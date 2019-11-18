@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DE>
+  		<url>https://sightlinede.consilio.com/</url>
+       	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
+       	<SourceLocation>IngestionTestData\Automation</SourceLocation>
+        <projectName>Auto_SL0826</projectName>
+        
+        <sa1userName>automationsightlineconsilio@gmail.com</sa1userName>
+        <sa1password>consilio@321</sa1password>
+        
+        
+        <!-- DEPA -->
+        <pa1FullName>DEPA1 PA1</pa1FullName>
+        <pa1userName>a.utomationsightlineconsilio@gmail.com</pa1userName>
+        <pa1password>sightline@123</pa1password>
+        
+        <pa2FullName>DEPA2 PA2</pa2FullName>
+        <pa2userName>au.tomationsightlin.ec.o.nsilio@gmail.com</pa2userName>
+        <pa2password>hotfix@123</pa2password>
+        
+        
+        <!--DERMU  -->
+        <rmu2FullName>DERMU1 RMU1</rmu2FullName>
+        <rmu2userName>au.tomationsightlinec.o.nsilio@gmail.com</rmu2userName>
+        <rmu2password>consilio@12345</rmu2password>
+        
+        <rmu1FullName>DERMU2 RMU2</rmu1FullName>
+        <rmu1userName>au.tomations.ightlinec.o.nsilio@gmail.com</rmu1userName>
+        <rmu1password>sightline@123</rmu1password>
+        
+        <!-- DEREV -->
+        <rev1FullName>DEREV1 REV1</rev1FullName>
+        <rev1userName>aut.omationsightlineconsilio@gmail.com</rev1userName>
+        <rev1password>sightline@456</rev1password>
+        
+        <rev2FullName>DEREV2 REV2</rev2FullName>
+        <rev2userName>a.u.tomatio.nsightlinec.onsilio@gmail.com</rev2userName>
+        <rev2password>sightline@123</rev2password>
+        
+        <shareTo>DEPA2 PA2</shareTo>
+       
+       
+</DE>	

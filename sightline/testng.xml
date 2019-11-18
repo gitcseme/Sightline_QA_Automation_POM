@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="RPMX V1.0 Test Suite - Sanity">
+
+<suite-files>
+
+	<suite-file path="./smokeSuite.xml"/>
+
+	<!-- <suite-file path="./regressionSuite.xml" /> -->
+
+
+	</suite-files>
+
+</suite>

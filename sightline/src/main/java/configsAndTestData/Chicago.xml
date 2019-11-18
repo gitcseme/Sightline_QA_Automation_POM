@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LD9PT>
+  		<url>http://mtpvtsslwb01.consilio.com/</url>
+       	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
+       	<SourceLocation>IngestionTestData\Automation</SourceLocation>
+        <projectName>Auto_SmokeTest25June</projectName>
+     
+    	<sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
+   		<sa1password>sightline@123</sa1password> 
+     
+        <!-- CPA -->
+        <pa1FullName>CPA1 PA1</pa1FullName>
+        <pa1userName>a.utomationsightlineconsili.o@gmail.com</pa1userName>
+        <pa1password>sightline@123</pa1password>
+        
+        <pa2FullName>CPA2 PA2</pa2FullName>
+        <pa2userName>au.tomationsightlineconsilio@gmail.com</pa2userName>
+        <pa2password>sightline@123</pa2password>
+        
+        <!--CRMU  -->
+        <rmu1FullName>CRMU1 RMU1</rmu1FullName>
+        <rmu1userName>aut.omationsightlineconsili.o@gmail.com</rmu1userName>
+        <rmu1password>sightline@123</rmu1password>
+        
+        <rmu2FullName>CRMU2 RMU2</rmu2FullName>
+        <rmu2userName>au.tomationsightli.nec.o.nsilio@gmail.com</rmu2userName>
+        <rmu2password>sightline@123</rmu2password>
+        
+        <!-- CRev -->
+        <rev1FullName>CREV1 REV1</rev1FullName>
+        <rev1userName>a.u.tomationsightlineconsili.o@gmail.com</rev1userName>
+        <rev1password>sightline@123</rev1password>
+        
+        <rev2FullName>CREV2 REV2</rev2FullName>
+        <rev2userName>a.u.tomationsightlinec.onsilio@gmail.com</rev2userName>
+        <rev2password>sightline@123</rev2password>
+        
+        <shareTo>CPA2 PA2</shareTo>
+       
+       
+</LD9PT>	

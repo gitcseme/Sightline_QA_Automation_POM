@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke Suite">
+	
+    <test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" ></class>  
+    </classes>
+	</test> 
+	 
+ <!-- 	
+   <test name="Categorization">
+	 <groups><run><include name="smoke" /></run></groups>
+	    <classes>
+        	<class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
+    	</classes>
+	</test>  
+ 	
+  <test name="2FAValidation">
+    <classes>
+        <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
+    </classes>
+	</test>    
+	
+	 <test name="AllManageModules">
+	 <groups><run><include name="smoke" /></run></groups>
+    	<classes>
+       	 <class name="testScriptsSmoke.TS_008_AllManageModules" ></class>  
+    	</classes>
+	</test>   
+	
+ 	<test name="BasicAndAdvancedSearchOperations">
+ 	 <groups><run><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
+    </classes>
+	</test>  -->
+	<test name="TS_017_DocList">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_017_DocList" ></class>  
+    </classes>
+	</test> 
+	
+	 <test name="BulkActionsFromSessionSearch">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch" ></class>  
+    </classes>
+	</test> 
+	<test name="AdvancedSearchBulkActions">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_003_AdvancedSearchBulkActions" ></class>  
+    </classes>
+	</test> 
+	<test name="SavedSearchShareSchedule">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule" ></class>  
+    </classes>
+	</test> 
+	<test name="ValidateAssignmentFunctionality">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality" ></class>  
+    </classes>
+	</test> 
+  	 <test name="Workflow">
+  	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_010_Workflow" ></class>  
+    </classes> 
+	</test>    
+	
+	<!-- <test name="UserManagement">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes> 
+    
+        <class name="testScriptsSmoke.TS_014_UserManagement" ></class>  
+    </classes>
+	</test> 
+	 
+ <test name="DomainDashboard">
+	 <groups><run><include name="smoke" /></run></groups>
+	    <classes>
+	    <class name="testScriptsSmoke.TS_016_DomainDashboard" ></class>  
+	    </classes>
+    </test> 
+    -->
+	 <test name="DocView - Non Audio">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer" ></class>  
+    </classes>
+	</test> 
+	 
+	<test name="Reports">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality" ></class>  
+    </classes>
+	</test> 
+	<!-- <test name="BatchUpload">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_013_ValidateBatchUpload" ></class>  
+    </classes>
+	</test>   -->
+	
+	<test name ="DocViewAudio">
+	 <groups><run><include name="smoke" /></run></groups>
+	 <classes>
+        <class name="testScriptsSmoke.TS_018_DocViewAudio" ></class>  
+    </classes>
+	</test> 
+	
+	<!--   <test name="Production">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_006_Production" ></class>  
+    </classes>
+	</test>  -->
+		<!-- <test name="BatchPrint">
+	 <groups><run><include name="smoke" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_006_ValidateBatchPrint" ></class>  
+    </classes>
+	</test>      
+ 	 -->
+ 	
+</suite> <!-- Suite -->

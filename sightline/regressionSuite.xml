@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression Suite">
+	
+     <test name="Input">
+     
+    <classes>
+        <class name="testScriptsSmoke.Input" ></class>  
+    </classes>
+	</test> 
+	
+	 <test name="Categorization">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
+    </classes>
+	</test>   
+ 	<!-- 
+	 <test name="2FAValidation">
+    <classes>
+        <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
+    </classes>
+	</test>   --> 
+	<test name="AllManageModules">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_008_AllManageModules" ></class>  
+    </classes>
+	</test> 
+	
+ 	<test name="BasicAndAdvancedSearchOperations">
+ 	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
+    </classes>
+	</test> 
+	<test name="TS_017_DocList">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_017_DocList" ></class>  
+    </classes>
+	</test> 
+	
+	 <test name="BulkActionsFromSessionSearch">
+	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch" ></class>  
+    </classes>
+	</test> 
+	<test name="AdvancedSearchBulkActions">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_003_AdvancedSearchBulkActions" ></class>  
+    </classes>
+	</test> 
+	<test name="SavedSearchShareSchedule">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule" ></class>  
+    </classes>
+	</test> 
+	<test name="ValidateAssignmentFunctionality">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality" ></class>  
+    </classes>
+	</test> 
+  	 <test name="Workflow">
+   <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_010_Workflow" ></class>  
+    </classes> 
+	</test>   
+	
+	<!-- <test name="UserManagement">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+    
+        <class name="testScriptsSmoke.TS_014_UserManagement" ></class>  
+    </classes>
+	</test>  -->
+	 
+	<!-- <test name="DomainDashboard">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+	    <classes>
+	    <class name="testScriptsSmoke.TS_016_DomainDashboard" ></class>  
+	    </classes>
+    </test>  -->
+	 <test name="DocView - Non Audio">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer" ></class>  
+    </classes>
+	</test> 
+	<test name="Reports">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality" ></class>  
+    </classes>
+	</test> 
+	<test name="BatchUpload">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_013_ValidateBatchUpload" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="DocViewAudio">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsSmoke.TS_018_DocViewAudio" ></class>  
+    </classes>
+	</test> 
+	
+	
+	 <test name="Production">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_006_Production" ></class>  
+    </classes>
+	</test> 
+	<test name="BatchPrint">
+	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_006_ValidateBatchPrint" ></class>  
+    </classes>
+    </test> 
+    <!-- Regression Classes  -->
+   
+ 	 <test name="Basic Search Regression">
+ 	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TS_001_BasicSearch" ></class>  
+    </classes>
+	</test>
+	 <test name="Advanced Search Regression">
+ 	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TS_002_AdvancedSearch" ></class>  
+    </classes>
+	</test>
+	 <test name="Advanced Search1 Regression">
+ 	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TS_003_AdvanceSearch1" ></class>  
+    </classes>
+	</test>
+	<test name="Saved Search Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.SavedSearch_Regression" ></class>  
+    </classes>
+	</test> 	 
+ 	 
+ 	  <test name="Alerts in BS and AS">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TS_005_BasicAndAdvanceAlerts" ></class>  
+    </classes>
+	</test> 
+ 	 
+ 	 <test name="Tally report Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TS_006_Tally_Report" ></class>  
+    </classes>
+	</test> 
+	 <test name="ICE Scenarios">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsSmoke.TS_019_ICEscenarios" ></class>  
+    </classes>
+	</test> 
+	
+	 <test name="BatchPrint regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.BatchPrint_Regression" ></class>  
+    </classes>
+	</test> 
+	 <test name="Coding regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.CodingForm_Regression" ></class>  
+    </classes>
+	</test> 
+	 <test name="Comments Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.Comments_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="DocView regression P2">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.DocViewP2" ></class>  
+    </classes>
+	</test> 
+	
+</suite> <!-- Suite -->
