@@ -1,4 +1,4 @@
-﻿package pageFactory;
+package pageFactory;
 
 import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
