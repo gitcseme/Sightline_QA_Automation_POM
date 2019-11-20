@@ -1,12 +1,13 @@
 # Sightline
-This is a Test automation framework to validate SightLine functionalities.
-This is a Page Object Model (POM) framework, below details brief about folder structure.
+---------------------------------------------------------------------------------------------------
+This project is a Test Automation Framework built using Maven, TestNG and selenium to validate SightLine functionalities.
+This is a Page Object Model (POM) framework and below details brief about folder structure.
 > src/main/java id root folder under this we have following packages:
-  >automationLibrary - Contains main driver and element classes.
-  >configsAndTestData - Contains class and XML files of configMain, environments and test data.
-  >pageFactory - Each page of the application is mapped to specific class here. All locators and functions of the specific page are    	maintained in specific class.
-  >testScriptSmoke - contains classes where somke test scenarios are covered. We could see sepearte class based on module.
-  >testScriptsRegression- contains classes where regression scenarios are covered.
+  1. automationLibrary - Contains main driver and element classes.
+  2. configsAndTestData - Contains class and XML files of configMain, environments and test data.
+  3. pageFactory - Each page of the application is mapped to specific class here. All locators and functions of the specific page are    	maintained in specific class.
+  4. testScriptSmoke - contains classes where somke test scenarios are covered. We could see sepearte class based on module.
+  5. testScriptsRegression- contains classes where regression scenarios are covered.
 
 > src/test/java - just a place holder. Empty one!
 
@@ -14,12 +15,14 @@ Other folders in project directory :
 > BrowserDrivers - contains chrome, IE browser drivers which are used by selenium to communicate with respective browsers.
                    This folder also contains bat files to kill background process of the browsers post execution of scripts.
 
->Misc
+> Misc -  Gmail properties file to deal with emails validation, fetch an OTP and activation links.
+          Also contains batch file to validate batch upload functionality.
+	  
   
 ---------------------------------------------------------------------------------------------------
 Plugins required in Eclipse :
-1. TestNG 
-2. Maven  
+1. TestNG -  To execute scripts and get automated report. 
+2. Maven  - This is a Maven project so that building the project and getting all dependencies is made easy.
 ---------------------------------------------------------------------------------------------------
 Project setup in Eclipse:
 
@@ -28,23 +31,25 @@ Project setup in Eclipse:
    https://github.consilio.com/Consilio/Sightline_QA_Automation_POM.git
 
 
-2. Build the project to make sure all the dependencies are in place
+2. Build the project to make sure all the dependencies are in place, .m2 folder will be created in your local machine to store all the jars.
 
 3. Open the required environment xml(like QA, US or UK) file under ConfigAndTestData package and check the project name.
-   If executing on existing project then give the existing project name.
-   If executing on new project then give the new project name that you wish to create.
+   If executing scripts on existing project then give the existing project name.
+   If executing scripts on new project then give the new project name that you wish to create.
+   Save changes
 
 4. Open ConfigMain xml under ConfigAndTestData package, check below param before start executing.
-	<env>QA</env><!--it should be QA or DE or LD9PT or Chicago-->
-	<newProject>NO</newProject><!--it should be YES or NO only--> // if it  is yes then project creation and user assignment will be done. 
-	<ingestion>NO</ingestion><!--it should be YES or NO only-->  //If it yes ingestion will be done
-	<suite>smoke</suite><!--it should be Smoke or Regression only--> 
-	<numberOfDataSets>3</numberOfDataSets>  // if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we go with option 1 for smoke suite)
-	<browserName>CHROME</browserName>
+	1. <env>QA</env><!--it should be QA or DE or LD9PT or Chicago-->
+	2. <newProject>NO</newProject><!--it should be YES or NO only--> // if it  is yes then project creation and user assignment will            be done. 
+	3. <ingestion>NO</ingestion><!--it should be YES or NO only-->  //If it yes ingestion will be done
+	4. <suite>smoke</suite><!--it should be Smoke or Regression only--> 
+	5. <numberOfDataSets>3</numberOfDataSets>  // if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we 	    go with option 1 for smoke suite)
+	6. <browserName>CHROME</browserName>
+	7. Save changes 
 
 5. Open testng.xml 
-	uncomment required suite and comment others like below and run as TestNg
-
+	It conatins path to smoke and regression suites, uncomment required one(like shown below) suite and run. To run, right click on 	testng.xml and go to 'Run As' and then select TestNG Suite.
+	
 	<suite-file path="./smokeSuite.xml"/>
 
 	<!-- <suite-file path="./regressionSuite.xml" /> -->
@@ -57,9 +62,12 @@ Jenkins:
 Jenkin location :
 http://172.22.155.19:8080/job/SL
 
+One should create a job in jenkin with the right configurations to run the scripts/code on GIT.
+
+Run existing job:
 Existing job is with the name SL and pointing to git code. Select SL job and click on build now to run scripts.
 
-Create a new job with below settings:
+Create a new job with below configurations:
 1. Select New Item from Jenkin dashboard 
 2. Provide a name and select maven option, click on OK
 3. Select Git option under Source Code Management section 
