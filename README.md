@@ -2,7 +2,7 @@
 ---------------------------------------------------------------------------------------------------
 This project is a Test Automation Framework built using Maven, TestNG and selenium to validate SightLine functionalities.
 This is a Page Object Model (POM) framework and below details brief about folder structure.
-> src/main/java id root folder under this we have following packages:
+> src/main/java is a root folder under this we have following packages:
   1. automationLibrary - Contains main driver and element classes.
   2. configsAndTestData - Contains class and XML files of configMain, environments and test data.
   3. pageFactory - Each page of the application is mapped to specific class here. All locators and functions of the specific page are    	maintained in specific class.
@@ -11,7 +11,7 @@ This is a Page Object Model (POM) framework and below details brief about folder
 
 > src/test/java - just a place holder. Empty one!
 
-Other folders in project directory :
+Other folders in the project directory :
 > BrowserDrivers - contains chrome, IE browser drivers which are used by selenium to communicate with respective browsers.
                    This folder also contains bat files to kill background process of the browsers post execution of scripts.
 
@@ -39,13 +39,13 @@ Project setup in Eclipse:
    Save changes
 
 4. Open ConfigMain xml under ConfigAndTestData package, check below param before start executing.
-	1. <env>QA</env><!--it should be QA or DE or LD9PT or Chicago-->
-	2. <newProject>NO</newProject><!--it should be YES or NO only--> // if it  is yes then project creation and user assignment will            be done. 
-	3. <ingestion>NO</ingestion><!--it should be YES or NO only-->  //If it yes ingestion will be done
-	4. <suite>smoke</suite><!--it should be Smoke or Regression only--> 
-	5. <numberOfDataSets>3</numberOfDataSets>  // if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we 	    go with option 1 for smoke suite)
-	6. <browserName>CHROME</browserName>
-	7. Save changes 
+	<env>QA</env><!--it should be QA or DE or LD9PT or Chicago-->
+	<newProject>NO</newProject><!--it should be YES or NO only--> // if it  is yes then project creation and user assignment will            be done. 
+	<ingestion>NO</ingestion><!--it should be YES or NO only-->  //If it yes ingestion will be done
+	<suite>smoke</suite><!--it should be Smoke or Regression only--> 
+	<numberOfDataSets>3</numberOfDataSets>  // if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we 	                                                 go with option 1 for smoke suite)
+	<browserName>CHROME</browserName>
+	Save changes 
 
 5. Open testng.xml 
 	It conatins path to smoke and regression suites, uncomment required one(like shown below) suite and run. To run, right click on 	testng.xml and go to 'Run As' and then select TestNG Suite.
