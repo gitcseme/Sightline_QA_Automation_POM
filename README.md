@@ -39,14 +39,13 @@ Project setup in Eclipse:
    Save changes
 
 4. Open ConfigMain xml under ConfigAndTestData package, check below param before start executing.
-	<env>QA</env><!--it should be QA or DE or LD9PT or Chicago-->
-	<newProject>NO</newProject><!--it should be YES or NO only--> // if it  is yes then project creation and user assignment will            be done. 
-	<ingestion>NO</ingestion><!--it should be YES or NO only-->  //If it yes ingestion will be done
-	<suite>smoke</suite><!--it should be Smoke or Regression only--> 
-	<numberOfDataSets>3</numberOfDataSets>  // if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we 	                                                 go with option 1 for smoke suite)
-	<browserName>CHROME</browserName>
-	Save changes 
-
+	1. env - Environment on which you wish to run scripts, like QA, US, UK and so on.
+	2. newProject - if it is YES then project creation and user assignment will be done. 
+	3. ingestion - if it YES then ingestion will be done
+	4. suite - to run required suites, it should be Smoke or Regression only 
+	5. numberOfDataSets -  if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we                                                go with option 1 for smoke suite)
+	6. browserName - On which browser you wish to run, CHROME or IE
+	
 5. Open testng.xml 
 	It conatins path to smoke and regression suites, uncomment required one(like shown below) suite and run. To run, right click on 	testng.xml and go to 'Run As' and then select TestNG Suite.
 	
