@@ -32,12 +32,17 @@ public class TS_002_AdvancedSearch {
 	int pureHit;
 	BaseClass bc;
 	
-
-	
-	@BeforeClass(alwaysRun = true)
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PA, all test methods start executing from login page
+	 */
+		@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    	//bt = new BaseTest();
+    
 		//Open browser
 	    Input in = new Input();
 	    in.loadEnvConfig();
@@ -50,7 +55,14 @@ public class TS_002_AdvancedSearch {
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
     
 	}
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : search docs in advanced search and do bulk tag. 
+	 * Untag the same and validate the count under 'Tags and Folders' page  
+	 */
 	  @Test(groups={"regression"})
 	   public void bulkUnTag() throws InterruptedException {
 		
@@ -78,7 +90,14 @@ public class TS_002_AdvancedSearch {
 	       System.out.println(tagName+" could be seen under tags and folder page");
 	   
 	}
-	
+  /*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : search docs in advanced search and do bulk folder. 
+	 * unfolder the same and validate the count under 'Tags and Folders page'  
+	 */	
 	@Test(groups={"regression"})
     public void bulkUnFolder() throws InterruptedException {
 	
@@ -104,7 +123,14 @@ public class TS_002_AdvancedSearch {
 	       Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
 	       System.out.println(folderName+" could be seen under tags and folder page");
 	}
-	
+ /*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Search for docs and do bulk folder. Search for the same folder 
+	 * under work product search in advance search, validate the count.  
+	 */	
 	@Test(groups={"regression"})
     public void WPFolderSearch() throws InterruptedException {
     	
@@ -121,7 +147,14 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);
 		 Assert.assertEquals(search.serarchWP(), Input.pureHitSeachString1);
 	  }
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Search for docs and do bulk tag. Search for the same tag 
+	 * under work product search in advance search, validate the count.  
+	 */	
 	@Test(groups={"regression"})
      public void WPTagSearch() throws InterruptedException {
 		
@@ -137,6 +170,15 @@ public class TS_002_AdvancedSearch {
 		 search.selectTagInASwp(tagName);
 		 Assert.assertEquals(search.serarchWP(), Input.pureHitSeachString1);
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user create security group and release some docs to it.
+	 * Validate docs and counts of security group under advanced search  
+	 */	
 	 @Test(groups={"regression"})
      public void WPSecuirtyGroupSearch() throws InterruptedException {
     	
@@ -162,7 +204,14 @@ public class TS_002_AdvancedSearch {
 		 Assert.assertEquals(search.serarchWP(),count);
 	     }
      
-     //Below test case is to validate different combination searches in work product
+ /*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Combinational search under work product search in advanced search.
+	 * Tags AND folders and security group and saved search
+	 */	
      @Test(groups={"regression"})
      public void workProductSearches() throws InterruptedException {
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
