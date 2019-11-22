@@ -81,11 +81,11 @@ Goals and options : clean test
 
 7. Save the config and click on biuld now to run scripts 
 
-8. we can monitor execution by clicking on 'Console Output', for UI refer point 10.
+8. We can monitor execution by clicking on 'Console Output' where we can see logs, for UI/browser refer point 10.
 
 9. Once execution completed we could see link to 'Test Results'.
 
-10. To see the exection UI/browser on server where jenkin is runng:
+10. We could see the execution (UI/Browser) on the jenkin server. Below setting is required to see the UI/Browser.
 	1. Logon to Jenkin server
 	2. Open Windows services (or run: services.msc)
 	3. Double click on Jenkins service
