@@ -437,9 +437,9 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	}
 	@Test(groups={"smoke","regression"})
 	public void audioSearch() {
+		bc.selectproject();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	bc.selectproject();
-    	Assert.assertTrue(ss.audioSearch(Input.audioSearchString1,"North American English")>=1);
+       	Assert.assertTrue(ss.audioSearch(Input.audioSearchString1,"North American English")>=1);
 
 	}
 	
@@ -449,6 +449,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		bc.selectproject();
 		/*softAssertion.assertTrue(ss.conceptualSearch(Input.conceptualSearchString1,"right")>=0);
 		bc.selectproject();*/
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		softAssertion.assertTrue(ss.conceptualSearch(Input.conceptualSearchString1,"mid")>=1);
 		/*bc.selectproject();
 		softAssertion.assertTrue(ss.conceptualSearch(Input.conceptualSearchString1,"left")>=2);*/
