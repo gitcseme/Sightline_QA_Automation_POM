@@ -81,6 +81,9 @@ Goals and options : clean test
 
 7. Save the config and click on biuld now to run scripts 
 
+	Note: How suites picked up by Jenkins to run? 
+	We have to mention testng.xml path in POM file, from there Jenkin picks suits.
+
 8. We can monitor execution by clicking on 'Console Output' where we can see logs, for UI/browser refer point 10.
 
 9. Once execution completed we could see link to 'Test Results'.
