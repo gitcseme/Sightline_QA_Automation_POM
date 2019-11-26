@@ -84,6 +84,8 @@ Goals and options : clean test
 8. We can monitor execution by clicking on 'Console Output' where we can see logs, for UI/browser refer point 10.
 
 9. Once execution completed we could see link to 'Test Results'.
+   Also we find details report under Trger folder :
+   http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/index.html
 
 10. We could see the execution (UI/Browser) on the jenkin server. Below setting is required to see the UI/Browser.
 	1. Logon to Jenkin server
