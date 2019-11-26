@@ -86,6 +86,11 @@ Goals and options : clean test
 9. Once execution completed we could see link to 'Test Results'.
    Also we find details report under Trger folder :
    http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/index.html
+   
+   Screenshots for failed scripts : http://172.22.155.19:8080/job/SL/ws/sightline/Screenshots/
+   
+   Failed script's xml : 
+   http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/testng-failed.xml
 
 10. We could see the execution (UI/Browser) on the jenkin server. Below setting is required to see the UI/Browser.
 	1. Logon to Jenkin server
