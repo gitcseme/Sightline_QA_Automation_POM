@@ -180,7 +180,6 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <include name="Test"/>
 <include name="close"/>
 </methods>
-<methods>...</methods>
 </class>
 <class name="testScriptsSmoke.TS_010_Workflow"></class>
 <!-- testScriptsSmoke.TS_010_Workflow -->
