@@ -294,4 +294,4 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 <test name="Production(failed)"></test>
 <!-- Production(failed) -->
 </suite>
-<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Smoke Suite]"></suite>
+
