@@ -6,26 +6,6 @@
         <class name="testScriptsSmoke.Input" ></class>  
     </classes>
 	</test> 
-<test name="Categorization(failed)">
-<groups>
-<run>
-<include name="smoke"/>
-</run>
-</groups>
-<classes>
-<class name="testScriptsSmoke.TS_005_ValidateCategorization">
-<methods>
-<include name="preConditions"/>
-<include name="takeScreenShot"/>
-<include name="close"/>
-<include name="validateCategorization"/>
-</methods>
-</class>
-<class name="testScriptsSmoke.TS_005_ValidateCategorization"></class>
-<!-- testScriptsSmoke.TS_005_ValidateCategorization -->
-</classes>
-
-</test>
 <test name="Categorization(failed)"></test>
 <!-- Categorization(failed) -->
 <test name="AllManageModules(failed)">
