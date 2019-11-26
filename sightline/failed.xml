@@ -11,9 +11,7 @@
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
 </groups>
-<groups>...</groups>
 <classes>
 <class name="testScriptsSmoke.TS_005_ValidateCategorization">
 <methods>
@@ -22,12 +20,11 @@
 <include name="close"/>
 <include name="validateCategorization"/>
 </methods>
-<methods>...</methods>
 </class>
 <class name="testScriptsSmoke.TS_005_ValidateCategorization">...</class>
 <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="Categorization(failed)">...</test>
 <!-- Categorization(failed) -->
@@ -36,9 +33,9 @@
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_008_AllManageModules">
 <methods>
@@ -47,12 +44,12 @@
 <include name="before"/>
 <include name="DeleteTagField"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_008_AllManageModules">...</class>
 <!-- testScriptsSmoke.TS_008_AllManageModules -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="AllManageModules(failed)">...</test>
 <!-- AllManageModules(failed) -->
@@ -61,9 +58,9 @@
 <run>
 <include name="regression"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
 <methods>
@@ -77,7 +74,7 @@
 <include name="contentSearchWithOperatorsInAS"/>
 <include name="metaDataSearchsBS"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">...</class>
 <!--
@@ -85,7 +82,7 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 -->
 <!--...-->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="BasicAndAdvancedSearchOperations(failed)">...</test>
 <!-- BasicAndAdvancedSearchOperations(failed) -->
@@ -94,9 +91,9 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_017_DocList">
 <methods>
@@ -105,12 +102,12 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <include name="doclistToDocView"/>
 <include name="takeScreenShot"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_017_DocList">...</class>
 <!-- testScriptsSmoke.TS_017_DocList -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="TS_017_DocList(failed)">...</test>
 <!-- TS_017_DocList(failed) -->
@@ -119,9 +116,9 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
 <methods>
@@ -132,12 +129,12 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <include name="saveSearchToDocList"/>
 <include name="takeScreenShot"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">...</class>
 <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="SavedSearchShareSchedule(failed)">...</test>
 <!-- SavedSearchShareSchedule(failed) -->
@@ -146,9 +143,9 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality">
 <methods>
@@ -156,7 +153,7 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 <include name="CreateAssignmentDistributeToReviwer"/>
 <include name="takeScreenShot"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality">...</class>
 <!--
@@ -164,7 +161,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 -->
 <!--...-->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="ValidateAssignmentFunctionality(failed)">...</test>
 <!-- ValidateAssignmentFunctionality(failed) -->
@@ -173,9 +170,9 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_010_Workflow">
 <methods>
@@ -188,7 +185,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <class name="testScriptsSmoke.TS_010_Workflow">...</class>
 <!-- testScriptsSmoke.TS_010_Workflow -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="Workflow(failed)">...</test>
 <!-- Workflow(failed) -->
@@ -197,9 +194,9 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
 <methods>
@@ -209,12 +206,12 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <include name="addRemarkToFirstDoc"/>
 <include name="completeDoc"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">...</class>
 <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="DocView - Non Audio(failed)">...</test>
 <!-- DocView - Non Audio(failed) -->
@@ -223,9 +220,9 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
 <methods>
@@ -234,7 +231,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 <include name="reviewProgressByRevReport"/>
 <include name="takeScreenShot"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">...</class>
 <!--
@@ -242,7 +239,7 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 -->
 <!--...-->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="Reports(failed)">...</test>
 <!-- Reports(failed) -->
@@ -251,9 +248,9 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
 <methods>
@@ -263,12 +260,12 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 <include name="preCondition"/>
 <include name="close"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">...</class>
 <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="BatchUpload(failed)">...</test>
 <!-- BatchUpload(failed) -->
@@ -277,9 +274,9 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 <run>
 <include name="smoke"/>
 </run>
-<run>...</run>
+
 </groups>
-<groups>...</groups>
+
 <classes>
 <class name="testScriptsSmoke.TS_006_Production">
 <methods>
@@ -288,12 +285,12 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 <include name="close"/>
 <include name="takeScreenShot"/>
 </methods>
-<methods>...</methods>
+
 </class>
 <class name="testScriptsSmoke.TS_006_Production">...</class>
 <!-- testScriptsSmoke.TS_006_Production -->
 </classes>
-<classes>...</classes>
+
 </test>
 <test name="Production(failed)">...</test>
 <!-- Production(failed) -->
