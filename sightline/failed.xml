@@ -6,7 +6,27 @@
         <class name="testScriptsSmoke.Input" ></class>  
     </classes>
 	</test> 
-<test name="Categorization(failed)"></test>
+<test name="Categorization(failed)">
+<groups>
+<run>
+<include name="smoke"/>
+</run>
+</groups>
+<classes>
+<class name="testScriptsSmoke.TS_005_ValidateCategorization">
+<methods>
+<include name="preConditions"/>
+<include name="takeScreenShot"/>
+<include name="close"/>
+<include name="validateCategorization"/>
+</methods>
+</class>
+<class name="testScriptsSmoke.TS_005_ValidateCategorization"></class>
+<!-- testScriptsSmoke.TS_005_ValidateCategorization -->
+</classes>
+
+</test>
+
 <!-- Categorization(failed) -->
 <test name="AllManageModules(failed)">
 <groups>
@@ -31,7 +51,7 @@
 </classes>
 
 </test>
-<test name="AllManageModules(failed)"></test>
+
 <!-- AllManageModules(failed) -->
 <test name="BasicAndAdvancedSearchOperations(failed)">
 <groups>
@@ -64,8 +84,8 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 </classes>
 
 </test>
-<test name="BasicAndAdvancedSearchOperations(failed)"></test>
-<!-- BasicAndAdvancedSearchOperations(failed) -->
+
+
 <test name="TS_017_DocList(failed)">
 <groups>
 <run>
@@ -89,7 +109,7 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 </classes>
 
 </test>
-<test name="TS_017_DocList(failed)"></test>
+
 <!-- TS_017_DocList(failed) -->
 <test name="SavedSearchShareSchedule(failed)">
 <groups>
@@ -116,7 +136,7 @@ testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations
 </classes>
 
 </test>
-<test name="SavedSearchShareSchedule(failed)"></test>
+
 <!-- SavedSearchShareSchedule(failed) -->
 <test name="ValidateAssignmentFunctionality(failed)">
 <groups>
@@ -143,7 +163,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 </classes>
 
 </test>
-<test name="ValidateAssignmentFunctionality(failed)"></test>
+
 <!-- ValidateAssignmentFunctionality(failed) -->
 <test name="Workflow(failed)">
 <groups>
@@ -166,7 +186,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 </classes>
 
 </test>
-<test name="Workflow(failed)"></test>
+
 <!-- Workflow(failed) -->
 <test name="DocView - Non Audio(failed)">
 <groups>
@@ -192,7 +212,7 @@ testScriptsSmoke.TS_009_ValidateAssignmentFunctionality
 </classes>
 
 </test>
-<test name="DocView - Non Audio(failed)"></test>
+
 <!-- DocView - Non Audio(failed) -->
 <test name="Reports(failed)">
 <groups>
@@ -220,7 +240,7 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 </classes>
 
 </test>
-<test name="Reports(failed)"></test>
+
 <!-- Reports(failed) -->
 <test name="BatchUpload(failed)">
 <groups>
@@ -246,7 +266,7 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 </classes>
 
 </test>
-<test name="BatchUpload(failed)"></test>
+
 <!-- BatchUpload(failed) -->
 <test name="Production(failed)">
 <groups>
@@ -271,7 +291,7 @@ testScriptsSmoke.TS_012_ValidateReportsFunctionality
 </classes>
 
 </test>
-<test name="Production(failed)"></test>
+
 <!-- Production(failed) -->
 </suite>
 
