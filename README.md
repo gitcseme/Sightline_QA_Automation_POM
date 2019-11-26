@@ -86,6 +86,7 @@ Goals and options : clean test
 9. Once execution completed we could see link to 'Test Results'.
    Also we find details report under Trger folder :
    http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/index.html
+   http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/emailable-report.html (along with time taken by each script)
    
    Screenshots for failed scripts : http://172.22.155.19:8080/job/SL/ws/sightline/Screenshots/
    
