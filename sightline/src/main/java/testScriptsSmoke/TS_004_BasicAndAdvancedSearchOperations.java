@@ -44,9 +44,9 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		/*Input in = new Input();
+		Input in = new Input();
 		in.loadEnvConfig();
-		*/
+		
     	//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -80,7 +80,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertAll();
 	}
 	
-    @Test(groups={"regression"})
+    @Test(groups={"smoke"})
 	public void contentSearchWithOperatorsInAS() {
 		SoftAssert softAssertion= new SoftAssert();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -98,7 +98,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertEquals(Input.searchString1NOTsearchString2,ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString2));
 		bc.selectproject();
 		softAssertion.assertEquals(Input.searchString2NOTsearchString1,ss.advancedContentSearch(Input.searchString2+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1));
-		bc.selectproject();
+		softAssertion.assertAll();
+	}
+	
+    @Test(groups={"regression"})
+   	public void contentSearchWithOperatorsInASreg() {
+   		SoftAssert softAssertion= new SoftAssert();
+   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+   		bc.selectproject();
 		softAssertion.assertTrue(ss.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
 
 		bc.selectproject();
@@ -115,8 +122,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertTrue(ss.advancedContentSearch("\"discrepancy scripts\"~3")>=4);
 
 		softAssertion.assertAll();
-	}
-	
+    }
 	
 	////@Test(groups={"regression"})
 	public void Search_RPMXCON_37690() throws InterruptedException {
@@ -158,8 +164,26 @@ public class TS_004_BasicAndAdvancedSearchOperations {
     	bc.selectproject();
     	softAssertion.assertEquals(Input.metaDataCNcount,ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null));//1135);
 		bc.selectproject();
-		softAssertion.assertEquals(340,ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+		softAssertion.assertTrue(85>=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+		bc.selectproject();
+    	softAssertion.assertTrue(1>=ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null));
 		
+    	//with time in IS 
+    	bc.selectproject();
+    	softAssertion.assertTrue(1>=ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null));
+	
+    	bc.selectproject();
+		softAssertion.assertTrue(116>=ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", " 2010-04-06"));
+		bc.selectproject();
+		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
+	
+		bc.selectproject();
+		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18"));
+	
+		//with time in Range	
+		bc.selectproject();
+		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
+			
 		softAssertion.assertAll();
 	}
 	@Test(groups={"regression"})
@@ -167,19 +191,6 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		SoftAssert softAssertion= new SoftAssert();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	softAssertion.assertEquals(95,ss.basicMetaDataSearch("MasterDate", "IS", "1980-01-01", null));
-		
-    	//with time in IS 
-    	bc.selectproject();
-    	softAssertion.assertEquals(11,ss.basicMetaDataSearch("MasterDate", "IS", "1989-02-10 16:59:39", null));
-		
-    	
-    	
-    	bc.selectproject();
-		softAssertion.assertEquals(124,ss.basicMetaDataSearch("MasterDate", "RANGE", "1980-01-01", "2000-01-01"));
-		
-		
-		bc.selectproject();
 		softAssertion.assertEquals(1,ss.basicMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
 	
 		bc.selectproject();
@@ -291,16 +302,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		
     	bc.selectproject();
 		softAssertion.assertEquals(124,ss.advancedMetaDataSearch("MasterDate", "RANGE", "1980-01-01", "2000-01-01"));
-		bc.selectproject();
-		softAssertion.assertEquals(1,ss.advancedMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
-	
-		bc.selectproject();
-		softAssertion.assertEquals(340,ss.advancedMetaDataSearch("CreateDate", "RANGE", "1986-01-01", "2018-01-01"));
-	
-		//with time in Range	
-		bc.selectproject();
-		softAssertion.assertEquals(170,ss.advancedMetaDataSearch("CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"));
-			
+				
 		bc.selectproject();
 		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
 		
