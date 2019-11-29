@@ -113,7 +113,7 @@ public class AssignmentsPage {
     public Element getAssgn_DocSequence_liveseq(){ return driver.FindElementByCssSelector(".live-seq"); }
     public Element getAssignmentAction_CopyAssignment(){ return driver.FindElementById("CopyAssignmentText"); }
     public Element getSelectCopyAssignment(){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[contains(.,'Copy')]/td[1]"); }
-    public Element getSelectcopyAssgnmToBulkAssign(String assignmentName){ return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[starts-with(.,'"+assignmentName+"']"); }
+    public Element getSelectcopyAssgnmToBulkAssign(String assignmentName){ return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[starts-with(.,'"+assignmentName+"')]"); }
     
     public Element getAssgn_permissions(int no){ return driver.FindElementByXPath("(//label[@class='toggle'])["+no+"]//i"); }
     public Element getAssgngrp_CascadeSetting(){ return driver.FindElementByXPath(".//*[@id='IsCascadeEnabled']/following-sibling::i"); }
