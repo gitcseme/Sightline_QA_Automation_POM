@@ -1,14 +1,9 @@
 package testScriptsSmoke;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.concurrent.Callable;
-
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -17,12 +12,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import automationLibrary.Driver;
-import pageFactory.BaseClass;
 import pageFactory.Categorization;
-import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 
 public class TS_005_ValidateCategorization {

@@ -1,10 +1,8 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
