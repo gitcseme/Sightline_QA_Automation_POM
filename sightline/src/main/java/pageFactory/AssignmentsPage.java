@@ -45,7 +45,7 @@ public class AssignmentsPage {
     public Element getSelectAssignment(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']"); }
     public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//*[@id='ui-id-2']"); }
     public Element getSelectAssignmentDocCount(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td[7]"); }
-    public Element getAssgnCounts(String assignmentName,int colno){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td=''"+assignmentName+"']/td["+colno+"]"); }
+    public Element getAssgnCounts(String assignmentName,int colno){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td["+colno+"]"); }
     public Element getPersistCB(){ return driver.FindElementByXPath("//div[@id='existingassignment']//label[@class='checkbox']/i"); }
     public Element getSelectSavePermission(){ return driver.FindElementByXPath("(//label[@class='toggle'])[23]"); }
     
@@ -258,15 +258,25 @@ public class AssignmentsPage {
     	getAssignment_BackToManageButton().waitAndClick(10);
     	Thread.sleep(2000);
     	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+    	
+    	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+    	
+    	
+    	driver.scrollingToBottomofAPage();
+    	Thread.sleep(2000);
+    	
+    	getAssgnCounts(assignmentName, 9).WaitUntilPresent();
     	//verify total docs count
-    	String acttotalcount = getAssgnCounts(assignmentName, 7).getText();
+    	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
-    	Assert.assertEquals(Input.searchString1, Integer.parseInt(acttotalcount));
+    	Assert.assertEquals(Input.pureHitSeachString1, Integer.parseInt(acttotalcount));
     	
     	//verify distributed docs count
     	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(actdistributedcount));
-    	Assert.assertEquals(Input.searchString1, Integer.parseInt(actdistributedcount));
+    	Assert.assertEquals(Input.pureHitSeachString1, Integer.parseInt(actdistributedcount));
      	
 	}
     
