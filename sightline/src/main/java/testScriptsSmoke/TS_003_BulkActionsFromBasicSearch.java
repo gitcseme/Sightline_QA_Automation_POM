@@ -74,7 +74,7 @@ public class TS_003_BulkActionsFromBasicSearch {
        		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
   	
        tf.getTag_ToggleDocCount().waitAndClick(8);
-       Thread.sleep(2000);
+       Thread.sleep(4000);
        tf.getTagandCount(tagName, pureHit).WaitUntilPresent();
        Assert.assertTrue(tf.getTagandCount(tagName, pureHit).Displayed());
        System.out.println(tagName+" could be seen under tags and folder page");

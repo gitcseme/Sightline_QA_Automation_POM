@@ -44,8 +44,9 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		
     	//Open browser
 		driver = new Driver();
@@ -173,7 +174,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
     	softAssertion.assertTrue(1>=ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null));
 	
     	bc.selectproject();
-		softAssertion.assertTrue(116>=ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", " 2010-04-06"));
+		softAssertion.assertTrue(116>=ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
 		bc.selectproject();
 		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
 	
