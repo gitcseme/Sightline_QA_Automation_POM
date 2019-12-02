@@ -1,7 +1,9 @@
 package testScriptsSmoke;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FileUtils;
@@ -36,8 +38,11 @@ public class TS_005_ValidateCategorization {
 	
 	
 	@BeforeClass(alwaysRun = true)
-	public void preConditions() throws InterruptedException {
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		String serachString = Input.searchString2;
 		//Open browser
 		driver = new Driver();
