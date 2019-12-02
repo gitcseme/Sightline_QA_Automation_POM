@@ -1,7 +1,9 @@
 package testScriptsSmoke;
 
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.text.ParseException;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -33,16 +35,18 @@ public class TS_009_ValidateAssignmentFunctionality {
 	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	
 	@Test(groups={"smoke","regression"})
-	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException {
+	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
     	//Open browser
 		driver =  new Driver();
 		//Login as PA
 		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		//Impersonate as RMU
-		bc = new BaseClass(driver);
-		bc.impersonatePAtoRMU();
+		/*
+		 * lp.loginToSightLine(Input.pa1userName, Input.pa1password); //Impersonate as
+		 * RMU bc = new BaseClass(driver); bc.impersonatePAtoRMU();
+		 */
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 	
 		//add tag
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
