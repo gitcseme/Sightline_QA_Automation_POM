@@ -1,12 +1,9 @@
 package testScriptsSmoke;
 
-import java.io.File;
-import java.lang.reflect.Method;
-import java.util.concurrent.Callable;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.ParseException;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -15,12 +12,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import automationLibrary.Driver;
-import pageFactory.BaseClass;
 import pageFactory.Categorization;
-import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 
 public class TS_005_ValidateCategorization {
@@ -36,8 +30,12 @@ public class TS_005_ValidateCategorization {
 	
 	
 	@BeforeClass(alwaysRun = true)
-	public void preConditions() throws InterruptedException {
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
+		
 		String serachString = Input.searchString2;
 		//Open browser
 		driver = new Driver();
