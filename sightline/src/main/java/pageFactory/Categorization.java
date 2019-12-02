@@ -84,8 +84,8 @@ public class Categorization {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFolderSelectionPopUp().Visible() ;}}),Input.wait30);
     	getFolderSelectionPopUp().Click();
-    //
-    	
+ 
+    	// iterate and select the folder
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getCatFolderTree().Visible()  ;}}), Input.wait30); 
     	 System.out.println(getCatFolderTree().FindWebElements().size());
@@ -100,14 +100,11 @@ public class Categorization {
     				}
     				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
     				driver.scrollingToBottomofAPage();
-    		//		System.out.println(iterable_element.getText());
+    		
     				iterable_element.click();
     			}
     		}
-    	//
-    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSelectFolder(folderName).Visible() ;}}),Input.wait30);
-    	getSelectFolder(folderName).Click();*/
+    	
     	
     	getSelectBtn().Click();
     	
