@@ -169,7 +169,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
-		getDAT_DATField1().SendKeys("BatesNumber");
+		getDAT_DATField1().SendKeys("BatesNumber"+Utility.dynamicNameAppender());
 		
 		driver.scrollingToBottomofAPage();
 		
@@ -207,8 +207,8 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFTab().Enabled()  ;}}), Input.wait30); 
 		getTIFFTab().Click();
-		driver.scrollingToBottomofAPage();
 		
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
 		getTIFF_CenterHeaderBranding().Click();
