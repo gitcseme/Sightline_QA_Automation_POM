@@ -1,10 +1,8 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -24,15 +22,10 @@ public class Categorization {
     public Element getRun(){ return driver.FindElementByXPath("//button[@id='btnRun']"); }
     public Element getPopupYesBtn(){ return driver.FindElementByXPath("//button[@id='btnYes']"); }
     public Element getResults(){ return driver.FindElementByXPath("//*[@id='divConfiguration']/div[2]/div[2]/div[1]"); }
-    
     public ElementCollection getTree(){ return driver.FindElementsByXPath("//a[@class='jstree-anchor'][contains(text(),'')]"); }
-
-    
-    
-  
-
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
-   
+    public ElementCollection getCatFolderTree(){ return driver.FindElementsByXPath("(//div[@class='panel-body'])[6]//a"); }
+       
     public Categorization(Driver driver){
 
         this.driver = driver;
@@ -89,10 +82,27 @@ public class Categorization {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFolderSelectionPopUp().Visible() ;}}),Input.wait30);
     	getFolderSelectionPopUp().Click();
+ 
+    	// iterate and select the folder
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 getCatFolderTree().Visible()  ;}}), Input.wait30); 
+    	 System.out.println(getCatFolderTree().FindWebElements().size());
+    		for (WebElement iterable_element : getCatFolderTree().FindWebElements()) {
+    			//System.out.println(iterable_element.getText());
+    			if(iterable_element.getText().contains(folderName)){
+    				try {
+    					Thread.sleep(5000);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+    				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+    				driver.scrollingToBottomofAPage();
+    		
+    				iterable_element.click();
+    			}
+    		}
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSelectFolder(folderName).Visible() ;}}),Input.wait30);
-    	getSelectFolder(folderName).Click();
     	
     	getSelectBtn().Click();
     	

@@ -181,7 +181,11 @@ public class TS_017_DocList {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			dl.getSelectAll().Visible()  ;}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
+		try {
     	dl.getYesAllPageDocs().waitAndClick(10);
+		}catch (Exception e) {
+			// No child docs
+		}
     	dl.getPopUpOkBtn().Click();
     	
     	ss.ViewInDocView();
