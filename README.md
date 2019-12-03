@@ -107,15 +107,8 @@ Goals and options : clean test
    3. Uncomment failed.xml line in testng.xml and comment somke and regression lines
    4. Copy the content from jenkin file http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/testng-failed.xml to   failed.xml 
    
-   Note: Post copying, add below lines after suite definition in the xml. Like in smoke and regression suite xmls.
-   
-   1. <suite name="Smoke Suite">
-    2. <test name="Input"> 
-    3. <classes>
-       4.  <class name="testScriptsSmoke.Input" ></class>  
-    5. </classes>
-    6.</test> 
-   
+   Note: Post copying, add a test in failed.xml soon after suite definition for the Input class, like in smoke and regression suite xmls.
+         
    5. Make sure failed.xml is updated in GIT branch that jenkin is pointing 
    6. Build the project, this timeonly failed scripts will be picked.
 
