@@ -5,7 +5,7 @@
     <classes>
         <class name="testScriptsSmoke.Input" ></class>  
     </classes>
-</test> 
+	</test> 
   <test name="TS_017_DocList(failed)">
     <groups>
       <run>
