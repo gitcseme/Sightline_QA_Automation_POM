@@ -2,6 +2,7 @@
 ---------------------------------------------------------------------------------------------------
 This project is a Test Automation Framework built using Maven, TestNG and selenium to validate SightLine functionalities.
 This is a Page Object Model (POM) framework and below details brief about folder structure.
+
 > src/main/java is a root folder under this we have following packages:
   1. automationLibrary - Contains main driver and element classes.
   2. configsAndTestData - Contains class and XML files of configMain, environments and test data.
@@ -12,19 +13,22 @@ This is a Page Object Model (POM) framework and below details brief about folder
 > src/test/java - just a place holder. Empty one!
 
 Other folders in the project directory :
+------------------------------------------
 > BrowserDrivers - contains chrome, IE browser drivers which are used by selenium to communicate with respective browsers.
                    This folder also contains bat files to kill background process of the browsers post execution of scripts.
 
 > Misc -  Gmail properties file to deal with emails validation, fetch an OTP and activation links.
+          Contains 'BatchPrintFiles' folder to manage batch print files.
           Also contains batch file to validate batch upload functionality.
 	  
   
----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
 Plugins required in Eclipse :
 1. TestNG -  To execute scripts and get automated report. 
 2. Maven  - This is a Maven project so that building the project and getting all dependencies is made easy.
----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
 Project setup in Eclipse:
+--------------------------
 
 1. Pull the project code from GIT location:
 
@@ -95,6 +99,25 @@ Goals and options : clean test
    
    Failed script's xml : 
    http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/testng-failed.xml
+   
+   How to run only failed scripts in jenkins:
+   --------------------------------------------
+   1. We have added one xml in project folder with the name failed.xml
+   2. Path to failed.xml is set in testng.xml
+   3. Uncomment failed.xml line in testng.xml and comment somke and regression lines
+   4. Copy the content from jenkin file http://172.22.155.19:8080/job/SL/ws/sightline/target/surefire-reports/testng-failed.xml to   failed.xml 
+   
+   Note: Post copying, add below lines after suite definition in the xml. Like in smoke and regression suite xmls.
+   
+   <suite name="Smoke Suite">
+    <test name="Input"> 
+    <classes>
+        <class name="testScriptsSmoke.Input" ></class>  
+    </classes>
+    </test> 
+   
+   5. Make sure failed.xml is updated in GIT branch that jenkin is pointing 
+   6. Build the project, this timeonly failed scripts will be picked.
 
 10. We could see the execution (UI/Browser) on the jenkin server. Below setting is required to see the UI/Browser.
 	1. Logon to Jenkin server
