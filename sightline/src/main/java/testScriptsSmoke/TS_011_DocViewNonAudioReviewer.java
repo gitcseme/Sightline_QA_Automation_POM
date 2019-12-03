@@ -44,6 +44,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	String  codingfrom = "CF"+Utility.dynamicNameAppender();
 	String assignmentName= "assi"+Utility.dynamicNameAppender();;
 
+
 	
 	//For reviewer assign docs,so create assignment with coding form(with tags and comments) and distribute 
 	@BeforeClass(alwaysRun = true)
@@ -105,7 +106,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	}
 	//putting comments
 	//adding remarks
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void addCommentToFirstDoc() {
 		
 		docView.addCommentToNonAudioDoc("firstcomment");
