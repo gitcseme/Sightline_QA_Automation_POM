@@ -109,12 +109,12 @@ Goals and options : clean test
    
    Note: Post copying, add below lines after suite definition in the xml. Like in smoke and regression suite xmls.
    
-   <suite name="Smoke Suite">
-    <test name="Input"> 
-    <classes>
-        <class name="testScriptsSmoke.Input" ></class>  
-    </classes>
-    </test> 
+   1. <suite name="Smoke Suite">
+    2. <test name="Input"> 
+    3. <classes>
+       4.  <class name="testScriptsSmoke.Input" ></class>  
+    5. </classes>
+    6.</test> 
    
    5. Make sure failed.xml is updated in GIT branch that jenkin is pointing 
    6. Build the project, this timeonly failed scripts will be picked.
