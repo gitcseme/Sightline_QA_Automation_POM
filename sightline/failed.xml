@@ -1,46 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Smoke Suite]">
-<test name="Input"> 
-    <classes>
-        <class name="testScriptsSmoke.Input" ></class>  
-    </classes>
-	</test> 
-  <test name="TS_017_DocList(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_017_DocList">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="doclistToDocView"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_017_DocList -->
-    </classes>
-  </test> <!-- TS_017_DocList(failed) -->
-  <test name="BulkActionsFromSessionSearch(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="bulkFolderInBasicSearch"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_003_BulkActionsFromBasicSearch -->
-    </classes>
-  </test> <!-- BulkActionsFromSessionSearch(failed) -->
-  <test name="SavedSearchShareSchedule(failed)">
+<suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Failed suite [Smoke Suite]]">
+  <test name="SavedSearchShareSchedule(failed)(failed)">
     <groups>
       <run>
         <include name="smoke"/>
@@ -52,15 +13,12 @@
           <include name="preCondition"/>
           <include name="close"/>
           <include name="shareSavedSearch"/>
-          <include name="saveSearchToDocView"/>
-          <include name="scheduleSavedSearch"/>
-          <include name="saveSearchToDocList"/>
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
     </classes>
-  </test> <!-- SavedSearchShareSchedule(failed) -->
-  <test name="Workflow(failed)">
+  </test> <!-- SavedSearchShareSchedule(failed)(failed) -->
+  <test name="Workflow(failed)(failed)">
     <groups>
       <run>
         <include name="smoke"/>
@@ -75,8 +33,8 @@
         </methods>
       </class> <!-- testScriptsSmoke.TS_010_Workflow -->
     </classes>
-  </test> <!-- Workflow(failed) -->
-  <test name="DocView - Non Audio(failed)">
+  </test> <!-- Workflow(failed)(failed) -->
+  <test name="DocView - Non Audio(failed)(failed)">
     <groups>
       <run>
         <include name="smoke"/>
@@ -92,22 +50,5 @@
         </methods>
       </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
     </classes>
-  </test> <!-- DocView - Non Audio(failed) -->
-  <test name="Production(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_006_Production">
-        <methods>
-          <include name="AddNewProduction"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_006_Production -->
-    </classes>
-  </test> <!-- Production(failed) -->
-</suite> <!-- Failed suite [Smoke Suite] -->
+  </test> <!-- DocView - Non Audio(failed)(failed) -->
+</suite> <!-- Failed suite [Failed suite [Smoke Suite]] -->
