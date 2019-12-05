@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QA>
           <url>https://sightlineus.ms.consilio.com/</url>
-         <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
+         <prodpath>\\ProductionWS_hwpoc\Automation</prodpath>
             <SourceLocation>IngestionTestData\Automation</SourceLocation>
         <projectName>Test ProjectH</projectName>
        <!-- UKSA1 SA1-->
