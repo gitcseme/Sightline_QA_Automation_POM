@@ -1,6 +1,11 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.WebElement;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import junit.framework.Assert;
@@ -21,6 +26,7 @@ public class RedactionPage {
     public Element getEditSaveBtn(){ return driver.FindElementById("btnModifySecurityGroup"); }
     public Element getactionDropDown(){ return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']"); }
     public Element getSelectredaction(String redactname){ return driver.FindElementByXPath("//a[contains(text(),'"+redactname+"')]"); }
+    public Element getSecurityGrp(){ return driver.FindElementById("ddlSecurityGroupRedaction"); }
   
     
 
@@ -34,7 +40,21 @@ public class RedactionPage {
 
     public void AddRedaction(String RedactName) {
     	
+    	SecurityGroupsPage sp = new SecurityGroupsPage(driver);
+    	List<String> expvalue = sp.GetSecurityGrouplist();
+    	
     	 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+    	 
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 getSecurityGrp().Visible()  ;}}),Input.wait30); 
+    	List<WebElement> sgnames = getSecurityGrp().selectFromDropdown().getOptions();
+    	List<String> allsg = new ArrayList<String>();
+    	
+    	for(int i=1;i<=allsg.size();i++)
+    	{
+  		  System.out.println(allsg.add(sgnames.get(i).getText()));
+    	}
+     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAllRedactionRootNode().Visible()  ;}}),Input.wait30); 
     	getAllRedactionRootNode().Click();

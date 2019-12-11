@@ -24,23 +24,14 @@ public class ABMReportPage {
     public Element getABM_FolderButton(){ return driver.FindElementByXPath("//*[@id='foldersPopup']//strong"); }
     public Element getABM_SelectSearch(String search){ return driver.FindElementByXPath("//*[@id='searchesJSTree']//a[contains(text(),"+search+")]/i[1]"); }
     public Element getApplyBtn(){ return driver.FindElementById("btn_applychanges"); } 
-    
     public Element getABM_ReviewerExpandbutton(){ return driver.FindElementByXPath("//*[@id='divreviewer']/div/a[2]"); } 
     public Element getABM_SelectAssgn(String assgnname){ return driver.FindElementByXPath("//*[@id='jstreeAssignmentGroup']//a[contains(text(),"+assgnname+")]"); }
-    public Element getCommunicationExplorer_Graph_Action_DropDown_SubTagOption(){ return driver.FindElementById("a[onclick*='SubTag']"); }
-    public Element getCommunicationExplorer_Graph_Action_DropDown_BulkTag_TotDocCount(){ return driver.FindElementById("spanTotal"); }
     public Element getABM_Reviewer_SelectAll(){ return driver.FindElementByXPath("//*[@id='checkAll4']/following-sibling::i"); }
-    public Element getSelectaTallyFieldtoruntallyon(){ return driver.FindElementById("select-source1"); }
     public Element getABM_SelectAssignment(){ return driver.FindElementById("assignmentGroupID"); }
     public Element getABM_Searchsavebutton(){ return driver.FindElementById("search"); }
     public Element getABM_SummaryPage(){ return driver.FindElementById("ABMSummary"); } 
-    public Element getAction_ViewInDoclistButton(){ return driver.FindElementByXPath(".//*[@class='dropdown-menu']//a[contains(.,'View All in DocList')]"); } 
-    
-    public Element getTally_SubTally_Action_ViewButton(){ return driver.FindElementByXPath(".//*[@id='freezediv']//a[contains(.,'View')]"); } 
-    public Element getTally_subMetadata(){ return driver.FindElementByXPath(".//*[@id='accordion2']//strong[contains(.,'METADATA')]"); } 
-    public Element getTally_SubTally_Action_ViewDocList(){ return driver.FindElementById("idSubTallyViewDoclist"); } 
-    
-    public Element getTally_LoadingScreen(){ return driver.FindElementByXPath("//span[@class='LoadImagePosition']/img[@src='/img/loading.gif']"); } 
+     //Updated on 12/09
+    public Element getABM_RevList(String name){ return driver.FindElementByXPath(".//*[@id='rvlist']//span[contains(text(),'"+name+"')]"); } 
     
     
     
@@ -95,6 +86,13 @@ public class ABMReportPage {
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getABM_ReviewerExpandbutton().Visible()  ;}}), Input.wait30);
 	     getABM_ReviewerExpandbutton().Click();
+	     
+	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		 getABM_RevList("0QARMU11 RMU11").Visible()  ;}}), Input.wait30);
+	     getABM_RevList("0QARMU11 RMU11").Displayed();
+	     getABM_RevList("0QADA1 DA11").Displayed();
+	     getABM_RevList("0QAPA1 PA1").Displayed();
+	     
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getABM_Reviewer_SelectAll().Enabled() ;}}), Input.wait30);
