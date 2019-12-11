@@ -109,13 +109,6 @@ public class TS_003_BulkActionsFromBasicSearch {
    public void viewInTallyResultsInBasicSearch() throws InterruptedException {
 		  TallyPage tp = new TallyPage(driver);
 	   //Tally Results
-      /* driver.getWebDriver().get(Input.url+"Search/Searches");
-       try {
-		Thread.sleep(8000);
-       } catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-       }*/
        sessionSearch.tallyResults();
      
        Assert.assertTrue(tp.getAutoSelectedSearchSource().WaitUntilPresent().Displayed());

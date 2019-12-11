@@ -52,8 +52,7 @@ public class TS_006_ValidateBatchPrint {
 		
 	    BatchPrintPage page1 = new BatchPrintPage(driver);
      	page1.BatchPrintWithNative("search",searchname,orderCriteria, orderType);
-		
-	//	page1.checkForOrderInPDF("DocID:", orderType);
+		page1.checkForOrderInPDF("DocID:", orderType);
 		
 		
 }

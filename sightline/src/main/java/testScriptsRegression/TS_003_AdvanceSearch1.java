@@ -57,7 +57,6 @@ public class TS_003_AdvanceSearch1 {
     	
 	}
 	
-	
 	  
 	 @Test(groups={"regression"})
      public void AdvancedWorkproductRedactionSearch() throws InterruptedException {

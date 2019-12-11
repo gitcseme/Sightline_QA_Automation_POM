@@ -56,6 +56,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate content search in Basic search with operators  
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void contentSearchWithOperatorsInBS() {
 		SoftAssert softAssertion= new SoftAssert();
@@ -80,8 +88,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 		softAssertion.assertAll();
 	}
-	
-    @Test(groups={"smoke"})
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate content search in advanced search with operators  
+	 */	
+	@Test(groups={"smoke","regression"})
 	public void contentSearchWithOperatorsInAS() {
 		SoftAssert softAssertion= new SoftAssert();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -102,29 +116,13 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertAll();
 	}
 	
-    @Test(groups={"regression"})
-   	public void contentSearchWithOperatorsInASreg() {
-   		SoftAssert softAssertion= new SoftAssert();
-   		driver.getWebDriver().get(Input.url+ "Search/Searches");
-   		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1)>=19);
-		
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1)>=1116);
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+"CustodianName: (  P Allen)")>0);
-
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch("\"discrepancy scripts\"~3")>=4);
-
-		softAssertion.assertAll();
-    }
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : RPMXCON_37690 is scripted  
+	 */
 	////@Test(groups={"regression"})
 	public void Search_RPMXCON_37690() throws InterruptedException {
 		SoftAssert softAssertion= new SoftAssert();
@@ -157,10 +155,18 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		
 	}
 	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate meta data searches in both basic and advance searches
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void metaDataSearch() {
+		
 		SoftAssert softAssertion= new SoftAssert();
+		//Check in basic search--------------------------------------- 
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
     	softAssertion.assertEquals(Input.metaDataCNcount,ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null));//1135);
@@ -175,6 +181,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	
     	bc.selectproject();
 		softAssertion.assertTrue(116>=ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
+				
+		//Check in Advance Search---------------------------------------------
 		bc.selectproject();
 		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
 	
@@ -187,241 +195,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			
 		softAssertion.assertAll();
 	}
-	@Test(groups={"regression"})
-	public void metaDataSearchsBS() {
-		SoftAssert softAssertion= new SoftAssert();
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	bc.selectproject();
-		softAssertion.assertEquals(1,ss.basicMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
 	
-		bc.selectproject();
-		softAssertion.assertEquals(340,ss.basicMetaDataSearch("CreateDate", "RANGE", "1986-01-01", "2018-01-01"));
-       
-		//with time in Range	
-		bc.selectproject();
-		softAssertion.assertEquals(170,ss.basicMetaDataSearch("CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"));
-	
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
-		//check IS and Range options
-		/*bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-	*/	
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		/*bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		*/
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//field mapping is not done for blow meta data search
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		softAssertion.assertAll();
-	}
-	@Test(groups={"regression"})
-	public void metaDataSearchsAS() {
-		SoftAssert softAssertion= new SoftAssert();
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	bc.selectproject();
-    	softAssertion.assertEquals(95,ss.advancedMetaDataSearch("MasterDate", "IS", "1980-01-01", null));
-		
-
-    	//with time in IS 
-    	bc.selectproject();
-    	softAssertion.assertEquals(11,ss.advancedMetaDataSearch("MasterDate", "IS", "1989-02-10 16:59:39", null));
-		
-    	bc.selectproject();
-		softAssertion.assertEquals(124,ss.advancedMetaDataSearch("MasterDate", "RANGE", "1980-01-01", "2000-01-01"));
-				
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//check IS and Range options
-		//bc.selectproject();
-		//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
-		
-		//bc.selectproject();
-		//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//bc.selectproject();
-		//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
-		
-		//bc.selectproject();
-		//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//bc.selectproject();
-		//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
-		
-		/*bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05")); 
-		*/
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		
-	/* * //field mapping is not done for blow meta data search
-	 * 
-	 * *//* bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-	*/	
-		bc.selectproject();
-		softAssertion.assertTrue(4==ss.advancedMetaDataSearch("EmailAuthorName", null, "(Gouri Dhavalikar)", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>ss.advancedMetaDataSearch("EmailAuthorAddress", null, "Gouri.Dhavalikar@symphonyteleca.com", null));
-		
-		
-		bc.selectproject();
-		softAssertion.assertTrue(26==ss.advancedMetaDataSearch("EmailAllDomains", null, "consilio.com;harman;harman.com", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>ss.advancedMetaDataSearch("EmailRecipientNames", null, "Satish Pawal;Shunmugasundaram Senthivelu;Swapnal Sonawane", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0>ss.advancedMetaDataSearch("EmailRecipientAddresses", null, "Robert.Superty@consilio.com", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(26==ss.advancedMetaDataSearch("EmailRecipientDomains", null, "consilio.com", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(95==ss.advancedMetaDataSearch("DocFileSize", null, "9728", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(138==ss.advancedMetaDataSearch("DocFileSize","RANGE", "60","9728"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(841==ss.advancedMetaDataSearch("DocFileExtension", null,".msg", null));
-		
-		softAssertion.assertAll();
-	}
 	
 	
 	@Test(groups={"smoke","regression"})
