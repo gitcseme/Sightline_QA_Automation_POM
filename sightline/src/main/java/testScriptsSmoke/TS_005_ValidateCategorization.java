@@ -28,7 +28,13 @@ public class TS_005_ValidateCategorization {
 	String tagName = "CatTag2"+Utility.dynamicNameAppender();
 	String folderName="CatFolder2"+Utility.dynamicNameAppender();
 	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: May 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as a PAU and create one bulk tag and folder
+	 */	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -57,7 +63,13 @@ public class TS_005_ValidateCategorization {
 	
 	}
 	
-
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: May 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Validate categorization with created tag and folder
+	 */	
 	@Test(groups={"smoke","regression"})
 	   public void validateCategorization() throws InterruptedException {
 		  
@@ -65,7 +77,8 @@ public class TS_005_ValidateCategorization {
 		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)>0);
 		  System.out.println("Expected documents count shown in categorization result");
 	   }
-	 @BeforeMethod
+	
+	@BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
 	    System.out.println("Executing method : " + testMethod.getName());       

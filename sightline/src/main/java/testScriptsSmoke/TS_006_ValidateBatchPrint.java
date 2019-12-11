@@ -34,6 +34,16 @@ public class TS_006_ValidateBatchPrint {
 	    System.out.println("Executing method : " + testMethod.getName());       
 	 }
 	 
+	 
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as a RMU, search for docs and save the search. 
+	 * Perform batch print with the saved search and validated the documents order!
+	 *   
+	 */	 
 	@Test(groups={"smoke","regression"})
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");

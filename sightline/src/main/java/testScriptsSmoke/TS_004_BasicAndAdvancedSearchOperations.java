@@ -38,8 +38,13 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	String saveSearchName = "savedSearch"+Utility.dynamicNameAppender();
 	String assignmentName = "assignmentSearch"+Utility.dynamicNameAppender();
 	
-	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PAU, from here all the scripts will run! 
+	 */	
 	@BeforeClass(alwaysRun=true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -196,8 +201,13 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertAll();
 	}
 	
-	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : save the search and validate in workproduct 
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void searchsavedSearch() {
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -212,6 +222,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
 
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Search audio files and validate the count
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void audioSearch() {
 		bc.selectproject();
@@ -220,6 +238,13 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 	}
 	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : validate conceptual Search in advance search with the low mid and high range options 
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void ConceptualSearch() {
 		SoftAssert softAssertion= new SoftAssert();
