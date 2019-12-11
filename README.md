@@ -2,6 +2,7 @@
 ---------------------------------------------------------------------------------------------------
 This project is a Test Automation Framework built using Maven, TestNG and selenium to validate SightLine functionalities.
 This is a Page Object Model (POM) framework and below details brief about folder structure.
+With this framework we have automated end to end test scenarios, each module is handled by saperate classes so that one can run only required module on demand!
 
 > src/main/java is a root folder under this we have following packages:
   1. automationLibrary - Contains main driver and element classes.
@@ -9,6 +10,8 @@ This is a Page Object Model (POM) framework and below details brief about folder
   3. pageFactory - Each page of the application is mapped to specific class here. All locators and functions of the specific page are    	maintained in specific class.
   4. testScriptSmoke - contains classes where somke test scenarios are covered. We could see sepearte class based on module.
   5. testScriptsRegression- contains classes where regression scenarios are covered.
+  
+  Note: To run required module in smoke or regression suite, please comment all other modules!!
 
 > src/test/java - just a place holder. Empty one!
 
@@ -47,7 +50,10 @@ Project setup in Eclipse:
 	2. newProject - if it is YES then project creation and user assignment will be done. 
 	3. ingestion - if it YES then ingestion will be done
 	4. suite - to run required suites, it should be Smoke or Regression only 
-	5. numberOfDataSets -  if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we                                                go with option 1 for smoke suite)
+	5. numberOfDataSets -  if 1 then one data set will be ingested, if 3 then 3 data sets will be ingested(we                                                go with option 1 for smoke suite). We have two test data xmls with the name TestData_Smoke(when its is 1) and 	TestData_Regression(when it is 3). 
+	
+	Note: Since we validate test cases based on documnet counts for searches, tags, folders and etc.. we are going with fixed datasets. If one wish to changes the datasets then should take care of expected resuts in the test data/scripts.
+	
 	6. browserName - On which browser you wish to run, CHROME or IE
 	
 5. Open testng.xml 
