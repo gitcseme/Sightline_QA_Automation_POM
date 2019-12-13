@@ -62,9 +62,10 @@ public class SecurityGroupsPage {
     	List<WebElement> allvalues = getSecurityGroupList().selectFromDropdown().getOptions();
 			
     	List<String> all = new ArrayList<String>();
-		for(int j=1;j<=allvalues.size();j++)
+		for(int j=0;j<allvalues.size();j++)
 		   {
 			  System.out.println(all.add(allvalues.get(j).getText()));
+			  System.out.println(all);
 		   }
 		return all;
 		
