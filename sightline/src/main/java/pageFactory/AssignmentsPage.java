@@ -326,7 +326,7 @@ public class AssignmentsPage {
 			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
 	driver.scrollingToBottomofAPage();
 
-	Assert.assertEquals(pureHit,getSelectAssignmentDocCount(assignmentName).getText());
+	Assert.assertEquals(pureHit,Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText()));
 	}
     
     
