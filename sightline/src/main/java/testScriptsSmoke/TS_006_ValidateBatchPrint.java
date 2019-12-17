@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -47,6 +48,9 @@ public class TS_006_ValidateBatchPrint {
 	@Test(groups={"smoke","regression"})
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		
 		String searchname= "BP"+Utility.dynamicNameAppender();
@@ -57,7 +61,7 @@ public class TS_006_ValidateBatchPrint {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch("morning"+Keys.ENTER+"AND"+Keys.ENTER+"test");
 		search.saveSearch(searchname); 
 		
 	    BatchPrintPage page1 = new BatchPrintPage(driver);

@@ -576,7 +576,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),3);
+ 		Assert.assertEquals(search.serarchWP(),15);
  		
      	
 
@@ -621,7 +621,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),3);
+ 		Assert.assertEquals(search.serarchWP(),15);
  		
  		String searchName="00Atest"+Utility.dynamicNameAppender();
  		search.saveSearch(searchName);
@@ -687,7 +687,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),47);
+ 		Assert.assertEquals(search.serarchWP(),33);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
@@ -703,7 +703,7 @@ public class TS_002_AdvancedSearch {
    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    				search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
    		
-     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"47");
+     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"33");
 
 	}
 	 	

@@ -174,30 +174,42 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		//Check in basic search--------------------------------------- 
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	softAssertion.assertEquals(Input.metaDataCNcount,ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null));//1135);
+    	softAssertion.assertEquals(Input.metaDataCNcount,ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null));
+		
+    	bc.selectproject();
+		if(Input.suite.equalsIgnoreCase("smoke"))
+			softAssertion.assertTrue(85==ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+		else 
+			softAssertion.assertTrue(340==ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+		
 		bc.selectproject();
-		softAssertion.assertTrue(85>=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
-		bc.selectproject();
-    	softAssertion.assertTrue(1>=ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null));
+    	softAssertion.assertTrue(1==ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null));
 		
     	//with time in IS 
     	bc.selectproject();
-    	softAssertion.assertTrue(1>=ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null));
+    	softAssertion.assertTrue(1==ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null));
 	
     	bc.selectproject();
-		softAssertion.assertTrue(116>=ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
-				
+    	if(Input.suite.equalsIgnoreCase("smoke"))
+    		softAssertion.assertTrue(116==ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
+		else
+			softAssertion.assertTrue(1087==ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
+			
 		//Check in Advance Search---------------------------------------------
 		bc.selectproject();
-		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
+		softAssertion.assertTrue(85==ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
 	
 		bc.selectproject();
-		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18"));
+		softAssertion.assertTrue(85==ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18"));
 	
 		//with time in Range	
 		bc.selectproject();
-		softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
-			
+		if(Input.suite.equalsIgnoreCase("smoke"))
+			softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
+		else
+			softAssertion.assertTrue(340==ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
+		
+		
 		softAssertion.assertAll();
 	}
 	

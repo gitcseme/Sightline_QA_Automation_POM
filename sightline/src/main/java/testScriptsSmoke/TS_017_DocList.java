@@ -56,7 +56,7 @@ public class TS_017_DocList {
 	public void masterDateForImageDocs() throws InterruptedException {
 		//driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=2);
+    	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=4);
     	ss.ViewInDocList();
     	final DocListPage DL= new DocListPage(driver);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
