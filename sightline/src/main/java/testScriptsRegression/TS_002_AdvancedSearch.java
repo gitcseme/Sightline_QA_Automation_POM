@@ -427,7 +427,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(3,search.serarchWP());
+		 Assert.assertEquals(16,search.serarchWP());
 		 
 		 
 		 
@@ -621,7 +621,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),15);
+ 		Assert.assertEquals(16,search.serarchWP());
  		
  		String searchName="00Atest"+Utility.dynamicNameAppender();
  		search.saveSearch(searchName);

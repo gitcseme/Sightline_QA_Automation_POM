@@ -264,9 +264,9 @@ public  class Driver  {
 			
 				prefs.put("profile.default_content_settings.popups", 0);
 				prefs.put("download.prompt_for_download", "false");
-				prefs.put("download.default_directory", System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles//downloads");
+				prefs.put("download.default_directory", "C:\\BatchPrintFiles\\downloads");
 				
-				System.out.println(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles//downloads");
+				
 				prefs.put("credentials_enable_service", false);
 				prefs.put("profile.password_manager_enabled", false);
 				options.setExperimentalOption("prefs", prefs);
