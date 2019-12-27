@@ -282,6 +282,13 @@ public class SessionSearch {
     	}catch (Exception e) {
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
+	    
+	    try{
+    		getSaveAsNewSearchRadioButton().waitAndClick(5);
+        	}catch (Exception e) {
+        		System.out.println("Radio button already selected");
+    		}
+    	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
