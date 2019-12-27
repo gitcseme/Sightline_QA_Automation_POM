@@ -222,14 +222,15 @@ public class DocViewPage {
     public Element getDocView_CurrentDocId(){ return driver.FindElementById("activeDocumentId"); }
     public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
   
+    //sp = new SessionSearch(driver);
+    //base = new BaseClass(driver);
+ 
     
     public DocViewPage(Driver driver){
 
         this.driver = driver;
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
-        sp = new SessionSearch(driver);
-        base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
    
     }
