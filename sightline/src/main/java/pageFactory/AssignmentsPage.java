@@ -117,7 +117,7 @@ public class AssignmentsPage {
     public Element getAssgn_DocSequence_liveseq(){ return driver.FindElementByCssSelector(".live-seq"); }
     public Element getAssignmentAction_CopyAssignment(){ return driver.FindElementById("CopyAssignmentText"); }
     public Element getSelectCopyAssignment(){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[contains(.,'Copy')]/td[1]"); }
-    public Element getSelectcopyAssgnmToBulkAssign(String assignmentName){ return driver.FindElementByXPath("//*[@id='jstreeComplete']//a[starts-with(.,'"+assignmentName+"')]"); }
+    public ElementCollection getSelectcopyAssgnmToBulkAssign(){ return driver.FindElementsByXPath("//*[@id='jstreeComplete']//a[starts-with(.,'')]"); }
     
     public Element getAssgn_permissions(int no){ return driver.FindElementByXPath("(//label[@class='toggle'])["+no+"]//i"); }
     public Element getAssgngrp_CascadeSetting(){ return driver.FindElementByXPath(".//*[@id='IsCascadeEnabled']/following-sibling::i"); }
@@ -185,8 +185,23 @@ public class AssignmentsPage {
     			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
        	
     	//getSelectAssignmentToBulkAssign(assignmentName).waitAndClick(20);
-    	getSelectcopyAssgnmToBulkAssign(assignmentName).waitAndClick(20);
-    	
+    	//getSelectcopyAssgnmToBulkAssign(assignmentName).waitAndClick(20);
+    	System.out.println(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
+		for (WebElement iterable_element : getSelectcopyAssgnmToBulkAssign().FindWebElements()) {
+			//System.out.println(iterable_element.getText());
+			if(iterable_element.getText().contains(assignmentName)){
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+				driver.scrollingToBottomofAPage();
+		
+				iterable_element.click();
+			}
+		}
     	getContinueBulkAssign().waitAndClick(5);
     
        	final BaseClass bc = new BaseClass(driver);

@@ -186,7 +186,7 @@ public class TS_006_Tally_Report {
 
 	     //Verify DocView from tally---------------------------------------------------------------------------------------------
 	     dp.getBackToSourceBtn().Click();
-	     Thread.sleep(5000);
+	     Thread.sleep(8000);
 	     
 	     Actions ac1=new Actions(driver.getWebDriver());
 		 
