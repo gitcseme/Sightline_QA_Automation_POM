@@ -41,9 +41,9 @@ public class TS_006_Tally_Report {
 	   @BeforeClass(alwaysRun = true)
 	   public void beforeClass() throws ParseException, InterruptedException, IOException{
 		
-		   Input in = new Input();
-			in.loadEnvConfig();		
-		
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		driver = new Driver();
 	    lp = new LoginPage(driver);
@@ -131,7 +131,7 @@ public class TS_006_Tally_Report {
 			
 			//Edit assignment and add reviewers 
 			agnmt.editAssignment(assignmentName);
-			agnmt.addReviewerAndDistributeDocs(assignmentName);
+			agnmt.addReviewerAndDistributeDocs(assignmentName,Input.totalNumberOfDocs);
 			lp.logout();
 			
 			//Login as reviewer and verify assignment
@@ -281,7 +281,7 @@ public class TS_006_Tally_Report {
 			
 			//Edit assignment and add reviewers 
 			agnmt.editAssignment(assignmentName);
-			agnmt.addReviewerAndDistributeDocs(assignmentName);
+			agnmt.addReviewerAndDistributeDocs(assignmentName,Input.totalNumberOfDocs);
 			lp.logout();
 			
 			//Login as reviewer and verify assignment

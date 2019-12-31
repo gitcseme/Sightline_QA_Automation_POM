@@ -44,7 +44,7 @@ public class AssignmentsPage {
     public Element getNumberOfAssignmentsToBeShown(){ return driver.FindElementByXPath("//*[@id='GridAssignment_length']/label/select"); }
     public Element getSelectAssignment(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']"); }
     //change this name to pop or smtg
-    public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//span[@class='ui-dialog-title']"); }
+    public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//span[@class='ui-dialog-title']/div"); }
     
     public Element getAssignment_ManageReviewersTab1(){ return driver.FindElementByXPath("//*[contains(text(),'Manage Reviewers')]"); }
     
@@ -257,7 +257,7 @@ public class AssignmentsPage {
     	
 	}
     
-      public void addReviewerAndDistributeDocs(String assignmentName) throws InterruptedException {
+      public void addReviewerAndDistributeDocs(String assignmentName,int docCount) throws InterruptedException {
 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAssignment_ManageReviewersTab1().Visible()  ;}}), Input.wait60);
@@ -293,12 +293,12 @@ public class AssignmentsPage {
     	//verify total docs count
     	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
-    	Assert.assertEquals(Input.totalNumberOfDocs, Integer.parseInt(acttotalcount));
+    	Assert.assertEquals(docCount, Integer.parseInt(acttotalcount));
     	
     	//verify distributed docs count
     	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(actdistributedcount));
-    	Assert.assertEquals(Input.totalNumberOfDocs, Integer.parseInt(actdistributedcount));
+    	Assert.assertEquals(docCount, Integer.parseInt(actdistributedcount));
      	
 	}
     

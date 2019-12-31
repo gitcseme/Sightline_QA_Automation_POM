@@ -290,7 +290,7 @@ public class TS_002_AdvancedSearch {
 	    tf.getFoldersTab().Visible()  ;}}),Input.wait60); 
 	  	  
 	       
-	       tf.getFoldersTab().Click();
+	       tf.getFoldersTab().waitAndClick(10);
 	       tf.getFolder_ToggleDocCount().waitAndClick(10);
 	       tf.getFolderandCount(folderName, 0).WaitUntilPresent();
 	       System.out.println(tf.getFolderandCount(folderName, 0).getText());

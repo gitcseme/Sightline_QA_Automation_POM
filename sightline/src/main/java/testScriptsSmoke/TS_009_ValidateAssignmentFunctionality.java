@@ -23,7 +23,7 @@ import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
-
+import testScriptsSmoke.Input;
 
 public class TS_009_ValidateAssignmentFunctionality {
 	Driver driver;
@@ -38,6 +38,8 @@ public class TS_009_ValidateAssignmentFunctionality {
 	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
+		Input in = new Input();
+		in.loadEnvConfig();
     	//Open browser
 		driver =  new Driver();
 		//Login as PA
@@ -72,7 +74,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName, Input.pureHitSeachString1);
 		lp.logout();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		

@@ -232,7 +232,8 @@ public class DocViewPage {
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
         softAssertion= new SoftAssert(); 
-   
+        base = new BaseClass(driver);
+        
     }
     
     
@@ -269,7 +270,12 @@ public class DocViewPage {
     			getAddComment1().Visible()  ;}}), Input.wait30);   
     	getAddComment1().SendKeys(comment);
     	getSaveDoc().waitAndClick(30);
-    	
+    	try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	base.VerifySuccessMessage("Document saved successfully");
 	}
    
@@ -327,7 +333,13 @@ public class DocViewPage {
     	driver.scrollPageToTop();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCompleteDocBtn().Visible()  ;}}), Input.wait30);   
-    	getCompleteDocBtn().Click();
+    	getCompleteDocBtn().waitAndClick(20);
+    	try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	base.VerifySuccessMessage("Document completed successfully");
 
 	}
