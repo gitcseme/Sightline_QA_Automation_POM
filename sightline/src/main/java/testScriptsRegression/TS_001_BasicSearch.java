@@ -307,8 +307,8 @@ public class TS_001_BasicSearch {
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
 		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
+		//bc.selectproject();
+		//softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
 		
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));

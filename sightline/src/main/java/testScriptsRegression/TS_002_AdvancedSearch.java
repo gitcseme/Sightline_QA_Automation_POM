@@ -427,7 +427,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(16,search.serarchWP());
+		 Assert.assertEquals(53,search.serarchWP());
 		 
 		 
 		 
@@ -576,7 +576,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),15);
+ 		Assert.assertEquals(search.serarchWP(),16);
  		
      	
 
@@ -627,25 +627,25 @@ public class TS_002_AdvancedSearch {
  		search.saveSearch(searchName);
  		
  		SavedSearch savedSearch = new SavedSearch(driver);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		
 	}
      @Test(groups={"regression"})
@@ -687,7 +687,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),33);
+ 		Assert.assertEquals(search.serarchWP(),34);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
