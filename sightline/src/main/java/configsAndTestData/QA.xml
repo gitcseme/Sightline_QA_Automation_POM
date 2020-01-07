@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QA>
-          <url>http://172.22.155.2/</url>
-         <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
-            <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <projectName>Auto111819</projectName>
-        <!-- AutoSa SysAdmin  -->
+        <url>http://172.22.155.2/</url>
+        <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
+        <SourceLocation>IngestionTestData\Automation</SourceLocation>
+        <projectName>DNDProjectAuto2</projectName>
+        <!-- AutoSys SysAdmin  -->
           <sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
           <sa1password>sightline@1234</sa1password> 
           

@@ -50,7 +50,7 @@ public class TS_013_ValidateBatchUpload {
 	
 		
 	}
-	@Test(groups={"regression"})
+	@Test(groups={"smoke","regression"})
 	   public void batchUploadByRMU() throws InterruptedException {
 		//Login as a PA
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -59,7 +59,7 @@ public class TS_013_ValidateBatchUpload {
 	
 		
 	}
-	@Test(groups={"regression"})
+	@Test(groups={"smoke","regression"})
 	   public void batchUploadByReviewer() throws InterruptedException {
 		//Login as a PA
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);

@@ -5,11 +5,11 @@
     <searchString1>test</searchString1>
     <searchString2>comments</searchString2>
     <pureHitSeachString1>50</pureHitSeachString1>
-    <pureHitSeachString2>7</pureHitSeachString2>
-    <searchString1ANDsearchString2>3</searchString1ANDsearchString2>
-    <searchString1ORsearchString2>53</searchString1ORsearchString2>
-    <searchString1NOTsearchString2>47</searchString1NOTsearchString2>
-    <searchString2NOTsearchString1>3</searchString2NOTsearchString1>
+    <pureHitSeachString2>53</pureHitSeachString2>
+    <searchString1ANDsearchString2>16</searchString1ANDsearchString2>
+    <searchString1ORsearchString2>87</searchString1ORsearchString2>
+    <searchString1NOTsearchString2>34</searchString1NOTsearchString2>
+    <searchString2NOTsearchString1>37</searchString2NOTsearchString1>
     <audioSearchString1>right</audioSearchString1>
     <audioSearchString1pureHit>3</audioSearchString1pureHit>
     <conceptualSearchString1>field report</conceptualSearchString1>

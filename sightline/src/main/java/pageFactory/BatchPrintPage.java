@@ -268,14 +268,14 @@ public class BatchPrintPage {
     public static void checkForOrderInPDF(String orderCriteria, String orderType) throws IOException, InterruptedException {
            //Call unzip function to unzip the downloaded file
     	   
-    	File rootZip = new File(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/downloads");
+    	File rootZip = new File("C:\\BatchPrintFiles\\downloads");
    File[] listZip = rootZip.listFiles();
    File zipFilePath = listZip[0];
-   String destDir = System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/PDFs/";
+   String destDir = "C:\\BatchPrintFiles\\PDFs";
    unzip(zipFilePath, destDir);
    
    //validate each fileonce unzip is done
-           File root = new File( System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/PDFs/");
+   File root = new File("C:\\BatchPrintFiles\\PDFs");
    File[] list = root.listFiles();
    
    ArrayList orderInFiles = new ArrayList();
@@ -471,8 +471,8 @@ orderInFiles.clear();
 
 public static void backUpBatchPrintFiles(String orderCriteria, String order) {
     //back up TCs zip file for later verification
-    File destinationFolder = new File(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/BackUpFiles");
-        File sourceFolder = new File(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/downloads");
+    File destinationFolder = new File("C:\\BatchPrintFiles\\BackUpFiles");
+        File sourceFolder = new File("C:\\BatchPrintFiles\\downloads");
       
         if (!destinationFolder.exists())
         {

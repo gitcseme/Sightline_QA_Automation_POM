@@ -35,7 +35,13 @@ public class TS_003_BulkActionsFromBasicSearch {
 	String tagName = "tagName"+Utility.dynamicNameAppender();
 	String folderName = "folderName1"+Utility.dynamicNameAppender();
 	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PAU and keep search ready, from here all the scripts will run! 
+	 */	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -55,6 +61,14 @@ public class TS_003_BulkActionsFromBasicSearch {
     	        
 
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate bulk folder in baisc search  
+	 */	
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInBasicSearch() throws InterruptedException {
 		
@@ -64,6 +78,13 @@ public class TS_003_BulkActionsFromBasicSearch {
         //home.exportData();
         
 	}
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate bulk tag in baisc search  
+	 */	
 	@Test(groups={"smoke","regression"})
    public void bulkTagInBasicSearch() throws InterruptedException {
 	   //Create Bulk Tag   
@@ -81,7 +102,13 @@ public class TS_003_BulkActionsFromBasicSearch {
    
 	}
 	
-	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate navigation to doclist from basic search  
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void viewInDoclistInBasicSearch() throws InterruptedException {
 	   //to Doclist
@@ -95,6 +122,13 @@ public class TS_003_BulkActionsFromBasicSearch {
        System.out.println("Expected docs("+pureHit+") are shown in doclist");
 
 	}
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate navigation to docview from basic search  
+	 */
 	@Test(groups={"smoke","regression"})
    public void viewInDocViewInBasicSearch() throws InterruptedException {
 	   //DocView
@@ -105,22 +139,24 @@ public class TS_003_BulkActionsFromBasicSearch {
        Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+pureHit+" Docs");
        System.out.println("Expected docs("+pureHit+") are shown in docView");
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate navigation to tally report from basic search  
+	 */
 	@Test(groups={"smoke","regression"})
    public void viewInTallyResultsInBasicSearch() throws InterruptedException {
 		  TallyPage tp = new TallyPage(driver);
 	   //Tally Results
-      /* driver.getWebDriver().get(Input.url+"Search/Searches");
-       try {
-		Thread.sleep(8000);
-       } catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-       }*/
        sessionSearch.tallyResults();
      
        Assert.assertTrue(tp.getAutoSelectedSearchSource().WaitUntilPresent().Displayed());
        System.out.println("Expected docs("+pureHit+") are shown in tally");
 }
+	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

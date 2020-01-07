@@ -57,7 +57,6 @@ public class TS_003_AdvanceSearch1 {
     	
 	}
 	
-	
 	  
 	 @Test(groups={"regression"})
      public void AdvancedWorkproductRedactionSearch() throws InterruptedException {
@@ -228,7 +227,7 @@ public class TS_003_AdvanceSearch1 {
 		    	
 				bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","left")>=1);
+		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","left")==2);
 		    	
 		    		    	
 		    	bc.selectproject();
