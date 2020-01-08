@@ -51,8 +51,27 @@ public class TS_001_BasicSearch {
 		
 
 	}
+	@Test(groups={"regression"})
+	public void copySearchTextToNewSearch(){
+		lp=new LoginPage(driver);
+		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	bc.selectproject();
+    	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
+    	
+    	//below locators are one time use in second search
+    	ss.getCopyTo().Click();
+    	ss.getCopyToNewSearch().Click();
+    	ss.getSecondSearchBtn().Click();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			ss.getSecondPureHit().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+    	    	
+    	softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()),Input.pureHitSeachString1);
+		lp.logout();
+	}
 	//RPMXCON-37996
-	////@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void autoSuggest() throws InterruptedException {
 		
 		lp=new LoginPage(driver);
@@ -112,7 +131,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	//RPMXCON-38005
-	////@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void conceptuallySimilar() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -128,7 +147,7 @@ public class TS_001_BasicSearch {
 	
 		lp.logout();
 	}
-	////@Test(groups={"regression"})
+	//@Test(groups={"regression"})
     public void exsitingBulkFolder() throws InterruptedException {
 		String Folder = "AFolder"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -156,7 +175,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
         
 	}
-	////@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -183,7 +202,7 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-   ////@Test(groups={"smoke","regression"})
+   //@Test(groups={"smoke","regression"})
 	public void starSearch() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -191,7 +210,7 @@ public class TS_001_BasicSearch {
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
 	}
-	////@Test(groups={"regression"})
+	//@Test(groups={"regression"})
    public void bulkUnTag() throws InterruptedException {
 	
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -221,7 +240,7 @@ public class TS_001_BasicSearch {
        lp.logout();
    }
 
-	////@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -254,7 +273,7 @@ public class TS_001_BasicSearch {
 	    lp.logout();
 	}
 	
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void metaDataSearchsBS() {
 		SoftAssert softAssertion= new SoftAssert();
 		lp=new LoginPage(driver);
@@ -382,7 +401,7 @@ public class TS_001_BasicSearch {
      }
      
    
-	@AfterClass(alwaysRun = true)
+	//@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
 			lp.logout();
