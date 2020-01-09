@@ -51,10 +51,14 @@ public class SecurityGroupsPage {
     	getSecurityGroupSaveButton().Click();
     	
     	bc.VerifySuccessMessage("Security group added successfully");
+    	System.out.println("Security Group created :-"+ securitygroupname);
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupList().Visible()  ;}}), Input.wait30); 
-    	getSecurityGroupList().selectFromDropdown().selectByVisibleText(securitygroupname);
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getSecurityGroupList().Visible() ;}}), Input.wait30);
+		 * getSecurityGroupList().selectFromDropdown().selectByVisibleText(
+		 * securitygroupname);
+		 */
      }
     
        public List<String> GetSecurityGrouplist() {

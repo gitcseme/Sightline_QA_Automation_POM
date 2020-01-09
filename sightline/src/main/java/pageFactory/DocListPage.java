@@ -49,9 +49,8 @@ public class DocListPage {
     public Element getCancelFilter1(){ return driver.FindElementByXPath("//*[@id='Include']/i"); }
     public Element getCancelFilter2(){ return driver.FindElementByXPath("//*[@id='undefined']/i"); }
     //Actions
-    // public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
+   // public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
     public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='selectAllRows']/following-sibling::i"); }
-  
     public Element getYesAllPageDocs(){ return driver.FindElementByXPath("(//*[@id='Yes'])[1]"); }
     public Element getPopUpOkBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); }
     public Element getBackToSourceBtn(){ return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]"); }
