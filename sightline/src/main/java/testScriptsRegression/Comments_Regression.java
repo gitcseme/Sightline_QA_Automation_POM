@@ -33,10 +33,7 @@ public class Comments_Regression {
 	 @BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-		Input input = new Input();
-		input.loadEnvConfig();
-		
+	
 		
 		//Open browser
 		this.driver = new Driver();
