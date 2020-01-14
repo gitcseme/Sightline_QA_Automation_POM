@@ -282,28 +282,7 @@ public class SavedSearch_Regression  {
 		 * Description : Verify sharing of saved searches is working correctly
 		 */
 	  
-	  @Test(groups={"smoke","regression"},priority=13)
-	  public void shareSavedSearch() throws ParseException, InterruptedException {
-
-	  	//Share the saved search
-	  	
-	  	/*	 
-	  	 * SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-	  	 * sgpage.AddSecurityGroup(securitygroupname);
-	  	 
-	      this.driver.getWebDriver().get(Input.url+ "Search/Searches");
-	      search.ViewInDocList();
-	     
-	      doclist.DoclisttobulkRelease(securitygroupname);*/
-	  	ss.shareSavedSearchPA(SearchNamePA,"Default Security Group");
-	  	lp.logout();
-	  	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	  	base.selectsecuritygroup("Default Security Group");
-	  	search.basicContentSearch(Input.searchString1);
-	  	search.saveSearch(SearchNameRMU);
-	  	ss.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
-	  	
-	  	}
+	 
 	  
 @Test(groups={"regression"},priority=14)
 	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
