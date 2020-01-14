@@ -50,11 +50,13 @@ public class RedactionPage {
     	List<WebElement> sgnames = getSecurityGrp().selectFromDropdown().getOptions();
     	List<String> allsg = new ArrayList<String>();
     	
-    	for(int i=1;i<=allsg.size();i++)
+    	for(int i=1;i<sgnames.size();i++)
     	{
   		  System.out.println(allsg.add(sgnames.get(i).getText()));
+  		  System.out.println(allsg);
     	}
      	
+    	Assert.assertEquals(allsg, expvalue);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAllRedactionRootNode().Visible()  ;}}),Input.wait30); 
     	getAllRedactionRootNode().Click();

@@ -14,6 +14,8 @@ import testScriptsSmoke.Input;
 public class DocListPage {
 
     Driver driver;
+    SessionSearch search;
+    BaseClass base;
   
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
     public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
@@ -47,7 +49,8 @@ public class DocListPage {
     public Element getCancelFilter1(){ return driver.FindElementByXPath("//*[@id='Include']/i"); }
     public Element getCancelFilter2(){ return driver.FindElementByXPath("//*[@id='undefined']/i"); }
     //Actions
-    public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
+   // public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
+    public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='selectAllRows']/following-sibling::i"); }
     public Element getYesAllPageDocs(){ return driver.FindElementByXPath("(//*[@id='Yes'])[1]"); }
     public Element getPopUpOkBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); }
     public Element getBackToSourceBtn(){ return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]"); }
@@ -60,6 +63,7 @@ public class DocListPage {
     public Element getDocList_Preview_AudioDuration(){ return driver.FindElementByXPath(".//*[@class='jp-current-time']"); }
     public Element getDocList_actionButton(){ return driver.FindElementById("idAction"); }
     public Element getDocList_action_BulkAssignButton(){ return driver.FindElementById("idBulkAssign"); }
+    public Element getDocList_action_BulkReleaseButton(){ return driver.FindElementById("idBulkRelease"); }
          
   
     
@@ -68,7 +72,8 @@ public class DocListPage {
         this.driver = driver;
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
-
+        search = new SessionSearch(driver);
+    	base = new BaseClass(driver);
     }
     
     public void include(String data) {
@@ -225,6 +230,39 @@ public class DocListPage {
      
      System.out.println("performing bulk assign");
   }
+     
+     public void DoclisttobulkRelease(String SecGroup) throws InterruptedException {
+     	
+       	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 getSelectAll().Visible()  ;}}), Input.wait60); 
+       	 getSelectAll().Click();
+       	 
+       	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
+       	 getPopUpOkBtn().Click();
+       	 
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   getDocList_actionButton().Visible()  ;}}), Input.wait60); 
+         getDocList_actionButton().waitAndClick(10);
+         Thread.sleep(3000);
+        	     
+         getDocList_action_BulkReleaseButton().waitAndClick(10);
+         
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		 search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
+         search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Click();
+    	 
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 search.getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
+    	 search.getBulkRelease_ButtonRelease().Click();
+    	 
+    	 search.getFinalizeButton().waitAndClick(30);
+       
+    	 base.VerifySuccessMessage("Records saved successfully");
+    	 
+    	 System.out.println("performing bulk release");
+    	
+      }
      
    
 }

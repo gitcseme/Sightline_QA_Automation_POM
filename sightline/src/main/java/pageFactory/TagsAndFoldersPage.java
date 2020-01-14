@@ -84,11 +84,11 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-     getTagActionDropDownArrow().Click();
+        getTagActionDropDownArrow().Click();
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getAddTag().Visible()  ;}}), Input.wait30); 
-        getAddTag().Click();
+        getAddTag().waitAndClick(10);
    
      
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

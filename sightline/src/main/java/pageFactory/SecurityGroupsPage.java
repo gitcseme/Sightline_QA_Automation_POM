@@ -51,10 +51,14 @@ public class SecurityGroupsPage {
     	getSecurityGroupSaveButton().Click();
     	
     	bc.VerifySuccessMessage("Security group added successfully");
+    	System.out.println("Security Group created :-"+ securitygroupname);
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupList().Visible()  ;}}), Input.wait30); 
-    	getSecurityGroupList().selectFromDropdown().selectByVisibleText(securitygroupname);
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getSecurityGroupList().Visible() ;}}), Input.wait30);
+		 * getSecurityGroupList().selectFromDropdown().selectByVisibleText(
+		 * securitygroupname);
+		 */
      }
     
        public List<String> GetSecurityGrouplist() {
@@ -62,9 +66,10 @@ public class SecurityGroupsPage {
     	List<WebElement> allvalues = getSecurityGroupList().selectFromDropdown().getOptions();
 			
     	List<String> all = new ArrayList<String>();
-		for(int j=1;j<=allvalues.size();j++)
+		for(int j=0;j<allvalues.size();j++)
 		   {
 			  System.out.println(all.add(allvalues.get(j).getText()));
+			  System.out.println(all);
 		   }
 		return all;
 		

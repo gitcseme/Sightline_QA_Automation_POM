@@ -21,7 +21,7 @@ public class SessionSearch {
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
-    public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementById("saveAsNewSearchRadioButton"); }
+    public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
    
     //Hits
     public Element getPureHitsCount(){ return driver.FindElementByXPath(".//*[@id='001']/span/count"); }
@@ -282,6 +282,12 @@ public class SessionSearch {
     	}catch (Exception e) {
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
+    	
+    	try{
+    		getSaveAsNewSearchRadioButton().waitAndClick(5);
+        	}catch (Exception e) {
+        		System.out.println("Radio button already selected");
+    		}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
