@@ -188,6 +188,12 @@ public class SessionSearch {
     public Element getSingleToolTipText(){ return driver.FindElementByXPath("//*[@id='single']/section/label/b"); }
     public Element getRangeToolTip1Text(){ return driver.FindElementByXPath("//*[@id='rangeVal']/div[1]/section/label/b"); }
     public Element getRangeToolTip2Text(){ return driver.FindElementByXPath("//*[@id='rangeVal']/div[2]/section/label/b"); }
+   
+    //second search
+    public Element getCopyTo(){ return driver.FindElementByXPath("//*[@id='Basic']/div[1]/div/div[2]/div[1]/button"); }
+    public Element getCopyToNewSearch(){ return driver.FindElementByXPath("//*[@id='Basic']/div[1]/div/div[2]/div[1]/ul/li[2]/a"); }
+    public Element getSecondSearchBtn(){ return driver.FindElementByXPath("(//*[@id='btnBasicSearch'])[2]"); }
+    public Element getSecondPureHit(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
     
     public SessionSearch(Driver driver){
 
