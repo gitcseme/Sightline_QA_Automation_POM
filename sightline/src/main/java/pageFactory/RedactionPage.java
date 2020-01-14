@@ -41,7 +41,7 @@ public class RedactionPage {
     public void AddRedaction(String RedactName) {
     	
     	SecurityGroupsPage sp = new SecurityGroupsPage(driver);
-    	//List<String> expvalue = sp.GetSecurityGrouplist();
+    	List<String> expvalue = sp.GetSecurityGrouplist();
     	
     	 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
     	 

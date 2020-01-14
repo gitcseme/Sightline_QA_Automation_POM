@@ -90,28 +90,28 @@ public class TS_007_SavedSearchShareSchedule {
 		sp.checkStatusComplete(saveSearchName);
 	}
 	
-	@Test(groups={"smoke","regression"},priority=7)
-	public void shareSavedSearch() throws ParseException, InterruptedException {
+	 @Test(groups={"smoke","regression"},priority=13)
+	  public void shareSavedSearch() throws ParseException, InterruptedException {
 
-		//Share the saved search
-		bc.selectproject();
-		search.basicContentSearch(Input.searchString1);
-		search.saveSearch(SearchNamePA);
-	    ss.shareSavedSearch(SearchNamePA,"Project Admin");
-		lp.logout();
-		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
-		ss.sharewithUsers(SearchNamePA,"Project Admin");
-		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		search.basicContentSearch(Input.searchString1);
-		search.saveSearch(SearchNameRMU);
-		ss.shareSavedSearch(SearchNameRMU,"RMU");
-		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
-		ss.sharewithUsers(SearchNameRMU,"RMU");
-		
-		
-  }
+	  	//Share the saved search
+	  	
+	  	/*	 
+	  	 * SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+	  	 * sgpage.AddSecurityGroup(securitygroupname);
+	  	 
+	      this.driver.getWebDriver().get(Input.url+ "Search/Searches");
+	      search.ViewInDocList();
+	     
+	      doclist.DoclisttobulkRelease(securitygroupname);*/
+	  	ss.shareSavedSearchPA(SearchNamePA,"Default Security Group");
+	  	lp.logout();
+	  	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	  	bc.selectsecuritygroup("Default Security Group");
+	  	search.basicContentSearch(Input.searchString1);
+	  	search.saveSearch(SearchNameRMU);
+	  	ss.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
+	  	
+	  	}
 
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
