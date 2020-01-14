@@ -71,7 +71,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	//RPMXCON-37996
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void autoSuggest() throws InterruptedException {
 		
 		lp=new LoginPage(driver);
@@ -114,7 +114,7 @@ public class TS_001_BasicSearch {
 
 	}
 	//RPMXCON-37807
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void emailInclusive() {
 		
 		lp=new LoginPage(driver);
@@ -131,7 +131,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	//RPMXCON-38005
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void conceptuallySimilar() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -147,7 +147,7 @@ public class TS_001_BasicSearch {
 	
 		lp.logout();
 	}
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
     public void exsitingBulkFolder() throws InterruptedException {
 		String Folder = "AFolder"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -175,7 +175,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
         
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -202,7 +202,7 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-   //@Test(groups={"smoke","regression"})
+   @Test(groups={"smoke","regression"})
 	public void starSearch() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -210,7 +210,7 @@ public class TS_001_BasicSearch {
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
 	}
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
    public void bulkUnTag() throws InterruptedException {
 	
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -240,7 +240,7 @@ public class TS_001_BasicSearch {
        lp.logout();
    }
 
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -273,7 +273,7 @@ public class TS_001_BasicSearch {
 	    lp.logout();
 	}
 	
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void metaDataSearchsBS() {
 		SoftAssert softAssertion= new SoftAssert();
 		lp=new LoginPage(driver);
