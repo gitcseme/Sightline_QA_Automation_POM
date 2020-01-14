@@ -45,8 +45,15 @@ public class TS_011_DocViewNonAudioReviewer {
 	String assignmentName= "assi"+Utility.dynamicNameAppender();;
 
 
-	
-	//For reviewer assign docs,so create assignment with coding form(with tags and comments) and distribute 
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : to assign docs to reviewer, create assignment with coding 
+	 * form(with tags and comments) and distribute
+	 *   
+	 */	 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
@@ -85,9 +92,10 @@ public class TS_011_DocViewNonAudioReviewer {
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1);
 		lp.logout();
 		
+		//login as a reviewer and select the specific assignment to review the docs
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		
 		hm = new HomePage(driver);
@@ -104,20 +112,44 @@ public class TS_011_DocViewNonAudioReviewer {
     	        
         docView=new DocViewPage(driver);
 	}
-	//putting comments
-	//adding remarks
+	
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a reviewer add comment to document
+	 *   
+	 */	
 	@Test(groups={"smoke","regression"})
 	public void addCommentToFirstDoc() {
 		
 		docView.addCommentToNonAudioDoc("firstcomment");
     
 	}
+	
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a reviewer add remark to first document
+	 *   
+	 */
 	@Test(groups={"smoke","regression"})
 	public void addRemarkToFirstDoc() {
 		
 		docView.addRemarkNonAudioDoc("FirstRemark2");
 	}
 	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a reviewer mark the document as complete
+	 *   
+	 */
 	@Test(groups={"smoke","regression"})
 	public void completeDoc() {
 		docView.completeNonAudioDocument();
@@ -137,7 +169,7 @@ public class TS_011_DocViewNonAudioReviewer {
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	
      }
-     @AfterClass(alwaysRun=true)
+ //    @AfterClass(alwaysRun=true)
 		public void close(){
 			try{ 
 				lp.logout();

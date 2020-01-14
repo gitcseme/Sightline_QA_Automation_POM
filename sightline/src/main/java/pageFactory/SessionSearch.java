@@ -386,7 +386,9 @@ public class SessionSearch {
 	}
     public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
-    	
+
+    		driver.getWebDriver().get(Input.url+ "Search/Searches");
+        
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
         	getAdvancedSearchLink().Click();

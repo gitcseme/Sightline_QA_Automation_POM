@@ -28,11 +28,12 @@ public class TS_018_DocViewAudio {
 	DocViewPage docview ;
 	
 	@BeforeClass(alwaysRun = true)
-	public void before() throws InterruptedException {
+	public void before() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-
+		Input in = new Input();
+		in.loadEnvConfig();
 		
 		driver = new Driver();
 		lp = new LoginPage(driver);

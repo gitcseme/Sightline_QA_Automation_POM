@@ -87,7 +87,7 @@ import testScriptsSmoke.Input;
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString2);
 		lp.logout();
 		
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);

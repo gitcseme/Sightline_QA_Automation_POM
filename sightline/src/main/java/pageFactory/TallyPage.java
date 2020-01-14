@@ -111,6 +111,8 @@ public class TallyPage {
 		getTally_btnTallyApply().Click();
 		
 		BaseClass bc = new BaseClass(driver);
+		//pop up may appear multiple times depends on app response
+		bc.yesPopUp();
 		bc.yesPopUp();
 
 	}
@@ -244,7 +246,8 @@ public class TallyPage {
 				 getTally_btnSubTallyApply().Visible()  ;}}), Input.wait30);	
 		getTally_btnSubTallyApply().Click();
 		
-		
+		//pop up may appear multiple times depends on app response
+		base.yesPopUp();
 		base.yesPopUp();
 	
 	}

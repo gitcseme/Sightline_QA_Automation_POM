@@ -52,11 +52,11 @@ public class TS_017_DocList {
 	}
 	
 	//To validate masterdate for all image files in doclist
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void masterDateForImageDocs() throws InterruptedException {
 		//driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=2);
+    	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=4);
     	ss.ViewInDocList();
     	final DocListPage DL= new DocListPage(driver);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -68,7 +68,7 @@ public class TS_017_DocList {
     	
 	}
 	//To validate custodian filter
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void masterDateFiltersInDocList() throws InterruptedException {
 		bc.selectproject();
     	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
@@ -88,7 +88,7 @@ public class TS_017_DocList {
     	
 	}
 	
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void docFileTypeInDocList() throws InterruptedException {
 		bc.selectproject();
     	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
@@ -116,7 +116,7 @@ public class TS_017_DocList {
 	/*
     To validate bulk tag and bulk folder in doclist page	
 	*/
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void bulkTagAndBulkFolder() throws InterruptedException {
 		String bulkTagName= "A_DocListBulkTag"+Utility.dynamicNameAppender();
 		String bulkFolderName= "A_DocListBulkFolder"+Utility.dynamicNameAppender();
@@ -201,7 +201,7 @@ public class TS_017_DocList {
 /*
 Create one security group and release docs to it, 
 Validate docs in SG through work product search 	
-*/	//@Test(groups={"smoke","regression"})
+*/	@Test(groups={"smoke","regression"})
 	public void doclistBulkRelease() throws InterruptedException {
 		
 		//Create Security group
@@ -230,7 +230,7 @@ Validate docs in SG through work product search
     	    	
 	}
 
-	 //  //@Test(groups={"regression"})
+	 	@Test(groups={"regression"})
 		public void custodianFiltersInDocList() throws InterruptedException {
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);

@@ -39,10 +39,11 @@ public class TS_006_Tally_Report {
 
 	
 	   @BeforeClass(alwaysRun = true)
-	   public void beforeClass(){
+	   public void beforeClass() throws ParseException, InterruptedException, IOException{
 		
-		
-		
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		driver = new Driver();
 	    lp = new LoginPage(driver);
@@ -130,7 +131,7 @@ public class TS_006_Tally_Report {
 			
 			//Edit assignment and add reviewers 
 			agnmt.editAssignment(assignmentName);
-			agnmt.addReviewerAndDistributeDocs(assignmentName);
+			agnmt.addReviewerAndDistributeDocs(assignmentName,Input.totalNumberOfDocs);
 			lp.logout();
 			
 			//Login as reviewer and verify assignment
@@ -154,7 +155,7 @@ public class TS_006_Tally_Report {
 	 
 	 //Run Tally reprot and view docs in doclist and docview
 	 @Test(groups={"smoke","regression"})
-	 public void tallyViewDLandDV() {
+	 public void tallyViewDLandDV() throws InterruptedException {
 		 //login
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 
@@ -185,11 +186,14 @@ public class TS_006_Tally_Report {
 
 	     //Verify DocView from tally---------------------------------------------------------------------------------------------
 	     dp.getBackToSourceBtn().Click();
-	       
+	     Thread.sleep(8000);
+	     
+	     Actions ac1=new Actions(driver.getWebDriver());
+		 
 	     tally.tallyActions();
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		 tally.getView().Visible()  ;}}),Input.wait30);
-		 ac.moveToElement(tally.getView().getWebElement()).build().perform();
+		 ac1.moveToElement(tally.getView().getWebElement()).build().perform();
 		 tally.getDocViewView().Click();
 		 
 		 //verify count in docview
@@ -277,7 +281,7 @@ public class TS_006_Tally_Report {
 			
 			//Edit assignment and add reviewers 
 			agnmt.editAssignment(assignmentName);
-			agnmt.addReviewerAndDistributeDocs(assignmentName);
+			agnmt.addReviewerAndDistributeDocs(assignmentName,Input.totalNumberOfDocs);
 			lp.logout();
 			
 			//Login as reviewer and verify assignment

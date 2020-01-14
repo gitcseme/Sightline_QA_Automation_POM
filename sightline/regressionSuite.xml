@@ -165,14 +165,14 @@
         <class name="testScriptsRegression.TS_006_Tally_Report" ></class>  
     </classes>
 	</test> 
-	 <test name="ICE Scenarios">
+<!-- <test name="ICE Scenarios">
      <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_019_ICEscenarios" ></class>  
     </classes>
 	</test> 
-	
-	 <test name="BatchPrint regression">
+	 -->
+ 	 <test name="BatchPrint regression">
      <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
         <class name="testScriptsRegression.BatchPrint_Regression" ></class>  
