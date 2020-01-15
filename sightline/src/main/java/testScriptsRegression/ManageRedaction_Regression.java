@@ -31,9 +31,6 @@ public class ManageRedaction_Regression {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
 
-	Input input = new Input();
-	input.loadEnvConfig();
-	
 	driver = new Driver();
 	lp = new LoginPage(driver);
 	bc = new BaseClass(driver);

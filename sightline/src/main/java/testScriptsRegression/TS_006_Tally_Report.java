@@ -41,9 +41,6 @@ public class TS_006_Tally_Report {
 	   @BeforeClass(alwaysRun = true)
 	   public void beforeClass() throws ParseException, InterruptedException, IOException{
 		
-		/*
-		 * Input in = new Input(); in.loadEnvConfig();
-		 */
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		driver = new Driver();
 	    lp = new LoginPage(driver);

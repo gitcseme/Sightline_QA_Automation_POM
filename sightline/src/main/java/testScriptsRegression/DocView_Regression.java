@@ -48,10 +48,7 @@ import testScriptsSmoke.Input;
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input input = new Input();
-		input.loadEnvConfig();
-				
-    	//Open browser
+		//Open browser
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);

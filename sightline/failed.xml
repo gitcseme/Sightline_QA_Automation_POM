@@ -2,6 +2,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" verbose="0" name="Failed suite [Failed suite [Smoke Suite]]">
   <test name="SavedSearchShareSchedule(failed)(failed)">
+  
+  <test name="Input">
+    <classes>
+        <class name="testScriptsSmoke.Input" ></class>  
+    </classes>
+	</test> 
+	
     <groups>
       <run>
         <include name="smoke"/>

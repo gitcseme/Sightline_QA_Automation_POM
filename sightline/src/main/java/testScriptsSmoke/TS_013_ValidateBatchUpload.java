@@ -26,8 +26,6 @@ public class TS_013_ValidateBatchUpload {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input in = new Input();
-		in.loadEnvConfig();
 		
 		//Open browser
 		driver = new Driver();

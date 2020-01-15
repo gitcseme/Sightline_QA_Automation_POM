@@ -38,9 +38,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-		Input in = new Input();
-		in.loadEnvConfig();
-    	//Open browser
+	    //Open browser
 		driver =  new Driver();
 		//Login as PA
 		lp = new LoginPage(driver);

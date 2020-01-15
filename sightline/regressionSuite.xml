@@ -2,8 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression Suite">
 	
-     <test name="Input">
-     
+    <test name="Input">
     <classes>
         <class name="testScriptsSmoke.Input" ></class>  
     </classes>
@@ -15,12 +14,14 @@
         <class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
     </classes>
 	</test>   
+	
  	<!-- 
 	 <test name="2FAValidation">
     <classes>
         <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
     </classes>
 	</test>   --> 
+	
 	<test name="AllManageModules">
 	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
@@ -125,10 +126,116 @@
         <class name="testScriptsSmoke.TS_006_ValidateBatchPrint" ></class>  
     </classes>
     </test> 
+    
+    <!-- Regression Test Cases  -->
     <!-- Regression Classes  -->
-   
- 	 <test name="Basic Search Regression">
+    
+     <test name="ABM Report Regression">
  	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.ABMReport" ></class>  
+    </classes>
+	</test>
+	
+     <test name="Assignment Regression">
+ 	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.Assignment_Regression" ></class>  
+    </classes>
+	</test>
+	
+	 <test name="Classification Regression">
+ 	  <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.Classification_Regression" ></class>  
+    </classes>
+	</test>
+	
+	 <test name="Coding regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.CodingForm_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	 <test name="Comments Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.Comments_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name="Doclist Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.DocList_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="DocView regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.DocView_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="DocView Audio regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.DocViewAudio_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="ManageRedaction Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.ManageRedaction_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="Production Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.Production_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name="Saved Search Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.SavedSearch_Regression" ></class>  
+    </classes>
+	</test> 	 
+ 	 
+ 	<test name="TagsAndFolders Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TagsAndFolders_Regression" ></class>  
+    </classes>
+	</test> 	 
+ 	
+ 	<test name="TagAndFolder">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TagAndFolder" ></class>  
+    </classes>
+	</test> 	 
+ 	
+ 	<test name="TagCountByTagReport Regression">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.TagCountByTagReport" ></class>  
+    </classes>
+	</test> 	 
+ 	
+ 	<test name="ToolTipsInfos">
+     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
+    <classes>
+        <class name="testScriptsRegression.ToolTipsInfos" ></class>  
+    </classes>
+	</test> 	 
+ 	
+ 	 <test name="Basic Search Regression">
     <classes>
         <class name="testScriptsRegression.TS_001_BasicSearch" ></class>  
     </classes>
@@ -145,14 +252,7 @@
         <class name="testScriptsRegression.TS_003_AdvanceSearch1" ></class>  
     </classes>
 	</test>
-	<test name="Saved Search Regression">
-     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
-    <classes>
-        <class name="testScriptsRegression.SavedSearch_Regression" ></class>  
-    </classes>
-	</test> 	 
- 	 
- 	  <test name="Alerts in BS and AS">
+	  <test name="Alerts in BS and AS">
      <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
         <class name="testScriptsRegression.TS_005_BasicAndAdvanceAlerts" ></class>  
@@ -165,29 +265,12 @@
         <class name="testScriptsRegression.TS_006_Tally_Report" ></class>  
     </classes>
 	</test> 
-<!-- <test name="ICE Scenarios">
-     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
-    <classes>
-        <class name="testScriptsSmoke.TS_019_ICEscenarios" ></class>  
-    </classes>
-	</test> 
-	 -->
- 	 <test name="BatchPrint regression">
+  
+  
+    <test name="BatchPrint regression">
      <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
         <class name="testScriptsRegression.BatchPrint_Regression" ></class>  
-    </classes>
-	</test> 
-	 <test name="Coding regression">
-     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
-    <classes>
-        <class name="testScriptsRegression.CodingForm_Regression" ></class>  
-    </classes>
-	</test> 
-	 <test name="Comments Regression">
-     <groups><run><include name="smoke" /><include name="regression" /></run></groups>
-    <classes>
-        <class name="testScriptsRegression.Comments_Regression" ></class>  
     </classes>
 	</test> 
 	
@@ -195,6 +278,13 @@
 	 <groups><run><include name="regression" /></run></groups>
 	 <classes>
         <class name="testScriptsRegression.DocViewP2" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="UserManagement Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.UserManagement_Regression" ></class>  
     </classes>
 	</test> 
 	

@@ -137,7 +137,7 @@ public class CodingForm_Regression {
 		cf.AddCodingformwithTag(codingfromTag, tagnameprev);
 	}
 
-    // @Test(dataProvider="validations",groups={"regression"},priority =7)
+    @Test(dataProvider="validations",groups={"regression"},priority =7)
         public void PreviewValidations(String S1,String S2,String S3) throws InterruptedException {
 		
 	 	cf = new CodingForm(driver);

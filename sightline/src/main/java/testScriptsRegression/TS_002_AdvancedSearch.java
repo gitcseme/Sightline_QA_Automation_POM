@@ -48,8 +48,6 @@ public class TS_002_AdvancedSearch {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
 		//Open browser
-	    Input in = new Input();
-	    in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;

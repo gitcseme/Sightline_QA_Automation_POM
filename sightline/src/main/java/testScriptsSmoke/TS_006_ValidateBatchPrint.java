@@ -49,8 +49,6 @@ public class TS_006_ValidateBatchPrint {
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
 		driver = new Driver();
 		
 		String searchname= "BP"+Utility.dynamicNameAppender();

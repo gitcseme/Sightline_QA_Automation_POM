@@ -90,6 +90,14 @@ public class TS_007_SavedSearchShareSchedule {
 		sp.checkStatusComplete(saveSearchName);
 	}
 	
+	 /*
+	 * Author : Shilpi Mangal
+	 * Created date: 08-01-2020
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify sharing of saved searches is working correctly
+	 */
+	
 	 @Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 

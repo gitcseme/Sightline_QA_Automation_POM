@@ -5,7 +5,7 @@
         <url>http://172.22.155.2/</url>
         <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <projectName>DNDProjectAuto2</projectName>
+        <projectName>Auto_NoIngestion</projectName>
         <!-- AutoSys SysAdmin  -->
 
           <sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
@@ -20,13 +20,9 @@
         <pa2userName>a.utomationsightlineconsil.i.o@gmail.com</pa2userName>
         <pa2password>sightline@1234</pa2password>
         
-       <!-- <pa1FullName>0QAPA22 PA22</pa1FullName>
+        <pa1FullName>0QAPA22 PA22</pa1FullName>
         <pa1userName>a.utomati.o.nsightlineconsi.l.i.o@gmail.com</pa1userName>
         <pa1password>consilio@4321</pa1password>   --> 
-        
-        <pa1userName>rm.user.consilio@gmail.com</pa1userName>
-        <pa1password>sightline@12345</pa1password>
-        
         
         <!--QARMU  -->
         <rmu1FullName>0QARMU11 RMU11</rmu1FullName>
