@@ -166,15 +166,13 @@ public class BaseClass {
 				getProjectNames().Visible()  ;}}), 10000);
 		driver.scrollPageToTop();
 		//Select project if required one is not seletced
-		if(!getProjectNames().getText().equalsIgnoreCase(Input.projectName)) {
-		
 		getProjectNames().waitAndClick(5);
 		  
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSelectProject().Visible()  ;}}), 10000);
 		getSelectProject().waitAndClick(5);
 		driver.waitForPageToBeReady();
-		}
+	
 	}
     
  /*   public void BckTaskClick() {
