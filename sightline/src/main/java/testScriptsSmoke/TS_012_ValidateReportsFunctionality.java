@@ -41,6 +41,7 @@ public class TS_012_ValidateReportsFunctionality {
 	@BeforeClass(alwaysRun = true)
    public void beforeClass() throws InterruptedException, ParseException, IOException{
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
 	driver = new Driver();
     lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -56,7 +57,7 @@ public class TS_012_ValidateReportsFunctionality {
 	 * Description : Login as rmu user run tally and sub tally report, validate the count in doclist!
 	 *   
 	 */
-	 @Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void tallySubTally() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		report.TallyReportButton();
