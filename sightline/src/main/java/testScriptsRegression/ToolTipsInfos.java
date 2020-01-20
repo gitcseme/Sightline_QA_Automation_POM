@@ -44,8 +44,9 @@ public class ToolTipsInfos {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
 		//Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		softAssertion= new SoftAssert();
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -94,7 +95,7 @@ public class ToolTipsInfos {
 		System.out.println("------------------------------------------");
 	    System.out.println("Executing method : " + testMethod.getName());       
 	 }
-   //  @AfterMethod(alwaysRun = true)
+     @AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
  	 if(ITestResult.FAILURE==result.getStatus()){
  		 
@@ -111,7 +112,7 @@ public class ToolTipsInfos {
      }
      
    
-	//@AfterClass(alwaysRun = true)
+	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
 			lp.logout();

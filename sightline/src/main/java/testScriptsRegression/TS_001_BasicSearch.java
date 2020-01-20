@@ -43,6 +43,7 @@ public class TS_001_BasicSearch {
     	
 		//Open browser
 		softAssertion= new SoftAssert();
+		//Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
@@ -74,7 +75,9 @@ public class TS_001_BasicSearch {
 		
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ss.getBasicSearch_MetadataBtn().Visible()  ;}}), Input.wait30); 
 		ss.getBasicSearch_MetadataBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				ss.getSelectMetaData().Visible()  ;}}), Input.wait30); 
