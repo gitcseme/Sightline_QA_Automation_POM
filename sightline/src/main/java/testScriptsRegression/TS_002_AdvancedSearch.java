@@ -33,6 +33,7 @@ public class TS_002_AdvancedSearch {
 	SessionSearch search;	
 	SecurityGroupsPage sgpage;
 	RedactionPage redact;
+	SoftAssert softAssertion;
 	int pureHit;
 	BaseClass bc;
 	
@@ -47,7 +48,9 @@ public class TS_002_AdvancedSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
+		softAssertion= new SoftAssert();
 		//Open browser
+		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
@@ -392,6 +395,7 @@ public class TS_002_AdvancedSearch {
 		 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
 		 String saveSearchName = "A_SaveSearch"+Utility.dynamicNameAppender();
 		 
+		 
 		 //create tag with searchString1
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
@@ -425,7 +429,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(53,search.serarchWP());
 		 
 		 
 		 
@@ -439,7 +443,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("OR");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(15,search.serarchWP());
 		 
 		 //TagNotFolder
 		 bc.selectproject();
@@ -447,7 +451,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectTagInASwp(tagName);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 Assert.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(47,search.serarchWP());
 		 
 		 //FolderNotTag
 		 bc.selectproject();
@@ -455,7 +459,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);	
 		 search.selectOperator("NOT");
 		 search.selectTagInASwp(tagName);
-		 Assert.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(3,search.serarchWP());
 		 
 		 //SG Not folder
 		 bc.selectproject();
@@ -463,7 +467,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 Assert.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(47,search.serarchWP());
 		
 		 //folder not SG
 		 bc.selectproject();
@@ -471,7 +475,9 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);
 		 search.selectOperator("NOT");
 		 search.selectSecurityGinWPS(securitygroupname);
-		 Assert.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(3,search.serarchWP());
+		 
+		 softAssertion.assertAll();
 	}
 	
      //To validate combination of audio and content 
@@ -574,7 +580,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),16);
+ 		Assert.assertEquals(search.serarchWP(),15);
  		
      	
 
@@ -625,19 +631,19 @@ public class TS_002_AdvancedSearch {
  		search.saveSearch(searchName);
  		
  		SavedSearch savedSearch = new SavedSearch(driver);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
  		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
@@ -685,7 +691,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),34);
+ 		Assert.assertEquals(search.serarchWP(),33);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
