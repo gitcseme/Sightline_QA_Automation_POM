@@ -44,6 +44,9 @@ public class ToolTipsInfos {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
 		//Open browser
+		/*
+		 * Input in = new Input(); in.loadEnvConfig();
+		 */
 		softAssertion= new SoftAssert();
 		driver = new Driver();
 		bc = new BaseClass(driver);

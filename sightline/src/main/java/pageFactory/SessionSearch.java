@@ -205,6 +205,9 @@ public class SessionSearch {
 
     }
     public String getToolTipMsgBS(String isOrRange, String metaDataField) {
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getEnterSearchString().Visible()  ;}}), Input.wait30);
     	getBasicSearch_MetadataBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Visible()  ;}}), Input.wait30); 
@@ -241,6 +244,9 @@ public class SessionSearch {
 	}
     
     public String getToolTipMsgAS(String isOrRange, String metaDataField) {
+    	
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
     	getAdvancedSearchLink().Click();
