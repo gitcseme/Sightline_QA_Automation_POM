@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -11,6 +13,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
@@ -29,6 +33,7 @@ public class TS_002_AdvancedSearch {
 	SessionSearch search;	
 	SecurityGroupsPage sgpage;
 	RedactionPage redact;
+	SoftAssert softAssertion;
 	int pureHit;
 	BaseClass bc;
 	
@@ -43,9 +48,9 @@ public class TS_002_AdvancedSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
+		softAssertion= new SoftAssert();
 		//Open browser
-	    Input in = new Input();
-	    in.loadEnvConfig();
+		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
@@ -55,6 +60,177 @@ public class TS_002_AdvancedSearch {
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
     
 	}
+		
+		/*
+		 * Author : Suresh Bavihalli
+		 * Created date: Feb 2019
+		 * Modified date: 
+		 * Modified by:
+		 * Description : As a PA user validate metadata search with string search in advanced search with an operators  
+		 */	
+	    @Test(groups={"regression"})
+	   	public void metaSearchWithOperatorsInASreg() {
+	   		SoftAssert softAssertion= new SoftAssert();
+	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	   		bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
+
+			bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1)>=19);
+			
+			bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1)>=1116);
+
+			bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+"CustodianName: (  P Allen)")>0);
+
+			//Proximity seach
+			bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch("\"discrepancy scripts\"~3")>=4);
+
+			softAssertion.assertAll();
+	    }
+	    
+	    /*
+		 * Author : Suresh Bavihalli
+		 * Created date: Feb 2019
+		 * Modified date: 
+		 * Modified by:
+		 * Description : As a PA user validate all meta data searches in advance searches
+		 */	
+		@Test(groups={"regression"})
+		public void metaDataSearchsAS() {
+			SoftAssert softAssertion= new SoftAssert();
+			driver.getWebDriver().get(Input.url+ "Search/Searches");
+	    	bc.selectproject();
+	    	softAssertion.assertEquals(95,search.advancedMetaDataSearch("MasterDate", "IS", "1980-01-01", null));
+			
+
+	    	//with time in IS 
+	    	bc.selectproject();
+	    	softAssertion.assertEquals(11,search.advancedMetaDataSearch("MasterDate", "IS", "1989-02-10 16:59:39", null));
+			
+	    	bc.selectproject();
+			softAssertion.assertEquals(124,search.advancedMetaDataSearch("MasterDate", "RANGE", "1980-01-01", "2000-01-01"));
+					
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			//check IS and Range options
+			//bc.selectproject();
+			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
+			
+			//bc.selectproject();
+			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			//bc.selectproject();
+			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
+			
+			//bc.selectproject();
+			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			//bc.selectproject();
+			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
+			
+			/*bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05")); 
+			*/
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+			
+			
+		/* * //field mapping is not done for blow meta data search
+		 * 
+		 * *//* bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		*/	
+			bc.selectproject();
+			softAssertion.assertTrue(4==search.advancedMetaDataSearch("EmailAuthorName", null, "(Gouri Dhavalikar)", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailAuthorAddress", null, "Gouri.Dhavalikar@symphonyteleca.com", null));
+			
+			
+			bc.selectproject();
+			softAssertion.assertTrue(26==search.advancedMetaDataSearch("EmailAllDomains", null, "consilio.com;harman;harman.com", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailRecipientNames", null, "Satish Pawal;Shunmugasundaram Senthivelu;Swapnal Sonawane", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailRecipientAddresses", null, "Robert.Superty@consilio.com", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(26==search.advancedMetaDataSearch("EmailRecipientDomains", null, "consilio.com", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(95==search.advancedMetaDataSearch("DocFileSize", null, "9728", null));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(138==search.advancedMetaDataSearch("DocFileSize","RANGE", "60","9728"));
+			
+			bc.selectproject();
+			softAssertion.assertTrue(841==search.advancedMetaDataSearch("DocFileExtension", null,".msg", null));
+			
+			softAssertion.assertAll();
+		}
 	/*
 	 * Author : Suresh Bavihalli
 	 * Created date: Feb 2019
@@ -115,7 +291,7 @@ public class TS_002_AdvancedSearch {
 	    tf.getFoldersTab().Visible()  ;}}),Input.wait60); 
 	  	  
 	       
-	       tf.getFoldersTab().Click();
+	       tf.getFoldersTab().waitAndClick(10);
 	       tf.getFolder_ToggleDocCount().waitAndClick(10);
 	       tf.getFolderandCount(folderName, 0).WaitUntilPresent();
 	       System.out.println(tf.getFolderandCount(folderName, 0).getText());
@@ -219,6 +395,7 @@ public class TS_002_AdvancedSearch {
 		 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
 		 String saveSearchName = "A_SaveSearch"+Utility.dynamicNameAppender();
 		 
+		 
 		 //create tag with searchString1
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
@@ -252,7 +429,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(53,search.serarchWP());
 		 
 		 
 		 
@@ -266,7 +443,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("OR");
 		 search.searchSavedSearch(saveSearchName);
-		 Assert.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(15,search.serarchWP());
 		 
 		 //TagNotFolder
 		 bc.selectproject();
@@ -274,7 +451,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectTagInASwp(tagName);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 Assert.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(47,search.serarchWP());
 		 
 		 //FolderNotTag
 		 bc.selectproject();
@@ -282,7 +459,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);	
 		 search.selectOperator("NOT");
 		 search.selectTagInASwp(tagName);
-		 Assert.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(3,search.serarchWP());
 		 
 		 //SG Not folder
 		 bc.selectproject();
@@ -290,7 +467,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 Assert.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(47,search.serarchWP());
 		
 		 //folder not SG
 		 bc.selectproject();
@@ -298,7 +475,9 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);
 		 search.selectOperator("NOT");
 		 search.selectSecurityGinWPS(securitygroupname);
-		 Assert.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(3,search.serarchWP());
+		 
+		 softAssertion.assertAll();
 	}
 	
      //To validate combination of audio and content 
@@ -401,7 +580,7 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),3);
+ 		Assert.assertEquals(search.serarchWP(),15);
  		
      	
 
@@ -446,31 +625,31 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),3);
+ 		Assert.assertEquals(16,search.serarchWP());
  		
  		String searchName="00Atest"+Utility.dynamicNameAppender();
  		search.saveSearch(searchName);
  		
  		SavedSearch savedSearch = new SavedSearch(driver);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 15);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 3);
+ 		savedSearch.savedSearchExecute(searchName, 16);
  		
 	}
      @Test(groups={"regression"})
@@ -512,7 +691,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),47);
+ 		Assert.assertEquals(search.serarchWP(),33);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
@@ -528,7 +707,7 @@ public class TS_002_AdvancedSearch {
    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    				search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
    		
-     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"47");
+     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"33");
 
 	}
 	 	
