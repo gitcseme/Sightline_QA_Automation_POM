@@ -13,6 +13,7 @@ public class TallyPage {
 
     Driver driver;
     BaseClass base;
+    final DocListPage dp;
   
     public Element getAutoSelectedSearchSource(){ return driver.FindElementByXPath("//li[contains(text(),'Documents: Selected Documents from Search')]"); }
     public Element getTally_SelectSource(){ return driver.FindElementById("select-source"); }
@@ -72,8 +73,9 @@ public class TallyPage {
     public TallyPage(Driver driver){
 
     	this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+ "Report/Tally");
-     
+         dp = new DocListPage(driver);
+         this.driver.getWebDriver().get(Input.url+ "Report/Tally");
+         
         base = new BaseClass(driver);
    
     }
@@ -354,10 +356,9 @@ public class TallyPage {
 		}
 		System.out.println("Navigated to Doclist page");
 		
-		  final DocListPage dp = new DocListPage(driver);
-	       //dp.getDocList_info().WaitUntilPresent();
-	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+		   //dp.getDocList_info().WaitUntilPresent();
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait30);
 	       Assert.assertTrue(dp.getDocList_info().getText().toString().contains("Showing 1 to 10 of"));
 	       System.out.println("Docs are shown in doclist");
 
