@@ -28,6 +28,15 @@ public class TS_003_AdvancedSearchBulkActions {
 	
 	String tagName = "tagName"+Utility.dynamicNameAppender();
 	String folderName = "folderName1"+Utility.dynamicNameAppender();
+	
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PAU and keep one search ready!, from here all the scripts will run. 
+	 */	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -46,6 +55,13 @@ public class TS_003_AdvancedSearchBulkActions {
     	        
 
 	}
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate bulk tag in advance search  
+	 */	
 	@Test(groups={"smoke","regression"})
 	   public void bulkTagInAdvancedSearch() throws InterruptedException {
 		
@@ -62,6 +78,13 @@ public class TS_003_AdvancedSearchBulkActions {
 	       System.out.println(tagName+" could be seen under tags and folder page");
 	   
 	}
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate bulk folder in advance search  
+	 */	
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInAdvancedSearch() throws InterruptedException {
 		

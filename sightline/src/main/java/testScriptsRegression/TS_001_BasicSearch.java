@@ -41,23 +41,43 @@ public class TS_001_BasicSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
-		Input in = new Input();
-		in.loadEnvConfig();
 		//Open browser
 		softAssertion= new SoftAssert();
+		//Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
 		
 
 	}
+	@Test(groups={"regression"})
+	public void copySearchTextToNewSearch(){
+		lp=new LoginPage(driver);
+		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	bc.selectproject();
+    	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
+    	
+    	//below locators are one time use in second search
+    	ss.getCopyTo().Click();
+    	ss.getCopyToNewSearch().Click();
+    	ss.getSecondSearchBtn().Click();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			ss.getSecondPureHit().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+    	    	
+    	softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()),Input.pureHitSeachString1);
+		lp.logout();
+	}
 	//RPMXCON-37996
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void autoSuggest() throws InterruptedException {
 		
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ss.getBasicSearch_MetadataBtn().Visible()  ;}}), Input.wait30); 
 		ss.getBasicSearch_MetadataBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				ss.getSelectMetaData().Visible()  ;}}), Input.wait30); 
@@ -112,7 +132,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	//RPMXCON-38005
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void conceptuallySimilar() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -128,7 +148,7 @@ public class TS_001_BasicSearch {
 	
 		lp.logout();
 	}
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
     public void exsitingBulkFolder() throws InterruptedException {
 		String Folder = "AFolder"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -156,7 +176,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
         
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -183,7 +203,7 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-   //@Test(groups={"smoke","regression"})
+   @Test(groups={"smoke","regression"})
 	public void starSearch() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -191,7 +211,7 @@ public class TS_001_BasicSearch {
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
 	}
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
    public void bulkUnTag() throws InterruptedException {
 	
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -221,7 +241,7 @@ public class TS_001_BasicSearch {
        lp.logout();
    }
 
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -254,7 +274,112 @@ public class TS_001_BasicSearch {
 	    lp.logout();
 	}
 	
+	@Test(groups={"regression"})
+	public void metaDataSearchsBS() {
+		SoftAssert softAssertion= new SoftAssert();
+		lp=new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	bc.selectproject();
+		softAssertion.assertEquals(1,ss.basicMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
 	
+		bc.selectproject();
+		softAssertion.assertEquals(340,ss.basicMetaDataSearch("CreateDate", "RANGE", "1986-01-01", "2018-01-01"));
+       
+		//with time in Range	
+		bc.selectproject();
+		softAssertion.assertEquals(170,ss.basicMetaDataSearch("CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"));
+	
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
+		//check IS and Range options
+		/*bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+	*/	
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		/*bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		*/
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		//bc.selectproject();
+		//softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		//field mapping is not done for blow meta data search
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
+		
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		
+		softAssertion.assertAll();
+		lp.logout();
+	}
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
@@ -277,7 +402,7 @@ public class TS_001_BasicSearch {
      }
      
    
-	@AfterClass(alwaysRun = true)
+	//@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
 			lp.logout();

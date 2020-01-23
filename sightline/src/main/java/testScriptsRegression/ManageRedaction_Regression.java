@@ -10,15 +10,17 @@ import java.text.ParseException;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import automationLibrary.Driver;
+import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.RedactionPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class Redaction_Regression {
+public class ManageRedaction_Regression {
 	Driver driver;
 	LoginPage lp;
 	RedactionPage redact;
+	BaseClass bc;
 	
 	String redactname = "Redaction"+Utility.dynamicNameAppender();
 	String editredactname = "RedactEdit"+Utility.dynamicNameAppender();
@@ -29,11 +31,9 @@ public class Redaction_Regression {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
 
-	Input input = new Input();
-	input.loadEnvConfig();
-	
 	driver = new Driver();
 	lp = new LoginPage(driver);
+	bc = new BaseClass(driver);
 	redact = new RedactionPage(driver);
 	}
 	
@@ -55,6 +55,15 @@ public class Redaction_Regression {
 		redact.AddRedaction(editredactname);
 		redact.EditRedaction(editredactname);
 		redact.DeleteRedaction(redactname);
+	}
+	
+	@Test(priority =1,groups={"regression"})
+	public void AddRedactionImpersonate() throws ParseException, InterruptedException {
+		
+		 lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		 //Impersonate as PA 
+		bc.impersonatePAtoRMU();
+		redact.AddRedaction(redactname);
 	}
 	
 	

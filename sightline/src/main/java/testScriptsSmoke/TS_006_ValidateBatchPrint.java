@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -34,9 +35,20 @@ public class TS_006_ValidateBatchPrint {
 	    System.out.println("Executing method : " + testMethod.getName());       
 	 }
 	 
+	 
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as a RMU, search for docs and save the search. 
+	 * Perform batch print with the saved search and validated the documents order!
+	 *   
+	 */	 
 	@Test(groups={"smoke","regression"})
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
 		driver = new Driver();
 		
 		String searchname= "BP"+Utility.dynamicNameAppender();
@@ -47,13 +59,12 @@ public class TS_006_ValidateBatchPrint {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		search.basicContentSearch("morning"+Keys.ENTER+"AND"+Keys.ENTER+"test");
 		search.saveSearch(searchname); 
 		
 	    BatchPrintPage page1 = new BatchPrintPage(driver);
      	page1.BatchPrintWithNative("search",searchname,orderCriteria, orderType);
-		
-	//	page1.checkForOrderInPDF("DocID:", orderType);
+		page1.checkForOrderInPDF("DocID:", orderType);
 		
 		
 }

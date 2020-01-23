@@ -48,10 +48,7 @@ import testScriptsSmoke.Input;
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input input = new Input();
-		input.loadEnvConfig();
-				
-    	//Open browser
+		//Open browser
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
@@ -87,7 +84,7 @@ import testScriptsSmoke.Input;
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString2);
 		lp.logout();
 		
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);

@@ -10,6 +10,8 @@ import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -22,6 +24,8 @@ public class SavedSearch {
     SessionSearch search;
     BaseClass base;
     AssignmentsPage assgnpage;
+    SoftAssert softAssertion;
+    
     
      
     public Element getSavedSearch_SearchName(){ return driver.FindElementById("txtSearchName"); }
@@ -41,7 +45,7 @@ public class SavedSearch {
     public ElementCollection getUserInShareList(){ return driver.FindElementsByXPath("//*[@id='my-table']/tbody/tr/td[2]/label[1]"); }
     public Element getSharecheckBoxofUser(int num){ return driver.FindElementByXPath("(//*[@id='my-table']/tbody/tr/td[1]/label/i)["+num+"]"); }
    
-    public Element getShareSaveBtn(){ return driver.FindElementByXPath("(//*[@id='btnShareSave'])[2]"); }
+    public Element getShareSaveBtn(){ return driver.FindElementById("btnShareSave"); }
   
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
@@ -90,6 +94,10 @@ public class SavedSearch {
     public Element getPublicShare() { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//li[3]"); }
  //   public Element getPublicShare() { return driver.FindElementByXPath("//a[@data-content='Public Shared (With Entire Security Group)']"); }
     public Element getSearchName(String serachName){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[3]"); }
+    public Element getShare_PA() { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'Project Admin')]/i"); }
+    public Element getSelectSearchWithID(String serachName){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[2]"); }
+    public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
+    public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'"+name+"')]"); }
     
     
     
@@ -99,6 +107,8 @@ public class SavedSearch {
         this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
+        softAssertion= new SoftAssert(); 
+        
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 
 
@@ -143,8 +153,7 @@ public class SavedSearch {
     	getSelectFile().SendKeys(System.getProperty("user.dir")+Input.batchFilesPath+batchFile);
     	getSubmitToUpload().Click();
     	
-    	successMsgUploadFile();
-    	 
+        base.VerifySuccessMessage("File uploaded successfully");    	 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	 			bc.initialBgCount() == Bgcount+12  ;}}), Input.wait60); 
     	driver.Navigate().refresh();
@@ -290,49 +299,117 @@ public class SavedSearch {
 	   System.out.println("Saved search "+searchName+" is scheduled to run in 5 secs!");
     }
    
-   public void shareSavedSearch(final String searchName, String Usertype) throws ParseException, InterruptedException{
-	   driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   getSavedSearch_SearchName().Visible()  ;}}),Input.wait60);
-	   try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	   getSavedSearch_SearchName().SendKeys(searchName);
-	   
-	   getSavedSearch_ApplyFilterButton().Click();
-	   
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
-	   Thread.sleep(2000);
-	   getSelectWithName(searchName).Click();
+   public void shareSavedSearchPA(final String searchName,String securitygroupname) throws ParseException, InterruptedException{
+		
+	   base.getSelectProject();
+	   savedSearch_Searchandclick(searchName);
 	   getShareSerachBtn().Click();
 	   Thread.sleep(2000);
 	   
-	   if(Usertype.equalsIgnoreCase("Project Admin"))
-	   {
-	   try{
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   getShare_selectallcheckbox().Visible()  ;}}), Input.wait30);
-	   getShare_selectallcheckbox().waitAndClick(10);  
-	   }
-	   catch (Exception e) {
-		System.out.println("User is not PA");
-	}
-	   getShareSaveBtn().Click();
+			   getShare_PA().Visible()  ;}}), Input.wait30);
+	   getShare_PA().waitAndClick(10);  
+	  
+	   getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
-	   System.out.println("Saved search "+searchName+" is scheduled to run in 5 secs!");
-	   }
-	   else if(Usertype.equalsIgnoreCase("RMU")) 
-	   {
-		   getShareSaveBtn().waitAndClick(10);
-		   base.VerifySuccessMessage("Share saved search operation successfully done.");
-		   System.out.println("Saved search "+searchName+" is scheduled to run in 5 secs!");
-	   }
 	   
+	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
+	   Thread.sleep(3000);
+		  
+	   //get Search ID 
+	   String SearchID= getSelectSearchWithID(searchName).getText();
+	   System.out.println(SearchID);
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
+	 
+	   getSelectWithName(searchName).waitAndClick(10);
+	
+	 
+	    //Again select same search and share with security group
+	 //  savedSearch_Searchandclick(searchName);
+	   getShareSerachBtn().Click();
+	   Thread.sleep(2000);
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShare_SecurityGroup(securitygroupname).Visible()  ;}}), Input.wait30);
+	   getShare_SecurityGroup(securitygroupname).waitAndClick(10);  
+	  
+	   getShareSaveBtn().waitAndClick(5);
+	   base.VerifySuccessMessage("Share saved search operation successfully done.");
+	   
+	   //click on share with project admin tab
+	   getSavedSearchGroupName("Project Admin").waitAndClick(10);
+	   
+	   //verify id should get changed
+	   String newSearchID = getSelectSearchWithID(searchName).waitAndGet(10);
+	   System.out.println(newSearchID);
+	   Assert.assertNotSame(SearchID, newSearchID);
+	   
+	   Assert.assertTrue(getSearchName(searchName).Displayed());
+	   
+	  //click on share with security group tab
+	   getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+	   Thread.sleep(2000);
+	   
+	   //verify id should get changed
+	   String newSearchID1 = getSelectSearchWithID(searchName).getText();
+	   System.out.println(newSearchID1);
+	   Assert.assertNotSame(SearchID, newSearchID1);
+	   
+	   Assert.assertTrue(getSearchName(searchName).Displayed());
+	   
+	   //impersonate to RMU and check search
+	   base.impersonatePAtoRMU_SelectedSG(securitygroupname);
+	   
+	 //click on share with security group tab
+	   this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
+	   getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+	   Thread.sleep(2000);
+	   
+	   //verify id should get changed
+	   String newSearchID2 = getSelectSearchWithID(searchName).getText();
+	   System.out.println(newSearchID2);
+	   Assert.assertEquals(newSearchID2, newSearchID1);
+	   
+	   }
+
+   
+   public void shareSavedSearchRMU(final String searchName,String securitygroupname) throws ParseException, InterruptedException{
+		
+	   
+	   savedSearch_Searchandclick(searchName);
+	   getShareSerachBtn().Click();
+	   Thread.sleep(2000);
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShare_SecurityGroup(securitygroupname).Visible()  ;}}), Input.wait30);
+	   getShare_SecurityGroup(securitygroupname).waitAndClick(10);  
+	  
+	   getShareSaveBtn().waitAndClick(10);
+	   base.VerifySuccessMessage("Share saved search operation successfully done.");
+	   
+	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
+	   Thread.sleep(2000);
+		  
+	   //get Search ID 
+	   String SearchID= getSelectSearchWithID(searchName).getText();
+	   System.out.println(SearchID);
+	   
+	   //click on share with security group tab
+	   getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+	   Thread.sleep(5000);
+	   
+	   //verify id should get changed
+	   String newSearchID1 = getSelectSearchWithID(searchName).getText();
+	   System.out.println(newSearchID1);
+	   Assert.assertNotSame(SearchID, newSearchID1);
+	   
+	   Assert.assertTrue(getSearchName(searchName).Displayed());
+   
     }
+
+   
    
     public void sharewithUsers(final String searchName, String Usertype)  {
     	
@@ -370,23 +447,6 @@ public class SavedSearch {
 	   
 	   
     }
-	
-	public Boolean successMsgSaveSearch() {
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSuccessMsgHeader().Visible()  ;}}),Input.wait60); 
-	 	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-	 	Assert.assertEquals("EN : Record scheduled successfully", getSuccessMsg().getText().toString());
-	 	return true;
-	 	}
-	
-	
-	public Boolean successMsgUploadFile() {
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSuccessMsgHeader().Visible()  ;}}),Input.wait60); 
-	 	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-	 	Assert.assertEquals("File uploaded successfully", getSuccessMsg().getText().toString());
-	 	return true;
-	 	}
 	
 	
 	public static String schdulerTimePlus15Secs() throws ParseException {

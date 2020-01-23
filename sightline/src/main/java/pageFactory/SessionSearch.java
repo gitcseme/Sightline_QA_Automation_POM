@@ -21,7 +21,7 @@ public class SessionSearch {
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
-    public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementById("saveAsNewSearchRadioButton"); }
+    public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
    
     //Hits
     public Element getPureHitsCount(){ return driver.FindElementByXPath(".//*[@id='001']/span/count"); }
@@ -188,6 +188,12 @@ public class SessionSearch {
     public Element getSingleToolTipText(){ return driver.FindElementByXPath("//*[@id='single']/section/label/b"); }
     public Element getRangeToolTip1Text(){ return driver.FindElementByXPath("//*[@id='rangeVal']/div[1]/section/label/b"); }
     public Element getRangeToolTip2Text(){ return driver.FindElementByXPath("//*[@id='rangeVal']/div[2]/section/label/b"); }
+   
+    //second search
+    public Element getCopyTo(){ return driver.FindElementByXPath("//*[@id='Basic']/div[1]/div/div[2]/div[1]/button"); }
+    public Element getCopyToNewSearch(){ return driver.FindElementByXPath("//*[@id='Basic']/div[1]/div/div[2]/div[1]/ul/li[2]/a"); }
+    public Element getSecondSearchBtn(){ return driver.FindElementByXPath("(//*[@id='btnBasicSearch'])[2]"); }
+    public Element getSecondPureHit(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
     
     public SessionSearch(Driver driver){
 
@@ -199,6 +205,9 @@ public class SessionSearch {
 
     }
     public String getToolTipMsgBS(String isOrRange, String metaDataField) {
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getEnterSearchString().Visible()  ;}}), Input.wait30);
     	getBasicSearch_MetadataBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Visible()  ;}}), Input.wait30); 
@@ -235,6 +244,9 @@ public class SessionSearch {
 	}
     
     public String getToolTipMsgAS(String isOrRange, String metaDataField) {
+    	
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
     	getAdvancedSearchLink().Click();
@@ -282,6 +294,12 @@ public class SessionSearch {
     	}catch (Exception e) {
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
+    	
+    	try{
+    		getSaveAsNewSearchRadioButton().waitAndClick(5);
+        	}catch (Exception e) {
+        		System.out.println("Radio button already selected");
+    		}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
@@ -380,7 +398,9 @@ public class SessionSearch {
 	}
     public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
-    	
+
+    		driver.getWebDriver().get(Input.url+ "Search/Searches");
+        
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
         	getAdvancedSearchLink().Click();

@@ -26,13 +26,6 @@ public class Classification_Regression {
 	 @BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input input = new Input();
-		try {
-			input.loadEnvConfig();
-		} catch (ParseException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		
 		//Open browser
@@ -44,7 +37,7 @@ public class Classification_Regression {
 	
 
 	   @Test(groups={"regression"},priority=1)
-	   public void AddComments() throws InterruptedException {
+	   public void VerifyClassification() throws InterruptedException {
 		   
 		   clssp.VerifyClassification();
 		  }

@@ -30,20 +30,34 @@ public class TS_012_ValidateReportsFunctionality {
 	ReportsPage report; 
 	//String usertosharewith = "smangal@consilio.com";
 
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as rmu and land on reports page, from here all other scripts will run
+	 *   
+	 */
+	@BeforeClass(alwaysRun = true)
+   public void beforeClass() throws InterruptedException, ParseException, IOException{
+	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-	   @BeforeClass(alwaysRun = true)
-	   public void beforeClass() throws InterruptedException, ParseException, IOException{
-		
-		
-		
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		driver = new Driver();
-	    lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		report = new ReportsPage(driver);
+	driver = new Driver();
+    lp = new LoginPage(driver);
+	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	report = new ReportsPage(driver);
 	
 	}
-	 @Test(groups={"smoke","regression"})
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as rmu user run tally and sub tally report, validate the count in doclist!
+	 *   
+	 */
+	@Test(groups={"smoke","regression"})
 	public void tallySubTally() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		report.TallyReportButton();
@@ -51,7 +65,15 @@ public class TS_012_ValidateReportsFunctionality {
 		tally.ValidateTallySubTally();
 
 	}
-	   
+	
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as rmu user run communication explorer report, validate the count in doclist!
+	 *   
+	 */
 	@Test(groups={"regression"})
 	public void communicationExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
@@ -59,6 +81,15 @@ public class TS_012_ValidateReportsFunctionality {
 		commreport.ValidateCommExplorerreport();
 		
 	}
+	
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as rmu user run concept explorer report, validate the count in doclist!
+	 *   
+	 */
 	@Test(groups={"smoke","regression"})
 	public void conceptExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
@@ -66,6 +97,15 @@ public class TS_012_ValidateReportsFunctionality {
 		conceptreport.ValidateConceptExplorerreport();
 	
 	}
+	
+	 /*
+	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : 
+	 *   
+	 */
 	@Test(groups={"smoke","regression"})
 	public void reviewProgressByRevReport() throws InterruptedException, ParseException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");

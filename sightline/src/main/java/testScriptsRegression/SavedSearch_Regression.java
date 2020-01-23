@@ -28,6 +28,7 @@ public class SavedSearch_Regression  {
 	LoginPage lp;
 	SavedSearch ss;
 	SessionSearch search;
+    BaseClass base;
 	
 	//String searchText = "test";
 	String saveSearchName = "test20"+Utility.dynamicNameAppender();
@@ -38,24 +39,40 @@ public class SavedSearch_Regression  {
 	String codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PA user,search for a string and save it as new saved search
+	 */		
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	  	
     	//Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		//Search and save it
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
+        search.saveSearch(SearchNamePA);
 		Thread.sleep(5000);
 		ss = new SavedSearch(driver);
+        base = new BaseClass(driver);
 	}
 	
-	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify navigation to doclist screen from saved search is displaying docs correctly
+	 */
 	@Test(groups={"regression"},priority=1)
 	public void  saveSearchToDocList() throws ParseException, InterruptedException, NoSuchMethodException, SecurityException {
 		
@@ -70,6 +87,13 @@ public class SavedSearch_Regression  {
 
 	}
 	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify navigation to docview screen from saved search is displaying docs correctly
+	 */
 	@Test(groups={"regression"},priority=2)
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
@@ -80,6 +104,13 @@ public class SavedSearch_Regression  {
 	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
 	}
 	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify bulk tag is working correctly from saved search 
+	 */
 	@Test(groups={"regression"},priority=3)
 	public void  SavedSearchBulkTag() throws ParseException, InterruptedException {
 		
@@ -96,6 +127,13 @@ public class SavedSearch_Regression  {
 	       System.out.println(TagName+" could be seen under tags and folder page");
 	}
 	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify bulk folder is working correctly from saved search 
+	 */
 	@Test(groups={"regression"},priority=4)
 	public void  SavedSearchBulkFolder() throws ParseException, InterruptedException {
 		
@@ -112,6 +150,13 @@ public class SavedSearch_Regression  {
 	       System.out.println(FolderName+" could be seen under tags and folder page");
 	}
 	
+         /*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify bulk export is working correctly from saved search 
+	 */
 	@Test(groups={"regression"},priority=5)
 	public void  SaveSearchExport() throws ParseException, InterruptedException {
 		
@@ -119,15 +164,15 @@ public class SavedSearch_Regression  {
 		ss.SaveSearchExport(saveSearchName);
 	}
 	
-	@Test(groups={"regression"},priority=14)
-	public void  SaveSearchDelete() throws ParseException, InterruptedException {
-		
-		//Schedule the saved search
-		
-		ss.SaveSearchDelete(saveSearchName);
-	}
+    
 	
-	
+		/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify schedule saved search  is working correctly and status is showing as completed from saved search 
+	 */
 	@Test(groups={"regression"},priority=6)
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
@@ -138,24 +183,16 @@ public class SavedSearch_Regression  {
 		sp.checkStatusComplete(saveSearchName);
 	}
 	
-	@Test(groups={"smoke","regression"},priority=7)
-	public void shareSavedSearch() throws ParseException, InterruptedException {
-
-		//Share the saved search
-		
-		ss.shareSavedSearch(SearchNameRMU,"RMU");
-		lp.logout();
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
-		ss.sharewithUsers(SearchNameRMU,"RMU");
-		lp.logout();
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	    ss.shareSavedSearch(SearchNamePA,"Project Admin");
-		lp.logout();
-		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
-		ss.sharewithUsers(SearchNamePA,"Project Admin");
-  }
 	
-	@Test(groups={"regression"},priority=8)
+
+	 /*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify conceptual report  is working correctly from saved search 
+	 */	
+	@Test(groups={"regression"},priority=7)
 	public void savedSearchToConcepts() throws ParseException, InterruptedException {
 
 			//Share the saved search
@@ -163,38 +200,59 @@ public class SavedSearch_Regression  {
 			ss.savedSearchToConcepts(saveSearchName);
 	  }
 	
-	@Test(groups={"regression"},priority=9)
+          /*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify Tally report  is working correctly from saved search 
+	 */
+	@Test(groups={"regression"},priority=8)
 	public void savedSearchToTally() throws ParseException, InterruptedException {
 
 		//Share the saved search
 		
 		ss.savedSearchToTally(saveSearchName);
   }
-	@Test(groups={"regression"},priority=10)
+       
+        /*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify Search Term report  is working correctly from saved search 
+	 */
+	@Test(groups={"regression"},priority=9)
 		public void savedSearchToTermReport() throws ParseException, InterruptedException {
 
 			//Share the saved search
 			
 			ss.savedSearchToTermReport(saveSearchName);
 	  }
-	
-	@Test(groups={"regression"},priority=11)
+
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify new search group is created successfully and search is saved under that group 
+	 */
+	@Test(groups={"regression"},priority=10)
 	public void savedSearchNewSearchGrp() throws ParseException, InterruptedException {
 
 		//Share the saved search
 		BaseClass base = new BaseClass(driver);
-		base.selectproject();
 		ss.savedSearchNewSearchGrp(saveSearchName);
   }
-	@Test(groups={"regression"},priority=12)
-	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
-
-		//Share the saved search
-		
-		ss.SaveSearchToBulkAssign(saveSearchName,assignmentName,codingfrom);
-  }
 	
-	@Test(groups={"regression"},priority=13)
+	 /*
+		 * Author : Shilpi Mangal
+		 * Created date: 
+		 * Modified date: 
+		 * Modified by:
+		 * Description : Verify execution of existing saved search is working correctly
+		 */
+	@Test(groups={"regression"},priority=11)
 	public void savedSearchExecute() throws ParseException, InterruptedException {
 
 		//Share the saved search
@@ -202,14 +260,49 @@ public class SavedSearch_Regression  {
 		ss.savedSearchExecute(saveSearchName, Input.pureHitSeachString1);
   }
 	
-	@Test(groups={"regression"})
+	@Test(groups={"regression"},priority=12)
 	public void savedSearchEdit() throws ParseException, InterruptedException {
 
 		//Share the saved search
 		
 		ss.savedSearchEdit(saveSearchName,SearchNameRMU);
   }
+
 	
+	
+	 /*
+		 * Author : Shilpi Mangal
+		 * Created date: 08-01-2020
+		 * Modified date: 
+		 * Modified by:
+		 * Description : Verify sharing of saved searches is working correctly
+		 */
+	  
+	 
+	  
+@Test(groups={"regression"},priority=14)
+	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
+
+		//Share the saved search
+		
+		ss.SaveSearchToBulkAssign(saveSearchName,assignmentName,codingfrom);
+  }
+	
+  
+/*
+ * Author : Shilpi Mangal
+ * Created date: 
+ * Modified date: 
+ * Modified by:
+ * Description : Verify deletion of saved searches is working correctly from saved search 
+ */
+@Test(groups={"regression"},priority=15)
+public void  SaveSearchDelete() throws ParseException, InterruptedException {
+	
+	//Schedule the saved search
+	
+	ss.SaveSearchDelete(saveSearchName);
+}
 
 	
 	 @BeforeMethod

@@ -54,8 +54,6 @@ public class Assignment_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input input = new Input();
-		input.loadEnvConfig();
 		
 		//Open browser
 		driver = new Driver();

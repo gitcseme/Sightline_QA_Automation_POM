@@ -22,10 +22,18 @@ public class Comments_Regression {
 	CommentsPage cp;
 	String commentname = "C"+Utility.dynamicNameAppender();
 	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: April 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Login as PA user
+	 */
 	
 	 @BeforeClass(alwaysRun = true)
-	public void preConditions() throws InterruptedException {
+	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
 		
 		//Open browser
 		this.driver = new Driver();
@@ -35,13 +43,26 @@ public class Comments_Regression {
 		cp = new CommentsPage(driver);
     }
 	
-
+	   /*
+		 * Author : Shilpi Mangal
+		 * Created date: April 2019
+		 * Modified date: 
+		 * Modified by:
+		 * Description : As a PA user, create new comment  
+		 */	
 	   @Test(groups={"smoke","regression"},priority=1)
 	   public void AddComments() throws InterruptedException {
 		   
 			cp.AddComments(commentname);
 		  }
 	   
+	   /*
+		 * Author : Shilpi Mangal
+		 * Created date: April 2019
+		 * Modified date: 
+		 * Modified by:
+		 * Description : As a PA user, delete existing comment  
+		 */	
 	   @Test(groups={"smoke","regression"},priority=2)
 	   public void DeleteComments() throws InterruptedException {
 		   

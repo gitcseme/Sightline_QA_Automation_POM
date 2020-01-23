@@ -165,12 +165,14 @@ public class BaseClass {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProjectNames().Visible()  ;}}), 10000);
 		driver.scrollPageToTop();
+		//Select project if required one is not seletced
 		getProjectNames().waitAndClick(5);
 		  
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSelectProject().Visible()  ;}}), 10000);
 		getSelectProject().waitAndClick(5);
 		driver.waitForPageToBeReady();
+	
 	}
     
  /*   public void BckTaskClick() {
@@ -376,6 +378,25 @@ public class BaseClass {
             System.out.println(Time);
         	return Time;
         	
+        	
         }
+        
+        
+        public void impersonatePAtoRMU_SelectedSG(String sgname) {
+        	getSignoutMenu().Click();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+        	
+        	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(sgname);
+        	getSaveChangeRole().Click();
+        	System.out.println("Impersnated from PA to RMU");
+
+    	}
+
    
 }

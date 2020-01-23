@@ -1,7 +1,11 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -11,6 +15,7 @@ import testScriptsSmoke.Input;
 public class SecurityGroupsPage {
 
     Driver driver;
+    BaseClass bc;
     
     public Element getSecurityGroupCreateButton(){ return driver.FindElementById("btnNewSecurityGroup"); }
     public Element getSecurityGroupName(){ return driver.FindElementById("txtSecurityGroupName"); }
@@ -19,12 +24,13 @@ public class SecurityGroupsPage {
        
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
- 
+  
   
     //Annotation Layer added successfully
     public SecurityGroupsPage(Driver driver){
 
         this.driver = driver;
+        bc = new BaseClass(driver);
         this.driver.getWebDriver().get(Input.url+"SecurityGroups/SecurityGroups");
         driver.waitForPageToBeReady();
       
@@ -44,22 +50,30 @@ public class SecurityGroupsPage {
     			getSecurityGroupSaveButton().Visible()  ;}}), Input.wait30); 
     	getSecurityGroupSaveButton().Click();
     	
-    	successMsgConfirmation();
+    	bc.VerifySuccessMessage("Security group added successfully");
+    	System.out.println("Security Group created :-"+ securitygroupname);
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupList().Visible()  ;}}), Input.wait30); 
-    	getSecurityGroupList().selectFromDropdown().selectByVisibleText(securitygroupname);
-    	
-    	
-    	
-    }
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getSecurityGroupList().Visible() ;}}), Input.wait30);
+		 * getSecurityGroupList().selectFromDropdown().selectByVisibleText(
+		 * securitygroupname);
+		 */
+     }
     
-    public void successMsgConfirmation() {
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSuccessMsgHeader().Visible()  ;}}), Input.wait60); 
-    	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-    	Assert.assertEquals("Security group added successfully", getSuccessMsg().getText().toString());
-	}
-   
- 
+       public List<String> GetSecurityGrouplist() {
+    	
+    	List<WebElement> allvalues = getSecurityGroupList().selectFromDropdown().getOptions();
+			
+    	List<String> all = new ArrayList<String>();
+		for(int j=0;j<allvalues.size();j++)
+		   {
+			  System.out.println(all.add(allvalues.get(j).getText()));
+			  System.out.println(all);
+		   }
+		return all;
+		
+       }
+		
+		
  }

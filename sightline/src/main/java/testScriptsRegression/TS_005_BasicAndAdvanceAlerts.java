@@ -41,10 +41,6 @@ public class TS_005_BasicAndAdvanceAlerts {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
 		
-		//Open browser
-		/*Input in = new Input();
-		in.loadEnvConfig();
-		*/
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
