@@ -133,7 +133,7 @@ public class IngestionPage {
     public Element getFilterByAPPROVED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='APPROVED']"); }
     public Element getFilterByPUBLISHED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='PUBLISHED']"); }
      public Element getRunCopying(){ return driver.FindElementByXPath(".//*[@id='RunCopying']/i"); }
-    public Element getCloseButton(){ return driver.FindElementByXPath("//*[@title='close']"); }
+    public Element getCloseButton(){ return driver.FindElementByXPath("//*[@class='ui-dialog-titlebar-close']"); }
     public Element getRunIndexing(){ return driver.FindElementByXPath(".//*[@id='RunIndexing']/i"); }
     public Element getIsAudioCheckbox(){ return driver.FindElementByXPath("//input[@id='IsAudio']/following-sibling::i"); }
     public Element getActionDropdownArrow(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//button[2]"); }
@@ -155,6 +155,8 @@ public class IngestionPage {
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
     public Element getDateFormat(){ return driver.FindElementById("ddlDateFormat"); }
+    public Element getIndexBlock(){ return driver.FindElementById("Indexingblock"); }
+	
    
     
     
@@ -692,7 +694,9 @@ public class IngestionPage {
     	    		
        getIngestionName().waitAndClick(Input.wait30);
        
-       driver.scrollingToElementofAPage(getMP3Count());
+       Actions actions = new Actions(driver.getWebDriver());
+       actions.moveToElement(getIndexBlock().getWebElement());
+       actions.perform();
        
        if(dataset.contains("Automation_AllSources")) {
        
