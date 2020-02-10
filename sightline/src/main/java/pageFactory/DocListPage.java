@@ -23,7 +23,7 @@ public class DocListPage {
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
      //Filters
     public Element getCustodianFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'CustodianName')]"); }
-    public Element getMasterDateFiler(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'MasterDate')]"); }
+    public Element getMasterDateFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'MasterDate')]"); }
     public Element getDocFileSizeFiler(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileSize')]"); }
     public Element getGetDocFIleTypeFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileType')]"); }
     public Element getEmailAuthNameFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]"); }
@@ -32,7 +32,7 @@ public class DocListPage {
     public Element getEmailAllDomainFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAllDomains')]"); }
     //options
     public Element getMasterDateRange(){ return driver.FindElementByXPath("(//select[@id='MasterDate-dtop'])[1]"); }
-    public Element getSetFromMasterDate(){ return driver.FindElementByXPath("(//*[@id='MasterDate-1-DOCLIST'])[1]"); }
+    public Element getSetFromMasterDate(){ return driver.FindElementByXPath("(//*[contains(@id,'MasterDate-1-DOC')])[1]"); }
     public Element getSetToMasterDate(){ return driver.FindElementByXPath("(//*[@id='MasterDate-2-DOCLIST'])[1]"); }
     public Element getDocFileSizeOption(){ return driver.FindElementByXPath("(//select[@id='DocFileSize-op'])[1]"); }
     public Element getDocFileFromSize(){ return driver.FindElementByXPath("(//*[@id='DocFileSize-1-DOCLIST'])[1]"); }
@@ -64,6 +64,7 @@ public class DocListPage {
     public Element getDocList_actionButton(){ return driver.FindElementById("idAction"); }
     public Element getDocList_action_BulkAssignButton(){ return driver.FindElementById("idBulkAssign"); }
     public Element getDocList_action_BulkReleaseButton(){ return driver.FindElementById("idBulkRelease"); }
+    public Element getDocList_SelectLenthtobeshown(){ return driver.FindElementById("idPageLength"); }
          
   
     
@@ -109,9 +110,9 @@ public class DocListPage {
     
     public void dateFilter(String option, String fromDate, String toDate) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCustodianFilter().Visible()  ;}}), Input.wait30);
+    			getMasterDateFilter().Visible()  ;}}), Input.wait30);
 		
-    	getMasterDateFiler().waitAndClick(10);
+    	getMasterDateFilter().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMasterDateRange().Visible()  ;}}), Input.wait30);
@@ -264,5 +265,14 @@ public class DocListPage {
     	
       }
      
+      public void Selectpagelength(String length) {
+     	driver.getWebDriver().get(Input.url+ "Document/DocList");
+     	
+     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait60);
+     	
+     	getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
    
+}
+      
 }
