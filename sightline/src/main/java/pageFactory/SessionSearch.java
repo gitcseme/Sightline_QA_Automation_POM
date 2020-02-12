@@ -955,7 +955,7 @@ public class SessionSearch {
    	 driver.getWebDriver().navigate().refresh();
    }
 
-   //Function to perform bulk folder with existing folder
+   //Function to perform bulk tag with existing tag
    public void bulkTagExisting(final String tagName) throws InterruptedException{
    	 
    	 driver.getWebDriver().get(Input.url+"Search/Searches");
@@ -997,13 +997,13 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk folder is done, folder is : "+tagName);
+   	 System.out.println("Bulk Tag is done, Tag is : "+tagName);
    	 
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
 
-   //Function to perform bulk folder with given tag name
+   //Function to perform bulk tag with given tag name
    public void bulkTag(String TagName) throws InterruptedException{
    	//driver.getWebDriver().get(Input.url+"Search/Searches");
    	try{
