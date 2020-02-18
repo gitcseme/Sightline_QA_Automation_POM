@@ -195,6 +195,9 @@ public class SessionSearch {
     public Element getSecondSearchBtn(){ return driver.FindElementByXPath("(//*[@id='btnBasicSearch'])[2]"); }
     public Element getSecondPureHit(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
     
+    //Quick Batch added by shilpi
+    public Element getQuickBatchAction(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
+    
     public SessionSearch(Driver driver){
 
     	this.driver = driver;
@@ -1569,6 +1572,27 @@ public void Removedocsfromresults() {
 		System.out.println("No docs present in cart");
 	}
 	
+}
+
+
+  public void quickbatch() {
+	driver.getWebDriver().get(Input.url+"Search/Searches");
+	 try{
+		 getPureHitAddButton().Click();
+		}catch (Exception e) {
+			System.out.println("Pure hit block already moved to action panel");
+		}
+	 
+	 getBulkActionButton().waitAndClick(10);
+	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getBulkAssignAction().Visible()  ;}}), Input.wait60); 
+	
+     
+	 getQuickBatchAction().Click();
+	 
+	 System.out.println("performing quick batch");
 	
 }
+
  }
