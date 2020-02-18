@@ -99,6 +99,8 @@ public class SavedSearch {
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
     public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'"+name+"')]"); }
     
+    //quick batch
+    public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
     
     
     public SavedSearch(Driver driver){
@@ -828,5 +830,16 @@ public class SavedSearch {
 		   search.basicContentSearch(Input.searchString1);
 		   search.saveSearch(searchName); */
 		 }
+	  
+	    public void savedsearchquickbatch(String searchName) {
+	    	
+	    	savedSearch_Searchandclick(searchName);
+			 
+	    	getSavedSearchQuickBatchButton().waitAndClick(10);
+			
+		   System.out.println("performing quick batch");
+			
+		}
+
 	
  }
