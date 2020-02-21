@@ -47,7 +47,7 @@ public class ABMReport {
 		AssignmentsPage asgnmp = new AssignmentsPage(driver);
 	    search.ViewInDocList();
 	    DocListPage dp = new DocListPage(driver);
-	    dp.DoclisttobulkAssign(assignmentName);
+	    dp.DoclisttobulkAssign(assignmentName,null);
         asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form",Input.pureHitSeachString1);
 	    
 	}	   

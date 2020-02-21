@@ -77,7 +77,8 @@ public class TS_009_ValidateAssignmentFunctionality {
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.quickbatch();
-		agnmt.createnewquickbatch(assignmentName, codingfrom, Input.searchString1);
+		String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB1, codingfrom,"AllRev");
 	   }
 	
 	  @Test(groups={"smoke","regression"},priority=2)

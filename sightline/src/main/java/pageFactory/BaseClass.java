@@ -47,10 +47,11 @@ public class BaseClass {
     //background task
     public Element getBackgroundTask_Button(){ return driver.FindElementByXPath("//*[@id='activity']/i"); }
     public Element getBckTask_SelectAll(){ return driver.FindElementById("btnViewAll"); }
+    public Element getBackgroundTask_Message(String texttosearch){ return driver.FindElementByXPath("(//span[contains(text(),'"+texttosearch+"')])[1]"); }
     
     //success message
     public Element getCloseSucessmsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//i"); }
-//    public Element getCloseSucessmsg(){ return driver.FindElementById("botClose1"); }
+
    
     
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
@@ -62,8 +63,8 @@ public class BaseClass {
     //select security group
     public Element getsgNames(){ return driver.FindElementById("SecurityGroup-selector"); }
     public Element getSelectsg(String sgname){ return driver.FindElementByXPath("//a[@title='"+sgname+"']"); }
- public Element getCancelbutton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
- public Element getNOBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); } 
+    public Element getCancelbutton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
+    public Element getNOBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); } 
    
     
     public BaseClass(Driver driver){
@@ -175,17 +176,19 @@ public class BaseClass {
 	
 	}
     
- /*   public void BckTaskClick() {
+    public void BckTaskMessageverify(String texttosearch) {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getBackgroundTask_Button().Visible()  ;}}),Input.wait60);
+    			getBackgroundTask_Button().Visible()  ;}}),Input.wait30);
     	getBackgroundTask_Button().Click();
   	    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getBckTask_SelectAll().Visible()  ;}}),Input.wait60);
-    	getBckTask_SelectAll().Click();
-    
-	}*/
+    			getBackgroundTask_Message(texttosearch).Visible()  ;}}),Input.wait60);
+    	String exptext = getBackgroundTask_Message(texttosearch).getText().toString();
+    	System.out.println(exptext);
+    	
+     	Assert.assertTrue(exptext.contains(texttosearch));
+   	}
     
     public void CloseSuccessMsgpopup() {
 		

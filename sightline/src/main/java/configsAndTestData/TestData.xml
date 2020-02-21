@@ -4,7 +4,7 @@
  <!-- Serach strings and expected pure hit counts -->
     <searchString1>test</searchString1>
     <searchString2>comments</searchString2>
-    <pureHitSeachString1>50</pureHitSeachString1>
+    <pureHitSeachString1>48</pureHitSeachString1>
     <pureHitSeachString2>53</pureHitSeachString2>
     <searchString1ANDsearchString2>16</searchString1ANDsearchString2>
     <searchString1ORsearchString2>87</searchString1ORsearchString2>

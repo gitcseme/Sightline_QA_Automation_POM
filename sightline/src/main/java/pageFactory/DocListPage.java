@@ -65,6 +65,8 @@ public class DocListPage {
     public Element getDocList_action_BulkAssignButton(){ return driver.FindElementById("idBulkAssign"); }
     public Element getDocList_action_BulkReleaseButton(){ return driver.FindElementById("idBulkRelease"); }
     public Element getDocList_SelectLenthtobeshown(){ return driver.FindElementById("idPageLength"); }
+    
+    public Element getDocList_QuickBatch(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
          
   
     
@@ -212,11 +214,15 @@ public class DocListPage {
  	   driver.scrollPageToTop();
  	  }
 
-     public void DoclisttobulkAssign(String assignmentName ) throws InterruptedException {
-    	
+     public void DoclisttobulkAssign(String assignmentName,String length ) throws InterruptedException {
+    	 
+    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait60);
+         	
+     getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getSelectAll().Visible()  ;}}), Input.wait60); 
-   	 getSelectAll().Click();
+   	 getSelectAll().waitAndClick(20);
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
@@ -266,7 +272,7 @@ public class DocListPage {
       }
      
       public void Selectpagelength(String length) {
-     	driver.getWebDriver().get(Input.url+ "Document/DocList");
+     	//driver.getWebDriver().get(Input.url+ "Document/DocList");
      	
      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait60);
@@ -274,5 +280,29 @@ public class DocListPage {
      	getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
    
 }
+      
+      public void DoclisttoQuickbatch(String length ) throws InterruptedException {
+     	 
+    	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	         			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait30);
+    	         	
+    	     getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
+    	   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				 getSelectAll().Visible()  ;}}), Input.wait60); 
+    	   	 getSelectAll().waitAndClick(20);
+    	   	 
+    	   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	   			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
+    	   	 getPopUpOkBtn().Click();
+    	   	 
+    	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    	   getDocList_actionButton().Visible()  ;}}), Input.wait60); 
+    	     getDocList_actionButton().waitAndClick(10);
+    	     Thread.sleep(3000);
+    	    	     
+    	     getDocList_QuickBatch().waitAndClick(10);
+    	     
+    	     System.out.println("performing quick batch");
+    	  }
       
 }

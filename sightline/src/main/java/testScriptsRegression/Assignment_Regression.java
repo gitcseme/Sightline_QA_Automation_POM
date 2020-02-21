@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -15,16 +14,20 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import automationLibrary.Driver;
-import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
+import pageFactory.ReportsPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
+import pageFactory.UserManagement;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -36,24 +39,33 @@ public class Assignment_Regression {
 	BaseClass bc;
 	AssignmentsPage agnmt;
 	TagsAndFoldersPage page;
+	DocListPage dp;
+	ReportsPage report; 
 	
 	String assgnname = "Assgnm";
-	String  codingfrom = "cfC1"+Utility.dynamicNameAppender();
+	String codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName3= "assignmentA3"+Utility.dynamicNameAppender();
 	String assignmentName4= "assignmentA4"+Utility.dynamicNameAppender();
 	String assignmentNamecopy = "assignment5"+Utility.dynamicNameAppender();
-//	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
+	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	String assignmentNameMultiRev= "assignmentR2"+Utility.dynamicNameAppender();
 	String assgngrpName= "assgnGrp"+Utility.dynamicNameAppender();
 	String assgngrpName1= "assgnGrp1"+Utility.dynamicNameAppender();
 	String tagname = "Assgntag"+Utility.dynamicNameAppender(); 
     String foldername= "Assgnfolder"+Utility.dynamicNameAppender(); 
-	String assignmentName = "assg85282";
+	String savedsearchname = "Save"+Utility.dynamicNameAppender();
+	
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+
+		Input in = new Input();
+		in.loadEnvConfig();
+		
+   
 		
 		//Open browser
 		driver = new Driver();
@@ -62,6 +74,7 @@ public class Assignment_Regression {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt = new AssignmentsPage(driver);
 		bc = new BaseClass(driver);
+		report = new ReportsPage(driver);
 	
 		//add tag
 		page = new TagsAndFoldersPage(driver);
@@ -74,7 +87,7 @@ public class Assignment_Regression {
 		//Create coding for for assignment
 		CodingForm cf = new CodingForm(driver);
 		cf.createCodingform(codingfrom);
-		/*	
+			
 		//Create assignment with newly created coding form
 		
 		agnmt.createAssignment(assignmentName,codingfrom);
@@ -87,12 +100,13 @@ public class Assignment_Regression {
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName); */
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1); 
+		dp = new DocListPage(driver);
 		
 	}
-	/*
 	
-	//  @Test(groups={"regression"},priority=1)
+	
+	  @Test(groups={"regression"},priority=1)
 	  public void AssgnManageRev_ViewInDocView() throws InterruptedException {
 		  
 		 
@@ -100,13 +114,13 @@ public class Assignment_Regression {
 		agnmt.Assignment_ManageRevtab_ViewinDocView();
 		
 	}
-	//  @Test(groups={"regression"},priority=2)
+	  @Test(groups={"regression"},priority=2)
 	  public void AssgnManageRev_ViewInDoclist() throws InterruptedException {
 		  
 		 
 		agnmt.editAssgnwithselectedassgn();
 		agnmt.Assignment_ManageRevtab_ViewinDoclist();
-		final DocListPage dp = new DocListPage(driver);
+	
 	    dp.getDocList_info().WaitUntilPresent();
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
@@ -115,7 +129,7 @@ public class Assignment_Regression {
 		
 	} 
 	  
-	//  @Test(groups={"regression"},priority=3)
+	  @Test(groups={"regression"},priority=3)
 	  public void AssgnwithDocSequnece() throws InterruptedException {
 		  
 		 
@@ -124,7 +138,7 @@ public class Assignment_Regression {
 		
 	}
 	
-	// @Test(groups={"regression"},priority=4)
+	 @Test(groups={"regression"},priority=4)
 	  public void AssignmentDashboard() throws InterruptedException {
 		  agnmt.AssignmentDashboard();
 		
@@ -252,20 +266,20 @@ public class Assignment_Regression {
 	 	agnmt.assignDocswithpercentagemethod(assignmentName,"Percentage");
       }
 	  
-	  @Test(groups={"regression"},priority=13)
+	 @Test(groups={"regression"},priority=13)
       public void NewAssgnUnassgn() throws InterruptedException
       {
 	    
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
-		agnmt.assignDocstoNewAssgn(assignmentName3, codingfrom);
+		agnmt.assignDocstoNewAssgn(assignmentName3, codingfrom,Input.pureHitSeachString1);
 		
 		search.bulkAssign();
 		agnmt.UnassignDocsfromAssgn(assignmentName3);
 		
       }
-	  */
+	  
 	  @Test(groups={"regression"},priority=14)
       public void CopyAssignment() throws InterruptedException
       {
@@ -294,6 +308,77 @@ public class Assignment_Regression {
 		agnmt.UnassignDocsfromAssgn(assignmentName3);
 		
       }
+      
+    @Test(groups={"regression"},priority=22)
+	   public void ValidateUserlistonQuickbatch() throws InterruptedException, ParseException, IOException {
+		 //Login as SA
+		lp.logout();
+       lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+
+		//create test user
+    UserManagement	um = new UserManagement(driver);
+   	String firstName = "QBRMU";
+   	String lastName =  "QBRMUTest";
+   	String emailId = "r.muserconsilio@gmai.com";
+    um.createUser(firstName, lastName, "Review Manager", emailId, null, Input.projectName);
+	
+    lp.logout();
+    lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
+    SessionSearch search = new SessionSearch(driver);
+	search.basicContentSearch(Input.searchString1);
+	search.quickbatch();
+	agnmt.ValidateReviewerlistquickbatch(emailId);
+  }
+      
+	   @Test(groups={"smoke","regression"},priority=17)
+	   public void CreateQuickBatchfromsavedsearch() throws InterruptedException, ParseException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
+		SavedSearch savesearch = new SavedSearch(driver);
+		savesearch.savedsearchquickbatch(savedsearchname);
+		String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB1, codingfrom,"AllRev");
+	   }
+	   
+	  @Test(groups={"smoke","regression"},priority=18)
+	   public void CreateQuickBatchfromdoclist() throws InterruptedException, ParseException, IOException {
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.ViewInDocList();
+		dp.DoclisttoQuickbatch("100");
+		String assignmentQB2= "assignmentQB2"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB2, codingfrom,"selectrmu");
+	   }
+	   
+	   
+	  @Test(groups={"smoke","regression"},priority=19)
+	public void CreateQuickBatchfromTally() throws InterruptedException, ParseException, IOException {
+	
+	driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
+	report.TallyReportButton();
+	TallyPage tally = new TallyPage(driver);
+	tally.ValidateTallySubTally_QuickBatch();
+	String assignmentQB3= "assignmentQB3"+Utility.dynamicNameAppender();
+	agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB3, codingfrom,"selectrev");
+  }
+		   
+   @Test(groups={"smoke","regression"},priority=20)
+	   public void CreateQuickBatchfromDocExplorer() throws InterruptedException, ParseException, IOException {
+	
+    	DocExplorerPage docexp = new DocExplorerPage(driver);
+		docexp.DocExplorertoquickBatch();
+		String assignmentQB4= "assignmentQB4"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB4, codingfrom,"AllRev");
+	 }
+			   
+	   @Test(groups={"regression"},priority=21)
+	   public void ValidateNameQuickBatchfailure()
+	   {
+		   DocExplorerPage docexp = new DocExplorerPage(driver);
+			docexp.DocExplorertoquickBatch();
+			agnmt.Quickbatchfailure();
+	   }
+	   
       
 	
 	

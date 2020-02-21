@@ -56,7 +56,7 @@ public class DocExplorer_Regression {
 		search.basicContentSearch(Input.searchString1);
 		//search.bulkFolderExisting("Confidential");
 		search.bulkTagExisting("Confidential");
-		bc.getSelectProject();
+		bc.selectproject();
 		search.basicContentSearch("*");
 		//search.bulkFolderExisting("Attorney_Client");
 		search.bulkTagExisting("Attorney_Client");
@@ -70,7 +70,7 @@ public class DocExplorer_Regression {
 	 * Description : Verify that Column header Filter is working correctly on Doc Explorer screen
 	 */
 	@Test(groups={"regression"},dataProvider="Filters",priority=1)
-	public void HeaderFiltersVerification(String Filtername) throws InterruptedException {
+	public void HeaderFiltersVerification(String Filtername) throws InterruptedException, ParseException {
 		
 		docexp.HeaderFilter(Filtername);
     }
@@ -200,11 +200,11 @@ public class DocExplorer_Regression {
 		DocListPage doclist = new DocListPage(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
-		doclist.DoclisttobulkAssign(assignmentName1);
+		doclist.DoclisttobulkAssign(assignmentName1,"10");
 		assgn.assignDocstoNewAssgn(assignmentName1, null, Input.pureHitSeachString1);
 		search.ViewInDocList();
 		doclist.Selectpagelength("100");
-		doclist.DoclisttobulkAssign(assignmentName2);
+		doclist.DoclisttobulkAssign(assignmentName2,"100");
 		assgn.assignDocstoNewAssgn(assignmentName2, null, Input.pureHitSeachString1);
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"exclude");
