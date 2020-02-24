@@ -62,12 +62,7 @@ public class Assignment_Regression {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 
-		Input in = new Input();
-		in.loadEnvConfig();
-		
-   
-		
-		//Open browser
+			//Open browser
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
@@ -309,7 +304,7 @@ public class Assignment_Regression {
 		
       }
       
-    @Test(groups={"regression"},priority=22)
+    @Test(groups={"regression"},priority=16)
 	   public void ValidateUserlistonQuickbatch() throws InterruptedException, ParseException, IOException {
 		 //Login as SA
 		lp.logout();
@@ -322,22 +317,24 @@ public class Assignment_Regression {
    	String emailId = "r.muserconsilio@gmai.com";
     um.createUser(firstName, lastName, "Review Manager", emailId, null, Input.projectName);
 	
-    lp.logout();
-    lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
+    bc.impersonateSAtoRMU();
     SessionSearch search = new SessionSearch(driver);
 	search.basicContentSearch(Input.searchString1);
 	search.quickbatch();
 	agnmt.ValidateReviewerlistquickbatch(emailId);
+	String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
+	agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB1, codingfrom);
   }
       
 	   @Test(groups={"smoke","regression"},priority=17)
 	   public void CreateQuickBatchfromsavedsearch() throws InterruptedException, ParseException, IOException {
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
+		
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
 		SavedSearch savesearch = new SavedSearch(driver);
 		savesearch.savedsearchquickbatch(savedsearchname);
-		String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
-		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB1, codingfrom,"AllRev");
+		String assignmentQB5= "assignmentQB5"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB5, codingfrom,"AllRev");
 	   }
 	   
 	  @Test(groups={"smoke","regression"},priority=18)
@@ -377,6 +374,16 @@ public class Assignment_Regression {
 		   DocExplorerPage docexp = new DocExplorerPage(driver);
 			docexp.DocExplorertoquickBatch();
 			agnmt.Quickbatchfailure();
+	   }
+	   
+	   @Test(groups={"smoke","regression"},priority=22)
+	   public void CreateQuickBatchfromadvancedsearch() throws InterruptedException, ParseException, IOException {
+		
+		SessionSearch advsearch = new SessionSearch(driver);
+		advsearch.advancedContentSearch(Input.searchString1);
+		advsearch.quickbatch();
+		String assignmentQB6= "assignmentQB6"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");
 	   }
 	   
       

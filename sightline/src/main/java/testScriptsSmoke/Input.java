@@ -72,6 +72,7 @@ public class Input {
 	public static String rmu2password;
 	public static String rev2userName;
 	public static String rev2password;
+	public static String domainName;
 	//Test data------------------------------------------------------
 	public static String searchString1;
 	public static String searchString2;
@@ -152,6 +153,7 @@ public class Input {
 		//Environment data-------------------------------------------------------------
 		url=envConfig.url;
 		projectName= envConfig.projectName;
+		domainName= envConfig.domainName;
 		sa1userName=envConfig.sa1userName;
 		sa1password = envConfig.sa1password;
 		pa1userName = envConfig.pa1userName;

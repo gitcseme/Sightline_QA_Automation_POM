@@ -77,7 +77,8 @@ public class DocListPage {
         //PageFactory.initElements(driver.getWebDriver(), this);
         search = new SessionSearch(driver);
     	base = new BaseClass(driver);
-    }
+    	this.driver.getWebDriver().get(Input.url+"Document/DocList");
+       }
     
     public void include(String data) {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

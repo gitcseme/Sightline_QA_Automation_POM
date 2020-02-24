@@ -288,4 +288,11 @@
     </classes>
 	</test> 
 	
+	<test name ="DocExplorer_Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.DocExplorer_Regression" ></class>  
+    </classes>
+	</test> 
+	
 </suite> <!-- Suite -->

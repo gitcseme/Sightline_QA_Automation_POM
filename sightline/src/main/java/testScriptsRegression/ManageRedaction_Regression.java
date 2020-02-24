@@ -41,8 +41,8 @@ public class ManageRedaction_Regression {
 	public void AddRedactionwithRMU() throws ParseException, InterruptedException {
 		
 		lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
-		redact.AddRedaction(redactname);
-		redact.AddRedaction(editredactname);
+		redact.AddRedaction(redactname,"RMU");
+		redact.AddRedaction(editredactname,"RMU");
 		redact.EditRedaction(editredactname);
 		redact.DeleteRedaction(redactname);
 	}
@@ -51,8 +51,8 @@ public class ManageRedaction_Regression {
 	public void AddRedactionwithPA() throws ParseException, InterruptedException {
 		
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
-		redact.AddRedaction(redactname);
-		redact.AddRedaction(editredactname);
+		redact.AddRedaction(redactname,"PA");
+		redact.AddRedaction(editredactname,"PA");
 		redact.EditRedaction(editredactname);
 		redact.DeleteRedaction(redactname);
 	}
@@ -63,7 +63,7 @@ public class ManageRedaction_Regression {
 		 lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		 //Impersonate as PA 
 		bc.impersonatePAtoRMU();
-		redact.AddRedaction(redactname);
+		redact.AddRedaction(redactname,"RMU");
 	}
 	
 	

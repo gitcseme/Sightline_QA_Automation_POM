@@ -61,7 +61,7 @@ public class DocViewPage {
     public Element getDocview_Audio_StartTime(){ return driver.FindElementByXPath("//*[@class='jp-current-time start']"); }
     public Element getDocview_Audio_EndTime(){ return driver.FindElementByXPath("//*[@class='jp-duration end']"); }
     public Element getDocview_Redactionstags_Value(){ return driver.FindElementByXPath("//ul[@class='multiselect-container dropdown-menu']/li[1]//input"); }
-    public Element getDocview_Redactionstags(){ return driver.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']"); }
+    public Element getDocview_AudioRedactions(){ return driver.FindElementById("ddlAudioRedactionTags"); }
     public Element getDocview_Redactionstags_Delete(){ return driver.FindElementById("btnDelete"); }
     public Element getDocview_Audio_Downloadbutton(){ return driver.FindElementById("liAudioDocumentTypeDropDown"); }
     public Element getDocview_Audio_DownloadFile(){ return driver.FindElementByXPath("//a[contains(text(),'MP3')]"); }
@@ -513,10 +513,10 @@ public void audioReduction() throws InterruptedException, ParseException {
      
      //select redaction tags
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getDocview_Redactionstags().Visible() ;}}),Input.wait30);
-     getDocview_Redactionstags().waitAndClick(10);
+    		 getDocview_AudioRedactions().Visible() ;}}),Input.wait30);
+     getDocview_AudioRedactions().selectFromDropdown().selectByIndex(1);
      Thread.sleep(2000);
-     getDocview_Redactionstags_Value().waitAndClick(10);
+    // getDocview_Redactionstags_Value().waitAndClick(10);
     
      //click on save button
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

@@ -6,9 +6,9 @@
 
 <suite-files>
 
-	 <suite-file path="./smokeSuite.xml"/> 
-	<!-- <suite-file path="./failed.xml"/> -->
-	<!-- <suite-file path="./regressionSuite.xml" />  -->
+	<!-- <suite-file path="./smokeSuite.xml"/> 
+	 <suite-file path="./failed.xml"/> -->
+	 <suite-file path="./regressionSuite.xml" />  
 
 
 	</suite-files>

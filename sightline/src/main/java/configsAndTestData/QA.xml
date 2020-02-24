@@ -5,6 +5,7 @@
         <url>http://172.22.155.2/</url>
         <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>
+        <domainName>DNDautoDomain1</domainName>
         <projectName>Auto_NoIngestion</projectName>
         <!-- Auto_SL2404  -->
         <!-- AutoSys SysAdmin  -->

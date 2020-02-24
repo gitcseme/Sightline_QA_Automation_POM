@@ -46,7 +46,7 @@ public class DocViewAudio_Regression {
 		cf.CodingformToSecurityGroup(codingfrom);
 		
 		RedactionPage redpage = new RedactionPage(driver);
-		redpage.AddRedaction(RedactName);
+		redpage.AddRedaction(RedactName,"RMU");
 		
 		lp.logout();
 		driver.getWebDriver().get(Input.url);

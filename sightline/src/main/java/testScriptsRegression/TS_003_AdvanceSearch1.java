@@ -64,7 +64,7 @@ public class TS_003_AdvanceSearch1 {
 		 
     	String RedactionName = "Redact"+Utility.dynamicNameAppender();
     	redact = new RedactionPage(driver);
-		redact.AddRedaction(RedactionName);
+		redact.AddRedaction(RedactionName,"RMU");
 		System.out.println("Redaction added "+RedactionName);
 		
 		driver.getWebDriver().get(Input.url+ "Search/Searches");

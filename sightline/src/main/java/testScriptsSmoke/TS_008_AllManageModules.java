@@ -90,7 +90,7 @@ public class TS_008_AllManageModules {
 	public void createRedaction() throws ParseException, InterruptedException {
 		
 		RedactionPage page3 = new RedactionPage(driver);
-		page3.AddRedaction(Redaction);
+		page3.AddRedaction(Redaction,"PA");
 		System.out.println("Redaction Successful");
 	}
 		

@@ -136,6 +136,7 @@ public class AssignmentsPage {
     public Element getAssgn_LikeDoc_Neartoggle(){ return driver.FindElementByXPath("//*[@id='chkIncludeNearDuplicates']/following-sibling::i"); }
     public Element getSelectUserToAssign(String userName){ return driver.FindElementByXPath("//*[@id='divNotAssignedUsers']//div[2][contains(.,'"+userName+"')]"); }
     public Element getQuickBatch_NameErrormsg(){ return driver.FindElementByXPath("//*[@id='assignmentName']/span/span"); }
+    public Element getQuickBatch_CodingErrormsg(){ return driver.FindElementByXPath("//*[@id='codingForm']/span/span"); }
     
     
     
@@ -1198,6 +1199,19 @@ public class AssignmentsPage {
           }
         
         public void Quickbatchfailure() {
+        	
+        	//click on continue button without selecting mandatory fields
+        	 getContinueBulkAssign().waitAndClick(Input.wait30);
+        	 
+        	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+           			getQuickBatch_NameErrormsg().Visible()  ;}}), Input.wait30);
+           	String expnamemsg = getQuickBatch_NameErrormsg().getText();
+           	System.out.println(expnamemsg);
+           	Assert.assertEquals("Name required", expnamemsg);
+           	
+           	String expcodingmsg = getQuickBatch_CodingErrormsg().getText();
+           	System.out.println(expcodingmsg);
+           	Assert.assertEquals("Please select Coding Form", expcodingmsg);
         	
             String aasgnname = "AutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTesting";   
            

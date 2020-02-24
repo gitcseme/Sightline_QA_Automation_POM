@@ -400,6 +400,34 @@ public class BaseClass {
         	System.out.println("Impersnated from PA to RMU");
 
     	}
+        
+        public void impersonateSAtoRMU() {
+        	getSignoutMenu().Click();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectDomain().Visible()  ;}}),Input.wait30);
+        	getSelectDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        	
+        	try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	
+         	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+        	getSaveChangeRole().Click();
+        	System.out.println("Impersnated from SA to RMU");
+
+    	}
 
    
 }

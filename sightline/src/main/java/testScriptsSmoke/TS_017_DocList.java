@@ -42,6 +42,7 @@ public class TS_017_DocList {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
+	
 		//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -51,11 +52,61 @@ public class TS_017_DocList {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
 	
+	/*
+    To validate bulk tag and bulk folder in doclist page	
+	*/
+	@Test(groups={"smoke","regression"},priority=1)
+	public void bulkTagAndBulkFolder() throws InterruptedException {
+		String bulkTagName= "A_DocListBulkTag"+Utility.dynamicNameAppender();
+		String bulkFolderName= "A_DocListBulkFolder"+Utility.dynamicNameAppender();
+		
+		bc.selectproject();
+		//search for string
+		Assert.assertTrue(ss.basicContentSearch(Input.searchString1)==Input.pureHitSeachString1);
+    	
+    	//view in doclist
+    	ss.ViewInDocList();
+    	final DocListPage dl= new DocListPage(driver);
+    	
+    	//Select all docs and perform bulk tag and bulk folder
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			dl.getSelectAll().Visible()  ;}}), Input.wait30);
+		dl.getSelectAll().waitAndClick(10);
+		
+    	dl.getYesAllPageDocs().waitAndClick(10);
+    	dl.getPopUpOkBtn().Click();
+    	
+    	ss.bulkTag(bulkTagName);
+    	
+    	
+    	//Select all docs and perform bulk tag and bulk folder
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			dl.getSelectAll().Visible()  ;}}), Input.wait30);
+		dl.getSelectAll().waitAndClick(10);
+		
+    	dl.getYesAllPageDocs().waitAndClick(10);
+    	dl.getPopUpOkBtn().Click();
+    	
+    	ss.bulkFolder(bulkFolderName);
+    	
+    	//Validate tag and folder in workproduct search
+    	bc.selectproject();
+    	ss.switchToWorkproduct();
+    	ss.selectTagInASwp(bulkTagName);
+		Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
+
+    	
+    	bc.selectproject();
+    	ss.switchToWorkproduct();
+    	ss.selectFolderInASwp(bulkFolderName);
+		Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
+   }
+	
 	//To validate masterdate for all image files in doclist
 	@Test(groups={"regression"})
 	public void masterDateForImageDocs() throws InterruptedException {
 		//driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	bc.selectproject();
+    
     	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=4);
     	ss.ViewInDocList();
     	final DocListPage DL= new DocListPage(driver);
@@ -113,57 +164,7 @@ public class TS_017_DocList {
     	
     	
 	}
-	/*
-    To validate bulk tag and bulk folder in doclist page	
-	*/
-	@Test(groups={"smoke","regression"})
-	public void bulkTagAndBulkFolder() throws InterruptedException {
-		String bulkTagName= "A_DocListBulkTag"+Utility.dynamicNameAppender();
-		String bulkFolderName= "A_DocListBulkFolder"+Utility.dynamicNameAppender();
-		
-		//search for string
-		bc.selectproject();
-    	Assert.assertTrue(ss.basicContentSearch(Input.searchString1)==Input.pureHitSeachString1);
-    	
-    	//view in doclist
-    	ss.ViewInDocList();
-    	final DocListPage dl= new DocListPage(driver);
-    	
-    	//Select all docs and perform bulk tag and bulk folder
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			dl.getSelectAll().Visible()  ;}}), Input.wait30);
-		dl.getSelectAll().waitAndClick(10);
-		
-    	dl.getYesAllPageDocs().waitAndClick(10);
-    	dl.getPopUpOkBtn().Click();
-    	
-    	ss.bulkTag(bulkTagName);
-    	
-    	
-    	//Select all docs and perform bulk tag and bulk folder
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			dl.getSelectAll().Visible()  ;}}), Input.wait30);
-		dl.getSelectAll().waitAndClick(10);
-		
-    	dl.getYesAllPageDocs().waitAndClick(10);
-    	dl.getPopUpOkBtn().Click();
-    	
-    	ss.bulkFolder(bulkFolderName);
-    	
-    	//Validate tag and folder in workproduct search
-    	bc.selectproject();
-    	ss.switchToWorkproduct();
-    	ss.selectTagInASwp(bulkTagName);
-		Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
-
-    	
-    	bc.selectproject();
-    	ss.switchToWorkproduct();
-    	ss.selectFolderInASwp(bulkFolderName);
-		Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
-    	
-    	
-	}
+	
 	/*
 	To verify navigation from doclist to docview
 	*/

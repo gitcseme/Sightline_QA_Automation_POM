@@ -38,8 +38,9 @@ public class RedactionPage {
         bc = new BaseClass(driver);
        }
 
-    public void AddRedaction(String RedactName) {
-    	
+    public void AddRedaction(String RedactName,String usertype) {
+    	if(usertype.equalsIgnoreCase("PA"))
+    	{
     	SecurityGroupsPage sp = new SecurityGroupsPage(driver);
     	List<String> expvalue = sp.GetSecurityGrouplist();
     	
@@ -57,6 +58,11 @@ public class RedactionPage {
     	}
      	
     	Assert.assertEquals(allsg, expvalue);
+    	}
+    	else if(usertype.equalsIgnoreCase("RMU")){
+    		System.out.println("User is not PA");
+    	}
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAllRedactionRootNode().Visible()  ;}}),Input.wait30); 
     	getAllRedactionRootNode().Click();

@@ -23,6 +23,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -286,9 +287,13 @@ public  class Driver  {
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//MicrosoftWebDriver.exe");
+		    		System.setProperty("webdriver.edge.driver","C:\\Users\\smangal\\Downloads\\MicrosoftWebDriver.exe");
+		    		EdgeOptions options = new EdgeOptions();
+		    		options.setPageLoadStrategy("eager");
+		    	//	driver = new EdgeDriver(options);
+		    //	    System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//MicrosoftWebDriver.exe");
 		    	  //Start Edge Session
-		    		WebDriver driver=new EdgeDriver();
+		    		WebDriver driver=new EdgeDriver(options);
 					driver.manage().window().maximize();
 					return driver;	
 		      } 
@@ -296,7 +301,7 @@ public  class Driver  {
 		      catch (Exception ex) { 
 		        ex.printStackTrace();
 		    	  throw new RuntimeException
-		              ("couldnt create chrome driver"); 
+		              ("couldnt create edge driver"); 
 		      } 
 		   }
 	
