@@ -24,6 +24,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -287,14 +289,15 @@ public  class Driver  {
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    		System.setProperty("webdriver.edge.driver","C:\\Users\\smangal\\Downloads\\MicrosoftWebDriver.exe");
-		    		EdgeOptions options = new EdgeOptions();
-		    		options.setPageLoadStrategy("eager");
-		    	//	driver = new EdgeDriver(options);
-		    //	    System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//MicrosoftWebDriver.exe");
-		    	  //Start Edge Session
-		    		WebDriver driver=new EdgeDriver(options);
-					driver.manage().window().maximize();
+		    		System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
+		    		DesiredCapabilities m_capability = DesiredCapabilities.chrome();
+		    		m_capability.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
+
+		    		m_capability = DesiredCapabilities.edge();
+		    		WebDriver driver = new EdgeDriver(m_capability);
+		    		
+		    		//Start Edge Session
+		    		driver.manage().window().maximize();
 					return driver;	
 		      } 
 
