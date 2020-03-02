@@ -226,6 +226,14 @@ public class BaseClass {
         	Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
     	}
      
+     public void VerifyErrorMessage(String ExpectedMsg) {
+     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     			getSuccessMsgHeader().Visible()  ;}}), Input.wait30); 
+     	Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
+     	Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+ 	}
+  
+     
      public void SelectCurrentdatfromDatePicker(Element DateFrom, Element dateWidget) {
     	 
   	   //Get Today's number

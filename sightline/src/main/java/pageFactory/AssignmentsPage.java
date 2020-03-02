@@ -64,9 +64,10 @@ public class AssignmentsPage {
     
     public Element getBulkAssign_NewAssignment(){ return driver.FindElementById("tabNew"); }
   //added by shilpi on 04-01
-    public Element getAssignmentAction_ViewinDocView(){ return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='View All Docs In DocView']"); }
+    public Element getAssignmentAction_ViewinDocView(){ return driver.FindElementByXPath("//a[text()='View All Docs In DocView']"); }
     public Element getSelectAssignmentAsReviewer(String assignmentName){ return driver.FindElementByXPath(".//*[@id='dt_basic']//strong[contains(.,'"+assignmentName+"')]"); }
-    
+    public Element getAssignmentAction_ViewinDocList(){ return driver.FindElementByXPath("//a[text()='View All Docs in DocList']"); }
+     
     //added on 06/03
     public Element getAssignment_Edit_DisplayDocumentHistory(){ return driver.FindElementByXPath(".//*[@id='CascadingDivision']//label[contains(.,'Document History Tab')]/i"); }
     public Element getAssignment_Edit_ApplyRedactionbyreviewer(){ return driver.FindElementByXPath(".//*[@id='CascadingDivision']//label[contains(.,'Allow reviewers to apply redactions')]/i"); }
@@ -303,7 +304,7 @@ public class AssignmentsPage {
     	driver.scrollingToBottomofAPage();
     	Thread.sleep(2000);
     	
-    	getAssgnCounts(assignmentName, 9).WaitUntilPresent();
+    	getAssgnCounts(assignmentName, 9);
     	//verify total docs count
     	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
@@ -756,7 +757,7 @@ public class AssignmentsPage {
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getAssignmentAction_DeleteAssignment().Visible()  ;}}), Input.wait60);
    
-   	getAssignmentAction_DeleteAssignment().waitAndClick(3);
+   	getAssignmentAction_DeleteAssignment().waitAndClick(10);
    	
 	bc.getYesBtn().waitAndClick(5);
 	bc.VerifySuccessMessage("Assignment deleted successfully");
@@ -1010,6 +1011,66 @@ public class AssignmentsPage {
     		
         }
         
+        public void Viewindoclistfromassgn(String assignmentName)
+        {
+        	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait30);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+           	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait30);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+           driver.scrollPageToTop();
+        	
+           getAssignmentActionDropdown().waitAndClick(15);
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_ViewinDocList().Visible()  ;}}), Input.wait60);
+        	getAssignmentAction_ViewinDocList().Click();
+        	
+        	final DocListPage dp = new DocListPage(driver);
+    	    dp.getDocList_info().WaitUntilPresent();
+    	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+    	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+Input.pureHitSeachString1+" entries");
+    	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+
+        }
+        
+        public void Viewindocviewfromassgn(String assignmentName)
+        {
+        	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait30);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+           	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait30);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+           driver.scrollPageToTop();
+        	
+           getAssignmentActionDropdown().waitAndClick(15);
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_ViewinDocView().Visible()  ;}}), Input.wait60);
+        	getAssignmentAction_ViewinDocView().Click();
+        	
+        	DocViewPage dv= new DocViewPage(driver);
+      	    dv.getDocView_info().WaitUntilPresent();
+      	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+Input.pureHitSeachString1+" Docs");
+      	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+        }
         
         public void createnewquickbatch_chronologic_withoutReviewer(final String assignmentName,String codingForm) {
      
@@ -1234,7 +1295,90 @@ public class AssignmentsPage {
         } 
         
          
+          
+        public void createnewquickbatch(final String assignmentName,String codingForm) throws NumberFormatException, InterruptedException {
+            
+            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			 getAssignmentName().Visible()  ;}}), Input.wait60);
+          	getAssignmentName().SendKeys(assignmentName);
+          
+             try {
+         		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait30);
+            	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+         	}
+         	catch (Exception e) {
+         		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+         	} 
+             
+             String doccount = getQuickBatch_Doccount().getText();
+             System.out.println(doccount);
+          
+          getContinueBulkAssign().waitAndClick(Input.wait30);
+             
+           final BaseClass bc = new BaseClass(driver);
+           final int Bgcount = bc.initialBgCount();
            
+           getFinalizeButton().waitAndClick(Input.wait30);
+           
+           bc.VerifySuccessMessage("Quick Batch Assign has been added to background process. You will get notification on completion.");
+           System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+              
+           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
+          	
+          	System.out.println("Docs assigned to  "+assignmentName);
+          	
+          	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+        	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+     	   driver.scrollPageToTop();
+        	
+        	getAssignmentActionDropdown().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
+        
+        	getAssignmentAction_EditAssignment().waitAndClick(15);
+        	
+        	getAssignmentName().SendKeys(assignmentName+"New");
+        	getAssignmentSaveButton().waitAndClick(10);
+        	Thread.sleep(2000);
+	
+        	
+			addReviewerAndDistributeDocs(assignmentName+"New", Integer.parseInt(doccount));
+			            
+        	getAssignmentActionDropdown().waitAndClick(10);
+       
+        	getAssignmentAction_CopyAssignment().waitAndClick(5);
+       	   	
+       		bc.getYesBtn().waitAndClick(5);
+       		bc.VerifySuccessMessage("Record copied successfully");
+       		
+       		//view all docs in doclist
+       		Viewindoclistfromassgn(assignmentName+"New");
+       		
+       	   //view all docs in docview
+       		Viewindocviewfromassgn(assignmentName+"New");
+
+        	//delete assignment
+       		deleteAssignment(assignmentName+"New");
+        	
+         }
+            
+
+        
+        
    
  
  

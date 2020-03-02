@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
-
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -20,10 +19,12 @@ import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
+import pageFactory.DocumentAuditReportPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
+import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
@@ -386,7 +387,28 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");
 	   }
 	   
-      
+	   @Test(groups={"smoke","regression"},priority=22)
+	   public void QuickBatchModifyValidation() throws InterruptedException, ParseException, IOException {
+		
+		   SavedSearch savesearch = new SavedSearch(driver);
+			savesearch.savedsearchquickbatch(savedsearchname);
+			String assignmentQB7= "assignmentQB7"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB7, codingfrom,"AllRev");
+	   }
+
+       @Test(groups={"regression"},priority=23)
+	   public void QuickBatchfromSearchTermDocAuditreport() throws InterruptedException, ParseException, IOException {
+		
+
+		    SearchTermReportPage st = new SearchTermReportPage(driver);
+		    st.ValidateSearchTermreport(savedsearchname);
+		    st.TermtoQuickbatch();
+			String assignmentQB8= "assignmentQB8"+Utility.dynamicNameAppender();
+			agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB8, codingfrom);
+			DocumentAuditReportPage da = new DocumentAuditReportPage(driver);
+			da.ValidateDAreport(savedsearchname, assignmentQB8);
+	   }
+	  
 	
 	
 	@DataProvider(name="Specail char")
