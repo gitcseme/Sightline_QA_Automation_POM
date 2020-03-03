@@ -42,9 +42,6 @@ public class TS_017_DocList {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-		Input in = new Input();
-		in.loadEnvConfig();
-    	
 		//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
