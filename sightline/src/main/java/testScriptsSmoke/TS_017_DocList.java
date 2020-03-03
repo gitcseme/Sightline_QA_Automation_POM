@@ -42,7 +42,9 @@ public class TS_017_DocList {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-	
+		Input in = new Input();
+		in.loadEnvConfig();
+    	
 		//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -50,7 +52,7 @@ public class TS_017_DocList {
 		//Login as a PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	}
+		}
 	
 	/*
     To validate bulk tag and bulk folder in doclist page	
@@ -73,8 +75,9 @@ public class TS_017_DocList {
     			dl.getSelectAll().Visible()  ;}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
 		
-    	dl.getYesAllPageDocs().waitAndClick(10);
-    	dl.getPopUpOkBtn().Click();
+    	//dl.getYesAllPageDocs().waitAndClick(10);
+    	dl.getPopUpOkBtn().waitAndClick(10);
+        
     	
     	ss.bulkTag(bulkTagName);
     	
@@ -84,8 +87,8 @@ public class TS_017_DocList {
     			dl.getSelectAll().Visible()  ;}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
 		
-    	dl.getYesAllPageDocs().waitAndClick(10);
-    	dl.getPopUpOkBtn().Click();
+    	dl.getPopUpOkBtn().waitAndClick(10);
+        
     	
     	ss.bulkFolder(bulkFolderName);
     	
@@ -150,7 +153,7 @@ public class TS_017_DocList {
 		
     	dl.getGetDocFIleTypeFilter().waitAndClick(10);
     	dl.include("HyperText Markup Language");
-    	dl.getApplyFilter().Click();
+    	dl.getApplyFilter().waitAndClick(10);
     	dl.validateCount("Showing 1 to 1 of 1 entries");
     
     	//cancel previous filter
@@ -182,13 +185,9 @@ public class TS_017_DocList {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			dl.getSelectAll().Visible()  ;}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
-		try {
-    	dl.getYesAllPageDocs().waitAndClick(10);
-		}catch (Exception e) {
-			// No child docs
-		}
-    	dl.getPopUpOkBtn().Click();
-    	
+	
+		dl.getPopUpOkBtn().waitAndClick(10);
+	    
     	ss.ViewInDocView();
     	
     	//validate count
@@ -202,7 +201,8 @@ public class TS_017_DocList {
 /*
 Create one security group and release docs to it, 
 Validate docs in SG through work product search 	
-*/	@Test(groups={"smoke","regression"})
+*/
+	@Test(groups={"smoke","regression"})
 	public void doclistBulkRelease() throws InterruptedException {
 		
 		//Create Security group
@@ -223,8 +223,8 @@ Validate docs in SG through work product search
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			dl.getSelectAll().Visible()  ;}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
-    	dl.getYesAllPageDocs().waitAndClick(10);
-    	dl.getPopUpOkBtn().Click();
+    //	dl.getYesAllPageDocs().waitAndClick(10);
+    	dl.getPopUpOkBtn().waitAndClick(10);
     	
     	//bulk release to SG
 		ss.bulkRelease(securitygroupname);
