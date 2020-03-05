@@ -66,6 +66,9 @@ public class BaseClass {
     public Element getCancelbutton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
     public Element getNOBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); } 
    
+    public Element getAvlDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
+    public Element getAvlProject(){ return driver.FindElementById("ddlAvailableProjects"); }
+  
     
     public BaseClass(Driver driver){
 
@@ -420,8 +423,8 @@ public class BaseClass {
         	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getSelectDomain().Visible()  ;}}),Input.wait30);
-        	getSelectDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
         	
         	try {
 				Thread.sleep(3000);
@@ -429,7 +432,7 @@ public class BaseClass {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
         	
          	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
         	getSaveChangeRole().Click();

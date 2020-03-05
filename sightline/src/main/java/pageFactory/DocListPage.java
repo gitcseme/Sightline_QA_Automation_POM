@@ -92,7 +92,7 @@ public class DocListPage {
 			e.printStackTrace();
 		}
     	getSearchTextArea().SendKeysNoClear(""+Keys.ENTER);
-    	getAddToFilter().Click();
+    	getAddToFilter().waitAndClick(10);
     
 	}
     public void exclude(String data) {

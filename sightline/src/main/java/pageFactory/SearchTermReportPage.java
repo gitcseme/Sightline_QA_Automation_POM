@@ -19,7 +19,7 @@ public class SearchTermReportPage {
     public Element getST_Actionsbutton(){ return driver.FindElementById("tallyactionbtn"); }
     public Element getST_Actions_QB(){ return driver.FindElementByXPath("//a[contains(.,'Quick Batch')]"); }
     //public Element getST_SelectHits(){ return driver.FindElementById("chkHits"); }
-    public Element getST_Selectsearch(String searchname){ return driver.FindElementByXPath("//a[@data-content='"+searchname+"']"); }
+    public Element getST_Selectsearch(String searchname){ return driver.FindElementByXPath("//a[contains(.,'"+searchname+"']/i[1]"); }
     
     
       public SearchTermReportPage(Driver driver){
@@ -38,16 +38,14 @@ public class SearchTermReportPage {
        			getReport_SearchTerm().Visible()  ;}}), Input.wait30); 
          getReport_SearchTerm().Click();
 		
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			  getApplyBtn().Visible()  ;}}), Input.wait30);	
-    	  getApplyBtn().Click();
+		  getApplyBtn().waitAndClick(20);
     	  
     	  bc.VerifyErrorMessage("Please select at least one search.");
     	  bc.CloseSuccessMsgpopup();
 		  
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  getST_Selectsearch(Searchname).Visible()  ;}}), Input.wait30);		
-		  getST_Selectsearch(Searchname).Click();
+				  getST_Selectmysearches().Visible()  ;}}), Input.wait30);		
+		  getST_Selectmysearches().Click();
 		   
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getApplyBtn().Visible()  ;}}), Input.wait30);	
@@ -70,8 +68,9 @@ public class SearchTermReportPage {
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getST_Actionsbutton().Visible()  ;}}), Input.wait30); 
 	     getST_Actionsbutton().waitAndClick(20);
+	     Thread.sleep(2000);
 	   	 
-	   	getST_Actions_QB().waitAndClick(10);
+	   	getST_Actions_QB().waitAndClick(20);
 	   	 
 	    }
 

@@ -518,7 +518,7 @@ public class SessionSearch {
     	
     	//verify counts for all the tiles
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+    	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait120);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
     	System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
@@ -929,7 +929,7 @@ public class SessionSearch {
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
    	 
-   	 getBulkFolderAction().Click();
+   	 getBulkFolderAction().waitAndClick(10);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1098,7 +1098,7 @@ public void ViewInDocList() throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getDocListAction().Visible()  ;}}), Input.wait60); 
 	 
-	 getDocListAction().waitAndClick(10);
+	 getDocListAction().waitAndClick(20);
 	 try{
 			getTallyContinue().waitAndClick(10);
 		}catch (Exception e) {

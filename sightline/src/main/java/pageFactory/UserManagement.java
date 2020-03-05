@@ -147,6 +147,7 @@ public class UserManagement {
 		 
 	}
 	 public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
+		
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddUserBtn().Visible() ;}}), Input.wait30);
 		 getAddUserBtn().Click();

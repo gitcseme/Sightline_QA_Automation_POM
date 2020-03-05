@@ -410,6 +410,7 @@ public class DocExplorerPage {
     
     public void DocExplorertoquickBatch()
     {
+    	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
     	getDocExp_SelectAllDocs().waitAndClick(10);

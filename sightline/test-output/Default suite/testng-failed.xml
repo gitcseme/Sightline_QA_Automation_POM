@@ -5,8 +5,8 @@
     <classes>
       <class name="testScriptsRegression.Assignment_Regression">
         <methods>
+          <include name="QuickBatchfromSearchTermDocAuditreport"/>
           <include name="beforeTestMethod"/>
-          <include name="QuickBatchModifyValidation"/>
           <include name="preCondition"/>
           <include name="close"/>
           <include name="takeScreenShot"/>

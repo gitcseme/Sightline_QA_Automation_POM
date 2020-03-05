@@ -31,24 +31,24 @@ public class TS_006_Production {
 	String productionname= "P"+Utility.dynamicNameAppender();
 	String PrefixID = "A_"+Utility.dynamicNameAppender();;
 	String SuffixID = "_P"+Utility.dynamicNameAppender();;
-	String foldername = "FolderProd"+Utility.dynamicNameAppender();;
+    String foldername = "FolderProd"+Utility.dynamicNameAppender();;
 	String Tagname = "Tag"+Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+	
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);
 		ss.basicContentSearch("crammer");
 		ss.bulkFolderExisting(foldername);
+		
 		tp.CreateTagwithClassification(Tagname,"Privileged"); 
 	}
 		

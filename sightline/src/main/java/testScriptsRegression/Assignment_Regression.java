@@ -44,7 +44,7 @@ public class Assignment_Regression {
 	ReportsPage report; 
 	
 	String assgnname = "Assgnm";
-	String codingfrom = "cfC1"+Utility.dynamicNameAppender();
+	//String codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName3= "assignmentA3"+Utility.dynamicNameAppender();
 	String assignmentName4= "assignmentA4"+Utility.dynamicNameAppender();
 	String assignmentNamecopy = "assignment5"+Utility.dynamicNameAppender();
@@ -54,7 +54,9 @@ public class Assignment_Regression {
 	String assgngrpName1= "assgnGrp1"+Utility.dynamicNameAppender();
 	String tagname = "Assgntag"+Utility.dynamicNameAppender(); 
     String foldername= "Assgnfolder"+Utility.dynamicNameAppender(); 
-	String savedsearchname = "Save"+Utility.dynamicNameAppender();
+	//String savedsearchname = "Save"+Utility.dynamicNameAppender();
+	String codingfrom = "cfC1940263";
+	String savedsearchname = "Save33767";
 	
 	
 	@BeforeClass(alwaysRun = true)
@@ -62,7 +64,8 @@ public class Assignment_Regression {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-
+        Input in = new Input();
+        in.loadEnvConfig();
 			//Open browser
 		driver = new Driver();
 		
@@ -74,34 +77,36 @@ public class Assignment_Regression {
 	
 		//add tag
 		page = new TagsAndFoldersPage(driver);
-		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
-		    	
+		//page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
+		/*    	
 		//add comment field
 		CommentsPage comments = new CommentsPage(driver);
 		comments.AddComments("Comment"+Utility.dynamicNameAppender());
 				
 		//Create coding for for assignment
 		CodingForm cf = new CodingForm(driver);
-		cf.createCodingform(codingfrom);
+		cf.createCodingform(codingfrom);*/
 			
 		//Create assignment with newly created coding form
 		
-		agnmt.createAssignment(assignmentName,codingfrom);
+	//	agnmt.createAssignment(assignmentName,codingfrom);
 	
 	  //Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
-		search.bulkAssign();
-		agnmt.assignDocstoExisting(assignmentName);
+		//search.basicContentSearch(Input.searchString1);
+		//search.saveSearch(savedsearchname);
+	/*	search.basicContentSearch(Input.searchString1);
+	//	search.bulkAssign();
+	//	agnmt.assignDocstoExisting(assignmentName);
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1); 
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1); */
 		dp = new DocListPage(driver);
 		
 	}
 	
-	
+	/*
 	  @Test(groups={"regression"},priority=1)
 	  public void AssgnManageRev_ViewInDocView() throws InterruptedException {
 		  
@@ -279,9 +284,7 @@ public class Assignment_Regression {
 	  @Test(groups={"regression"},priority=14)
       public void CopyAssignment() throws InterruptedException
       {
-		/*  agnmt.createAssgnGroup(assgngrpName1);
-		  agnmt.getAssgnGrp_Select(assgngrpName1).waitAndClick(10);
-		*/  agnmt.createAssignment(assignmentName, codingfrom);
+		  agnmt.createAssignment(assignmentName, codingfrom);
 		  agnmt.editAssignment(assignmentNamecopy);
 		  agnmt.CopyAssignment(assignmentNamecopy, codingfrom);
 		  SessionSearch search = new SessionSearch(driver);
@@ -304,20 +307,26 @@ public class Assignment_Regression {
 		agnmt.UnassignDocsfromAssgn(assignmentName3);
 		
       }
+	  
+	  */
       
-    @Test(groups={"regression"},priority=16)
+  //  @Test(groups={"regression"},priority=16)
 	   public void ValidateUserlistonQuickbatch() throws InterruptedException, ParseException, IOException {
 		 //Login as SA
 		lp.logout();
        lp.loginToSightLine(Input.sa1userName, Input.sa1password);
-
+     
 		//create test user
     UserManagement	um = new UserManagement(driver);
    	String firstName = "QBRMU";
    	String lastName =  "QBRMUTest";
    	String emailId = "r.muserconsilio@gmai.com";
-    um.createUser(firstName, lastName, "Review Manager", emailId, null, Input.projectName);
-	
+
+		/*
+		 * try { um.deleteUser(firstName); } catch(Exception e) {
+		 * System.out.println("User does not exist"); }
+		 */
+   	um.createUser(firstName, lastName, "Review Manager", emailId, null, Input.projectName);
     bc.impersonateSAtoRMU();
     SessionSearch search = new SessionSearch(driver);
 	search.basicContentSearch(Input.searchString1);
@@ -327,19 +336,20 @@ public class Assignment_Regression {
 	agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB1, codingfrom);
   }
       
-	   @Test(groups={"smoke","regression"},priority=17)
+	  // @Test(groups={"regression"},priority=17)
 	   public void CreateQuickBatchfromsavedsearch() throws InterruptedException, ParseException, IOException {
 		
-		lp.logout();
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
+		//lp.logout();
+		//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
 		SavedSearch savesearch = new SavedSearch(driver);
 		savesearch.savedsearchquickbatch(savedsearchname);
 		String assignmentQB5= "assignmentQB5"+Utility.dynamicNameAppender();
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB5, codingfrom,"AllRev");
 	   }
 	   
-	  @Test(groups={"smoke","regression"},priority=18)
+	 // @Test(groups={"smoke","regression"},priority=18)
 	   public void CreateQuickBatchfromdoclist() throws InterruptedException, ParseException, IOException {
+		bc.selectproject();
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
@@ -349,7 +359,7 @@ public class Assignment_Regression {
 	   }
 	   
 	   
-	  @Test(groups={"smoke","regression"},priority=19)
+	 // @Test(groups={"smoke","regression"},priority=19)
 	public void CreateQuickBatchfromTally() throws InterruptedException, ParseException, IOException {
 	
 	driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
@@ -360,7 +370,7 @@ public class Assignment_Regression {
 	agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB3, codingfrom,"selectrev");
   }
 		   
-   @Test(groups={"smoke","regression"},priority=20)
+    // @Test(groups={"smoke","regression"},priority=20)
 	   public void CreateQuickBatchfromDocExplorer() throws InterruptedException, ParseException, IOException {
 	
     	DocExplorerPage docexp = new DocExplorerPage(driver);
@@ -369,7 +379,7 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB4, codingfrom,"AllRev");
 	 }
 			   
-	   @Test(groups={"regression"},priority=21)
+	 // @Test(groups={"regression"},priority=21)
 	   public void ValidateNameQuickBatchfailure()
 	   {
 		   DocExplorerPage docexp = new DocExplorerPage(driver);
@@ -377,7 +387,7 @@ public class Assignment_Regression {
 			agnmt.Quickbatchfailure();
 	   }
 	   
-	   @Test(groups={"smoke","regression"},priority=22)
+      // @Test(groups={"smoke","regression"},priority=22)
 	   public void CreateQuickBatchfromadvancedsearch() throws InterruptedException, ParseException, IOException {
 		
 		SessionSearch advsearch = new SessionSearch(driver);
@@ -387,13 +397,13 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");
 	   }
 	   
-	   @Test(groups={"smoke","regression"},priority=22)
+     // @Test(groups={"smoke","regression"},priority=22)
 	   public void QuickBatchModifyValidation() throws InterruptedException, ParseException, IOException {
 		
 		   SavedSearch savesearch = new SavedSearch(driver);
 			savesearch.savedsearchquickbatch(savedsearchname);
 			String assignmentQB7= "assignmentQB7"+Utility.dynamicNameAppender();
-		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB7, codingfrom,"AllRev");
+		   agnmt.createnewquickbatch(assignmentQB7, codingfrom);
 	   }
 
        @Test(groups={"regression"},priority=23)

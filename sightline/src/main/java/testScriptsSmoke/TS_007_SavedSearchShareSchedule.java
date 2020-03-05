@@ -40,19 +40,23 @@ public class TS_007_SavedSearchShareSchedule {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    	//Open browser
+		
+	 //Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		//Search and save it
+		ss= new SavedSearch(driver);		
+		
 		search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
-		ss= new SavedSearch(driver);		
-		bc = new BaseClass(driver);
+		search.saveSearch(SearchNamePA);
+		
+			bc = new BaseClass(driver);
 	}
-	@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -68,7 +72,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -80,7 +84,7 @@ public class TS_007_SavedSearchShareSchedule {
 	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
 	}
 	
-	@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
@@ -103,9 +107,9 @@ public class TS_007_SavedSearchShareSchedule {
 
 	  	//Share the saved search
 	  	
-	  	/*	 
-	  	 * SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-	  	 * sgpage.AddSecurityGroup(securitygroupname);
+	  /*	 
+	     SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+	  	 sgpage.AddSecurityGroup(securitygroupname);
 	  	 
 	      this.driver.getWebDriver().get(Input.url+ "Search/Searches");
 	      search.ViewInDocList();
