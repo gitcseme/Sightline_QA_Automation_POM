@@ -2,8 +2,8 @@
 <QA>
           <url>https://sightlineus.ms.consilio.com/</url>
          <prodpath>\\ProductionWS_hwpoc\Automation</prodpath>
-            <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <projectName>Test Project</projectName>
+            <SourceLocation>IngestionWS_fnp\Fisher Phillips\Test Project</SourceLocation>
+        <projectName>Auto_SL0319</projectName>
        <!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
    		<sa1password>Q@test_12</sa1password> 
@@ -11,7 +11,7 @@
         <!-- USPA -->
         <pa2FullName>QA PAU2</pa2FullName>
         <pa2userName>qapau2@consilio.com</pa2userName>
-        <pa2password>Q@test_11</pa2password>
+        <pa2password>Q@test_12</pa2password>
         
         <pa1FullName>QA PAU1</pa1FullName>
         <pa1userName>qapau1@consilio.com</pa1userName>
@@ -19,7 +19,7 @@
         
         <!--USRMU  -->
         <rmu1FullName>QA RMU1</rmu1FullName>
-        <rmu1userName>qarmu2@consilio.com</rmu1userName>
+        <rmu1userName>qarmu1@consilio.com</rmu1userName>
         <rmu1password>Q@test_11</rmu1password>
         
         <rmu2FullName>QA RMU2</rmu2FullName>
@@ -29,11 +29,11 @@
         <!-- USRev -->
         <rev2FullName>QA REV2</rev2FullName>
         <rev2userName>qarev2@consilio.com</rev2userName>
-        <rev2password>Q@test_11</rev2password>
+        <rev2password>Q@test_13</rev2password>
         
         <rev1FullName>QA REV1</rev1FullName>
         <rev1userName>qarev1@consilio.com</rev1userName>
-        <rev1password>Q@test_11</rev1password>
+        <rev1password>Q@test_12</rev1password>
         
         <shareTo>QA PAU1</shareTo>
               

@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.CommentsPage;
 import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
@@ -30,6 +31,7 @@ public class DocExplorer_Regression {
 	
 	String assignmentName1 = "Assgn1"+Utility.dynamicNameAppender();
 	String assignmentName2 = "Assgn2"+Utility.dynamicNameAppender();
+	String commentname = "C"+Utility.dynamicNameAppender();
 
 	/*
 	 * Author : Shilpi Mangal
@@ -181,6 +183,20 @@ public class DocExplorer_Regression {
 	public void EmailAuthorDomainFilter() throws InterruptedException {
 		
 		docexp.EmailAuthorDomainFilter("consilio.com","gmail.com");
+    }
+	
+
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify that “EmailAuthorDomain” Filter with "Include" functionality is working correctly on Doc Explorer list.
+	 */
+	@Test(groups={"regression"},priority=10)
+	public void CommentsFilter() throws InterruptedException {
+		
+		docexp.CommentFilter();
     }
 	
 	

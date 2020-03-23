@@ -45,7 +45,10 @@ public class DocExplorerPage {
     public Element getDocExp_CommentsFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'Comments')]"); }
     public Element getDocExp_DocumentList_info(){ return driver.FindElementById("dtDocumentList_info"); }
     public Element getDocExp_DocID(){ return driver.FindElementByXPath(".//*[@id='dtDocumentList']//tr[1]/td[2]/div"); }
+    public Element getDocExp_Docfiletype(){ return driver.FindElementByXPath(".//*[@id='dtDocumentList']//tr[1]/td[5]/div"); }
+    
     public Element getDocExp_DocIDSearchName(){ return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr[2]/th[2]/input"); }
+    public Element getDocExp_DocFiletypeSearchName(){ return driver.FindElementByXPath("//*[@class='dataTables_scrollHead']//tr[2]/th[5]/input"); }
     public Element getDocExp_CusName(){ return driver.FindElementByXPath(".//*[@id='dtDocumentList']//tr[1]/td[4]/div"); }
     public Element getDocExp_CustodianSearchName(){ return driver.FindElementByXPath(".//*[@class='dataTables_scrollHead']//tr[2]/th[4]/input"); }
     public Element getDocExp_MasterDate(){ return driver.FindElementByXPath(".//*[@id='dtDocumentList']//tr[1]/td[7]/div"); }
@@ -426,5 +429,68 @@ public class DocExplorerPage {
     	getDocExp_action_quickbatch().Click();
     }
  
+  public void DocIDandDocFileTypeFilters() throws InterruptedException {
+        
+        this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+        
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getDocExp_DocID().Visible() ;}}), Input.wait30);
+    	String DocId = getDocExp_DocID().getText();
+    	System.out.println(DocId);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getDocExp_DocIDSearchName().Visible() ;}}), Input.wait30);
+    	getDocExp_DocIDSearchName().SendKeys(DocId);
+    	
+    	String Docfiletype = getDocExp_Docfiletype().getText();
+    	System.out.println(Docfiletype);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getDocExp_DocFiletypeSearchName().Visible() ;}}), Input.wait30);
+    	getDocExp_DocFiletypeSearchName().SendKeys(Docfiletype);
+    	
+    	doclist.getApplyFilter().waitAndClick(10);
+        Thread.sleep(2000);
+        validateCount("Showing 1 to 1 of 1 entries");
+        }
+        
+  public void CusNameandDocFileTypeFilters() throws InterruptedException {
+      
+      this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+      
+      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		  getDocExp_CusName().Visible() ;}}), Input.wait30);
+  	String Cusname = getDocExp_CusName().getText();
+  	System.out.println(Cusname);
+  	
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getDocExp_CustodianSearchName().Visible() ;}}), Input.wait30);
+  	getDocExp_CustodianSearchName().SendKeys(Cusname);
+  	
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getDocExp_DocFiletypeSearchName().Visible() ;}}), Input.wait30);
+  	getDocExp_DocFiletypeSearchName().SendKeys("Outlook");
+  	
+  	doclist.getApplyFilter().waitAndClick(10);
+      Thread.sleep(2000);
+      validateCount("Showing 1 to 50 of 822 entries");
+      }
+       
+   
+  public void CommentFilter() throws InterruptedException {
+      
+  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getDocExp_CommentsFilter().Visible() ;}}), Input.wait60);
+  	getDocExp_CommentsFilter().waitAndClick(10);
+  	
+  	doclist.include("Document_Comments");
+  	Thread.sleep(2000);
+  	
+  	doclist.getApplyFilter().waitAndClick(10);
+  	
+    validateCount("Showing 1 to 2 of 2 entries");
+ }
+
  
  }

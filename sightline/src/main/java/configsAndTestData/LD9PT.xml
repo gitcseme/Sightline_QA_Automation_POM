@@ -11,21 +11,21 @@
      
         <!-- PTPA1 PA1 -->
         <pa1FullName>PTPA1 PA1</pa1FullName>
-        <pa1userName>a.utomationsightlineconsili.o@gmail.com</pa1userName>
+        <pa1userName>rmuserconsilio@gmail.com</pa1userName>
         <pa1password>consilio@1234</pa1password> 
         
         <pa2FullName>PTPA2 PA2</pa2FullName>
-        <pa1userName>aut.omationsightli.neconsilio@gmail.com</pa1userName>
+        <pa1userName>rm.userconsilio@gmail.com</pa1userName>
         <pa1password>consilio@12345</pa1password>
         
         <!--PTRMU  -->
         <rmu1FullName>PTRMU1 RMU1</rmu1FullName>
         <rmu1userName>automationsightlineconsili.o@gmail.com</rmu1userName>
-        <rmu1password>consilio@12345</rmu1password>
+        <rmu1password>consilio@54321</rmu1password>
         
         <rmu2FullName>PTRMU2 RMU2</rmu2FullName>
         <rmu2userName>rm.user.consilio@gmail.com</rmu2userName>
-        <rmu2password>consilio@123</rmu2password>
+        <rmu2password>Welcome@54321</rmu2password>
         
         <!-- PTRev -->
         <rev1FullName>PTREV1 REV1</rev1FullName>
@@ -33,8 +33,8 @@
         <rev1password>sightline@12345</rev1password>
         
         <rev2FullName>PTREV2 REV2</rev2FullName>
-        <rev2userName>a.u.tomationsightlinec.onsilio@gmail.com</rev2userName>
-        <rev2password>consilio@123</rev2password>
+        <rev2userName>con.silio.reviewer@gmail.com</rev2userName>
+        <rev2password>sightline@12345</rev2password>
         
         <shareTo>PTPA2 PA2</shareTo>
        
