@@ -2,6 +2,7 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -19,7 +20,7 @@ public class DocListPage {
   
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
     public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
-    public Element getColumnText(int row, int col){ return driver.FindElementByName("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]"); }
+    public Element getColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]/a"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
      //Filters
     public Element getCustodianFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'CustodianName')]"); }
@@ -67,7 +68,8 @@ public class DocListPage {
     public Element getDocList_SelectLenthtobeshown(){ return driver.FindElementById("idPageLength"); }
     
     public Element getDocList_QuickBatch(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
-         
+    public Element getDocList_Preview_CloseButton(){ return driver.FindElementByXPath("//span[@id='ui-id-1']/following-sibling::button"); }
+    
   
     
     public DocListPage(Driver driver){
@@ -156,7 +158,7 @@ public class DocListPage {
 	   
 }
    
-   public void DoclistPreviewNonAudio(final String searchName) throws InterruptedException {
+   public void DoclistPreviewNonAudio() throws InterruptedException {
 		
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getColumnText(1,8).Visible()  ;}}),Input.wait60);
@@ -178,11 +180,12 @@ public class DocListPage {
 	   driver.scrollPageToTop();
 	  }
 
-     public void DoclistPreviewAudio(final String searchName) throws InterruptedException {
+     public void DoclistPreviewAudio() throws InterruptedException {
 		
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			   getColumnText(1,8).Visible()  ;}}),Input.wait60);
-  	   getColumnText(1,8).Click();
+       getColumnText(1,8).waitAndClick(10);
+  	 Thread.sleep(5000);
   	   
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			   getDocList_Preview_AudioPlay().Visible()  ;}}),Input.wait60);
@@ -202,17 +205,14 @@ public class DocListPage {
  	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			   getDocList_Previewpage().Visible()  ;}}),Input.wait30);
  	   Assert.assertTrue(getDocList_Previewpage().Enabled());
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getDocList_Preview_Pagenotextbox().Visible() ;}}),Input.wait30);
+		 * getDocList_Preview_Pagenotextbox().SendKeys("5");
+		 * getDocList_Preview_Pagenotextbox().Enter();
+		 */
  	   
- 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			   getDocList_Preview_Pagenotextbox().Visible()  ;}}),Input.wait30);
- 	   getDocList_Preview_Pagenotextbox().SendKeys("5");
- 	   getDocList_Preview_Pagenotextbox().Enter();
- 	   
- 	
- 	   driver.scrollingToBottomofAPage();
- 	   Thread.sleep(2000);
- 	   
- 	   driver.scrollPageToTop();
+ 	  getDocList_Preview_CloseButton().waitAndClick(10);
  	  }
 
      public void DoclisttobulkAssign(String assignmentName,String length ) throws InterruptedException {
