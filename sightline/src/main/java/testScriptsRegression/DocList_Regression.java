@@ -1,5 +1,6 @@
 package testScriptsRegression;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
@@ -31,10 +32,12 @@ public class DocList_Regression {
 	
 	
 	@BeforeClass(alwaysRun=true)
-	public void preCondition() throws ParseException{
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-    	//Open browser
+	public void preCondition() throws ParseException, InterruptedException, IOException{
+	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	 	
+	    Input in = new Input();
+	    in.loadEnvConfig();
+		//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
@@ -43,25 +46,35 @@ public class DocList_Regression {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
 	
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void PreviewDocNonAudio() throws InterruptedException {
 		
 		ss.basicContentSearch(Input.searchString2);
     	ss.ViewInDocList();
     	
     	final DocListPage dl= new DocListPage(driver);
+    	dl.DoclistPreviewNonAudio();
     }
 	
-	@Test(groups={"regression"})
-	public void PreviewDocAudio() throws InterruptedException {
-		
-		ss.audioSearch("morning", "North American English");
-		ss.ViewInDocList();
+		/*
+		 * Author : Shilpi Mangal
+		 * Created date: 3/24/2020
+		 * Modified date: 
+		 * Modified by:
+		 * Description : Verify that audio Preview Document is working correctly
+		 */
+		@Test(groups={"regression"})
+		public void PreviewDocAudio() throws InterruptedException {
 			
-    	final DocListPage dl= new DocListPage(driver);
-	}
+			ss.audioSearch("morning", "North American English");
+			ss.ViewInDocList();
+				
+	    	final DocListPage dl= new DocListPage(driver);
+	    	dl.DoclistPreviewAudio();
+		}
 
-		   @BeforeMethod
+		
+		  @BeforeMethod
 		 public void beforeTestMethod(Method testMethod){
 			System.out.println("------------------------------------------");
 		    System.out.println("Executing method : " + testMethod.getName());       
