@@ -93,13 +93,15 @@ public class TS_017_DocList {
     	bc.selectproject();
     	ss.switchToWorkproduct();
     	ss.selectTagInASwp(bulkTagName);
-		Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
+		//Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
+    	Assert.assertEquals(10,ss.serarchWP());
 
     	
     	bc.selectproject();
     	ss.switchToWorkproduct();
     	ss.selectFolderInASwp(bulkFolderName);
-		Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
+		//Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
+    	Assert.assertEquals(10,ss.serarchWP());
    }
 	
 	//To validate masterdate for all image files in doclist
@@ -190,7 +192,7 @@ public class TS_017_DocList {
     	//validate count
         DocViewPage dv= new DocViewPage(driver);
         dv.getDocView_info().WaitUntilPresent();
-        Assert.assertEquals("of "+Input.pureHitSeachString1+" Docs",dv.getDocView_info().getText().toString());
+        Assert.assertEquals("of "+10+" Docs",dv.getDocView_info().getText().toString());
         System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
 
     	
