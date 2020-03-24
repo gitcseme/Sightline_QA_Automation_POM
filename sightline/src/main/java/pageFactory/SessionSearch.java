@@ -686,7 +686,9 @@ public class SessionSearch {
 	}
     
     public int audioSearch(String SearchString, String language) {
-    	getAdvancedSearchLink().Click();
+    	this.driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	
+    	getAdvancedSearchLink().waitAndClick(20);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAs_Audio().Visible()  ;}}), Input.wait30); 
     	getAs_Audio().ScrollTo();
