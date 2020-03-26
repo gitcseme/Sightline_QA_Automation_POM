@@ -831,7 +831,7 @@ public class AssignmentsPage {
 	Assert.assertEquals(5, Integer.parseInt(acttotalcount));
 	}
    
-   public void CompleteAssgn(String assignmentName) {
+   public void CompleteAssgn(String assignmentName)throws InterruptedException{
 	   	driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
 	   	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
