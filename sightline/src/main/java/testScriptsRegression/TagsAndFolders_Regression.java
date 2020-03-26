@@ -120,7 +120,7 @@ public class TagsAndFolders_Regression {
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		//Impersonate as RMU
 	
-		bc.impersonateSAtoPA("ConsilioDomain");
+		bc.impersonateSAtoPA();
 		                      
 	
 		//add tag

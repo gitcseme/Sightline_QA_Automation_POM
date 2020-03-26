@@ -32,7 +32,7 @@ public class TagAndFolder {
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		//Impersonate as RMU
 		bc = new BaseClass(driver);
-		bc.impersonateSAtoPA("Not a Domain");
+		bc.impersonateSAtoPA();
 		                      
 	
 		//add tag

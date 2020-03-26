@@ -133,7 +133,7 @@ public class TS_001_BasicSearch {
 	}
 	//RPMXCON-38005
 	@Test(groups={"regression"})
-	public void conceptuallySimilar() {
+	public void conceptuallySimilar() throws InterruptedException {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		//Impersonate as RMU
