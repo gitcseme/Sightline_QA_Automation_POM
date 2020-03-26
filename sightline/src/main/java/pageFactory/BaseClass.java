@@ -91,7 +91,7 @@ public class BaseClass {
     	return bgCount;
 	}
 
-    public void impersonatePAtoRMU() {
+    public void impersonatePAtoRMU() throws InterruptedException {
     	getSignoutMenu().Click();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	   	getChangeRole().Visible()  ;}}),Input.wait60);
@@ -101,13 +101,22 @@ public class BaseClass {
   			getSelectRole().Visible()  ;}}),Input.wait60);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
     	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAvlDomain().Visible()  ;}}),Input.wait30);
+    	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+    
+    	Thread.sleep(3000);
+	
+    	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+    	Thread.sleep(2000);
+        	
     	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-    	getSaveChangeRole().Click();
+    	getSaveChangeRole().waitAndClick(10);
     	System.out.println("Impersnated from PA to RMU");
 
 	}
     
-    public void impersonateRMUtoReviewer() {
+    public void impersonateRMUtoReviewer() throws InterruptedException {
     	getSignoutMenu().Click();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	   	getChangeRole().Visible()  ;}}),Input.wait60);
@@ -117,8 +126,17 @@ public class BaseClass {
   			getSelectRole().Visible()  ;}}),Input.wait60);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
     	
-    	//getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-    	getSaveChangeRole().Click();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAvlDomain().Visible()  ;}}),Input.wait30);
+    	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+    
+    	Thread.sleep(3000);
+	
+    	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+    	Thread.sleep(2000);
+    	
+    	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+    	getSaveChangeRole().waitAndClick(5);
     	System.out.println("Impersnated from RMU to Reviewer");
 	}
     
@@ -142,7 +160,7 @@ public class BaseClass {
     	System.out.println("Impersnated from RMU to Reviewer");
 	}
     
-    public void impersonateSAtoPA(String domain) throws InterruptedException {
+    public void impersonateSAtoPA() throws InterruptedException {
     	getSignoutMenu().Click();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	   	getChangeRole().Visible()  ;}}),Input.wait30);
@@ -151,14 +169,13 @@ public class BaseClass {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getSelectRole().Visible()  ;}}),Input.wait30);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+    	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSelectDomain().Visible()  ;}}),Input.wait30);
-    	if(domain.equalsIgnoreCase("Any"))
-    		getSelectDomain().selectFromDropdown().selectByIndex(1);
-    	else
-    		getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
-    	
+    			getAvlDomain().Visible()  ;}}),Input.wait30);
+    	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+    
     	Thread.sleep(3000);
+	
     	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
     	
     	getSaveChangeRole().waitAndClick(5);
@@ -297,7 +314,8 @@ public class BaseClass {
 
           return todayStr;
 }
-          public void impersonateDAtoPA(String projectname) {
+          
+          public void impersonateDAtoPA() {
           	getSignoutMenu().Click();
           	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
           	   	getChangeRole().Visible()  ;}}),Input.wait30);
@@ -308,10 +326,8 @@ public class BaseClass {
           	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
           	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
           			getSelectProjectTo().Visible()  ;}}),Input.wait30);
-          	if(projectname.equalsIgnoreCase("Any"))
-          		getSelectProjectTo().selectFromDropdown().selectByIndex(1);
-          	else
-          		getSelectProjectTo().selectFromDropdown().selectByVisibleText(projectname);
+          	
+          		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
           	getSaveChangeRole().waitAndClick(5);
           	System.out.println("Impersnated from DA to PA");
       	}
@@ -397,7 +413,7 @@ public class BaseClass {
         
         
         public void impersonatePAtoRMU_SelectedSG(String sgname) {
-        	getSignoutMenu().Click();
+        	getSignoutMenu().waitAndClick(10);
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	   	getChangeRole().Visible()  ;}}),Input.wait60);
         	getChangeRole().Click();
@@ -406,8 +422,20 @@ public class BaseClass {
       			getSelectRole().Visible()  ;}}),Input.wait60);
         	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
         	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        	
+        	try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	
         	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(sgname);
-        	getSaveChangeRole().Click();
+        	getSaveChangeRole().waitAndClick(10);
         	System.out.println("Impersnated from PA to RMU");
 
     	}
