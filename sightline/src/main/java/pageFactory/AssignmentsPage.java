@@ -971,7 +971,7 @@ public class AssignmentsPage {
 	    Assert.assertTrue(permission4.equalsIgnoreCase("false"));
 	  	}
         
-        public void completedocsinassgn(String assignmentName)
+        public void completedocsinassgn(String assignmentName) throws InterruptedException
         {
         	getSelectAssignment(assignmentName).waitAndClick(5);;
         	driver.scrollPageToTop();
