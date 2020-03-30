@@ -845,21 +845,26 @@ public class SessionSearch {
     	
        }
     //Function to fetch Threaded docs hit count 
-    public String verifyThreadedCount(String Threaded) {
+    public String verifyThreadedCount() {
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getThreadedCount().Visible()  ;}}), Input.wait60);
     	
     	return getThreadedCount().getText();
     	
       }
     //Function to fetch neardupes hit count   
-    public String verifyNearDupeCount(String NearDupe) {
+    public String verifyNearDupeCount() {
     	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getNearDupeCount().Visible()  ;}}), Input.wait60);
     	return getNearDupeCount().getText();
    
     }
     //Function to fetch Familymembers hit count 
-    public String verifyFamilyount(String NearDupe) {
- 	
-    	return getNearDupeCount().getText();
+    public String verifyFamilyount() {
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFamilyCount().Visible()  ;}}), Input.wait60);
+    	return getFamilyCount().getText();
     }
  
   //Function to perform new bulk folder with given tag name
