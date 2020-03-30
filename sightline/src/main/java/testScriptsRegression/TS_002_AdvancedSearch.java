@@ -4,17 +4,14 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
-
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
@@ -50,7 +47,7 @@ public class TS_002_AdvancedSearch {
     
 		softAssertion= new SoftAssert();
 		//Open browser
-		Input in = new Input(); in.loadEnvConfig();
+		
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
@@ -710,6 +707,33 @@ public class TS_002_AdvancedSearch {
      	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"33");
 
 	}
+
+        @Test(groups={"regression"})
+	   	public void AdvSearchgetallresults() throws InterruptedException {
+	   		SoftAssert softAssertion= new SoftAssert();
+	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	   		bc.selectproject();
+			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
+		  	Thread.sleep(5000);
+			
+			String nearcount = search.verifyNearDupeCount();
+			softAssertion.assertTrue(Integer.parseInt(nearcount)>=1);
+			String threadcount =search.verifyThreadedCount();
+			softAssertion.assertTrue(Integer.parseInt(threadcount)>=1);
+			String familycount =search.verifyFamilyount();
+			softAssertion.assertTrue(Integer.parseInt(familycount)>=1);
+			System.out.println(nearcount+ "  -----  "+threadcount+" -----"+familycount);	
+			
+			//concept count
+			search.getConceptuallyPlayButton().waitAndClick(10);
+			search.getConceptualCount().Present();
+			Thread.sleep(2000);
+			String  conceptcount = search.getConceptualCount().getText();
+			System.out.println(conceptcount);
+			softAssertion.assertTrue(Integer.parseInt(conceptcount)>=1);
+		
+			softAssertion.assertAll();
+	    }
 	 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
