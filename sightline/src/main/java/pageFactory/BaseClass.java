@@ -440,7 +440,7 @@ public class BaseClass {
 
     	}
         
-        public void impersonateSAtoRMU() {
+        public void impersonateSAtoRMU() throws InterruptedException {
         	getSignoutMenu().Click();
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	   	getChangeRole().Visible()  ;}}),Input.wait60);
@@ -449,18 +449,16 @@ public class BaseClass {
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       			getSelectRole().Visible()  ;}}),Input.wait60);
         	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+        	Thread.sleep(3000);
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getAvlDomain().Visible()  ;}}),Input.wait30);
         	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
         	
-        	try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        	Thread.sleep(3000);
+			
         	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	Thread.sleep(3000);
         	
          	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
         	getSaveChangeRole().Click();
