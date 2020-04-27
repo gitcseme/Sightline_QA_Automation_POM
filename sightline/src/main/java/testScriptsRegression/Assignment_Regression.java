@@ -3,7 +3,6 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -49,101 +48,105 @@ public class Assignment_Regression {
 	
 	
 	String assgnname = "Assgnm";
-	//String codingfrom = "cfC1"+Utility.dynamicNameAppender();
+	String codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName3= "assignmentA3"+Utility.dynamicNameAppender();
 	String assignmentName4= "assignmentA4"+Utility.dynamicNameAppender();
 	String assignmentNamecopy = "assignment5"+Utility.dynamicNameAppender();
-	//String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
+	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	String assignmentNameMultiRev= "assignmentR2"+Utility.dynamicNameAppender();
 	String assgngrpName= "assgnGrp"+Utility.dynamicNameAppender();
 	String assgngrpName1= "assgnGrp1"+Utility.dynamicNameAppender();
 	String tagname = "Assgntag"+Utility.dynamicNameAppender(); 
     String foldername= "Assgnfolder"+Utility.dynamicNameAppender(); 
 	String savedsearchname = "Save"+Utility.dynamicNameAppender();
-	String assignmentName="Test2";
-	String codingfrom = "cfC1866745";
-
-	/*
-	 * Author : Shilpi Mangal
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Login as RMU and create an assignment with documents distributed to user,
-	 *               from here all the scripts will run. 
-	 */	
+		
+	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-        Input in = new Input();
-        in.loadEnvConfig();
-			//Open browser
+       	//Open browser
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		agnmt = new AssignmentsPage(driver);
 		bc = new BaseClass(driver);
-		dp = new DocListPage(driver);
-		page = new TagsAndFoldersPage(driver);
+        dp = new DocListPage(driver);
 		report = new ReportsPage(driver);
 	
-	}
+		//add tag
+		page = new TagsAndFoldersPage(driver);
+		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
+		    	
+		//add comment field
+		CommentsPage comments = new CommentsPage(driver);
+		comments.AddComments("Comment"+Utility.dynamicNameAppender());
+				
+		//Create coding for for assignment
+		CodingForm cf = new CodingForm(driver);
+		cf.createCodingform(codingfrom);
+			
+		//Create assignment with newly created coding form
+		
+	 	agnmt.createAssignment(assignmentName,codingfrom);
 	
-	
-	/*
-	 * Author : Shilpi Mangal
-	 * Created date: April 2020
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Validate distributed list and results for searching by
-	 *               Assignment workproduct
-  	 */	
-	@Test(groups= {"regression"})
-	public void Assgnwp() throws InterruptedException
-	{
-		//Search docs and assign to newly created assignment
-		SessionSearch search = new SessionSearch(driver);
-		search.switchToWorkproduct();
-		search.selectAssignmentInASwp(assignmentName);
-	}
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * Author : Shilpi Mangal
-	 * Created date: April 2020
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Test Case 4737: Assignments displayed on RU Dashboard if
-	 *                Draw from Pool option is enabled/disabled.
-  	 */	
-	//@Test
-	public void Assgnwithdrawfrompool() throws InterruptedException
-	{
-		//Search docs and assign to newly created assignment
+	   //Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
+		search.saveSearch(savedsearchname);
+	   
 		search.bulkAssign();
-		agnmt.assignDocstoNewAssgn(assignmentName, codingfrom);		
-		agnmt.addReviewerAndDistributeDocs(assignmentName, Input.pureHitSeachString1);
-		lp.logout();
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.impersonatePAtoRMU();
-		agnmt.CompleteAssgn(assignmentName);
+		agnmt.assignDocstoExisting(assignmentName);
+		
+		//Edit assignment and add reviewers 
+		agnmt.editAssignment(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1); 
+		dp = new DocListPage(driver);
+	
+	}
+	
+
+	  @Test(groups={"regression"},priority=1)
+	  public void AssgnManageRev_ViewInDocView() throws InterruptedException {
+		  
+		 
+		agnmt.editAssignment(assignmentName);
+		agnmt.Assignment_ManageRevtab_ViewinDocView();
+		
+	}
+	  @Test(groups={"regression"},priority=2)
+	  public void AssgnManageRev_ViewInDoclist() throws InterruptedException {
+		  
+		 
+		agnmt.editAssgnwithselectedassgn();
+		agnmt.Assignment_ManageRevtab_ViewinDoclist();
+	
+	    dp.getDocList_info().WaitUntilPresent();
+	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+Input.pureHitSeachString1+" entries");
+	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+		
+	} 
+	  
+	  @Test(groups={"regression"},priority=3)
+	  public void AssgnwithDocSequnece() throws InterruptedException {
+		  
+		 
+		  agnmt.editAssgnwithselectedassgn();
+		  agnmt.Assgnwithdocumentsequence();
 		
 	}
 	
-	
-	
-	
-	 
-	 // @Test(groups={"regression"},priority=5)
+	 @Test(groups={"regression"},priority=4)
+	  public void AssignmentDashboard() throws InterruptedException {
+		  agnmt.AssignmentDashboard();
+		
+	}
+	  
+	  @Test(groups={"regression"},priority=5)
 	  public void AssignmentManagerevTabActions() throws InterruptedException {
 		  
 		 page.CreateTag(tagname,"Default Security Group");
@@ -192,7 +195,348 @@ public class Assignment_Regression {
 	  }
 	
 	
-	 
+	    @Test(groups={"regression"},priority=6)
+		  public void AssignmentGroup() throws InterruptedException {
+		  
+		  this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+		  agnmt.createAssgnGroup(assgngrpName);
+		  agnmt.EditAssgnGroup(assgngrpName);	
+		  agnmt.DeleteAssgnGroup(assgngrpName);
+		}
+	    
+	    @Test(groups={"regression"},priority=7)
+		  public void AssnmGroupwithsubassgn() throws InterruptedException {
+		  
+		  this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+		  agnmt.createAssgnGroup(assgngrpName);
+		  agnmt.getAssgnGrp_Select(assgngrpName).waitAndClick(10);
+		  agnmt.createAssignment(assignmentName, codingfrom);
+		  agnmt.getAssgnGrp_Select(assgngrpName).waitAndClick(10);
+		  agnmt.DeleteAssgnGroup(assgngrpName);
+		  bc.getYesBtn().waitAndClick(10);
+		  bc.VerifyWarningMessage("To delete this group you have to delete its child elements");
+		}
+	
+	
+	      @Test(groups={"regression"},priority=8)
+		  public void DistributeDoc() throws InterruptedException {
+	    	agnmt.createAssignment(assignmentNameMultiRev,codingfrom);
+	    	
+	    	SessionSearch search = new SessionSearch(driver);
+	    	search.basicContentSearch(Input.searchString1);
+	    	search.bulkAssign();
+	    	agnmt.assignDocstoExisting(assignmentNameMultiRev);
+	    		
+	    		//Edit assignment and add reviewers 
+	    	agnmt.editAssignment(assignmentNameMultiRev);
+	    	agnmt.add2ReviewerAndDistributeDocs();
+	    	agnmt.RedistributeDoc_ReviewerTab();
+		}
+	
+	   @Test(groups={"regression"},priority=9)
+		  public void Assgn_RemoveDoc_ReviewerTab() throws InterruptedException {
+			  
+			 
+			agnmt.editAssignment(assignmentName);
+			agnmt.RemoveDoc_ReviewerTab(assignmentName);
+			
+		}
+	   
+	   @Test(groups={"regression"},priority=10,dataProvider="Specail char")
+		  public void EditAssgn_Disallowspeclchar(String data) throws InterruptedException {
+			  
+			agnmt.Assgnwithspecialchars(data);
+		}
+	   
+	   @Test(groups={"regression"},priority=11)
+		  public void DeleteAssignment() throws InterruptedException {
+			  
+			 
+			agnmt.deleteAssignment(assignmentName);
+			}
+	
+	  @Test(groups={"regression"},priority=12)
+      public void assignmentwithpercentmethod() throws InterruptedException
+      {
+    	assgnname =assgnname+Utility.dynamicNameAppender();
+    	agnmt.createAssignment(assgnname,codingfrom);
+	 	
+	 	//Search docs and assign to newly created assignment
+	 	SessionSearch search = new SessionSearch(driver);
+	 	search.basicContentSearch(Input.searchString1);
+	 	search.bulkAssign();
+	 	agnmt.assignDocswithpercentagemethod(assignmentName,"Percentage");
+      }
+	  
+	 @Test(groups={"regression"},priority=13)
+      public void NewAssgnUnassgn() throws InterruptedException
+      {
+	    
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.bulkAssign();
+		agnmt.assignDocstoNewAssgn(assignmentName3, codingfrom);
+		
+		search.bulkAssign();
+		agnmt.UnassignDocsfromAssgn(assignmentName3);
+		
+      }
+	  
+	  @Test(groups={"regression"},priority=14)
+      public void CopyAssignment() throws InterruptedException
+      {
+		  agnmt.createAssignment(assignmentName, codingfrom);
+		  agnmt.editAssignment(assignmentNamecopy);
+		  agnmt.CopyAssignment(assignmentNamecopy, codingfrom);
+		  SessionSearch search = new SessionSearch(driver);
+		  search.basicContentSearch(Input.searchString1);
+		  search.bulkAssign();
+		  agnmt.assignDocstoExisting("Copy");
+      }
+	 	
+	  @Test(groups={"regression"},priority=15)
+      public void AssgnCompleteDoc() throws InterruptedException
+      {
+	    
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch("*");
+		search.bulkAssign();
+		agnmt.assignDocstoNewAssgn(assignmentName4, codingfrom);
+		
+		search.bulkAssign();
+		agnmt.UnassignDocsfromAssgn(assignmentName3);
+		
+      }
+	  
+	   @Test(groups={"regression"},priority=16)
+	   public void ValidateUserlistonQuickbatch() throws InterruptedException, ParseException, IOException {
+		 //Login as SA
+		lp.logout();
+       lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+     
+		//create test user
+    UserManagement	um = new UserManagement(driver);
+   	String firstName = "QBRMU";
+   	String lastName =  "QBRMUTest";
+   	String emailId = "r.muserconsilio@gmai.com";
+
+		/*
+		 * try { um.deleteUser(firstName); } catch(Exception e) {
+		 * System.out.println("User does not exist"); }
+		 */
+   	um.createUser(firstName, lastName, "Review Manager", emailId, null, Input.projectName);
+    bc.impersonateSAtoRMU();
+    SessionSearch search = new SessionSearch(driver);
+	search.basicContentSearch(Input.searchString1);
+	search.quickbatch();
+	agnmt.ValidateReviewerlistquickbatch(emailId);
+	String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
+	agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB1, codingfrom);
+  }
+      
+	   @Test(groups={"regression"},priority=17)
+	   public void CreateQuickBatchfromsavedsearch() throws InterruptedException, ParseException, IOException {
+		
+		//lp.logout();
+		//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
+		SavedSearch savesearch = new SavedSearch(driver);
+		savesearch.savedsearchquickbatch(savedsearchname);
+		String assignmentQB5= "assignmentQB5"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB5, codingfrom,"AllRev");
+	   }
+	   
+	  @Test(groups={"smoke","regression"},priority=18)
+	   public void CreateQuickBatchfromdoclist() throws InterruptedException, ParseException, IOException {
+		bc.selectproject();
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.ViewInDocList();
+		dp.DoclisttoQuickbatch("100");
+		String assignmentQB2= "assignmentQB2"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB2, codingfrom,"selectrmu");
+	   }
+	   
+	   @Test(groups={"smoke","regression"},priority=19)
+	public void CreateQuickBatchfromTally() throws InterruptedException, ParseException, IOException {
+	
+	driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
+	report.TallyReportButton();
+	TallyPage tally = new TallyPage(driver);
+	tally.ValidateTallySubTally_QuickBatch();
+	String assignmentQB3= "assignmentQB3"+Utility.dynamicNameAppender();
+	agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB3, codingfrom,"selectrev");
+  }
+		   
+    @Test(groups={"smoke","regression"},priority=20)
+	   public void CreateQuickBatchfromDocExplorer() throws InterruptedException, ParseException, IOException {
+	
+    	DocExplorerPage docexp = new DocExplorerPage(driver);
+		docexp.DocExplorertoquickBatch();
+		String assignmentQB4= "assignmentQB4"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB4, codingfrom,"AllRev");
+	 }
+			   
+	 @Test(groups={"regression"},priority=21)
+	   public void ValidateNameQuickBatchfailure()
+	   {
+		   DocExplorerPage docexp = new DocExplorerPage(driver);
+			docexp.DocExplorertoquickBatch();
+			agnmt.Quickbatchfailure();
+	   }
+	   
+      @Test(groups={"smoke","regression"},priority=22)
+	   public void CreateQuickBatchfromadvancedsearch() throws InterruptedException, ParseException, IOException {
+		
+		SessionSearch advsearch = new SessionSearch(driver);
+		advsearch.advancedContentSearch(Input.searchString1);
+		advsearch.quickbatch();
+		String assignmentQB6= "assignmentQB6"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");
+	   }
+	   
+      @Test(groups={"smoke","regression"},priority=22)
+	   public void QuickBatchModifyValidation() throws InterruptedException, ParseException, IOException {
+		
+		   SavedSearch savesearch = new SavedSearch(driver);
+			savesearch.savedsearchquickbatch(savedsearchname);
+			String assignmentQB7= "assignmentQB7"+Utility.dynamicNameAppender();
+		   agnmt.createnewquickbatch(assignmentQB7, codingfrom);
+	   }
+
+       @Test(groups={"regression"},priority=23)
+	   public void QuickBatchfromSearchTermDocAuditreport() throws InterruptedException, ParseException, IOException {
+		
+
+		    SearchTermReportPage st = new SearchTermReportPage(driver);
+		    st.ValidateSearchTermreport(savedsearchname);
+		    st.TermtoQuickbatch();
+			String assignmentQB8= "assignmentQB8"+Utility.dynamicNameAppender();
+			agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB8, codingfrom);
+			DocumentAuditReportPage da = new DocumentAuditReportPage(driver);
+			da.ValidateDAreport(savedsearchname, assignmentQB8);
+	   }
+	  
+/*
+	 * Author : Shilpi Mangal
+	 * Created date: April 2020
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a RMU validate all keyowrds should bydefault added in new assignment  
+	 */	
+	@Test(groups= {"regression"})
+	public void AssignmentKeywordHighlight() throws InterruptedException
+	{
+		kp = new KeywordPage(driver);
+		String[] keywords = {"test","hi","this","to","all"};
+		/*
+		 * for(int i=0;i<keywords.length;i++) { System.out.println(keywords[i]); try {
+		 * kp.AddKeyword("AutoKey"+i, keywords[i]); } catch(Exception e) {
+		 * System.out.println("keyword already exist"); } }
+		 */
+		
+		String assignmentkey="Keyword"+Utility.dynamicNameAppender();
+		agnmt.createAssignmentwithkeywords(assignmentkey,codingfrom,keywords);
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		  
+		search.bulkAssign();
+		agnmt.assignDocstoExisting(assignmentkey);
+		agnmt.SelectAssignmentToViewinDocview(assignmentkey);
+		
+		DocViewPage docview = new DocViewPage(driver);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			docview.getDocView_info().Visible()  ;}}), Input.wait60);
+    	for(int j=0;j<=keywords.length;j++)
+		{
+    		docview.VerifyPersistentHit(keywords[j]);
+		}
+    	
+		
+	}
+	
+
+
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: April 2020
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Test Case 4313:To verify that if System impersonate as RMU, 
+	 *    then he is not able to complete documents from Manage Assignment Page
+	 *    But Project admin can do it
+  
+	 */	
+	@Test(groups= {"regression"})
+	public void SAORPATORMUCompleteDocs() throws InterruptedException
+	{
+		lp.logout();
+		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
+		bc.impersonateSAtoRMU();
+		agnmt.Impersonateusercompletedoc(assignmentName);
+		lp.logout();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.impersonatePAtoRMU();
+		agnmt.CompleteAssgn(assignmentName);
+		
+	}
+	
+
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: April 2020
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Validate distributed list and results for searching by
+	 *               Assignment workproduct
+  	 */	
+	@Test(groups= {"regression"})
+	public void Assgnwp() throws InterruptedException
+	{
+		//Search docs and assign to newly created assignment
+		SessionSearch search = new SessionSearch(driver);
+		search.switchToWorkproduct();
+		search.selectAssignmentInASwp(assignmentName);
+	}
+	
+/*
+	 * Author : Shilpi Mangal
+	 * Created date: April 2020
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Test Case 4737: Assignments displayed on RU Dashboard if
+	 *                Draw from Pool option is enabled/disabled.
+  	 */	
+	@Test
+	public void Assgnwithdrawfrompool() throws InterruptedException
+	{
+		//Search docs and assign to newly created assignment
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.bulkAssign();
+		agnmt.assignDocstoNewAssgn(assignmentName, codingfrom);		
+		agnmt.addReviewerAndDistributeDocs(assignmentName, Input.pureHitSeachString1);
+		lp.logout();
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.impersonatePAtoRMU();
+		agnmt.CompleteAssgn(assignmentName);
+		
+	}
+	
+	
+	
+	
+	@DataProvider(name="Specail char")
+	public Object[][] specialcharsmethod() 
+	{
+		return new Object[][] {{"AssignmentNameWith<test"},{"AssignmentNameWith(test"},{"AssignmentNameWith)test"},
+			{"AssignmentNameWith[test"},{"AssignmentNameWith{test"},{"AssignmentNameWith}test"},{"AssignmentNameWith}test"},
+			{"AssignmentNameWith:test"},{"AssignmentNameWith'test"},{"AssignmentNameWith~test"},{"AssignmentNameWith*test"},
+			{"AssignmentNameWith?test"},{"AssignmentNameWith&test"},{"AssignmentNameWith$test"},{"AssignmentNameWith#test"},
+			{"AssignmentNameWith@test"},{"AssignmentNameWith!test"},{"AssignmentNameWith-test"},{"AssignmentNameWith_test"},
+			};
+	}
+	
+	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
