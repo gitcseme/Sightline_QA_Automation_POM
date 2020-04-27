@@ -61,6 +61,8 @@ public class TagsAndFoldersPage {
     //securityGroup parameter value will be secGroup name else 'All Groups'   
     public void CreateTag(String strtag, String securityGroup) 
     {
+    	   this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
+    	     
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagsTab().Visible()  ;}}), Input.wait30); 
          try{

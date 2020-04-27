@@ -17,6 +17,8 @@ public class TestData {
 		public String  metaDataCN;
 		public int  metaDataCNcount;
 		public int totalNumberOfDocs;
+		public int totalNumberOfDocsincludeadvoption;
+		
 		public String getMetaDataCN() {
 			return metaDataCN;
 		}
@@ -108,4 +110,10 @@ public class TestData {
 			this.searchString2NOTsearchString1 = searchString2NOTsearchString1;
 		}
 		
+		public int gettotalNumberOfDocsincludeadvoption() {
+			return totalNumberOfDocsincludeadvoption;
+		}
+		public void settotalNumberOfDocsincludeadvoption(int totalNumberOfDocsincludeadvoption) {
+			this.totalNumberOfDocsincludeadvoption = totalNumberOfDocsincludeadvoption;
+		}
 }

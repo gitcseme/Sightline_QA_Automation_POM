@@ -3,7 +3,8 @@
   		<url>https://sightlinede.consilio.com/</url>
        	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <projectName>Auto_SL0826</projectName>
+       	 <domainName>QA Domain</domainName>
+        <projectName>Auto_04042020</projectName>
         
        <!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
@@ -11,13 +12,13 @@
      
         <!-- USPA -->
         <pa2FullName>QA PAU2</pa2FullName>
-        <pa2userName>qapau2@consilio.com</pa2userName>
-        <pa2password>Q@test_11</pa2password>
-        
+        <pa1userName>qapau2@consilio.com</pa1userName>
+        <pa1password>Q@test_11</pa1password>
+      <!--   
         <pa1FullName>QA PAU1</pa1FullName>
         <pa1userName>qapau1@consilio.com</pa1userName>
         <pa1password>Q@test_11</pa1password>
-        
+         -->
         <!--USRMU  -->
         <rmu1FullName>QA RMU1</rmu1FullName>
         <rmu1userName>qarmu1@consilio.com</rmu1userName>

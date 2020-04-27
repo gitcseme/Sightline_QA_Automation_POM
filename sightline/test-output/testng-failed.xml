@@ -3,31 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsRegression.DocView_Regression">
+      <class name="testScriptsRegression.Assignment_Regression">
         <methods>
-          <include name="VerifyFoldertab"/>
-          <include name="VerifyPersistentHit"/>
-          <include name="VerifyAnalytics_FamilyActions"/>
-          <include name="NonAudioAnnotation"/>
-          <include name="VerifyAnalyticsthrAssignment"/>
-          <include name="VerifyMiniDoclistFolderAction"/>
-          <include name="VerifyTabswhenAllprefEnabled"/>
-          <include name="VerifyAnalyticsforPA"/>
-          <include name="VerifyAnalyticsConceptual"/>
-          <include name="getPersistentHit"/>
-          <include name="VerifyAnalyticsThreaded"/>
-          <include name="VerifyTooltipsforIcons"/>
+          <include name="beforeTestMethod"/>
           <include name="preCondition"/>
-          <include name="VerifyAnalyticsEmailInclusive"/>
-          <include name="VerifyTabswhenAllprefDisabled"/>
+          <include name="close"/>
           <include name="takeScreenShot"/>
-          <include name="VerifyAnalyticsChildWinodw"/>
-          <include name="VerifyNearDupesCompwinodw"/>
-          <include name="VerifyThreadedChildWinodw"/>
-          <include name="NonAudioRemarkAddEditDeletebyReviewer"/>
-          <include name="VerifyTextTab"/>
+          <include name="Assgnwp"/>
         </methods>
-      </class> <!-- testScriptsRegression.DocView_Regression -->
+      </class> <!-- testScriptsRegression.Assignment_Regression -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

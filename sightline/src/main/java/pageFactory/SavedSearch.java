@@ -589,8 +589,17 @@ public class SavedSearch {
 		   
 		   //SessionSearch search = new SessionSearch(driver);
 		//   search.bulkAssign();
-		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm,Input.pureHitSeachString1);
-		   }
+		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm);
+		   assgnpage.SelectAssignmentToViewinDocview(assignmentName);   
+		   DocViewPage dp = new DocViewPage(driver);
+		 
+		   try {
+			dp.VerifyPersistentHit(Input.searchString1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
 	
 	   //Below function is to search saved search and delete it
 	  public void SaveSearchDelete(final String searchName) {

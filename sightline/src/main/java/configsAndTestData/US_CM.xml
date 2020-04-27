@@ -3,7 +3,7 @@
           <url>https://sightlineus.ms.consilio.com/</url>
          <prodpath>\\ProductionWS_hwpoc\Automation</prodpath>
             <SourceLocation>IngestionWS_fnp\Fisher Phillips\Test Project</SourceLocation>
-        <projectName>Auto_SL0319</projectName>
+        <projectName>QA_032501</projectName>
        <!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
    		<sa1password>Q@test_12</sa1password> 

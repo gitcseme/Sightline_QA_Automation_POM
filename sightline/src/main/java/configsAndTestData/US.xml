@@ -3,7 +3,8 @@
   		<url>https://sightlineus.consilio.com/</url>
   	  	<prodpath>\\Njzfs2\njsightline\Productions\Automation</prodpath>
   	  	<SourceLocation>\\llnas25\ukslprod\IngestionSourceData\Automation</SourceLocation>
-		<projectName>Auto_94_01</projectName>
+  	  	 <domainName>Auto09Feb</domainName>
+		<projectName>Auto_04042020</projectName>
      	<!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
    		<sa1password>Q@test_11</sa1password> 

@@ -217,11 +217,11 @@ public class DocExplorer_Regression {
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
 		doclist.DoclisttobulkAssign(assignmentName1,"10");
-		assgn.assignDocstoNewAssgn(assignmentName1, null, Input.pureHitSeachString1);
+		assgn.assignDocstoNewAssgn(assignmentName1, null);
 		search.ViewInDocList();
 		doclist.Selectpagelength("100");
 		doclist.DoclisttobulkAssign(assignmentName2,"100");
-		assgn.assignDocstoNewAssgn(assignmentName2, null, Input.pureHitSeachString1);
+		assgn.assignDocstoNewAssgn(assignmentName2, null);
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"exclude");
   }

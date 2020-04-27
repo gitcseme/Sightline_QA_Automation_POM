@@ -61,7 +61,9 @@ public class DocExplorerPage {
     
     public Element getDocExp_actionButton(){ return driver.FindElementById("idDocExplorerActions"); }
     public Element getDocExp_action_quickbatch(){ return driver.FindElementById("idQuickAssign"); }
-  
+    public Element getDocViewAction(){ return driver.FindElementById("idViewInDocView"); }
+    public Element getDocListAction(){ return driver.FindElementById("idViewInDocList"); }
+    
     
     
      public DocExplorerPage(Driver driver){
@@ -491,6 +493,32 @@ public class DocExplorerPage {
   	
     validateCount("Showing 1 to 2 of 2 entries");
  }
+
+  public void DocExplorertodoclist()
+  {
+  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
+  	getDocExp_SelectAllDocs().waitAndClick(10);
+  	
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait30); 
+  	doclist.getPopUpOkBtn().Click();
+  	
+  	 getDocExp_actionButton().waitAndClick(10);
+  		
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getDocListAction().Visible()  ;}}), Input.wait60); 
+	 
+	 getDocListAction().waitAndClick(20);
+	 try{
+			bc.getYesBtn().waitAndClick(10);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	 System.out.println("Navigated to doclist, to view docslist");
+	
+  }
 
  
  }

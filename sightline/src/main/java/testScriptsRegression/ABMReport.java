@@ -48,7 +48,7 @@ public class ABMReport {
 	    search.ViewInDocList();
 	    DocListPage dp = new DocListPage(driver);
 	    dp.DoclisttobulkAssign(assignmentName,null);
-        asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form",Input.pureHitSeachString1);
+        asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form");
 	    
 	}	   
 	  @Test(groups={"smoke","regression"})

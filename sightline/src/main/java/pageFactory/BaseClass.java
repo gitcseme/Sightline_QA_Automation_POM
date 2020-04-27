@@ -100,6 +100,7 @@ public class BaseClass {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getSelectRole().Visible()  ;}}),Input.wait60);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+    	Thread.sleep(3000);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAvlDomain().Visible()  ;}}),Input.wait30);
@@ -108,7 +109,7 @@ public class BaseClass {
     	Thread.sleep(3000);
 	
     	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-    	Thread.sleep(2000);
+    	Thread.sleep(3000);
         	
     	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
     	getSaveChangeRole().waitAndClick(10);

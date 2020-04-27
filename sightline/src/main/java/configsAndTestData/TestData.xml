@@ -7,8 +7,8 @@
     <pureHitSeachString1>48</pureHitSeachString1>
     <pureHitSeachString2>52</pureHitSeachString2>
     <searchString1ANDsearchString2>16</searchString1ANDsearchString2>
-    <searchString1ORsearchString2>87</searchString1ORsearchString2>
-    <searchString1NOTsearchString2>34</searchString1NOTsearchString2>
+    <searchString1ORsearchString2>85</searchString1ORsearchString2>
+    <searchString1NOTsearchString2>33</searchString1NOTsearchString2>
     <searchString2NOTsearchString1>37</searchString2NOTsearchString1>
     <audioSearchString1>right</audioSearchString1>
     <audioSearchString1pureHit>3</audioSearchString1pureHit>
@@ -17,4 +17,5 @@
     <metaDataCN>P Allen</metaDataCN>
     <metaDataCNcount>1135</metaDataCNcount>
     <totalNumberOfDocs>1202</totalNumberOfDocs>
+    <totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
 </TestData>

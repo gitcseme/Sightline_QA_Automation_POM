@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -198,6 +199,17 @@ public class SessionSearch {
     //Quick Batch added by shilpi
     public Element getQuickBatchAction(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
     
+    //search options
+    public Element getadvoption_family(){ return driver.FindElementByXPath("//*[@id='chkIncludeFamilyMember']/following-sibling::i"); }
+    public Element getadvoption_near(){ return driver.FindElementByXPath("//*[@id='chkIncludeNearDuplicate']/following-sibling::i"); }
+    public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
+    
+    //Assignment distribution list
+    public ElementCollection getadwp_assgn_distributedto(){ return driver.FindElementsById("dist"); }
+    public Element getadwp_assgn_status(){ return driver.FindElementById("statusSel"); }
+   // public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
+    
+    
     public SessionSearch(Driver driver){
 
     	this.driver = driver;
@@ -218,7 +230,6 @@ public class SessionSearch {
 	    try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
@@ -264,7 +275,6 @@ public class SessionSearch {
 	    try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
@@ -333,7 +343,7 @@ public class SessionSearch {
     	    try {
     			Thread.sleep(1500);
     		} catch (InterruptedException e) {
-    			// TODO Auto-generated catch block
+    			
     			e.printStackTrace();
     		}
     		getSelectMetaData().selectFromDropdown().selectByVisibleText(fieldName);
@@ -424,7 +434,7 @@ public class SessionSearch {
         	    try {
         			Thread.sleep(1500);
         		} catch (InterruptedException e) {
-        			// TODO Auto-generated catch block
+        	
         			e.printStackTrace();
         		}
         		getSelectMetaData().selectFromDropdown().selectByVisibleText(fieldName);
@@ -526,7 +536,7 @@ public class SessionSearch {
     	return pureHit;
    }
     //Function to perform content search for a given search string
-    public int advancedContentSearch(String SearchString){
+      public int advancedContentSearch(String SearchString){
     	
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -549,7 +559,7 @@ public class SessionSearch {
     	try{
     		getTallyContinue().waitAndClick(5);
     	}catch (Exception e) {
-			// TODO: handle exception
+		
 		}
     	
     	//verify counts for all the tiles
@@ -576,7 +586,7 @@ public class SessionSearch {
 	    try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
@@ -640,7 +650,6 @@ public class SessionSearch {
 	    try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
@@ -782,7 +791,7 @@ public class SessionSearch {
     	try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     	/*if(Percetage.equalsIgnoreCase("right")){
@@ -823,7 +832,7 @@ public class SessionSearch {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
@@ -1109,8 +1118,7 @@ public void ViewInDocList() throws InterruptedException{
 	 try{
 			getTallyContinue().waitAndClick(10);
 		}catch (Exception e) {
-			// TODO: handle exception
-		}
+					}
 	 System.out.println("Navigated to doclist, to view docslist");
 	
 }
@@ -1298,7 +1306,7 @@ public void selectTagInASwp(String tagName) {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
@@ -1325,7 +1333,6 @@ public void selectFolderInASwp(String folderName) {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
@@ -1352,7 +1359,7 @@ public void selectSecurityGinWPS(String sgname) {
 				try {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
@@ -1601,5 +1608,118 @@ public void Removedocsfromresults() {
 	 System.out.println("performing quick batch");
 	
 }
+  
+  //Function to perform content search with advanced search options
+  public int advContentSearchwithoptions(String SearchString){
+  	
+  	//To make sure we are in basic search page
+  	driver.getWebDriver().get(Input.url+ "Search/Searches");
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
+  	getAdvancedSearchLink().Click();
+  	
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getContentAndMetaDatabtn().Visible()  ;}}), Input.wait30); 
+  	getContentAndMetaDatabtn().Click();
+      //Enter seatch string
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  			getAdvancedContentSearchInput().Visible()  ;}}), Input.wait30); 
+  	getAdvancedContentSearchInput().SendKeys(SearchString) ;
+  	
+  	 getadvoption_family().waitAndClick(10);
+     
+     getadvoption_near().waitAndClick(10);
+     
+     getadvoption_threaded().waitAndClick(10);
+
+      //Click on Search button
+  	getQuerySearchButton().waitAndClick(10);
+  	
+  	//look for warnings, in case of proximity search
+  	try{
+  		getTallyContinue().waitAndClick(5);
+  	}catch (Exception e) {
+		e.printStackTrace();
+		}
+  	
+  	//verify counts for all the tiles
+  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+  	
+  	int pureHit = Integer.parseInt(getPureHitsCount().getText());
+  	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+  	
+  	String backgroundColorthread = driver.FindElementByXPath(".//*[@id='002']").GetAttribute("background-color");
+	System.out.println(backgroundColorthread);
+	
+	Assert.assertEquals(backgroundColorthread, "rgb(218,218,218)");
+
+	
+  	
+    return pureHit;
+  	
+ }
+  
+  public void selectAssignmentInASwp(String AssgnName) {
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getWP_assignmentsBtn().Visible()  ;}}), Input.wait30); 
+		getWP_assignmentsBtn().Click();
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTree().Visible()  ;}}), Input.wait30); 
+		 System.out.println(getTree().FindWebElements().size());
+			for (WebElement iterable_element : getTree().FindWebElements()) {
+				//System.out.println(iterable_element.getText());
+				if(iterable_element.getText().contains(AssgnName)){
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+			
+						e.printStackTrace();
+					}
+					new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+					driver.scrollingToBottomofAPage();
+					iterable_element.click();
+				}
+			}
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getadwp_assgn_distributedto().Visible()  ;}}), Input.wait30); 
+		
+			List<WebElement> alloptions = getadwp_assgn_distributedto().FindWebElements();
+			
+			System.out.println(alloptions.size());
+			
+			for (WebElement options : getadwp_assgn_distributedto().FindWebElements())
+			{
+				System.out.println(options.getText());
+				Assert.assertTrue(options.getText().contains(Input.rmu1userName));
+				Assert.assertTrue(options.getText().contains(Input.rmu2userName));
+				Assert.assertTrue(options.getText().contains(Input.pa1userName));
+				Assert.assertTrue(options.getText().contains(Input.pa2userName));
+				Assert.assertTrue(options.getText().contains(Input.rev1userName));
+				Assert.assertTrue(options.getText().contains(Input.rev2userName));
+			}
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getadwp_assgn_status().Visible()  ;}}), Input.wait30); 
+		
+			getadwp_assgn_status().selectFromDropdown().selectByVisibleText("Assigned");
+			getMetaDataInserQuery().Click();
+			driver.scrollPageToTop();
+			
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getQuerySearchButton().Visible()  ;}}), Input.wait30); 
+			getQuerySearchButton().waitAndClick(5);
+			//verify counts for all the tiles
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+				
+				int pureHit = Integer.parseInt(getPureHitsCount().getText());
+				System.out.println("Search is done and PureHit is : "+pureHit);
+			 			
+			
+
+	}
 
  }

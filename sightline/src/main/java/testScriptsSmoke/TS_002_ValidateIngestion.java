@@ -14,30 +14,77 @@ import pageFactory.SessionSearch;
 
 public class TS_002_ValidateIngestion {
 	Driver driver;
+	LoginPage lp;
+	 IngestionPage page;
 	
 	@BeforeSuite(alwaysRun = true) 
-	public void AddIngestion(String dataset) throws ParseException, InterruptedException, IOException {
+	public void AddIngestion() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		driver = new Driver();
 		
-		System.out.println(dataset);
-	  	LoginPage lp = new LoginPage(driver);
+		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
-		
-	    IngestionPage page1 = new IngestionPage(driver);
-     	page1.AddOnlyNewIngestion(dataset);
-     	
- 	    SessionSearch search = new SessionSearch(driver);
-     	search.basicContentSearch(page1.IngestionName);
-     	search.bulkRelease("Default Security Group");    	
-    
+		page = new IngestionPage(driver);
 }
 	
-	@DataProvider(name = "Datasets")
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Validate Add only Ingestion is working correctly
+	 */
+	//@Test(groups={"regression,smoke"},priority=3)
+	public void AddOnlyIngestion(String dataset) throws InterruptedException {
+		
+		System.out.println(dataset);
+		  
+		
+	     page.AddOnlyNewIngestion(dataset);
+	     	
+	 	 SessionSearch search = new SessionSearch(driver);
+	     search.basicContentSearch(page.IngestionName);
+	     search.bulkRelease("Default Security Group");    	
+    }
+	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Validate Overlay Ingestion is working correctly
+	 */
+	//@Test(groups={"regression,smoke"},priority=3)
+	public void OverlayIngestionFiles(String dataset) throws InterruptedException {
+		
+		System.out.println(dataset);
+		page.ReIngestionofNativeWithOverlay(dataset);
+	 }
+	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Validate Overlay Ingestion with metadata is working correctly
+	 */
+	@Test(groups={"regression,smoke"},priority=3)
+	public void MetadataOverlayIngestion() throws InterruptedException {
+		
+    //		System.out.println(dataset);
+		page.MetadataOverlay("Automation_AllSources");
+		}
+	
+	
+	 @DataProvider(name = "Datasets")
 	 public static Object[][] credentials() {
 	 
 		
-	  return new Object[][] { { "Automation_Collection1K_Tally"},{ "Automation_AllSources"},{ "Automation_20Family_20Threaded"}};
+	  return new Object[][] { { "Automation_AllSources"}};
 	
 	 
 	  }

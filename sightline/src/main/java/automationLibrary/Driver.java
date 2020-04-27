@@ -1,41 +1,23 @@
 package automationLibrary;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebDriver.Options;
 import org.openqa.selenium.WebDriver.TargetLocator;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-
-import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
-
-import configsAndTestData.ConfigLoader;
-import configsAndTestData.ConfigMain;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -126,10 +108,10 @@ public  class Driver  {
 	   }  
 	  
        //Find element-----------------------------------------------------
+	
 	   public Element FindElement(By by)
        {
-           
-		   return new Element(this, by);
+         return new Element(this, by);
        }
 	 
 	   public Element FindElementByClassName(String className)
@@ -211,10 +193,10 @@ public  class Driver  {
        {
            return FindElements(By.xpath(xpath));
        }
-       /*public Screenshot GetScreenshot()
-       {
-           return ((ITakesScreenshot)_driver).GetScreenshot();
-       }*/
+	/*
+	 * public Screenshot GetScreenshot() { return
+	 * ((ITakesScreenshot)_driver).GetScreenshot(); }
+	 */
 
     
 
@@ -480,6 +462,9 @@ public  class Driver  {
     {
         return driver.switchTo();
     }
+
+
+
 	
 	   
 	}

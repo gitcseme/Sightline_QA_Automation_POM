@@ -45,6 +45,9 @@ public class TS_002_AdvancedSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		softAssertion= new SoftAssert();
 		//Open browser
 		
@@ -65,7 +68,7 @@ public class TS_002_AdvancedSearch {
 		 * Modified by:
 		 * Description : As a PA user validate metadata search with string search in advanced search with an operators  
 		 */	
-	    @Test(groups={"regression"})
+	    //@Test(groups={"regression"})
 	   	public void metaSearchWithOperatorsInASreg() {
 	   		SoftAssert softAssertion= new SoftAssert();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -95,7 +98,7 @@ public class TS_002_AdvancedSearch {
 		 * Modified by:
 		 * Description : As a PA user validate all meta data searches in advance searches
 		 */	
-		@Test(groups={"regression"})
+		//@Test(groups={"regression"})
 		public void metaDataSearchsAS() {
 			SoftAssert softAssertion= new SoftAssert();
 			driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -236,7 +239,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : search docs in advanced search and do bulk tag. 
 	 * Untag the same and validate the count under 'Tags and Folders' page  
 	 */
-	  @Test(groups={"regression"})
+	  //@Test(groups={"regression"})
 	   public void bulkUnTag() throws InterruptedException {
 		
 		   String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -271,7 +274,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : search docs in advanced search and do bulk folder. 
 	 * unfolder the same and validate the count under 'Tags and Folders page'  
 	 */	
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
     public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -304,7 +307,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : Search for docs and do bulk folder. Search for the same folder 
 	 * under work product search in advance search, validate the count.  
 	 */	
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
     public void WPFolderSearch() throws InterruptedException {
     	
     	 String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -328,7 +331,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : Search for docs and do bulk tag. Search for the same tag 
 	 * under work product search in advance search, validate the count.  
 	 */	
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
      public void WPTagSearch() throws InterruptedException {
 		
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -352,7 +355,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : As a PA user create security group and release some docs to it.
 	 * Validate docs and counts of security group under advanced search  
 	 */	
-	 @Test(groups={"regression"})
+	 //@Test(groups={"regression"})
      public void WPSecuirtyGroupSearch() throws InterruptedException {
     	
     	 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
@@ -385,7 +388,7 @@ public class TS_002_AdvancedSearch {
 	 * Description : Combinational search under work product search in advanced search.
 	 * Tags AND folders and security group and saved search
 	 */	
-     @Test(groups={"regression"})
+     //@Test(groups={"regression"})
      public void workProductSearches() throws InterruptedException {
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
 		 String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -478,7 +481,7 @@ public class TS_002_AdvancedSearch {
 	}
 	
      //To validate combination of audio and content 
-     @Test(groups={"regression"})
+     //@Test(groups={"regression"})
      public void ContentSearchORAudioSearch() throws InterruptedException {
     	 
     	//create tag for work product first
@@ -538,7 +541,7 @@ public class TS_002_AdvancedSearch {
     	
 	}
      
-     @Test(groups={"regression"})
+     //@Test(groups={"regression"})
      public void contentANDwpTag() throws InterruptedException {
     	 
      	//create tag for work product first
@@ -583,7 +586,7 @@ public class TS_002_AdvancedSearch {
 
 	}
      //Complex query save and execute many time to check consistency!
-     @Test(groups={"regression"})
+     //@Test(groups={"regression"})
      public void contentANDwpTagSaveAndExecuteMultipleTimes() throws InterruptedException {
     	 
      	//create tag for work product first
@@ -649,7 +652,7 @@ public class TS_002_AdvancedSearch {
  		savedSearch.savedSearchExecute(searchName, 16);
  		
 	}
-     @Test(groups={"regression"})
+     //@Test(groups={"regression"})
      public void contentNOTwpTag() throws InterruptedException {
     	 
      	//create tag for work product first
@@ -708,12 +711,13 @@ public class TS_002_AdvancedSearch {
 
 	}
 
-        @Test(groups={"regression"})
+       // @Test(groups={"regression"})
 	   	public void AdvSearchgetallresults() throws InterruptedException {
-	   		SoftAssert softAssertion= new SoftAssert();
-	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	   		
+	   		
 	   		bc.selectproject();
-			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
+	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1165);
 		  	Thread.sleep(5000);
 			
 			String nearcount = search.verifyNearDupeCount();
@@ -724,17 +728,26 @@ public class TS_002_AdvancedSearch {
 			softAssertion.assertTrue(Integer.parseInt(familycount)>=1);
 			System.out.println(nearcount+ "  -----  "+threadcount+" -----"+familycount);	
 			
-			//concept count
+			//conceptual count
 			search.getConceptuallyPlayButton().waitAndClick(10);
-			search.getConceptualCount().Present();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					search.getConceptualCount().Present()  ;}}), Input.wait60); 
 			String  conceptcount = search.getConceptualCount().getText();
 			System.out.println(conceptcount);
 			softAssertion.assertTrue(Integer.parseInt(conceptcount)>=1);
 		
 			softAssertion.assertAll();
 	    }
-	 	
+	   	
+	    @Test(groups={"regression"})
+	     public void contentwithAdvSearchoptions() throws InterruptedException {
+	    	 
+	    	 bc.selectproject();
+		   	 
+	     	 search.advancedContentSearch(Input.searchString2);
+	 		 search.advContentSearchwithoptions(Input.searchString2);
+	    }	 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

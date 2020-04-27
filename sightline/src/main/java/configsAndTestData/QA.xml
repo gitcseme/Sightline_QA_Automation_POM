@@ -5,13 +5,13 @@
         <url>http://172.22.155.2/</url>
         <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <domainName>DNDautoDomain1</domainName>
-        <projectName>Auto_SL2402</projectName>
+        <domainName>AutoDomain</domainName>
+        <projectName>Auto_Regression</projectName>
         <!-- Auto_SL2404  -->
         <!-- AutoSys SysAdmin  -->
 
-          <sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
-          <sa1password>sightline@54321</sa1password> 
+          <sa1userName>smangal@consilio.com</sa1userName> 
+          <sa1password>sightline@654321</sa1password> 
           
           <!-- DA Admin  -->
          <da1userName>automation.sightlineconsilio@gmail.com</da1userName> 

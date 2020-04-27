@@ -107,6 +107,7 @@ public class Input {
 	public static String AllSourcesNativeFile;
 	public static String SourceLocation;
 	public static int totalNumberOfDocs;
+	public static int totalNumberOfDocsincludeadvoption;
 	
 
 	@BeforeSuite(alwaysRun=true)
@@ -196,6 +197,7 @@ public class Input {
 		metaDataCN=testData.metaDataCN;
 		metaDataCNcount = testData.metaDataCNcount;
 		totalNumberOfDocs = testData.totalNumberOfDocs;
+		totalNumberOfDocsincludeadvoption = testData.totalNumberOfDocsincludeadvoption;
 		
 		System.out.println("*****************************************************");
 		

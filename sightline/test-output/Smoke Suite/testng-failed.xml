@@ -27,14 +27,33 @@
     <classes>
       <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="ConceptualSearch"/>
           <include name="preCondition"/>
           <include name="close"/>
           <include name="takeScreenShot"/>
+          <include name="contentSearchWithOperatorsInBS"/>
+          <include name="contentSearchWithOperatorsInAS"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
     </classes>
   </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
+  <test name="TS_017_DocList(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="doclistToDocView"/>
+          <include name="takeScreenShot"/>
+          <include name="bulkTagAndBulkFolder"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+    </classes>
+  </test> <!-- TS_017_DocList(failed) -->
   <test name="SavedSearchShareSchedule(failed)">
     <groups>
       <run>
@@ -65,6 +84,7 @@
           <include name="close"/>
           <include name="CreateAssignmentDistributeToReviwer"/>
           <include name="takeScreenShot"/>
+          <include name="CreateQuickBatch"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_009_ValidateAssignmentFunctionality -->
     </classes>
@@ -87,6 +107,41 @@
       </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
     </classes>
   </test> <!-- DocView - Non Audio(failed) -->
+  <test name="Reports(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="tallySubTally"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+    </classes>
+  </test> <!-- Reports(failed) -->
+  <test name="BatchUpload(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="batchUploadByRMU"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+    </classes>
+  </test> <!-- BatchUpload(failed) -->
   <test name="Production(failed)">
     <groups>
       <run>

@@ -1612,7 +1612,25 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   }
 			  
 			  
-			  
+	 public void VerifyKeywordHit(String searchString) throws InterruptedException {
+				
+	    String hitscount = getPersistentHit(searchString);
+		System.out.println("Hits are:"+hitscount);
+				
+			   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
+				   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
+				   
+				
+				getDocView_Persistent_PrevHit().Displayed();
+				getDocView_Persistent_NextHit().Displayed();
+				getDocView_Persistent_NextHit().waitAndClick(10);
+				getDocView_Persistent_PrevHit().waitAndClick(10);
+				
+			  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+				
+					
+			}
 			  
 			  
 			  
