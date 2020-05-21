@@ -61,7 +61,7 @@ public class TS_017_DocList {
 		
 		bc.selectproject();
 		//search for string
-		Assert.assertTrue(ss.basicContentSearch(Input.searchString1)==Input.pureHitSeachString1);
+		ss.basicContentSearch(Input.searchString1);
     	
     	//view in doclist
     	ss.ViewInDocList();
@@ -104,68 +104,6 @@ public class TS_017_DocList {
     	Assert.assertEquals(10,ss.serarchWP());
    }
 	
-	//To validate masterdate for all image files in doclist
-	@Test(groups={"regression"})
-	public void masterDateForImageDocs() throws InterruptedException {
-		//driver.getWebDriver().get(Input.url+ "Search/Searches");
-    
-    	Assert.assertTrue(ss.basicMetaDataSearch("DocFileExtension", null, ".jpg", null)>=4);
-    	ss.ViewInDocList();
-    	final DocListPage DL= new DocListPage(driver);
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			DL.getColumnText(1,6).Visible()  ;}}), Input.wait30);
-		 
-    	for (int i = 0; i < DL.getDocListRows().size(); i++) {
-    			Assert.assertEquals( DL.getColumnText(i,6).getText(),"JPEG File Interchange File");
-		}
-    	
-	}
-	//To validate custodian filter
-	@Test(groups={"regression"})
-	public void masterDateFiltersInDocList() throws InterruptedException {
-		bc.selectproject();
-    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
-    	ss.ViewInDocList();
-    	
-    	final DocListPage dl= new DocListPage(driver);
-    	dl.dateFilter("between", "1980/01/01", "1990/02/15");
-    	dl.validateCount("Showing 1 to 10 of 121 entries");
-    	
-    	driver.scrollPageToTop();
-    	dl.removeRpeviousFilters();
-    	
-    	dl.dateFilter("on", "2000/02/22", null);
-    	dl.validateCount("Showing 1 to 10 of 70 entries");
-    	
-    	
-    	
-	}
-	
-	@Test(groups={"regression"})
-	public void docFileTypeInDocList() throws InterruptedException {
-		bc.selectproject();
-    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
-    	ss.ViewInDocList();
-    	final DocListPage dl= new DocListPage(driver);
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			dl.getGetDocFIleTypeFilter().Visible()  ;}}), Input.wait30);
-		
-    	dl.getGetDocFIleTypeFilter().waitAndClick(10);
-    	dl.include("HyperText Markup Language");
-    	dl.getApplyFilter().waitAndClick(10);
-    	dl.validateCount("Showing 1 to 1 of 1 entries");
-    
-    	//cancel previous filter
-    	dl.removeRpeviousFilters();
-    
-    	dl.getGetDocFIleTypeFilter().waitAndClick(10);
-    	dl.exclude("HyperText Markup Language");
-    	dl.getApplyFilter().Click();
-    	dl.validateCount("Showing 1 to 10 of 1,201 entries");
-
-    	
-    	
-	}
 	
 	/*
 	To verify navigation from doclist to docview
@@ -174,7 +112,7 @@ public class TS_017_DocList {
 	public void doclistToDocView() throws InterruptedException {
 		//search for string
 		bc.selectproject();
-    	Assert.assertTrue(ss.basicContentSearch(Input.searchString1)==Input.pureHitSeachString1);
+    	ss.basicContentSearch(Input.searchString1);
     	
     	//view in doclist
     	ss.ViewInDocList();
@@ -212,7 +150,7 @@ Validate docs in SG through work product search
 	
 		//search for string
 		bc.selectproject();
-		Assert.assertTrue(ss.basicContentSearch(Input.searchString1)==Input.pureHitSeachString1);
+		ss.basicContentSearch(Input.searchString1);
 		
 		//view in doclist
     	ss.ViewInDocList();
@@ -230,31 +168,7 @@ Validate docs in SG through work product search
     	    	
 	}
 
-	 	@Test(groups={"regression"})
-		public void custodianFiltersInDocList() throws InterruptedException {
-			bc.selectproject();
-	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
-	    	ss.ViewInDocList();
-	    	final DocListPage dl= new DocListPage(driver);
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			dl.getCustodianFilter().Visible()  ;}}), Input.wait30);
-			//include 
-	    	dl.getCustodianFilter().waitAndClick(10);
-	    	dl.include("P Allen");
-	    	dl.getApplyFilter().Click();
-	    	dl.validateCount("Showing 1 to 10 of 1,134 entries");
-	    	
-	    	//cancel previous filter
-	    	dl.removeRpeviousFilters();
-	    	
-	    	//exclude
-	    	dl.getCustodianFilter().waitAndClick(10);
-	    	dl.exclude("P Allen");
-	    	dl.getApplyFilter().Click();
-	    	//dl.validateCount("Showing 1 to 4 of 4 entries");
-	    	
-		}
+	 
 		
 	   @BeforeMethod
 		 public void beforeTestMethod(Method testMethod){
