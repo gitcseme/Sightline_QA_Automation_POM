@@ -36,11 +36,12 @@ import testScriptsSmoke.Input;
 	String Remark= "Re"+Utility.dynamicNameAppender();
 	String newTag = "newtag"+Utility.dynamicNameAppender();
 	String codingfrom = "CF"+Utility.dynamicNameAppender();
-	String assignmentName= "assi"+Utility.dynamicNameAppender();
+	//String assignmentName= "assi"+Utility.dynamicNameAppender();
 	String redactiontag= "RTag"+Utility.dynamicNameAppender();
 	String annotationname = "annotationname"+Utility.dynamicNameAppender();
-	String folderName = "Fol"+Utility.dynamicNameAppender();
-
+	//String folderName = "Fol"+Utility.dynamicNameAppender();
+	String folderName = "Fol431725";
+	String assignmentName= "assi488354";
 	
 	//For reviewer assign docs,so create assignment with coding form(with tags and comments) and distribute 
 	@BeforeClass(alwaysRun = true)
@@ -48,12 +49,16 @@ import testScriptsSmoke.Input;
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
+		Input in = new Input();
+		in.loadEnvConfig();
+		
+		
 		//Open browser
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		/*	
     	//add tag
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
     	page.CreateTag(newTag,"Default Security Group");
@@ -87,7 +92,7 @@ import testScriptsSmoke.Input;
 		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString2);
 		lp.logout();
 		
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password); */
 		
 		hm = new HomePage(driver);
 		Boolean found= false;
@@ -100,12 +105,12 @@ import testScriptsSmoke.Input;
 			}
 		}	
         Assert.assertTrue(found);
-     
+    
         docView=new DocViewPage(driver);     
         
 	}
 	
-   	 @Test(groups={"regression"},priority=1)
+   	// @Test(groups={"regression"},priority=1)
 		public void  VerifyPersistentHit() throws InterruptedException {
  		
  	
@@ -119,7 +124,7 @@ import testScriptsSmoke.Input;
  	@Test(groups={"regression"},priority=2)
 	public void VerifyFoldertab() throws InterruptedException {
 		
-		docView.VerifyFolderTab(folderName);
+		docView.VerifyFolderTab(folderName,2);
     
 	}
 	@Test(groups={"regression"},priority=3)

@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
-
+import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
@@ -40,12 +40,12 @@ import testScriptsSmoke.Input;
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	//Open browser
 		
+		   Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
-
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);

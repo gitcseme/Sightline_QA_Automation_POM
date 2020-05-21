@@ -4,25 +4,25 @@
        	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
        	 <domainName>QA Domain</domainName>
-        <projectName>Auto_04042020</projectName>
+        <projectName>Auto_0508</projectName>
         
        <!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
-   		<sa1password>Q@test_11</sa1password> 
+   		<sa1password>Q@test_12</sa1password> 
      
         <!-- USPA -->
         <pa2FullName>QA PAU2</pa2FullName>
         <pa1userName>qapau2@consilio.com</pa1userName>
-        <pa1password>Q@test_11</pa1password>
-      <!--   
-        <pa1FullName>QA PAU1</pa1FullName>
+        <pa1password>Q@test_13</pa1password>
+      
+    <!--     <pa1FullName>QA PAU1</pa1FullName>
         <pa1userName>qapau1@consilio.com</pa1userName>
-        <pa1password>Q@test_11</pa1password>
-         -->
+        <pa1password>Q@test_13</pa1password>
+     -->     -->
         <!--USRMU  -->
         <rmu1FullName>QA RMU1</rmu1FullName>
         <rmu1userName>qarmu1@consilio.com</rmu1userName>
-        <rmu1password>Q@test_11</rmu1password>
+        <rmu1password>Q@test_13</rmu1password>
         
         <rmu2FullName>QA RMU2</rmu2FullName>
         <rmu2userName>qarmu2@consilio.com</rmu2userName>
@@ -35,7 +35,7 @@
         
         <rev1FullName>QA REV1</rev1FullName>
         <rev1userName>qarev1@consilio.com</rev1userName>
-        <rev1password>Q@test_11</rev1password>
+        <rev1password>Q@test_13</rev1password>
         
         <shareTo>QA PAU2</shareTo>
        

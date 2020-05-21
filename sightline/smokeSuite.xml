@@ -21,20 +21,20 @@
         <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
     </classes>
 	</test>    
-	-->
+	
 	 <test name="AllManageModules">
 	 <groups><run><include name="smoke" /></run></groups>
     	<classes>
        	 <class name="testScriptsSmoke.TS_008_AllManageModules" ></class>  
     	</classes>
-	</test>   
+	</test>  
 	
  	<test name="BasicAndAdvancedSearchOperations">
  	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
     </classes>
-	</test>  
+	</test>   -->
 	<test name="TS_017_DocList">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>

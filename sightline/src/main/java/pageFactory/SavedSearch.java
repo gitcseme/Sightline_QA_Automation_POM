@@ -234,7 +234,7 @@ public class SavedSearch {
 	   getToDocList().Click();
 	   
    }
-   public void savedSearchToDocView(final String searchName) {
+   public void savedSearchToDocView(final String searchName) throws InterruptedException {
 	   driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSavedSearch_SearchName().Visible()  ;}}),Input.wait60);
@@ -245,13 +245,10 @@ public class SavedSearch {
 			e.printStackTrace();
 		}
 	   getSavedSearch_SearchName().SendKeys(searchName);
-	   try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	   Thread.sleep(2000);
+		
 	   getSavedSearch_ApplyFilterButton().Click();
+	   Thread.sleep(1000);
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
 	  
@@ -362,7 +359,7 @@ public class SavedSearch {
 	   Assert.assertTrue(getSearchName(searchName).Displayed());
 	   
 	   //impersonate to RMU and check search
-	   base.impersonatePAtoRMU_SelectedSG(securitygroupname);
+	   base.impersonatePAtoRMU();
 	   
 	 //click on share with security group tab
 	   this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");

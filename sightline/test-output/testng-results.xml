@@ -1,82 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="1" failed="0" ignored="0" total="1" passed="0">
+<testng-results skipped="0" failed="2" ignored="0" total="12" passed="10">
   <reporter-output>
+    <line>
+      <![CDATA[<a href='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--AddRedaction.png'> <img src='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--AddRedaction.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--Generateproduction.png'> <img src='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--Generateproduction.png' height='100' width='100'/> </a>]]>
+    </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="55711" started-at="2020-04-24T07:06:31Z" finished-at="2020-04-24T07:07:27Z">
+  <suite name="Default suite" duration-ms="415742" started-at="2020-05-20T13:34:39Z" finished-at="2020-05-20T13:41:35Z">
     <groups>
-      <group name="regression">
-        <method signature="Assignment_Regression.Assgnwp()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="Assgnwp" class="testScriptsRegression.Assignment_Regression"/>
-      </group> <!-- regression -->
     </groups>
-    <test name="Default test" duration-ms="55711" started-at="2020-04-24T07:06:31Z" finished-at="2020-04-24T07:07:27Z">
-      <class name="testScriptsRegression.Assignment_Regression">
-        <test-method status="FAIL" signature="preCondition()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="preCondition" is-config="true" duration-ms="55595" started-at="2020-04-24T12:36:31Z" finished-at="2020-04-24T12:37:27Z">
-          <exception class="java.lang.RuntimeException">
-            <message>
-              <![CDATA[couldnt create chrome driver]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.RuntimeException: couldnt create chrome driver
-	at automationLibrary.Driver.chromeDriver(Driver.java:266)
-	at automationLibrary.Driver.createDriver(Driver.java:224)
-	at automationLibrary.Driver.<init>(Driver.java:38)
-	at testScriptsRegression.Assignment_Regression.preCondition(Assignment_Regression.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:146)
-	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:166)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.RuntimeException -->
+    <test name="Default test" duration-ms="415742" started-at="2020-05-20T13:34:39Z" finished-at="2020-05-20T13:41:35Z">
+      <class name="testScriptsRegression.DocView_Redactions">
+        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="preCondition" is-config="true" duration-ms="123731" started-at="2020-05-20T19:04:39Z" finished-at="2020-05-20T19:06:43Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preCondition -->
-        <test-method status="SKIP" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
+        <test-method status="PASS" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="7371" started-at="2020-05-20T19:06:43Z" data-provider="Datasets" finished-at="2020-05-20T19:06:50Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[100]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[1]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="SKIP" signature="Assgnwp()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="Assgnwp" duration-ms="0" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
-          <exception class="java.lang.RuntimeException">
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2020-05-20T19:06:50Z" finished-at="2020-05-20T19:06:50Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=SUCCESS method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="6877" started-at="2020-05-20T19:06:50Z" data-provider="Datasets" finished-at="2020-05-20T19:06:57Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[150]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[202]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="6917" started-at="2020-05-20T19:06:57Z" data-provider="Datasets" finished-at="2020-05-20T19:07:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[200]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[205]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[3]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:06:57Z" finished-at="2020-05-20T19:06:57Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=SUCCESS method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:07:04Z" finished-at="2020-05-20T19:07:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=SUCCESS method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="FAIL" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="5010" started-at="2020-05-20T19:07:04Z" data-provider="Datasets" finished-at="2020-05-20T19:07:09Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[300]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[207]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[4]]>
+              </value>
+            </param>
+          </params>
+          <exception class="org.openqa.selenium.StaleElementReferenceException">
             <message>
-              <![CDATA[couldnt create chrome driver]]>
+              <![CDATA[stale element reference: element is not attached to the page document
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 59 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-SHILPIM', ip: '10.12.48.222', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir20940_24476}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: c2f1c2ed48ab0f402f65a1e695d05ff9]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.RuntimeException: couldnt create chrome driver
-	at automationLibrary.Driver.chromeDriver(Driver.java:266)
-	at automationLibrary.Driver.createDriver(Driver.java:224)
-	at automationLibrary.Driver.<init>(Driver.java:38)
-	at testScriptsRegression.Assignment_Regression.preCondition(Assignment_Regression.java:82)
+              <![CDATA[org.openqa.selenium.StaleElementReferenceException: stale element reference: element is not attached to the page document
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 59 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/stale_element_reference.html
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-SHILPIM', ip: '10.12.48.222', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir20940_24476}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: c2f1c2ed48ab0f402f65a1e695d05ff9
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.getText(RemoteWebElement.java:156)
+	at automationLibrary.Element.getText(Element.java:506)
+	at pageFactory.BaseClass.VerifySuccessMessage(BaseClass.java:241)
+	at pageFactory.DocViewPage.redactbyrectangle(DocViewPage.java:1668)
+	at testScriptsRegression.DocView_Redactions.AddRedaction(DocView_Redactions.java:120)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:146)
-	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:166)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
 	at org.testng.TestRunner.privateRun(TestRunner.java:744)
 	at org.testng.TestRunner.run(TestRunner.java:602)
 	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
@@ -94,25 +195,193 @@
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.RuntimeException -->
+          </exception> <!-- org.openqa.selenium.StaleElementReferenceException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Assgnwp -->
-        <test-method status="FAIL" signature="close()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="close" is-config="true" duration-ms="36" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
-          <exception class="java.lang.NullPointerException">
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="1007" started-at="2020-05-20T19:07:09Z" finished-at="2020-05-20T19:07:10Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=FAILURE method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<a href='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--AddRedaction.png'> <img src='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--AddRedaction.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="6928" started-at="2020-05-20T19:07:10Z" data-provider="Datasets" finished-at="2020-05-20T19:07:17Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[400]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[208]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[5]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:07:17Z" finished-at="2020-05-20T19:07:17Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=SUCCESS method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction" duration-ms="6991" started-at="2020-05-20T19:07:17Z" data-provider="Datasets" finished-at="2020-05-20T19:07:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[500]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[210]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[6]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2020-05-20T19:07:24Z" finished-at="2020-05-20T19:07:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction status=SUCCESS method=DocView_Redactions.AddRedaction(int, int, int)[pri:1, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="ModifyRedaction()[pri:2, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="ModifyRedaction" duration-ms="20744" started-at="2020-05-20T19:07:24Z" finished-at="2020-05-20T19:07:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ModifyRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:07:45Z" finished-at="2020-05-20T19:07:45Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=ModifyRedaction status=SUCCESS method=DocView_Redactions.ModifyRedaction()[pri:2, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="AddRedaction1()[pri:3, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedaction1" duration-ms="18737" started-at="2020-05-20T19:07:45Z" finished-at="2020-05-20T19:08:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedaction1 -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:08:04Z" finished-at="2020-05-20T19:08:04Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedaction1 status=SUCCESS method=DocView_Redactions.AddRedaction1()[pri:3, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="DeleteRedaction()[pri:4, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="DeleteRedaction" duration-ms="16574" started-at="2020-05-20T19:08:04Z" finished-at="2020-05-20T19:08:20Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DeleteRedaction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="0" started-at="2020-05-20T19:08:20Z" finished-at="2020-05-20T19:08:20Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=DeleteRedaction status=SUCCESS method=DocView_Redactions.DeleteRedaction()[pri:4, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="AddRedactionnextpage()[pri:5, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="AddRedactionnextpage" duration-ms="18756" started-at="2020-05-20T19:08:20Z" finished-at="2020-05-20T19:08:39Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddRedactionnextpage -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2020-05-20T19:08:39Z" finished-at="2020-05-20T19:08:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=AddRedactionnextpage status=SUCCESS method=DocView_Redactions.AddRedactionnextpage()[pri:5, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="FAIL" signature="Generateproduction()[pri:6, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="Generateproduction" duration-ms="173615" started-at="2020-05-20T19:08:39Z" finished-at="2020-05-20T19:11:33Z">
+          <exception class="org.openqa.selenium.ElementNotVisibleException">
+            <message>
+              <![CDATA[element not visible
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 228 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-SHILPIM', ip: '10.12.48.222', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir20940_24476}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: c2f1c2ed48ab0f402f65a1e695d05ff9]]>
+            </message>
             <full-stacktrace>
-              <![CDATA[java.lang.NullPointerException
-	at testScriptsRegression.Assignment_Regression.close(Assignment_Regression.java:216)
+              <![CDATA[org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 228 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-SHILPIM', ip: '10.12.48.222', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_181'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir20940_24476}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: c2f1c2ed48ab0f402f65a1e695d05ff9
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:210)
+	at pageFactory.ProductionPage.Productionwithredactions(ProductionPage.java:995)
+	at testScriptsRegression.DocView_Redactions.Generateproduction(DocView_Redactions.java:183)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:146)
-	at org.testng.internal.TestMethodWorker.invokeAfterClassMethods(TestMethodWorker.java:212)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
 	at org.testng.TestRunner.privateRun(TestRunner.java:744)
 	at org.testng.TestRunner.run(TestRunner.java:602)
 	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
@@ -130,11 +399,44 @@
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.NullPointerException -->
+          </exception> <!-- org.openqa.selenium.ElementNotVisibleException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Generateproduction -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="877" started-at="2020-05-20T19:11:33Z" finished-at="2020-05-20T19:11:33Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=Generateproduction status=FAILURE method=DocView_Redactions.Generateproduction()[pri:6, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<a href='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--Generateproduction.png'> <img src='C:\Users\smangal\git\Sightline_QA_Automation_POM\sightline/Screenshots/DocView_Redactions--Generateproduction.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="DatabaseValidation()[pri:7, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="DatabaseValidation" duration-ms="1500" started-at="2020-05-20T19:11:33Z" finished-at="2020-05-20T19:11:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- DatabaseValidation -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2020-05-20T19:11:35Z" finished-at="2020-05-20T19:11:35Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=DatabaseValidation status=SUCCESS method=DocView_Redactions.DatabaseValidation()[pri:7, instance:testScriptsRegression.DocView_Redactions@490ab905] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="close()[pri:0, instance:testScriptsRegression.DocView_Redactions@490ab905]" name="close" is-config="true" duration-ms="0" started-at="2020-05-20T19:11:35Z" finished-at="2020-05-20T19:11:35Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
-      </class> <!-- testScriptsRegression.Assignment_Regression -->
+      </class> <!-- testScriptsRegression.DocView_Redactions -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

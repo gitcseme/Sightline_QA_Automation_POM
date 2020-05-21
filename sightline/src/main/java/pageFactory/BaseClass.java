@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
@@ -465,6 +467,44 @@ public class BaseClass {
         	getSaveChangeRole().Click();
         	System.out.println("Impersnated from SA to RMU");
 
+    	}
+        
+        public void comparearraywithlist(String[] listarray,ElementCollection elelist)
+        {
+        
+       	 List<WebElement> values = elelist.FindWebElements();
+       	 List<String> value = new ArrayList<String>();
+            for(int j=1;j<=values.size();j++)
+            {
+          	 System.out.println(value.add(values.get(j).getText()));
+           }
+       	 
+            Assert.assertSame(listarray, values);
+        }	
+        
+        public void getallselectele(Select ele)
+        {
+        	List<WebElement> dd = ele.getOptions();
+
+        	System.out.println(dd.size());
+
+        	for (int j = 0; j < dd.size(); j++) {
+        	    System.out.println(dd.get(j).getText());
+
+        	}
+        }
+        
+        public boolean isFileDownloaded(String downloadPath, int count) {
+    		boolean flag = false;
+    	    File dir = new File(downloadPath);
+    	    File[] dir_contents = dir.listFiles();
+    	    System.out.println(dir_contents.length);
+    	  	    
+    	    if(dir_contents.length==count)
+    	      return flag=true;
+    	   
+    	    else   
+    	    return flag;
     	}
 
    

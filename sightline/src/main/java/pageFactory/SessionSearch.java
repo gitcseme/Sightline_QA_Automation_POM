@@ -117,7 +117,7 @@ public class SessionSearch {
     public Element getAs_Conceptual(){ return driver.FindElementByXPath("//button[@id='conceptual']"); }
     public Element getAs_ConceptualTextArea(){ return driver.FindElementByXPath("//textarea"); }
   
-    public Element getSelectFolderExisting(String folderName){ return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[contains(.,'"+folderName+"')]"); }
+    public Element getSelectFolderExisting(String folderName){ return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[contains(.,'"+folderName+"')]/i[1]"); }
     public Element getBulkUntagbutton(){ return driver.FindElementByXPath("//*[@id='toUnassign']/following-sibling::i"); }
     public Element getSelectTagExisting(String tagName){ return driver.FindElementByXPath("//*[@id='divBulkTagJSTree']//a[contains(.,'"+tagName+"')]"); }
     public Element getBulkUnFolderbutton(){ return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i"); }
@@ -1127,7 +1127,7 @@ public void ViewInDocView() throws InterruptedException{
 	//driver.getWebDriver().get(Input.url+"Search/Searches");
 	
 	 try{
-		 getPureHitAddButton().Click();
+		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
 		}
@@ -1136,12 +1136,9 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
 	 getBulkActionButton().waitAndClick(10);
-	
-	 try{
+	Thread.sleep(1000);
+	 
 	 getDocViewAction().waitAndClick(10);
-	 }catch (Exception e) {
-		 getDocViewActionDL().Click();
-	}
 	 System.out.println("Navigated to docView to view docs");
 	
 }

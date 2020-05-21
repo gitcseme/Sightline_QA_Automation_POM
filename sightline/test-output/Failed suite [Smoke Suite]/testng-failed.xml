@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Failed suite [Smoke Suite]]">
+  <test name="Categorization(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_005_ValidateCategorization">
+        <methods>
+          <include name="preConditions"/>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="validateCategorization"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
+    </classes>
+  </test> <!-- Categorization(failed)(failed) -->
+  <test name="SavedSearchShareSchedule(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="shareSavedSearch"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+    </classes>
+  </test> <!-- SavedSearchShareSchedule(failed)(failed) -->
+  <test name="ValidateAssignmentFunctionality(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="CreateAssignmentDistributeToReviwer"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_009_ValidateAssignmentFunctionality -->
+    </classes>
+  </test> <!-- ValidateAssignmentFunctionality(failed)(failed) -->
+  <test name="Workflow(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="Test"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+    </classes>
+  </test> <!-- Workflow(failed)(failed) -->
+  <test name="DocView - Non Audio(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
+          <include name="addCommentToFirstDoc"/>
+          <include name="takeScreenShot"/>
+          <include name="preCondition"/>
+          <include name="addRemarkToFirstDoc"/>
+          <include name="completeDoc"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+    </classes>
+  </test> <!-- DocView - Non Audio(failed)(failed) -->
+  <test name="Reports(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="reviewProgressByRevReport"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+    </classes>
+  </test> <!-- Reports(failed)(failed) -->
+  <test name="DocViewAudio(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="addRemark"/>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+    </classes>
+  </test> <!-- DocViewAudio(failed)(failed) -->
+  <test name="Production(failed)(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="AddNewProduction"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+    </classes>
+  </test> <!-- Production(failed)(failed) -->
+</suite> <!-- Failed suite [Failed suite [Smoke Suite]] -->

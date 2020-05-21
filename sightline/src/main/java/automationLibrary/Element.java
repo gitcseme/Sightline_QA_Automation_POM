@@ -302,7 +302,6 @@ private  Driver driver;
    	  }
    	  	return false;
     }
-     /*
 	 public Element FindElement(By by)
      {
          AssertExists();
@@ -378,7 +377,6 @@ private  Driver driver;
      {
          return FindElements(By.className(className));
      }
-     */
 
    /// <summary>
      /// Get/Set "value" for an Element which is a Select (dropdown) control 
