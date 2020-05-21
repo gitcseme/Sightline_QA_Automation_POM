@@ -1138,7 +1138,7 @@ public void ViewInDocView() throws InterruptedException{
 	 getBulkActionButton().waitAndClick(10);
 	Thread.sleep(1000);
 	 
-	 getDocViewAction().waitAndClick(10);
+	 getDocViewActionDL().waitAndClick(10);
 	 System.out.println("Navigated to docView to view docs");
 	
 }
