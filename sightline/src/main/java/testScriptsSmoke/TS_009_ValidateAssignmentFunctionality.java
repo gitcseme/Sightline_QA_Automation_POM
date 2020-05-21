@@ -91,6 +91,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 		agnmt.createAssignment(assignmentName,codingfrom);
 	
 		//Search docs and assign to newly created assignment
+		bc.selectproject();
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
