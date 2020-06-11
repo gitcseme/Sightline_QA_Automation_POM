@@ -34,6 +34,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	Driver driver;
 	LoginPage lp;
 	DocViewPage docView;
+	public static int purehits;
 	
 	String tagName = "tag"+Utility.dynamicNameAppender();
 	String folderName = "folder"+Utility.dynamicNameAppender();
@@ -58,6 +59,10 @@ public class TS_011_DocViewNonAudioReviewer {
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -84,13 +89,13 @@ public class TS_011_DocViewNonAudioReviewer {
 	
 		//Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		purehits=search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,purehits);
 		lp.logout();
 		
 		//login as a reviewer and select the specific assignment to review the docs
@@ -120,7 +125,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	 *   
 	 */	
 	@Test(groups={"smoke","regression"})
-	public void addCommentToFirstDoc() {
+	public void addCommentandcompleteDoc() {
 		
 		docView.addCommentToNonAudioDoc("firstcomment");
     
@@ -149,8 +154,11 @@ public class TS_011_DocViewNonAudioReviewer {
 	 *   
 	 */
 	@Test(groups={"smoke","regression"})
-	public void completeDoc() {
-		docView.completeNonAudioDocument();
+	public void addredaction() throws InterruptedException {
+    {
+
+			docView.redactbyrectangle(100, 200, 1, "Default Redaction Tag");
+		}
 		
 	}
 	 @BeforeMethod

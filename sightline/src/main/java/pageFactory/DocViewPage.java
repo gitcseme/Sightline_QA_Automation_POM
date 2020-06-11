@@ -274,21 +274,19 @@ public class DocViewPage {
     public void addCommentToNonAudioDoc(String comment) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddComment1().Visible()  ;}}), Input.wait30);   
+    	getAddComment1().Clear();
     	getAddComment1().SendKeys(comment);
-    	getSaveDoc().waitAndClick(30);
-    	try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	base.VerifySuccessMessage("Document saved successfully");
+    	getCompleteDocBtn().waitAndClick(30);
+    	
+    	base.VerifySuccessMessage("Document completed successfully");
 	}
    
     public void addRemarkNonAudioDoc(String remark) {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60);   
+    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60); 
+    	getDocView_DocId("ID00000125").waitAndClick(20);
+      
     	getNonAudioRemarkBtn().waitAndClick(10);
     	
     	   try {
@@ -477,7 +475,7 @@ public void audioReduction() throws InterruptedException, ParseException {
 		 getDocview_ButtonYes().Click();
 	    
 		 base.VerifySuccessMessage("Record Deleted Successfully");
-    	 Thread.sleep(10000);
+		 base.CloseSuccessMsgpopup();
            }
      catch (Exception e)
      {

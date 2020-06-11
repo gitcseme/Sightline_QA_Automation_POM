@@ -40,8 +40,7 @@ public class TS_007_SavedSearchShareSchedule {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-	 //Open browser
+	    //Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
@@ -56,7 +55,7 @@ public class TS_007_SavedSearchShareSchedule {
 		
 			bc = new BaseClass(driver);
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -67,12 +66,13 @@ public class TS_007_SavedSearchShareSchedule {
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
-	    Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
+	   Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(Input.pureHitSeachString1));
+	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
 	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
 
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -84,7 +84,7 @@ public class TS_007_SavedSearchShareSchedule {
 	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search

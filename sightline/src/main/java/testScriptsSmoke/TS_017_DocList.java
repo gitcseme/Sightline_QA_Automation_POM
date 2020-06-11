@@ -30,6 +30,7 @@ public class TS_017_DocList {
 	LoginPage lp;
 	SessionSearch ss;
 	BaseClass bc;
+	public static int purehits;
 	
 	String tagName = "tagSearch"+Utility.dynamicNameAppender();
 	String folderName = "folderSearch"+Utility.dynamicNameAppender();
@@ -112,7 +113,7 @@ public class TS_017_DocList {
 	public void doclistToDocView() throws InterruptedException {
 		//search for string
 		bc.selectproject();
-    	ss.basicContentSearch(Input.searchString1);
+		purehits=	ss.basicContentSearch(Input.searchString1);
     	
     	//view in doclist
     	ss.ViewInDocList();
@@ -131,7 +132,7 @@ public class TS_017_DocList {
         DocViewPage dv= new DocViewPage(driver);
         dv.getDocView_info().WaitUntilPresent();
         Assert.assertEquals("of "+10+" Docs",dv.getDocView_info().getText().toString());
-        System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+        System.out.println("Expected docs("+purehits+") are shown in docView");
 
     	
 	}
@@ -150,7 +151,7 @@ Validate docs in SG through work product search
 	
 		//search for string
 		bc.selectproject();
-		ss.basicContentSearch(Input.searchString1);
+		purehits=ss.basicContentSearch(Input.searchString1);
 		
 		//view in doclist
     	ss.ViewInDocList();

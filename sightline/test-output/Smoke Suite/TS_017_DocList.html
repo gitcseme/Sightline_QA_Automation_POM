@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>1/2/0</td>
 </tr><tr>
-<td>Started on:</td><td>Fri May 08 10:56:02 IST 2020</td>
+<td>Started on:</td><td>Tue May 26 12:30:01 IST 2020</td>
 </tr>
-<tr><td>Total time:</td><td>332 seconds (332128 ms)</td>
+<tr><td>Total time:</td><td>236 seconds (236135 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td>smoke </td>
 </tr><tr>
@@ -76,21 +76,44 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='testScriptsSmoke.TS_017_DocList.bulkTagAndBulkFolder()'><b>bulkTagAndBulkFolder</b><br>Test class: testScriptsSmoke.TS_017_DocList</td>
-<td><div><pre>junit.framework.AssertionFailedError: expected:&lt;10&gt; but was:&lt;9&gt;
-	at junit.framework.Assert.fail(Assert.java:47)
-	at junit.framework.Assert.failNotEquals(Assert.java:282)
-	at junit.framework.Assert.assertEquals(Assert.java:64)
-	at junit.framework.Assert.assertEquals(Assert.java:201)
-	at junit.framework.Assert.assertEquals(Assert.java:207)
-	at testScriptsSmoke.TS_017_DocList.bulkTagAndBulkFolder(TS_017_DocList.java:97)
-... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace173738886", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace173738886'><pre>junit.framework.AssertionFailedError: expected:&lt;10&gt; but was:&lt;9&gt;
-	at junit.framework.Assert.fail(Assert.java:47)
-	at junit.framework.Assert.failNotEquals(Assert.java:282)
-	at junit.framework.Assert.assertEquals(Assert.java:64)
-	at junit.framework.Assert.assertEquals(Assert.java:201)
-	at junit.framework.Assert.assertEquals(Assert.java:207)
-	at testScriptsSmoke.TS_017_DocList.bulkTagAndBulkFolder(TS_017_DocList.java:97)
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;project-selector&quot; class=&quot;popover-trigger-element dropdown-toggle left&quot; data-toggle=&quot;dropdown&quot; style=&quot;padding-bottom:8px;&quot; title=&quot;...&quot;&gt;Auto_Regression&lt;/span&gt; is not clickable at point (273, 36). Other element would receive the click: &lt;div class=&quot;divMessageBox animated fast fadeOut&quot; id=&quot;MsgBoxBack&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 49 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.12.51.128&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir19012_27750}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a0104baddd9f2bc3a50f44d02740e98b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:242)
+	at pageFactory.BaseClass.selectproject(BaseClass.java:193)
+	at testScriptsSmoke.TS_017_DocList.bulkTagAndBulkFolder(TS_017_DocList.java:61)
+... Removed 29 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace67671827", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace67671827'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;project-selector&quot; class=&quot;popover-trigger-element dropdown-toggle left&quot; data-toggle=&quot;dropdown&quot; style=&quot;padding-bottom:8px;&quot; title=&quot;...&quot;&gt;Auto_Regression&lt;/span&gt; is not clickable at point (273, 36). Other element would receive the click: &lt;div class=&quot;divMessageBox animated fast fadeOut&quot; id=&quot;MsgBoxBack&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 49 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.12.51.128&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir19012_27750}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a0104baddd9f2bc3a50f44d02740e98b
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:242)
+	at pageFactory.BaseClass.selectproject(BaseClass.java:193)
+	at testScriptsSmoke.TS_017_DocList.bulkTagAndBulkFolder(TS_017_DocList.java:61)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -118,19 +141,48 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
-<td>153</td>
-<td>testScriptsSmoke.TS_017_DocList@64bfbc86</td></tr>
+<td>9</td>
+<td>testScriptsSmoke.TS_017_DocList@6b09bb57</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_017_DocList.doclistToDocView()'><b>doclistToDocView</b><br>Test class: testScriptsSmoke.TS_017_DocList</td>
-<td><div><pre>junit.framework.ComparisonFailure: expected:&lt;...10...&gt; but was:&lt;...9...&gt;
-	at junit.framework.Assert.assertEquals(Assert.java:81)
-	at junit.framework.Assert.assertEquals(Assert.java:87)
-	at testScriptsSmoke.TS_017_DocList.doclistToDocView(TS_017_DocList.java:195)
-... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2044337856", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace2044337856'><pre>junit.framework.ComparisonFailure: expected:&lt;...10...&gt; but was:&lt;...9...&gt;
-	at junit.framework.Assert.assertEquals(Assert.java:81)
-	at junit.framework.Assert.assertEquals(Assert.java:87)
-	at testScriptsSmoke.TS_017_DocList.doclistToDocView(TS_017_DocList.java:195)
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;button id=&quot;idAction&quot; class=&quot;btn btn-primary dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;...&lt;/button&gt; is not clickable at point (1851, 151). Other element would receive the click: &lt;div class=&quot;divMessageBox animated fast fadeOut&quot; id=&quot;MsgBoxBack&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 47 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.12.51.128&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir19012_27750}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a0104baddd9f2bc3a50f44d02740e98b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:242)
+	at pageFactory.SessionSearch.ViewInDocView(SessionSearch.java:1138)
+	at testScriptsSmoke.TS_017_DocList.doclistToDocView(TS_017_DocList.java:127)
+... Removed 29 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2075372030", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2075372030'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;button id=&quot;idAction&quot; class=&quot;btn btn-primary dropdown-toggle&quot; data-toggle=&quot;dropdown&quot;&gt;...&lt;/button&gt; is not clickable at point (1851, 151). Other element would receive the click: &lt;div class=&quot;divMessageBox animated fast fadeOut&quot; id=&quot;MsgBoxBack&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=81.0.4044.138)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 47 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.12.51.128&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir19012_27750}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=81.0.4044.138, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a0104baddd9f2bc3a50f44d02740e98b
+	at sun.reflect.GeneratedConstructorAccessor19.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:242)
+	at pageFactory.SessionSearch.ViewInDocView(SessionSearch.java:1138)
+	at testScriptsSmoke.TS_017_DocList.doclistToDocView(TS_017_DocList.java:127)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -158,8 +210,8 @@ function toggleAllBoxes() {
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
-<td>58</td>
-<td>testScriptsSmoke.TS_017_DocList@64bfbc86</td></tr>
+<td>63</td>
+<td>testScriptsSmoke.TS_017_DocList@6b09bb57</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
@@ -171,8 +223,8 @@ function toggleAllBoxes() {
 <tr>
 <td title='testScriptsSmoke.TS_017_DocList.doclistBulkRelease()'><b>doclistBulkRelease</b><br>Test class: testScriptsSmoke.TS_017_DocList</td>
 <td></td>
-<td>65</td>
-<td>testScriptsSmoke.TS_017_DocList@64bfbc86</td></tr>
+<td>106</td>
+<td>testScriptsSmoke.TS_017_DocList@6b09bb57</td></tr>
 </table><p>
 </body>
 </html>

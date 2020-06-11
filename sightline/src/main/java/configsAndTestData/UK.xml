@@ -6,39 +6,37 @@
   	  	 <domainName>Auto28July</domainName>
         <projectName>Auto_04042020</projectName>
      	<!-- UKSA1 SA1-->
-    	<sa1userName>qasa@consilio.com</sa1userName> 
-   		<sa1password>Q@test_12</sa1password> 
+    	<sa1userName>SupportSA@consilio.com</sa1userName> 
+   		<sa1password>Consilio@114</sa1password> 
      
         <!-- UKPA user -->
-         <pa1FullName>QA PAU1</pa1FullName>
-        <pa1userName>qapau1@consilio.com</pa1userName>
-        <pa1password>Q@test_12</pa1password>
-    
-    
-        <pa2FullName>QA PAU2</pa2FullName>
-        <pa2userName>qapau2@consilio.com</pa2userName>
-        <pa2password>Q@test_15</pa2password>
+        <pa2FullName>ST PAU2</pa2FullName>
+        <pa2userName>SupportPAU2@consilio.com</pa2userName>
+        <pa2password>Consilio@114</pa2password>
         
-           
+        <pa1FullName>ST PAU1</pa1FullName>
+        <pa1userName>SupportPAU1@consilio.com</pa1userName>
+        <pa1password>Consilio@114</pa1password>
+        
         <!--UKRMU  -->
-        <rmu1FullName>QA RMU1</rmu1FullName>
-        <rmu1userName>qarmu1@consilio.com</rmu1userName>
-        <rmu1password>Q@test_15</rmu1password>
+        <rmu1FullName>ST RMU1</rmu1FullName>
+        <rmu1userName>SupportRMU1@consilio.com</rmu1userName>
+        <rmu1password>Consilio@114</rmu1password>
         
-        <rmu2FullName>QA RMU2</rmu2FullName>
-        <rmu2userName>qarmu2@consilio.com</rmu2userName>
-        <rmu2password>Q@test_15</rmu2password>
+        <rmu2FullName>ST RMU2</rmu2FullName>
+        <rmu2userName>SupportRMU2@consilio.com</rmu2userName>
+        <rmu2password>Consilio@114</rmu2password>
         
         <!-- UKRev -->
-        <rev2FullName>QA REV2</rev2FullName>
-        <rev2userName>qarev2@consilio.com</rev2userName>
-        <rev2password>Q@test_15</rev2password>
+        <rev2FullName>ST REV2</rev2FullName>
+        <rev2userName>SupportREV2@consilio.com</rev2userName>
+        <rev2password>Consilio@114</rev2password>
         
-        <rev1FullName>QA REV1</rev1FullName>
-        <rev1userName>qarev1@consilio.com</rev1userName>
-        <rev1password>Q@test_15</rev1password>
+        <rev1FullName>ST REV1</rev1FullName>
+        <rev1userName>SupportREV1@consilio.com</rev1userName>
+        <rev1password>Consilio@114</rev1password>
         
-        <shareTo>QA PAU1</shareTo>
+        <shareTo>ST PAU1</shareTo>
        
        
 </UK>	

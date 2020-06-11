@@ -1226,12 +1226,13 @@ public void bulkRelease(final String SecGroup) {
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{
 
-	getBulkActionButton().Click();
-	
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkTagAction().Visible()  ;}}), Input.wait60); 
-	 getBulkTagAction().waitAndClick(10);
-	 
+		/*
+		 * getBulkActionButton().Click();
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getBulkTagAction().Visible() ;}}), Input.wait60);
+		 * getBulkTagAction().waitAndClick(10);
+		 */ 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUntagbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUntagbutton().Click();
@@ -1260,12 +1261,13 @@ driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 //Function to perform new bulk folder with given folder name
 public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 
-	 getBulkActionButton().Click();
-	
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
-	 getBulkFolderAction().Click();
-	 
+		/*
+		 * getBulkActionButton().Click();
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getBulkFolderAction().Visible() ;}}), Input.wait60);
+		 * getBulkFolderAction().Click();
+		 */ 
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUnFolderbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUnFolderbutton().Click();
@@ -1553,9 +1555,7 @@ public void BulkActions_Tag(String TagName) throws InterruptedException{
 		    	getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
 	 getFinalizeButton().Click();
 	 
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkTagConfirmationButton().Visible()  ;}}), Input.wait60); 
-	 getBulkTagConfirmationButton().Click();
+	 getTallyContinue().waitAndClick(10);
 	 
 	 base.VerifySuccessMessage("Records saved successfully");
 	 

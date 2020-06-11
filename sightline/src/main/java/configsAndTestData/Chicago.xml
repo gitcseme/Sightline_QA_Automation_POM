@@ -17,7 +17,7 @@
         
         <pa2FullName>CPA2 PA2</pa2FullName>
         <pa2userName>au.tomationsightlineconsilio@gmail.com</pa2userName>
-        <pa2password>sightline@123</pa2password>
+        <pa2password>sightline@124</pa2password> 
         
         <!--CRMU  -->
         <rmu1FullName>CRMU1 RMU1</rmu1FullName>
@@ -25,16 +25,16 @@
         <rmu1password>sightline@123</rmu1password>
         
         <rmu2FullName>CRMU2 RMU2</rmu2FullName>
-        <rmu2userName>au.tomationsightli.nec.o.nsilio@gmail.com</rmu2userName>
+        <rmu2userName>r.m.user.consilio@gmail.com</rmu2userName>
         <rmu2password>sightline@123</rmu2password>
         
         <!-- CRev -->
-        <rev1FullName>CREV1 REV1</rev1FullName>
+        <rev1FullName>Shilpi Rev</rev1FullName>
         <rev1userName>rm.u.ser.consilio@gmail.com</rev1userName>
         <rev1password>sightline@123</rev1password>
         
-        <rev2FullName>CREV2 REV2</rev2FullName>
-        <rev2userName>a.u.tomationsightlinec.onsilio@gmail.com</rev2userName>
+        <rev2FullName>shilpi Rev2</rev2FullName>
+        <rev2userName>rm.u.ser.c.onsilio@gmail.com</rev2userName>
         <rev2password>sightline@123</rev2password>
         
         <shareTo>CPA2 PA2</shareTo>

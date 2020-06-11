@@ -35,6 +35,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 	AssignmentsPage agnmt;
 	CodingForm cf;
 	
+	
 	String  codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	
@@ -44,15 +45,12 @@ public class TS_009_ValidateAssignmentFunctionality {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-
-		Input in = new Input();
-		in.loadEnvConfig();
-		
-   
- 	//Open browser
+			//Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		//add tag

@@ -138,7 +138,13 @@
     <version>8.0.14</version>
 </dependency>
 
-  
+
+  <dependency>
+    <groupId>de.redsix</groupId>
+    <artifactId>pdfcompare</artifactId>
+    <version>1.1.25</version> 
+  </dependency>
+
   
   </dependencies>
 </project>

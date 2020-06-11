@@ -43,6 +43,9 @@ public class TS_008_AllManageModules {
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
+	Input in = new Input();
+	in.loadEnvConfig();
+	
 	driver = new Driver();
 	lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -55,7 +58,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add comment is working correctly
 	 */
-	@Test(priority =1,groups={"smoke","regression"})
+	//@Test(priority =1,groups={"smoke","regression"})
 	public void createCommentField() throws ParseException, InterruptedException {
 		
 		//add comment field
@@ -71,7 +74,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add keyword is working correctly
 	 */
-	@Test(priority =2,groups={"smoke","regression"})
+	//@Test(priority =2,groups={"smoke","regression"})
 	public void createKeywordField() throws ParseException, InterruptedException {
 		
 		KeywordPage page2= new KeywordPage(driver);
@@ -86,7 +89,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add redaction is working correctly
 	 */
-	@Test(priority =3,groups={"smoke","regression"})
+	//@Test(priority =3,groups={"smoke","regression"})
 	public void createRedaction() throws ParseException, InterruptedException {
 		
 		RedactionPage page3 = new RedactionPage(driver);
@@ -101,7 +104,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add tag is working correctly
 	 */
-	@Test(priority =4,groups={"smoke","regression"})
+	//@Test(priority =4,groups={"smoke","regression"})
 	public void CreateTagField() throws ParseException, InterruptedException {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
@@ -116,7 +119,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add folder is working correctly
 	 */
-	@Test(priority =5,groups={"smoke","regression"})
+	//@Test(priority =5,groups={"smoke","regression"})
 	public void CreateFolderField() throws ParseException, InterruptedException {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
@@ -131,7 +134,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add annotation layer is working correctly
 	 */			
-	@Test(priority =6,groups={"smoke","regression"})
+	//@Test(priority =6,groups={"smoke","regression"})
 	public void CreateAnnotationLayer() throws ParseException, InterruptedException {
 		
 		AnnotationLayer alayer = new AnnotationLayer(driver);
@@ -152,6 +155,7 @@ public class TS_008_AllManageModules {
 	public void CreateSecurityGroup() throws ParseException, InterruptedException {
 		
 		SecurityGroupsPage scpage = new SecurityGroupsPage(driver);
+		scpage.addlayertosg();
     	scpage.AddSecurityGroup(securitygroupname);
     	System.out.println("Security Group Successful");  
    }	
@@ -164,7 +168,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if delete tag is working correctly
 	 */	
-	@Test(priority =8,groups={"smoke","regression"})
+	//@Test(priority =8,groups={"smoke","regression"})
 	public void DeleteTagField() throws ParseException, InterruptedException {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
@@ -179,7 +183,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if delete folder is working correctly
 	 */	
-	@Test(priority =9,groups={"smoke","regression"})
+	//@Test(priority =9,groups={"smoke","regression"})
 	public void DeleteFolderField() throws ParseException, InterruptedException {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
@@ -194,7 +198,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add coding form is working correctly
 	 */	
-	@Test(priority =10,groups={"smoke","regression"})
+	//@Test(priority =10,groups={"smoke","regression"})
 	public void CreateCodingform() throws ParseException, InterruptedException {
 		
 		lp.logout();

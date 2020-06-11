@@ -46,19 +46,19 @@ import testScriptsSmoke.Input;
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
-		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
-		tp.CreateFolder(foldername,"Default Security Group");
-		SessionSearch ss = new SessionSearch(driver);
-		ss.basicContentSearch("crammer");
-		ss.bulkFolderExisting(foldername);
-		
-		tp.CreateTagwithClassification(Tagname,"Privileged");
-		
+		/*
+		 * TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
+		 * tp.CreateFolder(foldername,"Default Security Group"); SessionSearch ss = new
+		 * SessionSearch(driver); ss.basicContentSearch("crammer");
+		 * ss.bulkFolderExisting(foldername);
+		 * 
+		 * tp.CreateTagwithClassification(Tagname,"Privileged");
+		 */
 	}
 	   
 		
 	   		
-      @Test(groups={"smoke","regression"})
+     // @Test(groups={"smoke","regression"})
 	   public void AddNewProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
@@ -67,7 +67,19 @@ import testScriptsSmoke.Input;
 	  
 	  }
       
+	   //tc- 8356
       @Test(groups={"smoke","regression"})
+	   public void Productionwithallredaction() throws Exception {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		page = new ProductionPage(driver);
+	  page.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername, Tagname);
+	  
+	  }
+      
+      
+      
+    //  @Test(groups={"smoke","regression"})
 	   public void ExportwithpriorProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		page = new ProductionPage(driver);

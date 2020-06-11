@@ -4,7 +4,7 @@
        	<prodpath>Productions PT WorkSpace\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
        	<domainName>DragnDropDomain</domainName>
-        <projectName>QA_REGULAR_4_CA_5Mil</projectName>
+        <projectName>Auto_03March</projectName>
      
     	<sa1userName>smangal@consilio.com</sa1userName> 
    		<sa1password>sightline@12345</sa1password> 

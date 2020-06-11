@@ -42,7 +42,8 @@ public class CommentsPage {
       }
 
     public void AddComments(String ComentName) {
-		
+    	
+    	 this.driver.getWebDriver().get(Input.url+ "Comments/CommentsList");
     	getAddCommentsBtn().Click();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCommentName().Visible()  ;}}), Input.wait30); 

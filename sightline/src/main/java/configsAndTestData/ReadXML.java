@@ -11,7 +11,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 	public class ReadXML {
-		static String filepath=null;
+		static String filepath="C:\\Users\\smangal\\Documents\\XML.xml";
 		static DocumentBuilder builder;
 
 	  public static void main(String argv[]) throws Exception {
@@ -63,8 +63,9 @@ import org.w3c.dom.Element;
 	               }
 	           }
 	         }
+	      
 	      }
-	   }
+		}
 	   
 	}
 	

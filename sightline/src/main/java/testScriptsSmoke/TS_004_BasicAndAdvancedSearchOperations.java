@@ -50,9 +50,6 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 		
-	   Input in = new Input(); in.loadEnvConfig();
-		
-		
     	//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);

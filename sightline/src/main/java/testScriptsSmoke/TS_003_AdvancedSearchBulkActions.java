@@ -38,11 +38,11 @@ public class TS_003_AdvancedSearchBulkActions {
 	 * Description : Login as PAU and keep one search ready!, from here all the scripts will run. 
 	 */	
 	@BeforeClass(alwaysRun = true)
-	public void preCondition() throws ParseException {
+	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
 		//Open browser
-	
+		
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);

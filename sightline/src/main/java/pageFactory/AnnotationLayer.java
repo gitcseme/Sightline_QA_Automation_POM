@@ -34,15 +34,7 @@ public class AnnotationLayer {
 		
  
     	try{
-    		getDeleteAnnotationLayer().waitAndClick(10);
-    		getYes().waitAndClick(10);
-    		base.VerifySuccessMessage("Annotation Layer deleted successfully");
-    		Thread.sleep(2000);
-    		base.CloseSuccessMsgpopup();
-    	    	 
-    	}catch (Exception e) {
-			System.out.println("May be no annotation layer created!");
-		} 
+    		
     	getAddAnnotationLayerBtn().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -50,9 +42,11 @@ public class AnnotationLayer {
     	getAnnotationName().SendKeys(name);
     	getDescription().SendKeys(name);
     	getSaveBtn().Click();
-    	
+    	}
+    	catch (Exception e)
+    	{
     	base.VerifySuccessMessage("Annotation Layer added successfully");
-    	
+    	}
     	 
          base.CloseSuccessMsgpopup();
  

@@ -45,6 +45,7 @@ public class Assignment_Regression {
 	DocListPage dp;
 	ReportsPage report; 
 	KeywordPage kp;
+	public static int purehits=1286;
 	
 	
 	String assgnname = "Assgnm";
@@ -52,19 +53,25 @@ public class Assignment_Regression {
 	String assignmentName3= "assignmentA3"+Utility.dynamicNameAppender();
 	String assignmentName4= "assignmentA4"+Utility.dynamicNameAppender();
 	String assignmentNamecopy = "assignment5"+Utility.dynamicNameAppender();
-	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
+//	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	String assignmentNameMultiRev= "assignmentR2"+Utility.dynamicNameAppender();
 	String assgngrpName= "assgnGrp"+Utility.dynamicNameAppender();
 	String assgngrpName1= "assgnGrp1"+Utility.dynamicNameAppender();
 	String tagname = "Assgntag"+Utility.dynamicNameAppender(); 
     String foldername= "Assgnfolder"+Utility.dynamicNameAppender(); 
-	String savedsearchname = "Save"+Utility.dynamicNameAppender();
+//	String savedsearchname = "Save"+Utility.dynamicNameAppender();
+	String assignmentName= "assignmentA1325196";
+	String savedsearchname = "Save704539";
+	
 		
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		Input in = new Input();
+		in.loadEnvConfig();
 		
        	//Open browser
 		driver = new Driver();
@@ -75,7 +82,9 @@ public class Assignment_Regression {
 		bc = new BaseClass(driver);
         dp = new DocListPage(driver);
 		report = new ReportsPage(driver);
-	
+		dp = new DocListPage(driver);
+		page = new TagsAndFoldersPage(driver);
+	/*
 		//add tag
 		page = new TagsAndFoldersPage(driver);
 		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
@@ -94,21 +103,21 @@ public class Assignment_Regression {
 	
 	   //Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(savedsearchname);
-	   
+	/*   
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
 		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString1); 
-		dp = new DocListPage(driver);
+	*/	
 	
 	}
 	
 
-	  @Test(groups={"regression"},priority=1)
+	// @Test(groups={"regression"},priority=1)
 	  public void AssgnManageRev_ViewInDocView() throws InterruptedException {
 		  
 		 
@@ -116,7 +125,7 @@ public class Assignment_Regression {
 		agnmt.Assignment_ManageRevtab_ViewinDocView();
 		
 	}
-	  @Test(groups={"regression"},priority=2)
+	 // @Test(groups={"regression"},priority=2)
 	  public void AssgnManageRev_ViewInDoclist() throws InterruptedException {
 		  
 		 
@@ -126,12 +135,12 @@ public class Assignment_Regression {
 	    dp.getDocList_info().WaitUntilPresent();
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
-	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+Input.pureHitSeachString1+" entries");
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+purehits+" entries");
+	    System.out.println("Expected docs("+purehits+") are shown in doclist");
 		
 	} 
-	  
-	  @Test(groups={"regression"},priority=3)
+	  //tc-1576,1010
+	 // @Test(groups={"regression"},priority=3)
 	  public void AssgnwithDocSequnece() throws InterruptedException {
 		  
 		 
@@ -140,7 +149,7 @@ public class Assignment_Regression {
 		
 	}
 	
-	 @Test(groups={"regression"},priority=4)
+	// @Test(groups={"regression"},priority=4)
 	  public void AssignmentDashboard() throws InterruptedException {
 		  agnmt.AssignmentDashboard();
 		
@@ -149,8 +158,8 @@ public class Assignment_Regression {
 	  @Test(groups={"regression"},priority=5)
 	  public void AssignmentManagerevTabActions() throws InterruptedException {
 		  
-		 page.CreateTag(tagname,"Default Security Group");
-		 page.CreateFolder(foldername,"Default Security Group");
+		// page.CreateTag(tagname,"Default Security Group");
+		// page.CreateFolder(foldername,"Default Security Group");
 		 agnmt.editAssignment(assignmentName);
 		  agnmt.Assignment_ManageRevtab_TagFolder(tagname, foldername);
 		  Thread.sleep(3000);
@@ -160,20 +169,20 @@ public class Assignment_Regression {
 		       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
 		  	
 		       tf.getTag_ToggleDocCount().waitAndClick(10);
-		       tf.getTagandCount(tagname,Input.pureHitSeachString1).WaitUntilPresent();
-		       Assert.assertTrue(tf.getTagandCount(tagname,Input.pureHitSeachString1).Displayed());
+		       tf.getTagandCount(tagname,purehits).WaitUntilPresent();
+		       Assert.assertTrue(tf.getTagandCount(tagname,purehits).Displayed());
 		       System.out.println(tagname+" could be seen under tags and folder page");
 		       
 		  
 		  //verify tag and folder count
 	       tf.getFoldersTab().waitAndClick(10);
 	       tf.getFolder_ToggleDocCount().waitAndClick(10);
-	       tf.getFolderandCount(foldername, Input.pureHitSeachString1).WaitUntilPresent();
-	       Assert.assertTrue(tf.getFolderandCount(foldername, Input.pureHitSeachString1).Displayed());
+	       tf.getFolderandCount(foldername, purehits).WaitUntilPresent();
+	       Assert.assertTrue(tf.getFolderandCount(foldername, purehits).Displayed());
 	       System.out.println(foldername+" could be seen under tags and folder page");
 	       
 	           agnmt.editAssignment(assignmentName);
-	           agnmt.editAssignment(assignmentName);
+	          agnmt.editAssignment(assignmentName);
 		       agnmt.Assignment_ManageRevtab_UnTagUnFolder(tagname, foldername);
 		       //verify tag and folder count
 		       this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
@@ -195,7 +204,7 @@ public class Assignment_Regression {
 	  }
 	
 	
-	    @Test(groups={"regression"},priority=6)
+	    //@Test(groups={"regression"},priority=6)
 		  public void AssignmentGroup() throws InterruptedException {
 		  
 		  this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
@@ -204,7 +213,7 @@ public class Assignment_Regression {
 		  agnmt.DeleteAssgnGroup(assgngrpName);
 		}
 	    
-	    @Test(groups={"regression"},priority=7)
+	    //@Test(groups={"regression"},priority=7)
 		  public void AssnmGroupwithsubassgn() throws InterruptedException {
 		  
 		  this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
@@ -218,7 +227,7 @@ public class Assignment_Regression {
 		}
 	
 	
-	      @Test(groups={"regression"},priority=8)
+	      //@Test(groups={"regression"},priority=8)
 		  public void DistributeDoc() throws InterruptedException {
 	    	agnmt.createAssignment(assignmentNameMultiRev,codingfrom);
 	    	
@@ -233,7 +242,7 @@ public class Assignment_Regression {
 	    	agnmt.RedistributeDoc_ReviewerTab();
 		}
 	
-	   @Test(groups={"regression"},priority=9)
+	   //@Test(groups={"regression"},priority=9)
 		  public void Assgn_RemoveDoc_ReviewerTab() throws InterruptedException {
 			  
 			 
@@ -242,20 +251,20 @@ public class Assignment_Regression {
 			
 		}
 	   
-	   @Test(groups={"regression"},priority=10,dataProvider="Specail char")
+	   //@Test(groups={"regression"},priority=10,dataProvider="Specail char")
 		  public void EditAssgn_Disallowspeclchar(String data) throws InterruptedException {
 			  
 			agnmt.Assgnwithspecialchars(data);
 		}
 	   
-	   @Test(groups={"regression"},priority=11)
+	   //@Test(groups={"regression"},priority=11)
 		  public void DeleteAssignment() throws InterruptedException {
 			  
 			 
 			agnmt.deleteAssignment(assignmentName);
 			}
 	
-	  @Test(groups={"regression"},priority=12)
+	  //@Test(groups={"regression"},priority=12)
       public void assignmentwithpercentmethod() throws InterruptedException
       {
     	assgnname =assgnname+Utility.dynamicNameAppender();
@@ -268,7 +277,7 @@ public class Assignment_Regression {
 	 	agnmt.assignDocswithpercentagemethod(assignmentName,"Percentage");
       }
 	  
-	 @Test(groups={"regression"},priority=13)
+	 //@Test(groups={"regression"},priority=13)
       public void NewAssgnUnassgn() throws InterruptedException
       {
 	    
@@ -282,7 +291,7 @@ public class Assignment_Regression {
 		
       }
 	  
-	  @Test(groups={"regression"},priority=14)
+	  //@Test(groups={"regression"},priority=14)
       public void CopyAssignment() throws InterruptedException
       {
 		  agnmt.createAssignment(assignmentName, codingfrom);
@@ -294,7 +303,7 @@ public class Assignment_Regression {
 		  agnmt.assignDocstoExisting("Copy");
       }
 	 	
-	  @Test(groups={"regression"},priority=15)
+	  //@Test(groups={"regression"},priority=15)
       public void AssgnCompleteDoc() throws InterruptedException
       {
 	    
@@ -308,7 +317,7 @@ public class Assignment_Regression {
 		
       }
 	  
-	   @Test(groups={"regression"},priority=16)
+	   //@Test(groups={"regression"},priority=16)
 	   public void ValidateUserlistonQuickbatch() throws InterruptedException, ParseException, IOException {
 		 //Login as SA
 		lp.logout();
@@ -334,7 +343,7 @@ public class Assignment_Regression {
 	agnmt.createnewquickbatch_chronologic_withoutReviewer(assignmentQB1, codingfrom);
   }
       
-	   @Test(groups={"regression"},priority=17)
+	   //@Test(groups={"regression"},priority=17)
 	   public void CreateQuickBatchfromsavedsearch() throws InterruptedException, ParseException, IOException {
 		
 		//lp.logout();
@@ -345,7 +354,7 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB5, codingfrom,"AllRev");
 	   }
 	   
-	  @Test(groups={"smoke","regression"},priority=18)
+	  //@Test(groups={"smoke","regression"},priority=18)
 	   public void CreateQuickBatchfromdoclist() throws InterruptedException, ParseException, IOException {
 		bc.selectproject();
 		SessionSearch search = new SessionSearch(driver);
@@ -356,7 +365,7 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB2, codingfrom,"selectrmu");
 	   }
 	   
-	   @Test(groups={"smoke","regression"},priority=19)
+	   //@Test(groups={"smoke","regression"},priority=19)
 	public void CreateQuickBatchfromTally() throws InterruptedException, ParseException, IOException {
 	
 	driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
@@ -367,7 +376,7 @@ public class Assignment_Regression {
 	agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB3, codingfrom,"selectrev");
   }
 		   
-    @Test(groups={"smoke","regression"},priority=20)
+    //@Test(groups={"smoke","regression"},priority=20)
 	   public void CreateQuickBatchfromDocExplorer() throws InterruptedException, ParseException, IOException {
 	
     	DocExplorerPage docexp = new DocExplorerPage(driver);
@@ -376,7 +385,7 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB4, codingfrom,"AllRev");
 	 }
 			   
-	 @Test(groups={"regression"},priority=21)
+	 //@Test(groups={"regression"},priority=21)
 	   public void ValidateNameQuickBatchfailure()
 	   {
 		   DocExplorerPage docexp = new DocExplorerPage(driver);
@@ -384,7 +393,7 @@ public class Assignment_Regression {
 			agnmt.Quickbatchfailure();
 	   }
 	   
-      @Test(groups={"smoke","regression"},priority=22)
+      //@Test(groups={"smoke","regression"},priority=22)
 	   public void CreateQuickBatchfromadvancedsearch() throws InterruptedException, ParseException, IOException {
 		
 		SessionSearch advsearch = new SessionSearch(driver);
@@ -394,7 +403,7 @@ public class Assignment_Regression {
 		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");
 	   }
 	   
-      @Test(groups={"smoke","regression"},priority=22)
+      //@Test(groups={"smoke","regression"},priority=23)
 	   public void QuickBatchModifyValidation() throws InterruptedException, ParseException, IOException {
 		
 		   SavedSearch savesearch = new SavedSearch(driver);
@@ -403,7 +412,7 @@ public class Assignment_Regression {
 		   agnmt.createnewquickbatch(assignmentQB7, codingfrom);
 	   }
 
-       @Test(groups={"regression"},priority=23)
+       //@Test(groups={"regression"},priority=24)
 	   public void QuickBatchfromSearchTermDocAuditreport() throws InterruptedException, ParseException, IOException {
 		
 
@@ -423,7 +432,7 @@ public class Assignment_Regression {
 	 * Modified by:
 	 * Description : As a RMU validate all keyowrds should bydefault added in new assignment  
 	 */	
-	@Test(groups= {"regression"})
+	//@Test(groups={"regression"},priority=25)
 	public void AssignmentKeywordHighlight() throws InterruptedException
 	{
 		kp = new KeywordPage(driver);
@@ -466,7 +475,7 @@ public class Assignment_Regression {
 	 *    But Project admin can do it
   
 	 */	
-	@Test(groups= {"regression"})
+	//@Test(groups= {"regression"},priority=26)
 	public void SAORPATORMUCompleteDocs() throws InterruptedException
 	{
 		lp.logout();
@@ -489,10 +498,12 @@ public class Assignment_Regression {
 	 * Description : Validate distributed list and results for searching by
 	 *               Assignment workproduct
   	 */	
-	@Test(groups= {"regression"})
+	//@Test(groups= {"regression"},priority=27)
 	public void Assgnwp() throws InterruptedException
 	{
 		//Search docs and assign to newly created assignment
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		SessionSearch search = new SessionSearch(driver);
 		search.switchToWorkproduct();
 		search.selectAssignmentInASwp(assignmentName);
@@ -506,7 +517,7 @@ public class Assignment_Regression {
 	 * Description : Test Case 4737: Assignments displayed on RU Dashboard if
 	 *                Draw from Pool option is enabled/disabled.
   	 */	
-	@Test
+	//@Test(groups= {"regression"},priority=28)
 	public void Assgnwithdrawfrompool() throws InterruptedException
 	{
 		//Search docs and assign to newly created assignment
