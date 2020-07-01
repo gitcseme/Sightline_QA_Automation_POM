@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.NoSuchElementException;
 
+import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
@@ -23,7 +27,16 @@ public class TagAndFolder {
 	HomePage hm;
 	BaseClass bc;
 	
-	@Test(groups={"smoke","regression"})
+	@BeforeClass(alwaysRun = true)
+	public void before() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	 	driver = new Driver();
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		
+	}
+	
+	@Test(priority =1, groups={"smoke","regression"})
 	public void deleteTagSAasPA() throws ParseException, InterruptedException, IOException {
 		
 		driver =  new Driver();
@@ -94,8 +107,71 @@ public class TagAndFolder {
 			System.out.println("folder deletion working fine!!");
 		}
     	
-    	
-	
-
 	}
+	
+	    //added by Narendra
+		@Test(priority =2,groups={"smoke","regression"})
+		public void OperationOnTag() throws ParseException, IOException, InterruptedException {
+					lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+							
+			        //Add tag
+					String tag = "newTag"+Utility.dynamicNameAppender();
+					TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+					page.CreateTag(tag,"Default Security Group");
+					System.out.println("Tag added Successfully : "+tag);
+					
+					//Cancel tag
+					page.Tags(tag,"Default Security Group");
+					System.out.println("Tag modification cancelled successfully");
+					
+					//Edit Tag Group
+					page.TagGroup("Default Security Group");
+					System.out.println("Tag group modified successfully");
+						    	
+			    	//Delete tag under security group
+			    	page.DeleteTag(tag,"Default Security Group");
+			    	System.out.println("Tag successfully deleted from security group!");
+			    				 
+		
+		}
+		
+		@Test(priority =3,groups={"smoke","regression"})
+		public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
+					lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+						
+					//add folder
+					String folder = "newFolder"+Utility.dynamicNameAppender();
+					TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+					page.CreateFolder(folder, "Default Security Group");
+			    	System.out.println("Folder added Successfully : "+folder);
+			    	
+			    	
+			    	//Delete tag under security group
+			    	page.DeleteFolder(folder,"Default Security Group");
+			    	System.out.println("Folder deleted from security group");
+			 
+		
+		}
+		
+		
+		@AfterMethod(alwaysRun = true)
+		 public void takeScreenShot(ITestResult result) {
+		 if(ITestResult.FAILURE==result.getStatus()){
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+		}
+		}
+		 @AfterClass(alwaysRun = true)
+		 public void close(){
+			try{ 
+				lp.logout();
+			     //lp.quitBrowser();	
+				}finally {
+					lp.quitBrowser();
+				
+				}
+			LoginPage.clearBrowserCache();
+		}
 }
+
+

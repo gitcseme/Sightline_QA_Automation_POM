@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DE>
-  		<url>https://sightlinede.consilio.com/</url>
+ 		<url>https://sightlinede.consilio.com/</url>
        	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
        	 <domainName>QA Domain</domainName>
@@ -12,7 +12,7 @@
      
         <!-- USPA -->
         <pa2FullName>QA PAU2</pa2FullName>
-        <pa2userName>qapau2@consilio.com</pa2userName>
+       <pa2userName>qapau2@consilio.com</pa2userName>
         <pa2password>Q@test_13</pa2password>
       
         <pa1FullName>QA PAU1</pa1FullName>
@@ -42,4 +42,4 @@
         <shareTo>QA PAU2</shareTo>
        
        
-</DE>	
+</DE>  

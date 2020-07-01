@@ -67,6 +67,7 @@ public class BaseClass {
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
     public Element getYesBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); } 
+    public Element getNoBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); }
     //select domain
     public Element getSelectdomaindropdown(String domainname){ return driver.FindElementByXPath("//a[@title='"+domainname+"']"); }
     //select security group
@@ -168,7 +169,7 @@ public class BaseClass {
     	else
     		getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
     	getSaveChangeRole().waitAndClick(5);
-    	System.out.println("Impersnated from RMU to Reviewer");
+    	System.out.println("Impersnated from SA to DA");
 	}
     
     public void impersonateSAtoPA() throws InterruptedException {
@@ -192,6 +193,7 @@ public class BaseClass {
     	getSaveChangeRole().waitAndClick(5);
     	System.out.println("Impersnated from SA to PA");
 	}
+   
     public void selectproject() {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -556,5 +558,84 @@ public class BaseClass {
 
         }
 
-   
+        
+        //added by Narendra
+        public void impersonateSAtoReviewertoSA() throws InterruptedException {
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        
+        	Thread.sleep(3000);
+    	
+        	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	Thread.sleep(2000);
+        	
+        	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+        	getSaveChangeRole().waitAndClick(5);
+        	System.out.println("Impersnated from SA to Reviewer");
+        	
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
+        	
+        	getSaveChangeRole().waitAndClick(10);
+        	
+        	System.out.println("Impersnated back Reviewer to SA");
+    	}
+        
+        public void impersonateSAtoPAtoSA() throws InterruptedException {
+        	getSignoutMenu().Click();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait30);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait30);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+        	    	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        
+        	Thread.sleep(3000);
+    	
+        	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	
+        	getSaveChangeRole().waitAndClick(5);
+        	System.out.println("Impersnated from SA to PA");
+        	
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
+        	
+        	getSaveChangeRole().waitAndClick(10);
+        	
+        	System.out.println("Impersnated back PA to SA");
+    	}
+        
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ISelect;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -98,7 +100,249 @@ public class CodingForm {
     public Element getCF_RadioGroup(){ return driver.FindElementById("TagRdo_0"); }
     public Element getCF_RadioGroup1(){ return driver.FindElementById("//*[@id='c-2']//select[@id='2']"); }
     
+    //added- System Level Template - Narendra
+    public ElementCollection getTable(){ return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/tbody/tr/td[1]"); }
+    public Element getEditClick(){ return driver.FindElementByXPath("//a[@class='btn btn-primary btn-xs edit-coding-form']"); }
+    public ElementCollection getnesTable(){ return driver.FindElementsByXPath("//div[@id='nestable']//ol//li"); }
+    public Element getRootClick(){ return driver.FindElementByXPath("//li[@id='0']"); }
+    public Element getupClick1(){ return driver.FindElementByXPath("//li[@id='0']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick2(){ return driver.FindElementByXPath("//li[@id='1']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick3(){ return driver.FindElementByXPath("//li[@id='2']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick4(){ return driver.FindElementByXPath("//li[@id='3']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick5(){ return driver.FindElementByXPath("//li[@id='4']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick6(){ return driver.FindElementByXPath("//li[@id='10']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick7(){ return driver.FindElementByXPath("//li[@id='6']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick8(){ return driver.FindElementByXPath("//li[@id='7']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick9(){ return driver.FindElementByXPath("//li[@id='8']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick10(){ return driver.FindElementByXPath("//li[@id='9']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick11(){ return driver.FindElementByXPath("//li[@id='11']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick12(){ return driver.FindElementByXPath("//li[@id='12']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick13(){ return driver.FindElementByXPath("//li[@id='13']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick14(){ return driver.FindElementByXPath("//li[@id='14']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick15(){ return driver.FindElementByXPath("//li[@id='15']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick16(){ return driver.FindElementByXPath("//li[@id='16']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick17(){ return driver.FindElementByXPath("//li[@id='17']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick18(){ return driver.FindElementByXPath("//li[@id='18']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick19(){ return driver.FindElementByXPath("//li[@id='19']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+    public Element getupClick20(){ return driver.FindElementByXPath("//li[@id='20']//i[@class='fa fa-lg fa-angle-up pull-right']"); }
+              
+    public Element getStaticText(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_0']"); }
     
+    public Element getRadioGroupLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_1']"); }
+    public Element getInstructionText(){ return driver.FindElementByXPath("//input[@id='HelpText_1']"); }
+    public Element getErrorMessage(){ return driver.FindElementByXPath("//input[@id='ErrorMessage_1']"); }
+    
+    public Element getRTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_2']"); }
+    public Element getRDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-2']//i[@class='defertext']"); }
+    public Element getRFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-2']//div[@class='logic-box col-md-12']"); }
+    public Element getRErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-2']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+   
+    public Element getNRTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_3']"); }
+    public Element getNRDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-3']//i[@class='defertext']"); }
+    public Element getNRFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-3']//div[@class='logic-box col-md-12']"); }
+    public Element getNRErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-3']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getTITagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_4']"); }
+    public Element getTIDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-4']//i[@class='defertext']"); }
+    public Element getTIFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-4']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getTIErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-4']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    public Element getTIHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_4']"); }
+    
+    public Element getTIGCHECKGROUPLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_10']"); }
+    public Element getTIGInstructionText(){ return driver.FindElementByXPath("//input[@id='HelpText_10']"); }
+    public Element getTIGErrorMessage(){ return driver.FindElementByXPath("//input[@id='ErrorMessage_10']"); }
+        
+    public Element getPITagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_6']"); }
+    public Element getPIDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-6']//i[@class='defertext']"); }
+    public Element getPIFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-6']//div[@class='logic-box col-md-12']"); }
+    public Element getPIErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-6']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    public Element getPIHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_6']"); }
+    
+    public Element getFLTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_7']"); }
+    public Element getFLDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-7']//i[@class='defertext']"); }
+    public Element getFLFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-7']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getFLErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-7']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    public Element getFLHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_7']"); }
+    
+    public Element getHCTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_8']"); }
+    public Element getHCDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-8']//i[@class='defertext']"); }
+    public Element getHCFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-8']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getHCErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-8']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    public Element getHCHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_8']"); }
+    
+    public Element getHDTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_9']"); }
+    public Element getHDHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_9']"); }
+    
+    public Element getPGTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_11']"); }
+    public Element getPGInstructionText(){ return driver.FindElementByXPath("//input[@id='HelpText_11']"); }
+    public Element getPGErrorMessage(){ return driver.FindElementByXPath("//input[@id='ErrorMessage_11']"); }
+    
+    public Element getPTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_12']"); }
+    public Element getPDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-12']//i[@class='defertext']"); }
+    public Element getPFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-12']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getPErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-12']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getNPTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_13']"); }
+    public Element getNPDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-13']//i[@class='defertext']"); }
+    public Element getNPFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-13']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getNPErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-13']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getPTGCHECKGROUPLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_14']"); }
+    public Element getPTGInstructionText(){ return driver.FindElementByXPath("//input[@id='HelpText_14']"); }
+    public Element getPTGErrorMessage(){ return driver.FindElementByXPath("//input[@id='ErrorMessage_14']"); }
+    
+    public Element getACTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_15']"); }
+    public Element getACDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-15']//i[@class='defertext']"); }
+    public Element getACFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-15']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getACErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-15']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getAWPTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_16']"); }
+    public Element getAWPDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-16']//i[@class='defertext']"); }
+    public Element getAWPFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-16']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getAWPErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-16']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getCGTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_17']"); }
+    public Element getCGInstructionText(){ return driver.FindElementByXPath("//input[@id='HelpText_17']"); }
+    public Element getCGErrorMessage(){ return driver.FindElementByXPath("//input[@id='HelpText_17']"); }
+    
+    public Element getCTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_18']"); }
+    public Element getCDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-18']//i[@class='defertext']"); }
+    public Element getCFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-18']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getCErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-18']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getHTagLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_19']"); }
+    public Element getHDefaultAction(){ return driver.FindElementByXPath("//div[@id='ab-19']//i[@class='defertext']"); }
+    public Element getHFieldLogic(){ return driver.FindElementByXPath("//div[@id='c-19']//div[@class='col-md-12 field-logic-container']//i[@class='defertext']"); }
+    public Element getHErrorMessage(){ return driver.FindElementByXPath("//div[@id='c-19']//div[@class='form-group col-md-12']//i[@class='defertext']"); }
+    
+    public Element getDCCOMMENTLabel(){ return driver.FindElementByXPath("//input[@id='FriendlyInput_20']"); }
+    public Element getDCErrorMessage(){ return driver.FindElementByXPath("//input[@id='ErrorMessage_20']"); }
+    public Element getDCHelpText(){ return driver.FindElementByXPath("//input[@id='HelpText_20']"); }
+    
+    public Element getRGDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_1']"); }
+
+    public Element getRTagType(){ return driver.FindElementByXPath("//select[@id='2']"); }
+    public Element getRGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_2']"); }
+
+    public Element getNRTagType(){ return driver.FindElementByXPath("//select[@id='3']"); }
+    public Element getNRGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_3']"); }
+
+    public Element getTITagType(){ return driver.FindElementByXPath("//select[@id='4']"); }
+    public Element getTIGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_4']"); }
+
+    public Element getTIGDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_10']"); }
+    public Element getTIGObject(){ return driver.FindElementByXPath("//select[@id='SelectObjects_10_1']"); }
+    public Element getTIGCondition(){ return driver.FindElementByXPath("//select[@id='SelectCondition_10_1']"); }
+    public Element getTIGAction(){ return driver.FindElementByXPath("//select[@id='LogicFieldAction_10']"); }
+
+    public Element getPITagType(){ return driver.FindElementByXPath("//select[@id='6']"); }
+    public Element getPIGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_6']"); }
+
+    public Element getFLTagType(){ return driver.FindElementByXPath("//select[@id='7']"); }
+    public Element getFLGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_7']"); }
+
+    public Element getHCTagType(){ return driver.FindElementByXPath("//select[@id='8']"); }
+    public Element getHCGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_8']"); }
+
+    public Element getHDTagType(){ return driver.FindElementByXPath("//select[@id='9']"); }
+    public Element getHDGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_9']"); }
+    public Element getHDDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_9']"); }
+
+    public Element getPGDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_11']"); }
+
+    public Element getPTagType(){ return driver.FindElementByXPath("//select[@id='12']"); }
+    public Element getPGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_12']"); }
+
+    public Element getNPTagType(){ return driver.FindElementByXPath("//select[@id='13']"); }
+    public Element getNPGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_13']");}
+
+    public Element getPTGDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_14']"); }
+    public Element getPTGObject(){ return driver.FindElementByXPath("//select[@id='SelectObjects_14_1']"); }
+    public Element getPTGCondition(){ return driver.FindElementByXPath("//select[@id='SelectCondition_14_1']"); }
+    public Element getPTGAction(){ return driver.FindElementByXPath("//select[@id='LogicFieldAction_14']"); }
+
+    public Element getACTagType(){ return driver.FindElementByXPath("//select[@id='15']"); }
+    public Element getACGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_15']"); }
+
+    public Element getAWPTagType(){ return driver.FindElementByXPath("//select[@id='16']"); }
+    public Element getAWPGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagChk_16']"); }
+
+    public Element getCGDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_17']"); }
+
+    public Element getCTagType(){ return driver.FindElementByXPath("//select[@id='18']"); }
+    public Element getCGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_18']"); }
+
+    public Element getHTagType(){ return driver.FindElementByXPath("//select[@id='19']"); }
+    public Element getHGroupAssociation(){ return driver.FindElementByXPath("//select[@id='TagRdo_19']"); }
+
+    public Element getDCDefaultAction(){ return driver.FindElementByXPath("//select[@id='DefaultAction_20']"); }
+    public Element getDCObject(){ return driver.FindElementByXPath("//select[@id='SelectObjects_20_1']"); }
+    public Element getDCCondition(){ return driver.FindElementByXPath("//select[@id='SelectCondition_20_1']"); }
+    public Element getDCAction(){ return driver.FindElementByXPath("//select[@id='LogicFieldAction_20']"); }
+    
+    public Element getResponsiveCheked(){ return driver.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]"); }
+    public Element getNotResponsiveCheked(){ return driver.FindElementByXPath("//div[@id='item1']//div[2]//div[1]//label[1]//span[1]"); }
+    public Element getTechnicalIssueCheked(){ return driver.FindElementByXPath("//div[@id='item1']//div[3]//div[1]//label[1]//span[1]"); }
+    public Element getTestUrCodeClick(){ return driver.FindElementByXPath("//input[@id='previewForm']"); }
+    public Element getError1(){ return driver.FindElementByXPath("//span[@class='validationSpan']"); }
+    public Element getError2(){ return driver.FindElementByXPath("//td[@id='td_checkgroup_10']//span[@class='validationSpan']"); } 
+    public Element getError4(){ return driver.FindElementByXPath("//td[@class='form-c c-form-textwidth option-group-cell']//span[@class='validationSpan']"); } 
+    public Element getError3(){ return driver.FindElementByXPath("//td[@id='td_COMMENT_1']//span[@class='validationSpan']"); }
+
+    String expectedStaticText ="This is the default Coding Form for this project.  Please complete all fields.";
+    String expectedGroupText ="Responsive Group";
+    String expectedInstructionText ="Responsiveness";
+    String expectedPGInstructionText ="Privileged";
+    String expectedPTGInstructionText ="Privilege Type";
+    String expectedCGInstructionText ="Confidentiality";
+    String expectedDefaultAction1Text ="Make It Required";
+    String expectedDefaultAction2Text ="Make It Hidden";
+    String expectedDefaultAction3Text ="Make It Optional";
+    String expectedDefaultAction4Text ="Make It Display But Not Selectable";
+    String expectedGErrorMsgText ="You must select one of these options";
+    String expectedRTagLabelText ="Responsive";
+    String expectedNRTagLabelText ="Not_Responsive";
+    String expectedTITagLabelText ="Technical_Issue";
+    String expectedFLTagLabelText ="Foreign_Language";
+    String expectedHCTagLabelText ="Hidden_Content";
+    String expectedHDTagLabelText ="Hot_Doc";
+    String expectedPGTagLabelText ="Privileged Group";
+    String expectedPTagLabelText ="Privileged";
+    String expectedNPTagLabelText ="Not_Privileged";
+    String expectedPTGTagLabelText ="Privilege Type Group";
+    String expectedACTagLabelText ="Attorney_Client";
+    String expectedAWPTagLabelText ="Attorney_WorkProduct";
+    String expectedCGTagLabelText ="Confidentiality Group";
+    String expectedCTagLabelText ="Confidential";
+    String expectedHTagLabelText ="Highly_Confidential";
+    String expectedDCTagLabelText ="Document_Comments";
+    String expectedTagType1Text ="Radio Item";
+    String expectedTagType2Text ="Check Item";
+    String expectedGroupAssociation1Text ="Responsive Group(radiogroup_1)";
+    String expectedGroupAssociation2Text ="Tech Issue Group(checkgroup_10)";
+    String expectedGroupAssociation3Text ="Privileged Group(radiogroup_11)";
+    String expectedGroupAssociation4Text ="Confidentiality Group(radiogroup_17)";
+    String expectedGroupAssociation5Text ="Privilege Type Group(checkgroup_14)";
+    String expectedGroupAssociation6Text ="No Checkbox Group Association";
+    String expectedDefaultActionText ="Actions controlled at group level";
+    String expectedFieldLogicText ="Field logic controlled at group level";
+    String expectedErrorMsgText ="Error message controlled at group level";
+    String expectedErrorMessageText ="You must determine whether the doc is privileged or not";
+    String expectedTIHelpText ="Is there some reason that review cannot be determined?";
+    String expectedTIGCHECKGROUPLabel ="Tech Issue Group";
+    String expectedTIGInstructionText ="Tech Issue Group";  
+    String expectedFieldLogicObjectText1 = "Technical_Issue(TAG_14)";
+    String expectedFieldLogicObjectText2 = "Privileged(TAG_11)";
+    String expectedFieldLogicConditionText = "Selected";
+    String expectedFieldLogicActionText = "Make this Required";
+    String expectedTIGErrorMsgText ="If the document has a technical issue and cannot be reviewed, you must select a reason why from this list above";
+    String expectedDCErrorMsgText ="If you select Technical Issue, you must enter a comment";
+    String expectedPITagLabelText ="Processing_Issue";
+    String expectedPIHelpText ="Does this doc contain some type of issue that prohibits the ability for the record to be reviewed?";
+    String expectedFLHelpText ="Does this doc contain some language besides what you can review?";
+    String expectedHCHelpText ="Do you believe the document contains some hidden content?";
+    String expectedHDHelpText ="Check this tag if this document critical to surface to lead attorneys on the matter immediately";
+    String expectedDCHelpText ="Please enter any general comments related to review of this document";
     
     public CodingForm(Driver driver){
 
@@ -713,8 +957,612 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 	   }
 	}
 	   
-    
-    
+
+    	//added by Narendra
+    		
+		public void codingForm(){
+
+  			    this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");		
+  			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	 	   	    getCFlistTable().Visible()  ;}}),Input.wait30); 	   	   
+  	 	   	    //System.out.println(getCFnames().size());
+  	 	   	    boolean nextPage= true;
+			  
+			    while(nextPage){
+			    	
+			    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    	getTable().Visible()  ;}}),Input.wait30);
+					//System.out.println("Number of records in a current page : "+getTable().size());
+					List<String> tableele = new ArrayList<String>();
+	 	   		 	List<WebElement> table = getTable().FindWebElements();
+					for (int i = 0; i<getTable().size();i++) {
+						tableele.add(table.get(i).getText());
+						if (tableele.contains("Default Project Coding Form")) {
+						Assert.assertTrue(tableele.contains("Default Project Coding Form"));
+						System.out.println("Verified provisioned CF is available in the Project");
+						}
+						
+					}
+					try{
+						   driver.scrollingToBottomofAPage();
+						   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
+						   nextPage = false;
+					   }
+					   catch (Exception e) {
+						   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
+					 } 
+					
+	
+  	 	   	  }
+  		}
+						
+		public void codingFormTagsOrder() throws InterruptedException {
+		  			    this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");		
+		  			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		  	 	   	    getCFlistTable().Visible()  ;}}),Input.wait30); 	   	   
+		  	 	   	    //System.out.println(getCFnames().size());
+		  	 	   	    boolean nextPage= true;
+					  
+					    while(nextPage){
+					    	
+					    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	getTable().Visible()  ;}}),Input.wait30);
+							//System.out.println("Number of records in a current page : "+getTable().size());
+							List<String> tableele = new ArrayList<String>();
+			 	   		 	List<WebElement> table = getTable().FindWebElements();
+							for (int i = 0; i<getTable().size();i++) {
+								tableele.add(table.get(i).getText());
+								if (tableele.contains("Default Project Coding Form")) {
+									getEditClick().waitAndClick(10);
+									
+									//for (int j = 0; j<getnesTable().size();j++) {
+										getupClick1().waitAndClick(10);
+									    String getStaticTxt = getStaticText().GetAttribute("Value");
+										Assert.assertEquals(getStaticTxt,expectedStaticText);
+										System.out.println("Verified Static Text");
+										Thread.sleep(3000);
+										
+										
+										getupClick2().waitAndClick(10);
+										String getGroupTxt = getRadioGroupLabel().GetAttribute("Value");
+										Assert.assertEquals(getGroupTxt,expectedGroupText);
+																				
+										String getInstructionTxt = getInstructionText().GetAttribute("Value");
+										Assert.assertEquals(getInstructionTxt,expectedInstructionText);
+																				
+										WebElement optionG = getRGDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getGDefaultActionTxt = optionG.getText();
+										Assert.assertEquals(getGDefaultActionTxt,expectedDefaultAction1Text);
+										
+										String getErrorMessageTxt = getErrorMessage().GetAttribute("Value");
+										Assert.assertEquals(getErrorMessageTxt,expectedGErrorMsgText);
+										System.out.println("Verified Responsive Group");
+										Thread.sleep(3000);
+										
+										getupClick3().waitAndClick(10);
+										String getRTagLabelTxt = getRTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getRTagLabelTxt,expectedRTagLabelText );
+																				
+										
+										WebElement optionRT = getRTagType().selectFromDropdown().getFirstSelectedOption();
+										String getRTagTypeTxt = optionRT.getText();
+										Assert.assertEquals(getRTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionRA = getRGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getRGroupAssociationTxt = optionRA.getText();
+										Assert.assertEquals(getRGroupAssociationTxt,expectedGroupAssociation1Text);
+																				
+										String getRDefaultAction2Txt = getRDefaultAction().getText();
+										Assert.assertEquals(getRDefaultAction2Txt,expectedDefaultActionText);
+																				
+										String getRFieldLogicTxt = getRFieldLogic().getText();
+										Assert.assertEquals(getRFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getRErrorMessage2Txt = getRErrorMessage().getText();
+										Assert.assertEquals(getRErrorMessage2Txt,expectedErrorMsgText);
+										System.out.println("Verified Responsive");
+										Thread.sleep(3000);
+										
+										getupClick4().waitAndClick(10);
+										String getNRTagLabelTxt = getNRTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getNRTagLabelTxt,expectedNRTagLabelText);
+																			
+										
+										WebElement optionNRT = getNRTagType().selectFromDropdown().getFirstSelectedOption();
+										String getNRTagTypeTxt = optionNRT.getText();
+										Assert.assertEquals(getNRTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionNRA = getNRGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getNRGroupAssociationTxt = optionNRA.getText();
+										Assert.assertEquals(getNRGroupAssociationTxt,expectedGroupAssociation1Text);
+																				
+										String getNRDefaultAction2Txt = getNRDefaultAction().getText();
+										Assert.assertEquals(getNRDefaultAction2Txt,expectedDefaultActionText);
+																				
+										String getNRFieldLogicTxt = getNRFieldLogic().getText();
+										Assert.assertEquals(getNRFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getNRErrorMessage2Txt = getNRErrorMessage().getText();
+										Assert.assertEquals(getNRErrorMessage2Txt,expectedErrorMsgText);
+										System.out.println("Verified Not Responsive");
+										Thread.sleep(3000);
+										
+										getupClick5().waitAndClick(10);
+										String getTITagLabelTxt = getTITagLabel().GetAttribute("Value");
+										Assert.assertEquals(getTITagLabelTxt,expectedTITagLabelText);
+																		
+										
+										WebElement optionTIT = getTITagType().selectFromDropdown().getFirstSelectedOption();
+										String getTITagTypeTxt = optionTIT.getText();
+										Assert.assertEquals(getTITagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionTIA = getTIGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getTIGroupAssociationTxt = optionTIA.getText();
+										Assert.assertEquals(getTIGroupAssociationTxt,expectedGroupAssociation1Text);
+																				
+										String getTIDefaultActionTxt = getTIDefaultAction().getText();
+										Assert.assertEquals(getTIDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getTiFieldLogicTxt = getTIFieldLogic().getText();
+										Assert.assertEquals(getTiFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getTIErrorMessageTxt = getTIErrorMessage().getText();
+										Assert.assertEquals(getTIErrorMessageTxt,expectedErrorMsgText);
+																				
+										String getTIHelpTxt = getTIHelpText().GetAttribute("Value");
+										Assert.assertEquals(getTIHelpTxt,expectedTIHelpText);
+										System.out.println("Verified Technical_Issue");
+										Thread.sleep(3000);
+										
+										getupClick6().waitAndClick(10);
+										String getTIGGroupLabelTxt = getTIGCHECKGROUPLabel().GetAttribute("Value");
+										Assert.assertEquals(getTIGGroupLabelTxt,expectedTIGCHECKGROUPLabel);
+																				
+										String getTIGInstructionTxt = getTIGInstructionText().GetAttribute("Value");
+										Assert.assertEquals(getTIGInstructionTxt,expectedTIGInstructionText);
+																				
+										
+										WebElement optionTIG = getTIGDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getTIGDefaultActionTxt = optionTIG.getText();
+										Assert.assertEquals(getTIGDefaultActionTxt,expectedDefaultAction2Text);
+																				
+										
+										WebElement optionTIGO = getTIGObject().selectFromDropdown().getFirstSelectedOption();
+										String getTIGObjectTxt = optionTIGO.getText();
+										Assert.assertEquals(getTIGObjectTxt,expectedFieldLogicObjectText1);
+																				
+										
+										WebElement optionTIGC= getTIGCondition().selectFromDropdown().getFirstSelectedOption();
+										String getTIGConditionTxt = optionTIGC.getText();
+										Assert.assertEquals(getTIGConditionTxt,expectedFieldLogicConditionText);
+																				
+										
+										WebElement optionTIGA = getTIGAction().selectFromDropdown().getFirstSelectedOption();
+										String getTIGActionTxt = optionTIGA.getText();
+										Assert.assertEquals(getTIGActionTxt,expectedFieldLogicActionText);								
+																									
+										String getTIGErrorMessageTxt = getTIGErrorMessage().GetAttribute("Value");
+										Assert.assertEquals(getTIGErrorMessageTxt,expectedTIGErrorMsgText);
+										System.out.println("Verified Tech Issue Group");
+										Thread.sleep(3000);
+										
+
+										getupClick7().waitAndClick(10);
+										String getPITagLabelTxt = getPITagLabel().GetAttribute("Value");
+										Assert.assertEquals(getPITagLabelTxt,expectedPITagLabelText);
+																				
+										
+										WebElement optionPIT = getPITagType().selectFromDropdown().getFirstSelectedOption();
+										String getPITagTypeTxt = optionPIT.getText();
+										Assert.assertEquals(getPITagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionPIA = getPIGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getPIGroupAssociationTxt = optionPIA.getText();
+										Assert.assertEquals(getPIGroupAssociationTxt,expectedGroupAssociation2Text);
+																				
+										String getPIDefaultActionTxt = getNRDefaultAction().getText();
+										Assert.assertEquals(getPIDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getPIFieldLogicTxt = getNRFieldLogic().getText();
+										Assert.assertEquals(getPIFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getPIErrorMessageTxt = getNRErrorMessage().getText();
+										Assert.assertEquals(getPIErrorMessageTxt,expectedErrorMsgText);
+																				
+										String getPIHelpTxt = getPIHelpText().GetAttribute("Value");
+										Assert.assertEquals(getPIHelpTxt,expectedPIHelpText);
+										System.out.println("Verified Processing Issue");
+										Thread.sleep(3000);
+										
+										getupClick8().waitAndClick(10);
+										String getFLTagLabelTxt = getFLTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getFLTagLabelTxt,expectedFLTagLabelText);
+																				
+										
+										WebElement optionFLT = getFLTagType().selectFromDropdown().getFirstSelectedOption();
+										String getFLTagTypeTxt = optionFLT.getText();
+										Assert.assertEquals(getFLTagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionFLA = getFLGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getFLGroupAssociationTxt = optionFLA.getText();
+										Assert.assertEquals(getFLGroupAssociationTxt,expectedGroupAssociation2Text);
+																				
+										String getFLDefaultActionTxt = getFLDefaultAction().getText();
+										Assert.assertEquals(getFLDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getFLFieldLogicTxt = getFLFieldLogic().getText();
+										Assert.assertEquals(getFLFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getFLErrorMessageTxt = getFLErrorMessage().getText();
+										Assert.assertEquals(getFLErrorMessageTxt,expectedErrorMsgText);
+																				
+										String getFLHelpTxt = getFLHelpText().GetAttribute("Value");
+										Assert.assertEquals(getFLHelpTxt,expectedFLHelpText );
+										System.out.println("Verified Foreign Language");
+										Thread.sleep(3000);
+										
+										getupClick9().waitAndClick(10);
+										String getHCTagLabelTxt = getHCTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getHCTagLabelTxt,expectedHCTagLabelText);
+																				
+										
+										WebElement optionHCT = getHCTagType().selectFromDropdown().getFirstSelectedOption();
+										String getHCTagTypeTxt = optionHCT.getText();
+										Assert.assertEquals(getHCTagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionHCA = getHCGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getHCGroupAssociationTxt = optionHCA.getText();
+										Assert.assertEquals(getHCGroupAssociationTxt,expectedGroupAssociation2Text);
+																				
+										String getHCDefaultActionTxt = getHCDefaultAction().getText();
+										Assert.assertEquals(getHCDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getHCFieldLogicTxt = getHCFieldLogic().getText();
+										Assert.assertEquals(getHCFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getHCErrorMessageTxt = getHCErrorMessage().getText();
+										Assert.assertEquals(getHCErrorMessageTxt,expectedErrorMsgText);
+																				
+										String getHCHelpTxt = getHCHelpText().GetAttribute("Value");
+										Assert.assertEquals(getHCHelpTxt,expectedHCHelpText );
+										System.out.println("Verified Hidden Content");
+										Thread.sleep(3000);
+										
+										getupClick10().waitAndClick(10);
+										String getHDTagLabelTxt = getHDTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getHDTagLabelTxt,expectedHDTagLabelText);
+																		
+										
+										WebElement optionHDT = getHDTagType().selectFromDropdown().getFirstSelectedOption();
+										String getHDTagTypeTxt = optionHDT.getText();
+										Assert.assertEquals(getHDTagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionHDA = getHDGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getHDGroupAssociationTxt = optionHDA.getText();
+										Assert.assertEquals(getHDGroupAssociationTxt,expectedGroupAssociation6Text);
+										
+										
+										WebElement optionHDDA = getHDDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getHDDefaultActionTxt = optionHDDA.getText();
+										Assert.assertEquals(getHDDefaultActionTxt,expectedDefaultAction3Text);
+																									
+										String getHDHelpTxt = getHDHelpText().GetAttribute("Value");
+										Assert.assertEquals(getHDHelpTxt,expectedHDHelpText);
+										System.out.println("Verified Hot Doc");
+										Thread.sleep(3000);
+										
+										getupClick11().waitAndClick(10);
+										String getPGTagLabelTxt = getPGTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getPGTagLabelTxt,expectedPGTagLabelText);
+																		
+										String getPGInstructionTxt = getPGInstructionText().GetAttribute("Value");
+										Assert.assertEquals(getPGInstructionTxt,expectedPGInstructionText);
+										
+										
+										WebElement optionPGDA = getPGDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getPGDefaultActionTxt = optionPGDA.getText();
+										Assert.assertEquals(getPGDefaultActionTxt,expectedDefaultAction1Text);
+																									
+										String getPGErrorMessageTxt = getPGErrorMessage().GetAttribute("Value");
+										Assert.assertEquals(getPGErrorMessageTxt,expectedErrorMessageText);
+										System.out.println("Verified Privileged Group");
+										Thread.sleep(3000);
+										
+										getupClick12().waitAndClick(10);
+										String getPTagLabelTxt = getPTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getPTagLabelTxt,expectedPTagLabelText);
+																				
+										
+										WebElement optionPT = getPTagType().selectFromDropdown().getFirstSelectedOption();
+										String getPTagTypeTxt = optionPT.getText();
+										Assert.assertEquals(getPTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionPA = getPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getPGroupAssociationTxt = optionPA.getText();
+										Assert.assertEquals(getPGroupAssociationTxt,expectedGroupAssociation3Text);
+																				
+										String getPDefaultActionTxt = getPDefaultAction().getText();
+										Assert.assertEquals(getPDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getPFieldLogicTxt = getPFieldLogic().getText();
+										Assert.assertEquals(getPFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getPErrorMessageTxt = getPErrorMessage().getText();
+										Assert.assertEquals(getPErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Privileged");
+										Thread.sleep(3000);
+										
+										getupClick13().waitAndClick(10);
+										String getNPTagLabelTxt = getNPTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getNPTagLabelTxt,expectedNPTagLabelText);
+																				
+										
+										WebElement optionNPT = getNPTagType().selectFromDropdown().getFirstSelectedOption();
+										String getNPTagTypeTxt = optionNPT.getText();
+										Assert.assertEquals(getNPTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionNPA = getNPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getNPGroupAssociationTxt = optionNPA.getText();
+										Assert.assertEquals(getNPGroupAssociationTxt,expectedGroupAssociation3Text);
+																				
+										String getNPDefaultActionTxt = getNPDefaultAction().getText();
+										Assert.assertEquals(getNPDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getNPFieldLogicTxt = getNPFieldLogic().getText();
+										Assert.assertEquals(getNPFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getNPErrorMessageTxt = getNPErrorMessage().getText();
+										Assert.assertEquals(getNPErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Not Privileged");
+										Thread.sleep(3000);
+										
+										getupClick14().waitAndClick(10);
+										String getPTGGroupLabelTxt = getPTGCHECKGROUPLabel().GetAttribute("Value");
+										Assert.assertEquals(getPTGGroupLabelTxt,expectedPTGTagLabelText);
+																				
+										String getPTGInstructionTxt = getPTGInstructionText().GetAttribute("Value");
+										Assert.assertEquals(getPTGInstructionTxt,expectedPTGInstructionText);
+																				
+										
+										WebElement optionPTG = getPTGDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getPTGDefaultActionTxt = optionPTG.getText();
+										Assert.assertEquals(getPTGDefaultActionTxt,expectedDefaultAction2Text);
+																				
+										
+										WebElement optionPTGO = getPTGObject().selectFromDropdown().getFirstSelectedOption();
+										String getPTGObjectTxt = optionPTGO.getText();
+										Assert.assertEquals(getPTGObjectTxt,expectedFieldLogicObjectText2);
+																				
+										
+										WebElement optionPTGC= getPTGCondition().selectFromDropdown().getFirstSelectedOption();
+										String getPTGConditionTxt = optionPTGC.getText();
+										Assert.assertEquals(getPTGConditionTxt,expectedFieldLogicConditionText);
+																				
+										
+										WebElement optionPTGA = getPTGAction().selectFromDropdown().getFirstSelectedOption();
+										String getPTGOActionTxt = optionPTGA.getText();
+										Assert.assertEquals(getPTGOActionTxt,expectedFieldLogicActionText);								
+																									
+										String getPTGErrorMessageTxt = getPTGErrorMessage().GetAttribute("Value");
+										Assert.assertEquals(getPTGErrorMessageTxt,expectedErrorMessageText);
+										System.out.println("Verified Privilege Type Group");
+										Thread.sleep(3000);
+										
+										getupClick15().waitAndClick(10);
+										String getACTagLabelTxt = getACTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getACTagLabelTxt,expectedACTagLabelText);
+																				
+										
+										WebElement optionACT = getACTagType().selectFromDropdown().getFirstSelectedOption();
+										String getACTagTypeTxt = optionACT.getText();
+										Assert.assertEquals(getACTagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionACA = getACGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getACGroupAssociationTxt = optionACA.getText();
+										Assert.assertEquals(getACGroupAssociationTxt,expectedGroupAssociation5Text);
+																				
+										String getACDefaultActionTxt = getACDefaultAction().getText();
+										Assert.assertEquals(getACDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getACFieldLogicTxt = getACFieldLogic().getText();
+										Assert.assertEquals(getACFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getACErrorMessageTxt = getACErrorMessage().getText();
+										Assert.assertEquals(getACErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Attorney Client");
+										Thread.sleep(3000);
+										
+										getupClick16().waitAndClick(10);
+										String getAWPTagLabelTxt = getAWPTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getAWPTagLabelTxt,expectedAWPTagLabelText);
+																				
+										
+										WebElement optionAWPT = getAWPTagType().selectFromDropdown().getFirstSelectedOption();
+										String getAWPTagTypeTxt = optionAWPT.getText();
+										Assert.assertEquals(getAWPTagTypeTxt,expectedTagType2Text);
+																				
+										
+										WebElement optionAWPA = getAWPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getAWPGroupAssociationTxt = optionAWPA.getText();
+										Assert.assertEquals(getAWPGroupAssociationTxt,expectedGroupAssociation5Text);
+																				
+										String getAWPDefaultActionTxt = getAWPDefaultAction().getText();
+										Assert.assertEquals(getAWPDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getAWPFieldLogicTxt = getAWPFieldLogic().getText();
+										Assert.assertEquals(getAWPFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getAWPErrorMessageTxt = getAWPErrorMessage().getText();
+										Assert.assertEquals(getAWPErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Attorney Work Product");
+										Thread.sleep(3000);
+										
+										getupClick17().waitAndClick(10);
+										String getCGTagLabelTxt = getCGTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getCGTagLabelTxt,expectedCGTagLabelText);
+																		
+										String getCGInstructionTxt = getCGInstructionText().GetAttribute("Value");
+										Assert.assertEquals(getCGInstructionTxt,expectedCGInstructionText);
+										
+										
+										WebElement optionCGA = getCGDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getCGDefaultActionTxt = optionCGA.getText();
+										Assert.assertEquals(getCGDefaultActionTxt,expectedDefaultAction3Text);
+										System.out.println("Verified Confidentiality Group");
+										Thread.sleep(3000);
+										
+										getupClick18().waitAndClick(10);
+										String getCTagLabelTxt = getCTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getCTagLabelTxt,expectedCTagLabelText);
+																				
+										
+										WebElement optionCT = getCTagType().selectFromDropdown().getFirstSelectedOption();
+										String getCTagTypeTxt = optionCT.getText();
+										Assert.assertEquals(getCTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionCA = getCGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getCGroupAssociationTxt = optionCA.getText();
+										Assert.assertEquals(getCGroupAssociationTxt,expectedGroupAssociation4Text);
+																				
+										String getCDefaultActionTxt = getCDefaultAction().getText();
+										Assert.assertEquals(getCDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getCFieldLogicTxt = getCFieldLogic().getText();
+										Assert.assertEquals(getCFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getCErrorMessageTxt = getCErrorMessage().getText();
+										Assert.assertEquals(getCErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Confidential");
+										Thread.sleep(3000);
+										
+										getupClick19().waitAndClick(10);
+										String getHTagLabelTxt = getHTagLabel().GetAttribute("Value");
+										Assert.assertEquals(getHTagLabelTxt,expectedHTagLabelText);
+																				
+										
+										WebElement optionHT = getHTagType().selectFromDropdown().getFirstSelectedOption();
+										String getHTagTypeTxt = optionHT.getText();
+										Assert.assertEquals(getHTagTypeTxt,expectedTagType1Text);
+																				
+										
+										WebElement optionHA = getHGroupAssociation().selectFromDropdown().getFirstSelectedOption();
+										String getHGroupAssociationTxt = optionHA.getText();
+										Assert.assertEquals(getHGroupAssociationTxt,expectedGroupAssociation4Text);
+																				
+										String getHDefaultActionTxt = getHDefaultAction().getText();
+										Assert.assertEquals(getHDefaultActionTxt,expectedDefaultActionText);
+																				
+										String getHFieldLogicTxt = getHFieldLogic().getText();
+										Assert.assertEquals(getHFieldLogicTxt,expectedFieldLogicText);
+																													
+										String getHErrorMessageTxt = getHErrorMessage().getText();
+										Assert.assertEquals(getHErrorMessageTxt,expectedErrorMsgText);
+										System.out.println("Verified Highly Confidential");
+										Thread.sleep(3000);
+										
+										getupClick20().waitAndClick(10);
+										String getDCGroupLabelTxt = getDCCOMMENTLabel().GetAttribute("Value");
+										Assert.assertEquals(getDCGroupLabelTxt,expectedDCTagLabelText );
+																																							
+										
+										WebElement optionDC = getDCDefaultAction().selectFromDropdown().getFirstSelectedOption();
+										String getDCDefaultActionTxt = optionDC.getText();
+										Assert.assertEquals(getDCDefaultActionTxt,expectedDefaultAction3Text);
+																				
+										
+										WebElement optionDCO = getDCObject().selectFromDropdown().getFirstSelectedOption();
+										String getDCObjectTxt = optionDCO.getText();
+										Assert.assertEquals(getDCObjectTxt,expectedFieldLogicObjectText1);
+																				
+										
+										WebElement optionDCC= getDCCondition().selectFromDropdown().getFirstSelectedOption();
+										String getDCConditionTxt = optionDCC.getText();
+										Assert.assertEquals(getDCConditionTxt,expectedFieldLogicConditionText);
+																				
+										
+										WebElement optionDCA = getDCAction().selectFromDropdown().getFirstSelectedOption();
+										String getDCActionTxt = optionDCA.getText();
+										Assert.assertEquals(getDCActionTxt,expectedFieldLogicActionText);								
+																									
+										String getDCErrorMessageTxt = getDCErrorMessage().GetAttribute("Value");
+										Assert.assertEquals(getDCErrorMessageTxt,expectedDCErrorMsgText);
+										
+										String getDCHelpTxt = getDCHelpText().GetAttribute("Value");
+										Assert.assertEquals(getDCHelpTxt,expectedDCHelpText);
+										System.out.println("Verified Document Comments");
+										
+										driver.scrollPageToTop();
+										driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												getRootClick().Visible()  ;}}), Input.wait30);
+										getRootClick().waitAndClick(10);
+										
+									    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									    		getCF_PreviewButton().Visible()  ;}}), Input.wait30);
+										 getCF_PreviewButton().waitAndClick(10);
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getResponsiveCheked().Visible()  ;}}), Input.wait30);
+										 getResponsiveCheked().waitAndClick(10);
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
+										 getTestUrCodeClick().waitAndClick(10);
+										 String getResponsiveError = getError1().getText();
+										 Assert.assertEquals(getResponsiveError,expectedErrorMessageText);
+										 
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getNotResponsiveCheked().Visible()  ;}}), Input.wait30);
+										 getNotResponsiveCheked().waitAndClick(10);
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
+										 getTestUrCodeClick().waitAndClick(10);
+										 String getNotResponsiveError = getError1().getText();
+										 Assert.assertEquals(getNotResponsiveError,expectedErrorMessageText);
+										 
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getTechnicalIssueCheked().Visible()  ;}}), Input.wait30);
+										 getTechnicalIssueCheked().waitAndClick(10);
+										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
+										 getTestUrCodeClick().waitAndClick(10);
+										 String getTechIssueError1 = getError2().getText();
+										 Assert.assertEquals(getTechIssueError1,expectedTIGErrorMsgText);
+										 
+										 String getTechIssueError2 = getError4().getText();
+										 Assert.assertEquals(getTechIssueError2,expectedErrorMessageText);
+										 
+										 String getTechIssueError3 = getError3().getText();
+										 Assert.assertEquals(getTechIssueError3,expectedDCErrorMsgText);
+										 System.out.println("Verified Preview");
+								}
+								
+							}
+							try{
+								   driver.scrollingToBottomofAPage();
+								   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
+								   nextPage = false;
+							   }
+							   catch (Exception e) {
+								   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
+							 } 
+							
+			
+		  	 	   	  }
+		  		}
+
+		public void PreviewCheck() throws InterruptedException {
+			
+		}
+		
 }
 
 
