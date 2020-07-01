@@ -198,6 +198,21 @@ private  Driver driver;
  			//System.out.println("Scrolling Into View Exception");
  		}
      }
+     
+     public void javascriptclick()
+     {
+    	 AssertExists();
+         try
+ 		{
+ 			((JavascriptExecutor) driver).executeScript(
+ 					"arguments[0].click();", element);
+ 		}
+ 		catch (Exception e)
+ 		{
+ 			System.out.println("click exception");
+ 		}
+     }
+    
     
      public void Clear()
      {
@@ -302,7 +317,6 @@ private  Driver driver;
    	  }
    	  	return false;
     }
-     /*
 	 public Element FindElement(By by)
      {
          AssertExists();
@@ -378,7 +392,6 @@ private  Driver driver;
      {
          return FindElements(By.className(className));
      }
-     */
 
    /// <summary>
      /// Get/Set "value" for an Element which is a Select (dropdown) control 

@@ -223,9 +223,7 @@ public class TagsAndFoldersPage {
         		getDeleteTag().Visible()  ;}}), Input.wait30); 
         getDeleteTag().Click();
    
-        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 base.getYesBtn().Visible()  ;}}), Input.wait30); 
-	    base.getYesBtn().Click();
+       base.getYesBtn().waitAndClick(10);
      
         base.VerifySuccessMessage("Tag deleted successfully");
         base.CloseSuccessMsgpopup();
@@ -262,7 +260,7 @@ public class TagsAndFoldersPage {
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 base.getYesBtn().Visible()  ;}}), Input.wait30); 
-    	    base.getYesBtn().Click();
+    	    base.getYesBtn().waitAndClick(10);
          
             base.VerifySuccessMessage("Folder deleted successfully");
             base.CloseSuccessMsgpopup();

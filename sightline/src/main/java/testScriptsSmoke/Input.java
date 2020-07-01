@@ -108,6 +108,8 @@ public class Input {
 	public static String SourceLocation;
 	public static int totalNumberOfDocs;
 	public static int totalNumberOfDocsincludeadvoption;
+	public static String MasterPDF1location;
+	public static String MasterPDF2location;
 	
 
 	@BeforeSuite(alwaysRun=true)
@@ -198,6 +200,8 @@ public class Input {
 		metaDataCNcount = testData.metaDataCNcount;
 		totalNumberOfDocs = testData.totalNumberOfDocs;
 		totalNumberOfDocsincludeadvoption = testData.totalNumberOfDocsincludeadvoption;
+		MasterPDF1location = testData.MasterPDF1location;
+		MasterPDF2location = testData.MasterPDF2location;
 		
 		System.out.println("*****************************************************");
 		

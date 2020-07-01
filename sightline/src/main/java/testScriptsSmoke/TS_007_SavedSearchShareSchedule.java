@@ -29,6 +29,7 @@ public class TS_007_SavedSearchShareSchedule {
 	SavedSearch ss;
 	SessionSearch search;
 	BaseClass bc;
+	int purehits;
 	
 	//String searchText = "test";
 	String saveSearchName = "test013"+Utility.dynamicNameAppender();
@@ -40,8 +41,7 @@ public class TS_007_SavedSearchShareSchedule {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-	 //Open browser
+	    //Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
@@ -54,9 +54,9 @@ public class TS_007_SavedSearchShareSchedule {
 		search.saveSearch(saveSearchName);
 		search.saveSearch(SearchNamePA);
 		
-			bc = new BaseClass(driver);
+		bc = new BaseClass(driver);
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -67,24 +67,27 @@ public class TS_007_SavedSearchShareSchedule {
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
-	    Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+	   Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(purehits));
+	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
+	    System.out.println("Expected docs("+purehits+") are shown in doclist");
 
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
 		
 		ss.savedSearchToDocView(saveSearchName);
 	    DocViewPage dv= new DocViewPage(driver);
-	    dv.getDocView_info().WaitUntilPresent();
-	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+Input.pureHitSeachString1+" Docs");
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		   !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
+	
+	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
+	    System.out.println("Expected docs("+purehits+") are shown in docView");
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search

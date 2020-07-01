@@ -21,10 +21,11 @@ public class SecurityGroupsPage {
     public Element getSecurityGroupName(){ return driver.FindElementById("txtSecurityGroupName"); }
     public Element getSecurityGroupList(){ return driver.FindElementById("ddlSecurityGroupsList"); }
     public Element getSecurityGroupSaveButton(){ return driver.FindElementById("btnSaveSecurityGroup"); }
-       
-    public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
-    public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
-  
+    public Element getSG_AnnLayerbutton(){ return driver.FindElementByXPath("//*[@id='myTab1']//a[contains(text(),'Annotation Layers')]"); }
+    public Element getSG_AddAnnLayer(){ return driver.FindElementByXPath("//*[@id=\"annotationJSTree\"]/ul/li/ul/li[1]"); }
+    public Element getSG_AddAnnLayer_Right(){ return driver.FindElementByXPath("//*[@onclick='AnnotationRightShift();']"); }
+    public Element getSG_AnnSaveButton(){ return driver.FindElementById("btnSaveAccessControls"); }
+        
   
     //Annotation Layer added successfully
     public SecurityGroupsPage(Driver driver){
@@ -73,6 +74,32 @@ public class SecurityGroupsPage {
 		   }
 		return all;
 		
+       }
+       
+       public void addlayertosg()
+       {
+    	 
+    	   this.driver.getWebDriver().get(Input.url+"SecurityGroups/SecurityGroups");
+    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			   getSG_AnnLayerbutton().Visible()  ;}}), Input.wait30); 
+    	   getSG_AnnLayerbutton().waitAndClick(5);
+    	   
+    	   getSG_AddAnnLayer().waitAndClick(15);
+    	   
+    	   getSG_AddAnnLayer_Right().waitAndClick(15);
+    	   try {
+    		   bc.VerifyWarningMessage("Cannot add more than one security group. "
+    		   		+ "A security group can have only one annotation layer at a time.");
+    		 
+    	     getSG_AnnSaveButton().waitAndClick(15);
+    	     bc.VerifySuccessMessage("Your selections were saved successfully");
+    	     bc.CloseSuccessMsgpopup();
+    	   }
+    	   catch(Exception e)
+    	   {
+    		   System.out.println("Annotation layer already added");
+    	   }
+         	
        }
 		
 		

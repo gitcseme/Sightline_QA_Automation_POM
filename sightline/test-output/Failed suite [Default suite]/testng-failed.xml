@@ -3,73 +3,20 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Failed suite [Default suite]]">
   <test name="Default test(failed)(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+      <class name="testScriptsRegression.DocView_Regression">
         <methods>
+          <include name="VerifyAnalytics_FamilyActions"/>
+          <include name="VerifyAnalyticsthrAssignment"/>
+          <include name="VerifyTabswhenAllprefEnabled"/>
           <include name="preCondition"/>
-          <include name="close"/>
-          <include name="searchsavedSearch"/>
+          <include name="VerifyTabswhenAllprefDisabled"/>
+          <include name="VerifyAnalyticsforPA"/>
           <include name="takeScreenShot"/>
-          <include name="contentSearchWithOperatorsInBS"/>
-          <include name="metaDataSearch"/>
-          <include name="contentSearchWithOperatorsInAS"/>
-          <include name="audioSearch"/>
-          <include name="beforeTestMethod"/>
+          <include name="VerifyAnalyticsChildWinodw"/>
+          <include name="VerifyAnalyticsConceptual"/>
+          <include name="NonAudioRemarkAddEditDeletebyReviewer"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
-        <methods>
-          <include name="addCommentToFirstDoc"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
-          <include name="preCondition"/>
-          <include name="addRemarkToFirstDoc"/>
-          <include name="completeDoc"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
-      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="shareSavedSearch"/>
-          <include name="beforeTestMethod"/>
-          <include name="saveSearchToDocView"/>
-          <include name="scheduleSavedSearch"/>
-          <include name="saveSearchToDocList"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
-      <class name="testScriptsSmoke.TS_017_DocList">
-        <methods>
-          <include name="custodianFiltersInDocList"/>
-          <include name="beforeTestMethod"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="doclistToDocView"/>
-          <include name="takeScreenShot"/>
-          <include name="doclistBulkRelease"/>
-          <include name="masterDateFiltersInDocList"/>
-          <include name="bulkTagAndBulkFolder"/>
-          <include name="docFileTypeInDocList"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_017_DocList -->
-      <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="CreateAssignmentDistributeToReviwer"/>
-          <include name="takeScreenShot"/>
-          <include name="CreateQuickBatch"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_009_ValidateAssignmentFunctionality -->
-      <class name="testScriptsSmoke.TS_010_Workflow">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="Test"/>
-          <include name="beforeTestMethod"/>
-          <include name="close"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      </class> <!-- testScriptsRegression.DocView_Regression -->
     </classes>
   </test> <!-- Default test(failed)(failed) -->
 </suite> <!-- Failed suite [Failed suite [Default suite]] -->

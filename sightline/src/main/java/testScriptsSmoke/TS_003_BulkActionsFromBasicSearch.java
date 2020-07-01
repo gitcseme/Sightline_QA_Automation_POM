@@ -45,7 +45,7 @@ public class TS_003_BulkActionsFromBasicSearch {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
+	
 		//bt = new BaseTest();
 		//Open browser
 		softAssertion= new SoftAssert();
@@ -119,7 +119,9 @@ public class TS_003_BulkActionsFromBasicSearch {
        dp.getDocList_info().WaitUntilPresent();
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
-       Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(pureHit)));
+	   Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(Input.pureHitSeachString1));
+
+//       Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(pureHit)));
        System.out.println("Expected docs("+pureHit+") are shown in doclist");
 
 	}
@@ -136,7 +138,8 @@ public class TS_003_BulkActionsFromBasicSearch {
        driver.getWebDriver().get(Input.url+"Search/Searches");
        sessionSearch.ViewInDocView();
        DocViewPage dv= new DocViewPage(driver);
-       dv.getDocView_info().WaitUntilPresent();
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		   dv.getDocView_info().getText().isEmpty()  ;}}),Input.wait30);
        Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+pureHit+" Docs");
        System.out.println("Expected docs("+pureHit+") are shown in docView");
 	}

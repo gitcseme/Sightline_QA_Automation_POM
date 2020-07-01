@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
@@ -231,10 +232,18 @@ public class SavedSearch {
 	  
 	   getSelectWithName(searchName).waitAndClick(10);
 	   
-	   getToDocList().Click();
+	   getToDocList().waitAndClick(10);
+	   
+	   try {
+		   base.getYesBtn().waitAndClick(10);
+	   }
+	   catch(Exception e)
+	   {
+		   System.out.println("Pop up message does not appear");
+	   }
 	   
    }
-   public void savedSearchToDocView(final String searchName) {
+   public void savedSearchToDocView(final String searchName) throws InterruptedException {
 	   driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSavedSearch_SearchName().Visible()  ;}}),Input.wait60);
@@ -245,19 +254,24 @@ public class SavedSearch {
 			e.printStackTrace();
 		}
 	   getSavedSearch_SearchName().SendKeys(searchName);
-	   try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	   Thread.sleep(2000);
+		
 	   getSavedSearch_ApplyFilterButton().Click();
+	   Thread.sleep(1000);
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
 	  
 	   getSelectWithName(searchName).waitAndClick(10);
 	   
 	   getToDocView().waitAndClick(10);
+	   
+	   try {
+		   base.getYesBtn().waitAndClick(10);
+	   }
+	   catch(Exception e)
+	   {
+		   System.out.println("Pop up message does not appear");
+	   }
 	   
    }
    
@@ -311,8 +325,12 @@ public class SavedSearch {
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShare_PA().Visible()  ;}}), Input.wait30);
 	   getShare_PA().waitAndClick(10);  
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
+	   getShareSaveBtn().javascriptclick();
 	  
-	   getShareSaveBtn().waitAndClick(5);
+	 //  getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
 	   
 	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
@@ -362,7 +380,7 @@ public class SavedSearch {
 	   Assert.assertTrue(getSearchName(searchName).Displayed());
 	   
 	   //impersonate to RMU and check search
-	   base.impersonatePAtoRMU_SelectedSG(securitygroupname);
+	   base.impersonatePAtoRMU();
 	   
 	 //click on share with security group tab
 	   this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
@@ -387,8 +405,12 @@ public class SavedSearch {
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShare_SecurityGroup(securitygroupname).Visible()  ;}}), Input.wait30);
 	   getShare_SecurityGroup(securitygroupname).waitAndClick(10);  
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
+	   getShareSaveBtn().javascriptclick();
 	  
-	   getShareSaveBtn().waitAndClick(10);
+	//   getShareSaveBtn().waitAndClick(10);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
 	   
 	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
@@ -585,7 +607,7 @@ public class SavedSearch {
 		   assgnpage = new AssignmentsPage(driver);
 		   savedSearch_Searchandclick(searchName);
 		   
-		   getSavedSearchToBulkAssign().Click();
+		   getSavedSearchToBulkAssign().waitAndClick(10);
 		   
 		   //SessionSearch search = new SessionSearch(driver);
 		//   search.bulkAssign();
@@ -788,7 +810,7 @@ public class SavedSearch {
 	    	int pureHit = Integer.parseInt(search.getPureHitsCount().getText());
 	    	System.out.println("PureHit is : "+pureHit);
 	    	
-	 	   Assert.assertEquals(search.getPureHitsCount().getText(), String.valueOf(Input.pureHitSeachString1));
+	 	   Assert.assertEquals(search.getPureHitsCount().getText(),pureHit);
 	 	   
 	 	   search.getSearchButton().waitAndClick(10);
 	 	   
@@ -813,7 +835,7 @@ public class SavedSearch {
 	    	
 	    	search.basicContentSearch(Input.searchString2);
 	    	
-	    	Assert.assertEquals(search.getPureHitsCount().getText(), String.valueOf(Input.pureHitSeachString2));
+	    	Assert.assertEquals(search.getPureHitsCount().getText(), pureHit);
 	   	 	
 	    	search.saveSearch(searchName2);
 			   	

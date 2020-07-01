@@ -45,6 +45,9 @@ public class BatchPrint_Regression {
 	    @BeforeClass(alwaysRun = true)
 	    public void preConditions() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
+		Input in = new Input();
+		in.loadEnvConfig();
 	 
 		driver = new Driver();
 		lp = new LoginPage(driver);

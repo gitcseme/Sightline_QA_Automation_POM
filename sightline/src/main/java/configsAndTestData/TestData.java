@@ -18,6 +18,8 @@ public class TestData {
 		public int  metaDataCNcount;
 		public int totalNumberOfDocs;
 		public int totalNumberOfDocsincludeadvoption;
+		public String MasterPDF1location;
+		public String MasterPDF2location;
 		
 		public String getMetaDataCN() {
 			return metaDataCN;
@@ -116,4 +118,19 @@ public class TestData {
 		public void settotalNumberOfDocsincludeadvoption(int totalNumberOfDocsincludeadvoption) {
 			this.totalNumberOfDocsincludeadvoption = totalNumberOfDocsincludeadvoption;
 		}
+		
+		 public String MasterPDF1location() {
+				return MasterPDF1location;
+			}
+			public void MasterPDF1location(String MasterPDF1location) {
+				this.MasterPDF1location = MasterPDF1location;
+			}
+			
+		 public String MasterPDF2location() {
+				return MasterPDF2location;
+			}
+		public void MasterPDF2location(String MasterPDF2location) {
+				this.MasterPDF2location = MasterPDF2location;
+				}
+
 }

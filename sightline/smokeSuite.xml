@@ -14,7 +14,7 @@
 	    <classes>
         	<class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
     	</classes>
-	</test>  
+	</test>   
 	<!--  	
   <test name="2FAValidation">
     <classes>
@@ -27,14 +27,14 @@
     	<classes>
        	 <class name="testScriptsSmoke.TS_008_AllManageModules" ></class>  
     	</classes>
-	</test>   
+	</test>  
 	
  	<test name="BasicAndAdvancedSearchOperations">
  	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
     </classes>
-	</test>  
+	</test>   
 	<test name="TS_017_DocList">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>

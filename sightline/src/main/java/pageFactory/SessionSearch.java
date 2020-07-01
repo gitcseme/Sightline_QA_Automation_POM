@@ -117,7 +117,7 @@ public class SessionSearch {
     public Element getAs_Conceptual(){ return driver.FindElementByXPath("//button[@id='conceptual']"); }
     public Element getAs_ConceptualTextArea(){ return driver.FindElementByXPath("//textarea"); }
   
-    public Element getSelectFolderExisting(String folderName){ return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[contains(.,'"+folderName+"')]"); }
+    public Element getSelectFolderExisting(String folderName){ return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[contains(.,'"+folderName+"')]/i[1]"); }
     public Element getBulkUntagbutton(){ return driver.FindElementByXPath("//*[@id='toUnassign']/following-sibling::i"); }
     public Element getSelectTagExisting(String tagName){ return driver.FindElementByXPath("//*[@id='divBulkTagJSTree']//a[contains(.,'"+tagName+"')]"); }
     public Element getBulkUnFolderbutton(){ return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i"); }
@@ -1127,7 +1127,7 @@ public void ViewInDocView() throws InterruptedException{
 	//driver.getWebDriver().get(Input.url+"Search/Searches");
 	
 	 try{
-		 getPureHitAddButton().Click();
+		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
 		}
@@ -1136,12 +1136,13 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
 	 getBulkActionButton().waitAndClick(10);
-	
+	Thread.sleep(1000);
+	 
 	 try{
-	 getDocViewAction().waitAndClick(10);
-	 }catch (Exception e) {
-		 getDocViewActionDL().Click();
-	}
+		 getDocViewAction().waitAndClick(10);
+		 }catch (Exception e) {
+			 getDocViewActionDL().Click();
+		}
 	 System.out.println("Navigated to docView to view docs");
 	
 }
@@ -1176,7 +1177,7 @@ public void bulkAssign() {
 			 getBulkAssignAction().Visible()  ;}}), Input.wait60); 
 	
      
-	 getBulkAssignAction().Click();
+	 getBulkAssignAction().waitAndClick(10);
 	 
 	 System.out.println("performing bulk assign");
 	 
@@ -1225,12 +1226,13 @@ public void bulkRelease(final String SecGroup) {
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{
 
-	getBulkActionButton().Click();
-	
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkTagAction().Visible()  ;}}), Input.wait60); 
-	 getBulkTagAction().waitAndClick(10);
-	 
+		/*
+		 * getBulkActionButton().Click();
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getBulkTagAction().Visible() ;}}), Input.wait60);
+		 * getBulkTagAction().waitAndClick(10);
+		 */ 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUntagbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUntagbutton().Click();
@@ -1259,12 +1261,13 @@ driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 //Function to perform new bulk folder with given folder name
 public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 
-	 getBulkActionButton().Click();
-	
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
-	 getBulkFolderAction().Click();
-	 
+		/*
+		 * getBulkActionButton().Click();
+		 * 
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getBulkFolderAction().Visible() ;}}), Input.wait60);
+		 * getBulkFolderAction().Click();
+		 */ 
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUnFolderbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUnFolderbutton().Click();
@@ -1552,9 +1555,7 @@ public void BulkActions_Tag(String TagName) throws InterruptedException{
 		    	getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
 	 getFinalizeButton().Click();
 	 
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkTagConfirmationButton().Visible()  ;}}), Input.wait60); 
-	 getBulkTagConfirmationButton().Click();
+	 getTallyContinue().waitAndClick(10);
 	 
 	 base.VerifySuccessMessage("Records saved successfully");
 	 

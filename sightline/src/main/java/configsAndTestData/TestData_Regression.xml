@@ -18,4 +18,12 @@
     <metaDataCNcount>1135</metaDataCNcount>
     <totalNumberOfDocs>1202</totalNumberOfDocs>
     <totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
+    
+    <!-- Production path for redaction master doc -->
+    <MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+    <MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
+    
+    
+  
+    
 </TestData>

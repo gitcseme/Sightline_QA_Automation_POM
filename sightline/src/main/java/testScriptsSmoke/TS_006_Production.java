@@ -38,6 +38,7 @@ public class TS_006_Production {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
@@ -53,10 +54,13 @@ public class TS_006_Production {
 	}
 		
 	@Test(groups={"smoke","regression"})
-	public void  AddNewProduction() throws ParseException, InterruptedException, NoSuchMethodException, SecurityException {
+	public void  AddNewProduction() throws Exception {
 		
+		System.out.println(Input.prodPath);
 		ProductionPage page1 = new ProductionPage(driver);
-		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagname);
+	//	page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagname);
+
+		page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagname);
 
 	}
 	 @BeforeMethod

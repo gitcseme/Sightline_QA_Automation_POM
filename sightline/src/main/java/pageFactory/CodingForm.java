@@ -98,6 +98,7 @@ public class CodingForm {
     public Element getCF_TagTypes(){ return driver.FindElementByXPath(".//*[@id='c-0']//select[@id='0']"); }
     public Element getCF_Preview1(){ return driver.FindElementByXPath(".//*[starts-with(@id,'item')]//td[1]"); }
     public Element getCF_RadioGroup(){ return driver.FindElementById("TagRdo_0"); }
+    public Element getCF_RadioGroup1(){ return driver.FindElementById("//*[@id='c-2']//select[@id='2']"); }
     
     //added- System Level Template - Narendra
     public ElementCollection getTable(){ return driver.FindElementsByXPath("//*[@id='CodingFormDataTable']/tbody/tr/td[1]"); }
@@ -357,7 +358,7 @@ public class CodingForm {
    //to create coding form with first tag and comments from the list 
    public void createCodingform(String cfName) {
 	   
-	   this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");
+	    this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");
 	   getAddNewCodingFormBtn().waitAndClick(10);
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getCodingFormName().Visible()  ;}}),Input.wait30);

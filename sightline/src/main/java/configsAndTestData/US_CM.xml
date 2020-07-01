@@ -2,8 +2,10 @@
 <QA>
           <url>https://sightlineus.ms.consilio.com/</url>
          <prodpath>\\ProductionWS_hwpoc\Automation</prodpath>
-            <SourceLocation>IngestionWS_fnp\Fisher Phillips\Test Project</SourceLocation>
-        <projectName>QA_032501</projectName>
+            <SourceLocation>IngestionWS_fnp\Automation</SourceLocation>
+             <domainName>POC</domainName>
+        <projectName>0506201258_EG</projectName>
+        
        <!-- UKSA1 SA1-->
     	<sa1userName>qasa@consilio.com</sa1userName> 
    		<sa1password>Q@test_12</sa1password> 

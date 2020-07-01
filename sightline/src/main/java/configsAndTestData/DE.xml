@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DE>
-              <url>https://sightlinede.consilio.com/</url>
-             <prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
-             <SourceLocation>IngestionTestData\Automation</SourceLocation>
-              <domainName>QA Domain</domainName>
-        <projectName>Auto_0612</projectName>
+ 		<url>https://sightlinede.consilio.com/</url>
+       	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
+       	<SourceLocation>IngestionTestData\Automation</SourceLocation>
+       	 <domainName>QA Domain</domainName>
+        <projectName>Auto_0523</projectName>
         
        <!-- UKSA1 SA1-->
-       <sa1userName>qasa@consilio.com</sa1userName> 
-              <sa1password>Q@test_12</sa1password> 
+    	<sa1userName>qasa@consilio.com</sa1userName> 
+   		<sa1password>Q@test_12</sa1password> 
      
         <!-- USPA -->
-        <pa1FullName>QA PAU2</pa1FullName>
-        <pa2userName>qapau2@consilio.com</pa2userName>
+        <pa2FullName>QA PAU2</pa2FullName>
+       <pa2userName>qapau2@consilio.com</pa2userName>
         <pa2password>Q@test_13</pa2password>
       
         <pa1FullName>QA PAU1</pa1FullName>

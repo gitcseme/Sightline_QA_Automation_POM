@@ -1,108 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="1" failed="0" ignored="0" total="1" passed="0">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="55711" started-at="2020-04-24T07:06:31Z" finished-at="2020-04-24T07:07:27Z">
+  <suite name="Default suite" duration-ms="44711" started-at="2020-06-30T14:41:13Z" finished-at="2020-06-30T14:41:58Z">
     <groups>
-      <group name="regression">
-        <method signature="Assignment_Regression.Assgnwp()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="Assgnwp" class="testScriptsRegression.Assignment_Regression"/>
-      </group> <!-- regression -->
     </groups>
-    <test name="Default test" duration-ms="55711" started-at="2020-04-24T07:06:31Z" finished-at="2020-04-24T07:07:27Z">
-      <class name="testScriptsRegression.Assignment_Regression">
-        <test-method status="FAIL" signature="preCondition()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="preCondition" is-config="true" duration-ms="55595" started-at="2020-04-24T12:36:31Z" finished-at="2020-04-24T12:37:27Z">
-          <exception class="java.lang.RuntimeException">
-            <message>
-              <![CDATA[couldnt create chrome driver]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.RuntimeException: couldnt create chrome driver
-	at automationLibrary.Driver.chromeDriver(Driver.java:266)
-	at automationLibrary.Driver.createDriver(Driver.java:224)
-	at automationLibrary.Driver.<init>(Driver.java:38)
-	at testScriptsRegression.Assignment_Regression.preCondition(Assignment_Regression.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:146)
-	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:166)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.RuntimeException -->
+    <test name="Default test" duration-ms="44711" started-at="2020-06-30T14:41:13Z" finished-at="2020-06-30T14:41:58Z">
+      <class name="testScriptsRegression.DocView_Redactions">
+        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsRegression.DocView_Redactions@56ef9176]" name="preCondition" is-config="true" duration-ms="40007" started-at="2020-06-30T20:11:13Z" finished-at="2020-06-30T20:11:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preCondition -->
-        <test-method status="SKIP" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
+        <test-method status="PASS" signature="DatabaseValidation()[pri:9, instance:testScriptsRegression.DocView_Redactions@56ef9176]" name="DatabaseValidation" duration-ms="4630" started-at="2020-06-30T20:11:53Z" finished-at="2020-06-30T20:11:58Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="SKIP" signature="Assgnwp()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="Assgnwp" duration-ms="0" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
-          <exception class="java.lang.RuntimeException">
-            <message>
-              <![CDATA[couldnt create chrome driver]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.RuntimeException: couldnt create chrome driver
-	at automationLibrary.Driver.chromeDriver(Driver.java:266)
-	at automationLibrary.Driver.createDriver(Driver.java:224)
-	at automationLibrary.Driver.<init>(Driver.java:38)
-	at testScriptsRegression.Assignment_Regression.preCondition(Assignment_Regression.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:523)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:224)
-	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:146)
-	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:166)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.RuntimeException -->
+        </test-method> <!-- DatabaseValidation -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult)[pri:0, instance:testScriptsRegression.DocView_Redactions@56ef9176]" name="takeScreenShot" is-config="true" duration-ms="5" started-at="2020-06-30T20:11:58Z" finished-at="2020-06-30T20:11:58Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=DatabaseValidation status=SUCCESS method=DocView_Redactions.DatabaseValidation()[pri:9, instance:testScriptsRegression.DocView_Redactions@56ef9176] output={null}]]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Assgnwp -->
-        <test-method status="FAIL" signature="close()[pri:0, instance:testScriptsRegression.Assignment_Regression@3d51f06e]" name="close" is-config="true" duration-ms="36" started-at="2020-04-24T12:37:27Z" finished-at="2020-04-24T12:37:27Z">
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="FAIL" signature="close()[pri:0, instance:testScriptsRegression.DocView_Redactions@56ef9176]" name="close" is-config="true" duration-ms="1" started-at="2020-06-30T20:11:58Z" finished-at="2020-06-30T20:11:58Z">
           <exception class="java.lang.NullPointerException">
             <full-stacktrace>
               <![CDATA[java.lang.NullPointerException
-	at testScriptsRegression.Assignment_Regression.close(Assignment_Regression.java:216)
+	at testScriptsRegression.DocView_Redactions.close(DocView_Redactions.java:214)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -134,7 +62,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
-      </class> <!-- testScriptsRegression.Assignment_Regression -->
+      </class> <!-- testScriptsRegression.DocView_Redactions -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
