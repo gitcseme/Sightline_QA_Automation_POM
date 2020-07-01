@@ -39,9 +39,11 @@ import testScriptsSmoke.Input;
 	//String assignmentName= "assi"+Utility.dynamicNameAppender();
 	String redactiontag= "RTag"+Utility.dynamicNameAppender();
 	String annotationname = "annotationname"+Utility.dynamicNameAppender();
-	//String folderName = "Fol"+Utility.dynamicNameAppender();
-	String folderName = "Fol431725";
-	String assignmentName= "assi488354";
+//	String folderName = "Fol"+Utility.dynamicNameAppender();
+	String folderName = "Folder263284";
+	String folderName1 = "Fol"+Utility.dynamicNameAppender();
+	String folderName2 = "Fol"+Utility.dynamicNameAppender();
+	String assignmentName= "assi575308";
 	
 	//For reviewer assign docs,so create assignment with coding form(with tags and comments) and distribute 
 	@BeforeClass(alwaysRun = true)
@@ -51,14 +53,12 @@ import testScriptsSmoke.Input;
 		
 		Input in = new Input();
 		in.loadEnvConfig();
-		
-		
 		//Open browser
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
-		/*	
+	/*	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	
     	//add tag
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
     	page.CreateTag(newTag,"Default Security Group");
@@ -90,9 +90,10 @@ import testScriptsSmoke.Input;
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
 		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString2);
-		lp.logout();
 		
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password); */
+		lp.logout();
+		*/
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password); 
 		
 		hm = new HomePage(driver);
 		Boolean found= false;
@@ -110,10 +111,10 @@ import testScriptsSmoke.Input;
         
 	}
 	
-   	// @Test(groups={"regression"},priority=1)
+   	 @Test(groups={"regression"},priority=1)
 		public void  VerifyPersistentHit() throws InterruptedException {
  		
- 	
+   		 System.out.println("******Execution started for Persistent Hits********");
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString1);
 			search.ViewInDocView();
@@ -123,19 +124,20 @@ import testScriptsSmoke.Input;
  	
  	@Test(groups={"regression"},priority=2)
 	public void VerifyFoldertab() throws InterruptedException {
-		
+ 		System.out.println("******Execution started for Verify folder tab********");
 		docView.VerifyFolderTab(folderName,2);
     
 	}
 	@Test(groups={"regression"},priority=3)
 	public void VerifyTextTab() {
-		
+		System.out.println("******Execution started forverify text tab********");
 		docView.ViewTextTab();
 	}
 	
 	@Test(groups={"regression"},priority=4)
 	public void NonAudioAnnotation() throws InterruptedException
 	{
+		System.out.println("******Execution started for Annotation********");
 		docView.NonAudioAnnotation();
 	}
 	
@@ -145,6 +147,7 @@ import testScriptsSmoke.Input;
 	@Test(groups={"regression"},priority=6)
 	public void VerifyAnalyticsEmailInclusive() throws InterruptedException
 	{
+		System.out.println("******Execution started for VerifyAnalyticsEmailInclusive********");
 		 BaseClass bc = new BaseClass(driver);
 		 bc.selectproject();
 		SessionSearch search = new SessionSearch(driver);
@@ -220,12 +223,7 @@ import testScriptsSmoke.Input;
 		{
 			docView.addRemarkNonAudioDoc(Remark);
 		}
-	
-	//@Test(groups={"regression"},priority=5)
-	public void VerifyMiniDoclistConifgSortOrder() throws InterruptedException
-	{
-	   docView.MiniDoclistConifgSortOrder();
-	}
+
 	  
 		@Test(groups={"regression"},priority=12)
 		public void VerifyAnalytics_FamilyActions() throws InterruptedException
@@ -239,7 +237,7 @@ import testScriptsSmoke.Input;
 			search.getFamilyAddButton().waitAndClick(20);
 			search.getBulkActionButton().waitAndClick(10);
 			search.getDocViewAction().waitAndClick(10);
-			docView.Analytics_FamilyActions(folderName);
+			docView.Analytics_FamilyActions(folderName1);
 			final DocListPage dp = new DocListPage(driver);
 		    dp.getDocList_info().WaitUntilPresent();
 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -252,9 +250,9 @@ import testScriptsSmoke.Input;
 		       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
 		  	   tf.getFoldersTab().waitAndClick(10);
 		       tf.getFolder_ToggleDocCount().waitAndClick(10);
-		       tf.getFolderandCount(folderName, 1).WaitUntilPresent();
-		       Assert.assertTrue(tf.getFolderandCount(folderName, 1).Displayed());
-		       System.out.println(folderName+" could be seen under tags and folder page");
+		       tf.getFolderandCount(folderName1, 1).WaitUntilPresent();
+		       Assert.assertTrue(tf.getFolderandCount(folderName1, 1).Displayed());
+		       System.out.println(folderName1+" could be seen under tags and folder page");
 		}
 		
 		 @Test(groups={"regression"},priority=13)
@@ -269,7 +267,7 @@ import testScriptsSmoke.Input;
 				search.getPureHitAddButton().waitAndClick(20);
 				search.getBulkActionButton().waitAndClick(10);
 				search.getDocViewAction().waitAndClick(10);
-				docView.MiniDoclistFolderAction(folderName);
+				docView.MiniDoclistFolderAction(folderName2);
 		    }
 		 
 		
@@ -297,7 +295,7 @@ import testScriptsSmoke.Input;
 		     docView.VerifyPersistentHit(Input.searchString1);
 	    }
 
-			@Test(groups={"regression"},priority=16)
+			//@Test(groups={"regression"},priority=16)
 			public void VerifyTooltipsforIcons() throws InterruptedException {
 				driver.getWebDriver().navigate().refresh();
 				AssignmentsPage agnmt = new AssignmentsPage(driver);
@@ -370,7 +368,14 @@ import testScriptsSmoke.Input;
 		docView.AnalyticsThreaded_Actions();
        }
 	
-	  	 @Test(groups={"regression"},priority=6)
+	  	@Test(groups={"regression"},priority=20)
+		public void VerifyMiniDoclistConifgSortOrder() throws InterruptedException
+		{
+		   System.out.println("******Execution started for VerifyMiniDoclistConifgSortOrder********");
+		   docView.MiniDoclistConifgSortOrder();
+		}
+		
+	  	 @Test(groups={"regression"},priority=21)
 	 	public void VerifyAnalyticsConceptual() throws InterruptedException
 	 	{
 	 		

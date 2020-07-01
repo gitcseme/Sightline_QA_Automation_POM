@@ -7,15 +7,14 @@
         <SourceLocation>IngestionTestData\Automation</SourceLocation>
         <domainName>AutoDomain</domainName>
         <projectName>Auto_Regression</projectName>
-        <!-- Auto_SL2404  -->
-        <!-- AutoSys SysAdmin  -->
-
+      
+          <!-- AutoSys SysAdmin  -->
           <sa1userName>smangal@consilio.com</sa1userName> 
           <sa1password>sightline@654321</sa1password> 
           
           <!-- DA Admin  -->
          <da1userName>automation.sightlineconsilio@gmail.com</da1userName> 
-          <da1password>sightline@54321</da1password> 
+         <da1password>sightline@54321</da1password> 
      
         <!-- QAPA -->
         <pa2FullName>0QAPA1 PA1</pa2FullName>
@@ -23,14 +22,14 @@
         <pa2password>sightline@123456</pa2password>
         
         <pa1FullName>0QAPA22 PA22</pa1FullName>
-        <pa1userName>a.utomati.o.nsightlineconsi.l.i.o@gmail.com</pa1userName>
-        <pa1password>consilio@654321</pa1password>   --> 
+        <pa1userName>rmuserconsilio@gmail.com</pa1userName>
+        <pa1password>consilio@123</pa1password>   --> 
         
         <!--QARMU  -->
-       <!--  <rmu1FullName>0QARMU11 RMU11</rmu1FullName>
+        <rmu1FullName>0QARMU11 RMU11</rmu1FullName>
         <rmu1userName>a.ut.om.ationsig.htlinec.o.n.silio@gmail.com</rmu1userName>
         <rmu1password>sightline@12345</rmu1password>
-      -->   
+         
         <rmu1FullName>0QARMU11 RMU11</rmu1FullName>
         <rmu1userName>aut.o.ma.tions.i.ghtlineconsilio@gmail.com</rmu1userName>
         <rmu1password>consilio@6543210</rmu1password>

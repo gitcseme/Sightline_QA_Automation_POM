@@ -234,8 +234,8 @@ public class DocViewPage {
     public DocViewPage(Driver driver){
 
         this.driver = driver;
-        //This initElements method will create all WebElements
-        //PageFactory.initElements(driver.getWebDriver(), this);
+     
+        this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
         softAssertion= new SoftAssert(); 
         base = new BaseClass(driver);
         sp = new SessionSearch(driver);
@@ -712,11 +712,11 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			getDocView_AnnotateIcon().Displayed()  ;}}), Input.wait30);   
 		Thread.sleep(3000);
 		getDocView_AnnotateIcon().waitAndClick(10);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 	
  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getDocView_Annotate_ThisPage().Displayed()  ;}}), Input.wait30); 
- 	getDocView_Annotate_ThisPage().waitAndClick(10);
+ 	getDocView_Annotate_ThisPage().Click();
  	Thread.sleep(3000);
     	
  	
@@ -1549,7 +1549,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			   WebElement countoffields = driver.FindElementByXPath("//*[@id='SearchDataTable_wrapper']/div[3]/div[1]//table/thead/tr/th").getWebElement();
 			   List<WebElement> allvalues = countoffields.findElements(By.tagName("th"));
 			   List<String> all = new ArrayList<String>();
-			   for(int j=1;j<=allvalues.size();j++)
+			   for(int j=0;j<=allvalues.size();j++)
 			   {
 				  System.out.println(all.add(allvalues.get(j).getText()));
 				   if(all.equals(expvalues)) {
@@ -1569,7 +1569,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			   
 			  List<WebElement> optimized = getDocView_Config_Selectedfield().FindWebElements();
 			  List<String> alloptimized = new ArrayList<String>();
-              for(int k=1;k<=optimized.size();k++)
+              for(int k=0;k<=optimized.size();k++)
               {
             	 System.out.println(alloptimized.add(optimized.get(k).getText()));
              }

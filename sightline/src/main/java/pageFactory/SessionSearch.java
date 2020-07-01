@@ -1177,7 +1177,7 @@ public void bulkAssign() {
 			 getBulkAssignAction().Visible()  ;}}), Input.wait60); 
 	
      
-	 getBulkAssignAction().Click();
+	 getBulkAssignAction().waitAndClick(10);
 	 
 	 System.out.println("performing bulk assign");
 	 

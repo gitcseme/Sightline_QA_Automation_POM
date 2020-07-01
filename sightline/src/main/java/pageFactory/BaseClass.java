@@ -1,6 +1,8 @@
 package pageFactory;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,9 +17,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import com.google.common.io.Files;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import de.redsix.pdfcompare.PdfComparator;
 import testScriptsSmoke.Input;
 
 
@@ -26,7 +32,8 @@ public class BaseClass {
     Driver driver;
     public static String tooltipmsg;
     SoftAssert softAssertion;
-  
+    ProductionPage page;
+    
     public Element getBGnotificationCount1(){ return driver.FindElementByXPath("//b[@class='badge']"); }
     public Element getBGnotificationCount2(){ return driver.FindElementByXPath("//b[@class='badge bg-color-red bounceIn animated']"); }
     public Element getSignoutMenu(){ return driver.FindElementByXPath("//*[@id='user-selector']"); }
@@ -78,6 +85,7 @@ public class BaseClass {
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
         softAssertion= new SoftAssert(); 
+        page= new ProductionPage(driver);
     }
     
     public int initialBgCount() {
@@ -506,6 +514,47 @@ public class BaseClass {
     	    else   
     	    return flag;
     	}
+
+      	public void copyfiles() throws Exception
+      	{
+      		//Path src2 = Paths.get("\\\\MTPVTSSLMQ01\\Productions\\Automation\\P657944\\VOL0001\\PDF\\0001\\A_7786590000000100_P128632.pdf");
+      		
+      		Path src1 = Paths.get(Input.MasterPDF1location);
+      		Path src2 = Paths.get(page.ProdPath);
+      	    Path dest1 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF.pdf"); 
+      	    Path dest2 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//PDF1.pdf"); 
+      	    
+      	  //delete last TCs PDF from PDFs folder
+            File file = new File("C:\\Users\\smangal\\Documents\\Production Files");      
+            String[] myFiles;    
+                if(file.isDirectory()){
+                    myFiles = file.list();
+                    for (int i=0; i<myFiles.length; i++) {
+                        File myFile = new File(file, myFiles[i]); 
+                        myFile.delete();
+                    }
+                 }
+        	  
+      	    Files.copy(src1.toFile(), dest1.toFile());
+      	    Files.copy(src2.toFile(), dest2.toFile());
+      	    System.out.println("Copied file into another location successfully");
+      			
+      	}
+      	
+        public void TestPDFCompare() throws Exception
+        {    		
+        	   copyfiles();
+        	   String result=System.getProperty("user.dir")+"//Misc//Production Files//result.pdf";
+        	   String file1=System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF.pdf";
+        	   String file2=System.getProperty("user.dir")+"//Misc//Production Files//PDF1.pdf";
+        	  
+        	   new PdfComparator(file1, file2).compare().writeTo(result);
+        	   
+        	   System.out.println("process completed");
+        	   boolean isEquals = new PdfComparator(file1, file2).compare().writeTo(result);
+        	   System.out.println("Are PDF files similar..."+isEquals);
+
+        }
 
    
 }

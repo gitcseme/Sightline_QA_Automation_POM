@@ -34,7 +34,7 @@ public class AnnotationLayer {
 		
  
     	try{
-    		
+    		this.driver.getWebDriver().get(Input.url+ "Annotations/Annotations");
     	getAddAnnotationLayerBtn().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -42,10 +42,11 @@ public class AnnotationLayer {
     	getAnnotationName().SendKeys(name);
     	getDescription().SendKeys(name);
     	getSaveBtn().Click();
+    	base.VerifySuccessMessage("Annotation Layer added successfully");
     	}
     	catch (Exception e)
     	{
-    	base.VerifySuccessMessage("Annotation Layer added successfully");
+    	System.out.println("Annotation layer already exist");
     	}
     	 
          base.CloseSuccessMsgpopup();

@@ -1,9 +1,16 @@
 package pageFactory;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.interactions.Actions;
+
+import com.google.common.io.Files;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import de.redsix.pdfcompare.PdfComparator;
 import testScriptsSmoke.Input;
 
 public class ProductionPage_Old {
@@ -645,6 +652,10 @@ public class ProductionPage_Old {
         Thread.sleep(7000);
 		
 	    }
+    
+
+ 
+	
 }
     
 

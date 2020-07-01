@@ -3,15 +3,21 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+      <class name="testScriptsRegression.DocView_Redactions">
         <methods>
-          <include name="addredaction"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
+          <include name="ModifyRedaction"/>
+          <include name="PDFComparision"/>
+          <include name="AddRedaction"/>
+          <include name="AddRedaction1"/>
+          <include name="DatabaseValidation"/>
+          <include name="DeleteRedaction"/>
           <include name="preCondition"/>
-          <include name="addRemarkToFirstDoc"/>
+          <include name="close"/>
+          <include name="ProductionSomeRedaction"/>
+          <include name="takeScreenShot"/>
+          <include name="AddRedactionnextpage"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      </class> <!-- testScriptsRegression.DocView_Redactions -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

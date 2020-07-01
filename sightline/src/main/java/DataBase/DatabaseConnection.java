@@ -7,32 +7,30 @@ import java.sql.Statement;
 
 	public class DatabaseConnection {
 		
-	 static Connection conn = null;
 	 private static Statement stmt;
 	 static ResultSet resultSet = null;
+	 private Connection conn;
+	public static String databaseName;
+    private static Statement s1, s2, s3;
+	private static ResultSet rs1, rs2, rs3;
+	public static int docid=1426;
+	
 	
 
-	 public void  setUp() throws Exception
-	 
-	 {
-		String url="jdbc:sqlserver://MTPVTDSLDB02.consilio.com:1433;"+
-	"databaseName=EAutoP0C8A;integratedSecurity=true;";
-		 //Object of ResultSet => 'It maintains a cursor that points to the current row in the result set'
-	 
-	 try {
-	 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-	 System.out.println("Connecting to Database...");
-	// Open a connection
-	conn = DriverManager.getConnection(url, "SLUser", "ConAdm1n");
-	if (conn != null) {
-	System.out.println("Connected to the Database..");
-	}
-	
-	 }
-	 catch(Exception e)
-	 {
-		 e.printStackTrace();
-	 }
+	 public void  setUp(String databaseName) throws Exception
+	 { 
+		String databaseURL = "jdbc:sqlserver://MTPVTDSLDB02.consilio.com:1433;" + "databaseName="+databaseName+";";
+		String user = "SLUser";
+		String password = "ConAdm1n";
+		
+		try {
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+
+			conn = DriverManager.getConnection(databaseURL, user, password);
+			System.out.println("Connection pass");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	 
 	 public ResultSet getqueryresults(String query) throws SQLException
@@ -43,8 +41,21 @@ import java.sql.Statement;
 	 
 	 resultSet = stmt.executeQuery(query);
 	 while (resultSet .next()) {
-	 System.out.println(resultSet .getString(1) + "  " + resultSet.getString(2) + "  " + resultSet.getString(3) + "  "
-	 + resultSet.getString(4) + "  " + resultSet.getString(5));
+	 System.out.println(resultSet .getString(1) + "  " + resultSet.getString(2) + "  " + resultSet.getString(3));
+
+	     String nodeid=resultSet.getNString("NodeId");
+	     String OrphanedRedactionXml=resultSet.getNString("OrphanedRedactionXml");
+	     String OrphandedRedactionTag=resultSet.getNString("OrphandedRedactionTag");
+        // System.out.println(nodeid+"\t"+OrphanedRedactionXml+"\t"+OrphandedRedactionTag);
+         
+         if(OrphanedRedactionXml==null && OrphandedRedactionTag==null)
+         {
+        	 System.out.println("Test Passed");
+         }
+         else if(OrphanedRedactionXml.contains("Orphaned Tag")|| OrphandedRedactionTag.contains("Orphaned Tag"))
+         {
+        	System.out.println("Test Failed");
+         }
 	 }
  }
 	 catch(Exception e)
@@ -54,20 +65,14 @@ import java.sql.Statement;
 		 return resultSet;
 	 }
 	
-	public void tearDown() throws Exception {
+			public void tearDown() throws Exception {
 			// Close DB connection
 			if (conn != null) {
 			conn.close();
 			}
 			}
 
-	
-	 public static void main(String[] args) throws Exception {
-		 DatabaseConnection db = new DatabaseConnection();
-		 db.setUp();
-		 db.getqueryresults("select* from EAutoP0C8A.dbo.documents where sourcedocid='65ID00000188'");
-		 
-	 }
+
 
 	}	 
 	

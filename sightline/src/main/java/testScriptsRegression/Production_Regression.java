@@ -25,13 +25,19 @@ import testScriptsSmoke.Input;
 	Driver driver;
 	LoginPage lp;
 	ProductionPage page;
+	TagsAndFoldersPage tp;
+	SessionSearch ss;
 	
 	String productionname= "P"+Utility.dynamicNameAppender();
+	String productionname1= "P1"+Utility.dynamicNameAppender();
 	String exportname= "EXP"+Utility.dynamicNameAppender();
 	String PrefixID = "A_"+Utility.dynamicNameAppender();;
 	String SuffixID = "_P"+Utility.dynamicNameAppender();;
 	String foldername = "FolderProd"+Utility.dynamicNameAppender(); 
+	String templatername = "TempProd"+Utility.dynamicNameAppender(); 
 	String Tagname = "Tag"+Utility.dynamicNameAppender();
+	String Tagnameprev = "Privileged";
+	String Tagnametech = "Technical_Issue";
 	
 	
 	@BeforeClass(alwaysRun = true)
@@ -46,34 +52,33 @@ import testScriptsSmoke.Input;
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
-		/*
-		 * TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
-		 * tp.CreateFolder(foldername,"Default Security Group"); SessionSearch ss = new
-		 * SessionSearch(driver); ss.basicContentSearch("crammer");
-		 * ss.bulkFolderExisting(foldername);
-		 * 
-		 * tp.CreateTagwithClassification(Tagname,"Privileged");
-		 */
+		
+		 tp = new TagsAndFoldersPage(driver);
+		 tp.CreateFolder(foldername,"Default Security Group");
+		 ss = new	 SessionSearch(driver); 
+		 ss.basicContentSearch("crammer");
+		 ss.bulkFolderExisting(foldername);
+		 
+		 tp.CreateTagwithClassification(Tagname,"Privileged");
+		
+		page = new ProductionPage(driver);
 	}
 	   
 		
 	   		
-     // @Test(groups={"smoke","regression"})
+    //  @Test(groups={"smoke","regression"})
 	   public void AddNewProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-		page = new ProductionPage(driver);
-	  page.CreateProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
+		   page.CreateProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
 	  
 	  }
       
 	   //tc- 8356
-      @Test(groups={"smoke","regression"})
+     // @Test(groups={"smoke","regression"})
 	   public void Productionwithallredaction() throws Exception {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		page = new ProductionPage(driver);
-	  page.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername, Tagname);
+	   page.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername, Tagname);
 	  
 	  }
       
@@ -82,10 +87,23 @@ import testScriptsSmoke.Input;
     //  @Test(groups={"smoke","regression"})
 	   public void ExportwithpriorProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		page = new ProductionPage(driver);
-	
 	  page.ExportwithpriorProduction(exportname, PrefixID, SuffixID, foldername);
    }
+	   
+	 @Test(groups={"regression"})
+	 public void ProductionwithNatives() throws Exception {
+	 System.out.println("******Execution started for ProductionwithNatives********");
+	 page.ProductionwithNatives(productionname1, PrefixID, SuffixID, foldername,templatername);
+	 }
+	 
+	 @Test(groups={"regression"})
+	 public void ProductionwithTechIssuetags() throws ParseException, InterruptedException, IOException {
+	 System.out.println("******Execution started for ProductionwithTechIssuetags********");
+	 tp.CreateTagwithClassification(Tagnametech,"Technical Issue");
+	 ss.basicContentSearch("crammer");
+	 ss.bulkTagExisting(Tagnametech);
+	 page.ProductionwithTechIssuetags(productionname1, PrefixID, SuffixID, foldername,Tagnameprev,Tagnametech);
+	 }
       
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
