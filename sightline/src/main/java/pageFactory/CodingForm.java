@@ -1559,9 +1559,6 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 		  	 	   	  }
 		  		}
 
-		public void PreviewCheck() throws InterruptedException {
-			
-		}
 		
 }
 
