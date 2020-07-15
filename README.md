@@ -24,7 +24,15 @@ Other folders in the project directory :
           Contains 'BatchPrintFiles' folder to manage batch print files.
           Also contains batch file to validate batch upload functionality.
 	  
-  
+  -----------------------------------------------------------------------------------------------------------
+Automation Framework setup required for local system :
+1. Download and install Java JDK version 8 or above
+2. Set the Java Environment Path under advanced system settings
+3. Download and install Eclipse
+4. Install TestNG plugin in Eclipse using “Install New Software” option 
+
+------------------------------------------------------------------------------------------------------------
+
 -----------------------------------------------------------------------------------------------------------
 Plugins required in Eclipse :
 1. TestNG -  To execute scripts and get automated report. 
