@@ -46,7 +46,7 @@ import testScriptsSmoke.Input;
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	//Open browser
 		
-		   Input in = new Input(); in.loadEnvConfig();
+		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
@@ -62,21 +62,23 @@ import testScriptsSmoke.Input;
 		 tp.CreateTagwithClassification(Tagname,"Privileged");
 		
 		page = new ProductionPage(driver);
+		
 	}
 	   
 		
-	   		
-    //  @Test(groups={"smoke","regression"})
-	   public void AddNewProduction() throws ParseException, InterruptedException, IOException {
+	
+		@Test(groups={"smoke","regression"})
+	    public void AddNewProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		   page.CreateProduction(productionname, PrefixID, SuffixID, foldername, Tagname);
 	  
 	  }
       
 	   //tc- 8356
-     // @Test(groups={"smoke","regression"})
+	   
+       @Test(groups={"smoke","regression"})
 	   public void Productionwithallredaction() throws Exception {
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	   System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 	   page.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername, Tagname);
 	  
@@ -84,27 +86,89 @@ import testScriptsSmoke.Input;
       
       
       
-    //  @Test(groups={"smoke","regression"})
-	   public void ExportwithpriorProduction() throws ParseException, InterruptedException, IOException {
+  		@Test(groups={"smoke","regression"})
+	    public void ExportwithpriorProduction() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	  page.ExportwithpriorProduction(exportname, PrefixID, SuffixID, foldername);
-   }
+	    page.ExportwithpriorProduction(exportname, PrefixID, SuffixID, foldername);
+   	  }
 	   
-	 @Test(groups={"regression"})
-	 public void ProductionwithNatives() throws Exception {
-	 System.out.println("******Execution started for ProductionwithNatives********");
-	 page.ProductionwithNatives(productionname1, PrefixID, SuffixID, foldername,templatername);
-	 }
-	 
-	 @Test(groups={"regression"})
-	 public void ProductionwithTechIssuetags() throws ParseException, InterruptedException, IOException {
-	 System.out.println("******Execution started for ProductionwithTechIssuetags********");
-	 tp.CreateTagwithClassification(Tagnametech,"Technical Issue");
-	 ss.basicContentSearch("crammer");
-	 ss.bulkTagExisting(Tagnametech);
-	 page.ProductionwithTechIssuetags(productionname1, PrefixID, SuffixID, foldername,Tagnameprev,Tagnametech);
-	 }
+		 @Test(groups={"regression"})
+		 public void ProductionwithNatives() throws Exception {
+		 System.out.println("******Execution started for ProductionwithNatives********");
+		 page.ProductionwithNatives(productionname1, PrefixID, SuffixID, foldername,templatername);
+	  }
+		 
+		 @Test(groups={"regression"})
+		 public void ProductionwithTechIssuetags() throws ParseException, InterruptedException, IOException {
+		 System.out.println("******Execution started for ProductionwithTechIssuetags********");
+		 tp.CreateTagwithClassification(Tagnametech,"Technical Issue");
+		 ss.basicContentSearch("crammer");
+		 ss.bulkTagExisting(Tagnametech);
+		 page.ProductionwithTechIssuetags(productionname1, PrefixID, SuffixID, foldername,Tagnameprev,Tagnametech);
+	  }
+	 	
+	   //added by Narendra	
+	   @Test(groups={"smoke","regression"})
+	   public void Filter() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		page.ProductionFilter();
+	  
+	  }
+	   
+	   @Test(groups={"smoke","regression"})
+	   public void Sort() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		page.ProductionSort();
+	  
+	  }
+	  
+	   @Test(groups={"smoke","regression"})
+	   public void Grid() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		page.GridView();
+	  
+	  }
+	    
+	   @Test(groups={"smoke","regression"})
+	   public void VerifyTemplate() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		String tempName = "newProd"+Utility.dynamicNameAppender();
+		page.SaveTemplate(tempName);
+	  
+	  }
+	   
+	   @Test(groups={"smoke","regression"})
+	   public void DeleteTemplate() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		String tempName = "newProd"+Utility.dynamicNameAppender();
+		page.DeleteTemplate(tempName);
+	  
+	  }
+	   
+	   @Test(groups={"smoke","regression"})
+	   public void VerifyProductionSet() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		String prodsetName = "newSet"+Utility.dynamicNameAppender();
+		page.CreateProductionSets(prodsetName);
+	  
+	  }
       
+	  @Test(groups={"smoke","regression"})
+	   public void LockProduction() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		page.ProductionLock();
+	  
+	  }
+	  
+	  @Test(groups={"smoke","regression"})
+	   public void CustomizedTemplate() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		String productionName = "newSet"+Utility.dynamicNameAppender();
+		String newproductionName = "productionName"+Utility.dynamicNameAppender();
+		page.CustomizeTemplate(productionName,newproductionName);
+	  
+	  }
+	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

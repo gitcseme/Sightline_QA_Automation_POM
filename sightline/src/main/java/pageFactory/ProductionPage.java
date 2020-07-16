@@ -4,8 +4,10 @@ import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -17,6 +19,7 @@ import de.redsix.pdfcompare.PdfComparator;
 import testScriptsSmoke.Input;
 import org.apache.commons.io.FileUtils;
 import com.google.common.io.Files;
+import com.steadystate.css.parser.ParseException;
 
 public class ProductionPage {
 
@@ -172,6 +175,43 @@ public class ProductionPage {
 	public Element getTechissue_toggle(){ return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i"); }
 	public Element getTechissue_SelectTagButton(){ return driver.FindElementById("btnSelectTechIssueTags"); }
     public Element getTechissue_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFTechIssueDocPlaceHolderText']/preceding-sibling::div"); }
+    
+    //added by Narendra
+    public ElementCollection getFilterOptions(){ return driver.FindElementsByXPath("//div[@class='col-md-9']//select//option"); }
+    public Element getFilter(int i){ return driver.FindElementByXPath("//div[@class='col-md-5']//li["+i+"]//a[1]"); }
+    public Element getFilterByButton(){ return driver.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']"); }
+    public Element getFilterByDRAFT(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='DRAFT']"); }
+    public Element getFilterByINPROGRESS(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']"); }
+    public Element getFilterByFAILED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='FAILED']"); }
+    public Element getFilterByCOMPLETED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='COMPLETED']"); }
+    public Element getRefreshButton(){ return driver.FindElementById("refresh"); }  
+    public Element getSortByButton(){ return driver.FindElementById("SortBy"); }
+    public Element getGridView(){ return driver.FindElementById("GridView"); }
+    public ElementCollection getProductionItemsTile(){ return driver.FindElementsByXPath("//div[@id='cardCanvas']//li/div[1]/a[1]"); }
+    public ElementCollection getProductionItemsGrid(){ return driver.FindElementsByXPath("//table[@id='ProductionListGridViewTable']//tr"); }
+    public Element getProductionItemsTileItems(){ return driver.FindElementByXPath("//div[@class='col-md-6']//div[contains(@class,'col-md-6')]//span[1]"); }
+    public Element getProductionItemsGridItems(){ return driver.FindElementByXPath("//span[@class='text-primary']"); }
+    public Element getArrow(){ return driver.FindElementByXPath("//div[@id='pName']//div//a[1]"); }
+    public Element getSaveTemplate(){ return driver.FindElementByXPath("//*[@class='dropdown-menu']//a[contains(text(),'Save as Template')]"); }
+    public Element getTemplateName(){ return driver.FindElementById("templatesettxt"); }
+    public Element getCustomTemplateName(String tempName){ return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[1][contains(text(),'"+tempName+"')]"); }
+    public Element getSave(){ return driver.FindElementByXPath("//button[@class='btn-primary']"); }
+    public Element getManageTemplates(){ return driver.FindElementByXPath("//li[@class='ui-tabs-tab ui-corner-top ui-state-default ui-tab']//a[@class='ui-tabs-anchor']"); }
+    public ElementCollection getCustomTemplates(){ return driver.FindElementsByXPath("//table[@id='customTemplatesDatatable']//tr//td[1]"); }
+    public Element getDeleteTemplate(){ return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[9]//a[contains(text(),'Delete')]"); }
+    public Element getOK(){ return driver.FindElementById("bot1-Msg1"); }
+    public Element getCreateProductionSet(){ return driver.FindElementByXPath("//div[@id='tabs-a']/div[@class='col-md-12']/div[@class='col-md-5']/a[1]"); }
+    public Element getSaveSet(){ return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']"); }
+    public Element getCancelSet(){ return driver.FindElementByXPath("//button[@class='btn btn-default btn-sm']"); }
+    public Element getSetName(){ return driver.FindElementById("ProductionSettxt"); }
+    public Element getSelectProductionSets(){ return driver.FindElementById("ProductionSets"); }
+    public Element getDeleteProd(){ return driver.FindElementById("DeleteProd"); }
+    public Element getLock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Lock')]"); }
+    public Element getLockIcon(){ return driver.FindElementByXPath("//i[@class='fa fa-lock']"); }
+    public Element getOpenWizard(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Open In Wizard')]"); }
+    public Element getLoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
+ 
+    
     
 
 
@@ -754,8 +794,7 @@ public class ProductionPage {
         base.isFileDownloaded(location+"\\VOL0001"+"\\Text"+"\\0001",3);
 		
 	    }
-    
-    
+      
     public void Productionwithallredactions(String productionname,String PrefixID,String SuffixID,final String foldername,String tagname) 
     		throws Exception{
 		
@@ -1173,8 +1212,7 @@ public class ProductionPage {
 		 * //getProdname_Gearicon(productionname).waitAndClick(10);
 		 */		
 	    }
-    
-    
+     
     public void Productionwithsomeredactions(String productionname,String PrefixID,String SuffixID,final String foldername,String redname) 
     		throws Exception{
 		
@@ -1573,9 +1611,6 @@ public class ProductionPage {
         
 	    }
     
-  
-      
-
   	public void addANewProduction(String productionName) throws InterruptedException {
     	
   		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1936,24 +1971,24 @@ public class ProductionPage {
   								
   				}
   				
-  	public void FillingallsectionsProduction(String productionname,String PrefixID,String SuffixID,final String foldername) 
+  	   public void FillingallsectionsProduction(String productionname,String PrefixID,String SuffixID,final String foldername) 
   			    		throws InterruptedException{
   					
-  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-  	getComponentsMarkComplete().Click();
-  					
-  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
-  	getComponentsMarkNext().waitAndClick(10);
-  					
-  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getBeginningBates().Enabled()  ;}}), Input.wait30); 
-  	getBeginningBates().SendKeys("100");
-  					
-  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
-  	gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
+				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				  							getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
+				  	getComponentsMarkComplete().Click();
+				  					
+				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				  						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
+				  	getComponentsMarkNext().waitAndClick(10);
+				  					
+				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				  							getBeginningBates().Enabled()  ;}}), Input.wait30); 
+				  	getBeginningBates().SendKeys("100");
+				  					
+				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				  				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
+				  	gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
@@ -2126,8 +2161,6 @@ public class ProductionPage {
 	    getProdExport_SaveButton().waitAndClick(5);
 	    base.VerifySuccessMessage("Production Saved as a Custom Template.");
 	   }
-  				
-  				
 
   		public void ProductionwithNatives(String productionname,String PrefixID,
   				String SuffixID,final String foldername,String templatename) 
@@ -2164,8 +2197,7 @@ public class ProductionPage {
        getComponentsMarkComplete().Click();
 			
   	  	    }
-  			 
-  		
+		
   		public void ProductionwithTechIssuetags(String productionname,String PrefixID,
   				String SuffixID,final String foldername,String Tagnametech,String Tagnameprev) 
   				throws InterruptedException 
@@ -2185,8 +2217,324 @@ public class ProductionPage {
   				
   	  	    }
   			 
-  			
+  		//added by Narendra
+  	    public void ProductionFilter(){
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+  	       	for(int i=1; i<getFilterOptions().size(); i++) {
+  	       	getFilter(i).waitAndClick(10);
+  	       	}
+  	          	    
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+  	    	getFilterByDRAFT().waitAndClick(10);
+  	    	getRefreshButton().waitAndClick(10);
+  	    	
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+  	    	getFilterByDRAFT().waitAndClick(10);
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
+  	    	getFilterByINPROGRESS().waitAndClick(10);
+  	    	getRefreshButton().waitAndClick(10);
+  	    	
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
+  	        getFilterByINPROGRESS().waitAndClick(10);
+  	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        		getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+  	        getFilterByFAILED().waitAndClick(10);
+   	    	getRefreshButton().waitAndClick(10);
+   	    	
+   	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+  	    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   	        		getFilterByFAILED().Visible()  ;}}), Input.wait30); 
+   	        getFilterByFAILED().waitAndClick(10);
+  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+  	        getFilterByCOMPLETED().waitAndClick(10);
+  	        getRefreshButton().waitAndClick(10);
+  	        System.out.println("Verified Production Filer");
+  	    }
+  	    
+  	    public void ProductionSort(){
+  		  	getSortByButton().selectFromDropdown().selectByVisibleText("Production Date");
+	        getRefreshButton().waitAndClick(10);
+	        
+	        getSortByButton().selectFromDropdown().selectByVisibleText("Locked");
+	        getRefreshButton().waitAndClick(10);
+	        
+	        getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
+	        getRefreshButton().waitAndClick(10);
+	        
+	        getSortByButton().selectFromDropdown().selectByVisibleText("User Name");
+	        getRefreshButton().waitAndClick(10);
+	        
+	        getSortByButton().selectFromDropdown().selectByVisibleText("Status");
+	        getRefreshButton().waitAndClick(10);
+	        
+	        System.out.println("Verified Production Sort");
+	    }
+	
+  	    public void GridView() throws InterruptedException{
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+
+  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+  	        getFilterByCOMPLETED().waitAndClick(10);
+  	        getRefreshButton().waitAndClick(10);
+
+  	        String tileitems = getProductionItemsTileItems().getText();
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getGridView().Visible()  ;}}), Input.wait30);
+  	    	getGridView().Click();
+  	    	getRefreshButton().waitAndClick(10);
+
+  	    	String griditems = getProductionItemsGridItems().getText();
+	   		Assert.assertEquals(tileitems, griditems);
+	   		System.out.println("Verified Tile Production and Grid Production are eqal");
+	   		
+  	    }
+
+  	    public void SaveTemplate(final String tempName) throws InterruptedException{
+  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+	    	getFilterByButton().waitAndClick(10);
+
+	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+	        getFilterByCOMPLETED().waitAndClick(10);
+	        getRefreshButton().waitAndClick(10);
+	        
+	        System.out.println("Number of records in a current page : "+getProductionItemsTile().size());
+	       	        
+	        if(getProductionItemsTile().size()>0)
+	        {
+	        	getArrow().waitAndClick(10);
+	        	getSaveTemplate().waitAndClick(10);
+	        	
+	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        			getTemplateName().Visible()  ;}}), Input.wait30); 
+	        	getTemplateName().SendKeys(tempName);
+	        	
+	        	getSave().waitAndClick(10);
+	        	BaseClass bc= new BaseClass(driver);
+	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
+	        	
+	        	getManageTemplates().waitAndClick(10);
+		        	
+	        	ArrayList<String> tableele = new ArrayList<String>();
+		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
+				for (int i = 1; i<getCustomTemplates().size();i++) {
+					tableele.add(table.get(i).getText());
+	   		 	}
+				Assert.assertTrue(tableele.contains(tempName));
+				System.out.println("Verified saved template under Custom template");
+	        }
+  	  }
+
+  	    public void DeleteTemplate(final String tempName) throws InterruptedException{
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+  	    	getFilterByButton().waitAndClick(10);
+
+  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+  	        getFilterByCOMPLETED().waitAndClick(10);
+  	        getRefreshButton().waitAndClick(10);
+  	        
+  	        System.out.println("Number of records in a current page : "+getProductionItemsTile().size());
+  	       	        
+  	        if(getProductionItemsTile().size()>0)
+  	        {
+  	        	getArrow().waitAndClick(10);
+  	        	getSaveTemplate().waitAndClick(10);
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getTemplateName().Visible()  ;}}), Input.wait30); 
+  	        	getTemplateName().SendKeys(tempName);
+  	        	
+  	        	getSave().waitAndClick(10);
+  	        	BaseClass bc= new BaseClass(driver);
+  	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
+  	        	
+  	        	getManageTemplates().waitAndClick(10);
+  		        	
+  	        	ArrayList<String> tableele = new ArrayList<String>();
+  		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
+  				for (int i = 1; i<getCustomTemplates().size();i++) {
+  					tableele.add(table.get(i).getText());
+  	   		 	}
+  				//System.out.println(tableele);
+  				Assert.assertTrue(tableele.contains(tempName));
   				
+  				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  						getCustomTemplateName(tempName).Visible()  ;}}), Input.wait30); 
+  				getCustomTemplateName(tempName).waitAndClick(10);
+  				
+  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  						getDeleteTemplate().Visible()  ;}}), Input.wait30); 
+  				getDeleteTemplate().waitAndClick(10);
+  				
+  				getOK().waitAndClick(10);
+  				bc.VerifySuccessMessage("Custom Template deleted successfully");
+  				
+  				System.out.println("Verified saved template got deleted successfully under Custom template");
+  	        }
+    	  }
+
+  	    public void CreateProductionSets(final String prodsetName) throws InterruptedException{
+  	    	
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getCreateProductionSet().Visible()  ;}}), Input.wait30);
+    			getCreateProductionSet().waitAndClick(10);
+
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getSetName().Visible()  ;}}), Input.wait30); 
+  	        	getSetName().SendKeys("Demo");
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getCancelSet().Visible()  ;}}), Input.wait30); 
+  	        	getCancelSet().waitAndClick(10);
+  	    	
+    			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getCreateProductionSet().Visible()  ;}}), Input.wait30);
+    			getCreateProductionSet().waitAndClick(10);
+
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getSetName().Visible()  ;}}), Input.wait30); 
+  	        	getSetName().SendKeys(prodsetName);
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getSaveSet().Visible()  ;}}), Input.wait30); 
+  	        	getSaveSet().waitAndClick(10);
+  	        	BaseClass bc= new BaseClass(driver);
+  	        	bc.VerifySuccessMessage("Production Set Added Successfully");
+  	        	Thread.sleep(3000);
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getSelectProductionSets().Visible()  ;}}), Input.wait60);
+  	        	
+  	        	String myString = prodsetName.concat(" (Production Set)");
+  	        			
+  	        	getSelectProductionSets().selectFromDropdown().selectByVisibleText(myString);	
+  	        	
+  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	        			getDeleteProd().Visible()  ;}}), Input.wait60); 
+  	        	getDeleteProd().waitAndClick(10);
+  				
+  				getOK().waitAndClick(30);
+  				
+  				Thread.sleep(3000);
+  				bc.VerifySuccessMessage("Production Set has been deleted successfully.");
+  	        	
+  				System.out.println("Verified created production set");
+
+    	  }
+  	  
+  	    public void ProductionLock() throws InterruptedException{
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+	    	getFilterByButton().waitAndClick(10);
+	       	for(int i=1; i<getFilterOptions().size(); i++) {
+	       	getFilter(i).waitAndClick(10);
+	       	}
+	      
+	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+	        getFilterByCOMPLETED().waitAndClick(10);
+	        
+	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        		getRefreshButton().Visible()  ;}}), Input.wait30);
+	        getRefreshButton().waitAndClick(10);
+	        
+	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        		getArrow().Visible()  ;}}), Input.wait30); 
+	        getArrow().waitAndClick(10);
+	        
+	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        		getLock().Visible()  ;}}), Input.wait30); 
+	        getLock().waitAndClick(10);
+	        Thread.sleep(3000);
+	        getOK().waitAndClick(10);
+	        Thread.sleep(3000);
+	        BaseClass bc= new BaseClass(driver);
+        	bc.VerifySuccessMessage("Production Lock Successfully.");
+	        
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFilterByButton().Visible()  ;}}), Input.wait30);
+	    	getFilterByButton().waitAndClick(10);
+	       	for(int i=1; i<getFilterOptions().size(); i++) {
+	       	getFilter(i).waitAndClick(10);
+	       	}
+        	
+	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
+		    getFilterByCOMPLETED().waitAndClick(10);
+		    
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        		getRefreshButton().Visible()  ;}}), Input.wait30);
+	        getRefreshButton().waitAndClick(10);
+	       	
+        	String locktxt = getLockIcon().GetAttribute("class");
+        	Assert.assertTrue(locktxt.contains("lock"), "Verified Lock Production");
+	    }
+
+  	    public void CustomizeTemplate(final String productionName, String newproductionName) throws InterruptedException{
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	  				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
+  	  		getAddNewProductionbutton().waitAndClick(10);
+
+  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	  				getProductionName().Visible()  ;}}), Input.wait30); 
+  	  		getProductionName().SendKeys(productionName);
+  	  		
+  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	  				getProductionDesc().Visible()  ;}}), Input.wait30); 
+  	  		getProductionDesc().SendKeys(productionName);
+  	  		
+  	  		getLoadTemplate().selectFromDropdown().getFirstSelectedOption();	
+  	  		
+  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	  			getBasicInfoSave().Visible()  ;}}), Input.wait30); 
+  	  		getBasicInfoSave().waitAndClick(10);
+  	  		
+	  	  	ArrayList<String> tableele = new ArrayList<String>();
+	   		java.util.List<WebElement> table = getProductionItemsTile().FindWebElements();
+			for (int i = 1; i<getProductionItemsTile().size();i++) {
+			tableele.add(table.get(i).getText());
+		 	}
+			
+  	  		for(int i=1; i<getProductionItemsTile().size(); i++)
+  	  		{
+	  	  		if (tableele.contains(productionName))
+	  	  		{
+	  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		        		getArrow().Visible()  ;}}), Input.wait30); 
+		        getArrow().waitAndClick(10);
+		        
+		        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	  	  				getProductionName().Visible()  ;}}), Input.wait30); 
+	  	  		getProductionName().SendKeys(newproductionName);
+	  	  		
+	  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	  	  			getBasicInfoSave().Visible()  ;}}), Input.wait30); 
+	  	  		getBasicInfoSave().waitAndClick(10);
+	  	  		}
+  	  		}
+    	  }
 
 }
     
