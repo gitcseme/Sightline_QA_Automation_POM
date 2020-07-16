@@ -74,7 +74,6 @@ import testScriptsSmoke.Input;
 	  
 	  }
       
-	   //tc- 8356
 	   
        @Test(groups={"smoke","regression"})
 	   public void Productionwithallredaction() throws Exception {
