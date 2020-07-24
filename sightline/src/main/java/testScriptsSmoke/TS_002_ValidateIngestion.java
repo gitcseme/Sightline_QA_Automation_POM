@@ -21,10 +21,7 @@ public class TS_002_ValidateIngestion {
 	public void AddIngestion() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
-		
-		driver = new Driver();
+			driver = new Driver();
 		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);

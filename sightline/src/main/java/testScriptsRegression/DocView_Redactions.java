@@ -31,7 +31,7 @@ public class DocView_Redactions {
 	BaseClass bc;
 	RedactionPage redact;
 	ProductionPage page;
-	
+
 	String redactname = "Redaction" + Utility.dynamicNameAppender();
 	String production1 = "P" + Utility.dynamicNameAppender();
 	String production2 = "P" + Utility.dynamicNameAppender();
@@ -41,54 +41,54 @@ public class DocView_Redactions {
 	String SuffixID2 = "_N" + Utility.dynamicNameAppender();
 	String foldername = "FolderProd" + Utility.dynamicNameAppender();
 	String Tagname = "Privileged";
-	String databasename="EAutoP0C8A";
-	String docID="1426";
-	
+	String databasename = "EAutoP0C8A";
+	String docID = "1426";
+	String documentid= "ID00000130";
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input(); 	
+		Input in = new Input();
 		in.loadEnvConfig();
-	
+
 		// Open browser
 		driver = new Driver();
 
 		lp = new LoginPage(driver);
-
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		bc = new BaseClass(driver);
-		page= new ProductionPage(driver);
-		docView = new DocViewPage(driver);
+		page = new ProductionPage(driver);
 
-		SavedSearch ss = new SavedSearch(driver);
-		ss.savedSearchToDocView("RedactTest");
+//		  lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+//		  
+//		  docView = new DocViewPage(driver);
+//		  
+//		  SavedSearch ss = new SavedSearch(driver);
+//		  ss.savedSearchToDocView("RedactTest");
+//		  
+//		  
+//		  
+//		//  docView.getDocView_DocId(documentid).waitAndClick(10);
+//		  
+//		  driver.WaitUntil((new Callable<Boolean>() { public Boolean call() { return
+//		  docView.getDocView_Redact_Rectangle().Displayed();}}), Input.wait30);
+//		  docView.getDocView_RedactIcon().Click(); Thread.sleep(1000);
+//		  
+//		  driver.WaitUntil((new Callable<Boolean>() { public Boolean call() {return
+//		  docView.getDocView_Redact_Rectangle().Displayed();}}), Input.wait30);
+//		  docView.getDocView_Redact_Rectangle().Click(); Thread.sleep(2000);
+//		 
 
-		
-
-		docView.getDocView_DocId("ID00001426").waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {	return docView.getDocView_Redact_Rectangle().Displayed();}}), Input.wait30);
-		docView.getDocView_RedactIcon().Click();
-		Thread.sleep(1000);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {return docView.getDocView_Redact_Rectangle().Displayed();}}), Input.wait30);
-		docView.getDocView_Redact_Rectangle().Click();
-		Thread.sleep(2000);
-	
 	}
 
-	@Test(dataProvider="Datasets",priority=1)
+   // @Test(dataProvider="Datasets",priority=1)
 	public void AddRedaction(int off1, int off2, int k) throws InterruptedException {
 
 		docView.redactbyrectangle(off1, off2, k, "R1");
 	}
 
-	@Test(priority=2)
+	// @Test(priority=2)
 	public void ModifyRedaction() throws InterruptedException {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -102,7 +102,7 @@ public class DocView_Redactions {
 		docView.editredaction(500, 210, 6, "R6");
 	}
 
-	 @Test(priority=3)
+	// @Test(priority=3)
 	public void AddRedaction1() throws InterruptedException {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -116,7 +116,7 @@ public class DocView_Redactions {
 		docView.redactbyrectangle(700, 150, 8, "R2");
 	}
 
-	@Test(priority=4)
+	//@Test(priority=4)
 	public void DeleteRedaction() throws InterruptedException {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -130,7 +130,7 @@ public class DocView_Redactions {
 		docView.Deleteredaction(200, 205, 3, "R2");
 	}
 
-	@Test(priority=5)
+	// @Test(priority=5)
 	public void AddRedactionnextpage() throws InterruptedException {
 		driver.scrollPageToTop();
 		// docView.getDocView_Next().Click();
@@ -148,45 +148,36 @@ public class DocView_Redactions {
 
 	@Test(priority = 6)
 	public void ProductionAllRedaction() throws Exception {
-		
-		 driver.scrollPageToTop(); 
-		 docView.VerifyFolderTab("ProdRedact", 9);
-		 lp.logout();
-		  lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		 
-		  page.Productionwithallredactions(production1, PrefixID1, SuffixID1,
-		  "ProdRedact",Tagname);
-		}
-	
+
+		// driver.scrollPageToTop();
+		// docView.VerifyFolderTab("ProdRedact", 9);
+		// lp.logout();
+		 lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		page.Productionwithallredactions(production1, PrefixID1, SuffixID1, "ProdRedact", Tagname);
+	}
+
 	@Test(priority = 7)
 	public void ProductionSomeRedaction() throws Exception {
-		
-		  lp.logout();
-		  lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		  this.driver.getWebDriver().get(Input.url+"Production/Home");
-		  page.Productionwithsomeredactions(production2, PrefixID2, SuffixID2,
-		  "ProdRedact",Tagname);
-		}
-	
-	//@Test(priority = 8)
+
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		page.Productionwithsomeredactions(production2, PrefixID2, SuffixID2, "ProdRedact", Tagname);
+	}
+
+	@Test(priority = 8)
 	public void PDFComparision() throws Exception {
-		
-		 bc.TestPDFCompare();
+
+		bc.TestPDFCompare();
 
 	}
-	 
-	@Test(priority = 9)
+
+	//@Test(priority = 9)
 	public void DatabaseValidation() throws Exception {
 		DatabaseConnection db = new DatabaseConnection();
 		db.setUp(databasename);
-		String query = "SELECT	* from "+databasename+".dbo.AutoRedactionTestResults";
+		String query = "SELECT	* from " + databasename + ".dbo.AutoRedactionTestResults";
 		db.getqueryresults(query);
 	}
-
-
-		
-	
-
 
 	@DataProvider(name = "Datasets")
 	public static Object[][] offsets() {
@@ -213,5 +204,5 @@ public class DocView_Redactions {
 			LoginPage.clearBrowserCache();
 		}
 
-		}
 	}
+}

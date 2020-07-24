@@ -34,7 +34,8 @@ public class TS_009_ValidateAssignmentFunctionality {
 	BaseClass bc;	
 	AssignmentsPage agnmt;
 	CodingForm cf;
-	
+	public static int purehits;
+	SessionSearch search;
 	
 	String  codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
@@ -65,6 +66,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 				 cf = new CodingForm(driver);
 				cf.createCodingform(codingfrom);
 				agnmt = new AssignmentsPage(driver);
+				search = new SessionSearch(driver);
 				
 	}
 	
@@ -72,7 +74,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 	   public void CreateQuickBatch() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-		SessionSearch search = new SessionSearch(driver);
+	
 		search.basicContentSearch(Input.searchString1);
 		search.quickbatch();
 		String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
@@ -90,14 +92,14 @@ public class TS_009_ValidateAssignmentFunctionality {
 	
 		//Search docs and assign to newly created assignment
 		bc.selectproject();
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+	
+		purehits=search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName, Input.pureHitSeachString1);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,purehits);
 		lp.logout();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		

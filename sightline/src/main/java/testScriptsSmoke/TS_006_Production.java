@@ -33,6 +33,7 @@ public class TS_006_Production {
 	String SuffixID = "_P"+Utility.dynamicNameAppender();;
     String foldername = "FolderProd"+Utility.dynamicNameAppender();;
 	String Tagname = "Tag"+Utility.dynamicNameAppender();
+	String Tagnameprev = "Privileged";
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
@@ -58,9 +59,9 @@ public class TS_006_Production {
 		
 		System.out.println(Input.prodPath);
 		ProductionPage page1 = new ProductionPage(driver);
-	//	page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagname);
+		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
-		page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagname);
+		//page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 	}
 	 @BeforeMethod

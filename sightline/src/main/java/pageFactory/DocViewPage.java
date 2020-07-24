@@ -225,7 +225,7 @@ public class DocViewPage {
     public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
-    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig1level0").getWebElement(); }
+    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
@@ -235,11 +235,11 @@ public class DocViewPage {
 
         this.driver = driver;
      
-        this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+       
         softAssertion= new SoftAssert(); 
         base = new BaseClass(driver);
         sp = new SessionSearch(driver);
-         
+        this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
     }
     
     
@@ -273,7 +273,7 @@ public class DocViewPage {
 	}
     public void addCommentToNonAudioDoc(String comment) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAddComment1().Visible()  ;}}), Input.wait30);   
+    			getAddComment1().Visible()  ;}}), Input.wait60);   
     	getAddComment1().Clear();
     	getAddComment1().SendKeys(comment);
     	getCompleteDocBtn().waitAndClick(30);
@@ -303,7 +303,7 @@ public class DocViewPage {
     try {
 		Thread.sleep(4000);
 	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	}
     /*Actions newBuilder = new Actions(driver.getWebDriver());

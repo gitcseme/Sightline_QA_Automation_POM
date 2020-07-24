@@ -1103,13 +1103,14 @@ public void ViewInDocList() throws InterruptedException{
 	 
 	driver.getWebDriver().get(Input.url+"Search/Searches");
 	 try{
-		 getPureHitAddButton().Click();
+		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
 		}
 		 
 	 
-	 getBulkActionButton().waitAndClick(10);;
+	 getBulkActionButton().waitAndClick(15);
+	 Thread.sleep(2000);
 	
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getDocListAction().Visible()  ;}}), Input.wait60); 

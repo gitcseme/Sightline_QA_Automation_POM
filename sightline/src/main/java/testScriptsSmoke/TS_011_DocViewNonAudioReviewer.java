@@ -86,7 +86,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	
 		//Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
-		purehits=search.basicContentSearch(Input.searchString1);
+		purehits=search.basicContentSearch("*");
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 		
@@ -104,7 +104,7 @@ public class TS_011_DocViewNonAudioReviewer {
 			if(element.getText().equalsIgnoreCase(assignmentName)){
 				found = true;
 				System.out.println(assignmentName +"is assigned to reviewer successfully");
-				element.click();
+			  element.click();
 				break;
 			}
 		}	
@@ -154,7 +154,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	public void addredaction() throws InterruptedException {
     {
 
-			docView.redactbyrectangle(100, 200, 1, "Default Redaction Tag");
+			docView.NonAudioRedaction("Default Redaction Tag");
 		}
 		
 	}

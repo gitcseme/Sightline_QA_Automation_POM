@@ -67,7 +67,6 @@ public class BaseClass {
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
     public Element getYesBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); } 
-    public Element getNoBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); }
     //select domain
     public Element getSelectdomaindropdown(String domainname){ return driver.FindElementByXPath("//a[@title='"+domainname+"']"); }
     //select security group
@@ -86,8 +85,7 @@ public class BaseClass {
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
         softAssertion= new SoftAssert(); 
-        page= new ProductionPage(driver);
-    }
+       }
     
     public int initialBgCount() {
     	int bgCount = 0;	
@@ -169,7 +167,7 @@ public class BaseClass {
     	else
     		getSelectDomain().selectFromDropdown().selectByVisibleText(domain);
     	getSaveChangeRole().waitAndClick(5);
-    	System.out.println("Impersnated from SA to DA");
+    	System.out.println("Impersnated from RMU to Reviewer");
 	}
     
     public void impersonateSAtoPA() throws InterruptedException {
@@ -193,7 +191,6 @@ public class BaseClass {
     	getSaveChangeRole().waitAndClick(5);
     	System.out.println("Impersnated from SA to PA");
 	}
-   
     public void selectproject() {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -520,12 +517,16 @@ public class BaseClass {
       	public void copyfiles() throws Exception
       	{
       		//Path src2 = Paths.get("\\\\MTPVTSSLMQ01\\Productions\\Automation\\P657944\\VOL0001\\PDF\\0001\\A_7786590000000100_P128632.pdf");
-      		
-      		Path src1 = Paths.get(Input.MasterPDF1location);
-      		Path src2 = Paths.get(page.ProdPath);
-      	    Path dest1 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF.pdf"); 
-      	    Path dest2 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//PDF1.pdf"); 
-      	    
+      		page = new ProductionPage(driver);
+      		Path srcpath1 = Paths.get(Input.MasterPDF1location);
+      		Path srcpath2 = Paths.get(Input.MasterPDF2location);
+      		Path actsrcall = Paths.get(page.ProdPathallredact);
+      		Path actsrcsome = Paths.get(page.ProdPathsomeredact);
+      	    Path dest1 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//MasterPDFAllRedact.pdf"); 
+      	    Path dest2 = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF2Redact.pdf"); 
+      	    Path actdestall = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//actsrcall.pdf"); 
+      	    Path actdestsome = Paths.get(System.getProperty("user.dir")+"//Misc//Production Files//actsrcsome.pdf"); 
+        	 
       	  //delete last TCs PDF from PDFs folder
             File file = new File("C:\\Users\\smangal\\Documents\\Production Files");      
             String[] myFiles;    
@@ -537,105 +538,35 @@ public class BaseClass {
                     }
                  }
         	  
-      	    Files.copy(src1.toFile(), dest1.toFile());
-      	    Files.copy(src2.toFile(), dest2.toFile());
+      	    Files.copy(srcpath1.toFile(), dest1.toFile());
+      	    Files.copy(srcpath2.toFile(), dest2.toFile());
+      	    Files.copy(actsrcall.toFile(), actdestall.toFile());
+      	    Files.copy(actsrcsome.toFile(), actdestsome.toFile());
       	    System.out.println("Copied file into another location successfully");
       			
       	}
       	
         public void TestPDFCompare() throws Exception
-        {    		
+        {    
+        	  boolean isEquals=false;
         	   copyfiles();
-        	   String result=System.getProperty("user.dir")+"//Misc//Production Files//result.pdf";
-        	   String file1=System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF.pdf";
-        	   String file2=System.getProperty("user.dir")+"//Misc//Production Files//PDF1.pdf";
+        	   String result1=System.getProperty("user.dir")+"//Misc//Production Files//resultallredact.pdf";
+        	   String result2=System.getProperty("user.dir")+"//Misc//Production Files//result2redact.pdf";
+        	   String file1=System.getProperty("user.dir")+"//Misc//Production Files//MasterPDFAllRedact.pdf";
+        	   String file2=System.getProperty("user.dir")+"//Misc//Production Files//MasterPDF2Redact.pdf";
+        	   String actualfileall=System.getProperty("user.dir")+"//Misc//Production Files//actsrcall.pdf";
+        	   String actualfilesome=System.getProperty("user.dir")+"//Misc//Production Files//actsrcsome.pdf";
         	  
-        	   new PdfComparator(file1, file2).compare().writeTo(result);
+        	   new PdfComparator(file1, actualfileall).compare().writeTo(result1);
+        	   new PdfComparator(file2, actualfilesome).compare().writeTo(result2);
         	   
         	   System.out.println("process completed");
-        	   boolean isEquals = new PdfComparator(file1, file2).compare().writeTo(result);
+        	   isEquals = new PdfComparator(file1, file2).compare().writeTo(result1);
+        	   System.out.println("Are PDF files similar..."+isEquals);
+        	   isEquals = new PdfComparator(file1, file2).compare().writeTo(result2);
         	   System.out.println("Are PDF files similar..."+isEquals);
 
         }
 
-        
-        //added by Narendra
-        public void impersonateSAtoReviewertoSA() throws InterruptedException {
-        	getSignoutMenu().waitAndClick(10);
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        	   	getChangeRole().Visible()  ;}}),Input.wait60);
-        	getChangeRole().Click();
-      	    
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-      			getSelectRole().Visible()  ;}}),Input.wait60);
-        	getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
-        	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getAvlDomain().Visible()  ;}}),Input.wait30);
-        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-        
-        	Thread.sleep(3000);
-    	
-        	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-        	Thread.sleep(2000);
-        	
-        	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-        	getSaveChangeRole().waitAndClick(5);
-        	System.out.println("Impersnated from SA to Reviewer");
-        	
-        	getSignoutMenu().waitAndClick(10);
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        	   	getChangeRole().Visible()  ;}}),Input.wait60);
-        	getChangeRole().Click();
-      	    
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-      			getSelectRole().Visible()  ;}}),Input.wait60);
-        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
-        	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
-        	
-        	getSaveChangeRole().waitAndClick(10);
-        	
-        	System.out.println("Impersnated back Reviewer to SA");
-    	}
-        
-        public void impersonateSAtoPAtoSA() throws InterruptedException {
-        	getSignoutMenu().Click();
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        	   	getChangeRole().Visible()  ;}}),Input.wait30);
-        	getChangeRole().Click();
-      	    
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-      			getSelectRole().Visible()  ;}}),Input.wait30);
-        	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
-        	    	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getAvlDomain().Visible()  ;}}),Input.wait30);
-        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-        
-        	Thread.sleep(3000);
-    	
-        	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
-        	
-        	getSaveChangeRole().waitAndClick(5);
-        	System.out.println("Impersnated from SA to PA");
-        	
-        	getSignoutMenu().waitAndClick(10);
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        	   	getChangeRole().Visible()  ;}}),Input.wait60);
-        	getChangeRole().Click();
-      	    
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-      			getSelectRole().Visible()  ;}}),Input.wait60);
-        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
-        	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
-        	
-        	getSaveChangeRole().waitAndClick(10);
-        	
-        	System.out.println("Impersnated back PA to SA");
-    	}
-        
+   
 }

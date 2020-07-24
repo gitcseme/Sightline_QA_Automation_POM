@@ -1,5 +1,6 @@
 package pageFactory;
 
+import org.openqa.selenium.*;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -318,6 +319,11 @@ public class SavedSearch {
    public void shareSavedSearchPA(final String searchName,String securitygroupname) throws ParseException, InterruptedException{
 		
 	   base.getSelectProject();
+	   
+	   Dimension dim = new Dimension(1600,900);
+	   driver.getWebDriver().manage().window().setSize(dim);
+	   
+	 //  driver.getWebDriver().manage().window().setSize(800);
 	   savedSearch_Searchandclick(searchName);
 	   getShareSerachBtn().Click();
 	   Thread.sleep(2000);
@@ -328,7 +334,7 @@ public class SavedSearch {
 	   
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
-	   getShareSaveBtn().javascriptclick();
+	   getShareSaveBtn().waitAndClick(10);
 	  
 	 //  getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
@@ -357,6 +363,7 @@ public class SavedSearch {
 	  
 	   getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
+	   Thread.sleep(2000);
 	   
 	   //click on share with project admin tab
 	   getSavedSearchGroupName("Project Admin").waitAndClick(10);
@@ -373,6 +380,8 @@ public class SavedSearch {
 	   Thread.sleep(2000);
 	   
 	   //verify id should get changed
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getSelectSearchWithID(searchName).Visible()  ;}}), Input.wait30);
 	   String newSearchID1 = getSelectSearchWithID(searchName).getText();
 	   System.out.println(newSearchID1);
 	   Assert.assertNotSame(SearchID, newSearchID1);

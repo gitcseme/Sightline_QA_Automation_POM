@@ -10,7 +10,6 @@ import com.google.common.io.Files;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import de.redsix.pdfcompare.PdfComparator;
 import testScriptsSmoke.Input;
 
 public class ProductionPage_Old {

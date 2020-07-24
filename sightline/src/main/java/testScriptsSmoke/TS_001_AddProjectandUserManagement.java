@@ -21,8 +21,12 @@ public class TS_001_AddProjectandUserManagement {
     
     
     @BeforeClass(alwaysRun = true)
-     public void before() {
+     public void before() throws Exception{
     	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+    	
+    	Input in = new Input(); 	
+		in.loadEnvConfig();
+	
 		
     	//	String securitygroup= "Default Security Group";
     		driver = new Driver();

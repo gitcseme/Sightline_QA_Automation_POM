@@ -71,19 +71,19 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		SoftAssert softAssertion= new SoftAssert();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
+    	softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.pureHitSeachString2,ss.basicContentSearch(Input.searchString2));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ANDsearchString2,ss.basicContentSearch(Input.searchString1+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ANDsearchString2,ss.basicContentSearch(Input.searchString2+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ORsearchString2,ss.basicContentSearch(Input.searchString1+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1NOTsearchString2,ss.basicContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString2NOTsearchString1,ss.basicContentSearch(Input.searchString2+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1));
+		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1)>=1);
 
 		bc.selectproject();
 		softAssertion.assertTrue(ss.basicContentSearch("\"very long\"")>=1);
@@ -102,19 +102,19 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		SoftAssert softAssertion= new SoftAssert();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	softAssertion.assertEquals(Input.pureHitSeachString1,ss.advancedContentSearch(Input.searchString1));
+    	softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.pureHitSeachString2,ss.advancedContentSearch(Input.searchString2));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ANDsearchString2,ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ANDsearchString2,ss.advancedContentSearch(Input.searchString2+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2+Keys.ENTER+"AND"+Keys.ENTER+Input.searchString1)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1ORsearchString2,ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString1NOTsearchString2,ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString2));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString2)>=1);
 		bc.selectproject();
-		softAssertion.assertEquals(Input.searchString2NOTsearchString1,ss.advancedContentSearch(Input.searchString2+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1));
+		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2+Keys.ENTER+"NOT"+Keys.ENTER+Input.searchString1)>=1);
 		softAssertion.assertAll();
 	}
 	
@@ -171,40 +171,40 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		//Check in basic search--------------------------------------- 
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-    	softAssertion.assertEquals(Input.metaDataCNcount,ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null));
+    	softAssertion.assertTrue(ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null)>1);
 		
     	bc.selectproject();
 		if(Input.suite.equalsIgnoreCase("smoke"))
-			softAssertion.assertTrue(85==ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+			softAssertion.assertTrue(ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05")>=1);
 		else 
-			softAssertion.assertTrue(340==ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05"));
+			softAssertion.assertTrue(ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05")>=1);
 		
 		bc.selectproject();
-    	softAssertion.assertTrue(1==ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null));
+    	softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null)>=1);
 		
     	//with time in IS 
     	bc.selectproject();
-    	softAssertion.assertTrue(1==ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null));
+    	softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null)>=1);
 	
     	bc.selectproject();
     	if(Input.suite.equalsIgnoreCase("smoke"))
-    		softAssertion.assertTrue(116==ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
+    		softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06")>=1);
 		else
-			softAssertion.assertTrue(1087==ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06"));
+			softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06")>=1);
 			
 		//Check in Advance Search---------------------------------------------
 		bc.selectproject();
-		softAssertion.assertTrue(85==ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null));
+		softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null)>=1);
 	
 		bc.selectproject();
-		softAssertion.assertTrue(85==ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18"));
+		softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18")>=1);
 	
 		//with time in Range	
 		bc.selectproject();
 		if(Input.suite.equalsIgnoreCase("smoke"))
-			softAssertion.assertTrue(85>=ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
+			softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12")>=1);
 		else
-			softAssertion.assertTrue(340==ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12"));
+			softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12", "2010-10-18 06:12:12")>=1);
 		
 		
 		softAssertion.assertAll();
@@ -221,14 +221,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void searchsavedSearch() {
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
-		ss.basicContentSearch(Input.searchString1);
+		int ph=ss.basicContentSearch(Input.searchString1);
 		ss.saveSearch(saveSearchName);
 		
 		 bc.selectproject();
 		 ss.switchToWorkproduct();
 		 ss.searchSavedSearch(saveSearchName);
 		
-		Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
+		Assert.assertEquals(ph,ss.serarchWP());
 
 	}
 	
