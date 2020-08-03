@@ -422,37 +422,38 @@ public class IngestionPage {
     	
     	if (dataset.contains("Automation_20Family_20Threaded")) {
     		
-    
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getMappingFIELDCAT8().Visible()  ;}}), Input.wait30); 
-    	getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailAuthorName");
-    	
+    	/*
+			 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+			 * getMappingFIELDCAT8().Visible() ;}}), Input.wait30);
+			 * getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
+			 * getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText(
+			 * "EmailAuthorName");
+			 */	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT9().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorAddress");
+    	getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT10().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCAddresses");
+    	getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getMappingFIELDCAT11().Visible()  ;}}), Input.wait30); 
-    	getMappingFIELDCAT11().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD11().selectFromDropdown().selectByVisibleText("EmailBCCNames");
-    	
+//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			getMappingFIELDCAT11().Visible()  ;}}), Input.wait30); 
+//    	getMappingFIELDCAT11().selectFromDropdown().selectByVisibleText("EMAIL");
+//    	getMappingDESTINATIONFIELD11().selectFromDropdown().selectByVisibleText("EmailBCCNames");
+//    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT13().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCAddresses");
+    	getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getMappingFIELDCAT14().Visible()  ;}}), Input.wait30); 
-    	getMappingFIELDCAT14().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD14().selectFromDropdown().selectByVisibleText("EmailCCNames");
-    
+//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			getMappingFIELDCAT14().Visible()  ;}}), Input.wait30); 
+//    	getMappingFIELDCAT14().selectFromDropdown().selectByVisibleText("EMAIL");
+//    	getMappingDESTINATIONFIELD14().selectFromDropdown().selectByVisibleText("EmailCCNames");
+//    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT25().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
@@ -488,15 +489,15 @@ public class IngestionPage {
     	getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
     	getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
     	
-      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getMappingFIELDCAT50().Visible()  ;}}), Input.wait30); 
-    	getMappingFIELDCAT50().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD50().selectFromDropdown().selectByVisibleText("EmailToNames");
-        	
+//      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			getMappingFIELDCAT50().Visible()  ;}}), Input.wait30); 
+//    	getMappingFIELDCAT50().selectFromDropdown().selectByVisibleText("EMAIL");
+//    	getMappingDESTINATIONFIELD50().selectFromDropdown().selectByVisibleText("EmailToNames");
+//        	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT51().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToAddresses");
+    	getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
     	} 
     	else {
 			System.out.println("No need to select fields for this dataset'");
