@@ -33,6 +33,7 @@ public class ManageRedaction_Regression {
 
 	driver = new Driver();
 	lp = new LoginPage(driver);
+	lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
 	bc = new BaseClass(driver);
 	redact = new RedactionPage(driver);
 	}
@@ -40,16 +41,16 @@ public class ManageRedaction_Regression {
 	@Test(priority =1,groups={"regression"})
 	public void AddRedactionwithRMU() throws ParseException, InterruptedException {
 		
-		lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
 		redact.AddRedaction(redactname,"RMU");
 		redact.AddRedaction(editredactname,"RMU");
 		redact.EditRedaction(editredactname);
 		redact.DeleteRedaction(redactname);
 	}
 	
-	@Test(priority =1,groups={"regression"})
+	@Test(priority =2,groups={"regression"})
 	public void AddRedactionwithPA() throws ParseException, InterruptedException {
 		
+		lp.logout();
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
 		redact.AddRedaction(redactname,"PA");
 		redact.AddRedaction(editredactname,"PA");
@@ -57,21 +58,14 @@ public class ManageRedaction_Regression {
 		redact.DeleteRedaction(redactname);
 	}
 	
-	@Test(priority =1,groups={"regression"})
+	@Test(priority =3,groups={"regression"})
 	public void AddRedactionImpersonate() throws ParseException, InterruptedException {
 		
-		 lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		 //Impersonate as PA 
 		bc.impersonatePAtoRMU();
 		redact.AddRedaction(redactname,"RMU");
 	}
 	
-	
-	@AfterMethod(alwaysRun = true)
-	private void user() {
-		 lp.logout();
-
-	}
 	
 	@AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {

@@ -229,6 +229,9 @@ public class DocViewPage {
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
+    public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
+    public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
+    
     
     
     public DocViewPage(Driver driver){
@@ -250,7 +253,12 @@ public class DocViewPage {
 				 getPersistantHitEyeIcon().Visible()  ;}}), Input.wait60);
 		 Thread.sleep(5000);
 		 
+		 try {
 		getPersistantHitEyeIcon().waitAndClick(10);
+		 }
+		 catch(Exception e) {
+			 getAudioPersistantHitEyeIcon().waitAndClick(10);
+		 }
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getHitPanels().Visible()  ;}}), Input.wait30);
 		 
@@ -271,6 +279,34 @@ public class DocViewPage {
 	//	driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
+    
+    public String getAudioPersistentHit(String searchString) throws InterruptedException {
+    	
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getAudioPersistantHitEyeIcon().Visible()  ;}}), Input.wait60);
+			 getAudioPersistantHitEyeIcon().waitAndClick(10);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getHitPanels().Visible()  ;}}), Input.wait30);
+		 
+		int numOfPanels = getHitPanels().size();
+		String Phit = "NULL";
+		System.out.println("numOfPanels"+(numOfPanels-1));
+		Boolean flag = false;
+		for (int i = 1; i <= numOfPanels; i++) {
+			if(getTermInHitPanels(i).getText().contains(searchString)){
+				System.out.println("Found "+searchString);
+				flag = true;
+				Phit = getTermInHitPanels(i).getText();
+			break;
+			}
+		
+		}
+		//Assert.assertTrue(flag);
+	//	driver.getWebDriver().navigate().refresh();
+		return Phit;
+	}
+   
     public void addCommentToNonAudioDoc(String comment) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddComment1().Visible()  ;}}), Input.wait60);   
@@ -472,7 +508,7 @@ public void audioReduction() throws InterruptedException, ParseException {
 		 //click on yes button
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-		 getDocview_ButtonYes().Click();
+		 getDocview_ButtonYes().waitAndClick(10);
 	    
 		 base.VerifySuccessMessage("Record Deleted Successfully");
 		 base.CloseSuccessMsgpopup();
@@ -538,11 +574,12 @@ public void audioComment(String comments) {
 	//adding comments
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getAudioComment().Visible() ;}}),Input.wait30);
+    getAudioComment().Clear();
     getAudioComment().SendKeys(comments);
    
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getDocumentViewer_DocView_SaveBtn().Visible() ;}}),Input.wait30);
-    getDocumentViewer_DocView_SaveBtn().Click();
+    getDocumentViewer_DocView_SaveBtn().waitAndClick(10);
     
    
 
@@ -631,23 +668,35 @@ public void VerifyFolderTab(final String folderName,int rowno) throws Interrupte
 
 public void VerifyPersistentHit(String searchString) throws InterruptedException {
 	
-	    String hitscount = getPersistentHit(searchString);
+    String hitscount = getPersistentHit(searchString);
+	System.out.println("Hits are:"+hitscount);
+	
+   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
+	   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
+	   
+	
+	getDocView_Persistent_PrevHit().Displayed();
+	getDocView_Persistent_NextHit().Displayed();
+	getDocView_Persistent_NextHit().waitAndClick(10);
+	getDocView_Persistent_PrevHit().waitAndClick(10);
+	
+  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+	
+		
+}
+
+public void VerifyAudiopersistentHit(String searchString) throws InterruptedException {
+	
+	    String hitscount = getAudioPersistentHit(searchString);
 		System.out.println("Hits are:"+hitscount);
 		
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
-		   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
-		   
-		
-		getDocView_Persistent_PrevHit().Displayed();
-		getDocView_Persistent_NextHit().Displayed();
-		getDocView_Persistent_NextHit().waitAndClick(10);
-		getDocView_Persistent_PrevHit().waitAndClick(10);
-		
-	  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+	   System.out.println(getDocView_Audio_Hit().getText().toString());
 		
 			
 	}
+
+
 
 public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws InterruptedException {
 	   	
@@ -970,7 +1019,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	   public void AnalyticsCodeSameAs() throws InterruptedException {
 				   	
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
+					getDocView_EditMode().Displayed()  ;}}), Input.wait60);   
 		   getDocView_EditMode().waitAndClick(10);
 	   
 		   String parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -1195,7 +1244,25 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   driver.getWebDriver().close();
 		   driver.switchTo().window(parentWindowID);
 		    
-		   sp.BulkActions_Folder(foldername);
+		  // sp.BulkActions_Folder(foldername);
+		   sp.getSelectFolderExisting(foldername).waitAndClick(5);
+		   	 
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   		    	sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+			   sp.getContinueButton().Click();
+			   	 
+			   	final BaseClass bc = new BaseClass(driver);
+			    final int Bgcount = bc.initialBgCount();
+			       
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   		    	sp.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+			  sp.getFinalizeButton().Click();
+			   	 
+			   base.VerifySuccessMessage("Records saved successfully");
+			   	 
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+			  System.out.println("Bulk folder is done, folder is : "+foldername);
 		   
 		   driver.Navigate().refresh();
 		   Thread.sleep(3000);
@@ -1221,14 +1288,14 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			               System.out.println("Remark Button not displayed for PA");
 			 }
 
-		   
+		   getDocView_DocId("ID00001059").waitAndClick(20);
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getDocView_ThreadedChild_Selectalldoc().Displayed()  ;}}), Input.wait30);   
 		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
 		   
-		   getDocView_Analytics_LoadMoreButton().waitAndClick(10);
+		  // getDocView_Analytics_LoadMoreButton().waitAndClick(10);
 		   
-		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
+		 //  getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
 		   
 		   getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		   
@@ -1272,19 +1339,19 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	    	//adding comments
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDocView_NumTextBox().Visible() ;}}),Input.wait30);
-	        getDocView_NumTextBox().SendKeys("3");
+	        getDocView_NumTextBox().SendKeys("2");
 	        getDocView_NumTextBox().Enter();
 	       
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	       		 getDocView_HistoryButton().Visible() ;}}),Input.wait30);
-	        getDocView_HistoryButton().Click();
+	        getDocView_HistoryButton().waitAndClick(10);
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDocView_Historydropdown().Visible() ;}}),Input.wait30);
-		    getDocView_Historydropdown().Click();
+		    getDocView_Historydropdown().waitAndClick(10);
 		    
 		    Assert.assertTrue(getDocView_TextFileType().Enabled());
-         Assert.assertEquals(getDocView_TextFileType(), "MP3 Version");
+            Assert.assertEquals(getDocView_TextFileType().getText().toString(), "MP3 VERSION");
 	    }
 	   
 	    public void getDocView_AnalyticsEmail() throws InterruptedException {
@@ -1549,7 +1616,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			   WebElement countoffields = driver.FindElementByXPath("//*[@id='SearchDataTable_wrapper']/div[3]/div[1]//table/thead/tr/th").getWebElement();
 			   List<WebElement> allvalues = countoffields.findElements(By.tagName("th"));
 			   List<String> all = new ArrayList<String>();
-			   for(int j=0;j<=allvalues.size();j++)
+			   for(int j=1;j<=allvalues.size();j++)
 			   {
 				  System.out.println(all.add(allvalues.get(j).getText()));
 				   if(all.equals(expvalues)) {
@@ -1569,7 +1636,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			   
 			  List<WebElement> optimized = getDocView_Config_Selectedfield().FindWebElements();
 			  List<String> alloptimized = new ArrayList<String>();
-              for(int k=0;k<=optimized.size();k++)
+              for(int k=0;k<optimized.size();k++)
               {
             	 System.out.println(alloptimized.add(optimized.get(k).getText()));
              }

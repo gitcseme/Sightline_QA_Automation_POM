@@ -39,13 +39,11 @@ public class BaseClass {
     public Element getSignoutMenu(){ return driver.FindElementByXPath("//*[@id='user-selector']"); }
     public Element getChangeRole(){ return driver.FindElementByXPath("//*[@id='utility-group']//a[text()='Change Role']"); }
     public Element getSelectRole(){ return driver.FindElementByXPath("//select[@name='Role']"); }
-    public Element getSelectDomain(){ return driver.FindElementById("ddlSysAdminChangeRoleDomain"); }
-    public Element getSelectProjectTo(){ return driver.FindElementById("ddlSysAdminChangeRoleProj"); }
+    public Element getSelectDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
+    public Element getSelectProjectTo(){ return driver.FindElementById("ddlAvailableProjects"); }
     
     public Element getSelectSecurityGroup(){ return driver.FindElementByXPath("//select[@name='SecurityGroupID']"); }
     public Element getSaveChangeRole(){ return driver.FindElementByXPath("//input[@type='submit']"); }
-     
-    
     public Element getContinueBtn(){ return driver.FindElementByXPath("//button[contains(.,'Continue')]"); }
   
     //select project
@@ -60,9 +58,6 @@ public class BaseClass {
     
     //success message
     public Element getCloseSucessmsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//i"); }
-
-   
-    
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
@@ -74,7 +69,6 @@ public class BaseClass {
     public Element getSelectsg(String sgname){ return driver.FindElementByXPath("//a[@title='"+sgname+"']"); }
     public Element getCancelbutton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
     public Element getNOBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); } 
-   
     public Element getAvlDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
     public Element getAvlProject(){ return driver.FindElementById("ddlAvailableProjects"); }
   
@@ -136,14 +130,16 @@ public class BaseClass {
   			getSelectRole().Visible()  ;}}),Input.wait60);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
     	
+    	Thread.sleep(1000);
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAvlDomain().Visible()  ;}}),Input.wait30);
     	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
     
-    	Thread.sleep(3000);
+    	Thread.sleep(1000);
 	
     	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-    	Thread.sleep(2000);
+    	Thread.sleep(1000);
     	
     	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
     	getSaveChangeRole().waitAndClick(5);
@@ -179,13 +175,13 @@ public class BaseClass {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getSelectRole().Visible()  ;}}),Input.wait30);
     	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
-    	    	
+    	Thread.sleep(3000);	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAvlDomain().Visible()  ;}}),Input.wait30);
     	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
     
     	Thread.sleep(3000);
-	
+
     	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
     	
     	getSaveChangeRole().waitAndClick(5);
@@ -567,6 +563,84 @@ public class BaseClass {
         	   System.out.println("Are PDF files similar..."+isEquals);
 
         }
-
+		
+        //Code added by Narendra
+        public void impersonateSAtoReviewertoSA() throws InterruptedException {
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        
+        	Thread.sleep(3000);
+    	
+        	getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	Thread.sleep(2000);
+        	
+        	getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+        	getSaveChangeRole().waitAndClick(5);
+        	System.out.println("Impersnated from SA to Reviewer");
+        	
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
+        	
+        	getSaveChangeRole().waitAndClick(10);
+        	
+        	System.out.println("Impersnated back Reviewer to SA");
+    	}
+        
+        public void impersonateSAtoPAtoSA() throws InterruptedException {
+        	getSignoutMenu().Click();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait30);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait30);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+        	    	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAvlDomain().Visible()  ;}}),Input.wait30);
+        	getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+        
+        	Thread.sleep(3000);
+    	
+        	getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
+        	
+        	getSaveChangeRole().waitAndClick(5);
+        	System.out.println("Impersnated from SA to PA");
+        	
+        	getSignoutMenu().waitAndClick(10);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	   	getChangeRole().Visible()  ;}}),Input.wait60);
+        	getChangeRole().Click();
+      	    
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getSelectRole().Visible()  ;}}),Input.wait60);
+        	getSelectRole().selectFromDropdown().selectByVisibleText("System Administrator");
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSaveChangeRole().Visible()  ;}}),Input.wait60);
+        	
+        	getSaveChangeRole().waitAndClick(10);
+        	
+        	System.out.println("Impersnated back PA to SA");
+    	}
    
 }

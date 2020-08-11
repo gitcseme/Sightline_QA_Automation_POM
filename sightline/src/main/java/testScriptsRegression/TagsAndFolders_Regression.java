@@ -33,9 +33,11 @@ public class TagsAndFolders_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
  	driver = new Driver();
 	lp = new LoginPage(driver);
 	bc = new BaseClass(driver);
+	
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	
 	tnfpage = new TagsAndFoldersPage(driver);
@@ -46,7 +48,7 @@ public class TagsAndFolders_Regression {
 	search.basicContentSearch(Input.searchString1);
 	search.bulkTagExisting(Tag);
 	search.bulkFolderExisting(Folder);
-
+	
 	}
 	
 	@Test(priority =1,groups={"smoke","regression"})
@@ -66,8 +68,8 @@ public class TagsAndFolders_Regression {
 	@Test(priority =2,groups={"smoke","regression"})
 	public void TagsViewinDocList() throws ParseException, InterruptedException {
 		
-		tnfpage = new TagsAndFoldersPage(driver);
-	    tnfpage.ViewinDocListthrTag(Tag);
+		 tnfpage = new TagsAndFoldersPage(driver);
+	     tnfpage.ViewinDocListthrTag(Tag);
        //view in doclist and verify count
 		 doclist = new DocListPage(driver);
 		 doclist.getDocList_info().WaitUntilPresent();
@@ -76,16 +78,16 @@ public class TagsAndFolders_Regression {
 	     
 	     Assert.assertTrue(Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))>0);
 	     System.out.println("Expected docs("+Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))+") are shown in doclist");
-	     doclist.getBackToSourceBtn().Click();
-	     tnfpage.getTagsTab().WaitUntilPresent();
+	     //doclist.getBackToSourceBtn().Click();
+	     //tnfpage.getTagsTab().WaitUntilPresent();
 	}
 	
-
+	
 	@Test(priority =3,groups={"smoke","regression"})
 	public void FolderViewinDocview() throws ParseException, InterruptedException {
 		tnfpage = new TagsAndFoldersPage(driver);
 		tnfpage.ViewinDocViewthrFolder(Folder);
-    
+		Thread.sleep(3000);
 		//Validate in docview count
 		docview= new DocViewPage(driver);
 		//docview.getDocView_info().WaitUntilPresent();
@@ -109,20 +111,19 @@ public class TagsAndFolders_Regression {
 	     !doclist.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	     Assert.assertTrue(Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))>0);
 	     System.out.println("Expected docs("+Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))+") are shown in doclist");
-	     doclist.getBackToSourceBtn().Click();
-	     tnfpage.getTagsTab().WaitUntilPresent();
+	     //doclist.getBackToSourceBtn().Click();
+	     //tnfpage.getTagsTab().WaitUntilPresent();
+	     lp.logout();
 	}
 	
-	@Test(priority = 6,groups={"smoke","regression"})
+	@Test(priority =5,groups={"smoke","regression"})
 	public void deleteTagSAasPA() throws ParseException, InterruptedException, IOException {
-		
-	    lp.logout();
+ 
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		//Impersonate as RMU
 	
 		bc.impersonateSAtoPA();
-		                      
-	
+
 		//add tag
 		String tag = "newTag"+Utility.dynamicNameAppender();
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
@@ -136,56 +137,57 @@ public class TagsAndFolders_Regression {
     	
     	//Delete tag under security group
     	page.DeleteTag(tag,"Default Security Group");
+    	System.out.println("Tag deleted from security group");
     	
-    	
-    	//try to delete tag under same security group again, it should fail!
-    	try{
-    		page.DeleteTag(tag,"Default Security Group");
-    		Assert.assertFalse(1==0);
-    	}catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Tag successfully deleted from security group!");
-		}
-    	
-    	//Delete from all Groups, it make sure deleting tag under security group not deleted from all groups!
-    	
-    	page.DeleteTag(tag,"All Groups");
-    	
-    	//try deleting tag from all groups again to make sure its been deleted
-    	try{
-    		page.DeleteTag(tag,"All Groups");
-    		Assert.assertFalse(1==0);
-    	}catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Tag successfully deleted from all groups!");
-			System.out.println("Tag deletion working fine!!");
-		}
-    	
-    	
+    	//Delete folder under security group
     	page.DeleteFolder(folder,"Default Security Group");
     	System.out.println("Folder deleted from security group");
-    	
-    	//try deleting again to confirm, it should fail
-    	try{
-    		page.DeleteFolder(folder,"Default Security Group");
-    	}catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Folder successfully deleted from security group");
-			
-		}
-    	//delete folder form all groups!
-    	page.DeleteFolder(folder,"All Groups");
-    	
-    	//try deleting folder from all groups again to make sure its been deleted
-    	try{
-    		page.DeleteFolder(folder,"All Groups");
-    		Assert.assertFalse(1==0);
-    	}catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("folder successfully deleted from all groups!");
-			System.out.println("folder deletion working fine!!");
-		}
+    	lp.logout();
  	}
 
-	
+	//added by Narendra
+@Test(priority =6,groups={"smoke","regression"})
+public void OperationOnTag() throws ParseException, IOException, InterruptedException {
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+					
+	        //Add tag
+			String tag = "newTag"+Utility.dynamicNameAppender();
+			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+			page.CreateTag(tag,"Default Security Group");
+			System.out.println("Tag added Successfully : "+tag);
+			
+			//Cancel tag
+			page.Tags(tag,"Default Security Group");
+			System.out.println("Tag modification cancelled successfully");
+			
+			//Edit Tag Group
+			page.TagGroup("Default Security Group");
+			System.out.println("Tag group modified successfully");
+				    	
+	    	//Delete tag under security group
+	    	page.DeleteTag(tag,"Default Security Group");
+	    	System.out.println("Tag successfully deleted from security group!");
+	    				 
 
-	
+}
+
+@Test(priority =7,groups={"smoke","regression"})
+public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
+			//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+				
+			//add folder
+			String folder = "newFolder"+Utility.dynamicNameAppender();
+			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+			page.CreateFolder(folder, "Default Security Group");
+	    	System.out.println("Folder added Successfully : "+folder);
+	    	
+	    	
+	    	//Delete tag under security group
+	    	page.DeleteFolder(folder,"Default Security Group");
+	    	System.out.println("Folder deleted from security group");
+
+}
+			
   
 	@AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {

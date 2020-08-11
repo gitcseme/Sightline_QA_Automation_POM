@@ -58,7 +58,7 @@ public class SavedSearch_Regression  {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		//Search and save it
-		SessionSearch search = new SessionSearch(driver);
+		search = new SessionSearch(driver);
 		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
         search.saveSearch(SearchNamePA);
@@ -269,7 +269,20 @@ public class SavedSearch_Regression  {
 		ss.savedSearchEdit(saveSearchName,SearchNameRMU);
   }
 
-	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify deletion of saved searches is working correctly from saved search 
+	 */
+	@Test(groups={"regression"},priority=13)
+	public void  SaveSearchDelete() throws ParseException, InterruptedException {
+		
+		//Schedule the saved search
+		
+		ss.SaveSearchDelete(saveSearchName);
+	}
 	
 	 /*
 		 * Author : Shilpi Mangal
@@ -284,26 +297,17 @@ public class SavedSearch_Regression  {
 @Test(groups={"regression"},priority=14)
 	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
 
-		//Share the saved search
-		
-		ss.SaveSearchToBulkAssign(saveSearchName,assignmentName,codingfrom);
+	 lp.logout();
+	 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	//Share the saved search
+	   search = new SessionSearch(driver);
+	   purehits=search.basicContentSearch(Input.searchString1);
+	   search.saveSearch(SearchNameRMU);
+		ss.SaveSearchToBulkAssign(SearchNameRMU,assignmentName,codingfrom,purehits);
   }
 	
   
-/*
- * Author : Shilpi Mangal
- * Created date: 
- * Modified date: 
- * Modified by:
- * Description : Verify deletion of saved searches is working correctly from saved search 
- */
-@Test(groups={"regression"},priority=15)
-public void  SaveSearchDelete() throws ParseException, InterruptedException {
-	
-	//Schedule the saved search
-	
-	ss.SaveSearchDelete(saveSearchName);
-}
+
 
 	
 	 @BeforeMethod
@@ -329,6 +333,5 @@ public void  SaveSearchDelete() throws ParseException, InterruptedException {
 			}finally {
 				lp.quitBrowser();
 			}
-		LoginPage.clearBrowserCache();
 	}
 }

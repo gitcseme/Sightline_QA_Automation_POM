@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression Suite">
-	
-    <test name="Input">
+
+ <test name="Input"> 
     <classes>
         <class name="testScriptsSmoke.Input" ></class>  
     </classes>
 	</test> 
+	 	
+   
 	
 	 <test name="Categorization">
 	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
@@ -214,10 +216,10 @@
     </classes>
 	</test> 	 
  	
- 	<test name="TagAndFolder">
+ 	<test name="TagsAndFolders_Regression">
      <groups><run><include name="smoke" /><include name="regression" /></run></groups>
     <classes>
-        <class name="testScriptsRegression.TagAndFolder" ></class>  
+        <class name="testScriptsRegression.TagsAndFolders_Regression" ></class>  
     </classes>
 	</test> 	 
  	
@@ -292,6 +294,27 @@
 	 <groups><run><include name="regression" /></run></groups>
 	 <classes>
         <class name="testScriptsRegression.DocExplorer_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="AssignQuickBatch_Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.AssignQuickBatch_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="SearchTermReport_Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.SearchTermReport_Regression" ></class>  
+    </classes>
+	</test> 
+	
+	<test name ="SystemTemplate_Regression">
+	 <groups><run><include name="regression" /></run></groups>
+	 <classes>
+        <class name="testScriptsRegression.SystemTemplate_Regression" ></class>  
     </classes>
 	</test> 
 	

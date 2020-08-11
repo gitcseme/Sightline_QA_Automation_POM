@@ -50,7 +50,8 @@ public class DocViewAudio_Regression {
 		
 		lp.logout();
 		driver.getWebDriver().get(Input.url);
-		lp.loginToSightLine(Input.rev2userName, Input.rev2password);
+		
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		SessionSearch search = new SessionSearch(driver);
 		search.audioSearch("morning", "North American English");
 		search.ViewInDocView();
@@ -68,7 +69,7 @@ public class DocViewAudio_Regression {
 	@Test(groups={"smoke","regression"})
 	public void AudioPersistentHits() throws ParseException, InterruptedException {
 	
-		docview.VerifyPersistentHit("morning");
+		docview.VerifyAudiopersistentHit("morning");
 		
 	}
 	

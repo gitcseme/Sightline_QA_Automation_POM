@@ -112,6 +112,7 @@ public class SavedSearch {
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
+        search = new SessionSearch(driver);
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 
@@ -578,7 +579,7 @@ public class SavedSearch {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		   getSavedSearch_ApplyFilterButton().Click();
+		   getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		   
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
@@ -611,7 +612,7 @@ public class SavedSearch {
 		   
 	   }
 	
-	   public void SaveSearchToBulkAssign(final String searchName,String assignmentName,String codingForm)  {
+	   public void SaveSearchToBulkAssign(final String searchName,String assignmentName,String codingForm,int purehits)  {
 		   
 		   assgnpage = new AssignmentsPage(driver);
 		   savedSearch_Searchandclick(searchName);
@@ -620,7 +621,7 @@ public class SavedSearch {
 		   
 		   //SessionSearch search = new SessionSearch(driver);
 		//   search.bulkAssign();
-		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm);
+		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm,purehits);
 		   assgnpage.SelectAssignmentToViewinDocview(assignmentName);   
 		   DocViewPage dp = new DocViewPage(driver);
 		 
@@ -799,6 +800,7 @@ public class SavedSearch {
 				   getSavedSearch_SearchButton().Visible()  ;}}),Input.wait60);
 		   getSavedSearch_SearchButton().Click();
 		   
+		   base.selectproject();
 		   search = new SessionSearch(driver);
 		   search.basicContentSearch(Input.searchString1);
 		   search.saveSearch(searchName);
@@ -819,11 +821,11 @@ public class SavedSearch {
 	    	int pureHit = Integer.parseInt(search.getPureHitsCount().getText());
 	    	System.out.println("PureHit is : "+pureHit);
 	    	
-	 	   Assert.assertEquals(search.getPureHitsCount().getText(),pureHit);
+	 	   Assert.assertEquals(Integer.parseInt(search.getPureHitsCount().getText()),pureHit);
 	 	   
-	 	   search.getSearchButton().waitAndClick(10);
+	 	/*   search.getSecondSearchBtn().waitAndClick(10);
 	 	   
-	 	  search.getSaveSearch_Button().waitAndClick(10);
+	 	  search.getSecondSavedSearchBtn().waitAndClick(10);
 	 	   
 	 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			 search.getsavesearch_overwrite().Visible()  ;}}),Input.wait60);
@@ -852,7 +854,7 @@ public class SavedSearch {
 	    	
 	    	savedSearch_Searchandclick(searchName2);
 	 	      getSavedSearch_ApplyFilterButton().waitAndClick(20);
-	  	/*   
+	  	  
 	  	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
 	  	 

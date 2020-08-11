@@ -19,7 +19,7 @@ import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
-public class SearchTermReport {
+public class SearchTermReport_Regression {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;

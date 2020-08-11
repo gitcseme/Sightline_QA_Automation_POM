@@ -14,7 +14,6 @@ import testScriptsSmoke.Input;
 public class SessionSearch {
 
     Driver driver;
-
     public static int pureHit;
     BaseClass base;
   
@@ -26,6 +25,7 @@ public class SessionSearch {
    
     //Hits
     public Element getPureHitsCount(){ return driver.FindElementByXPath(".//*[@id='001']/span/count"); }
+    public Element getPureHitsCountwithOptions(){ return driver.FindElementByXPath(".//*[@id='001']/count"); } 
     public Element getPureHitsCount2ndSearch(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
     public Element getTDHitsCount(){ return driver.FindElementByXPath(".//*[@id='002']/span/count"); }
     public Element getNDHitsCount(){ return driver.FindElementByXPath(".//*[@id='003']/span/count"); }
@@ -372,7 +372,7 @@ public class SessionSearch {
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
         	}
     	if(MessageNumber == 4)
-            Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as “bi-weekly report”, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
+            Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
     	if(MessageNumber == 5){
         	String msg= "Invalid parenthesis balance, please ensure all the braces have proper parenthesis balance.";
         	 
@@ -464,7 +464,7 @@ public class SessionSearch {
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
         	}
         	if(MessageNumber == 4)
-                Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as “bi-weekly report”, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
+                Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
               
         	if(MessageNumber == 5){
             	String msg= "Invalid parenthesis balance, please ensure all the braces have proper parenthesis balance.";
@@ -558,6 +558,7 @@ public class SessionSearch {
     	//look for warnings, in case of proximity search
     	try{
     		getTallyContinue().waitAndClick(5);
+    		Thread.sleep(4000);
     	}catch (Exception e) {
 		
 		}
@@ -1133,7 +1134,7 @@ public void ViewInDocView() throws InterruptedException{
 			System.out.println("Pure hit block already moved to action panel");
 		}
 		 
-	 
+	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
 	 getBulkActionButton().waitAndClick(10);
@@ -1227,31 +1228,31 @@ public void bulkRelease(final String SecGroup) {
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{
 
-		/*
-		 * getBulkActionButton().Click();
-		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getBulkTagAction().Visible() ;}}), Input.wait60);
-		 * getBulkTagAction().waitAndClick(10);
-		 */ 
+	 Thread.sleep(1000);	
+	 getBulkActionButton().Click();
+	 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+	 getBulkTagAction().Visible() ;}}), Input.wait60);
+	 getBulkTagAction().waitAndClick(10);
+		 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUntagbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUntagbutton().Click();
 	
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getSelectTagExisting(TagName).Visible()  ;}}), Input.wait60); 
-	getSelectTagExisting(TagName).waitAndClick(10);
+	 getSelectTagExisting(TagName).waitAndClick(10);
 	
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
 	 getContinueButton().Click();
 	 
 	 final BaseClass bc = new BaseClass(driver);
-  final int Bgcount = bc.initialBgCount();
+     final int Bgcount = bc.initialBgCount();
   
 	 bc.VerifySuccessMessage("Records saved successfully");
 	 
-driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	 System.out.println("Bulk Untag is done, Tag is : "+TagName); 
 	 
@@ -1261,15 +1262,15 @@ driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 
 //Function to perform new bulk folder with given folder name
 public void bulkUnFolder(final String folderName) throws InterruptedException{
+	 driver.scrollPageToTop();
+	 Thread.sleep(1000);
+	 getBulkActionButton().Click();
 	 
-		/*
-		 * getBulkActionButton().Click();
-		 * 
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getBulkFolderAction().Visible() ;}}), Input.wait60);
-		 * getBulkFolderAction().Click();
-		 */ 
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+	 getBulkFolderAction().Visible() ;}}), Input.wait60);
+	 getBulkFolderAction().Click();
+		 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBulkUnFolderbutton().Visible()  ;}}), Input.wait30); 
 	 getBulkUnFolderbutton().Click();
 	 
@@ -1282,7 +1283,7 @@ public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 getContinueButton().Click();
 	 
 	 final BaseClass bc = new BaseClass(driver);
-final int Bgcount = bc.initialBgCount();
+	 final int Bgcount = bc.initialBgCount();
 
 	 bc.VerifySuccessMessage("Records saved successfully");
 	 
@@ -1433,11 +1434,11 @@ public void  selectRedactioninWPS(final String redactName) throws InterruptedExc
 }
 
 //Function to perform assignment name search in work product
-public void  selectAssignmentInWPS(final String redactName) throws InterruptedException{
+public void  selectAssignmentInWPS(final String assignMentName) throws InterruptedException{
 	 
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getRedactionBtn().Visible()  ;}}), Input.wait30); 
-	getRedactionBtn().Click();
+			getWP_assignmentsBtn().Visible()  ;}}), Input.wait30); 
+	getWP_assignmentsBtn().Click();
 	
 	//
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1445,7 +1446,7 @@ public void  selectAssignmentInWPS(final String redactName) throws InterruptedEx
 	System.out.println(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
 		//System.out.println(iterable_element.getText());
-		if(iterable_element.getText().contains(redactName)){
+		if(iterable_element.getText().contains(assignMentName)){
 			
 			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 			driver.scrollingToBottomofAPage();
@@ -1641,20 +1642,20 @@ public void Removedocsfromresults() {
   	try{
   		getTallyContinue().waitAndClick(5);
   	}catch (Exception e) {
-		e.printStackTrace();
+		System.out.println("NO pop up appears");
 		}
   	
   	//verify counts for all the tiles
   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+  			getPureHitsCountwithOptions().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
   	
-  	int pureHit = Integer.parseInt(getPureHitsCount().getText());
+  	int pureHit = Integer.parseInt(getPureHitsCountwithOptions().getText());
   	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
   	
-  	String backgroundColorthread = driver.FindElementByXPath(".//*[@id='002']").GetAttribute("background-color");
+  	String backgroundColorthread = driver.FindElementByXPath(".//*[@id='002']").GetCssValue("background-color");
 	System.out.println(backgroundColorthread);
 	
-	Assert.assertEquals(backgroundColorthread, "rgb(218,218,218)");
+	Assert.assertEquals(backgroundColorthread, "rgba(218, 218, 218, 1)");
 
 	
   	

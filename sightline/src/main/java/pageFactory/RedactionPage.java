@@ -41,7 +41,9 @@ public class RedactionPage {
         bc = new BaseClass(driver);
        }
 
-    public void AddRedaction(String RedactName,String usertype) {
+    public void AddRedaction(String RedactName,String usertype) 
+    {
+    	this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
     	if(usertype.equalsIgnoreCase("PA"))
     	{
     	SecurityGroupsPage sp = new SecurityGroupsPage(driver);
@@ -145,6 +147,7 @@ public class RedactionPage {
      	bc.getYesBtn().waitAndClick(10);
      	
      	bc.VerifySuccessMessage("Redaction label deleted successfully");
+     	bc.CloseSuccessMsgpopup();
      	
      	
      	 try{

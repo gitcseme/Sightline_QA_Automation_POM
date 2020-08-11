@@ -323,7 +323,7 @@ public class AssignmentsPage {
      	
 	}
     
-    public void assignDocstoNewAssgn(final String assignmentName,String codingForm) {
+    public void assignDocstoNewAssgn(final String assignmentName,String codingForm,int purehits) {
       	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getBulkAssign_NewAssignment().Visible()  ;}}), Input.wait60);
@@ -374,7 +374,7 @@ public class AssignmentsPage {
 			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
 	driver.scrollingToBottomofAPage();
 
-	Assert.assertEquals(Input.pureHitSeachString1,Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText()));
+	Assert.assertEquals(purehits,Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText()));
 	
      }
     

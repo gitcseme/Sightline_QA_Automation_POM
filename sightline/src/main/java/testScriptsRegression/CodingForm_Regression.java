@@ -34,7 +34,6 @@ public class CodingForm_Regression {
 	String tagnameprev = "Tagprev"+Utility.dynamicNameAppender();
 	String comment = "C"+Utility.dynamicNameAppender();
 	
-	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -49,9 +48,8 @@ public class CodingForm_Regression {
 		cf.CodingformToSecurityGroup(codingfrom);
 	}
 	
-	
 	@Test(groups={"smoke","regression"},priority =1)
-    public void EditCodingForm() {
+    public void EditCodingForm() throws InterruptedException {
 		System.out.println("******Edit Coding Form********");
 		
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
@@ -70,9 +68,9 @@ public class CodingForm_Regression {
 		   
 		   String serachString = Input.searchString2;
 		  
-		  //Search for any content on basic search screen
+		    //Search for any content on basic search screen
 			sessionSearch =new SessionSearch(driver);
-			System.out.println(serachString);
+			//System.out.println(serachString);
 	    	sessionSearch.basicContentSearch(serachString);
 	    	System.out.println(serachString);
 	    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
@@ -83,21 +81,21 @@ public class CodingForm_Regression {
 	   }
 	   
 
-	  @Test(groups={"smoke","regression"},priority=3)
+	   @Test(groups={"smoke","regression"},priority=3)
 	   public void ValidateCFinDocViewFromAssignment() throws InterruptedException {
 		   
 		   
 		    AssignmentsPage ass = new AssignmentsPage(driver);
 		    ass.createAssignment(AssgnName, codingfrom);
-		  /*  
-		    String serachString = Input.searchString2;
 		  
-		  //Search for any content on basic search screen
+		    /*String serachString = Input.searchString2;
+		  
+		    Search for any content on basic search screen
 			sessionSearch =new SessionSearch(driver);
 			System.out.println(serachString);
 	    	sessionSearch.basicContentSearch(serachString);
 	    	System.out.println(serachString);
-	    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());*/
+	    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText()); */
 	    	
 	    	sessionSearch.bulkAssign();
 	    	ass.assignDocstoExisting(AssgnName);
@@ -106,7 +104,7 @@ public class CodingForm_Regression {
 	   
 	   }
 	  
-	  @Test(groups={"smoke","regression"},priority =4)
+	    @Test(groups={"smoke","regression"},priority =4)
 	    public void CopyCodingForm() {
 			
 			cf = new CodingForm(driver);
@@ -114,14 +112,14 @@ public class CodingForm_Regression {
 		}
 
 
-	 @Test(groups={"smoke","regression"},priority =10)
+	    @Test(groups={"smoke","regression"},priority =10)
 	    public void DeleteCodingForm() {
 			
 			cf = new CodingForm(driver);
 		    cf.DeleteCodingform(codingfrom);
 		}
 
-     @Test(groups={"smoke","regression"},priority =5)
+	    @Test(groups={"smoke","regression"},priority =5)
         public void AddCodingformwithMetadata() {
 		
 	 	cf = new CodingForm(driver);
@@ -129,7 +127,7 @@ public class CodingForm_Regression {
 	}
      
  	@Test(groups={"smoke","regression"},priority=6)
-    public void AddnewCodingFormwithtag() {
+    public void AddnewCodingFormwithtag() throws InterruptedException {
 		
 		TagsAndFoldersPage p = new TagsAndFoldersPage(driver);
 		p.CreateTag(tagnameprev,"Default Security Group");
@@ -137,7 +135,7 @@ public class CodingForm_Regression {
 		cf.AddCodingformwithTag(codingfromTag, tagnameprev);
 	}
 
-    @Test(dataProvider="validations",groups={"regression"},priority =7)
+    	//@Test(dataProvider="validations",groups={"regression"},priority =7)
         public void PreviewValidations(String S1,String S2,String S3) throws InterruptedException {
 		
 	 	cf = new CodingForm(driver);

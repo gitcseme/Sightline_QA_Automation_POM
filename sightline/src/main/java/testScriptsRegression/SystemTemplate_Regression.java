@@ -1,98 +1,168 @@
 package testScriptsRegression;
-
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.List;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import automationLibrary.Driver;
-import pageFactory.AnnotationLayer;
-import pageFactory.CommentsPage;
+import junit.framework.Assert;
+import pageFactory.BaseClass;
+import pageFactory.CodingForm;
 import pageFactory.LoginPage;
-import pageFactory.RedactionPage;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class SystemTemplate_Regression {
 	Driver driver;
 	LoginPage lp;
-		
-	/*
-	 * Author : Shilpi Mangal
-	 * Created date: April 2020
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Login as PA user
-	 */
-	
-	 @BeforeClass(alwaysRun = true)
-	public void preConditions() throws InterruptedException, ParseException, IOException {
+	TagsAndFoldersPage tnfpage;
+	BaseClass bc;
+	CodingForm cf;
+
+	@BeforeClass(alwaysRun = true)
+	public void before() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	 	driver = new Driver();
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		
+	}
 	
-		Input in = new Input();
-		in.loadEnvConfig();
-		
-		//Open browser
-		this.driver = new Driver();
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);   
-		
-    }
+	@Test(priority =1,groups={"smoke","regression"})
+	public void provisionedTags_8633_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedTags();
+	    lp.logout();
+	}
 	
-	   /*
-		 * Author : Shilpi Mangal
-		 * Created date: April 2020
-		 * Modified date: 
-		 * Modified by:
-		 * Description : Tc- 8660/Verify that When a Domain project is created then provisioned Annotation Layer is available in the Project- PA/RMU
-		 */	
-	  // @Test(groups={"smoke","regression"},priority=1)
-	   public void AddComments() throws InterruptedException {
-		   
-			AnnotationLayer al = new AnnotationLayer(driver);
-			
-		  }
-	   
-	   /*
-		 * Author : Shilpi Mangal
-		 * Created date: April 2020
-		 * Modified date: 
-		 * Modified by:
-		 * Description : Test Case 8663:Verify that When a Domain project is created then provisioned Redaction Tags are available in the Project- PA/RMU
- 
-		 */	
-	   @Test(groups={"smoke","regression"},priority=2)
-	   public void DeleteComments() throws InterruptedException {
-		   
-		RedactionPage rp = new RedactionPage(driver);
-		rp.findredaction();  
-		
-	   }
-		   
+	@Test(priority =2,groups={"smoke","regression"})
+	public void provisionedTags_8633_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedTagsAsRMU();
+	    lp.logout();
+	}
+	
+	@Test(priority =3,groups={"smoke","regression"})
+	public void tagsClassifications_8657_1() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.tagsClassifications();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =4,groups={"smoke","regression"})
+	public void tagsClassifications_8657_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.tagsClassificationsAsRMU();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =5,groups={"smoke","regression"})
+	public void layerAnnotations_8660_1() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.layerAnnotations();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =6,groups={"smoke","regression"})
+	public void layerAnnotations_8660_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.layerAnnotationsAsRMU();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =7,groups={"smoke","regression"})
+	public void provisionedFolder_8661_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedFolder();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =8,groups={"smoke","regression"})
+	public void provisionedFolder_8661_2() throws  InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedFolderAsRMU();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =9,groups={"smoke","regression"})
+	public void redactionTags_8663_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.redactionTags();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =10,groups={"smoke","regression"})
+	public void redactionTags_8663_2() throws  InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.redactionTagsAsRMU();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =11,groups={"smoke","regression"})
+	public void provisionedFolderGroup_9028() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedFolderGroup();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =12,groups={"smoke","regression"})
+	public void codingForm_8719() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		cf = new CodingForm(driver);
+	    cf.codingForm();
+	    lp.logout();
+	
+	}
+	
+	@Test(priority =13,groups={"smoke","regression"})
+	public void codingFormTagsOrder_8720() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		cf = new CodingForm(driver);
+	    cf.codingFormTagsOrder();
+	    lp.logout();
+	}
+	
+	
 	@AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
-   	 if(ITestResult.FAILURE==result.getStatus()){
-   		Utility bc = new Utility(driver);
-   		bc.screenShot(result);
-   	}
-    }
-	
-	@AfterClass(alwaysRun = true)
-	public void close(){
+	 if(ITestResult.FAILURE==result.getStatus()){
+		Utility bc = new Utility(driver);
+		bc.screenShot(result);
+	}
+	}
+	 @AfterClass(alwaysRun = true)
+	 public void close(){
 		try{ 
 			lp.logout();
 		     //lp.quitBrowser();	
 			}finally {
 				lp.quitBrowser();
-				lp.clearBrowserCache();
+			
 			}
+		LoginPage.clearBrowserCache();
 	}
+
 }

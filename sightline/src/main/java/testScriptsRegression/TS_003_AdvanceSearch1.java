@@ -191,11 +191,10 @@ public class TS_003_AdvanceSearch1 {
 			bc.selectproject();
 			search.switchToWorkproduct();
 		    search.selectFolderInASwp(Folder);
-			 
 			Assert.assertEquals(count,search.serarchWP());
 		    
 	}
-		@Test(groups={"regression"})
+	   @Test(groups={"regression"})
 	   public void existingBulkTag() throws InterruptedException {
 		   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 			

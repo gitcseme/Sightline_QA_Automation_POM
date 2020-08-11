@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<LD9PT>
+<QA>
   		<url>http://172.22.155.2/</url>
        	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
        	<domainName>AutoDomain</domainName>
-        <projectName>QA_CmplxQueryTest1</projectName>
+        <projectName>TD_24July</projectName>
+        <!--  TD_24July -->
      
-    	<sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
-   		<sa1password>Sightline@123</sa1password> 
+    	<sa1userName>smangal@consilio.com</sa1userName> 
+   		<sa1password>sightline@12345</sa1password> 
    		
    		<!-- DA Admin  -->
    		
         <da1userName>automation.consilio@gmail.com</da1userName> 
-        <da1password>sightline@123</da1password>
+        <da1password>sightline@12345</da1password>
      
         <!-- CPA -->
-        <pa1FullName>NK PA1</pa1FullName>
-        <pa1userName>a.utomation.consilio@gmail.com</pa1userName>
-        <pa1password>sightline@123</pa1password>
+        <pa1FullName>Shilpi PA1</pa1FullName>
+        <pa1userName>rm.user.consilio@gmail.com</pa1userName>
+        <pa1password>sightline@321</pa1password>
 
         
               
         <!--CRMU  -->
-        <rmu1FullName>NK RMU1</rmu1FullName>
-        <rmu1userName>au.tomation.consilio@gmail.com</rmu1userName>
+        <rmu1FullName>Shilpi RMU</rmu1FullName>
+        <rmu1userName>rm.user.c.onsilio@gmail.com</rmu1userName>
         <rmu1password>sightline@123</rmu1password>
                 
         <!-- CRev -->
-        <rev1FullName>NK REV1</rev1FullName>
-        <rev1userName>aut.omation.consilio@gmail.com</rev1userName>
+        <rev1FullName>Shilpi REV1</rev1FullName>
+        <rev1userName>r.m.user.consilio@gmail.com</rev1userName>
         <rev1password>sightline@123</rev1password>
 
         <shareTo>CPA2 PA2</shareTo>
        
-</LD9PT>
+</QA>

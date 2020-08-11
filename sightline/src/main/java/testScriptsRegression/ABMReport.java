@@ -22,6 +22,7 @@ public class ABMReport {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch search;
+	int purehits;
 	
 	String saveSearchName = "ABM"+Utility.dynamicNameAppender();
 	String assignmentName= "assignmentABM"+Utility.dynamicNameAppender();
@@ -40,7 +41,7 @@ public class ABMReport {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		//Search and save it
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		purehits = search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
 		Thread.sleep(5000);
 		
@@ -48,7 +49,7 @@ public class ABMReport {
 	    search.ViewInDocList();
 	    DocListPage dp = new DocListPage(driver);
 	    dp.DoclisttobulkAssign(assignmentName,null);
-        asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form");
+        asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form",purehits);
 	    
 	}	   
 	  @Test(groups={"smoke","regression"})

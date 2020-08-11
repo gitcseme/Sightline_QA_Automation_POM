@@ -104,7 +104,7 @@ public class TagsAndFoldersPage {
         }
     
     //securityGroup parameter value will be secGroup name else 'All Groups'   
-    public void CreateTag(String strtag, String securityGroup) 
+    public void CreateTag(String strtag, String securityGroup) throws InterruptedException 
     {
     	   this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
     	     
@@ -132,7 +132,9 @@ public class TagsAndFoldersPage {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
         getTagActionDropDownArrow().Click();
-     
+        
+        Thread.sleep(1000);
+        
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getAddTag().Visible()  ;}}), Input.wait30); 
         getAddTag().waitAndClick(10);
@@ -142,10 +144,10 @@ public class TagsAndFoldersPage {
 			 getTagName().Visible()  ;}}), Input.wait30); 
      getTagName().SendKeys(strtag);
      
+     Thread.sleep(1000);
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveTag().Visible()  ;}}), Input.wait30); 
      getSaveTag().Click();
-     
      base.VerifySuccessMessage("Tag added successfully");
      base.CloseSuccessMsgpopup();
    	
@@ -177,7 +179,7 @@ public class TagsAndFoldersPage {
          Thread.sleep(2000);
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getFolderActionDropDownArrow().waitAndClick(10);
+         getFolderActionDropDownArrow().waitAndClick(30);
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAddFolder().Visible()  ;}}), Input.wait30); 
@@ -210,10 +212,10 @@ public class TagsAndFoldersPage {
         }catch (Exception e) {
 			// TODO: handle exception
 		}
-
-    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        driver.scrollingToBottomofAPage();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagName(strtag).Visible()  ;}}), Input.wait30); 
-    	 getTagName(strtag).waitAndClick(10);
+    	 getTagName(strtag).Click();
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
@@ -245,12 +247,12 @@ public class TagsAndFoldersPage {
  			// TODO: handle exception
  		}
 
-         
+         driver.scrollingToBottomofAPage();
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getFolderName(strFolder).Visible()  ;}}), Input.wait30); 
-        getFolderName(strFolder).waitAndClick(10);	
+         getFolderName(strFolder).waitAndClick(10);	
      
-        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
          getFolderActionDropDownArrow().waitAndClick(10);
      
@@ -401,7 +403,7 @@ public class TagsAndFoldersPage {
          getFolderViewDocView().Click();
   }  	
     
-    //added by Narendra
+    //Code added by Narendra
  	
  	public void provisionedTags() throws InterruptedException {
  				
@@ -462,47 +464,49 @@ public class TagsAndFoldersPage {
         	List<WebElement> allvalues1 = getDefaultTagsCount().FindWebElements();
         	List<String> test12 = Arrays.asList("Select Tag Classification","Technical Issue","Private Data","Privileged","Responsive");
         	for(WebElement element : allvalues1) {
-        	element.click();
-        	Thread.sleep(3000);
-         new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-         //rightarrow().Click();
-         rightarrow().waitAndClick(10);
-         Thread.sleep(3000);
-         getEditClick().waitAndClick(10);
-         Thread.sleep(3000);
-         getTagclick().waitAndClick(10);
-         Thread.sleep(3000);
-         List<String> tags1 = new ArrayList<String>();
-  	    List<WebElement> tagsclss = getAllTagClassification().FindWebElements();
-  	    for (k=0; k<tagsclss.size(); k++){
-  	    	tags1.add(tagsclss.get(k).getText());}
-  	    Assert.assertEquals(tags1, test12);
-  	    getCancel().waitAndClick(10);
-        } 
+		        	 element.click();
+		        	 Thread.sleep(1000);
+		        	 driver.scrollPageToTop();
+			          new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
+			         //rightarrow().Click();
+			         rightarrow().waitAndClick(10);
+			         Thread.sleep(1000);
+			         getEditClick().waitAndClick(10);
+			         Thread.sleep(1000);
+			         getTagclick().waitAndClick(10);
+			         Thread.sleep(1000);
+			         List<String> tags1 = new ArrayList<String>();
+			  	     List<WebElement> tagsclss = getAllTagClassification().FindWebElements();
+			  	     for (k=0; k<tagsclss.size(); k++){
+			  	    	tags1.add(tagsclss.get(k).getText());}
+			  	     Assert.assertEquals(tags1, test12);
+			  	     getCancel().waitAndClick(10);
+		        } 
         	System.out.println("Verified Tag Classification under All Tags" ); 
         	
-         //Now Default Security Group
-        	getDefaultSecgrp().waitAndClick(10);
+        //Now Default Security Group
+        getDefaultSecgrp().waitAndClick(10);
  	    getDefaultTagsArrow().waitAndClick(10);
  	    List<WebElement> allvalues2 = getDefaultTagsCount().FindWebElements();
        	for(WebElement element : allvalues2) {
-        	element.click();
-        	Thread.sleep(3000);
-         new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-         //rightarrow().Click();
-         rightarrow().waitAndClick(10);
-         Thread.sleep(3000);
-         getEditClick().waitAndClick(10);
-         Thread.sleep(3000);
-         getTagclick().waitAndClick(10);
-         Thread.sleep(3000);
-         List<String> tags2 = new ArrayList<String>();
-  	    List<WebElement> tagsclss = getAllTagClassification().FindWebElements();
-  	    for (k=0; k<tagsclss.size(); k++){
-  	    tags2.add(tagsclss.get(k).getText());}
-  	    Assert.assertEquals(tags2, test12);
-  	    getCancel().waitAndClick(10);} 
-        System.out.println("Verified Tag Classification under Default Security Group" ); 
+			    	 element.click();
+			    	 Thread.sleep(1000);
+			    	 driver.scrollPageToTop();
+			         new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
+				     //rightarrow().Click();
+				     rightarrow().waitAndClick(10);
+				     Thread.sleep(1000);
+				     getEditClick().waitAndClick(10);
+				     Thread.sleep(1000);
+				     getTagclick().waitAndClick(10);
+				     Thread.sleep(1000);
+				     List<String> tags2 = new ArrayList<String>();
+				     List<WebElement> tagsclss = getAllTagClassification().FindWebElements();
+				     for (k=0; k<tagsclss.size(); k++){
+				     tags2.add(tagsclss.get(k).getText());}
+				     Assert.assertEquals(tags2, test12);
+				     getCancel().waitAndClick(10);} 
+				     System.out.println("Verified Tag Classification under Default Security Group" ); 
 
  	}
  	
@@ -517,15 +521,16 @@ public class TagsAndFoldersPage {
 			       	//List<String> test12 = Arrays.asList("Select Tag Classification","Technical Issue","Private Data","Privileged","Responsive");
 			       	for(WebElement element : allvalues3) {
 			       	element.click();
-			       	Thread.sleep(3000);
+			       	Thread.sleep(1000);
+			       	driver.scrollPageToTop();
 			        new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
 			        //rightarrow().Click();
 			        rightarrow().waitAndClick(10);
-			        Thread.sleep(3000);
+			        Thread.sleep(1000);
 			        getEditClick().waitAndClick(10);
-			        Thread.sleep(3000);
+			        Thread.sleep(1000);
 			        getTagclick().waitAndClick(10);
-			        Thread.sleep(3000);
+			        Thread.sleep(1000);
 			        List<String> tags3 = new ArrayList<String>();
 			 	    List<WebElement> tagsclss = getAllTagClassification().FindWebElements();
 			 	    for (k=0; k<tagsclss.size(); k++){
@@ -558,7 +563,6 @@ public class TagsAndFoldersPage {
   	    Assert.assertTrue(layerann3.contains("Default Annotation Layer")); 
   		System.out.println("Verified provisioned Annotation Layer is available in Default Security Group" );
 
- 		
  	}
  	
 	public void layerAnnotationsAsRMU() throws InterruptedException {

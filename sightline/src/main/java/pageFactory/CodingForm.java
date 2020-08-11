@@ -96,7 +96,7 @@ public class CodingForm {
     public Element getCodingForm_MetadataField(){ return driver.FindElementByXPath(".//*[@id='lstMetadata']//label"); }
     public Element getCF_Metadata(){ return driver.FindElementById("lstMetadata"); }
     public Element getCF_TagTypes(){ return driver.FindElementByXPath(".//*[@id='c-0']//select[@id='0']"); }
-    public Element getCF_Preview1(){ return driver.FindElementByXPath(".//*[starts-with(@id,'item')]//td[1]"); }
+    public Element getCF_Preview1(){ return driver.FindElementByXPath(".//*[starts-with(@id,'item0')]//td[1]"); }
     public Element getCF_RadioGroup(){ return driver.FindElementById("TagRdo_0"); }
     public Element getCF_RadioGroup1(){ return driver.FindElementById("//*[@id='c-2']//select[@id='2']"); }
     
@@ -468,13 +468,44 @@ public class CodingForm {
     	   base.CloseSuccessMsgpopup();
     }
      
-     public void CopyCodingform(final String cfName) {
+     public boolean CopyCodingform(final String cfName) {
     	 
     	 this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");
      	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			  getCodingForm_CopyButton(cfName).Visible()  ;}}), Input.wait30);
-    	 
-  	   getCodingForm_CopyButton(cfName).Click();
+   
+     	   boolean nextPage= true;
+      	   boolean found= false;
+      	   System.out.println(getCFnames().size());
+      	   while(nextPage){
+      		   int row = 1;
+      		   
+      		   for (WebElement ele : getCFnames().FindWebElements()) {
+      			  System.out.println(ele.getText().trim());
+      				if(ele.getText().trim().equals(cfName)){
+      					nextPage = false;
+      					found=true;
+      					getCodingForm_CopyButton(cfName).Click();
+      					System.out.println(cfName +" is selected");
+      					return true;
+      					
+      				}
+      				
+      				row++;
+      				
+      			}
+      		   try{
+      			   driver.scrollingToBottomofAPage();
+      			   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
+      			   nextPage = false;
+      		   }
+      		   catch (Exception e) {
+      			   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
+      		   } 
+      			   
+      	   }  
+
+  	   
   	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			   base.getYesBtn().Visible()  ;}}),Input.wait60);
   	   String msg = getCF_DeletePopup().getText();
@@ -484,6 +515,7 @@ public class CodingForm {
   	    
   	   base.VerifySuccessMessage("Coding form copied successfully");
   	   base.CloseSuccessMsgpopup();
+  	 return found;
   	 	   
   }
      
@@ -516,7 +548,7 @@ public class CodingForm {
    	   
    	   boolean nextPage= true;
    	   boolean found= false;
-   	  System.out.println(getCFnames().size());
+   	   System.out.println(getCFnames().size());
    	   while(nextPage){
    		   int row = 1;
    		   
@@ -877,7 +909,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 	   
 	   if(ObjectName.equalsIgnoreCase("tag") && TagType.equalsIgnoreCase("check item") && Action.equalsIgnoreCase("Make It Optional") )
 	   {
-		   System.out.println(getCF_Preview1().GetAttribute("type"));
+		   System.out.println(getCF_Preview1().GetAttribute("class"));
 		   softAssertion.assertEquals(getCF_Preview1().GetAttribute("type"), "checkbox");
 		   softAssertion.assertTrue(getCF_Preview1().Displayed() && getCodingForm_TagNames(1).Enabled() );
 	   }
@@ -958,7 +990,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 	}
 	   
 
-    	//added by Narendra
+    	//Code added by Narendra
     		
 		public void codingForm(){
 

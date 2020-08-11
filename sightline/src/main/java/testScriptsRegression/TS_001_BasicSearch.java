@@ -50,10 +50,10 @@ public class TS_001_BasicSearch {
 		
 
 	}
-	@Test(groups={"regression"})
+	@Test(groups={"regression"},priority=1)
 	public void copySearchTextToNewSearch(){
 		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
     	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
@@ -69,8 +69,8 @@ public class TS_001_BasicSearch {
     	softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()),Input.pureHitSeachString1);
 		lp.logout();
 	}
-	//RPMXCON-37996
-	@Test(groups={"regression"})
+	
+	@Test(groups={"regression"},priority=2)
 	public void autoSuggest() throws InterruptedException {
 		
 		lp=new LoginPage(driver);
@@ -91,7 +91,7 @@ public class TS_001_BasicSearch {
 		ss.getSelectMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
 		
 			
-		ss.getMetaDataSearchText1().SendKeys("P Al");
+		ss.getMetaDataSearchText1().SendKeys("P Allen");
 		Thread.sleep(2000);
 		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
 		
@@ -108,14 +108,12 @@ public class TS_001_BasicSearch {
 		//verify counts for all the tiles
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		ss.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
-			
 		Assert.assertEquals(ss.getPureHitsCount().getText(), "1135");
-		
 		lp.logout();
 
 	}
-	//RPMXCON-37807
-	@Test(groups={"regression"})
+
+	@Test(groups={"regression"},priority=3)
 	public void emailInclusive() {
 		
 		lp=new LoginPage(driver);
@@ -131,12 +129,12 @@ public class TS_001_BasicSearch {
 		
 		lp.logout();
 	}
-	//RPMXCON-38005
-	@Test(groups={"regression"})
+	
+	@Test(groups={"regression"},priority=4)
 	public void conceptuallySimilar() throws InterruptedException {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		//Impersonate as RMU
+		//Impersonate as Reviewer
 		bc = new BaseClass(driver);
 		bc.impersonateRMUtoReviewer();	
 		ss.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
@@ -148,7 +146,8 @@ public class TS_001_BasicSearch {
 	
 		lp.logout();
 	}
-	@Test(groups={"regression"})
+	
+	@Test(groups={"regression"},priority=5)
     public void exsitingBulkFolder() throws InterruptedException {
 		String Folder = "AFolder"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -176,7 +175,8 @@ public class TS_001_BasicSearch {
 		lp.logout();
         
 	}
-	@Test(groups={"smoke","regression"})
+	
+   @Test(groups={"regression"},priority=6)
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -203,7 +203,8 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-   @Test(groups={"smoke","regression"})
+	
+    @Test(groups={"smoke","regression"},priority=7)
 	public void starSearch() {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -211,8 +212,8 @@ public class TS_001_BasicSearch {
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
 	}
-	@Test(groups={"regression"})
-   public void bulkUnTag() throws InterruptedException {
+	@Test(groups={"regression"},priority=8)
+    public void bulkUnTag() throws InterruptedException {
 	
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
 	   //Login
@@ -241,7 +242,7 @@ public class TS_001_BasicSearch {
        lp.logout();
    }
 
-	@Test(groups={"regression"})
+	@Test(groups={"regression"},priority=9)
 	public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -274,7 +275,7 @@ public class TS_001_BasicSearch {
 	    lp.logout();
 	}
 	
-	@Test(groups={"regression"})
+	@Test(groups={"regression"},priority=10)
 	public void metaDataSearchsBS() {
 		SoftAssert softAssertion= new SoftAssert();
 		lp=new LoginPage(driver);
@@ -326,9 +327,9 @@ public class TS_001_BasicSearch {
 		
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//bc.selectproject();
-		//softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
+		/*
+		bc.selectproject();
+		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
 		
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
@@ -356,7 +357,7 @@ public class TS_001_BasicSearch {
 		
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
+		*/
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
 		
@@ -370,13 +371,13 @@ public class TS_001_BasicSearch {
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
 		
 		//field mapping is not done for blow meta data search
-		
+		/*
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
 		
 		bc.selectproject();
 		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
+		*/
 		softAssertion.assertAll();
 		lp.logout();
 	}

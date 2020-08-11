@@ -28,6 +28,7 @@ public class DocExplorer_Regression {
 	BaseClass bc;
 	DocExplorerPage docexp;
 	SessionSearch search;
+	int purehits;
 	
 	String assignmentName1 = "Assgn1"+Utility.dynamicNameAppender();
 	String assignmentName2 = "Assgn2"+Utility.dynamicNameAppender();
@@ -44,10 +45,7 @@ public class DocExplorer_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
-		
-    	//Open browser
+	 	//Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		docexp = new DocExplorerPage(driver);
@@ -55,7 +53,7 @@ public class DocExplorer_Regression {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		search= new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		purehits=search.basicContentSearch(Input.searchString1);
 		//search.bulkFolderExisting("Confidential");
 		search.bulkTagExisting("Confidential");
 		bc.selectproject();
@@ -217,11 +215,11 @@ public class DocExplorer_Regression {
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
 		doclist.DoclisttobulkAssign(assignmentName1,"10");
-		assgn.assignDocstoNewAssgn(assignmentName1, null);
+		assgn.assignDocstoNewAssgn(assignmentName1, null,purehits);
 		search.ViewInDocList();
 		doclist.Selectpagelength("100");
 		doclist.DoclisttobulkAssign(assignmentName2,"100");
-		assgn.assignDocstoNewAssgn(assignmentName2, null);
+		assgn.assignDocstoNewAssgn(assignmentName2, null,purehits);
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"exclude");
   }
