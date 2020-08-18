@@ -101,7 +101,7 @@ public class ProductionPage {
     public Element getMarkpopup(){ return driver.FindElementByXPath("//*[@id='AlwayShowButton']/span"); }
     public Element getProdExportSet(){ return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a new production/export set')]"); }
     public Element getProductionLink(){ return driver.FindElementByXPath("(.//*[@id='pName']/a)[1]"); }
-    public Element getConfirmProductionCommit(){ return driver.FindElementByXPath(".//*[@id='btnProductionConfirmation']/strong"); }
+    public Element getConfirmProductionCommit(){ return driver.FindElementByXPath(".//*[@id='btnProductionConfirmation']"); }
     public Element getProductionDocCount(){ return driver.FindElementByXPath(".//*[@class='drk-gray-widget']/span[1]"); }
     public Element getReviewproductionButton(){ return driver.FindElementByXPath("//a[contains(text(),'Review Production')]"); }
     public Element getDestinationPathText(){ return driver.FindElementById("DestinationPathToCopy"); }
@@ -215,6 +215,12 @@ public class ProductionPage {
     public Element getAvailableFields(int i){ return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style']//li["+i+"]//a"); }
     public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//div[@class='col-md-8 tiff-logic insertPopup']//a[@class='LaunchPopup']"); }
     
+    //added by shilpi on 08/17
+    public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
+    public Element getDocumentGeneratetext() { return driver.FindElementByXPath("//span[contains(text(),'Documents Generated')]"); }
+    public Element getQC_backbutton() { return driver.FindElementByXPath("//a[contains(text(),'< Back')]"); }
+    public Element getQC_Download() { return driver.FindElementByXPath("//a[text()='Download']"); }
+    public Element getQC_Downloadbutton_allfiles() { return driver.FindElementByXPath("(//a[@title='Download All files'])[1]"); }
     
 
 
@@ -557,9 +563,10 @@ public class ProductionPage {
 				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
 		getbtnProductionLocationNext().Click();
 		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPreviewprod().Enabled()  ;}}), Input.wait30); 
-		getPreviewprod().Click();
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().Click();
+		 */
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
@@ -572,43 +579,38 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
 		getbtnProductionGenerate().Click();
-		System.out.println("Wait until regenerate is enabled");
+		System.out.println("Wait for generate to complete");
 				
-		for (int i = 0; i < 120; i++)
-		{
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDocumentGeneratetext().Visible()  ;}}), Input.wait120); 
+		Assert.assertTrue(getDocumentGeneratetext().Displayed());
 			
-			System.out.println("Inside fro loop");
-			try
-			{
-				
-				Thread.sleep(600000);
-				this.driver.getWebDriver().get(Input.url+"Production/Home");
-				System.out.println("Production url is hit");
-		    	getProductionLink().waitAndClick(5);
-		    	System.out.println("under Production");
-				getbtnGenerateMarkComplete().waitAndClick(5);
-				System.out.println("Generated");
-				break;
-				
-			}
-			catch (Exception e)
-			{
-				Thread.sleep(10000);
-				driver.Navigate().refresh();
-				
-			
-			}
-			
-		}
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+		getQC_backbutton().waitAndClick(15);
 	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
 		String batesno = getProd_BatesRange().getText();
 		System.out.println(batesno);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
 		getbtnSummaryNext().Click();
-		//Thread.sleep(10000);
+		
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getCopyPath().Visible()  ;}}), Input.wait30); 
+		getCopyPath().Click();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getQC_Download().Enabled()  ;}}), Input.wait30); 
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
 	
+		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
 		getConfirmProductionCommit().waitAndClick(10);
@@ -617,14 +619,7 @@ public class ProductionPage {
          int Doc = Integer.parseInt(PDocCount);
          System.out.println(Doc); 
 		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().Click();
 		
-		String location = getDestinationPathText().getText();
-        System.out.println(location);
-        Thread.sleep(7000);
-        
     	}
     
     public void ExportwithpriorProduction(String exportname,String PrefixID,String SuffixID,final String foldername) 
