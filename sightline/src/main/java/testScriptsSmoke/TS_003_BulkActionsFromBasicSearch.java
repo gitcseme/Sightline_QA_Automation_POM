@@ -141,8 +141,10 @@ public class TS_003_BulkActionsFromBasicSearch {
        sessionSearch.ViewInDocView();
        DocViewPage dv= new DocViewPage(driver);
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		   dv.getDocView_info().getText().isEmpty()  ;}}),Input.wait60);
-       Assert.assertTrue(dv.getDocView_info().Displayed());
+    		   dv.getDocView_info().Displayed()  ;}}),Input.wait60);
+       Assert.assertTrue(dv.getDocView_info().getText().toString().replaceAll(",", "").contains(String.valueOf(pureHit)));
+       
+     //  Assert.assertTrue(dv.getDocView_info().Displayed());
        System.out.println("Expected docs("+pureHit+") are shown in docView");
 	}
 	
