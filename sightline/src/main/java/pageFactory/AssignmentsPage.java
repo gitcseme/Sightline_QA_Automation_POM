@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import junit.framework.Assert;
-import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
 public class AssignmentsPage {
@@ -44,13 +42,14 @@ public class AssignmentsPage {
     public Element getNumberOfAssignmentsToBeShown(){ return driver.FindElementByXPath("//*[@id='GridAssignment_length']/label/select"); }
     public Element getSelectAssignment(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']"); }
     //change this name to pop or smtg
-    public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//span[@class='ui-dialog-title']/div"); }
+    public Element getAssignment_Actionlikepopup(){ return driver.FindElementByXPath("//span[@class='ui-dialog-title']/div"); }
     
-    public Element getAssignment_ManageReviewersTab1(){ return driver.FindElementByXPath("//*[contains(text(),'Manage Reviewers')]"); }
+    public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//*[contains(text(),'Manage Reviewers')]"); }
     
     public Element getSelectAssignmentDocCount(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td[7]"); }
     public Element getAssgnCounts(String assignmentName,int colno){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td["+colno+"]"); }
-    public Element getPersistCB(){ return driver.FindElementByXPath("//div[@id='existingassignment']//label[@class='checkbox']/i"); }
+    public Element getPersistCB_ExistAssgn(){ return driver.FindElementByXPath("//div[@id='existingassignment']//label[@class='checkbox']/i"); }
+    public Element getPersistCB_NewAssgn(){ return driver.FindElementByXPath("//div[@id='newassignmentdiv']//label[@class='checkbox']/i"); }
     public Element getSelectSavePermission(){ return driver.FindElementByXPath("(//label[@class='toggle'])[23]"); }
     
     //Assign users to assignment
@@ -64,9 +63,10 @@ public class AssignmentsPage {
     
     public Element getBulkAssign_NewAssignment(){ return driver.FindElementById("tabNew"); }
   //added by shilpi on 04-01
-    public Element getAssignmentAction_ViewinDocView(){ return driver.FindElementByXPath("//*[@id='ulActions']//a[text()='View All Docs In DocView']"); }
+    public Element getAssignmentAction_ViewinDocView(){ return driver.FindElementByXPath("//a[text()='View All Docs In DocView']"); }
     public Element getSelectAssignmentAsReviewer(String assignmentName){ return driver.FindElementByXPath(".//*[@id='dt_basic']//strong[contains(.,'"+assignmentName+"')]"); }
-    
+    public Element getAssignmentAction_ViewinDocList(){ return driver.FindElementByXPath("//a[text()='View All Docs in DocList']"); }
+     
     //added on 06/03
     public Element getAssignment_Edit_DisplayDocumentHistory(){ return driver.FindElementByXPath(".//*[@id='CascadingDivision']//label[contains(.,'Document History Tab')]/i"); }
     public Element getAssignment_Edit_ApplyRedactionbyreviewer(){ return driver.FindElementByXPath(".//*[@id='CascadingDivision']//label[contains(.,'Allow reviewers to apply redactions')]/i"); }
@@ -86,8 +86,8 @@ public class AssignmentsPage {
     public Element getAssgn_ManageRev_Action_tagdoc(){ return driver.FindElementById("Tag Documents"); }
     public Element getAssgn_ManageRev_Action_folderdoc(){ return driver.FindElementById("Folder Documents"); }
     public Element getAssgn_ManageRev_Action_ViewDoclist(){ return driver.FindElementById("View in Doc List"); }
-    public ElementCollection getDashboadAssgn(){ return driver.FindElementsByXPath("//*[@id='assignmentList']/tbody/tr"); }
-    public Element getAssgn_ManageRev_selectrev(){ return driver.FindElementByXPath(".//*[@id='dt_basic']//td[contains(.,'"+Input.rmu1userName+"')]"); }
+    public ElementCollection getDashboadAssgn(){ return driver.FindElementsByXPath("//*[@id='dt_basic']/tbody/tr"); }
+    public Element getAssgn_ManageRev_selectrev(){ return driver.FindElementByXPath(".//*[@id='dt_basic']//td[contains(.,'"+Input.rev1userName+"')]"); }
     public Element getAssgnAction_Export(){ return driver.FindElementById("rbnExport"); }
     public Element getAssgn_LikeDoc_Family(){ return driver.FindElementByXPath("//*[@class='light-bg toggleSwitch']//div[contains(text(),'Family Members')]"); }
     public Element getAssgn_LikeDoc_Email(){ return driver.FindElementByXPath("//*[@class='light-bg toggleSwitch']//div[contains(text(),'Email Threaded')]"); }
@@ -110,7 +110,7 @@ public class AssignmentsPage {
     public Element getAssgn_ManageRev_DisDoc(int rowno){ return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td["+rowno+"]"); }
     public Element getAssgnnameErrormsg(){ return driver.FindElementByCssSelector(".field-validation-error span"); }
     public Element getUnassignbutton(){ return driver.FindElementByXPath("//*[@id='toUnassign']/following-sibling::i"); }
-    public Element getAssignmentAction_Completedoc(){ return driver.FindElementById("CompleteAllDocuments"); }
+    public Element getAssignmentAction_Completedoc(){ return driver.FindElementByXPath("//a[contains(text(),'Complete All Documents')]"); }
     public Element getAssgn_Redistributepopup(){ return driver.FindElementByXPath("//*[@name='Users']/following-sibling::i"); }
     public Element getAssgn_Redistributepopup_save(){ return driver.FindElementById("btnShareSave"); }
     public Element getAssgn_DocSequence_avacrtiera(int no){ return driver.FindElementByCssSelector(".dd-list li:nth-of-type("+no+")"); }
@@ -125,6 +125,30 @@ public class AssignmentsPage {
     public Element getrev_batchprogress(String assignmentName){ return driver.FindElementById(".//td[contains(.,'"+assignmentName+"')]//following::div[starts-with(@class,'progress-bar bg-color-green')]"); }
     // public Element getAssignmentAction_Completedoc(){ return driver.FindElementById("CompleteAllDocuments"); }
     
+    //Quick Batch added by shilpi
+    public Element getQuickBatchpopup(){ return driver.FindElementByXPath("//span[contains(text(),'Quick Batch')]"); }
+  //  public Element getQuickBatch_optimizedorder(){ return driver.FindElementByXPath("//*[@id='optimized']/following-sibling::i"); }
+    public Element getQuickBatch_chornologicorder(){ return driver.FindElementByXPath(".//*[@id='chronological']/following-sibling::i"); }
+    public Element getQuickBatch_Doccount(){ return driver.FindElementByXPath("//label[text()='Selected Documents']/preceding-sibling::div"); }
+    public Element getQuickBatch_Selectallrev(){ return driver.FindElementByXPath("//*[@id='chkAll']/following-sibling::i"); }
+    public Element getAssgn_LikeDoc_Familytoggle(){ return driver.FindElementByXPath("//*[@id='chkIncludeFamilyMemeber']/following-sibling::i"); }
+    public Element getAssgn_LikeDoc_Emailtoggle(){ return driver.FindElementByXPath("//*[@id='chkIncludeEmailThreads']/following-sibling::i"); }
+    public Element getAssgn_LikeDoc_Neartoggle(){ return driver.FindElementByXPath("//*[@id='chkIncludeNearDuplicates']/following-sibling::i"); }
+    public Element getSelectUserToAssign(String userName){ return driver.FindElementByXPath("//*[@id='divNotAssignedUsers']//div[2][contains(.,'"+userName+"')]"); }
+    public Element getQuickBatch_NameErrormsg(){ return driver.FindElementByXPath("//*[@id='assignmentName']/span/span"); }
+    public Element getQuickBatch_CodingErrormsg(){ return driver.FindElementByXPath("//*[@id='codingForm']/span/span"); }
+    
+    public Element getQuickBatch_optimizedorder(){ return driver.FindElementById("optimized"); }
+    public Element getAssgn_ManageRev_revdoccount(){ return driver.FindElementByXPath(".//*[@id='dt_basic']//td[contains(.,'"+Input.rev1userName+"')]/following-sibling::td[2]"); }
+    
+    //Keywords element added by shilpi
+    public Element getAssgn_Keywordsbutton(){ return driver.FindElementById("btnKeywords"); }
+    public Element getAssgn_Keywordspopup(){ return driver.FindElementById("divkeyword"); }
+    public ElementCollection getAssgn_AllKeywords(){ return driver.FindElementsByXPath("//*[@id='assKeywordsListDiv']//div/div[1]"); }
+    public ElementCollection getAssgn_AllKeywordscheck(){ return driver.FindElementsByName("assKeywordsList"); }
+     
+    public Element getAssgn_Keywordokbutton(){ return driver.FindElementById("keywordOK"); }
+  
     
     public AssignmentsPage(Driver driver){
 
@@ -145,9 +169,7 @@ public class AssignmentsPage {
     	Thread.sleep(2000);
     	getAssignmentActionDropdown().waitAndClick(10);
     	
-    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAssignmentAction_NewAssignment().Displayed()  ;}}), Input.wait60);*/
-    	getAssignmentAction_NewAssignment().WaitUntilPresent();
+     	getAssignmentAction_NewAssignment().WaitUntilPresent();
     	Thread.sleep(2000);
     	getAssignmentAction_NewAssignment().waitAndClick(20);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -163,7 +185,8 @@ public class AssignmentsPage {
     	catch (Exception e) {
     		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
     	} 
-    	//permissions
+    	
+    	 	//permissions
     	driver.scrollingToBottomofAPage();
     	getSelectSavePermission().ScrollTo();
     	getSelectSavePermission().waitAndClick(5);
@@ -176,19 +199,16 @@ public class AssignmentsPage {
     
     public void assignDocstoExisting(final String assignmentName) {
     	
-    	//getSelectAssignmentToBulkAssign(assignmentName).WaitUntilPresent();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getStartingCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
        	
-    	getPersistCB().waitAndClick(5);
+    	getPersistCB_ExistAssgn().waitAndClick(5);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
        	
-    	//getSelectAssignmentToBulkAssign(assignmentName).waitAndClick(20);
-    	//getSelectcopyAssgnmToBulkAssign(assignmentName).waitAndClick(20);
     	System.out.println(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
 		for (WebElement iterable_element : getSelectcopyAssgnmToBulkAssign().FindWebElements()) {
-			//System.out.println(iterable_element.getText());
+			
 			if(iterable_element.getText().contains(assignmentName)){
 				try {
 					Thread.sleep(5000);
@@ -210,10 +230,10 @@ public class AssignmentsPage {
        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-       			getAssignment_ManageReviewersTab().Visible();}}), Input.wait30);
+       			getAssignment_Actionlikepopup().Visible();}}), Input.wait30);
        	
        	
-       	String assignpop = getAssignment_ManageReviewersTab().getText();
+       	String assignpop = getAssignment_Actionlikepopup().getText();
        	System.out.println(assignpop);
        	Assert.assertEquals("Action Like Documents" , assignpop);
        	
@@ -260,8 +280,8 @@ public class AssignmentsPage {
       public void addReviewerAndDistributeDocs(String assignmentName,int docCount) throws InterruptedException {
 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAssignment_ManageReviewersTab1().Visible()  ;}}), Input.wait60);
-    	getAssignment_ManageReviewersTab1().waitAndClick(10);
+    			getAssignment_ManageReviewersTab().Visible()  ;}}), Input.wait60);
+    	getAssignment_ManageReviewersTab().waitAndClick(10);
     	
     	getAddReviewersBtn().waitAndClick(10);
     	
@@ -269,8 +289,8 @@ public class AssignmentsPage {
     			getSelectUserToAssign().Visible()  ;}}), Input.wait60);
     	getSelectUserToAssign().waitAndClick(10);
     	getAdduserBtn().Click();
-    	 bc.VerifySuccessMessage("Record saved successfully");
-    	getDistributeTab().Click();
+    	bc.VerifySuccessMessage("Record saved successfully");
+    	getDistributeTab().waitAndClick(20);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSelectUserInDistributeTab().Visible()  ;}}), Input.wait60);
     	getSelectUserInDistributeTab().waitAndClick(20);
@@ -289,32 +309,35 @@ public class AssignmentsPage {
     	driver.scrollingToBottomofAPage();
     	Thread.sleep(2000);
     	
-    	getAssgnCounts(assignmentName, 9).WaitUntilPresent();
+    	getAssgnCounts(assignmentName, 9);
     	//verify total docs count
     	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
-    	Assert.assertEquals(docCount, Integer.parseInt(acttotalcount));
+    	//assertion.assertEquals(docCount, Integer.parseInt(acttotalcount));
     	
     	//verify distributed docs count
     	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(actdistributedcount));
-    	Assert.assertEquals(docCount, Integer.parseInt(actdistributedcount));
+    //	assertion.assertEquals(docCount, Integer.parseInt(actdistributedcount));
+    //	assertion.assertAll();
      	
 	}
     
-    public void assignDocstoNewAssgn(final String assignmentName,String codingForm,int pureHit) {
+    public void assignDocstoNewAssgn(final String assignmentName,String codingForm,int purehits) {
       	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getBulkAssign_NewAssignment().Visible()  ;}}), Input.wait60);
     	getBulkAssign_NewAssignment().waitAndClick(20);
     	Assert.assertTrue(getbulkassgnpopup().Displayed());
+    	
+    	getPersistCB_NewAssgn().waitAndClick(15);
    	
-        	getContinueBulkAssign().waitAndClick(15);
+        getContinueBulkAssign().waitAndClick(15);
   
      	final BaseClass bc = new BaseClass(driver);
       final int Bgcount = bc.initialBgCount();
       
-      getFinalizeButton().waitAndClick(5);
+      getFinalizeButton().waitAndClick(Input.wait30);
       
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			 getAssignmentName().Visible()  ;}}), Input.wait60);
@@ -329,7 +352,10 @@ public class AssignmentsPage {
  	catch (Exception e) {
  		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
  	} 
-    getAssignmentSaveButton().waitAndClick(5);
+ 	  
+ 	  getAssgnGrp_Create_DrawPooltoggle().waitAndClick(10);
+ 	  
+    getAssignmentSaveButton().waitAndClick(Input.wait30);
  	  System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
       
    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -348,8 +374,9 @@ public class AssignmentsPage {
 			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
 	driver.scrollingToBottomofAPage();
 
-	Assert.assertEquals(pureHit,Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText()));
-	}
+	Assert.assertEquals(purehits,Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText()));
+	
+     }
     
     
     public void SelectAssignmentToViewinDocview(final String assignmentName) {
@@ -409,7 +436,7 @@ public class AssignmentsPage {
   {
 	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getAssgn_DocSequenceblock().Displayed()  ;}}), Input.wait60);
-	  assertion.assertEquals("DOCUMENT PRESENTATION SEQUENCE", getAssgn_DocSequencelabel().getText());
+	  Assert.assertEquals("DOCUMENT PRESENTATION SEQUENCE", getAssgn_DocSequencelabel().getText());
 	  
 	Element taget = getAssgn_DocSequence_liveseq();
 	for(int i=1;i<=4;i++)
@@ -425,7 +452,7 @@ public class AssignmentsPage {
 	  
   	bc.VerifySuccessMessage("Assignment updated successfully");
   	bc.CloseSuccessMsgpopup();
-	assertion.assertAll();
+
   }
   
    public void Assignment_ManageRevtab_ViewinDocView() {
@@ -434,18 +461,24 @@ public class AssignmentsPage {
     			getAssignment_ManageReviewersTab().Visible()  ;}}), Input.wait60);
     	getAssignment_ManageReviewersTab().waitAndClick(10);
     	
+    	String count= getAssgn_ManageRev_revdoccount().getText();
+    	System.out.println(count);
+    	
     	getAssgn_ManageRev_selectrev().waitAndClick(10);
        	
        	getAssgn_ManageRev_Action().waitAndClick(10);
        	
-       	assertion.assertTrue(getAssgn_ManageRev_Action_ViewDocview().Displayed());
-    	assertion.assertTrue(getAssgn_ManageRev_Action_ViewDoclist().Displayed());
+       	Assert.assertTrue(getAssgn_ManageRev_Action_ViewDocview().Displayed());
     	
     	getAssgn_ManageRev_Action_ViewDocview().waitAndClick(10);
     	bc.getYesBtn().waitAndClick(10);
     	
     	DocViewPage docview = new DocViewPage(driver);
-    	//docview.
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			docview.getDocView_info().Visible()  ;}}), Input.wait60);
+    	String expcount= docview.getDocView_info().getText();
+    	System.out.println(expcount);
+    	Assert.assertTrue(expcount.contains(count));
       
 		}
    
@@ -455,15 +488,20 @@ public class AssignmentsPage {
    			getAssignment_ManageReviewersTab().Visible()  ;}}), Input.wait60);
    	getAssignment_ManageReviewersTab().waitAndClick(10);
    	
+   	String count= getAssgn_ManageRev_revdoccount().getText();
+	System.out.println(count);
+   	
    	getAssgn_ManageRev_selectrev().waitAndClick(10);
       	
-      	getAssgn_ManageRev_Action().waitAndClick(10);
+     getAssgn_ManageRev_Action().waitAndClick(10);
       	
    	assertion.assertTrue(getAssgn_ManageRev_Action_ViewDoclist().Displayed());
    	
    	getAssgn_ManageRev_Action_ViewDoclist().waitAndClick(10);
    	bc.getYesBtn().waitAndClick(10);
-   		}
+   }
+   
+   
    public void AssignmentDashboard() {
 	   driver.getWebDriver().get(Input.url+ "Dashboard/Dashboard");
 	   
@@ -473,19 +511,10 @@ public class AssignmentsPage {
 	List<WebElement> assgnlist = new ArrayList<WebElement>();
 	assgnlist = getDashboadAssgn().FindWebElements();
 	System.out.println("Assign list is"+assgnlist.size());
-	List<String> asgncount = new ArrayList<String>();
-	for(WebElement count: assgnlist)
-	{
-		asgncount.add(count.getText());
-		System.out.println(asgncount.add(count.getText()));
-	}
-	if(asgncount.size()<=5)
-	{
-		System.out.println("Pass");
-	}
-	else {System.out.println("Fail");}
 	
- 		}
+	Assert.assertTrue(assgnlist.size()<=5);
+
+	}
    
    public void Assignment_ManageRevtab_TagFolder(String tagname,String foldername) throws InterruptedException {
 	   
@@ -742,7 +771,7 @@ public class AssignmentsPage {
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getAssignmentAction_DeleteAssignment().Visible()  ;}}), Input.wait60);
    
-   	getAssignmentAction_DeleteAssignment().waitAndClick(3);
+   	getAssignmentAction_DeleteAssignment().waitAndClick(10);
    	
 	bc.getYesBtn().waitAndClick(5);
 	bc.VerifySuccessMessage("Assignment deleted successfully");
@@ -757,7 +786,7 @@ public class AssignmentsPage {
    	
    	driver.scrollPageToTop();
    	
-   	getAssignmentActionDropdown().Click();
+   	getAssignmentActionDropdown().waitAndClick(10);
    	
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
@@ -786,7 +815,7 @@ public class AssignmentsPage {
    		getsampleMethod().selectFromDropdown().selectByVisibleText("Inclusive Email");
    	}
       	
-   	getPersistCB().waitAndClick(5);
+   	getPersistCB_ExistAssgn().waitAndClick(5);
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
       	
@@ -814,7 +843,7 @@ public class AssignmentsPage {
 	Assert.assertEquals(5, Integer.parseInt(acttotalcount));
 	}
    
-   public void CompleteAssgn(String assignmentName) {
+   public void CompleteAssgn(String assignmentName)throws InterruptedException{
 	   	driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
 	   	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -837,6 +866,7 @@ public class AssignmentsPage {
     
     	Assert.assertTrue(getAssignmentAction_Completedoc().Displayed());
     	
+    	getAssignmentAction_Completedoc().waitAndClick(10);
     	bc.getYesBtn().waitAndClick(10);
     	bc.VerifySuccessMessage("All Documents successfully completed.");
     	
@@ -954,7 +984,7 @@ public class AssignmentsPage {
 	    Assert.assertTrue(permission4.equalsIgnoreCase("false"));
 	  	}
         
-        public void completedocsinassgn(String assignmentName)
+        public void completedocsinassgn(String assignmentName) throws InterruptedException
         {
         	getSelectAssignment(assignmentName).waitAndClick(5);;
         	driver.scrollPageToTop();
@@ -995,8 +1025,473 @@ public class AssignmentsPage {
     		}*/
     		
         }
-   
+        
+        public void Viewindoclistfromassgn(String assignmentName)
+        {
+        	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait30);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+           	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait30);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+           driver.scrollPageToTop();
+        	
+           getAssignmentActionDropdown().waitAndClick(15);
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_ViewinDocList().Visible()  ;}}), Input.wait60);
+        	getAssignmentAction_ViewinDocList().Click();
+        	
+        	final DocListPage dp = new DocListPage(driver);
+    	    dp.getDocList_info().WaitUntilPresent();
+    	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+    	  //  Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+Input.pureHitSeachString1+" entries");
+    	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+
+        }
+        
+        public void Viewindocviewfromassgn(String assignmentName)
+        {
+        	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait30);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+           	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait30);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+           driver.scrollPageToTop();
+        	
+           getAssignmentActionDropdown().waitAndClick(15);
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_ViewinDocView().Visible()  ;}}), Input.wait60);
+        	getAssignmentAction_ViewinDocView().Click();
+        	
+        	DocViewPage dv= new DocViewPage(driver);
+      	    dv.getDocView_info().WaitUntilPresent();
+      	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+Input.pureHitSeachString1+" Docs");
+      	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+        }
+        
+        public void createnewquickbatch_chronologic_withoutReviewer(final String assignmentName,String codingForm) {
+     
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     			 getAssignmentName().Visible()  ;}}), Input.wait60);
+      	getAssignmentName().SendKeys(assignmentName);
+      
+         try {
+     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait30);
+        	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+     	}
+     	catch (Exception e) {
+     		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+     	} 
+         try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+         
+         Assert.assertTrue(getQuickBatch_optimizedorder().Selected());
+         getQuickBatch_chornologicorder().waitAndClick(10);
+         
+          
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		 getQuickBatch_Doccount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
+        	    	
+         int doccount = Integer.parseInt(getQuickBatch_Doccount().getText());
+         System.out.println("Doc Count is :"+doccount);
+         
+         getContinueBulkAssign().waitAndClick(Input.wait30);
+         
+
+       final BaseClass bc = new BaseClass(driver);
+       final int Bgcount = bc.initialBgCount();
+       
+       getFinalizeButton().waitAndClick(Input.wait30);
+       
+       bc.VerifySuccessMessage("Quick Batch Assign has been added to background process. You will get notification on completion.");
+       System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+          
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
+      	
+      	System.out.println("Docs assigned to  "+assignmentName);
+      	
+      	bc.BckTaskMessageverify("QuickBatch");
+      	
+      	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+      	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+    	
+    	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+    	
+    	
+    	driver.scrollingToBottomofAPage();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
+    	driver.scrollingToBottomofAPage();
+    	getSelectAssignment(assignmentName).waitAndClick(15);
+
+    	System.out.println(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()));
+
+    //	Assert.assertEquals(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()),doccount);
+    	
+	   driver.scrollPageToTop();
+    	
+    	getAssignmentActionDropdown().Click();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
+    
+    	getAssignmentAction_EditAssignment().waitAndClick(15);
+    	getAssgnGrp_Create_DrawPoolCount().WaitUntilPresent();
+    	
+    	System.out.println(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"));
+    	System.out.println(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value").toString());
+    	Assert.assertEquals(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"),"true");
+    	
+    	Assert.assertEquals(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value").toString(),"100");
+    //	assertion.assertAll();
+    }
+        
+        public void createnewquickbatch_Optimized_withReviewer(final String assignmentName,String codingForm,String Reviewercheck) {
+           
+            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			 getAssignmentName().Visible()  ;}}), Input.wait60);
+          	getAssignmentName().SendKeys(assignmentName);
+          
+             try {
+         		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait30);
+            	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+         	}
+         	catch (Exception e) {
+         		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+         	} 
+         
+             if(Reviewercheck.equals("AllRev"))
+            {
+            getQuickBatch_Selectallrev().waitAndClick(10);
+            }
+            else if(Reviewercheck.equals("selectrmu"))
+            {
+            	getSelectUserToAssign(Input.rmu1userName).waitAndClick(10);
+            	getSelectUserToAssign(Input.rmu2userName).waitAndClick(10);
+            }
+            else if(Reviewercheck.equals("selectrev"))
+            {
+            	getSelectUserToAssign(Input.rev1userName).waitAndClick(10);
+            	getSelectUserToAssign(Input.rev2userName).waitAndClick(10);
+            }
+             final String doccount = getQuickBatch_Doccount().getText();
+             System.out.println(doccount);
+             
+             getContinueBulkAssign().waitAndClick(Input.wait30);
+             
+             driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
+              
+           getAssgn_LikeDoc_Familytoggle().waitAndClick(Input.wait30);
+           getAssgn_LikeDoc_Emailtoggle().waitAndClick(10);
+           getAssgn_LikeDoc_Neartoggle().waitAndClick(10);
+          	
+           String totaldoccount = getFinalCount().getText();
+           Integer.parseInt(totaldoccount);
+           System.out.println("Doc Count:-"+  totaldoccount);
+           
+           final BaseClass bc = new BaseClass(driver);
+           final int Bgcount = bc.initialBgCount();
+           
+           getFinalizeButton().waitAndClick(Input.wait30);
+           
+           bc.VerifySuccessMessage("Quick Batch Assign has been added to background process. You will get notification on completion.");
+           System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+              
+           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
+          	
+          	System.out.println("Docs assigned to  "+assignmentName);
+          	
+          	bc.BckTaskMessageverify("QuickBatch");
+          	
+          	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+        	
+        	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+        	
+        	System.out.println(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()));
+
+        	assertion.assertEquals(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()),totaldoccount);
+        	
+    	    driver.scrollPageToTop();
+        	
+        	getAssignmentActionDropdown().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
+        
+        	getAssignmentAction_EditAssignment().waitAndClick(15);
+        	getAssgnGrp_Create_DrawPoolCount().WaitUntilPresent();
+        	
+        	Assert.assertEquals(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"),"true");
+        	System.out.println(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"));
+        	System.out.println(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value"));
+        	
+        	Assert.assertEquals(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value"),"100");
+        	//assertion.assertAll();
+        }
+        
+        public void ValidateReviewerlistquickbatch(String pendinguser) {
+         
+            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			 getAssignmentName().Visible()  ;}}), Input.wait60);
+         
+             
+           //verify all users are available
+           System.out.println(getSelectUserToAssign(Input.pa1userName).Exists());
+         //  Assert.assertTrue(getSelectUserToAssign(Input.da1userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.pa1userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.pa2userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.rmu1userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.rmu2userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.rev1userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(Input.rev2userName).Exists());
+           Assert.assertTrue(getSelectUserToAssign(pendinguser).Exists());
+            
+          }
+        
+        public void Quickbatchfailure() {
+        	
+        	//click on continue button without selecting mandatory fields
+        	 getContinueBulkAssign().waitAndClick(Input.wait30);
+        	 
+        	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+           			getQuickBatch_NameErrormsg().Visible()  ;}}), Input.wait30);
+           	String expnamemsg = getQuickBatch_NameErrormsg().getText();
+           	System.out.println(expnamemsg);
+           	Assert.assertEquals("Name required", expnamemsg);
+           	
+           	String expcodingmsg = getQuickBatch_CodingErrormsg().getText();
+           	System.out.println(expcodingmsg);
+           	Assert.assertEquals("Please select Coding Form", expcodingmsg);
+        	
+            String aasgnname = "AutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTestingforQuickBatchAutomationTesting";   
+           
+            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			 getAssignmentName().Visible()  ;}}), Input.wait30);
+          	getAssignmentName().SendKeys(aasgnname);
+          	
+          	getAssignmentName().Click();
+          	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+          			getQuickBatch_NameErrormsg().Visible()  ;}}), Input.wait30);
+          	String expmsg = getQuickBatch_NameErrormsg().getText();
+          	System.out.println(expmsg);
+          	Assert.assertEquals("Maximum length should be 250", expmsg);
+          
+           	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait30);
+           	getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+        
+            getContinueBulkAssign().waitAndClick(Input.wait30);
+        } 
+        
+         
+          
+        public void createnewquickbatch(final String assignmentName,String codingForm) throws NumberFormatException, InterruptedException {
+            
+            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			 getAssignmentName().Visible()  ;}}), Input.wait60);
+          	getAssignmentName().SendKeys(assignmentName);
+          
+             try {
+         		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait30);
+            	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+         	}
+         	catch (Exception e) {
+         		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+         	} 
+             
+             String doccount = getQuickBatch_Doccount().getText();
+             Integer.parseInt(doccount);
+             System.out.println(doccount);
+          
+          getContinueBulkAssign().waitAndClick(Input.wait30);
+             
+           final BaseClass bc = new BaseClass(driver);
+           final int Bgcount = bc.initialBgCount();
+           
+           getFinalizeButton().waitAndClick(Input.wait30);
+           
+           bc.VerifySuccessMessage("Quick Batch Assign has been added to background process. You will get notification on completion.");
+           System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+              
+           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
+          	
+          	System.out.println("Docs assigned to  "+assignmentName);
+          	
+          	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+          	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+        	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
+        	driver.scrollingToBottomofAPage();
+        	getSelectAssignment(assignmentName).waitAndClick(15);
+
+     	   driver.scrollPageToTop();
+        	
+        	getAssignmentActionDropdown().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
+        
+        	getAssignmentAction_EditAssignment().waitAndClick(15);
+        	
+        	getAssignmentName().SendKeys(assignmentName+"New");
+        	getAssignmentSaveButton().waitAndClick(10);
+            bc.VerifySuccessMessage("Assignment updated successfully");
+        	bc.CloseSuccessMsgpopup();
+        	Thread.sleep(2000);
+	
+        	
+			addReviewerAndDistributeDocs(assignmentName+"New", Integer.parseInt(doccount));
+			            
+        	getAssignmentActionDropdown().waitAndClick(10);
+       
+        	getAssignmentAction_CopyAssignment().waitAndClick(5);
+       	   	
+       		bc.getYesBtn().waitAndClick(5);
+       		bc.VerifySuccessMessage("Record copied successfully");
+       		
+       		//view all docs in doclist
+       		Viewindoclistfromassgn(assignmentName+"New");
+       		
+       	   //view all docs in docview
+       		Viewindocviewfromassgn(assignmentName+"New");
+
+        	//delete assignment
+       		deleteAssignment(assignmentName+"New");
+        	
+         }
+            
+
+        public void createAssignmentwithkeywords(String assignmentName, String codingForm,String[] keys) throws InterruptedException {
+        	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentActionDropdown().Visible() ;}}), Input.wait60);
+        	Thread.sleep(2000);
+        	getAssignmentActionDropdown().waitAndClick(10);
+        	
+         	getAssignmentAction_NewAssignment().WaitUntilPresent();
+        	Thread.sleep(2000);
+        	getAssignmentAction_NewAssignment().waitAndClick(20);
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			 getAssignmentName().Visible()  ;}}), Input.wait60);
+        	getAssignmentName().SendKeys(assignmentName);
+        	getParentAssignmentGroupName().Displayed();
+        	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
+        	try {
+        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        				getAssignmentCodingFormDropDown().Visible()  ;}}), Input.wait60);
+           	getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+        	}
+        	catch (Exception e) {
+        		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
+        	} 
+        	
+        	//verify keywords
+        	getAssgn_Keywordsbutton().waitAndClick(10);
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAssgn_Keywordspopup().Visible()  ;}}), Input.wait30);
+        	
+        	  List<WebElement> allvalues = getAssgn_AllKeywordscheck().FindWebElements();
+        	  List<String> expkey = new ArrayList<String>();
+			   for(int j=1;j<=allvalues.size();j++)
+			   {
+				  System.out.println(allvalues.get(j).getAttribute("checked").toString());
+				  System.out.println(allvalues.get(j).getText());
+				  if(allvalues.get(j).getAttribute("checked").equalsIgnoreCase("checked")) {
+					   System.out.println("Pass");
+					  
+				   }
+				   else {
+					   System.out.println("FAIL");
+				   }
+			   }
+            	
+        	 	//permissions
+        	driver.scrollingToBottomofAPage();
+        	getSelectSavePermission().ScrollTo();
+        	getSelectSavePermission().waitAndClick(5);
+        	driver.scrollPageToTop();
+        	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
+        	getAssignmentSaveButton().waitAndClick(5);
+        	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+        	 
+    	}
+        
+        public void Impersonateusercompletedoc(String assignmentName)
+        {
+        	driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+    	   	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNumberOfAssignmentsToBeShown().Visible()  ;}}), Input.wait60);
+        	
+        	getNumberOfAssignmentsToBeShown().selectFromDropdown().selectByVisibleText("100");
+        	
+        	driver.scrollingToBottomofAPage();
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getSelectAssignment(assignmentName).Visible()  ;}}), Input.wait60);
+        	driver.scrollingToBottomofAPage();
+        
+        	getSelectAssignment(assignmentName).waitAndClick(5);;
+        	driver.scrollPageToTop();
+        	
+        	getAssignmentActionDropdown().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
+        
+         	getAssignmentAction_Completedoc().waitAndClick(10);
+        	bc.VerifyErrorMessage("Impersonated User cant do this operation");
+         		
+        }
    
  
+       
  
  }

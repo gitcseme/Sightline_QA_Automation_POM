@@ -3,6 +3,7 @@ package configsAndTestData;
 public class Environment {
 	public String url;
 	public String projectName;
+	public String domainName;
 	public String sa1userName;
 	public String sa1password;
     public String da1userName;
@@ -206,4 +207,11 @@ public class Environment {
 		this.da1password = da1password;
 	}
 	
+	public String getdomainName() {
+		return domainName;
+	}
+	
+	public void setdomainName(String domainName) {
+		this.domainName = domainName;
+	}
 }

@@ -25,7 +25,7 @@ public class UserManagement {
 	    public Element getSelectLanguage(){ return driver.FindElementByXPath("//*[@tabindex='6']"); }
 	    public Element getSelectDomain(){ return driver.FindElementByXPath("//*[@tabindex='8']"); }
 	    public Element getSelectProject(){ return driver.FindElementByXPath("//*[@tabindex='7']"); }
-	    public Element getSecurityGroup(){ return driver.FindElementByXPath("(//*[@tabindex='8'])[2]"); }
+	    public Element getSecurityGroup(){ return driver.FindElementByXPath("(//*[@tabindex='8'])"); }
 	    public Element getSave(){ return driver.FindElementById("SaveUser"); }
 	    
 	    //set password
@@ -80,6 +80,18 @@ public class UserManagement {
 	    public Element getSelectusertoassignindomain(){ return driver.FindElementById("UnAssignedUsersForDomain"); }
 	    public Element getrightBtndomainuser(){ return driver.FindElementByXPath("//a[@id='btnRightUserMaappingForDomain']"); }
 	    public Element getsavedomainuser(){ return driver.FindElementById("btnSave"); }
+	    
+	    //added by Narendra - Lock Account
+	    public Element getEdit(int i){ return driver.FindElementByXPath("//table[@id='dtUserList']//tr["+i+"]/td[7]/a[contains(text(),'Edit')]"); }
+	    public Element getIsLock(){ return driver.FindElementById("Ischklocked"); }
+	    public Element getSubmit(){ return driver.FindElementById("btnsubmit"); }
+	    public Element getCancel(){ return driver.FindElementById("submit"); }
+	    public Element getLock(){ return driver.FindElementByXPath("//div[@class='tab-pane fade in active']//div[10]//div[1]//label[1]//i[1]"); }
+	    public Element getRMUasPASecurityGroup(){ return driver.FindElementByXPath("(//*[@id='SysAdminSecGroup'][@tabindex='7'])"); }
+	    public Element getRMUasRMUSecurityGroup(){ return driver.FindElementByXPath("(//*[@id='SysAdminSecGroup'][@tabindex='6'])"); }
+	    
+	    
+	    
 	   
 	    public UserManagement(Driver driver){
 
@@ -130,7 +142,8 @@ public class UserManagement {
 			   }
 		
 	}
-	 public void setPassword(String pwd) {
+	 
+public void setPassword(String pwd) {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSetPassword().Visible() ;}}), Input.wait30);
 		 getSetPassword().SendKeys(pwd);
@@ -146,7 +159,9 @@ public class UserManagement {
 		 
 		 
 	}
-	 public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
+	
+ public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
+		
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddUserBtn().Visible() ;}}), Input.wait30);
 		 getAddUserBtn().Click();
@@ -254,7 +269,7 @@ public class UserManagement {
 
 	}
 
- public void RMUUserwithAttorneyProfile(String firstName, String lastName, String role, String emailId, String domain, String project) {
+     public void RMUUserwithAttorneyProfile(String firstName, String lastName, String role, String emailId, String domain, String project) {
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddUserBtn().Visible() ;}}), Input.wait30);
@@ -348,4 +363,215 @@ public class UserManagement {
 			getsavedomainuser().waitAndClick(10);
 			 
 	    }		 
+
+	    //added by Narendra
+	    
+	    public void lockAccount(String name,String role, String userSate) throws InterruptedException {
+	    	 
+	    	 if (userSate.equalsIgnoreCase("inactive")) {
+				 driver.scrollPageToTop();
+				 getActiveInactiveBtn().waitAndClick(10);
+			}
+		    	 getUserNameFilter().SendKeys(name);
+		    	 getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		    	 getFilerApplyBtn().Click();
+			   
+		    	 boolean nextPage= true;
+		    	 
+		    	 while(nextPage){
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   getNumberofUsers().Visible()  ;}}),Input.wait30);
+				   System.out.println("Number of records in a current page : "+getNumberofUsers().size());
+				   System.out.println("Validation started..please wait");
+					
+				   for (int i = 1; i<getNumberofUsers().size();i++) {
+					  if (userSate.endsWith("active")) {
+						  getEdit(i).waitAndClick(10);
+						  Thread.sleep(3000);
+						  if(getIsLock().GetAttribute("checked") != null)
+						  {
+							  System.out.println("Already Cheacked"); 
+							  getCancel().waitAndClick(10);
+						  }
+						  else
+						  {
+							  getIsLock().Click(); 
+							  getSubmit().waitAndClick(10);
+						  }
+						  
+					}else if (userSate.equalsIgnoreCase("inactive")) {
+						
+							System.out.println("Users are Inactive");	
+					
+					}
+						
+					}
+				   
+				   try{
+					   driver.scrollingToBottomofAPage();
+					   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
+					   nextPage = false;
+				   }
+				   catch (Exception e) {
+					   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
+				   } 
+					   
+			   }
+	    }
+	    
+	    public void UnlockAccount(String name,String role, String userSate) throws InterruptedException {
+	    	 
+	    	 if (userSate.equalsIgnoreCase("inactive")) {
+				 driver.scrollPageToTop();
+				 getActiveInactiveBtn().waitAndClick(10);
+			}
+		    	 getUserNameFilter().SendKeys(name);
+		    	 getSelectRoleToFilter().selectFromDropdown().selectByVisibleText(role);
+		    	 getFilerApplyBtn().Click();
+			   
+		    	 boolean nextPage= true;
+		    	 
+		    	 while(nextPage){
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   getNumberofUsers().Visible()  ;}}),Input.wait30);
+				   System.out.println("Number of records in a current page : "+getNumberofUsers().size());
+				   System.out.println("Validation started..please wait");
+					
+				   for (int i = 1; i<getNumberofUsers().size();i++) {
+					  if (userSate.endsWith("active")) {
+						  getEdit(i).waitAndClick(10);
+						  Thread.sleep(3000);
+						  if(getIsLock().GetAttribute("checked") != null)
+						  {
+							  getLock().Click(); 
+							  getSubmit().waitAndClick(10);
+							  System.out.println("Account is unlocked now");
+						  }
+						  else
+						  {
+							  System.out.println("Already unlocked"); 
+							  getCancel().waitAndClick(10);
+						  }
+						  
+					}else if (userSate.equalsIgnoreCase("inactive")) {
+						
+							System.out.println("Users are Inactive");	
+					
+					}
+						
+					}
+				   
+				   try{
+					   driver.scrollingToBottomofAPage();
+					   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
+					   nextPage = false;
+				   }
+				   catch (Exception e) {
+					   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
+				   } 
+					   
+			   }
+	    }
+		
+	    public void RMUUserAttorneyasPA(String firstName, String lastName, String role, String emailId, String domain) {
+			 
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getAddUserBtn().Visible() ;}}), Input.wait30);
+			 getAddUserBtn().Click();
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getFirstName().Visible() ;}}), Input.wait30);
+			 getFirstName().SendKeys(firstName);
+			 getLastName().SendKeys(lastName);
+			 getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			 if(role.equalsIgnoreCase("Review Manager"))
+					 {
+				 getAttorneyprofilecheckbox().WaitUntilPresent();
+				 Assert.assertTrue(getAttorneyprofilecheckbox().Displayed());
+				 getAttorneyprofilecheckbox().waitAndClick(10);
+					 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getSelectDomain().Visible() ;}}), Input.wait30);
+			 if(role.equalsIgnoreCase("Domain Administrator")){
+				 getSelectDomain().selectFromDropdown().selectByIndex(1);
+			 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getEmail().Exists() ;}}), Input.wait30);
+			 getEmail().SendKeys(emailId);
+			 getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+			 if(role.equalsIgnoreCase("Project Administrator")||role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getSelectProject().Visible() ;}}), Input.wait30);
+			 //getSelectDomain().SendKeys(domain);
+			 //getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getRMUasPASecurityGroup().Visible() ;}}), Input.wait30);
+			 try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			 if(role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+				 getRMUasPASecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");;
+			 
+			 }
+			 getSave().Click();
+			 bc.VerifySuccessMessage("User profile was successfully created");
+					 
+		}
+	    
+	    public void RMUUserAttorneyasRMU(String firstName, String lastName, String role, String emailId, String domain) {
+			 
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getAddUserBtn().Visible() ;}}), Input.wait30);
+			 getAddUserBtn().Click();
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getFirstName().Visible() ;}}), Input.wait30);
+			 getFirstName().SendKeys(firstName);
+			 getLastName().SendKeys(lastName);
+			 getSelectRole().selectFromDropdown().selectByVisibleText(role);
+			 if(role.equalsIgnoreCase("Review Manager"))
+					 {
+				 getAttorneyprofilecheckbox().WaitUntilPresent();
+				 Assert.assertTrue(getAttorneyprofilecheckbox().Displayed());
+				 getAttorneyprofilecheckbox().waitAndClick(10);
+					 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getSelectDomain().Visible() ;}}), Input.wait30);
+			 if(role.equalsIgnoreCase("Domain Administrator")){
+				 getSelectDomain().selectFromDropdown().selectByIndex(1);
+			 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getEmail().Exists() ;}}), Input.wait30);
+			 getEmail().SendKeys(emailId);
+			 getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+			 if(role.equalsIgnoreCase("Project Administrator")||role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getSelectProject().Visible() ;}}), Input.wait30);
+			 //getSelectDomain().SendKeys(domain);
+			 //getSelectProject().selectFromDropdown().selectByVisibleText(project);
+			 }
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 getRMUasRMUSecurityGroup().Visible() ;}}), Input.wait30);
+			 try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
+			 if(role.equalsIgnoreCase("Review Manager")
+						||role.equalsIgnoreCase("Reviewer")){
+				 getRMUasRMUSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");;
+			 
+			 }
+			 getSave().Click();
+			 bc.VerifySuccessMessage("User profile was successfully created");
+					 
+		}
+	    
+	   
 }

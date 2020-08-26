@@ -29,6 +29,7 @@ public class SavedSearch_Regression  {
 	SavedSearch ss;
 	SessionSearch search;
     BaseClass base;
+    public static int purehits;
 	
 	//String searchText = "test";
 	String saveSearchName = "test20"+Utility.dynamicNameAppender();
@@ -57,8 +58,8 @@ public class SavedSearch_Regression  {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		//Search and save it
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		search = new SessionSearch(driver);
+		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
         search.saveSearch(SearchNamePA);
 		Thread.sleep(5000);
@@ -82,8 +83,8 @@ public class SavedSearch_Regression  {
 	    dp.getDocList_info().WaitUntilPresent();
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
-	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+Input.pureHitSeachString1+" entries");
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+	    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 10 of "+purehits+" entries");
+	    System.out.println("Expected docs("+purehits+") are shown in doclist");
 
 	}
 	
@@ -96,12 +97,12 @@ public class SavedSearch_Regression  {
 	 */
 	@Test(groups={"regression"},priority=2)
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
-		
+		System.out.println("****************DocView Started*************************"); 
 		ss.savedSearchToDocView(saveSearchName);
 	    DocViewPage dv= new DocViewPage(driver);
 	    dv.getDocView_info().WaitUntilPresent();
-	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+Input.pureHitSeachString1+" Docs");
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
+	    System.out.println("Expected docs("+purehits+") are shown in docView");
 	}
 	
 	/*
@@ -114,6 +115,7 @@ public class SavedSearch_Regression  {
 	@Test(groups={"regression"},priority=3)
 	public void  SavedSearchBulkTag() throws ParseException, InterruptedException {
 		
+		System.out.println("****************Bulk Tag Started*************************"); 
 		//Schedule the saved search
 		
 		 ss.SaveSearchToBulkTag(saveSearchName, TagName);
@@ -122,8 +124,8 @@ public class SavedSearch_Regression  {
 	       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
 	  	
 	       tf.getTag_ToggleDocCount().waitAndClick(10);
-	       tf.getTagandCount(TagName,Input.pureHitSeachString1).WaitUntilPresent();
-	       Assert.assertTrue(tf.getTagandCount(TagName,Input.pureHitSeachString1).Displayed());
+	       tf.getTagandCount(TagName,purehits).WaitUntilPresent();
+	       Assert.assertTrue(tf.getTagandCount(TagName,purehits).Displayed());
 	       System.out.println(TagName+" could be seen under tags and folder page");
 	}
 	
@@ -138,15 +140,15 @@ public class SavedSearch_Regression  {
 	public void  SavedSearchBulkFolder() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
-		
+		System.out.println("****************Bulk Folder Started*************************"); 
 		 ss.SaveSearchToBulkFolder(saveSearchName, FolderName);
 		 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
 	  	   tf.getFoldersTab().waitAndClick(10);
 	       tf.getFolder_ToggleDocCount().waitAndClick(10);
-	       tf.getFolderandCount(FolderName, Input.pureHitSeachString1).WaitUntilPresent();
-	       Assert.assertTrue(tf.getFolderandCount(FolderName, Input.pureHitSeachString1).Displayed());
+	       tf.getFolderandCount(FolderName, purehits).WaitUntilPresent();
+	       Assert.assertTrue(tf.getFolderandCount(FolderName, purehits).Displayed());
 	       System.out.println(FolderName+" could be seen under tags and folder page");
 	}
 	
@@ -241,7 +243,6 @@ public class SavedSearch_Regression  {
 	public void savedSearchNewSearchGrp() throws ParseException, InterruptedException {
 
 		//Share the saved search
-		BaseClass base = new BaseClass(driver);
 		ss.savedSearchNewSearchGrp(saveSearchName);
   }
 	
@@ -257,7 +258,7 @@ public class SavedSearch_Regression  {
 
 		//Share the saved search
 		
-		ss.savedSearchExecute(saveSearchName, Input.pureHitSeachString1);
+		ss.savedSearchExecute(saveSearchName, purehits);
   }
 	
 	@Test(groups={"regression"},priority=12)
@@ -268,7 +269,20 @@ public class SavedSearch_Regression  {
 		ss.savedSearchEdit(saveSearchName,SearchNameRMU);
   }
 
-	
+	/*
+	 * Author : Shilpi Mangal
+	 * Created date: 
+	 * Modified date: 
+	 * Modified by:
+	 * Description : Verify deletion of saved searches is working correctly from saved search 
+	 */
+	@Test(groups={"regression"},priority=13)
+	public void  SaveSearchDelete() throws ParseException, InterruptedException {
+		
+		//Schedule the saved search
+		
+		ss.SaveSearchDelete(saveSearchName);
+	}
 	
 	 /*
 		 * Author : Shilpi Mangal
@@ -283,26 +297,17 @@ public class SavedSearch_Regression  {
 @Test(groups={"regression"},priority=14)
 	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
 
-		//Share the saved search
-		
-		ss.SaveSearchToBulkAssign(saveSearchName,assignmentName,codingfrom);
+	 lp.logout();
+	 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	//Share the saved search
+	   search = new SessionSearch(driver);
+	   purehits=search.basicContentSearch(Input.searchString1);
+	   search.saveSearch(SearchNameRMU);
+		ss.SaveSearchToBulkAssign(SearchNameRMU,assignmentName,codingfrom,purehits);
   }
 	
   
-/*
- * Author : Shilpi Mangal
- * Created date: 
- * Modified date: 
- * Modified by:
- * Description : Verify deletion of saved searches is working correctly from saved search 
- */
-@Test(groups={"regression"},priority=15)
-public void  SaveSearchDelete() throws ParseException, InterruptedException {
-	
-	//Schedule the saved search
-	
-	ss.SaveSearchDelete(saveSearchName);
-}
+
 
 	
 	 @BeforeMethod
@@ -328,6 +333,5 @@ public void  SaveSearchDelete() throws ParseException, InterruptedException {
 			}finally {
 				lp.quitBrowser();
 			}
-		LoginPage.clearBrowserCache();
 	}
 }

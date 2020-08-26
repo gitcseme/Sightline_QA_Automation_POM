@@ -69,6 +69,9 @@ public class TallyPage {
     public Element getBulkAssignAction(int i){ return driver.FindElementByXPath("(//a[contains(.,'Bulk Assign')])["+i+"]"); }
     
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
+    
+    public Element getQuickBatchAction(int i){ return driver.FindElementByXPath("(//a[contains(text(),'Quick Batch')])["+i+"]"); }
+    
    
     public TallyPage(Driver driver){
 
@@ -364,6 +367,91 @@ public class TallyPage {
 
 			
     }
+    
+ public void ValidateTallySubTally_QuickBatch() throws InterruptedException {
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getTally_SelectSource().Visible()  ;}}), Input.wait30); 
+		getTally_SelectSource().Click();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_SecurityGroupsButton().Visible()  ;}}), Input.wait30); 
+		getTally_SecurityGroupsButton().Click();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_SelectSecurityGroup().Visible()  ;}}), Input.wait30); 
+		getTally_SelectSecurityGroup().Click();
+		
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_SaveSelections().Visible()  ;}}), Input.wait30); 
+	  getTally_SaveSelections().Click();
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getTally_SelectaTallyFieldtoruntallyon().Visible()  ;}}), Input.wait30);		
+		getTally_SelectaTallyFieldtoruntallyon().Click();
+		
+		
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTally_Metadataselect().Visible()  ;}}), Input.wait30);	
+		getTally_Metadataselect().selectFromDropdown().selectByVisibleText("CustodianName");
+		
+		
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTally_btnTallyApply().Visible()  ;}}), Input.wait30);	
+		getTally_btnTallyApply().Click();
+		
+		
+		base.yesPopUp();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_btnTallyAll().Visible()  ;}}), Input.wait30);	
+		
+		getTally_btnTallyAll().ScrollTo();
+		getTally_btnTallyAll().waitAndClick(30);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_tallyactionbtn().Visible()  ;}}), Input.wait30);	
+		getTally_tallyactionbtn().Click();
+		
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_actionSubTally().Visible()  ;}}), Input.wait30);
+		getTally_actionSubTally().Click();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_SourceSubTally().Visible()  ;}}), Input.wait30);	
+		Thread.sleep(3000);
+	   getTally_SourceSubTally().Click();
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getTally_subMetadata().Visible()  ;}}), Input.wait30);	
+		getTally_subMetadata().Click();
+		
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTally_submetadataselect().Visible()  ;}}), Input.wait30);	
+		getTally_submetadataselect().selectFromDropdown().selectByVisibleText("DocFileExtension");
+		
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTally_btnSubTallyApply().Visible()  ;}}), Input.wait30);	
+		getTally_btnSubTallyApply().Click();
+		
+		base = new BaseClass(driver);
+		base.yesPopUp();
+		
+		getTally_btnSubTallyAll().waitAndClick(30);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTally_SubTallyActionButton().Visible()  ;}}), Input.wait30);	
+		getTally_SubTallyActionButton().Click();
+	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getQuickBatchAction(2).Visible()  ;}}), Input.wait30);	
+		
+		getQuickBatchAction(2).waitAndClick(10);
+		
+		    }
+
 
      
 }

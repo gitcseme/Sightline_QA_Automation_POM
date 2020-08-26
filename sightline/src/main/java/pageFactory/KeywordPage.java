@@ -10,6 +10,7 @@ import testScriptsSmoke.Input;
 public class KeywordPage {
 
     Driver driver;
+    BaseClass base;
    
     public Element getNewKeywordButton(){ return driver.FindElementById("btnAddKeyword"); }
     public Element getKeywordName(){ return driver.FindElementById("KeywordName"); }
@@ -29,7 +30,7 @@ public class KeywordPage {
         this.driver = driver;
         this.driver.getWebDriver().get(Input.url+"Keywords/Keywords");
         driver.waitForPageToBeReady();
-      
+        base= new BaseClass(driver);
        }
 
     public void AddKeyword(String keywordname,String keywords) {
@@ -58,19 +59,10 @@ public class KeywordPage {
     			getYesButton().Visible()  ;}}), Input.wait30); 
     	getYesButton().Click();
     	
-    	successMsgConfirmation();
+    	base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
     	
-    	 BaseClass base = new BaseClass(driver);
-         base.CloseSuccessMsgpopup();
-    	
-    }
+        base.CloseSuccessMsgpopup();
+      }
     
-    public void successMsgConfirmation() {
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSuccessMsgHeader().Visible()  ;}}), Input.wait60); 
-    	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-    	Assert.assertEquals("Keyword Highlighting Group added successfully", getSuccessMsg().getText().toString());
-	}
-   
  
  }

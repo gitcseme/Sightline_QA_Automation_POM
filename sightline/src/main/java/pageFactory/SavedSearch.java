@@ -1,5 +1,6 @@
 package pageFactory;
 
+import org.openqa.selenium.*;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.testng.asserts.SoftAssert;
 
@@ -99,6 +101,8 @@ public class SavedSearch {
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
     public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'"+name+"')]"); }
     
+    //quick batch
+    public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
     
     
     public SavedSearch(Driver driver){
@@ -108,6 +112,7 @@ public class SavedSearch {
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
+        search = new SessionSearch(driver);
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 
@@ -229,10 +234,18 @@ public class SavedSearch {
 	  
 	   getSelectWithName(searchName).waitAndClick(10);
 	   
-	   getToDocList().Click();
+	   getToDocList().waitAndClick(10);
+	   
+	   try {
+		   base.getYesBtn().waitAndClick(10);
+	   }
+	   catch(Exception e)
+	   {
+		   System.out.println("Pop up message does not appear");
+	   }
 	   
    }
-   public void savedSearchToDocView(final String searchName) {
+   public void savedSearchToDocView(final String searchName) throws InterruptedException {
 	   driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSavedSearch_SearchName().Visible()  ;}}),Input.wait60);
@@ -243,19 +256,24 @@ public class SavedSearch {
 			e.printStackTrace();
 		}
 	   getSavedSearch_SearchName().SendKeys(searchName);
-	   try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	   Thread.sleep(2000);
+		
 	   getSavedSearch_ApplyFilterButton().Click();
+	   Thread.sleep(1000);
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
 	  
 	   getSelectWithName(searchName).waitAndClick(10);
 	   
 	   getToDocView().waitAndClick(10);
+	   
+	   try {
+		   base.getYesBtn().waitAndClick(10);
+	   }
+	   catch(Exception e)
+	   {
+		   System.out.println("Pop up message does not appear");
+	   }
 	   
    }
    
@@ -302,6 +320,11 @@ public class SavedSearch {
    public void shareSavedSearchPA(final String searchName,String securitygroupname) throws ParseException, InterruptedException{
 		
 	   base.getSelectProject();
+	   
+	   Dimension dim = new Dimension(1600,900);
+	   driver.getWebDriver().manage().window().setSize(dim);
+	   
+	 //  driver.getWebDriver().manage().window().setSize(800);
 	   savedSearch_Searchandclick(searchName);
 	   getShareSerachBtn().Click();
 	   Thread.sleep(2000);
@@ -309,8 +332,12 @@ public class SavedSearch {
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShare_PA().Visible()  ;}}), Input.wait30);
 	   getShare_PA().waitAndClick(10);  
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
+	   getShareSaveBtn().waitAndClick(10);
 	  
-	   getShareSaveBtn().waitAndClick(5);
+	 //  getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
 	   
 	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
@@ -337,6 +364,7 @@ public class SavedSearch {
 	  
 	   getShareSaveBtn().waitAndClick(5);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
+	   Thread.sleep(2000);
 	   
 	   //click on share with project admin tab
 	   getSavedSearchGroupName("Project Admin").waitAndClick(10);
@@ -353,6 +381,8 @@ public class SavedSearch {
 	   Thread.sleep(2000);
 	   
 	   //verify id should get changed
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getSelectSearchWithID(searchName).Visible()  ;}}), Input.wait30);
 	   String newSearchID1 = getSelectSearchWithID(searchName).getText();
 	   System.out.println(newSearchID1);
 	   Assert.assertNotSame(SearchID, newSearchID1);
@@ -360,7 +390,7 @@ public class SavedSearch {
 	   Assert.assertTrue(getSearchName(searchName).Displayed());
 	   
 	   //impersonate to RMU and check search
-	   base.impersonatePAtoRMU_SelectedSG(securitygroupname);
+	   base.impersonatePAtoRMU();
 	   
 	 //click on share with security group tab
 	   this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
@@ -385,8 +415,12 @@ public class SavedSearch {
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShare_SecurityGroup(securitygroupname).Visible()  ;}}), Input.wait30);
 	   getShare_SecurityGroup(securitygroupname).waitAndClick(10);  
+	   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
+	   getShareSaveBtn().javascriptclick();
 	  
-	   getShareSaveBtn().waitAndClick(10);
+	//   getShareSaveBtn().waitAndClick(10);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
 	   
 	   getSavedSearch_ApplyFilterButton().waitAndClick(10);
@@ -545,7 +579,7 @@ public class SavedSearch {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		   getSavedSearch_ApplyFilterButton().Click();
+		   getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		   
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
@@ -578,17 +612,26 @@ public class SavedSearch {
 		   
 	   }
 	
-	   public void SaveSearchToBulkAssign(final String searchName,String assignmentName,String codingForm)  {
+	   public void SaveSearchToBulkAssign(final String searchName,String assignmentName,String codingForm,int purehits)  {
 		   
 		   assgnpage = new AssignmentsPage(driver);
 		   savedSearch_Searchandclick(searchName);
 		   
-		   getSavedSearchToBulkAssign().Click();
+		   getSavedSearchToBulkAssign().waitAndClick(10);
 		   
 		   //SessionSearch search = new SessionSearch(driver);
 		//   search.bulkAssign();
-		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm,Input.pureHitSeachString1);
-		   }
+		   assgnpage.assignDocstoNewAssgn(assignmentName, codingForm,purehits);
+		   assgnpage.SelectAssignmentToViewinDocview(assignmentName);   
+		   DocViewPage dp = new DocViewPage(driver);
+		 
+		   try {
+			dp.VerifyPersistentHit(Input.searchString1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
 	
 	   //Below function is to search saved search and delete it
 	  public void SaveSearchDelete(final String searchName) {
@@ -757,6 +800,7 @@ public class SavedSearch {
 				   getSavedSearch_SearchButton().Visible()  ;}}),Input.wait60);
 		   getSavedSearch_SearchButton().Click();
 		   
+		   base.selectproject();
 		   search = new SessionSearch(driver);
 		   search.basicContentSearch(Input.searchString1);
 		   search.saveSearch(searchName);
@@ -777,11 +821,11 @@ public class SavedSearch {
 	    	int pureHit = Integer.parseInt(search.getPureHitsCount().getText());
 	    	System.out.println("PureHit is : "+pureHit);
 	    	
-	 	   Assert.assertEquals(search.getPureHitsCount().getText(), String.valueOf(Input.pureHitSeachString1));
+	 	   Assert.assertEquals(Integer.parseInt(search.getPureHitsCount().getText()),pureHit);
 	 	   
-	 	   search.getSearchButton().waitAndClick(10);
+	 	/*   search.getSecondSearchBtn().waitAndClick(10);
 	 	   
-	 	  search.getSaveSearch_Button().waitAndClick(10);
+	 	  search.getSecondSavedSearchBtn().waitAndClick(10);
 	 	   
 	 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			 search.getsavesearch_overwrite().Visible()  ;}}),Input.wait60);
@@ -802,7 +846,7 @@ public class SavedSearch {
 	    	
 	    	search.basicContentSearch(Input.searchString2);
 	    	
-	    	Assert.assertEquals(search.getPureHitsCount().getText(), String.valueOf(Input.pureHitSeachString2));
+	    	Assert.assertEquals(search.getPureHitsCount().getText(), pureHit);
 	   	 	
 	    	search.saveSearch(searchName2);
 			   	
@@ -810,7 +854,7 @@ public class SavedSearch {
 	    	
 	    	savedSearch_Searchandclick(searchName2);
 	 	      getSavedSearch_ApplyFilterButton().waitAndClick(20);
-	  	/*   
+	  	  
 	  	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			   getSelectWithName(searchName).Visible()  ;}}),Input.wait30);
 	  	 
@@ -828,5 +872,16 @@ public class SavedSearch {
 		   search.basicContentSearch(Input.searchString1);
 		   search.saveSearch(searchName); */
 		 }
+	  
+	    public void savedsearchquickbatch(String searchName) {
+	    	
+	    	savedSearch_Searchandclick(searchName);
+			 
+	    	getSavedSearchQuickBatchButton().waitAndClick(10);
+			
+		   System.out.println("performing quick batch");
+			
+		}
+
 	
  }

@@ -1,49 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <QA>
-
-
-        <url>http://172.22.155.2/</url>
-        <prodpath>\\INBCTASLSTR01\Storage\Productions\Automation</prodpath>
-        <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <projectName>Auto_NoIngestion</projectName>
-        <!-- AutoSys SysAdmin  -->
-
-          <sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
-          <sa1password>sightline@1234</sa1password> 
-          
-          <!-- DA Admin  -->
-        <da1userName>automation.sightlineconsilio@gmail.com</da1userName> 
-          <da1password>sightline@123</da1password> 
+  		<url>http://172.22.155.2/</url>
+       	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
+       	<SourceLocation>IngestionTestData\Automation</SourceLocation>
+       	<domainName>AutoDomain</domainName>
+        <projectName>TD_24July</projectName>
+        <!--  TD_24July -->
      
-        <!-- QAPA -->
-        <pa2FullName>0QAPA1 PA1</pa2FullName>
-        <pa2userName>a.utomationsightlineconsil.i.o@gmail.com</pa2userName>
-        <pa2password>sightline@1234</pa2password>
+    	<sa1userName>smangal@consilio.com</sa1userName> 
+   		<sa1password>sightline@12345</sa1password> 
+   		
+   		<!-- DA Admin  -->
+   		
+        <da1userName>automation.consilio@gmail.com</da1userName> 
+        <da1password>sightline@12345</da1password>
+     
+        <!-- CPA -->
+        <pa1FullName>Shilpi PA1</pa1FullName>
+        <pa1userName>rm.user.consilio@gmail.com</pa1userName>
+        <pa1password>sightline@321</pa1password>
+
         
-        <pa1FullName>0QAPA22 PA22</pa1FullName>
-        <pa1userName>a.utomati.o.nsightlineconsi.l.i.o@gmail.com</pa1userName>
-        <pa1password>consilio@4321</pa1password>   --> 
-        
-        <!--QARMU  -->
-        <rmu1FullName>0QARMU11 RMU11</rmu1FullName>
-        <rmu1userName>a.ut.om.ationsig.htlinec.o.n.silio@gmail.com</rmu1userName>
-        <rmu1password>consilio@54321</rmu1password>
-        
-        <rmu2FullName>0QARMU22 RMU22</rmu2FullName>
-        <rmu2userName>aut.o.ma.tions.i.ghtlineconsilio@gmail.com</rmu2userName>
-        <rmu2password>consilio@54321</rmu2password>
-        
-        <!-- QARev  -->
-        <rev1FullName>0QAREV2 REV2</rev1FullName>
-        <rev1userName>a.utomati.ons.ightli.n.econsilio@gmail.com</rev1userName>
-        <rev1password>consilio@54321</rev1password>
-        
-        <rev2FullName>0QAREV1 REV1</rev2FullName>
-        <rev2userName>a.utomationsightli.n.econsilio@gmail.com</rev2userName>
-        <rev2password>consilio@543210</rev2password>
-        
-       
-        
-        <shareTo>0QAPA1 PA1</shareTo>
               
-</QA>    
+        <!--CRMU  -->
+        <rmu1FullName>Shilpi RMU</rmu1FullName>
+        <rmu1userName>rm.user.c.onsilio@gmail.com</rmu1userName>
+        <rmu1password>sightline@123</rmu1password>
+                
+        <!-- CRev -->
+        <rev1FullName>Shilpi REV1</rev1FullName>
+        <rev1userName>r.m.user.consilio@gmail.com</rev1userName>
+        <rev1password>sightline@123</rev1password>
+
+        <shareTo>CPA2 PA2</shareTo>
+       
+</QA>

@@ -29,6 +29,7 @@ public class TS_007_SavedSearchShareSchedule {
 	SavedSearch ss;
 	SessionSearch search;
 	BaseClass bc;
+	public static int purehits;
 	
 	//String searchText = "test";
 	String saveSearchName = "test013"+Utility.dynamicNameAppender();
@@ -40,16 +41,19 @@ public class TS_007_SavedSearchShareSchedule {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    	//Open browser
+	    //Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		//Search and save it
-		search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
-		search.saveSearch(saveSearchName);
 		ss= new SavedSearch(driver);		
+		
+		search = new SessionSearch(driver);
+		purehits=search.basicContentSearch(Input.searchString1);
+		search.saveSearch(saveSearchName);
+		search.saveSearch(SearchNamePA);
+		
 		bc = new BaseClass(driver);
 	}
 	@Test(groups={"smoke","regression"})
@@ -63,8 +67,10 @@ public class TS_007_SavedSearchShareSchedule {
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
-	    Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in doclist");
+	  // Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(purehits));
+	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
+	    Assert.assertTrue(dp.getDocList_info().Displayed());
+	    System.out.println("Expected docs("+purehits+") are shown in doclist");
 
 	}
 	
@@ -75,9 +81,11 @@ public class TS_007_SavedSearchShareSchedule {
 		
 		ss.savedSearchToDocView(saveSearchName);
 	    DocViewPage dv= new DocViewPage(driver);
-	    dv.getDocView_info().WaitUntilPresent();
-	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+Input.pureHitSeachString1+" Docs");
-	    System.out.println("Expected docs("+Input.pureHitSeachString1+") are shown in docView");
+	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		   !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
+	
+	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
+	    System.out.println("Expected docs("+purehits+") are shown in docView");
 	}
 	
 	@Test(groups={"smoke","regression"})
@@ -103,9 +111,9 @@ public class TS_007_SavedSearchShareSchedule {
 
 	  	//Share the saved search
 	  	
-	  	/*	 
-	  	 * SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-	  	 * sgpage.AddSecurityGroup(securitygroupname);
+	  /*	 
+	     SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
+	  	 sgpage.AddSecurityGroup(securitygroupname);
 	  	 
 	      this.driver.getWebDriver().get(Input.url+ "Search/Searches");
 	      search.ViewInDocList();

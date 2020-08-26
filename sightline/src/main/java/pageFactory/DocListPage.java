@@ -2,6 +2,7 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
@@ -19,11 +20,11 @@ public class DocListPage {
   
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
     public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
-    public Element getColumnText(int row, int col){ return driver.FindElementByName("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]"); }
+    public Element getColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]/a"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
      //Filters
     public Element getCustodianFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'CustodianName')]"); }
-    public Element getMasterDateFiler(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'MasterDate')]"); }
+    public Element getMasterDateFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'MasterDate')]"); }
     public Element getDocFileSizeFiler(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileSize')]"); }
     public Element getGetDocFIleTypeFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'DocFileType')]"); }
     public Element getEmailAuthNameFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAuthorName')]"); }
@@ -32,7 +33,7 @@ public class DocListPage {
     public Element getEmailAllDomainFilter(){ return driver.FindElementByXPath("//*[@id='optionFilters']/li[contains(text(),'EmailAllDomains')]"); }
     //options
     public Element getMasterDateRange(){ return driver.FindElementByXPath("(//select[@id='MasterDate-dtop'])[1]"); }
-    public Element getSetFromMasterDate(){ return driver.FindElementByXPath("(//*[@id='MasterDate-1-DOCLIST'])[1]"); }
+    public Element getSetFromMasterDate(){ return driver.FindElementByXPath("(//*[contains(@id,'MasterDate-1-DOC')])[1]"); }
     public Element getSetToMasterDate(){ return driver.FindElementByXPath("(//*[@id='MasterDate-2-DOCLIST'])[1]"); }
     public Element getDocFileSizeOption(){ return driver.FindElementByXPath("(//select[@id='DocFileSize-op'])[1]"); }
     public Element getDocFileFromSize(){ return driver.FindElementByXPath("(//*[@id='DocFileSize-1-DOCLIST'])[1]"); }
@@ -64,7 +65,11 @@ public class DocListPage {
     public Element getDocList_actionButton(){ return driver.FindElementById("idAction"); }
     public Element getDocList_action_BulkAssignButton(){ return driver.FindElementById("idBulkAssign"); }
     public Element getDocList_action_BulkReleaseButton(){ return driver.FindElementById("idBulkRelease"); }
-         
+    public Element getDocList_SelectLenthtobeshown(){ return driver.FindElementById("idPageLength"); }
+    
+    public Element getDocList_QuickBatch(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
+    public Element getDocList_Preview_CloseButton(){ return driver.FindElementByXPath("//span[@id='ui-id-1']/following-sibling::button"); }
+    
   
     
     public DocListPage(Driver driver){
@@ -74,7 +79,8 @@ public class DocListPage {
         //PageFactory.initElements(driver.getWebDriver(), this);
         search = new SessionSearch(driver);
     	base = new BaseClass(driver);
-    }
+    	this.driver.getWebDriver().get(Input.url+"Document/DocList");
+       }
     
     public void include(String data) {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -88,7 +94,7 @@ public class DocListPage {
 			e.printStackTrace();
 		}
     	getSearchTextArea().SendKeysNoClear(""+Keys.ENTER);
-    	getAddToFilter().Click();
+    	getAddToFilter().waitAndClick(10);
     
 	}
     public void exclude(String data) {
@@ -109,9 +115,9 @@ public class DocListPage {
     
     public void dateFilter(String option, String fromDate, String toDate) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCustodianFilter().Visible()  ;}}), Input.wait30);
+    			getMasterDateFilter().Visible()  ;}}), Input.wait30);
 		
-    	getMasterDateFiler().waitAndClick(10);
+    	getMasterDateFilter().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMasterDateRange().Visible()  ;}}), Input.wait30);
@@ -152,7 +158,7 @@ public class DocListPage {
 	   
 }
    
-   public void DoclistPreviewNonAudio(final String searchName) throws InterruptedException {
+   public void DoclistPreviewNonAudio() throws InterruptedException {
 		
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getColumnText(1,8).Visible()  ;}}),Input.wait60);
@@ -174,11 +180,12 @@ public class DocListPage {
 	   driver.scrollPageToTop();
 	  }
 
-     public void DoclistPreviewAudio(final String searchName) throws InterruptedException {
+     public void DoclistPreviewAudio() throws InterruptedException {
 		
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			   getColumnText(1,8).Visible()  ;}}),Input.wait60);
-  	   getColumnText(1,8).Click();
+       getColumnText(1,8).waitAndClick(10);
+  	 Thread.sleep(5000);
   	   
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			   getDocList_Preview_AudioPlay().Visible()  ;}}),Input.wait60);
@@ -198,24 +205,25 @@ public class DocListPage {
  	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			   getDocList_Previewpage().Visible()  ;}}),Input.wait30);
  	   Assert.assertTrue(getDocList_Previewpage().Enabled());
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getDocList_Preview_Pagenotextbox().Visible() ;}}),Input.wait30);
+		 * getDocList_Preview_Pagenotextbox().SendKeys("5");
+		 * getDocList_Preview_Pagenotextbox().Enter();
+		 */
  	   
- 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			   getDocList_Preview_Pagenotextbox().Visible()  ;}}),Input.wait30);
- 	   getDocList_Preview_Pagenotextbox().SendKeys("5");
- 	   getDocList_Preview_Pagenotextbox().Enter();
- 	   
- 	
- 	   driver.scrollingToBottomofAPage();
- 	   Thread.sleep(2000);
- 	   
- 	   driver.scrollPageToTop();
+ 	  getDocList_Preview_CloseButton().waitAndClick(10);
  	  }
 
-     public void DoclisttobulkAssign(String assignmentName ) throws InterruptedException {
-    	
+     public void DoclisttobulkAssign(String assignmentName,String length ) throws InterruptedException {
+    	 
+    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+         			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait60);
+         	
+     getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getSelectAll().Visible()  ;}}), Input.wait60); 
-   	 getSelectAll().Click();
+   	 getSelectAll().waitAndClick(20);
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
@@ -264,5 +272,38 @@ public class DocListPage {
     	
       }
      
+      public void Selectpagelength(String length) {
+     	//driver.getWebDriver().get(Input.url+ "Document/DocList");
+     	
+     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait60);
+     	
+     	getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
    
+}
+      
+      public void DoclisttoQuickbatch(String length ) throws InterruptedException {
+     	 
+    	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	         			getDocList_SelectLenthtobeshown().Visible()  ;}}), Input.wait30);
+    	         	
+    	     getDocList_SelectLenthtobeshown().selectFromDropdown().selectByVisibleText(length);
+    	   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				 getSelectAll().Visible()  ;}}), Input.wait60); 
+    	   	 getSelectAll().waitAndClick(20);
+    	   	 
+    	   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	   			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
+    	   	 getPopUpOkBtn().Click();
+    	   	 
+    	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    	   getDocList_actionButton().Visible()  ;}}), Input.wait60); 
+    	     getDocList_actionButton().waitAndClick(10);
+    	     Thread.sleep(3000);
+    	    	     
+    	     getDocList_QuickBatch().waitAndClick(10);
+    	     
+    	     System.out.println("performing quick batch");
+    	  }
+      
 }

@@ -116,7 +116,7 @@ public class TS_012_ValidateReportsFunctionality {
 	}
 	   
 
-	@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void customDDRExportAfterSwap() throws InterruptedException, ParseException, IOException {
     	//Columns to be selected
 		String[] metaDataFields = {"AllCustodians","CreateDate","DocDate","EmailAllDomains","FamilyID"

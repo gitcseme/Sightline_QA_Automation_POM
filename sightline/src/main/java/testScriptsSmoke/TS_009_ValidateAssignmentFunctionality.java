@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -20,6 +21,7 @@ import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -29,50 +31,75 @@ public class TS_009_ValidateAssignmentFunctionality {
 	Driver driver;
 	LoginPage lp;
 	HomePage hm;
-	BaseClass bc;
+	BaseClass bc;	
+	AssignmentsPage agnmt;
+	CodingForm cf;
+	public static int purehits;
+	SessionSearch search;
 	
 	String  codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String assignmentName= "assignmentA1"+Utility.dynamicNameAppender();
 	
-	@Test(groups={"smoke","regression"})
+	
+	@BeforeClass(alwaysRun = true)
+	public void preCondition() throws ParseException, InterruptedException, IOException{
+	
+		
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+			//Open browser
+		driver = new Driver();
+		//Login as a PA
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
+		
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		//add tag
+				TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+				page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
+				    	
+				//add comment field
+				CommentsPage comments = new CommentsPage(driver);
+				comments.AddComments("Comment"+Utility.dynamicNameAppender());
+						
+				//Create coding for for assignment
+				 cf = new CodingForm(driver);
+				cf.createCodingform(codingfrom);
+				agnmt = new AssignmentsPage(driver);
+				search = new SessionSearch(driver);
+				
+	}
+	
+	  @Test(groups={"smoke","regression"},priority=1)
+	   public void CreateQuickBatch() throws InterruptedException, ParseException, IOException {
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+	
+	
+		search.basicContentSearch(Input.searchString1);
+		search.quickbatch();
+		String assignmentQB1= "assignmentQB1"+Utility.dynamicNameAppender();
+		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB1, codingfrom,"AllRev");
+	   }
+	
+	  @Test(groups={"smoke","regression"},priority=2)
 	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-	    //Open browser
-		driver =  new Driver();
-		//Login as PA
-		lp = new LoginPage(driver);
-		/*
-		 * lp.loginToSightLine(Input.pa1userName, Input.pa1password); //Impersonate as
-		 * RMU bc = new BaseClass(driver); bc.impersonatePAtoRMU();
-		 */
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	
-		//add tag
-		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
-		    	
-		//add comment field
-		CommentsPage comments = new CommentsPage(driver);
-		comments.AddComments("Comment"+Utility.dynamicNameAppender());
-				
-		//Create coding for for assignment
-		CodingForm cf = new CodingForm(driver);
-		cf.createCodingform(codingfrom);
 		
 		//Create assignment with newly created coding form
-		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		
 		agnmt.createAssignment(assignmentName,codingfrom);
 	
 		//Search docs and assign to newly created assignment
-		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		bc.selectproject();
+	
+		purehits=search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 		
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
-		agnmt.addReviewerAndDistributeDocs(assignmentName, Input.pureHitSeachString1);
+		agnmt.addReviewerAndDistributeDocs(assignmentName,purehits);
 		lp.logout();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		
@@ -88,6 +115,11 @@ public class TS_009_ValidateAssignmentFunctionality {
         Assert.assertTrue(found);
        
 	}
+	
+	   
+	  
+	  
+	  
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

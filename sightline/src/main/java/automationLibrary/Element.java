@@ -198,6 +198,21 @@ private  Driver driver;
  			//System.out.println("Scrolling Into View Exception");
  		}
      }
+     
+     public void javascriptclick()
+     {
+    	 AssertExists();
+         try
+ 		{
+ 			((JavascriptExecutor) driver).executeScript(
+ 					"arguments[0].click();", element);
+ 		}
+ 		catch (Exception e)
+ 		{
+ 			System.out.println("click exception");
+ 		}
+     }
+    
     
      public void Clear()
      {

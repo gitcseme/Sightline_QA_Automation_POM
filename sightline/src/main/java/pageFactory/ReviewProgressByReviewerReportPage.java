@@ -2,12 +2,7 @@ package pageFactory;
 
 import java.text.ParseException;
 import java.util.concurrent.Callable;
-
-import javax.management.ListenerNotFoundException;
-
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -81,9 +76,9 @@ public class ReviewProgressByReviewerReportPage {
 	    
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getReviewerProgressReport_Assignment().Visible()  ;}}), Input.wait30);	
-	    getReviewerProgressReport_Assignment().ScrollTo();
+	     getReviewerProgressReport_Assignment().ScrollTo();
 		  getReviewerProgressReport_Assignment().waitAndClick(15);
-		  //Thread.sleep(3000);
+		  Thread.sleep(2000);
 	    
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			  getApplyChanges().Visible()  ;}}), Input.wait30);		

@@ -72,6 +72,7 @@ public class Input {
 	public static String rmu2password;
 	public static String rev2userName;
 	public static String rev2password;
+	public static String domainName;
 	//Test data------------------------------------------------------
 	public static String searchString1;
 	public static String searchString2;
@@ -106,6 +107,9 @@ public class Input {
 	public static String AllSourcesNativeFile;
 	public static String SourceLocation;
 	public static int totalNumberOfDocs;
+	public static int totalNumberOfDocsincludeadvoption;
+	public static String MasterPDF1location;
+	public static String MasterPDF2location;
 	
 
 	@BeforeSuite(alwaysRun=true)
@@ -152,6 +156,7 @@ public class Input {
 		//Environment data-------------------------------------------------------------
 		url=envConfig.url;
 		projectName= envConfig.projectName;
+		domainName= envConfig.domainName;
 		sa1userName=envConfig.sa1userName;
 		sa1password = envConfig.sa1password;
 		pa1userName = envConfig.pa1userName;
@@ -194,6 +199,9 @@ public class Input {
 		metaDataCN=testData.metaDataCN;
 		metaDataCNcount = testData.metaDataCNcount;
 		totalNumberOfDocs = testData.totalNumberOfDocs;
+		totalNumberOfDocsincludeadvoption = testData.totalNumberOfDocsincludeadvoption;
+		MasterPDF1location = testData.MasterPDF1location;
+		MasterPDF2location = testData.MasterPDF2location;
 		
 		System.out.println("*****************************************************");
 		

@@ -31,7 +31,8 @@ public class TS_018_DocViewAudio {
 	public void before() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
+		
+		
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -46,7 +47,7 @@ public class TS_018_DocViewAudio {
 		cf.CodingformToSecurityGroup(codingfrom);
 		
 		RedactionPage redpage = new RedactionPage(driver);
-		redpage.AddRedaction(RedactName);
+		redpage.AddRedaction(RedactName,"RMU");
 		
 		lp.logout();
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);

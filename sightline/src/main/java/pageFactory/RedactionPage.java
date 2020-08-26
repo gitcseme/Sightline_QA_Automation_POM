@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -27,7 +29,8 @@ public class RedactionPage {
     public Element getactionDropDown(){ return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']"); }
     public Element getSelectredaction(String redactname){ return driver.FindElementByXPath("//a[contains(text(),'"+redactname+"')]"); }
     public Element getSecurityGrp(){ return driver.FindElementById("ddlSecurityGroupRedaction"); }
-  
+    public ElementCollection getredactiontags(){ return driver.FindElementsByXPath("//*[@id='tagsJSTree']//a"); }
+    
     
 
     public RedactionPage(Driver driver){
@@ -38,8 +41,11 @@ public class RedactionPage {
         bc = new BaseClass(driver);
        }
 
-    public void AddRedaction(String RedactName) {
-    	
+    public void AddRedaction(String RedactName,String usertype) 
+    {
+    	this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+    	if(usertype.equalsIgnoreCase("PA"))
+    	{
     	SecurityGroupsPage sp = new SecurityGroupsPage(driver);
     	List<String> expvalue = sp.GetSecurityGrouplist();
     	
@@ -57,6 +63,11 @@ public class RedactionPage {
     	}
      	
     	Assert.assertEquals(allsg, expvalue);
+    	}
+    	else if(usertype.equalsIgnoreCase("RMU")){
+    		System.out.println("User is not PA");
+    	}
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAllRedactionRootNode().Visible()  ;}}),Input.wait30); 
     	getAllRedactionRootNode().Click();
@@ -136,6 +147,7 @@ public class RedactionPage {
      	bc.getYesBtn().waitAndClick(10);
      	
      	bc.VerifySuccessMessage("Redaction label deleted successfully");
+     	bc.CloseSuccessMsgpopup();
      	
      	
      	 try{
@@ -146,4 +158,24 @@ public class RedactionPage {
 		 }
      }
  
+     
+     public void findredaction()
+     {
+    	 String expvalues[] = {"Default Redaction Tag","Redacted Privacy","Redacted Privilege","All Redaction Tags"};
+    	 List<WebElement> allvalues = getredactiontags().FindWebElements();
+    	 System.out.println(allvalues.size());
+    	 List<String> value = new ArrayList<String>();
+         for(int j=0;j<allvalues.size();j++)
+         {
+        	 System.out.println(allvalues.get(j).getText());
+       	 System.out.println(value.add(allvalues.get(j).getText()));
+        }
+    	 
+         Assert.assertSame(value, expvalues);
+ 		
+    	 
+    	 
+    	 
+    	 
+     }
  }

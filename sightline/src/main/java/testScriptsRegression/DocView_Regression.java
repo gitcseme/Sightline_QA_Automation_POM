@@ -30,9 +30,11 @@ import testScriptsSmoke.Input;
 	Driver driver;
 	LoginPage lp;
 	DocViewPage docView;
+	TagsAndFoldersPage page;
+	AssignmentsPage agnmt;
+	HomePage hm;
+	BaseClass bc;
 	
-    HomePage hm;
-	//BaseClass bc;
 	String Remark= "Re"+Utility.dynamicNameAppender();
 	String newTag = "newtag"+Utility.dynamicNameAppender();
 	String codingfrom = "CF"+Utility.dynamicNameAppender();
@@ -40,13 +42,16 @@ import testScriptsSmoke.Input;
 	String redactiontag= "RTag"+Utility.dynamicNameAppender();
 	String annotationname = "annotationname"+Utility.dynamicNameAppender();
 	String folderName = "Fol"+Utility.dynamicNameAppender();
-
+	String folderName1 = "Fol"+Utility.dynamicNameAppender();
+	String folderName2 = "Fol"+Utility.dynamicNameAppender();
+	
 	
 	//For reviewer assign docs,so create assignment with coding form(with tags and comments) and distribute 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		
 		
 		//Open browser
 		driver = new Driver();
@@ -55,7 +60,7 @@ import testScriptsSmoke.Input;
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
     	//add tag
-		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		page = new TagsAndFoldersPage(driver);
     	page.CreateTag(newTag,"Default Security Group");
     	page.CreateFolder(folderName,"Default Security Group");
     	
@@ -68,7 +73,7 @@ import testScriptsSmoke.Input;
 		cf.createCodingform(codingfrom); 
 		
 		//Create assignment with newly created coding form
-		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		agnmt = new AssignmentsPage(driver);
 		agnmt.createAssignment(assignmentName,codingfrom);
 		
 		AnnotationLayer alayer = new AnnotationLayer(driver);
@@ -85,9 +90,10 @@ import testScriptsSmoke.Input;
 		//Edit assignment and add reviewers 
 		agnmt.editAssignment(assignmentName);
 		agnmt.addReviewerAndDistributeDocs(assignmentName,Input.pureHitSeachString2);
+		
 		lp.logout();
 		
-		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password); 
 		
 		hm = new HomePage(driver);
 		Boolean found= false;
@@ -100,15 +106,17 @@ import testScriptsSmoke.Input;
 			}
 		}	
         Assert.assertTrue(found);
-     
+    
         docView=new DocViewPage(driver);     
+        agnmt = new AssignmentsPage(driver);
+		
         
 	}
 	
-   	 @Test(groups={"regression"},priority=1)
+   	@Test(groups={"regression"},priority=1)
 		public void  VerifyPersistentHit() throws InterruptedException {
  		
- 	
+   		 System.out.println("******Execution started for Persistent Hits********");
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString1);
 			search.ViewInDocView();
@@ -118,19 +126,20 @@ import testScriptsSmoke.Input;
  	
  	@Test(groups={"regression"},priority=2)
 	public void VerifyFoldertab() throws InterruptedException {
-		
-		docView.VerifyFolderTab(folderName);
+ 		System.out.println("******Execution started for Verify folder tab********");
+		docView.VerifyFolderTab(folderName,2);
     
 	}
 	@Test(groups={"regression"},priority=3)
 	public void VerifyTextTab() {
-		
+		System.out.println("******Execution started forverify text tab********");
 		docView.ViewTextTab();
 	}
 	
 	@Test(groups={"regression"},priority=4)
 	public void NonAudioAnnotation() throws InterruptedException
 	{
+		System.out.println("******Execution started for Annotation********");
 		docView.NonAudioAnnotation();
 	}
 	
@@ -140,6 +149,7 @@ import testScriptsSmoke.Input;
 	@Test(groups={"regression"},priority=6)
 	public void VerifyAnalyticsEmailInclusive() throws InterruptedException
 	{
+		System.out.println("******Execution started for VerifyAnalyticsEmailInclusive********");
 		 BaseClass bc = new BaseClass(driver);
 		 bc.selectproject();
 		SessionSearch search = new SessionSearch(driver);
@@ -151,9 +161,11 @@ import testScriptsSmoke.Input;
 		docView.getDocView_AnalyticsEmail();
 		
 	}
-	 @Test(groups={"regression"},priority=7)
+	
+	@Test(groups={"regression"},priority=7)
 		public void VerifyAnalyticsThreaded() throws InterruptedException
 		{
+		System.out.println("******Execution started for VerifyAnalyticsThreaded********");
 		 BaseClass bc = new BaseClass(driver);
 		 bc.selectproject();
 			SessionSearch search = new SessionSearch(driver);
@@ -167,7 +179,10 @@ import testScriptsSmoke.Input;
 	   @Test(groups={"regression"},priority=8)
 		public void VerifyAnalyticsChildWinodw() throws InterruptedException
 		{
-		  BaseClass bc = new BaseClass(driver);
+			System.out.println("******Execution started for VerifyAnalyticsChildWinodw********");
+			 driver.getWebDriver().navigate().refresh();
+			BaseClass bc = new BaseClass(driver);
+		 
 			 bc.selectproject();
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString2);
@@ -180,7 +195,9 @@ import testScriptsSmoke.Input;
 	  @Test(groups={"regression"},priority=9)
 		public void VerifyNearDupesCompwinodw() throws InterruptedException
 		{
+			System.out.println("******Execution started for VerifyNearDupesCompwinodw********");
 		  BaseClass bc = new BaseClass(driver);
+		  driver.getWebDriver().navigate().refresh();
 			 bc.selectproject();
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString1);
@@ -200,9 +217,11 @@ import testScriptsSmoke.Input;
 	  @Test(groups={"regression"},priority=10)
 		public void VerifyThreadedChildWinodw() throws InterruptedException
 		{
+		  System.out.println("******Execution started for VerifyThreadedChildWinodw********");
 		  BaseClass bc = new BaseClass(driver);
+		  driver.getWebDriver().navigate().refresh();
 			 bc.selectproject();
-	         SessionSearch search = new SessionSearch(driver);
+	        SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString2);
 			search.getThreadedAddButton().waitAndClick(20);
 			search.getBulkActionButton().waitAndClick(10);
@@ -213,28 +232,28 @@ import testScriptsSmoke.Input;
 	@Test(groups={"regression"},priority=11)
 		public void NonAudioRemarkAddEditDeletebyReviewer()
 		{
+		  System.out.println("******Execution started for NonAudioRemarkAddEditDeletebyReviewer********");
 			docView.addRemarkNonAudioDoc(Remark);
 		}
-	
-	//@Test(groups={"regression"},priority=5)
-	public void VerifyMiniDoclistConifgSortOrder() throws InterruptedException
-	{
-	   docView.MiniDoclistConifgSortOrder();
-	}
+
 	  
 		@Test(groups={"regression"},priority=12)
 		public void VerifyAnalytics_FamilyActions() throws InterruptedException
 		{
 			
+			  System.out.println("******Execution started for VerifyAnalytics_FamilyActions********");
 			driver.getWebDriver().navigate().refresh();
 			lp.logout();
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			page = new TagsAndFoldersPage(driver);
+			page.CreateFolder(folderName1,"Default Security Group");
+	    	
 		    SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString2);
 			search.getFamilyAddButton().waitAndClick(20);
 			search.getBulkActionButton().waitAndClick(10);
 			search.getDocViewAction().waitAndClick(10);
-			docView.Analytics_FamilyActions(folderName);
+			docView.Analytics_FamilyActions(folderName1);
 			final DocListPage dp = new DocListPage(driver);
 		    dp.getDocList_info().WaitUntilPresent();
 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -247,15 +266,15 @@ import testScriptsSmoke.Input;
 		       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
 		  	   tf.getFoldersTab().waitAndClick(10);
 		       tf.getFolder_ToggleDocCount().waitAndClick(10);
-		       tf.getFolderandCount(folderName, 1).WaitUntilPresent();
-		       Assert.assertTrue(tf.getFolderandCount(folderName, 1).Displayed());
-		       System.out.println(folderName+" could be seen under tags and folder page");
+		       tf.getFolderandCount(folderName1, 1).WaitUntilPresent();
+		       Assert.assertTrue(tf.getFolderandCount(folderName1, 1).Displayed());
+		       System.out.println(folderName1+" could be seen under tags and folder page");
 		}
 		
 		 @Test(groups={"regression"},priority=13)
 			public void VerifyMiniDoclistFolderAction() throws InterruptedException
 			{
-			 
+			  System.out.println("******Execution started for VerifyMiniDoclistFolderAction********");
 			 	driver.getWebDriver().navigate().refresh();
 			 	 BaseClass bc = new BaseClass(driver);
 				 bc.selectproject();
@@ -264,17 +283,17 @@ import testScriptsSmoke.Input;
 				search.getPureHitAddButton().waitAndClick(20);
 				search.getBulkActionButton().waitAndClick(10);
 				search.getDocViewAction().waitAndClick(10);
-				docView.MiniDoclistFolderAction(folderName);
+				docView.MiniDoclistFolderAction(folderName2);
 		    }
 		 
 		
 	    
 	  
-	     @Test(groups={"regression"},priority=14)
+	    @Test(groups={"regression"},priority=14)
 		public void VerifyTabswhenAllprefEnabled() throws InterruptedException
 		{
+	    	  System.out.println("******Execution started for VerifyTabswhenAllprefEnabled********");
 	    	 driver.getWebDriver().navigate().refresh();
-			AssignmentsPage agnmt = new AssignmentsPage(driver);
 			agnmt.editAssignment(assignmentName);
 			agnmt.AssgnToggleButtons();
 			agnmt.getAssignment_BackToManageButton().waitAndClick(10);
@@ -286,13 +305,14 @@ import testScriptsSmoke.Input;
 	 	
 		 @Test(groups={"regression"},priority=15)
 		public void getPersistentHit() throws InterruptedException {
+			  System.out.println("******Execution started for getPersistentHit********");
 			 driver.getWebDriver().navigate().refresh();
-			 AssignmentsPage agnmt = new AssignmentsPage(driver);
+			 agnmt = new AssignmentsPage(driver);
 			 agnmt.SelectAssignmentToViewinDocview(assignmentName);
 		     docView.VerifyPersistentHit(Input.searchString1);
 	    }
 
-			@Test(groups={"regression"},priority=16)
+			//@Test(groups={"regression"},priority=16)
 			public void VerifyTooltipsforIcons() throws InterruptedException {
 				driver.getWebDriver().navigate().refresh();
 				AssignmentsPage agnmt = new AssignmentsPage(driver);
@@ -331,6 +351,7 @@ import testScriptsSmoke.Input;
 			  @Test(groups={"regression"},priority=17)
 				public void VerifyAnalyticsthrAssignment() throws InterruptedException
 				{
+				  System.out.println("******Execution started for VerifyAnalyticsthrAssignment********");
 				  driver.getWebDriver().navigate().refresh();
 				  BaseClass bc = new BaseClass(driver);
 					 bc.selectproject();
@@ -338,15 +359,20 @@ import testScriptsSmoke.Input;
 					search.basicContentSearch(Input.searchString2);
 					// search.Removedocsfromresults();
 					search.getThreadedAddButton().waitAndClick(20);
+					agnmt = new AssignmentsPage(driver);
 					search.bulkAssign();
-					AssignmentsPage agnmt = new AssignmentsPage(driver);
+					
 					agnmt.assignDocstoExisting(assignmentName);
+					agnmt.SelectAssignmentToViewinDocview(assignmentName);
+					
 					docView.AnalyticsCodeSameAs();
 			    }
-			  @Test(groups={"regression"},priority=18)
+			  
+			@Test(groups={"regression"},priority=18)
 			public void VerifyTabswhenAllprefDisabled() throws InterruptedException
 					{
-						AssignmentsPage agnmt = new AssignmentsPage(driver);
+				 System.out.println("******Execution started for VerifyTabswhenAllprefDisabled********");
+						agnmt = new AssignmentsPage(driver);
 						agnmt.editAssignment(assignmentName);
 						agnmt.AssgnToggleButtons();
 						docView.VerifyTabswhenAllprefDisabled();
@@ -355,6 +381,7 @@ import testScriptsSmoke.Input;
 	  	@Test(groups={"regression"},priority=19)
 	   public void VerifyAnalyticsforPA() throws InterruptedException
 	   {
+	  		 System.out.println("******Execution started for VerifyAnalyticsforPA********");
 		lp.logout();
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
 	    SessionSearch search = new SessionSearch(driver);
@@ -365,10 +392,18 @@ import testScriptsSmoke.Input;
 		docView.AnalyticsThreaded_Actions();
        }
 	
-	  	 @Test(groups={"regression"},priority=6)
+	  	@Test(groups={"regression"},priority=20)
+		public void VerifyMiniDoclistConifgSortOrder() throws InterruptedException
+		{
+	  		 System.out.println("******Execution started for VerifyMiniDoclistConifgSortOrder********");
+		   System.out.println("******Execution started for VerifyMiniDoclistConifgSortOrder********");
+		   docView.MiniDoclistConifgSortOrder();
+		}
+		
+	  	 @Test(groups={"regression"},priority=21)
 	 	public void VerifyAnalyticsConceptual() throws InterruptedException
 	 	{
-	 		
+	  		 System.out.println("******Execution started for VerifyAnalyticsConceptual********");
 	  		 BaseClass bc = new BaseClass(driver);
 			 bc.selectproject();
 	 		SessionSearch search = new SessionSearch(driver);

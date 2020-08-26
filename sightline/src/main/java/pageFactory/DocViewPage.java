@@ -1,6 +1,7 @@
 package pageFactory;
 import static org.testng.Assert.assertTrue;
 
+import java.awt.Graphics;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,7 +62,7 @@ public class DocViewPage {
     public Element getDocview_Audio_StartTime(){ return driver.FindElementByXPath("//*[@class='jp-current-time start']"); }
     public Element getDocview_Audio_EndTime(){ return driver.FindElementByXPath("//*[@class='jp-duration end']"); }
     public Element getDocview_Redactionstags_Value(){ return driver.FindElementByXPath("//ul[@class='multiselect-container dropdown-menu']/li[1]//input"); }
-    public Element getDocview_Redactionstags(){ return driver.FindElementByXPath("//button[@class='multiselect dropdown-toggle btn']"); }
+    public Element getDocview_AudioRedactions(){ return driver.FindElementById("ddlAudioRedactionTags"); }
     public Element getDocview_Redactionstags_Delete(){ return driver.FindElementById("btnDelete"); }
     public Element getDocview_Audio_Downloadbutton(){ return driver.FindElementById("liAudioDocumentTypeDropDown"); }
     public Element getDocview_Audio_DownloadFile(){ return driver.FindElementByXPath("//a[contains(text(),'MP3')]"); }
@@ -72,9 +73,10 @@ public class DocViewPage {
     public Element getSaveButton(){ return driver.FindElementById("btnSave"); }
     //non audio reduction page
     public Element getDocView_RedactThisPage(){ return driver.FindElementByXPath("//*[@id='redactCurrentPage_divDocViewer']"); }
-    public Element getDocView_SelectReductionLabel(){ return driver.FindElementByXPath("//*[@id='ddlRedactionTagsForPopup']"); }
-    public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//button[@id='btnSave']"); }
-        
+    public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
+    public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
+    public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
+    
    //remaks objects
     public Element getAdvancedSearchAudioRemarkIcon(){ return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]"); }
     public Element getAdvancedSearchAudioRemarkPlusIcon(){ return driver.FindElementByXPath(".//*[@id='audAddRemark']/i"); }
@@ -112,7 +114,7 @@ public class DocViewPage {
     public Element getDocView_Annotate_ThisPage(){ return driver.FindElementById("highlightCurrentPage_divDocViewer"); }
     public Element getRemarkDeletetIcon(){ return driver.FindElementByXPath("//*[@id='remarksSaveCancelControls']/i[@class='fa fa-trash-o']"); }
     public Element getRemarkEditIcon(){ return driver.FindElementByXPath("//*[@id='remarksSaveCancelControls']/i[@class='fa fa-pencil']"); }
-    public Element getDocView_Redact_ThisPage(){ return driver.FindElementById(".//*[@id='redactCurrentPage_divDocViewer']/a/i"); }
+    public Element getDocView_Redact_ThisPage(){ return driver.FindElementByXPath(".//*[@id='redactCurrentPage_divDocViewer']/a/i"); }
     public Element getDocView_Annotate_TextArea(){ return driver.FindElementByCssSelector("rect[style*='#FFFF00']"); }
     public Element getDocView_Annotate_DeleteIcon(){ return driver.FindElementById("btn_delete"); }
     public Element getDocView_Redact_TextArea(){ return driver.FindElementById("divDocViewer"); }
@@ -222,18 +224,25 @@ public class DocViewPage {
     public Element getDocView_CurrentDocId(){ return driver.FindElementById("activeDocumentId"); }
     public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
   
-    //sp = new SessionSearch(driver);
-    //base = new BaseClass(driver);
- 
+    public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
+    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
+    public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
+    public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
+    public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
+    public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
+    public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
+    
+    
     
     public DocViewPage(Driver driver){
 
         this.driver = driver;
-        //This initElements method will create all WebElements
-        //PageFactory.initElements(driver.getWebDriver(), this);
+     
+       
         softAssertion= new SoftAssert(); 
         base = new BaseClass(driver);
-        
+        sp = new SessionSearch(driver);
+        this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
     }
     
     
@@ -244,7 +253,12 @@ public class DocViewPage {
 				 getPersistantHitEyeIcon().Visible()  ;}}), Input.wait60);
 		 Thread.sleep(5000);
 		 
+		 try {
 		getPersistantHitEyeIcon().waitAndClick(10);
+		 }
+		 catch(Exception e) {
+			 getAudioPersistantHitEyeIcon().waitAndClick(10);
+		 }
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getHitPanels().Visible()  ;}}), Input.wait30);
 		 
@@ -265,24 +279,50 @@ public class DocViewPage {
 	//	driver.getWebDriver().navigate().refresh();
 		return Phit;
 	}
+    
+    public String getAudioPersistentHit(String searchString) throws InterruptedException {
+    	
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getAudioPersistantHitEyeIcon().Visible()  ;}}), Input.wait60);
+			 getAudioPersistantHitEyeIcon().waitAndClick(10);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getHitPanels().Visible()  ;}}), Input.wait30);
+		 
+		int numOfPanels = getHitPanels().size();
+		String Phit = "NULL";
+		System.out.println("numOfPanels"+(numOfPanels-1));
+		Boolean flag = false;
+		for (int i = 1; i <= numOfPanels; i++) {
+			if(getTermInHitPanels(i).getText().contains(searchString)){
+				System.out.println("Found "+searchString);
+				flag = true;
+				Phit = getTermInHitPanels(i).getText();
+			break;
+			}
+		
+		}
+		//Assert.assertTrue(flag);
+	//	driver.getWebDriver().navigate().refresh();
+		return Phit;
+	}
+   
     public void addCommentToNonAudioDoc(String comment) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAddComment1().Visible()  ;}}), Input.wait30);   
+    			getAddComment1().Visible()  ;}}), Input.wait60);   
+    	getAddComment1().Clear();
     	getAddComment1().SendKeys(comment);
-    	getSaveDoc().waitAndClick(30);
-    	try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	base.VerifySuccessMessage("Document saved successfully");
+    	getCompleteDocBtn().waitAndClick(30);
+    	
+    	base.VerifySuccessMessage("Document completed successfully");
 	}
    
     public void addRemarkNonAudioDoc(String remark) {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60);   
+    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60); 
+    	getDocView_DocId("ID00000125").waitAndClick(20);
+      
     	getNonAudioRemarkBtn().waitAndClick(10);
     	
     	   try {
@@ -299,7 +339,7 @@ public class DocViewPage {
     try {
 		Thread.sleep(4000);
 	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	}
     /*Actions newBuilder = new Actions(driver.getWebDriver());
@@ -468,10 +508,10 @@ public void audioReduction() throws InterruptedException, ParseException {
 		 //click on yes button
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-		 getDocview_ButtonYes().Click();
+		 getDocview_ButtonYes().waitAndClick(10);
 	    
 		 base.VerifySuccessMessage("Record Deleted Successfully");
-    	 Thread.sleep(10000);
+		 base.CloseSuccessMsgpopup();
            }
      catch (Exception e)
      {
@@ -513,10 +553,10 @@ public void audioReduction() throws InterruptedException, ParseException {
      
      //select redaction tags
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getDocview_Redactionstags().Visible() ;}}),Input.wait30);
-     getDocview_Redactionstags().waitAndClick(10);
+    		 getDocview_AudioRedactions().Visible() ;}}),Input.wait30);
+     getDocview_AudioRedactions().selectFromDropdown().selectByIndex(1);
      Thread.sleep(2000);
-     getDocview_Redactionstags_Value().waitAndClick(10);
+    // getDocview_Redactionstags_Value().waitAndClick(10);
     
      //click on save button
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -534,11 +574,12 @@ public void audioComment(String comments) {
 	//adding comments
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getAudioComment().Visible() ;}}),Input.wait30);
+    getAudioComment().Clear();
     getAudioComment().SendKeys(comments);
    
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getDocumentViewer_DocView_SaveBtn().Visible() ;}}),Input.wait30);
-    getDocumentViewer_DocView_SaveBtn().Click();
+    getDocumentViewer_DocView_SaveBtn().waitAndClick(10);
     
    
 
@@ -575,11 +616,11 @@ public void ViewTextTab() {
 	   Assert.assertTrue(getDocView_MiniDocListIds(5).Displayed());
 	   
 	    }
-public void VerifyFolderTab(final String folderName) throws InterruptedException {
+public void VerifyFolderTab(final String folderName,int rowno) throws InterruptedException {
 	   
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		  		 getDocView_MiniDoc_SelectRow(2).Visible() ;}}),Input.wait60);
-	   getDocView_MiniDoc_SelectRow(2).waitAndClick(15);
+		  		 getDocView_MiniDoc_SelectRow(rowno).Visible() ;}}),Input.wait60);
+	   getDocView_MiniDoc_SelectRow(rowno).waitAndClick(15);
 	   
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		  		 getDocView_Mini_ActionButton().Visible() ;}}),Input.wait30);
@@ -608,7 +649,7 @@ public void VerifyFolderTab(final String folderName) throws InterruptedException
 	   			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	   	 System.out.println("Bulk folder is done, folder is : "+folderName);
 	   	 
-	   	getDocView_MiniDocListIds(2).waitAndClick(15);
+	   	getDocView_MiniDocListIds(rowno).waitAndClick(15);
 	   
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		  		 getDocView_FolderTab().Visible() ;}}),Input.wait30);
@@ -627,23 +668,35 @@ public void VerifyFolderTab(final String folderName) throws InterruptedException
 
 public void VerifyPersistentHit(String searchString) throws InterruptedException {
 	
-	    String hitscount = getPersistentHit(searchString);
+    String hitscount = getPersistentHit(searchString);
+	System.out.println("Hits are:"+hitscount);
+	
+   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
+	   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
+	   
+	
+	getDocView_Persistent_PrevHit().Displayed();
+	getDocView_Persistent_NextHit().Displayed();
+	getDocView_Persistent_NextHit().waitAndClick(10);
+	getDocView_Persistent_PrevHit().waitAndClick(10);
+	
+  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+	
+		
+}
+
+public void VerifyAudiopersistentHit(String searchString) throws InterruptedException {
+	
+	    String hitscount = getAudioPersistentHit(searchString);
 		System.out.println("Hits are:"+hitscount);
 		
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
-		   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
-		   
-		
-		getDocView_Persistent_PrevHit().Displayed();
-		getDocView_Persistent_NextHit().Displayed();
-		getDocView_Persistent_NextHit().waitAndClick(10);
-		getDocView_Persistent_PrevHit().waitAndClick(10);
-		
-	  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+	   System.out.println(getDocView_Audio_Hit().getText().toString());
 		
 			
 	}
+
+
 
 public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws InterruptedException {
 	   	
@@ -708,15 +761,15 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			getDocView_AnnotateIcon().Displayed()  ;}}), Input.wait30);   
 		Thread.sleep(3000);
 		getDocView_AnnotateIcon().waitAndClick(10);
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 	
  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getDocView_Annotate_ThisPage().Displayed()  ;}}), Input.wait30); 
- 	getDocView_Annotate_ThisPage().waitAndClick(10);
+ 	getDocView_Annotate_ThisPage().Click();
  	Thread.sleep(3000);
     	
  	
- 	// Verify Yellow color of highlighted text
+ 	  // Verify Yellow color of highlighted text
 		WebElement activeElement = driver.switchTo().activeElement();
 		String HighlightedColor = driver.FindElementByCssSelector("rect[style*='#FFFF00']").GetCssValue("fill");
 		System.out.println(HighlightedColor);
@@ -966,7 +1019,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	   public void AnalyticsCodeSameAs() throws InterruptedException {
 				   	
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
+					getDocView_EditMode().Displayed()  ;}}), Input.wait60);   
 		   getDocView_EditMode().waitAndClick(10);
 	   
 		   String parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -1191,7 +1244,25 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   driver.getWebDriver().close();
 		   driver.switchTo().window(parentWindowID);
 		    
-		   sp.BulkActions_Folder(foldername);
+		  // sp.BulkActions_Folder(foldername);
+		   sp.getSelectFolderExisting(foldername).waitAndClick(5);
+		   	 
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   		    	sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+			   sp.getContinueButton().Click();
+			   	 
+			   	final BaseClass bc = new BaseClass(driver);
+			    final int Bgcount = bc.initialBgCount();
+			       
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   		    	sp.getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+			  sp.getFinalizeButton().Click();
+			   	 
+			   base.VerifySuccessMessage("Records saved successfully");
+			   	 
+			  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+			  System.out.println("Bulk folder is done, folder is : "+foldername);
 		   
 		   driver.Navigate().refresh();
 		   Thread.sleep(3000);
@@ -1217,14 +1288,14 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			               System.out.println("Remark Button not displayed for PA");
 			 }
 
-		   
+		   getDocView_DocId("ID00001059").waitAndClick(20);
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getDocView_ThreadedChild_Selectalldoc().Displayed()  ;}}), Input.wait30);   
 		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
 		   
-		   getDocView_Analytics_LoadMoreButton().waitAndClick(10);
+		  // getDocView_Analytics_LoadMoreButton().waitAndClick(10);
 		   
-		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
+		 //  getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
 		   
 		   getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		   
@@ -1268,19 +1339,19 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	    	//adding comments
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDocView_NumTextBox().Visible() ;}}),Input.wait30);
-	        getDocView_NumTextBox().SendKeys("3");
+	        getDocView_NumTextBox().SendKeys("2");
 	        getDocView_NumTextBox().Enter();
 	       
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	       		 getDocView_HistoryButton().Visible() ;}}),Input.wait30);
-	        getDocView_HistoryButton().Click();
+	        getDocView_HistoryButton().waitAndClick(10);
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDocView_Historydropdown().Visible() ;}}),Input.wait30);
-		    getDocView_Historydropdown().Click();
+		    getDocView_Historydropdown().waitAndClick(10);
 		    
 		    Assert.assertTrue(getDocView_TextFileType().Enabled());
-         Assert.assertEquals(getDocView_TextFileType(), "MP3 Version");
+            Assert.assertEquals(getDocView_TextFileType().getText().toString(), "MP3 VERSION");
 	    }
 	   
 	    public void getDocView_AnalyticsEmail() throws InterruptedException {
@@ -1565,7 +1636,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			   
 			  List<WebElement> optimized = getDocView_Config_Selectedfield().FindWebElements();
 			  List<String> alloptimized = new ArrayList<String>();
-              for(int k=1;k<=optimized.size();k++)
+              for(int k=0;k<optimized.size();k++)
               {
             	 System.out.println(alloptimized.add(optimized.get(k).getText()));
              }
@@ -1612,9 +1683,101 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   }
 			  
 			  
+	 public void VerifyKeywordHit(String searchString) throws InterruptedException {
+				
+	    String hitscount = getPersistentHit(searchString);
+		System.out.println("Hits are:"+hitscount);
+				
+			   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  		 getDocView_HitsTogglePanel().Displayed() ;}}),Input.wait30);
+				   Assert.assertEquals("Hide Terms with 0 hits:", getDocView_ToogleLabel().getText());
+				   
+				
+				getDocView_Persistent_PrevHit().Displayed();
+				getDocView_Persistent_NextHit().Displayed();
+				getDocView_Persistent_NextHit().waitAndClick(10);
+				getDocView_Persistent_PrevHit().waitAndClick(10);
+				
+			  System.out.println(getDocView_Persistent_NextHit().GetAttribute("key").toString());
+				
+					
+			}
+	 
+	 public void redactbyrectangle(int off1,int off2,int cordinate,String redactiontag) throws InterruptedException
+	 {
+		 try {
+			  System.out.println(off1+"...."+off2);
+             Actions actions = new Actions(driver.getWebDriver());  
+             WebElement text = getDocView_Redactrec_textarea();
+             
+             actions.moveToElement(text, off1,off2)
+             .clickAndHold()
+             .moveByOffset(100, 10)
+             .release()
+             .perform();
+		 }
+           
+			catch (Exception e)
+					{
+						e.printStackTrace();
+						System.out.println("Not able to select redacted area");
+					}
+		 
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		    getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+		    getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
+		 
+	    	Thread.sleep(2000); 
+		   	getDocView_SaveReduction1(cordinate).waitAndClick(15);
+	    	Thread.sleep(2000);    	
+	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
+	    	Thread.sleep(2000);
+     
+	 }
+	 
+	 public void editredaction(int off1,int off2,int cordinate,String redactiontag) throws InterruptedException
+	 {
+			 System.out.println(off1+"...."+off2);
+             Actions actions = new Actions(driver.getWebDriver());  
+             WebElement text = getDocView_Redactrec_textarea();
+             
+             actions.moveToElement(text, off1,off2).click().build().perform();
+             Thread.sleep(1000);
+             
+             driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+            		 getDocView_Redactedit_selectlabel().Displayed() ;}}), Input.wait30);
+             getDocView_Redactedit_selectlabel().selectFromDropdown().selectByVisibleText(redactiontag);
+         		 
+         	    	Thread.sleep(2000); 
+         	    	getDocView_Redactedit_save().waitAndClick(15);
+         	    	Thread.sleep(2000);    	
+         	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
+         	    	Thread.sleep(2000);
+  		
+ 		}
+	 
+	 public void Deleteredaction(int off1,int off2,int cordinate,String redactiontag) throws InterruptedException
+	 {
+			 System.out.println(off1+"...."+off2);
+             Actions actions = new Actions(driver.getWebDriver());  
+             WebElement text = getDocView_Redactrec_textarea();
+             
+             actions.moveToElement(text, off1,off2).click().build().perform();
+             Thread.sleep(1000);
+             
+             driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+            		 getDocView_Annotate_DeleteIcon().Displayed() ;}}), Input.wait30);
+             getDocView_Annotate_DeleteIcon().waitAndClick(15);
+         	 Thread.sleep(2000);    	
+         	 base.VerifySuccessMessage("Redaction Removed successfully.");
+         	 Thread.sleep(2000);
+  		
+ 		}
 			  
-			  
-			  
+	    public void paint(Graphics g)
+		{
+			g.fillRect(240, 240, 200, 100);
+		}	  
 			  
 			  
 	}

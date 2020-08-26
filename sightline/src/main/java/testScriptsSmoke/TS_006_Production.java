@@ -31,8 +31,9 @@ public class TS_006_Production {
 	String productionname= "P"+Utility.dynamicNameAppender();
 	String PrefixID = "A_"+Utility.dynamicNameAppender();;
 	String SuffixID = "_P"+Utility.dynamicNameAppender();;
-	String foldername = "FolderProd"+Utility.dynamicNameAppender();;
+    String foldername = "FolderProd"+Utility.dynamicNameAppender();;
 	String Tagname = "Tag"+Utility.dynamicNameAppender();
+	String Tagnameprev = "Privileged";
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
@@ -43,20 +44,24 @@ public class TS_006_Production {
 		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+	
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);
 		ss.basicContentSearch("crammer");
 		ss.bulkFolderExisting(foldername);
+		
 		tp.CreateTagwithClassification(Tagname,"Privileged"); 
 	}
 		
 	@Test(groups={"smoke","regression"})
-	public void  AddNewProduction() throws ParseException, InterruptedException, NoSuchMethodException, SecurityException {
+	public void  AddNewProduction() throws Exception {
 		
+		System.out.println(Input.prodPath);
 		ProductionPage page1 = new ProductionPage(driver);
-		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagname);
+		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
+
+		//page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 	}
 	 @BeforeMethod
