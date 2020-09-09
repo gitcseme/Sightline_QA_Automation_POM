@@ -1,5 +1,7 @@
 package automationLibrary;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -23,9 +26,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.remote.BrowserType;
-import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -34,8 +34,6 @@ import org.openqa.selenium.support.ui.Wait;
 
 import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
-import configsAndTestData.ConfigLoader;
-import configsAndTestData.ConfigMain;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -52,10 +50,10 @@ public  class Driver  {
        /// <param name="browserType">Currently only Chrome, IE and Firefox supported</param>
 	
 	public Driver() { 
-		System.out.println(Input.browserName);
+		//System.out.println(Input.browserName);
 		  this.driver = createDriver(Input.browserName); 
 	      this.driver.get(Input.url);
-	      System.out.println(Input.browserName + "is opned and loading application");
+	      //System.out.println(Input.browserName + " is opened and loading application");
 	      waitForPageToBeReady();
 	      
 	   }  
@@ -256,7 +254,13 @@ public  class Driver  {
 	   private WebDriver chromeDriver() { 
 	      
 	      try { 
-	    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
+	    	    String os = System.getProperty("os.name").toLowerCase();
+	    	    
+	    	    if (os.contains("mac") || (os.contains("linux"))) {
+	    	    	System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver");
+	    	    } else {
+	    	    	System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
+	    	    }
 				ChromeOptions options = new ChromeOptions();
 				options.addArguments("chrome.switches","--disable-extensions");
 				new DesiredCapabilities();
@@ -275,7 +279,7 @@ public  class Driver  {
 				options.setExperimentalOption("prefs", prefs);
 		
 				driver = new ChromeDriver(caps);
-				driver.manage().window().maximize();
+				//driver.manage().window().maximize();
 				return driver;	
 	      } 
 
@@ -289,22 +293,17 @@ public  class Driver  {
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    		System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
-		    		DesiredCapabilities m_capability = DesiredCapabilities.chrome();
-		    		m_capability.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-
-		    		m_capability = DesiredCapabilities.edge();
-		    		WebDriver driver = new EdgeDriver(m_capability);
-		    		
-		    		//Start Edge Session
-		    		driver.manage().window().maximize();
+		    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//MicrosoftWebDriver.exe");
+		    	  //Start Edge Session
+		    		WebDriver driver=new EdgeDriver();
+					driver.manage().window().maximize();
 					return driver;	
 		      } 
 
 		      catch (Exception ex) { 
 		        ex.printStackTrace();
 		    	  throw new RuntimeException
-		              ("couldnt create edge driver"); 
+		              ("couldnt create chrome driver"); 
 		      } 
 		   }
 	
@@ -471,7 +470,7 @@ public  class Driver  {
  			catch (Throwable e)
  			{
  				System.out.println(
- 						"IGNORE" + e.getLocalizedMessage() + e.getMessage());
+ 						"IGNORE " + e.getLocalizedMessage() + e.getMessage());
  				e.printStackTrace();
  			}
  		}
@@ -481,5 +480,17 @@ public  class Driver  {
         return driver.switchTo();
     }
 	
+ 	public String capture() {
+	 		File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	 		File Dest = new File(System.getProperty("user.dir")+File.separator+"report"+File.separator+"screenshoots"+File.separator+"screenshoots" + System.currentTimeMillis()+ ".png");
+	 		String errflpath = Dest.getAbsolutePath();
+	 		try {
+				FileUtils.copyFile(scrFile, Dest);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	 		return errflpath;
+ 		}
 	   
 	}

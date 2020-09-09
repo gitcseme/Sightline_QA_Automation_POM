@@ -1,6 +1,10 @@
 package pageFactory;
 
+import java.util.HashMap;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.interactions.Actions;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import testScriptsSmoke.Input;
@@ -13,6 +17,7 @@ public class IngestionPage {
     BaseClass base;
     
    //ID's
+    public Element getTotalIngestCount(){ return driver.FindElementById("totalIngestionCount"); }
     public Element getSpecifySourceSystem(){ return driver.FindElementById("ddlSourceSystem"); }
     public Element getSpecifySourceFolder(){ return driver.FindElementById("ddlFolders"); }
     public Element getSpecifyLocation(){ return driver.FindElementById("ddlServerLocation"); }
@@ -68,11 +73,11 @@ public class IngestionPage {
     public Element getMappingFIELDCAT28(){ return driver.FindElementById("TY_28"); }
     public Element getMappingFIELDCAT29(){ return driver.FindElementById("TY_29"); }
     public Element getMappingFIELDCAT31(){ return driver.FindElementById("TY_31"); }
-    public Element getMappingFIELDCAT46(){ return driver.FindElementById("TY_46"); }
     public Element getMappingFIELDCAT49(){ return driver.FindElementById("TY_49"); }
     public Element getMappingFIELDCAT50(){ return driver.FindElementById("TY_50"); }
     public Element getMappingFIELDCAT51(){ return driver.FindElementById("TY_51"); }
    
+    public Element getMappingDESTINATIONFIELD1(){ return driver.FindElementById("DF_1"); }
     public Element getMappingDESTINATIONFIELD2(){ return driver.FindElementById("DF_2"); }
     public Element getMappingDESTINATIONFIELD3(){ return driver.FindElementById("DF_3"); }
     public Element getMappingDESTINATIONFIELD4(){ return driver.FindElementById("DF_4"); }
@@ -91,11 +96,11 @@ public class IngestionPage {
     public Element getMappingDESTINATIONFIELD28(){ return driver.FindElementById("DF_28"); }
     public Element getMappingDESTINATIONFIELD29(){ return driver.FindElementById("DF_29"); }
     public Element getMappingDESTINATIONFIELD31(){ return driver.FindElementById("DF_31"); }
-    public Element getMappingDESTINATIONFIELD46(){ return driver.FindElementById("DF_46"); }
     public Element getMappingDESTINATIONFIELD49(){ return driver.FindElementById("DF_49"); }
     public Element getMappingDESTINATIONFIELD50(){ return driver.FindElementById("DF_50"); }
     public Element getMappingDESTINATIONFIELD51(){ return driver.FindElementById("DF_51"); }
     public Element getPreviewRun(){ return driver.FindElementById("PreviewRun"); }
+    public Element getSaveDraftButton(){ return driver.FindElementById("SaveIngestion"); }
     public Element getbtnRunIngestion(){ return driver.FindElementById("btnRunIngestion"); }
     public Element getRefreshButton(){ return driver.FindElementById("refresh"); }
     public Element getApproveMessageOKButton(){ return driver.FindElementById("bot1-Msg1"); }
@@ -134,7 +139,7 @@ public class IngestionPage {
     public Element getFilterByINDEXED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INDEXED']"); }
     public Element getFilterByAPPROVED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='APPROVED']"); }
     public Element getFilterByPUBLISHED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='PUBLISHED']"); }
-     public Element getRunCopying(){ return driver.FindElementByXPath(".//*[@id='RunCopying']/i"); }
+    public Element getRunCopying(){ return driver.FindElementByXPath(".//*[@id='RunCopying']/i"); }
     public Element getCloseButton(){ return driver.FindElementByXPath("//*[@class='ui-dialog-titlebar-close']"); }
     public Element getRunIndexing(){ return driver.FindElementByXPath(".//*[@id='RunIndexing']/i"); }
     public Element getIsAudioCheckbox(){ return driver.FindElementByXPath("//input[@id='IsAudio']/following-sibling::i"); }
@@ -153,23 +158,149 @@ public class IngestionPage {
     
     //added on 04-04
     public Element getIngestionName_CloseButton(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/se//button[@class='ui-dialog-titlebar-close']"); }
+    public Element getIngestionName_ExecCloseButton(){ return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionActionButton(){ return driver.FindElementByXPath(".//*[@id='cardCanvas']//div[1]/a"); }
+    public Element getFirstIngestionActionButton() {return driver.FindElementByXPath(".//*[@id='cardCanvas']//li[1]//div[1]/a");}
+    public Element getIngestionAction_Wizard(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Open in Wizard')]"); }
+    public Element getIngestionAction_Delete(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Delete')]"); }
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
     public Element getDateFormat(){ return driver.FindElementById("ddlDateFormat"); }
     public Element getIndexBlock(){ return driver.FindElementById("Indexingblock"); }
 	
-   
-    
+    //added on 200831
+    public Element getDateTimeOption(){ return driver.FindElementByXPath("ddlDateFormat//option[text='YYYY/MM/DD HH:MM:SS']"); }
+    public Element getTimeZone(){ return driver.FindElementByXPath("ddlTimeZone//option[text='UTC']"); }
+    public Element getDESTINATIONFIELD1OPTION(){ return driver.FindElementByXPath("//select[@id='DF_1']//option[@value='-54']"); }
+    public Element getFirstIngestionTileName(){ return driver.FindElementByXPath("//div[@id='cardCanvas']//li[1]//span"); }
+    public Element getIngestionExecutionHeader(){ return driver.FindElementByXPath("//span[@id='ui-id-1']/div"); }
+    public Element getConfigureMappingText(){ return driver.FindElementByXPath("//div[@class='stepHeader']//div[@class='col-md-7']"); }
+    public Element getMappingRequiredSource1(){ return driver.FindElementByXPath("//select[@id='DF_1']/following-sibling::span"); }
+    public Element getMappingRequiredSource2(){ return driver.FindElementByXPath("//select[@id='DF_2']/following-sibling::span"); }
+    public Element getMappingRequiredSource3(){ return driver.FindElementByXPath("//select[@id='DF_3']/following-sibling::span"); }
+    public Element getMappingRequiredSource4(){ return driver.FindElementByXPath("//select[@id='DF_4']/following-sibling::span"); }
+    public Element getToastMessage() {return driver.FindElementByCssSelector("div.bigBox.animated.fadeIn.fast");}
+    public Element getActualSourceSys() {return driver.FindElementByCssSelector("#ddlSourceSystem > option[selected]");}
+    public Element getActualSrcLoc() {return driver.FindElementByCssSelector("#ddlServerLocation > option[selected]");}
+    public Element getActualSrcFolder() {return driver.FindElementByCssSelector("#ddlFolders > option[selected]");}
+    public Element getActualDocKey() {return driver.FindElementByCssSelector("#ddlKeyDatFile > option[selected]");}
+    public Element getActualNativeFile() {return driver.FindElementByCssSelector("#ddlLoadNativeFile > option[selected]");}
+    public Element getActualMp3File() {return driver.FindElementByCssSelector("#ddlLoadMP3Variantfile > option[selected]");}
+    public Element getActualAudioFile() {return driver.FindElementByCssSelector("#ddlLoadTranscriptfile > option[selected]");}
+    public Element getSourceSystemTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(2) > div.col-md-5 > label");}
+    public Element getSourceLocationTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
+    public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
     
     public IngestionPage(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Ingestion/Home");
+        //this.driver.getWebDriver().get(Input.url+"Ingestion/Home");
         base = new BaseClass(driver);
         driver.waitForPageToBeReady();
 
     }
+    
+    public void requiredFieldsAreEntered(boolean scriptState) 
+    		throws InterruptedException {
+    	
+    	if (scriptState) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
+    		getSpecifySourceSystem().SendKeys("source_system");
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
+    		getSpecifyLocation().SendKeys("source_location");
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
+    		getSpecifySourceFolder().SendKeys("source_folder");
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getDocumentKey().Visible()  ;}}), Input.wait30); 
+    		getDocumentKey().SendKeys("doc_key");
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
+    		getNativeCheckBox().Click();
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getNativeLST().Visible()  ;}}), Input.wait30); 
+    		getNativeLST().SendKeys("native_file");
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    		getMP3CheckBoxstionButton().Click();
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getMP3LST().Visible()  ;}}), Input.wait30); 
+    		getMP3LST().SendKeys("mp3_file");
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptCheckBoxstionButton().Click();
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptLST().SendKeys("audio_file");
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getDateFormat().Visible()  ;}}), Input.wait30); 
+    		getDateFormat().SendKeys("date_time");
+		} else {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptCheckBoxstionButton().Click();
+
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptLST().SendKeys("audio_file");
+		}
+		
+    }
+    
+    public void openFirstIngestionSettings(boolean scriptState) 
+    		throws InterruptedException {
+    	
+    	if (scriptState) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getFilterByButton().Visible()  ;}}), Input.wait30); 
+    		getFilterByButton().Click();
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+    		getFilterByDRAFT().Click();
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFirstIngestionActionButton().Displayed()  ;}}), Input.wait30); 
+	    	getFirstIngestionActionButton().Click();
+		} else {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptCheckBoxstionButton().Click();
+		}
+		
+    }
+    
+    public void clearSourceDatFields(boolean scriptState) 
+    		throws InterruptedException {
+    	
+    	if (scriptState) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getFilterByButton().Visible()  ;}}), Input.wait30); 
+    		getFilterByButton().Click();
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+    		getFilterByDRAFT().Click();
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getFirstIngestionActionButton().Displayed()  ;}}), Input.wait30); 
+	    	getFirstIngestionActionButton().Click();
+		} else {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptCheckBoxstionButton().Click();
+		}
+		
+    }
+
     
     public void AddOnlyNewIngestion(String dataset) throws InterruptedException {
 		
@@ -424,38 +555,37 @@ public class IngestionPage {
     	
     	if (dataset.contains("Automation_20Family_20Threaded")) {
     		
-    	/*
-			 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-			 * getMappingFIELDCAT8().Visible() ;}}), Input.wait30);
-			 * getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
-			 * getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText(
-			 * "EmailAuthorName");
-			 */	
+    
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getMappingFIELDCAT8().Visible()  ;}}), Input.wait30); 
+    	getMappingFIELDCAT8().selectFromDropdown().selectByVisibleText("EMAIL");
+    	getMappingDESTINATIONFIELD8().selectFromDropdown().selectByVisibleText("EmailAuthorName");
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT9().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT9().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
+    	getMappingDESTINATIONFIELD9().selectFromDropdown().selectByVisibleText("EmailAuthorAddress");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT10().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
+    	getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailBCCAddresses");
     	
-//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			getMappingFIELDCAT11().Visible()  ;}}), Input.wait30); 
-//    	getMappingFIELDCAT11().selectFromDropdown().selectByVisibleText("EMAIL");
-//    	getMappingDESTINATIONFIELD11().selectFromDropdown().selectByVisibleText("EmailBCCNames");
-//    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getMappingFIELDCAT11().Visible()  ;}}), Input.wait30); 
+    	getMappingFIELDCAT11().selectFromDropdown().selectByVisibleText("EMAIL");
+    	getMappingDESTINATIONFIELD11().selectFromDropdown().selectByVisibleText("EmailBCCNames");
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT13().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT13().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
+    	getMappingDESTINATIONFIELD13().selectFromDropdown().selectByVisibleText("EmailCCAddresses");
     	
-//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			getMappingFIELDCAT14().Visible()  ;}}), Input.wait30); 
-//    	getMappingFIELDCAT14().selectFromDropdown().selectByVisibleText("EMAIL");
-//    	getMappingDESTINATIONFIELD14().selectFromDropdown().selectByVisibleText("EmailCCNames");
-//    
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getMappingFIELDCAT14().Visible()  ;}}), Input.wait30); 
+    	getMappingFIELDCAT14().selectFromDropdown().selectByVisibleText("EMAIL");
+    	getMappingDESTINATIONFIELD14().selectFromDropdown().selectByVisibleText("EmailCCNames");
+    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT25().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT25().selectFromDropdown().selectByVisibleText("FAMILY");
@@ -491,15 +621,15 @@ public class IngestionPage {
     	getMappingFIELDCAT49().selectFromDropdown().selectByVisibleText("EMAIL");
     	getMappingDESTINATIONFIELD49().selectFromDropdown().selectByVisibleText("EmailReceivedDate");
     	
-//      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			getMappingFIELDCAT50().Visible()  ;}}), Input.wait30); 
-//    	getMappingFIELDCAT50().selectFromDropdown().selectByVisibleText("EMAIL");
-//    	getMappingDESTINATIONFIELD50().selectFromDropdown().selectByVisibleText("EmailToNames");
-//        	
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getMappingFIELDCAT50().Visible()  ;}}), Input.wait30); 
+    	getMappingFIELDCAT50().selectFromDropdown().selectByVisibleText("EMAIL");
+    	getMappingDESTINATIONFIELD50().selectFromDropdown().selectByVisibleText("EmailToNames");
+        	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingFIELDCAT51().Visible()  ;}}), Input.wait30); 
     	getMappingFIELDCAT51().selectFromDropdown().selectByVisibleText("EMAIL");
-    	getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
+    	getMappingDESTINATIONFIELD51().selectFromDropdown().selectByVisibleText("EmailToAddresses");
     	} 
     	else {
 			System.out.println("No need to select fields for this dataset'");
@@ -757,8 +887,7 @@ public class IngestionPage {
 			}
 		}
 }
-    	
-    	Thread.sleep(5000);
+
     	//Approve
     	getIngestionName().waitAndClick(Input.wait30);
     	
@@ -916,86 +1045,6 @@ public class IngestionPage {
 		}
     	
     }
-    
-    public void MetadataOverlay(String dataset) throws InterruptedException {
-    	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getFilterByButton().Visible();}}), Input.wait30); 
-   	getFilterByButton().waitAndClick(Input.wait30);
-   
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-   	getFilterByPUBLISHED().Click();
-   	
-   	getRefreshButton().waitAndClick(5);
-   	Thread.sleep(2000);
-   	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getIngestionActionButton().Visible()  ;}}), Input.wait30); 
-   	getIngestionActionButton().waitAndClick(5);
-   	Thread.sleep(2000);
-   	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getIngestionAction_Copy().Visible()  ;}}), Input.wait30); 
-   	getIngestionAction_Copy().waitAndClick(5);
-   	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getSpecifySourceFolder().Visible()   ;}}), Input.wait30); 
-   	
-   	 getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.AllSourcesFolder);
-   	 
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getIngestion_IngestionType().Visible()   ;}}), Input.wait30); 
-   	 getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
-   	 
-   	 driver.scrollingToBottomofAPage(); 
-   	 
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getSourceSelectionDATLoadFile().Visible()   ;}}), Input.wait30); 
-   	 getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.AllSourcesDATFile);
-   	 Thread.sleep(2000);
-   	 
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getSourceSelectionDATKey().Visible()   ;}}), Input.wait60); 
-		 getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.AllSourcesDockey);
-		
-    driver.scrollPageToTop();
-   	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			getNextButton().Visible()  ;}}), Input.wait30); 
-   	getNextButton().Click();
-   	
-   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	getApproveMessageOKButton().Click();
-	Thread.sleep(5000);
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMappingSOURCEFIELD6().Visible()  ;}}), Input.wait30); 
-	getMappingFIELDCAT6().selectFromDropdown().selectByVisibleText("EMAIL");
-	getMappingDESTINATIONFIELD6().selectFromDropdown().selectByVisibleText("EmailAuthorNameAndAddress");
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMappingFIELDCAT7().Visible()  ;}}), Input.wait30); 
-	getMappingFIELDCAT7().selectFromDropdown().selectByVisibleText("EMAIL");
-	getMappingDESTINATIONFIELD7().selectFromDropdown().selectByVisibleText("EmailBCCNamesAndAddresses");
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMappingFIELDCAT10().Visible()  ;}}), Input.wait30); 
-	getMappingFIELDCAT10().selectFromDropdown().selectByVisibleText("EMAIL");
-	getMappingDESTINATIONFIELD10().selectFromDropdown().selectByVisibleText("EmailCCNamesAndAddresses");
-	
-	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMappingFIELDCAT46().Visible()  ;}}), Input.wait30); 
-	getMappingFIELDCAT46().selectFromDropdown().selectByVisibleText("EMAIL");
-	getMappingDESTINATIONFIELD46().selectFromDropdown().selectByVisibleText("EmailToNamesAndAddresses");
-	
-	
-	IngestionCatlogtoPublish(dataset);
-   	
-     }
-   
-   
     
 } 
  

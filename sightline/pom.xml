@@ -12,7 +12,12 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <testng.version>6.14.3</testng.version>
+    <cucumber.version>3.0.1</cucumber.version>
+    <courgette.version>2.4.0</courgette.version>
+    <spring.version>4.3.28.RELEASE</spring.version>
   </properties>
+  
  <build>
     <plugins>
       <plugin>
@@ -60,9 +65,56 @@
 	<dependency>
 	    <groupId>org.testng</groupId>
 	    <artifactId>testng</artifactId>
-	    <version>6.11</version>
+	    <version>${testng.version}</version>
 	   <scope>compile</scope>
 	</dependency>
+	<dependency>
+	<groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java8</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-spring</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-testng</artifactId>
+      <version>${cucumber.version}</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>io.github.prashant-ramcharan</groupId>
+        <artifactId>courgette-jvm</artifactId>
+        <version>${courgette.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+    </dependency>
 	<!-- https://mvnrepository.com/artifact/com.fasterxml/jackson-xml-databind -->
 	<dependency>
     <groupId>com.fasterxml</groupId>

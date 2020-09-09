@@ -73,7 +73,7 @@ public class TS_002_ValidateIngestion {
 	public void MetadataOverlayIngestion() throws InterruptedException {
 		
     //		System.out.println(dataset);
-		page.MetadataOverlay("Automation_AllSources");
+//		page.MetadataOverlay("Automation_AllSources");
 		}
 	
 	

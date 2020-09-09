@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import javax.mail.BodyPart;
@@ -21,6 +22,9 @@ import org.openqa.selenium.NoAlertPresentException;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import junit.framework.Assert;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 import testScriptsSmoke.Input;
 
 public class LoginPage {
@@ -42,7 +46,9 @@ public class LoginPage {
     public Element getSelectLanguage(){ return driver.FindElementById("select-1"); }
     public Element getEditprofilesave(){ return driver.FindElementById("btnSaveEditProfile"); }
 
-    
+	static ExtentReports report;
+	static ExtentTest test;
+   
     public LoginPage(Driver driver){
 
         this.driver = driver;
@@ -53,66 +59,112 @@ public class LoginPage {
 
    // @SuppressWarnings("static-access")
 	public void loginToSightLine(String strUserName,String strPasword){
+		loginToSightLine( strUserName, strPasword, true, null);
+	}
+	public void loginToSightLine(String strUserName,String strPasword, boolean verifyLogin, HashMap dataMap){
+		
+    	test = (dataMap != null) ? (ExtentTest) dataMap.get("ExtentTest") : null;
+		
     	driver.waitForPageToBeReady();
-        //Fill user name
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getEuserName().Visible()  ;}}), Input.wait30); 
-    	getEuserName().SendKeys(strUserName);
-
-        //Fill password
-    	getEpassword().SendKeys(strPasword);
-
-        //Click Login button
-    	getEloginButton().Click();
+    	
+    	try {
+	        //Fill user name
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getEuserName().Visible()  ;}}), Input.wait30); 
+	    	getEuserName().SendKeys(strUserName);
+	
+	        //Fill password
+	    	getEpassword().SendKeys(strPasword);
+	
+	        //Click Login button
+	    	getEloginButton().Click();
+    	} catch (Exception e) {
+    		if (test!=null)
+				test.log(LogStatus.FAIL, test.addScreenCapture(driver.capture())+"Unable to enter credentials");
+    	}
     	
     	//check if user session is active
+    	boolean activeSessionButton = false;
     	try{
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getEuserName().Enabled()  ;}}), 3000); 
-    		getActiveSessionYesButton().Click();	
+    		getActiveSessionYesButton().Click();
+    		activeSessionButton = true;
     		
-    		//driver.Navigate().refresh();
-    		driver.waitForPageToBeReady();
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getEuserName().Enabled()  ;}}), 30000);
-    		getEuserName().SendKeys(strUserName) ;
-
-            //Fill password
-        	getEpassword().SendKeys(strPasword);
-            //Click Login button
-        	getEloginButton().Click();
-			driver.waitForPageToBeReady();
 		}catch (Exception e) {
+			// no activeSessionButton found
 			
 		}
-    	//below code is to handles 2FA
-    	try{
-		/*	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getEuserName().Enabled()  ;}}), Input.wait30);
-		*/
-    	getEmailMeButton().Click();
-		getInputOTP().SendKeys(LoginPage.readGmailMail("Your one-time passcode to log into Sightline","","OTP",strUserName,strPasword));
-		getEloginButton().Click();
-		}catch (Exception e1) {
-			//System.out.println("2FA is failed/disabled");
-		}
     	
-    	//Make sure sign out menu is visible post login
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			 getSignoutMenu().Visible()  ;}}), Input.wait30); 
-    	BaseClass bc = new BaseClass(driver);
-    	try{
-    		if(!strUserName.equals(Input.sa1userName))
-    			bc.selectproject();
-    	}catch (Exception e) {
-			// TODO: handle exception
-		}
+    	if (activeSessionButton) {
+	       	try{
+	    		//driver.Navigate().refresh();
+	    		driver.waitForPageToBeReady();
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				getEuserName().Enabled()  ;}}), 30000);
+	    		getEuserName().SendKeys(strUserName) ;
+	
+	            //Fill password
+	        	getEpassword().SendKeys(strPasword);
+	            //Click Login button
+	        	getEloginButton().Click();
+				driver.waitForPageToBeReady();
+			}catch (Exception e) {
+				if (test!=null) test.log(LogStatus.FAIL, "Unable to enter credentials for active session");
+				
+			}
+    	}
+    	
+    	verifyLogin = false;
+    	if (verifyLogin) {
+	    	//below code is to handles 2FA
+	    	try{
+				/*	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    				getEuserName().Enabled()  ;}}), Input.wait30);
+				*/
+		    	getEmailMeButton().Click();
+				getInputOTP().SendKeys(LoginPage.readGmailMail("Your one-time passcode to log into Sightline","","OTP",strUserName,strPasword));
+				getEloginButton().Click();
+			}catch (Exception e1) {
+				if (test!=null) test.log(LogStatus.INFO, "2FA is failed/disabled");
+				//System.out.println("2FA is failed/disabled");
+			}
+	    	
+	    	//Make sure sign out menu is visible post login
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			 getSignoutMenu().Visible()  ;}}), Input.wait30); 
+	    	BaseClass bc = new BaseClass(driver);
+	    	try{
+	    		//if(!strUserName.equals(Input.sa1userName))
+	    			bc.selectproject();
+	    	}catch (Exception e) {
+	    		if (test!=null) test.log(LogStatus.INFO, String.format("%s not %s as expected", strUserName, Input.sa1userName));
+				// TODO: handle exception
+			}
+	    	
+    	}
+	    
+    	if (getSignoutMenu().Visible()) {
+	    	if (test != null) test.log(LogStatus.PASS, "Login success!");
+    	} else {
+	    	if (test != null) test.log(LogStatus.FAIL, "NOT Logged in!");
+    	}
     	Assert.assertTrue(getSignoutMenu().Visible());
-    	System.out.println("Login success!");
+    	
 
     }
     public void logout(){
-    	
+    	logout(null);
+    
+    }
+    
+    public void logout(HashMap databaseMap){
+ 
+		test = null;
+		if (databaseMap != null)
+			test = (ExtentTest) databaseMap.get("ExtentText");
+		
+  	
     	driver.Navigate().refresh();
     	 try {
     		 try {
@@ -129,17 +181,21 @@ public class LoginPage {
     	        //e.printStackTrace();
     	    }
     	
-    	
-    	driver.scrollPageToTop();
-    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSignoutMenu().Visible()  ;}}), 30000); */
-    	getSignoutMenu().waitAndClick(5);
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getLogoutOption().Visible()  ;}}), 30000); 
-    	getLogoutOption().waitAndClick(5);;
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEuserName().Visible()  ;}}), 30000); 
-    	Assert.assertTrue(getEuserName().Visible());
+    	try {
+	    	driver.scrollPageToTop();
+	    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getSignoutMenu().Visible()  ;}}), 30000); */
+	    	getSignoutMenu().waitAndClick(5);
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getLogoutOption().Visible()  ;}}), 30000); 
+	    	getLogoutOption().waitAndClick(5);;
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getEuserName().Visible()  ;}}), 30000); 
+	    	if (test != null && getEuserName().Visible()) test.log(LogStatus.PASS, "Logged out sucessfully");
+	    	Assert.assertTrue(getEuserName().Visible());
+    	} catch (Exception e) {
+	    	if (test != null) test.log(LogStatus.FAIL, "Unable to logout");
+    	}
     }
 
  public void logOutWithConfirmation(){

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SQA Regression Suite">
+
+    <test name="SiteLine"> 
+ 		<groups>	
+				<run>	
+   					 <include name="smoke" />	
+        		</run>	
+       	</groups>	
+    <classes>
+	    <class name="testScriptsRegression.ProductionRegression" ></class>  
+        <class name="testScriptsRegression.IngestionRegression" ></class>  
+        <class name="testScriptsRegression.ExportRegression" ></class>  
+    </classes>
+	</test> 
+	  
+</suite> <!-- Suite -->
