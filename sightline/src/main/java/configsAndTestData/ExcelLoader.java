@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+//import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import testScriptsSmoke.Input;
 
@@ -36,7 +36,7 @@ public class ExcelLoader {
 
     //If it is xlsx file then create object of XSSFWorkbook class
 
-    guru99Workbook = new XSSFWorkbook(inputStream);
+    //guru99Workbook = new XSSFWorkbook(inputStream);
 
     }
 
