@@ -1636,4 +1636,576 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+	@Test(groups = {"/Users/SQAresources/AutomationIngestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_new_ingestion_tile_is_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and click_preview_run_button When click_run_ingest_button Then verify_new_ingestion_tile_is_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_new_ingestion_tile_is_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"/Users/SQAresources/AutomationIngestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_executed_successfully() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and click_preview_run_button When click_run_ingest_button Then verify_ingestion_executed_successfully");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_executed_successfully(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_Not_click_preview_run_button_When_click_run_ingest_button_Then_Not_verify_new_ingestion_tile_is_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and [Not] click_preview_run_button When click_run_ingest_button Then [Not] verify_new_ingestion_tile_is_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_new_ingestion_tile_is_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_Not_click_preview_run_button_When_click_run_ingest_button_Then_Not_verify_ingestion_executed_successfully() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and [Not] click_preview_run_button When click_run_ingest_button Then [Not] verify_ingestion_executed_successfully");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_executed_successfully(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and click_preview_run_button When click_run_ingest_button Then verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_source_selection_types_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When add_a_new_ingestion_btn_is_clicked Then verify_source_selection_types_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_source_selection_types_are_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_all_components_are_displayed_on_the_wizard() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When add_a_new_ingestion_btn_is_clicked Then verify_all_components_are_displayed_on_the_wizard");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_all_components_are_displayed_on_the_wizard(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_Not_sightline_is_launched_When_click_run_ingest_button_Then_Not_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] sightline_is_launched When click_run_ingest_button Then [Not] verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_Not_login_as_pau_When_click_run_ingest_button_Then_Not_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and [Not] login_as_pau When click_run_ingest_button Then [Not] verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_Not_on_ingestion_home_page_When_click_run_ingest_button_Then_Not_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and [Not] on_ingestion_home_page When click_run_ingest_button Then [Not] verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_Not_new_ingestion_created_When_click_run_ingest_button_Then_Not_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and [Not] new_ingestion_created When click_run_ingest_button Then [Not] verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.new_ingestion_created(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_Not_click_preview_run_button_When_click_run_ingest_button_Then_Not_verify_first_50_records_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and [Not] click_preview_run_button When click_run_ingest_button Then [Not] verify_first_50_records_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("native_file", "native.lst");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "AttachDocument");
+			dataMap.put("audio_file", "AttachDocIDs2.dat");
+			dataMap.put("mp3_file", "AttachDocIDs.dat");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DocFileType");
+			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(false, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_first_50_records_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_Not_sightline_is_launched_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_source_selection_types_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] sightline_is_launched When add_a_new_ingestion_btn_is_clicked Then [Not] verify_source_selection_types_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_source_selection_types_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_Not_login_as_pau_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_source_selection_types_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and [Not] login_as_pau When add_a_new_ingestion_btn_is_clicked Then [Not] verify_source_selection_types_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_source_selection_types_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_Not_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_source_selection_types_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and [Not] on_ingestion_home_page When add_a_new_ingestion_btn_is_clicked Then [Not] verify_source_selection_types_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_source_selection_types_are_displayed(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_Not_sightline_is_launched_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_all_components_are_displayed_on_the_wizard() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] sightline_is_launched When add_a_new_ingestion_btn_is_clicked Then [Not] verify_all_components_are_displayed_on_the_wizard");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_all_components_are_displayed_on_the_wizard(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_Not_login_as_pau_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_all_components_are_displayed_on_the_wizard() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and [Not] login_as_pau When add_a_new_ingestion_btn_is_clicked Then [Not] verify_all_components_are_displayed_on_the_wizard");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_all_components_are_displayed_on_the_wizard(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion, Negative"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_Not_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_Not_verify_all_components_are_displayed_on_the_wizard() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and [Not] on_ingestion_home_page When add_a_new_ingestion_btn_is_clicked Then [Not] verify_all_components_are_displayed_on_the_wizard");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(false, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_all_components_are_displayed_on_the_wizard(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }
+
