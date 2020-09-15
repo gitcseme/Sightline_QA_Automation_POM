@@ -16,6 +16,7 @@ import cucumber.api.java.en.And;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -48,8 +49,24 @@ public class CommonContext {
 		}
 	}
 
+	@And("^.*(\\[Not\\] )? login$")
+	public void login(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		lp = new LoginPage(driver);
+		String uid = (String) dataMap.get("uid");
+		String pwd = (String) dataMap.get("pwd");
+		if (scriptState) {
+			lp.loginToSightLine(uid, pwd, true, dataMap);
+			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
+		} else {
+			if (uid != null && uid.length() > 0) {
+				lp.loginToSightLine(uid, pwd, false, dataMap);
+			}
+		}
+	}
+
+    
     @And("^(.*\\[Not\\] )?login_as_pau$")
-	public HashMap login_as_pau(boolean scriptState, HashMap dataMap) {
+	public void login_as_pau(boolean scriptState, HashMap dataMap) {
 		lp = new LoginPage(driver);
 		if (scriptState) {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password, true, dataMap);
@@ -62,7 +79,6 @@ public class CommonContext {
 				lp.loginToSightLine(uid, pwd, false, dataMap);
 			}
 		}
-		return dataMap;
 	}
 
     @When("^.*(\\[Not\\] )? on_production_home_page$")
@@ -96,10 +112,10 @@ public class CommonContext {
 			webDriver.get("http://www.google.com");
 		}
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
-		String totalIngestCountText = ingest.getTotalIngestCount().getText();
-		dataMap.put(totalIngestCountText, "actualCount");
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
+//		String totalIngestCountText = ingest.getTotalIngestCount().getText();
+//		dataMap.put(totalIngestCountText, "actualCount");
 		
 		ingest = new IngestionPage(driver);
 	}
