@@ -112,11 +112,7 @@ public class CommonContext {
 			webDriver.get("http://www.google.com");
 		}
 		driver.waitForPageToBeReady();
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
-//		String totalIngestCountText = ingest.getTotalIngestCount().getText();
-//		dataMap.put(totalIngestCountText, "actualCount");
-		
+								
 		ingest = new IngestionPage(driver);
 	}
 

@@ -22,12 +22,7 @@ import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
 public class IngestionContext extends CommonContext {
-	Driver driver;
-	WebDriver webDriver;
-	LoginPage lp;
-
-    IngestionPage ingest;
-
+	
 	/* 
 	 * moved to CommonContext
 	 * 
@@ -42,8 +37,11 @@ public class IngestionContext extends CommonContext {
 	public void add_a_new_ingestion_btn_is_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
+			if(driver == null) {System.out.print("Our driver is null");}
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
+
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
 		} else {
@@ -169,7 +167,6 @@ public class IngestionContext extends CommonContext {
 	public void on_ingest_execution_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
