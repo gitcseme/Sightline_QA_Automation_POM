@@ -379,7 +379,7 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
 
 			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			if (specifySourceSystemText.equals("TRUE")
+			if (specifySourceSystemText.contains("TRUE")
 							) {
 						pass(dataMap,"TRUE was found in the dropdown for Source System");
 					} else {
@@ -402,17 +402,25 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceSystemTitleText = ingest.getSourceSystemTitle().getText();
 			
+			System.out.println(sourceSystemTitleText.split(":")[0]);
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceLocationTitleText = ingest.getSourceLocationTitle().getText();
+			
+			System.out.println(sourceLocationTitleText.split(":")[0]);
+			
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceFolderTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceFolderTitleText = ingest.getSourceFolderTitle().getText();
 			
-			if (sourceSystemTitleText.equals("Source System") &&
-				sourceLocationTitleText.equals("Source Location") &&
-				sourceFolderTitleText.equals("Source Folder")
+			System.out.println(sourceFolderTitleText.split(":")[0]);
+
+			
+			if ((sourceSystemTitleText.split(":")[0]).equals("Source System") &&
+				(sourceLocationTitleText.split(":")[0]).equals("Source Location") &&
+				(sourceFolderTitleText.split(":")[0]).equals("Source Folder")
 						) {
 					pass(dataMap,"Source System, Location and Folder Fields are Displayed");
 				} else {
