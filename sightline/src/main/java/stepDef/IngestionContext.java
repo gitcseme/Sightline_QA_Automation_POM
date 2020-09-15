@@ -38,9 +38,8 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 
-			if(driver == null) {System.out.print("Our driver is null");}
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
+			//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					//ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
 
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();

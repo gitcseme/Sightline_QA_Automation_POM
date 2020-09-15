@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
@@ -109,7 +110,12 @@ public class IngestionPage {
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
     
    // Xpaths    
-    public Element getAddanewIngestionButton(){ return driver.FindElementByXPath("//a[text()='Add a new Ingestion']"); }
+    //public Element getAddanewIngestionButton(){return driver.FindElementByXPath("//a[text()='Addx a new Ingestion']"); }
+
+    //Try these
+    public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
+    //public Element getAddanewIngestionButton(){return driver.FindElement(By.xpath("//a[@href='/en-us/Ingestion/Wizard']"));}
+
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
     public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
@@ -206,15 +212,15 @@ public class IngestionPage {
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceSystem().SendKeys("source_system");
+    		getSpecifySourceSystem().SendKeys("TRUE");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
-    		getSpecifyLocation().SendKeys("source_location");
+    		getSpecifyLocation().SendKeys("Ingestion");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("source_folder");
+    		getSpecifySourceFolder().SendKeys("DATA");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDocumentKey().Visible()  ;}}), Input.wait30); 
@@ -234,7 +240,7 @@ public class IngestionPage {
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getMP3LST().Visible()  ;}}), Input.wait30); 
-    		getMP3LST().SendKeys("mp3_file");
+    		getMP3LST().SendKeys("custodians");
     		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
@@ -242,7 +248,7 @@ public class IngestionPage {
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptLST().SendKeys("audio_file");
+    		getAudioTranscriptLST().SendKeys("text");
     		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
