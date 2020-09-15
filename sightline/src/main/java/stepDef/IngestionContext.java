@@ -22,24 +22,14 @@ import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
 public class IngestionContext extends CommonContext {
-	Driver driver;
-	WebDriver webDriver;
-	LoginPage lp;
-
-    IngestionPage ingest;
-
+	
 	/* 
 	 * moved to CommonContext
 	 * 
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	public void login_as_pau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-	 */
-    
-    /* 
-	 * moved to CommonContext
-	 * 
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
 	 */
     
     
@@ -47,8 +37,10 @@ public class IngestionContext extends CommonContext {
 	public void add_a_new_ingestion_btn_is_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
+
+			//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					//ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
+
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
 		} else {
@@ -94,7 +86,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
 			ingest.requiredFieldsAreEntered(scriptState);
-			click_next_button(scriptState, dataMap);
+
 		} else {
 			ingest.requiredFieldsAreEntered(scriptState);
 		}
@@ -107,9 +99,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Thread.sleep(5000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getNextButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
+	    	//Needs to be added anywhere it says click preview and run
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
 		}
@@ -174,7 +171,6 @@ public class IngestionContext extends CommonContext {
 	public void on_ingest_execution_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -381,8 +377,8 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+
 			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			
 			if (specifySourceSystemText.equals("TRUE")
 							) {
 						pass(dataMap,"TRUE was found in the dropdown for Source System");
@@ -432,6 +428,24 @@ public class IngestionContext extends CommonContext {
 
 	}
 
+		
+	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
+	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			throw new ImplementationException("verify_delete_button_is_available_on_tile");
+		} else {
+			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
+		}
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
+	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			throw new ImplementationException("verify_delete_button_is_available_on_tile");
+		} else {
+			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
+		}
+	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
 	public void verify_mandatory_toast_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -453,7 +467,7 @@ public class IngestionContext extends CommonContext {
 				pass(dataMap,"Toast Message is NOT Displayed for Required Fields");
 			}
 		}
-		}
+	}
 
 
 	@Then("^.*(\\[Not\\] )? verify_saved_draft_retains_files_selected$")
@@ -512,42 +526,82 @@ public class IngestionContext extends CommonContext {
 
 	}
 
+	@And("^.*(\\[Not\\] )? click_preview_run_button$")
+	public void click_preview_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
-	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			//
+			//* Text Qualifier
+			//* Column and Data delimeter
+			//
+			throw new ImplementationException("click_preview_run_button");
+		} else {
+			throw new ImplementationException("NOT click_preview_run_button");
+		}
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionName_CloseButton().Displayed()  ;}}), Input.wait30); 
-			ingest.getIngestionName_CloseButton().Click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getFirstIngestionTileName().Displayed()  ;}}), Input.wait30); 
-			
-			pass(dataMap,"Ingestion Popup is closed and Home Page is Displayed");
-		}catch (Exception e) {
-			if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"Ingestion Popup is NOT closed and Home Page is NOT Displayed");
-			}
-			}
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_first_50_records_are_displayed$")
+	public void verify_first_50_records_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1421 verify Preview Records pop up display.
+			//* Click the Preview and Run button
+			//* On the Preview pop up page
+			//* Click on "Run Ingestion" button
+			//* Verify url changed from "/Ingestion/Wizard" to "/Ingestion/Home"
+			//Test Cases Covered:
+			//
+			//* TC264 Verify the Preview of Igestion display for the frist 50 records with valid inputs
+			//
+			throw new ImplementationException("verify_first_50_records_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_first_50_records_are_displayed");
+		}
 
 	}
 
 
-	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
-	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@Then("^.*(\\[Not\\] )? verify_source_selection_types_are_displayed$")
+	public void verify_source_selection_types_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getToastMessage().Displayed()  ;}}), Input.wait30); 
-			pass(dataMap,"Delete Toast Message is Displayed");
-		}catch (Exception e) {
-			if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"Delete Toast Message is NOT Displayed");
-			}
-			}
+		if (scriptState) {
+			//TC1414 verify the Source Selection in Ingestion Wizard Page.
+			//* Verify Native, Text, PDF, TIFF and DAT sources are displayed
+			//* Verify DAT displays a "Load File" and "Key" fields
+			//* Verify Key field is only displayed ONCE in DAT section
+			//* Verify Native, Text, PDF and TIFF display "Load File" field and "IS DAT?" checkbox
+			//* Verify when "IS DAT?" is checked, a file path field is displayed
+			//* Verify when "IS DAT?" is checked, Load field is disabled for that section
+			//* Verify when "IS DAT?" is checked, File Path field is enabled
+			//* Verify selecting "Other" option, then Link Type, Load File and "IS DAT?" fields are displayed
+			//* Verify Link Type drop down displays "Translation" and "Related" options
+			//
+			throw new ImplementationException("verify_source_selection_types_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_source_selection_types_are_displayed");
 		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_all_components_are_displayed_on_the_wizard$")
+	public void verify_all_components_are_displayed_on_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1412 verify the display of all the ingestion pages in the new Wizard view.
+			//
+			//* Verify source fields are displayed (Source System, Location, etc.)
+			//* Verify Ingestion types are displayed (DAT, Native, etc.)
+			//* Verify Configure Mapping section is displayed
+			//* Verify Preview Run button is displayed
+			//* Verify "Ingestion Wizard" header is displayed
+			//* Verify Save button is displayed
+			//
+			throw new ImplementationException("verify_all_components_are_displayed_on_the_wizard");
+		} else {
+			throw new ImplementationException("NOT verify_all_components_are_displayed_on_the_wizard");
+		}
+
+	}
 }

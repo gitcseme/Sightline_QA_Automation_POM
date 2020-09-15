@@ -219,8 +219,8 @@ public class Input {
 	
 	public void projectCreationAndUserAssignment() throws ParseException, InterruptedException, IOException {
 		
-		driver = new Driver();
 		if(newProject.equalsIgnoreCase("yes")){
+			driver = new Driver();
 				
 				System.out.println("******Creating new project********");
 				//clean browsers---------------------------------------------------------

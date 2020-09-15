@@ -430,7 +430,7 @@ private  Driver driver;
      public void SendKeys(String text)
      {
          AssertExists();
-         element.clear();
+         //element.clear();
          element.sendKeys(text);
      }
      /// <summary>

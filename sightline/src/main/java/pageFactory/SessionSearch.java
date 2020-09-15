@@ -17,7 +17,7 @@ public class SessionSearch {
     public static int pureHit;
     BaseClass base;
   
-    //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
+    public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
@@ -92,7 +92,7 @@ public class SessionSearch {
     public Element getMetaDataSearchText2(){ return driver.FindElementById("val2"); }
     public Element getMetaDataInserQuery(){ return driver.FindElementById("insertQueryBtn"); }
    
-    //Advance Saerch
+    //Advance Search
     public Element getAdvancedSearchLink(){ return driver.FindElementByXPath("//*[@id='advancedswitch']"); }
     public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath("//button[@id='contentmetadata']"); }
     public Element getWorkproductBtn(){ return driver.FindElementByXPath("//button[@id='workproduct']"); }
@@ -104,7 +104,7 @@ public class SessionSearch {
     //advanced Content search
     public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath("//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']"); }
     
-    //Audio Saerch
+    //Audio Search
     public Element getAs_Audio(){ return driver.FindElementById("audio"); }
     public Element getAs_AudioLanguage(){ return driver.FindElementById("audioLanguage"); }
     public Element getAs_AudioText(){ return driver.FindElementByXPath("(//*[@id='xEdit']/li/input)[3]"); }
@@ -209,16 +209,35 @@ public class SessionSearch {
     public Element getadwp_assgn_status(){ return driver.FindElementById("statusSel"); }
    // public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
     
-    
+    // 200913
+    public Element getPageTitle() {return driver.FindElementByCssSelector("h1.page-title"); }
+    public Element getHelpTip() {return driver.FindElementByCssSelector("a.helptip[data-original-title='Searching Help']"); }
+    public Element getUniqueCount(){ return driver.FindElementByCssSelector("h1.page-title span label"); }
+    public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
+    public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
+    public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
+
     public SessionSearch(Driver driver){
+    	this(Input.url, driver);
+    }
+    public SessionSearch(String url, Driver driver){
 
     	this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+ "Search/Searches");
-        base = new BaseClass(driver);
+        this.driver.getWebDriver().get(url+ "Search/Searches");
+        //base = new BaseClass(driver);
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
+    
+    public Element removeSearchQueryRemove(int listItem){ 
+    	Element removeLineItem = getSearchQueryText(listItem); 
+		Actions builder=new Actions(driver.getWebDriver());
+		// Mouse hover to see X button
+		builder.moveToElement(removeLineItem.getWebElement()).perform();
+		return getRemoveSearchQuery();		
+    }
+
     public String getToolTipMsgBS(String isOrRange, String metaDataField) {
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -573,13 +592,10 @@ public class SessionSearch {
     	return pureHit;
    }
     
-    
-    public int basicMetaDataSearch(String metaDataField, String option, String val1, String val2) {
-	   
-    	//To make sure we are in basic search page
-    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	
-    	getBasicSearch_MetadataBtn().Click();
+    public void selectMetaDataOption(String metaDataField) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBasicSearch_MetadataBtn().Enabled()  ;}}), Input.wait30); 
+		getBasicSearch_MetadataBtn().Click();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Visible()  ;}}), Input.wait30); 
@@ -591,6 +607,10 @@ public class SessionSearch {
 			e.printStackTrace();
 		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+    	
+    }
+    
+    public void setMetaDataValue(String option, String val1, String val2) {
 		if(option == null){
 			
 			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
@@ -605,8 +625,19 @@ public class SessionSearch {
 			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
 			
 		}
-		getMetaDataInserQuery().Click();
-		  //Click on Search button
+		getMetaDataInserQuery().Click();    	
+    }
+    
+    public int basicMetaDataSearch(String metaDataField, String option, String val1, String val2) {
+	   
+    	
+    	//To make sure we are in basic search page
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	selectMetaDataOption(metaDataField);
+    	
+    	setMetaDataValue(option, val1, val2);
+
+    	//Click on Search button
     	getSearchButton().Click();
     	
     	//two handle twosearch strings
