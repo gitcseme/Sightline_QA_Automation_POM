@@ -86,7 +86,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
 			ingest.requiredFieldsAreEntered(scriptState);
-			click_next_button(scriptState, dataMap);
+
 		} else {
 			ingest.requiredFieldsAreEntered(scriptState);
 		}
@@ -99,9 +99,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Thread.sleep(5000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getNextButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
+	    	//Needs to be added anywhere it says click preview and run
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
 		}
@@ -372,8 +377,8 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+
 			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			
 			if (specifySourceSystemText.equals("TRUE")
 							) {
 						pass(dataMap,"TRUE was found in the dropdown for Source System");

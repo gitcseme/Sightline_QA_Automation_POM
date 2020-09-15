@@ -117,7 +117,8 @@ public class IngestionPage {
     //public Element getAddanewIngestionButton(){return driver.FindElement(By.xpath("//a[@href='/en-us/Ingestion/Wizard']"));}
 
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
-    public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    //public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    public Element getNextButton(){ return driver.FindElementById("NextButton"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
     public Element getIsNativeInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
     public Element getIsTextInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATText']/following-sibling::i"); }

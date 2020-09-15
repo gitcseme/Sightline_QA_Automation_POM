@@ -43,8 +43,8 @@ public class CommonContext {
 			driver.waitForPageToBeReady();
 			pass(dataMap,String.format("Opened page %s",url));
 		} else {
-			url = "http://www.google.com";
-			webDriver.get("http://www.google.com");
+			url = "http://www.sqasquared.com";
+			webDriver.get(url);
 			pass(dataMap,String.format("Opened random page %s",url));
 		}
 	}
