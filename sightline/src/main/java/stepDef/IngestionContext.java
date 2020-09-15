@@ -135,14 +135,12 @@ public class IngestionContext extends CommonContext {
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSaveDraftButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
-	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getApproveMessageOKButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getApproveMessageOKButton().Click();
 	    	on_ingestion_home_page(scriptState, dataMap);
-	    
 	    	ingest.openFirstIngestionSettings(scriptState);
 		} else {
 			on_ingestion_home_page(scriptState, dataMap);
@@ -485,7 +483,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSourceSys().Displayed()  ;}}), Input.wait30); 
 			String actualSourceSysText = ingest.getActualSourceSys().getText();
-			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcLoc().Displayed()  ;}}), Input.wait30); 
 			String actualSrcLocText = ingest.getActualSrcLoc().getText();
@@ -509,7 +506,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualAudioFile().Displayed()  ;}}), Input.wait30); 
 			String actualAudioFileText = ingest.getActualAudioFile().getText();
-			
 			
 			
 			if (actualSourceSysText.equals(dataMap.get("source_system")) &&

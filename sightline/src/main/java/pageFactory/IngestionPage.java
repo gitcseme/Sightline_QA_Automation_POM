@@ -215,18 +215,22 @@ public class IngestionPage {
     				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
     		getSpecifySourceSystem().SendKeys("TRUE");
 
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
     		getSpecifyLocation().SendKeys("Ingestion");
 
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("DATA");
+    		getSpecifySourceFolder().SendKeys("AttachDocument");
 
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDocumentKey().Visible()  ;}}), Input.wait30); 
-    		getDocumentKey().SendKeys("doc_key");
+    		getDocumentKey().SendKeys("DocFileType");
 
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
     		getNativeCheckBox().Click();
@@ -235,25 +239,30 @@ public class IngestionPage {
     				getNativeLST().Visible()  ;}}), Input.wait30); 
     		getNativeLST().SendKeys("native_file");
     		
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
     		getMP3CheckBoxstionButton().Click();
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getMP3LST().Visible()  ;}}), Input.wait30); 
-    		getMP3LST().SendKeys("custodians");
+    		getMP3LST().SendKeys("AttachDocIDs.dat");
     		
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptCheckBoxstionButton().Click();
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptLST().SendKeys("text");
+    		getAudioTranscriptLST().SendKeys("AttachDocIDs2.dat");
     		
+			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
-    		getDateFormat().SendKeys("date_time");
+    		getDateFormat().SendKeys("MM/DD/YYY");
+
+			Thread.sleep(2000);
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 

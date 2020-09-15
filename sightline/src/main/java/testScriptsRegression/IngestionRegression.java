@@ -805,7 +805,8 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive","smoke" })
+	@Test(groups = { "Ingestion", "Positive"})
+	//Passed
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_expected_source_fields_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1048,7 +1049,9 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+
+	//Passed
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_mandatory_toast_message_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1244,7 +1247,10 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	//Very Strange Behavior from this script. Sometimes it goes all the way and fails.
+	//Sometimes it stops early and fails. Sometimes it goes half way and fails.
+	//But it no matter what it always fails. I haven't got it to work yet.
+	@Test(groups = { "Ingestion", "Positive", "smoke" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_draft_ingestion_When_click_open_wizard_option_Then_verify_saved_draft_retains_files_selected()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
