@@ -1,7 +1,10 @@
 package testScriptsRegression;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -29,8 +32,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -94,8 +97,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -134,8 +137,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -174,8 +177,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -214,8 +217,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -254,18 +257,25 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			SessionSearch searchSession = (SessionSearch) dataMap.get("searchSession");
-			Element metaDataElement = searchSession.getMetaOption();
+			//SessionSearch sessionSearch = (SessionSearch) dataMap.get("sessionSearch");
+			//Element metaDataElement = sessionSearch.getMetaOption();
+			//List<WebElement> metaDataOptions = metaDataElement.selectFromDropdown().getOptions();
+			List<String> metaDataOptions= new ArrayList<String>();
+			metaDataOptions.add("EmailAuthorDomain");
+			metaDataOptions.add("EmailRecipientNames");
+			metaDataOptions.add("DocFileType");
+			
 			for (String option : metaDataOptions) {
 				dataMap.put("metaDataOption",option);
 				context.create_search(true, dataMap);
 				//context.(true, dataMap);
 				context.verify_search_criteria(true, dataMap);
+				context.remove_search_criteria(true, dataMap);
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -292,8 +302,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -563,9 +573,7 @@ public class SearchRegression extends RegressionBase {
 			context.login(false, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			SessionSearch searchSession = (SessionSearch) dataMap.get("searchSession");
-			Element metaDataElement = searchSession.getMetaOption();
-			dataMap.put("metaDataOption",option);
+			dataMap.put("metaDataOption","EmailAuthorDomain");
 
 			context.create_search(false, dataMap);
 			//context.(true, dataMap);
@@ -635,6 +643,738 @@ public class SearchRegression extends RegressionBase {
 			context.create_search(false, dataMap);
 			context.save_search(true, dataMap);
 			context.verify_searched_save(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchis_When_Then_verify_is_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search[is] When  Then verify_is_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "5");
+			dataMap.put("metaDataOption", "EmailDomainClount");
+			dataMap.put("searchType","IS");
+			context.create_search(true, dataMap);
+			context.verify_is_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchfull_text_search_When_Then_verify_fulltext_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search[full_text_search] When  Then verify_fulltext_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("FullText", "CustodianName: \"P Allen\" AND CustodianName: \"P Vinod\"");
+			dataMap.put("searchType","FULLTEXT");
+			context.create_search(true, dataMap);
+			context.verify_fulltext_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search[range] When  Then verify_range_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","RANGE");
+			dataMap.put("metaDataOption","");
+			dataMap.put("metaDataValue","");
+			dataMap.put("metaDataVal2","");
+			context.create_search(true, dataMap);
+			context.verify_range_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_on_production_Search_Session_page_When_Then_Not_verify_is_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] on_production_Search_Session_page When  Then [Not] verify_is_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(false, dataMap);
+			context.verify_is_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchis_When_Then_Not_verify_is_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search[is] When  Then [Not] verify_is_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","IS");
+			context.create_search(false, dataMap);
+			context.verify_is_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_on_production_Search_Session_page_When_Then_Not_verify_fulltext_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] on_production_Search_Session_page When  Then [Not] verify_fulltext_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(false, dataMap);
+			context.verify_fulltext_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchfull_text_search_When_Then_Not_verify_fulltext_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search[full_text_search] When  Then [Not] verify_fulltext_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","FULLTEXT");
+			context.create_search(false, dataMap);
+			context.verify_fulltext_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_on_production_Search_Session_page_When_Then_Not_verify_long_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] on_production_Search_Session_page When  Then [Not] verify_long_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(false, dataMap);
+			dataMap.put("searchType","LONG");
+			context.create_search(false, dataMap);
+			context.verify_long_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchlong_search_When_Then_Not_verify_long_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search[long_search] When  Then [Not] verify_long_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","LONG");
+			context.create_search(false, dataMap);
+			context.verify_long_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_on_production_Search_Session_page_When_Then_Not_verify_range_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] on_production_Search_Session_page When  Then [Not] verify_range_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(false, dataMap);
+			context.verify_range_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchrange_When_Then_Not_verify_range_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search[range] When  Then [Not] verify_range_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","RANGE");
+			context.create_search(false, dataMap);
+			context.verify_range_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_verify_long_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_long_search_criteria When click_search Then verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "P Allen");
+			dataMap.put("condition", "OR");
+			dataMap.put("metaDataOption2", "CustodianName");
+			dataMap.put("metaDataValue2", "P Vinod");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType","LONG");
+			context.create_search(false, dataMap);
+			context.verify_long_search_criteria(true, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_verify_range_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_range_search_criteria When click_search Then verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","RANGE");
+			context.create_search(false, dataMap);
+			context.verify_range_search_criteria(true, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchlong_search_When_Then_verify_long_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search[long_search] When  Then verify_long_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue1", "P Allen");
+			dataMap.put("F", "OR");
+			dataMap.put("metaDataOption2", "CustodianName");
+			dataMap.put("metaDataValue2", "P Vinod");
+			dataMap.put("metaDataOption1", "CustodianName");
+			dataMap.put("searchType","LONG");
+			context.create_search(false, dataMap);
+			context.verify_long_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_verify_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_search_criteria When click_search Then verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "test");
+			dataMap.put("metaDataOption", "EmailAuthorDomain");
+			context.create_search(false, dataMap);
+			context.verify_search_criteria(true, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_verify_is_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_is_search_criteria When click_search Then verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "5");
+			dataMap.put("metaDataOption", "EmailDomainClount");
+			dataMap.put("searchType","is");
+			context.create_search(false, dataMap);
+			context.verify_is_search_criteria(true, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_verify_fulltext_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_fulltext_search_criteria When click_search Then verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("PWD", "Consilio!SQRdIam1!");
+			dataMap.put("UID", "qapau5");
+			context.login(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("FullText", "CustodianName: \"P Allen\" AND CustodianName: \"P Vinod\"");
+			dataMap.put("searchType","FULLTEXT");
+			context.create_search(false, dataMap);
+			context.verify_fulltext_search_criteria(true, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_verify_long_search_criteria_When_click_search_Then_Not_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] verify_long_search_criteria When click_search Then [Not] verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","LONG");
+			context.create_search(false, dataMap);
+			context.verify_long_search_criteria(false, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_verify_range_search_criteria_When_click_search_Then_Not_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] verify_range_search_criteria When click_search Then [Not] verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","RANGE");
+			context.create_search(false, dataMap);
+			context.verify_range_search_criteria(false, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_verify_search_criteria_When_click_search_Then_Not_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] verify_search_criteria When click_search Then [Not] verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			context.create_search(false, dataMap);
+			context.verify_search_criteria(false, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_verify_is_search_criteria_When_click_search_Then_Not_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] verify_is_search_criteria When click_search Then [Not] verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","IS");
+			context.create_search(false, dataMap);
+			context.verify_is_search_criteria(false, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_verify_fulltext_search_criteria_When_click_search_Then_Not_verify_search_returned() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] verify_fulltext_search_criteria When click_search Then [Not] verify_search_returned");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(false, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("searchType","FULLTEXT");
+			context.create_search(false, dataMap);
+			context.verify_fulltext_search_criteria(false, dataMap);
+			context.click_search(true, dataMap);
+			context.verify_search_returned(false, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;

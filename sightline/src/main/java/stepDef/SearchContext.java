@@ -1,6 +1,7 @@
 package stepDef;
 
 import java.util.HashMap;
+import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebDriver;
 
@@ -8,7 +9,9 @@ import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
@@ -18,11 +21,7 @@ import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
 public class SearchContext extends CommonContext {
-	Driver driver;
-	WebDriver webDriver;
-	LoginPage lp;
-
-	SessionSearch searchSession;
+	SessionSearch sessionSearch;
 
 	/* 
 	 * moved to CommonContext
@@ -38,6 +37,10 @@ public class SearchContext extends CommonContext {
 	 * 
 	public void create_search[nTimes](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	public void create_search[ForEach_MetaData](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void create_search[is](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void create_search[full_text_search](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void create_search[range](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void create_search[long_search](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	public void (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	 */
     
@@ -45,12 +48,12 @@ public class SearchContext extends CommonContext {
 	public void goto_search_session_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			dataMap.put("searchSession",searchSession);
-			//
-			throw new ImplementationException("goto_search_session_page");
+			sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			dataMap.put("sessionSearch",sessionSearch);
 		} else {
-			throw new ImplementationException("NOT goto_search_session_page");
+			webDriver.get("http://www.google.com");
 		}
+		driver.waitForPageToBeReady();
 
 	}
 
@@ -58,11 +61,31 @@ public class SearchContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? on_production_Search_Session_page$")
 	public void on_production_Search_Session_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//Goto URI /Search/SearchesVerify title "Search"Verify Help Tip [?]Verify button [+ New Search]Verify "Count of unique DocIDs index in the project: ????"
-			throw new ImplementationException("on_production_Search_Session_page");
-		} else {
-			throw new ImplementationException("NOT on_production_Search_Session_page");
+		try {
+			//Verify title "Search"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getPageTitle().Visible()  ;}}), Input.wait30); 
+	
+			//Verify Help Tip [?]
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getHelpTip().Visible()  ;}}), Input.wait30); 
+	
+			//Verify button [+ New Search]
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getNewSearch().Visible()  ;}}), Input.wait30); 
+			
+			//Verify "Count of unique DocIDs index in the project: ????"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getUniqueCount().Visible()  ;}}), Input.wait30); 
+
+			pass(dataMap,"On Session Search page.");
+
+		} catch (Exception e) {
+			if (scriptState) {
+				throw new Exception(e.getMessage());
+			} else {
+				// scriptState = false: not pass or fail. Just move on
+			}
 		}
 
 	}
@@ -72,10 +95,41 @@ public class SearchContext extends CommonContext {
 	public void create_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("create_search");
+			String searchType = (String) dataMap.get("searchType");
+			if (searchType==null) searchType = "metaData";
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
+			sessionSearch.getNewSearch().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSelectMetaData().Visible()  ;}}), Input.wait30);
+			
+			String metaDataOption = (String)dataMap.get("metaDataOption");
+			String metaDataValue = (String)dataMap.get("metaDataValue");
+			
+			if (searchType.equalsIgnoreCase("metaData")) {
+				sessionSearch.selectMetaDataOption(metaDataOption);
+				sessionSearch.setMetaDataValue( null,metaDataValue,null);
+			} else if (searchType.equalsIgnoreCase("is")) {
+				sessionSearch.selectMetaDataOption(metaDataOption);
+				sessionSearch.setMetaDataValue( "IS",metaDataValue,null);
+			} else if (searchType.equalsIgnoreCase("range")) {
+				sessionSearch.selectMetaDataOption(metaDataOption);
+				String metaDataVal2 = (String)dataMap.get("metaDataVal2");
+				sessionSearch.setMetaDataValue( "RANGE",metaDataValue,metaDataVal2);
+			} else if (searchType.equalsIgnoreCase("long")) {
+				throw new ImplementationException("create search - long");
+			} else if (searchType.equalsIgnoreCase("fulltext")) {
+				throw new ImplementationException("create search - fulltext");
+			}
+		
+			
 		} else {
-			throw new ImplementationException("NOT create_search");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
+			sessionSearch.getNewSearch().Click();
 		}
 
 	}
@@ -174,9 +228,116 @@ public class SearchContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("verify_search_criteria");
+			String metadataOption = (String) dataMap.get("metaDataOption");
+			String metadataValue = (String) dataMap.get("metaDataValue");
+			
+			String searchQuery = sessionSearch.getSearchQueryText(1).getText();
+			
+			if (searchQuery.equals(String.format("%s: ( %s)", metadataOption, metadataValue))) {
+				pass(dataMap,String.format("Search criterial matches for %s with value %s", metadataOption, metadataValue));
+			} else {
+				fail(dataMap,String.format("Search criterial DOES NOT matche for %s with value %s", metadataOption, metadataValue));
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT verify_search_criteria");
+		}
+
+	}
+	
+	@Then("^.*(\\[Not\\] )? remove_search_criteria$")
+	public void remove_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchQueryText(1).Exists()  ;}}), Input.wait30); 
+			sessionSearch.getSearchQueryText(1).Visible();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.removeSearchQueryRemove(1).Visible()  ;}}), Input.wait30);
+				sessionSearch.removeSearchQueryRemove(1).Click();
+				sessionSearch.getSearchQueryText(1).Visible();
+				fail(dataMap,"Unable to remove search criteria");
+			} catch (Exception e) {
+				// should be removed
+			}
+			
+		} else {
+			throw new ImplementationException("NOT remove_search_criteria");
+		}
+
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_is_search_criteria$")
+	public void verify_is_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_is_search_criteria");
+		} else {
+			throw new ImplementationException("NOT verify_is_search_criteria");
+		}
+
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_fulltext_search_criteria$")
+	public void verify_fulltext_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_fulltext_search_criteria");
+		} else {
+			throw new ImplementationException("NOT verify_fulltext_search_criteria");
+		}
+
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_range_search_criteria$")
+	public void verify_range_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_range_search_criteria");
+		} else {
+			throw new ImplementationException("NOT verify_range_search_criteria");
+		}
+
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_long_search_criteria$")
+	public void verify_long_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_long_search_criteria");
+		} else {
+			throw new ImplementationException("NOT verify_long_search_criteria");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? click_search$")
+	public void click_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_search");
+		} else {
+			throw new ImplementationException("NOT click_search");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_search_returned$")
+	public void verify_search_returned(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_search_returned");
+		} else {
+			throw new ImplementationException("NOT verify_search_returned");
 		}
 
 	}
