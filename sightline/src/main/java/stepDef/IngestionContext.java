@@ -599,21 +599,100 @@ public class IngestionContext extends CommonContext {
 			catch(Exception e) {
 				ingest.getToastMessage();
 			}
-			
 		} 
-
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_source_selection_types_are_displayed$")
 	public void verify_source_selection_types_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1414 verify the Source Selection in Ingestion Wizard Page.
-			//* Verify Native, Text, PDF, TIFF and DAT sources are displayed
-			//* Verify DAT displays a "Load File" and "Key" fields
-			//* Verify Key field is only displayed ONCE in DAT section
-			//* Verify Native, Text, PDF and TIFF display "Load File" field and "IS DAT?" checkbox
+			
+				try {
+			// Checkbox
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFCheckBoxstionButton().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);	
+				
+				
+				//DAT files
+				
+				ingest.getIsNativeInPathInDAT().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getSourceSelectionDATLoadFile().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getDocumentKey().Displayed()  ;}}), Input.wait30);
+				
+				
+				//Native
+				ingest.getNativeCheckBox().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);
+				ingest.getIsNativeInPathInDAT().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeLST().Displayed()  ;}}), Input.wait30);
+				ingest.getNativeFilePathFieldinDAT().Click();
+				
+				
+				// Text
+				
+				ingest.getTextCheckBox().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextLST().Displayed()  ;}}), Input.wait30);
+				
+				ingest.getTextFilePathFieldinDAT().Click();
+
+				
+				//PDF
+				ingest.getPDFCheckBoxstionButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFLST().Displayed()  ;}}), Input.wait30);
+				ingest.getPDFFilePathFieldinDAT().Click();
+
+				
+				//TIFF
+				ingest.getTIFFCheckBox().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFLST().Displayed()  ;}}), Input.wait30);
+				ingest.getTIFFFilePathFieldinDAT().Click();
+
+				
+				
+			
+				
+				
+				pass(dataMap,"Selection types are displayed");
+			}
+			catch(Exception e) {
+				fail(dataMap,"Selection types are not displayed");
+			}
+			
+			
+			
+				
+				
 			//* Verify when "IS DAT?" is checked, a file path field is displayed
 			//* Verify when "IS DAT?" is checked, Load field is disabled for that section
 			//* Verify when "IS DAT?" is checked, File Path field is enabled

@@ -198,6 +198,7 @@ public class IngestionPage {
     public Element getSourceLocationTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
     public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(4) > div.col-md-5 > label");}
     public Element getRecordTable() {return driver.FindElementByCssSelector("#previewRecords > div > table > tbody");}
+    public Element getDATcheckbox() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > i");}
     
     public IngestionPage(Driver driver){
 
