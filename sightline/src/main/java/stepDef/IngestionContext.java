@@ -2,10 +2,13 @@ package stepDef;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -99,13 +102,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-			Thread.sleep(500);
+			Thread.sleep(5000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
 	    	//Needs to be added anywhere it says click preview and run
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+			Thread.sleep(5000);
 	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
@@ -585,19 +589,18 @@ public class IngestionContext extends CommonContext {
 	public void verify_first_50_records_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1421 verify Preview Records pop up display.
-			//* Click the Preview and Run button
-			//* On the Preview pop up page
-			//* Click on "Run Ingestion" button
-			//* Verify url changed from "/Ingestion/Wizard" to "/Ingestion/Home"
-			//Test Cases Covered:
-			//
-			//* TC264 Verify the Preview of Igestion display for the frist 50 records with valid inputs
-			//
-			throw new ImplementationException("verify_first_50_records_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_first_50_records_are_displayed");
-		}
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getRecordTable().Visible()  ;}}), Input.wait30); 
+				int recordSize =  ingest.getRecordTable().getWebElement().findElements(By.tagName("tr")).size();
+				if(recordSize <=50) pass(dataMap, "There are less than 50 records");
+				else fail(dataMap, "There are more than 50 records");
+			}
+			catch(Exception e) {
+				ingest.getToastMessage();
+			}
+			
+		} 
 
 	}
 

@@ -1922,7 +1922,8 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion, Positive" })
+	//Passed
+	@Test(groups = { "Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_first_50_records_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
