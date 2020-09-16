@@ -29,9 +29,11 @@ public class ProductionPage {
     public Element getDAT_FieldClassification1(){ return driver.FindElementById("TY_0"); }
     public Element getDAT_FieldClassification2(){ return driver.FindElementById("TY_1"); }
     public Element getDAT_FieldClassification3(){ return driver.FindElementById("TY_1"); }
+    public Element getDAT_FieldClassification1(String value){ return driver.FindElementByCssSelector(String.format("#TY_0%s",value)); }
     public Element getDAT_SourceField1(){ return driver.FindElementById("SF_0"); }
     public Element getDAT_SourceField2(){ return driver.FindElementById("SF_1"); }
     public Element getDAT_SourceField3() { return driver.FindElementById("SF_2"); }
+    public Element getDAT_SourceField1(String value){ return driver.FindElementByCssSelector(String.format("#SF_0 %s",value)); }
     public Element getDAT_DATField1(){ return driver.FindElementById("DATFL_0"); }
     public Element getDAT_DATField2(){ return driver.FindElementById("DATFL_1"); }
     public Element getDAT_DATField3(){ return driver.FindElementById("DATFL_2"); }
@@ -42,6 +44,11 @@ public class ProductionPage {
     public Element getTIFF_InsertMetadataField(){ return driver.FindElementById("Launcheditor_0"); }
     public Element getTIFF_selectedMetadataField(){ return driver.FindElementById("selectedMetadataField"); }
     public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
+ 
+    public Element getTileViewIcon() { return driver.FindElementById("TileView"); }
+    public Element getTileProdCount() { return driver.FindElementById("hddtotalProductionCount"); }
+    public Element getGridViewIcon() { return driver.FindElementById("GridView"); }
+    public Element getGridProdCount() { return driver.FindElementById("ProductionListGridViewTable_info"); }
     
     public Element getComponentsMarkComplete(){ return driver.FindElementById("ComponentsMarkComplete"); }
     public Element getComponentsMarkNext(){ return driver.FindElementById("ComponentsNext"); }
@@ -76,6 +83,7 @@ public class ProductionPage {
     public Element getDATChkBox(){ return driver.FindElementByXPath("//input[@name='IsDATSelected']/following-sibling::i"); }
     public Element getDATTab(){ return driver.FindElementByXPath("//a[@href='#DATContainer']"); }
     public Element getDAT_AddField(){ return driver.FindElementByXPath(".//*[@id='DATContainer']//button[contains(.,'Add Field')]"); }
+    public Element getDATComponentAdvanced(){ return driver.FindElementByCssSelector("#DATContainer div.advanced-dd-toggle"); }
     public Element getNativeChkBox(){ return driver.FindElementByXPath("//input[@name='IsNativeSelected']/following-sibling::i"); }
     public Element getNativeTab(){ return driver.FindElementByXPath("//a[@href='#NativeContainer']"); }
     public Element getNative_SelectAllCheck(){ return driver.FindElementByXPath(".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i"); }
@@ -115,7 +123,7 @@ public class ProductionPage {
     public Element getPriveldge_PDFTagTree_SelectButton(){ return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionPDF']"); }
     public Element getPriveldge_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFPrevDocPlaceHolderText']/preceding-sibling::div"); }
     public Element getPriveldge_PDFTextArea(){ return driver.FindElementByXPath("//textarea[@class='PDFPrevDocPlaceHolderText']/preceding-sibling::div"); }
-   
+    
     //addition on 23/04
     public Element getProdExportSetRadioButton(){ return driver.FindElementByXPath(".//*[@id='productionSet']//input[@id='IsExportSet']/following-sibling::i"); }
     public Element getProdExport_SaveButton(){ return driver.FindElementByXPath("//button[contains(.,'Save')]"); }
@@ -222,7 +230,90 @@ public class ProductionPage {
     public Element getQC_Download() { return driver.FindElementByXPath("//a[text()='Download']"); }
     public Element getQC_Downloadbutton_allfiles() { return driver.FindElementByXPath("(//a[@title='Download All files'])[1]"); }
     
+    public Element getArchiveComponentTab() { return driver.FindElementByXPath("//a[@href='#ArchiveContainer']");}
+    public Element getArchiveComponentType() { return driver.FindElementByCssSelector("#ArchiveContainer #lstArchiveType option");}	
 
+    public Element getMP3Tab(){ return driver.FindElementByXPath("//a[@href='#MP3FilesContainer']"); }
+    public Element getMP3ChkBox(){ return driver.FindElementByXPath("//input[@name='chkIsMP3Selected']/following-sibling::i"); }
+    
+    // Production Home Page
+    public Element getProductionSetDropdown() { return driver.FindElementByCssSelector("[value='2063']"); }
+    public Element getExportSetDropdown() { return driver.FindElementByCssSelector("[value='2064']"); }
+    public Element getAddNewProductionButton(){ return driver.FindElementByXPath("//a[text()='Add a New Production']"); }
+    public Element getAddNewExportButton(){ return driver.FindElementByXPath("//a[text()='Add a New Export']"); }
+    
+    // Basic Info
+    public Element getBasicInfoTemplate(String value) { return driver.FindElementByCssSelector(String.format("#ddlTemplate [label='Custom Templates']%s",value)); }
+    public Element getBasicInfoPriorProd(String value) { return driver.FindElementByCssSelector(String.format("#ProductionSetLst%s",value)); }
+    public Element getBasicInfoCompleteButton() { return driver.FindElementById("BasicInfoMarkComplete"); }
+    public Element getBasicInfoNextButton() { return driver.FindElementById("BasicInfoNext"); }
+    
+    // Production Components
+    public Element getProductionComponentTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
+    public Element getProductionAdvanced() { return driver.FindElementByCssSelector(".advanced-production-toggle"); }
+    
+    // Production Components - Native
+    public Element getNativeAdvanced() { return driver.FindElementByCssSelector("#NativeContainer  div.advanced-dd-toggle"); }
+    public Element getNativeDescription() { return driver.FindElementByCssSelector("#NativeContainer p.blue-text strong"); }
+    public Element getNativeAdvancedHelp() { return driver.FindElementByCssSelector("[data-original-title='Family of Redacted and Privileged Documents']"); }
+    public Element getNativeAdvancedParentsRadio() { return driver.FindElementByCssSelector("#rdbExcludeNativesofparent + span"); }
+    public Element getNativeAdvancedFamilyRadio() { return driver.FindElementByCssSelector("#rdbExcludeEntireFamily + span"); }
+    public Element getNativeAdvancedLST() { return driver.FindElementByCssSelector("#NativeContainer  div.advanced-content [name='ProduceLoadFile'] + i + strong span"); }
+    public Element getNativeAdvancedLSTHelp() { return driver.FindElementByCssSelector("#NativeContainer [data-original-title='Generate Load File']"); }
+    public String nativeBlueText = "To produce specific docs natively, please select file types and/or tags below. In addition, to " +
+            "export placeholders for these docs, configure placeholder in the TIFF or PDF section for the same " +
+            "selected file types and/or tags.";
+    public String blueColor = "#4570BF";
+    
+    // Production Components - TIFF
+    public Element getTIFFAdvanced() { return driver.FindElementByCssSelector("#TIFFContainer  div.advanced-dd-toggle"); }
+    public Element getTIFFMultiRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='1'] + i"); }
+    public Element getTIFFSingleRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='0'] + i"); }
+    public Element getTIFFRotateDropdown() { return driver.FindElementByCssSelector("#TIFFContainer #dldPageRotatePreference"); }
+    public Element getTIFFLetterRadio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatLetter + i"); }
+    public Element getTIFFA4Radio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatA4 + i"); }
+    public Element getTIFFColorToggle() { return driver.FindElementByCssSelector("#TIFFContainer [name='CommonTIFFSettings.PreseveColor'] + i"); }
+    public Element getTIFFBlankRemovalToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkTIFFBlankPageRemove + input + i"); }
+    public Element getTIFFTiffToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkShouldSkipTIFFGeneration + input + i"); }
+    public Element getTIFFBrandingTagsLink() { return driver.FindElementByCssSelector("#TIFFContainer #divLeftHeaderBranding a.add-logic"); }
+    public Element getTIFFBrandingTextField() { return driver.FindElementByCssSelector("#TIFFContainer #divLeftHeaderBranding .redactor-editor"); }
+    public Element getTIFFPlaceholderPrivilegedToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkEnabledforPrivDocs + input + i"); }
+    public Element getTIFFPlaceholderTechIssueToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkEnabledforExceptionDocs + input + i"); }
+    public Element getTIFFPlaceholderPrivilegedTagsButton() { return driver.FindElementByCssSelector("#TIFFContainer #btnSelectPrevTags"); }
+    public Element getTIFFPlaceholderPrivilegedTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the privileged docs']"); }
+    public Element getTIFFPlaceholderTechTagsButton() { return driver.FindElementByCssSelector("#TIFFContainer #btnSelectTechIssueTags"); }
+    public Element getTIFFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
+    public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
+    public Element getTIFFPlaceholderNative() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic .add-tiff-img-logic"); }
+    public Element getTIFFBurnRedactionToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkBurnRedactions + input + i"); }
+    public Element getTIFFSlipSheetsToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkIsTIFFSlipSheetEnabled + input + i"); }
+    public Element getTIFFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#TIFFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
+    
+    // Production Components - Text
+    public Element getTextAdvanced() { return driver.FindElementByCssSelector("#TextContainer  div.advanced-dd-toggle"); }
+    public Element getTextDescription() { return driver.FindElementByCssSelector("#TextContainer p"); }
+    public Element getTextRemovedTiff() { return driver.FindElementByCssSelector("#TextContainer div.advanced-content div:nth-child(2)"); }
+    public String textDescriptionChange = "Redacted documents are automatically OCRed to export the text. Original extracted text is " +
+            "exported for natively produced documents (file based placeholdering). For exception and " +
+            "privileged placeholdered docs, the placeholder text is exported.";
+    
+    // Production Components - PDF
+    public Element getPDFAdvanced() { return driver.FindElementByCssSelector("#PDFContainer  div.advanced-dd-toggle"); }
+    public Element getPDFPlaceholderTechIssueToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFExceptionDocs + input + i"); }
+    public Element getPDFPlaceholderTechTagsButton() { return driver.FindElementByCssSelector("#PDFContainer #btnSelectPDFTechIssueTags"); }
+    public Element getPDFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
+    public Element getPDFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#PDFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
+    public Element getPDFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#PDFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
+    
+    // Production Components - MP3
+    public Element getMP3ComponentAdvanced(){ return driver.FindElementByCssSelector("#MP3FilesContainer div.advanced-dd-toggle"); }
+    public Element getMP3ComponentRedactionToggle(){ return driver.FindElementByCssSelector("[name='IsBurnRedactionSelected'] + i"); }
+    public Element getMP3ComponentRedactionStyle(String value){ return driver.FindElementByCssSelector(String.format("#lstFillerAudio%s",value)); }
+    public Element getMP3AdvancedList() { return driver.FindElementByCssSelector("#MP3FilesContainer #chkMP3ProduceLoadFile + input + i"); }
+    public String mp3Warning = "For MP3 Files component, you must enable LST load file option or you must specify MP3FilePath in " + 
+                               "the DAT, in order to generate a load file for the generated MP3s files.";
+    public Element getMP3WarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }
+    
 
     public ProductionPage(Driver driver){
 
@@ -230,6 +321,97 @@ public class ProductionPage {
         this.driver.getWebDriver().get(Input.url+"Production/Home");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
+    }
+    
+    public void addNewProduction(String productionName, String template) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getProductionSetDropdown().Visible()  ;}}), Input.wait30); 
+		getProductionSetDropdown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+		getAddNewProductionbutton().Click();
+		driver.waitForPageToBeReady();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getProductionName().Displayed()  ;}}), Input.wait30); 
+		getProductionName().SendKeys(productionName);
+		
+		if (template != "false") {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getBasicInfoTemplate(String.format(" [value='%s']",template)).Visible()  ;}}), Input.wait30); 
+			getBasicInfoTemplate(String.format(" [value='%s']",template)).Click();		
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
+		getBasicInfoCompleteButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
+		getBasicInfoNextButton().Click();
+		driver.waitForPageToBeReady();
+
+		
+    }
+    
+    public void addNewExport(String productionName, String template, String priorProduction) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getExportSetDropdown().Visible()  ;}}), Input.wait30); 
+		getExportSetDropdown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getAddNewExportButton().Displayed()  ;}}), Input.wait30); 
+		getAddNewExportButton().Click();
+		driver.waitForPageToBeReady();
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getProductionName().Displayed()  ;}}), Input.wait30); 
+		getProductionName().SendKeys(productionName);
+		
+		if (template != "false") {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getBasicInfoTemplate(String.format(" [value='%s']",template)).Visible()  ;}}), Input.wait30); 
+			getBasicInfoTemplate(String.format(" [value='%s']",template)).Click();		
+		}
+		
+		if (priorProduction != "false") {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getProdExport_Priorprodtoggle().Visible()  ;}}), Input.wait30);
+			getProdExport_Priorprodtoggle().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getBasicInfoPriorProd(String.format(" [value='%s']",priorProduction)).Visible()  ;}}), Input.wait30); 
+			getBasicInfoPriorProd(String.format(" [value='%s']",priorProduction)).Click();
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
+		getBasicInfoCompleteButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
+		getBasicInfoNextButton().Click();
+		driver.waitForPageToBeReady();
+
+		
+    }
+    
+    public void clickProductionTileView() {
+    	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
+		getTileViewIcon().Click();
+    }
+    
+    public void clickProductionGridView() {
+    	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
+		getGridViewIcon().Click();
+		getGridViewIcon().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getGridProdCount().Visible()  ;}}), Input.wait30); 
     }
     
     public void CreateProduction(String productionname,String PrefixID,String SuffixID,final String foldername,String tagname) 
@@ -2720,37 +2902,90 @@ public class ProductionPage {
 	  		System.out.println("Verified METADATA/WORKPRODUCT & CALCULATED Tabs");
   	  }
   	    
-  	    public void DeleteProduction() throws InterruptedException{
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
-	       	getFilterByDRAFT().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getDelete().Visible()  ;}}), Input.wait30); 
-	        getDelete().waitAndClick(10);
-	        Thread.sleep(1000);
-	        getOK().waitAndClick(10);
-	        Thread.sleep(1000);
-	        BaseClass bc= new BaseClass(driver);
-	      	bc.VerifySuccessMessage("Production deleted successfully");
-	      	bc.CloseSuccessMsgpopup();
-	      	
-	      	System.out.println("Verified deleted Production");
-	    }
+    public void DeleteProduction() throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30);
+    	getFilterByButton().waitAndClick(10);
+       	for(int i=1; i<getFilterOptions().size(); i++) {
+       	getFilter(i).waitAndClick(10);
+       	}
+      
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+       	getFilterByDRAFT().waitAndClick(10);
+        
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		getRefreshButton().Visible()  ;}}), Input.wait30);
+        getRefreshButton().waitAndClick(10);
+        
+        Thread.sleep(1000);
+        getArrow().waitAndClick(10);
+        
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		getDelete().Visible()  ;}}), Input.wait30); 
+        getDelete().waitAndClick(10);
+        Thread.sleep(1000);
+        getOK().waitAndClick(10);
+        Thread.sleep(1000);
+        BaseClass bc= new BaseClass(driver);
+      	bc.VerifySuccessMessage("Production deleted successfully");
+      	bc.CloseSuccessMsgpopup();
+      	
+      	System.out.println("Verified deleted Production");
+    }
+    
+    public void selectDATWithDefaultValue() 
+    		throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDATChkBox().Visible()  ;}}), Input.wait30); 
+		getDATChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDATTab().Visible()  ;}}), Input.wait30); 
+ 		getDATTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDAT_FieldClassification1(" [value='BATES']").Visible()  ;}}), Input.wait30); 
+		getDAT_FieldClassification1(" [value='BATES']").Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDAT_SourceField1(" [value='-146']").Visible()  ;}}), Input.wait30); 
+		getDAT_SourceField1(" [value='-146']").Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
+		getDAT_DATField1().SendKeys("BatesNumber");
+
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getDATTab().Visible()  ;}}), Input.wait30); 
+//		getDATTab().Click();
+    }
+    
+    public void selectMP3WithLSTOff() 
+        		throws InterruptedException {
+    	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDATComponentAdvanced().Visible()  ;}}), Input.wait30); 
+		getDATComponentAdvanced().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3ChkBox().Visible()  ;}}), Input.wait30); 
+		getMP3ChkBox().Click();
+        
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3Tab().Visible()  ;}}), Input.wait30); 
+        getMP3Tab().Click();
+        
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3ComponentAdvanced().Visible()  ;}}), Input.wait30); 
+        getMP3ComponentAdvanced().Click();
+        
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3AdvancedList().Visible()  ;}}), Input.wait30); 
+        getMP3AdvancedList().Click();
+    }
+  	    
+  	    
   	    
 }
     
