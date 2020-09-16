@@ -99,7 +99,7 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-			Thread.sleep(5000);
+			Thread.sleep(500);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
@@ -460,11 +460,22 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
 	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
-		}
+		
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionAction_Delete().Visible()  ;}}), Input.wait30); 
+				ingest.getIngestionAction_Delete().Exists();
+				pass(dataMap, "Ingestion Action Delete Button is Avaliable");
+				}
+			catch (Exception e) {
+				if (scriptState) {
+				throw new Exception(e.getMessage());
+			} else {
+				pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
+				}
+			}
+			
+			
 	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
@@ -548,13 +559,24 @@ public class IngestionContext extends CommonContext {
 	public void click_preview_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Text Qualifier
-			//* Column and Data delimeter
-			//
-			throw new ImplementationException("click_preview_run_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
+				ingest.getPreviewRun().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			        ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+	    	    ingest.getApproveMessageOKButton().Click(); 
+
+				pass(dataMap, "Get Preview Run Button is Clickable");
+			}
+			catch (Exception e) {
+				fail(dataMap, "Get Preview Run Button could not be Clicked");
+			}
+
 		} else {
-			throw new ImplementationException("NOT click_preview_run_button");
+			//Not sure what to do here
+			ingest.getToastMessage();
 		}
 
 	}

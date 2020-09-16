@@ -210,27 +210,24 @@ public class IngestionPage {
     public void requiredFieldsAreEntered(boolean scriptState) 
     		throws InterruptedException {
     	
+    	driver.waitForPageToBeReady();
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
     		getSpecifySourceSystem().SendKeys("TRUE");
 
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
     		getSpecifyLocation().SendKeys("Ingestion");
 
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
     		getSpecifySourceFolder().SendKeys("AttachDocument");
 
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDocumentKey().Visible()  ;}}), Input.wait30); 
     		getDocumentKey().SendKeys("DocFileType");
 
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
     		getNativeCheckBox().Click();
@@ -239,7 +236,6 @@ public class IngestionPage {
     				getNativeLST().Visible()  ;}}), Input.wait30); 
     		getNativeLST().SendKeys("native_file");
     		
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
     		getMP3CheckBoxstionButton().Click();
@@ -248,7 +244,6 @@ public class IngestionPage {
     				getMP3LST().Visible()  ;}}), Input.wait30); 
     		getMP3LST().SendKeys("AttachDocIDs.dat");
     		
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptCheckBoxstionButton().Click();
@@ -257,12 +252,10 @@ public class IngestionPage {
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptLST().SendKeys("AttachDocIDs2.dat");
     		
-			Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
     		getDateFormat().SendKeys("MM/DD/YYY");
 
-			Thread.sleep(2000);
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
@@ -280,11 +273,13 @@ public class IngestionPage {
     	
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByButton().Visible()  ;}}), Input.wait30); 
+    				getFilterByButton().Displayed()  ;}}), Input.wait30); 
     		getFilterByButton().Click();
+    		Thread.sleep(500);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+    				getFilterByDRAFT().Displayed()  ;}}), Input.wait30); 
     		getFilterByDRAFT().Click();
+    		getTotalIngestCount().Click();
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFirstIngestionActionButton().Displayed()  ;}}), Input.wait30); 
 	    	getFirstIngestionActionButton().Click();
