@@ -1963,6 +1963,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	//Passed
 	@Test(groups = { "Ingestion, Positive","smoke" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_source_selection_types_are_displayed()
 			throws Throwable {

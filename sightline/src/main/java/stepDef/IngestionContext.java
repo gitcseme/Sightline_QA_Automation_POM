@@ -622,12 +622,12 @@ public class IngestionContext extends CommonContext {
 		    			ingest.getTIFFCheckBox().Displayed()  ;}}), Input.wait30);
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);	
-				
+		    			ingest.getDATcheckbox().Displayed()  ;}}), Input.wait30);	
+				System.out.println("Made it past preliminary checks");
 				
 				//DAT files
 				
-				ingest.getIsNativeInPathInDAT().Click();
+				ingest.getDATcheckbox().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getSourceSelectionDATLoadFile().Displayed()  ;}}), Input.wait30);
@@ -635,75 +635,122 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getDocumentKey().Displayed()  ;}}), Input.wait30);
 				
+				//Make sure Key Field is displayed once in DAT Section
+				Assert.assertEquals(1, driver.FindElements(By.id("ddlKeyDatFile")).size());
 				
-				//Native
+				
+				//Open Native Field
 				ingest.getNativeCheckBox().Click();
 				
+				//Verify Both DAT Checkbox and Load File Field are displayed
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);
-				ingest.getIsNativeInPathInDAT().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getNativeLST().Displayed()  ;}}), Input.wait30);
-				ingest.getNativeFilePathFieldinDAT().Click();
-				
-				
-				// Text
-				
-				ingest.getTextCheckBox().Click();
+
+				//Click Native DAT Checkbox 
+				ingest.getIsNativeInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			ingest.getTextFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+		    			ingest.getNativeFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getNativeLST().Enabled());
+
 				
+				
+				//Open Text Field
+				ingest.getTextCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTextInPathInDAT().Displayed()  ;}}), Input.wait30);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getTextLST().Displayed()  ;}}), Input.wait30);
 				
-				ingest.getTextFilePathFieldinDAT().Click();
+				//Click Text DAT Checkbox
+				ingest.getIsTextInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTextLST().Enabled());
+
 
 				
-				//PDF
+				//Open PDF Field
 				ingest.getPDFCheckBoxstionButton().Click();
+
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsPDFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click PDF DAT Checkbox
+				ingest.getIsPDFInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getPDFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
 				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			ingest.getPDFLST().Displayed()  ;}}), Input.wait30);
-				ingest.getPDFFilePathFieldinDAT().Click();
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getPDFLST().Enabled());
+
 
 				
-				//TIFF
+				//Open TIFF DAT Checkbox
 				ingest.getTIFFCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTIFFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click TIFF DAT Checkbox
+				ingest.getIsTIFFInPathInDAT().Click();
+				
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			ingest.getTIFFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
 				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			ingest.getTIFFLST().Displayed()  ;}}), Input.wait30);
-				ingest.getTIFFFilePathFieldinDAT().Click();
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTIFFLST().Enabled());
 
 				
-				
-			
-				
-				
+				//Other Option Checks
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Click "Other" field
+				ingest.getOtherCheckBox().Click();
+
+				//Wait for Link Dropdown, Load File Dropdown and DAT Checkbox to be displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLinkType().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLoadFile().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Get Link Type Drop down contents, and make sure it contains "Translation and Related"
+				String LinkTypeContents = ingest.getOtherLinkType().getText();
+				Assert.assertTrue(LinkTypeContents.contains("Translation") && LinkTypeContents.contains("Related"));
+
 				pass(dataMap,"Selection types are displayed");
+				
+				
 			}
 			catch(Exception e) {
 				fail(dataMap,"Selection types are not displayed");
 			}
 			
-			
-			
-				
-				
-			//* Verify when "IS DAT?" is checked, a file path field is displayed
-			//* Verify when "IS DAT?" is checked, Load field is disabled for that section
-			//* Verify when "IS DAT?" is checked, File Path field is enabled
-			//* Verify selecting "Other" option, then Link Type, Load File and "IS DAT?" fields are displayed
-			//* Verify Link Type drop down displays "Translation" and "Related" options
-			//
-			throw new ImplementationException("verify_source_selection_types_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_source_selection_types_are_displayed");
 		}
-
 	}
 
 

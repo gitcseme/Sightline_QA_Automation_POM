@@ -109,12 +109,9 @@ public class IngestionPage {
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
     
-   // Xpaths    
+    //Xpaths    
     //public Element getAddanewIngestionButton(){return driver.FindElementByXPath("//a[text()='Addx a new Ingestion']"); }
-
-    //Try these
     public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
-    //public Element getAddanewIngestionButton(){return driver.FindElement(By.xpath("//a[@href='/en-us/Ingestion/Wizard']"));}
 
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
     //public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
