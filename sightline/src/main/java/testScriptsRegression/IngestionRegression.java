@@ -805,8 +805,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
-	//Passed
+	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_expected_source_fields_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1049,9 +1048,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
-	//Passed
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_mandatory_toast_message_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1247,10 +1244,8 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	//Very Strange Behavior from this script. Sometimes it goes all the way and fails.
-	//Sometimes it stops early and fails. Sometimes it goes half way and fails.
-	//But it no matter what it always fails. I haven't got it to work yet.
-	@Test(groups = { "Ingestion", "Positive", "smoke" })
+	//Pass
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_draft_ingestion_When_click_open_wizard_option_Then_verify_saved_draft_retains_files_selected()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1264,7 +1259,7 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			dataMap.put("native_file", "native.lst");
-			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_location", "IngestionTestData" + "\\" + "Automation");
 			dataMap.put("source_folder", "AttachDocument");
 			dataMap.put("audio_file", "AttachDocIDs2.dat");
 			dataMap.put("mp3_file", "AttachDocIDs.dat");
@@ -1378,7 +1373,7 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-
+	//Pass
 	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_expected_date_time_format_is_displayed()
 			throws Throwable {
@@ -1500,6 +1495,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	//Pass
 	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingest_execution_details_page_When_click_close_button_Then_verify_close_button_redirects_to_ingestion_home_page()
 			throws Throwable {

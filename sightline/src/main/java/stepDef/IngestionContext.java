@@ -137,6 +137,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
+	    	Thread.sleep(2000);
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getApproveMessageOKButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getApproveMessageOKButton().Click();
@@ -174,6 +175,11 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
 	    	ingest.getPreviewRun().Click();
+	    	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+	    	ingest.getApproveMessageOKButton().Click();
+	    	
 	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -438,11 +444,19 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
 	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
+			String url = driver.getUrl();
+			
+			if(url.contains("Ingestion/Home")){
+				pass(dataMap,"Close Button redirects to Ingestion Home Page");
+			} else {
+				fail(dataMap,"Close Button does not redirect to Ingestion Home Page");
+			}
 		}
-	}
+		else {
+			 throw new ImplementationException("Close Button does not redirect to Ingestion Home Page");
+			}
+		}
+	
 
 	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
 	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -483,10 +497,11 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSourceSys().Displayed()  ;}}), Input.wait30); 
 			String actualSourceSysText = ingest.getActualSourceSys().getText();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			
+;			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcLoc().Displayed()  ;}}), Input.wait30); 
 			String actualSrcLocText = ingest.getActualSrcLoc().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcFolder().Displayed()  ;}}), Input.wait30); 
 			String actualSrcFolderText = ingest.getActualSrcFolder().getText();
@@ -494,7 +509,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualDocKey().Displayed()  ;}}), Input.wait30); 
 			String actualDocKeyText= ingest.getActualDocKey().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualNativeFile().Displayed()  ;}}), Input.wait30); 
 			String actualNativeFileText = ingest.getActualNativeFile().getText();
@@ -502,11 +517,10 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualMp3File().Displayed()  ;}}), Input.wait30); 
 			String actualMp3FileText = ingest.getActualMp3File().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualAudioFile().Displayed()  ;}}), Input.wait30); 
 			String actualAudioFileText = ingest.getActualAudioFile().getText();
-			
 			
 			if (actualSourceSysText.equals(dataMap.get("source_system")) &&
 					actualSrcLocText.equals(dataMap.get("source_location")) &&
