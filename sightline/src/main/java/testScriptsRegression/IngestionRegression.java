@@ -139,7 +139,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	@Test(groups = { "Ingestion", "Positive"    })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_source_doc_id_is_auto_mapped()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -172,7 +172,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	@Test(groups = { "Ingestion", "Positive"    })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_expected_fields_are_mandatory()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -213,7 +213,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	@Test(groups = { "Ingestion", "Positive"    })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_configure_mapping_page_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -645,7 +645,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = { "Ingestion", "Positive"   })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_When_click_source_system_dropdown_Then_verify_source_system_displays_expected_options()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -677,7 +677,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = { "Ingestion", "Positive"   })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_expected_source_fields_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -920,7 +920,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	@Test(groups = { "Ingestion", "Positive"   })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_mandatory_toast_message_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1116,7 +1116,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = { "Ingestion", "Positive"   })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_draft_ingestion_When_click_open_wizard_option_Then_verify_saved_draft_retains_files_selected()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1244,7 +1244,8 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-	@Test(groups = { "Ingestion", "Positive" })
+
+	@Test(groups = { "Ingestion", "Positive"    })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_expected_date_time_format_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1365,7 +1366,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive" })
+	@Test(groups = { "Ingestion", "Positive"  })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingest_execution_details_page_When_click_close_button_Then_verify_close_button_redirects_to_ingestion_home_page()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1622,7 +1623,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_new_ingestion_tile_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();

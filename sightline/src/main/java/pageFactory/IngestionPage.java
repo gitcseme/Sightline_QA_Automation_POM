@@ -222,9 +222,8 @@ public class IngestionPage {
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
     		getSpecifyLocation().SendKeys("Ingestion");
 
-    		Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
+    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
     		getSpecifySourceFolder().SendKeys("AttachDocument");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

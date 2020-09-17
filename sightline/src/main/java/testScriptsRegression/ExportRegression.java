@@ -141,7 +141,7 @@ public class ExportRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Export", "Positive", "smoke"})
+	@Test(groups = {"Export", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_export_process_Then_verify_export_native_component_section() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

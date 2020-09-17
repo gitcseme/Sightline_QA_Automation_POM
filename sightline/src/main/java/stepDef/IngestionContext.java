@@ -98,13 +98,13 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
-			Thread.sleep(5000);
+			Thread.sleep(2000);
 	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
@@ -172,14 +172,7 @@ public class IngestionContext extends CommonContext {
 			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
-	    	ingest.getPreviewRun().Click();
-	    	
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	    	ingest.getApproveMessageOKButton().Click();
-	    	
+			click_preview_run_button(scriptState, dataMap);
 	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -261,8 +254,8 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
+
 			String totalIngestCountText = ingest.getTotalIngestCount().getText();
-			
 			if (totalIngestCountText.equals(dataMap.get("actualCount"))) {
 				pass(dataMap,"Ingestion Tile and Count Have Increased");
 			} else {
@@ -478,6 +471,12 @@ public class IngestionContext extends CommonContext {
 		try {
 			
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+
+			//Deselect Required Field
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getMappingSOURCEFIELD4().Displayed()  ;}}), Input.wait30); 
+			ingest.getMappingSOURCEFIELD4().SendKeys("Select");
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getPreviewRun().Displayed()  ;}}), Input.wait30); 
 			ingest.getPreviewRun().Click();

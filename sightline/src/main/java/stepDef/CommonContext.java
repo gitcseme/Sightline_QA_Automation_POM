@@ -103,7 +103,6 @@ public class CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		dataMap = new HashMap();
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 		
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
