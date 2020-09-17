@@ -33,6 +33,7 @@ public class ProductionContext extends CommonContext {
 
 		try {
 			if (scriptState) {
+				System.out.println("1");
 				prod.addNewProduction("AutoProduction"+dateTime, template);
 			} else {
 				pass(dataMap,"Skipped adding new production");

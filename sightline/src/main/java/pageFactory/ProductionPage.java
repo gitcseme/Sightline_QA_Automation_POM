@@ -324,9 +324,19 @@ public class ProductionPage {
     }
     
     public void addNewProduction(String productionName, String template) {
+    	try {
+    	/*
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getProductionSetDropdown().Visible()  ;}}), Input.wait30); 
+		Thread.sleep(5000);
+
 		getProductionSetDropdown().Click();
+		*/
+
+    	//Replaced the above code with this 
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+		getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
@@ -337,7 +347,9 @@ public class ProductionPage {
 				getProductionName().Displayed()  ;}}), Input.wait30); 
 		getProductionName().SendKeys(productionName);
 		
+
 		if (template != "false") {
+			System.out.format("What is template?: %s", template);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getBasicInfoTemplate(String.format(" [value='%s']",template)).Visible()  ;}}), Input.wait30); 
 			getBasicInfoTemplate(String.format(" [value='%s']",template)).Click();		
@@ -351,6 +363,8 @@ public class ProductionPage {
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
 		getBasicInfoNextButton().Click();
 		driver.waitForPageToBeReady();
+    	}
+    	catch(Exception e){System.out.println("error occured");}
 
 		
     }
