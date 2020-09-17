@@ -40,10 +40,6 @@ public class IngestionContext extends CommonContext {
 	public void add_a_new_ingestion_btn_is_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-
-			//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					//ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
-
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
 		} else {
@@ -106,7 +102,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
-	    	//Needs to be added anywhere it says click preview and run
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
 			Thread.sleep(5000);
@@ -174,6 +169,7 @@ public class IngestionContext extends CommonContext {
 	public void on_ingest_execution_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -406,25 +402,19 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_expected_source_fields_are_displayed$")
 	public void verify_expected_source_fields_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceSystemTitleText = ingest.getSourceSystemTitle().getText();
-			
-			System.out.println(sourceSystemTitleText.split(":")[0]);
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceLocationTitleText = ingest.getSourceLocationTitle().getText();
 			
-			System.out.println(sourceLocationTitleText.split(":")[0]);
-			
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceFolderTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceFolderTitleText = ingest.getSourceFolderTitle().getText();
-			
-			System.out.println(sourceFolderTitleText.split(":")[0]);
-
 			
 			if ((sourceSystemTitleText.split(":")[0]).equals("Source System") &&
 				(sourceLocationTitleText.split(":")[0]).equals("Source Location") &&
@@ -579,7 +569,6 @@ public class IngestionContext extends CommonContext {
 			}
 
 		} else {
-			//Not sure what to do here
 			ingest.getToastMessage();
 		}
 
@@ -626,7 +615,6 @@ public class IngestionContext extends CommonContext {
 				System.out.println("Made it past preliminary checks");
 				
 				//DAT files
-				
 				ingest.getDATcheckbox().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -749,7 +737,8 @@ public class IngestionContext extends CommonContext {
 			catch(Exception e) {
 				fail(dataMap,"Selection types are not displayed");
 			}
-			
+		} else {
+			fail(dataMap,"Selection types are not displayed");
 		}
 	}
 
@@ -758,19 +747,39 @@ public class IngestionContext extends CommonContext {
 	public void verify_all_components_are_displayed_on_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1412 verify the display of all the ingestion pages in the new Wizard view.
-			//
-			//* Verify source fields are displayed (Source System, Location, etc.)
-			//* Verify Ingestion types are displayed (DAT, Native, etc.)
-			//* Verify Configure Mapping section is displayed
-			//* Verify Preview Run button is displayed
-			//* Verify "Ingestion Wizard" header is displayed
-			//* Verify Save button is displayed
-			//
-			throw new ImplementationException("verify_all_components_are_displayed_on_the_wizard");
-		} else {
-			throw new ImplementationException("NOT verify_all_components_are_displayed_on_the_wizard");
-		}
+				try {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getDATTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getNativeTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getConfigureMappingText().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getPreviewRun().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getIngestionWizardTitle().Displayed()  ;}}), Input.wait30);
+	    			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getSaveDraftButton().Displayed()  ;}}), Input.wait30);
+	    	
+					pass(dataMap,"All components are displayed on the wizard");
 
+			}
+			catch(Exception e) {
+				fail(dataMap,"All components are NOT displayed on the wizard");}}
+		else {
+			fail(dataMap,"All components are NOT displayed on the wizard");
+				}
+		}
 	}
-}
+
