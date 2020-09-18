@@ -33,7 +33,6 @@ public class ProductionContext extends CommonContext {
 
 		try {
 			if (scriptState) {
-				System.out.println("1");
 				prod.addNewProduction("AutoProduction"+dateTime, template);
 			} else {
 				pass(dataMap,"Skipped adding new production");
@@ -59,7 +58,7 @@ public class ProductionContext extends CommonContext {
 		}
 
 		driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-		Thread.sleep(2000);
+		Thread.sleep(1200);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30); 
 		prod.getComponentsMarkComplete().Click();
@@ -93,9 +92,11 @@ public class ProductionContext extends CommonContext {
 					prod.getDATTab().Visible()  ;}}), Input.wait30); 
 			prod.getDATTab().Click();
 
-			if (!prod.getDATComponentAdvanced().Displayed()) {
+			//Broken Right here
+			if (prod.getDATComponentAdvanced().Exists() == false) {
 				pass(dataMap,"Production DAT component removed");
 			} else {
+
 				fail(dataMap,"Production DAT component not removed");
 			}				
 		} catch (Exception e) {
@@ -221,9 +222,10 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_mp3_redaction_styles(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		try {
+			Thread.sleep(1000);
 			// Open MP3 section
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getProductionAdvanced().Visible()  ;}}), Input.wait30);
+					prod.getProductionAdvanced().Displayed()  ;}}), Input.wait30);
 			prod.getProductionAdvanced().Click();
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

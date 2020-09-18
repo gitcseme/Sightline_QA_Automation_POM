@@ -72,6 +72,8 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	//Failed on Test Suite
+	//Passed Individually
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_dat_contains_production_volume_name() throws Throwable
 	{
@@ -324,7 +326,8 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	//Passed
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_archive_option_is_only_zip() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -581,6 +584,8 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+	//Failed on Test Suite
+	//Passed Individually
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_mp3_redaction_styles() throws Throwable
 	{
@@ -932,6 +937,8 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+	//Failed on Test Suite
+	//Passed Individually
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_tech_issue_placeholder_is_available() throws Throwable
 	{
@@ -1049,7 +1056,9 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	//Failed on Test Suite
+	//Failed Indivdually 
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_dat_component_removed_advanced_option() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1165,7 +1174,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
+	//Failed on Suite
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_tiff_pdf_advanced_options() throws Throwable
 	{
