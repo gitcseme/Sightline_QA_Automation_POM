@@ -2,10 +2,13 @@ package stepDef;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -22,12 +25,7 @@ import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
 public class IngestionContext extends CommonContext {
-	Driver driver;
-	WebDriver webDriver;
-	LoginPage lp;
-
-    IngestionPage ingest;
-
+	
 	/* 
 	 * moved to CommonContext
 	 * 
@@ -42,8 +40,6 @@ public class IngestionContext extends CommonContext {
 	public void add_a_new_ingestion_btn_is_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
 		} else {
@@ -89,7 +85,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
 			ingest.requiredFieldsAreEntered(scriptState);
-			click_next_button(scriptState, dataMap);
+
 		} else {
 			ingest.requiredFieldsAreEntered(scriptState);
 		}
@@ -102,9 +98,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Thread.sleep(2000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getNextButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+			Thread.sleep(2000);
+	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
 		}
@@ -133,14 +134,13 @@ public class IngestionContext extends CommonContext {
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSaveDraftButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
-	    	
+	    	Thread.sleep(2000);
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getApproveMessageOKButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getApproveMessageOKButton().Click();
 	    	on_ingestion_home_page(scriptState, dataMap);
-	    
 	    	ingest.openFirstIngestionSettings(scriptState);
 		} else {
 			on_ingestion_home_page(scriptState, dataMap);
@@ -172,9 +172,7 @@ public class IngestionContext extends CommonContext {
 			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
-	    	ingest.getPreviewRun().Click();
+			click_preview_run_button(scriptState, dataMap);
 	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -256,8 +254,8 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
+
 			String totalIngestCountText = ingest.getTotalIngestCount().getText();
-			
 			if (totalIngestCountText.equals(dataMap.get("actualCount"))) {
 				pass(dataMap,"Ingestion Tile and Count Have Increased");
 			} else {
@@ -376,9 +374,9 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+
 			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			
-			if (specifySourceSystemText.equals("TRUE")
+			if (specifySourceSystemText.contains("TRUE")
 							) {
 						pass(dataMap,"TRUE was found in the dropdown for Source System");
 					} else {
@@ -397,6 +395,7 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_expected_source_fields_are_displayed$")
 	public void verify_expected_source_fields_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceSystemTitleText = ingest.getSourceSystemTitle().getText();
@@ -405,13 +404,14 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceLocationTitleText = ingest.getSourceLocationTitle().getText();
 			
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceFolderTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceFolderTitleText = ingest.getSourceFolderTitle().getText();
 			
-			if (sourceSystemTitleText.equals("Source System") &&
-				sourceLocationTitleText.equals("Source Location") &&
-				sourceFolderTitleText.equals("Source Folder")
+			if ((sourceSystemTitleText.split(":")[0]).equals("Source System") &&
+				(sourceLocationTitleText.split(":")[0]).equals("Source Location") &&
+				(sourceFolderTitleText.split(":")[0]).equals("Source Folder")
 						) {
 					pass(dataMap,"Source System, Location and Folder Fields are Displayed");
 				} else {
@@ -430,19 +430,38 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
 	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
+			String url = driver.getUrl();
+			
+			if(url.contains("Ingestion/Home")){
+				pass(dataMap,"Close Button redirects to Ingestion Home Page");
+			} else {
+				fail(dataMap,"Close Button does not redirect to Ingestion Home Page");
+			}
 		}
-	}
+		else {
+			 throw new ImplementationException("Close Button does not redirect to Ingestion Home Page");
+			}
+		}
+	
 
 	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
 	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
-		}
+		
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionAction_Delete().Visible()  ;}}), Input.wait30); 
+				ingest.getIngestionAction_Delete().Exists();
+				pass(dataMap, "Ingestion Action Delete Button is Avaliable");
+				}
+			catch (Exception e) {
+				if (scriptState) {
+				throw new Exception(e.getMessage());
+			} else {
+				pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
+				}
+			}
+			
+			
 	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
@@ -451,6 +470,12 @@ public class IngestionContext extends CommonContext {
 		try {
 			
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+
+			//Deselect Required Field
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getMappingSOURCEFIELD4().Displayed()  ;}}), Input.wait30); 
+			ingest.getMappingSOURCEFIELD4().SendKeys("Select");
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getPreviewRun().Displayed()  ;}}), Input.wait30); 
 			ingest.getPreviewRun().Click();
@@ -476,10 +501,10 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getActualSourceSys().Displayed()  ;}}), Input.wait30); 
 			String actualSourceSysText = ingest.getActualSourceSys().getText();
 			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+;			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcLoc().Displayed()  ;}}), Input.wait30); 
 			String actualSrcLocText = ingest.getActualSrcLoc().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcFolder().Displayed()  ;}}), Input.wait30); 
 			String actualSrcFolderText = ingest.getActualSrcFolder().getText();
@@ -487,7 +512,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualDocKey().Displayed()  ;}}), Input.wait30); 
 			String actualDocKeyText= ingest.getActualDocKey().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualNativeFile().Displayed()  ;}}), Input.wait30); 
 			String actualNativeFileText = ingest.getActualNativeFile().getText();
@@ -495,12 +520,10 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualMp3File().Displayed()  ;}}), Input.wait30); 
 			String actualMp3FileText = ingest.getActualMp3File().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualAudioFile().Displayed()  ;}}), Input.wait30); 
 			String actualAudioFileText = ingest.getActualAudioFile().getText();
-			
-			
 			
 			if (actualSourceSysText.equals(dataMap.get("source_system")) &&
 					actualSrcLocText.equals(dataMap.get("source_location")) &&
@@ -528,13 +551,23 @@ public class IngestionContext extends CommonContext {
 	public void click_preview_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Text Qualifier
-			//* Column and Data delimeter
-			//
-			throw new ImplementationException("click_preview_run_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
+				ingest.getPreviewRun().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			        ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+	    	    ingest.getApproveMessageOKButton().Click(); 
+
+				pass(dataMap, "Get Preview Run Button is Clickable");
+			}
+			catch (Exception e) {
+				fail(dataMap, "Get Preview Run Button could not be Clicked");
+			}
+
 		} else {
-			throw new ImplementationException("NOT click_preview_run_button");
+			ingest.getToastMessage();
 		}
 
 	}
@@ -543,43 +576,168 @@ public class IngestionContext extends CommonContext {
 	public void verify_first_50_records_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1421 verify Preview Records pop up display.
-			//* Click the Preview and Run button
-			//* On the Preview pop up page
-			//* Click on "Run Ingestion" button
-			//* Verify url changed from "/Ingestion/Wizard" to "/Ingestion/Home"
-			//Test Cases Covered:
-			//
-			//* TC264 Verify the Preview of Igestion display for the frist 50 records with valid inputs
-			//
-			throw new ImplementationException("verify_first_50_records_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_first_50_records_are_displayed");
-		}
-
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getRecordTable().Visible()  ;}}), Input.wait30); 
+				int recordSize =  ingest.getRecordTable().getWebElement().findElements(By.tagName("tr")).size();
+				if(recordSize <=50) pass(dataMap, "There are less than 50 records");
+				else fail(dataMap, "There are more than 50 records");
+			}
+			catch(Exception e) {
+				ingest.getToastMessage();
+			}
+		} 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_source_selection_types_are_displayed$")
 	public void verify_source_selection_types_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1414 verify the Source Selection in Ingestion Wizard Page.
-			//* Verify Native, Text, PDF, TIFF and DAT sources are displayed
-			//* Verify DAT displays a "Load File" and "Key" fields
-			//* Verify Key field is only displayed ONCE in DAT section
-			//* Verify Native, Text, PDF and TIFF display "Load File" field and "IS DAT?" checkbox
-			//* Verify when "IS DAT?" is checked, a file path field is displayed
-			//* Verify when "IS DAT?" is checked, Load field is disabled for that section
-			//* Verify when "IS DAT?" is checked, File Path field is enabled
-			//* Verify selecting "Other" option, then Link Type, Load File and "IS DAT?" fields are displayed
-			//* Verify Link Type drop down displays "Translation" and "Related" options
-			//
-			throw new ImplementationException("verify_source_selection_types_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_source_selection_types_are_displayed");
-		}
+			
+				try {
+			// Checkbox
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFCheckBoxstionButton().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getDATcheckbox().Displayed()  ;}}), Input.wait30);	
+				System.out.println("Made it past preliminary checks");
+				
+				//DAT files
+				ingest.getDATcheckbox().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getSourceSelectionDATLoadFile().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getDocumentKey().Displayed()  ;}}), Input.wait30);
+				
+				//Make sure Key Field is displayed once in DAT Section
+				Assert.assertEquals(1, driver.FindElements(By.id("ddlKeyDatFile")).size());
+				
+				
+				//Open Native Field
+				ingest.getNativeCheckBox().Click();
+				
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeLST().Displayed()  ;}}), Input.wait30);
 
+				//Click Native DAT Checkbox 
+				ingest.getIsNativeInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getNativeLST().Enabled());
+
+				
+				
+				//Open Text Field
+				ingest.getTextCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTextInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click Text DAT Checkbox
+				ingest.getIsTextInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTextLST().Enabled());
+
+
+				
+				//Open PDF Field
+				ingest.getPDFCheckBoxstionButton().Click();
+
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsPDFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click PDF DAT Checkbox
+				ingest.getIsPDFInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getPDFLST().Enabled());
+
+
+				
+				//Open TIFF DAT Checkbox
+				ingest.getTIFFCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTIFFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click TIFF DAT Checkbox
+				ingest.getIsTIFFInPathInDAT().Click();
+				
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTIFFLST().Enabled());
+
+				
+				//Other Option Checks
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Click "Other" field
+				ingest.getOtherCheckBox().Click();
+
+				//Wait for Link Dropdown, Load File Dropdown and DAT Checkbox to be displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLinkType().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLoadFile().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Get Link Type Drop down contents, and make sure it contains "Translation and Related"
+				String LinkTypeContents = ingest.getOtherLinkType().getText();
+				Assert.assertTrue(LinkTypeContents.contains("Translation") && LinkTypeContents.contains("Related"));
+
+				pass(dataMap,"Selection types are displayed");
+				
+				
+			}
+			catch(Exception e) {
+				fail(dataMap,"Selection types are not displayed");
+			}
+		} else {
+			fail(dataMap,"Selection types are not displayed");
+		}
 	}
 
 
@@ -587,22 +745,41 @@ public class IngestionContext extends CommonContext {
 	public void verify_all_components_are_displayed_on_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1412 verify the display of all the ingestion pages in the new Wizard view.
-			//
-			//* Verify source fields are displayed (Source System, Location, etc.)
-			//* Verify Ingestion types are displayed (DAT, Native, etc.)
-			//* Verify Configure Mapping section is displayed
-			//* Verify Preview Run button is displayed
-			//* Verify "Ingestion Wizard" header is displayed
-			//* Verify Save button is displayed
-			//
-			throw new ImplementationException("verify_all_components_are_displayed_on_the_wizard");
-		} else {
-			throw new ImplementationException("NOT verify_all_components_are_displayed_on_the_wizard");
+				try {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getDATTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getNativeTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getConfigureMappingText().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getPreviewRun().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getIngestionWizardTitle().Displayed()  ;}}), Input.wait30);
+	    			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getSaveDraftButton().Displayed()  ;}}), Input.wait30);
+	    	
+					pass(dataMap,"All components are displayed on the wizard");
+
+			}
+			catch(Exception e) {
+				fail(dataMap,"All components are NOT displayed on the wizard");}}
+		else {
+			fail(dataMap,"All components are NOT displayed on the wizard");
+				}
 		}
-
-	}
-
+  
 	@Then("^.*(\\[Not\\] )? verify_multi_value_ascii_is_set_by_default$")
 	public void verify_multi_value_ascii_is_set_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 

@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
@@ -108,10 +109,13 @@ public class IngestionPage {
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
     
-   // Xpaths    
-    public Element getAddanewIngestionButton(){ return driver.FindElementByXPath("//a[text()='Add a new Ingestion']"); }
+    //Xpaths    
+    //public Element getAddanewIngestionButton(){return driver.FindElementByXPath("//a[text()='Addx a new Ingestion']"); }
+    public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
+
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
-    public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    //public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    public Element getNextButton(){ return driver.FindElementById("NextButton"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
     public Element getIsNativeInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
     public Element getIsTextInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATText']/following-sibling::i"); }
@@ -189,7 +193,12 @@ public class IngestionPage {
     public Element getActualAudioFile() {return driver.FindElementByCssSelector("#ddlLoadTranscriptfile > option[selected]");}
     public Element getSourceSystemTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(2) > div.col-md-5 > label");}
     public Element getSourceLocationTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
-    public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
+    public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(4) > div.col-md-5 > label");}
+    public Element getRecordTable() {return driver.FindElementByCssSelector("#previewRecords > div > table > tbody");}
+    public Element getDATcheckbox() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > i");}
+    public Element getDATTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > strong");}
+    public Element getNativeTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(4) > div > label > strong");}
+    public Element getIngestionWizardTitle() {return driver.FindElementByCssSelector("#content > div:nth-child(3) > div > h1");}
     
     public IngestionPage(Driver driver){
 
@@ -203,22 +212,23 @@ public class IngestionPage {
     public void requiredFieldsAreEntered(boolean scriptState) 
     		throws InterruptedException {
     	
+    	driver.waitForPageToBeReady();
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceSystem().SendKeys("source_system");
+    		getSpecifySourceSystem().SendKeys("TRUE");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
-    		getSpecifyLocation().SendKeys("source_location");
+    		getSpecifyLocation().SendKeys("Ingestion");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("source_folder");
+    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
+    		getSpecifySourceFolder().SendKeys("AttachDocument");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDocumentKey().Visible()  ;}}), Input.wait30); 
-    		getDocumentKey().SendKeys("doc_key");
+    		getDocumentKey().SendKeys("DocFileType");
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
@@ -234,7 +244,7 @@ public class IngestionPage {
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getMP3LST().Visible()  ;}}), Input.wait30); 
-    		getMP3LST().SendKeys("mp3_file");
+    		getMP3LST().SendKeys("AttachDocIDs.dat");
     		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
@@ -242,11 +252,12 @@ public class IngestionPage {
 
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptLST().SendKeys("audio_file");
+    		getAudioTranscriptLST().SendKeys("AttachDocIDs2.dat");
     		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
-    		getDateFormat().SendKeys("date_time");
+    		getDateFormat().SendKeys("MM/DD/YYY");
+
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
@@ -264,11 +275,13 @@ public class IngestionPage {
     	
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByButton().Visible()  ;}}), Input.wait30); 
+    				getFilterByButton().Displayed()  ;}}), Input.wait30); 
     		getFilterByButton().Click();
+    		Thread.sleep(500);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+    				getFilterByDRAFT().Displayed()  ;}}), Input.wait30); 
     		getFilterByDRAFT().Click();
+    		getTotalIngestCount().Click();
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFirstIngestionActionButton().Displayed()  ;}}), Input.wait30); 
 	    	getFirstIngestionActionButton().Click();

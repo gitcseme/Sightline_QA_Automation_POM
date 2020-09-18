@@ -43,8 +43,8 @@ public class CommonContext {
 			driver.waitForPageToBeReady();
 			pass(dataMap,String.format("Opened page %s",url));
 		} else {
-			url = "http://www.google.com";
-			webDriver.get("http://www.google.com");
+			url = "http://www.sqasquared.com";
+			webDriver.get(url);
 			pass(dataMap,String.format("Opened random page %s",url));
 		}
 	}
@@ -103,7 +103,6 @@ public class CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		dataMap = new HashMap();
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 		
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
@@ -112,11 +111,7 @@ public class CommonContext {
 			webDriver.get("http://www.google.com");
 		}
 		driver.waitForPageToBeReady();
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
-//		String totalIngestCountText = ingest.getTotalIngestCount().getText();
-//		dataMap.put(totalIngestCountText, "actualCount");
-		
+								
 		ingest = new IngestionPage(driver);
 	}
 
