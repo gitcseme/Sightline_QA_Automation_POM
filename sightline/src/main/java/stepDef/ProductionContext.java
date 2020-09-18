@@ -548,7 +548,309 @@ public class ProductionContext extends CommonContext {
 //		throw new ImplementationException("verify_export_tiff_pdf_advanced_options");
 //	}
 
+	@When("^.*(\\[Not\\] )? expanding_the_dat_production_component$")
+	public void expanding_the_dat_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//The user should be on the "Production Components" section of Productions.The user should click on "DAT" to expand the Native section.
+			throw new ImplementationException("expanding_the_dat_production_component");
+		} else {
+			throw new ImplementationException("NOT expanding_the_dat_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_dat_product_component_displays_the_correct_default_options$")
+	public void verify_the_dat_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4896
+			//*  Verify the options should be displayed in DAT -> 1>Format 2>Field Delimiters 3>Date Format 4> Specify DAT Field Mapping
+			//* Verify Format -> ANSI is not selected by default with the option "(deprecated)" set as the default option in the dropdown.
+			//* Verify Format -> Unicode UTF-16 radio button is selected by default.
+			//* Verify Field Delimeters -> Field Separator is set to ASCII(20), Text Qualifier is set to ASCII(254), Multi-value is set to ASCII(174), and New Line is set to ASCII(10)
+			//* Verify Date Format is set to "YYYY/MM/DD HH:MI:SS" by default.
+			//* Verify Specify DAT Field Mapping -> the table contains FIELD CLASSIFICATION, SOURCE FIELD, DAT FIELD, REDACTIONS, and PRIVILEDGED with all of the options set to blank other than FIELD CLASSICATION being set to "Select". 
+			//
+			throw new ImplementationException("verify_the_dat_product_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_dat_product_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_tiff_production_component$")
+	public void expanding_the_tiff_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//The user should be on the "Production Components" section of Productions.The user should click on "TIFF" to expand the Native section.The user should click on the "Advanced" option to expand the additional options for TIFF
+			throw new ImplementationException("expanding_the_tiff_production_component");
+		} else {
+			throw new ImplementationException("NOT expanding_the_tiff_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_tiff_product_component_displays_the_correct_default_options$")
+	public void verify_the_tiff_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4904
+			//* Verify the first section is Page Options
+			//* Verify in Page Options, the section "Single / Multiple:" has the options "Multi-page" and "Single Page" with Single Page selected as the default option with a radio button.
+			//* Verify in Page Options, the section "Format" has the options "Letter" and "A4" with Letter selected as the default option with a radio button.
+			//* Verify in Page Options, Blank Page Removal, Preserve Color, and Do not produce full content TIFFs or placeholder TIFFs for Natively Produced Docs: all have the option set to the red "x" by default. 
+			//* Verify in Page Options, the option "Rotate Landscape pages to portrait layout:" has the option "No Rotation" set to default.
+			//* Verify the "Branding" section contains the fields "Location", "Branding Text", "Speicify Default Branding", "Insert Metadata Field" link, and "+ Specify Branding by Selecting Tags:" link.
+			//* Verify in the Branding section for Location, there is a rectangle with the options, "LEFT", "CENTER", "RIGHT" at the top and bottom of the rectable with the words "--Page Body--" in the middle, and the top left "LEFT" option selected by default.
+			//* Verify in the Branding section, Specify Default Branding contains a section with the text "Enter default branding for the selection location on the page."
+			//* Verify in the "Placeholders" section, "Enable for Privileged Docs:" is checked green by default, there is a "Select tags" blue button to the right of Enable for Privileged Docs:, "Enable for Tech Tissue Docs:" is checked red by default, "+ Enable for Natively Produced Documents:" link with a question mark button next to it, and a rectangle with the watermark "Enter placeholder text for the privileged docs" with a link "Insert Metadata Field" under it. 
+			//* In the Redactions section, the option "Burn Redactions:" is checked red by default.
+			//* In the "Advanced" section, "Generate Load File (LST):" is checked green by default, "Load File Type:" is set to "Log" by default, and "Slip Sheets" is checked red by default.
+			//
+			throw new ImplementationException("verify_the_tiff_product_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_tiff_product_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_production_component$")
+	public void complete_default_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates NumberClick the complete buttonClick the next button
+			throw new ImplementationException("complete_default_production_component");
+		} else {
+			throw new ImplementationException("NOT complete_default_production_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_numbering_and_sorting$")
+	public void complete_default_numbering_and_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompletedClick Next
+			throw new ImplementationException("complete_default_numbering_and_sorting");
+		} else {
+			throw new ImplementationException("NOT complete_default_numbering_and_sorting");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_document_selection$")
+	public void complete_default_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure "Select Folders:" radio button is selectedClick "All Folders" checkboxClick Mark CompletedClick Next
+			throw new ImplementationException("complete_default_document_selection");
+		} else {
+			throw new ImplementationException("NOT complete_default_document_selection");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_priv_guard_documents_are_matched$")
+	public void complete_default_priv_guard_documents_are_matched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//You should be on the section "Priv Guard"Click "+ Add Rule"Click "Redactions"Click "All Redaction Tags" and scroll down and click "Insert into Query"Click "Check for Matching Documents"
+			throw new ImplementationException("complete_default_priv_guard_documents_are_matched");
+		} else {
+			throw new ImplementationException("NOT complete_default_priv_guard_documents_are_matched");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_on_the_docview_button$")
+	public void clicking_on_the_docview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//In the section "Matched Documents" there should be results here. Click the button named "DocView".
+			throw new ImplementationException("clicking_on_the_docview_button");
+		} else {
+			throw new ImplementationException("NOT clicking_on_the_docview_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_viewing_docview_for_priv_guard$")
+	public void verify_viewing_docview_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4906 part 2:
+			//* Verify the user is navigated to the DocView page.
+			//* Top left of the main section should display "REVIEW MODE" with a grid displaying the amount of Matched documents from the prior screen. If 5 documents were matched in the prior screen, the curren screen should show 5 items in the grid.
+			//
+			throw new ImplementationException("verify_viewing_docview_for_priv_guard");
+		} else {
+			throw new ImplementationException("NOT verify_viewing_docview_for_priv_guard");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_on_the_doclist_button$")
+	public void clicking_on_the_doclist_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//In the section "Matched Documents" there should be results here. Click the button named "DocList".
+			throw new ImplementationException("clicking_on_the_doclist_button");
+		} else {
+			throw new ImplementationException("NOT clicking_on_the_doclist_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_viewing_doclist_for_priv_guard$")
+	public void verify_viewing_doclist_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4906 part 1:
+			//* Verify the user is navigated to the DocList page.
+			//* Top left of the main page should display "SOURCE CRITERIA" with "Production" listed below with the button "Back to Source"
+			//* The number of matched documents listed in the Priv Guard screen should be displayed here. If 5 documented were said to be matched in the prior screen, make sure 5 documents are listed here.
+			//* Verify there should be text displaying "Showing 1 to x of x entries", replacing x with the number of matched documents. 
+			//
+			throw new ImplementationException("verify_viewing_doclist_for_priv_guard");
+		} else {
+			throw new ImplementationException("NOT verify_viewing_doclist_for_priv_guard");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_document_as_the_numbering_default_option$")
+	public void clicking_document_as_the_numbering_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the Documents radio button
+			throw new ImplementationException("clicking_document_as_the_numbering_default_option");
+		} else {
+			throw new ImplementationException("NOT clicking_document_as_the_numbering_default_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_numbering_and_sorting_component_displays_the_correct_default_options$")
+	public void verify_the_numbering_and_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4922
+			//* In the Numbering, Level section, "Page" is selected by default.
+			//* In the Numbering, Format section, "Specify Bates Numbering" should be selected by default with the option to "Click here to view and select the next bates number(s)".
+			//* In the Sorting section, "Sort by Metadata" is chosen by default. 
+			//If Document is selected to be default instead of page:
+			//* Ignore bullet 1 above.
+			//* Verify under Document, "Beginning Sub-bates Number:" starts at 1 and "Min Number Length:" starts at 5.
+			//If Use Metadata field is selected to be default instead of Specify Bates Numbering:
+			//* Ignore bullet 2 at the top. 
+			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
+			//
+			throw new ImplementationException("verify_the_numbering_and_sorting_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_numbering_and_sorting_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_use_metadata_field_as_the_format_default_option$")
+	public void clicking_use_metadata_field_as_the_format_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Metadata field radio button
+			throw new ImplementationException("clicking_use_metadata_field_as_the_format_default_option");
+		} else {
+			throw new ImplementationException("NOT clicking_use_metadata_field_as_the_format_default_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
+	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4922
+			//* In the Numbering, Level section, "Page" is selected by default.
+			//* In the Numbering, Format section, "Specify Bates Numbering" should be selected by default with the option to "Click here to view and select the next bates number(s)".
+			//* In the Sorting section, "Sort by Metadata" is chosen by default. 
+			//If Document is selected to be default instead of page:
+			//* Ignore bullet 1 above.
+			//* Verify under Document, "Beginning Sub-bates Number:" starts at 1 and "Min Number Length:" starts at 5.
+			//If Use Metadata field is selected to be default instead of Specify Bates Numbering:
+			//* Ignore bullet 2 at the top. 
+			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
+			//
+			throw new ImplementationException("verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_document_selection_select_searches_option$")
+	public void clicking_the_document_selection_select_searches_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the radio button Select Searches:
+			throw new ImplementationException("clicking_the_document_selection_select_searches_option");
+		} else {
+			throw new ImplementationException("NOT clicking_the_document_selection_select_searches_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_document_selection_component_displays_the_correct_default_options$")
+	public void verify_the_document_selection_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4923In all cases, verify the option "Include Families" is checked green at the bottom by default.If Select Folders is selected:1. Verify a grid of folders appears with the first option being "All Folders".2. Verify no folders are selected by default.3. Verify clicking All Folders and clicking Mark complete returns "Total Docs Selected Incl. Families: x".The amount of documents should equal the number of docs here: http://mtpvtsslwb01.consilio.com/ICE/Datasets If Select Tags is selected:1. Verify a list of tags should appear in a grid. 2. Verify no tags are selected by default.3.  Verify multiple tags can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the tags associated to documents. You can tag documents here: http://mtpvtsslwb01.consilio.com/DocExplorer/Explorer.You can create new tags here: http://mtpvtsslwb01.consilio.com/TagsAndFolders/TagsAndFoldersIf Searches is selected:1. Verify a grid of Searches appear.2. Verify no Searches are selected by default.3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
+			throw new ImplementationException("verify_the_document_selection_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_document_selection_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_document_selection_select_folders_option$")
+	public void clicking_the_document_selection_select_folders_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the radio button Select Folders:
+			throw new ImplementationException("clicking_the_document_selection_select_folders_option");
+		} else {
+			throw new ImplementationException("NOT clicking_the_document_selection_select_folders_option");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_document_selection_select_tags_option$")
+	public void clicking_the_document_selection_select_tags_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the radio button Select Tags:
+			throw new ImplementationException("clicking_the_document_selection_select_tags_option");
+		} else {
+			throw new ImplementationException("NOT clicking_the_document_selection_select_tags_option");
+		}
+
+	}
 }
-
-
-
