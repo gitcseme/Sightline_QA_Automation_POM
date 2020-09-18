@@ -426,8 +426,7 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
-
-		
+	
 	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
 	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
@@ -780,5 +779,307 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap,"All components are NOT displayed on the wizard");
 				}
 		}
+  
+	@Then("^.*(\\[Not\\] )? verify_multi_value_ascii_is_set_by_default$")
+	public void verify_multi_value_ascii_is_set_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6315 To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiterTC6316 To verify In Ingestion, Copy ,ASCII(59) should be default New Line delimiter
+			//
+			//* Verify multi-value section is set to ASCII(59) by default
+			//
+			throw new ImplementationException("verify_multi_value_ascii_is_set_by_default");
+		} else {
+			throw new ImplementationException("NOT verify_multi_value_ascii_is_set_by_default");
+		}
+
 	}
 
+
+	@When("^.*(\\[Not\\] )? click_copy_button$")
+	public void click_copy_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* On the Ingestion Execution page
+			//* Click on the Action dropdown
+			//* Click on Copy option
+			//* Ingestion Wizard page is displayed
+			//
+			throw new ImplementationException("click_copy_button");
+		} else {
+			throw new ImplementationException("NOT click_copy_button");
+		}
+
+	}
+
+	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
+	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2559 To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file.
+			//
+			//* When choosing a DAT file to upload, the fields specified in the file are auto populated in the Source Field section
+			//* Number of headers specified should match the number of fields that were auto populated
+			//
+			throw new ImplementationException("verify_source_field_is_auto_populated");
+		} else {
+			throw new ImplementationException("NOT verify_source_field_is_auto_populated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_destination_field_is_auto_populated$")
+	public void verify_destination_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2558 To Verify -> No of Headers in DAT < No. of headers in Destination field in Configure mapping page.
+			//
+			//* After a file has been selected or uploaded for DAT file and Source Field is auto populated, the Destination Field is auto mapped
+			//* Number of headers populated on the source field section should match the number of fields mapped on Destination field section
+			//
+			throw new ImplementationException("verify_destination_field_is_auto_populated");
+		} else {
+			throw new ImplementationException("NOT verify_destination_field_is_auto_populated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? publish_ingested_files$")
+	public void publish_ingested_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Ingestion/Analytics
+			//* ??? Unable to select Incrmental Analysis and unable to click Publish Button
+			//* Select "Incremental Analysis"
+			//* Click Publish button
+			//
+			throw new ImplementationException("publish_ingested_files");
+		} else {
+			throw new ImplementationException("NOT publish_ingested_files");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? create_saved_search$")
+	public void create_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Search/Searches
+			//* Enter "AudioPlayerReady=1" into the text box
+			//* Click Search Button
+			//* Assert Audio file is displayed after search is completed
+			//* Click Save Button
+			//* Save Search modal is displayed
+			//* Click on "My Saved Search" 
+			//* Enter a valid name into the text box
+			//* Click Save
+			//
+			throw new ImplementationException("create_saved_search");
+		} else {
+			throw new ImplementationException("NOT create_saved_search");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")
+	public void unpublish_ingestion_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Ingestion/UnPublish
+			//* Select saved filter created
+			//* Click Unpublish button
+			//
+			throw new ImplementationException("unpublish_ingestion_files");
+		} else {
+			throw new ImplementationException("NOT unpublish_ingestion_files");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unpublish_for_audio_documents_is_successful$")
+	public void verify_unpublish_for_audio_documents_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6067 To Verify Unpublish for Ingested audio documents
+			//
+			//* Verify successful toast message appears
+			//
+			throw new ImplementationException("verify_unpublish_for_audio_documents_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_unpublish_for_audio_documents_is_successful");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_audio_indexing$")
+	public void select_audio_indexing(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Return to Ingestion/Home
+			//* Look for Ingestion Tile created
+			//* Click on Ingestion Title
+			//* Run the Catalog step
+			//* Run the Copy step
+			//* Click on Audio checkbox
+			//* Select 3 language packs (Norh American English/United Kingdom English/German)
+			//* Run Indexing
+			//
+			throw new ImplementationException("select_audio_indexing");
+		} else {
+			throw new ImplementationException("NOT select_audio_indexing");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_no_error_message_is_displayed$")
+	public void verify_no_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6001 To Verify In Ingestions, for audio indexing, there should not be any error message.
+			//* Validate no errors are displayed when indexing
+			//
+			throw new ImplementationException("verify_no_error_message_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_no_error_message_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_error_messaged_displays_mp3_variant$")
+	public void verify_error_messaged_displays_mp3_variant(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5961 To Verify In Ingestion, the error message for audio ingestions should display "MP3 Variant"
+			//* Return to Ingestion/Home
+			//* Look for Ingestion Tile created
+			//* Click on Ingestion Title
+			//* Run the Catalog step
+			//* Remove files ingested from source location/folder
+			//* Run the Copy step in the ingestion
+			//* Verify "MP3 Variant:File Not Found" error is displayed
+			//
+			throw new ImplementationException("verify_error_messaged_displays_mp3_variant");
+		} else {
+			throw new ImplementationException("NOT verify_error_messaged_displays_mp3_variant");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? run_ingestion_indexing$")
+	public void run_ingestion_indexing(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After ingestion has been created
+			//* Go to Ingestion/Home page
+			//* Open the Ingestion tile created
+			//* Take note of the Audio Document Count in the Copy Step
+			//* Run Indexing step
+			//* Take note of the Audio Doucment Count in the Indeing Step
+			//
+			throw new ImplementationException("run_ingestion_indexing");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_indexing");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_document_and_audio_docs_count_are_the_same$")
+	public void verify_document_and_audio_docs_count_are_the_same(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6022 To verify Document Count for Audio Docs in Indexing section
+			//
+			//* Open Ingestion Tile from Ingestion/Home page
+			//* Validate Audio Document count and Indexing have the same count
+			//
+			throw new ImplementationException("verify_document_and_audio_docs_count_are_the_same");
+		} else {
+			throw new ImplementationException("NOT verify_document_and_audio_docs_count_are_the_same");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_copy_play_button$")
+	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Find Ingested tile created
+			//* Click on the Ingestion Name
+			//* Modal is displayed
+			//* After Cataloging, click Copy play button
+			//
+			throw new ImplementationException("click_copy_play_button");
+		} else {
+			throw new ImplementationException("NOT click_copy_play_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? rename_MP3_doc_file$")
+	public void rename_MP3_doc_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Destination Location where file is located
+			//* Find MP3 file used in the ingestion
+			//* Rename the file and save
+			//
+			throw new ImplementationException("rename_MP3_doc_file");
+		} else {
+			throw new ImplementationException("NOT rename_MP3_doc_file");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_run_indexing_play_button$")
+	public void click_run_indexing_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Ingestion/Home page
+			//* Find Ingestion Created by filtering by Copied
+			//* Click on the Indexing play button
+			//
+			throw new ImplementationException("click_run_indexing_play_button");
+		} else {
+			throw new ImplementationException("NOT click_run_indexing_play_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_audio_indexing_fails$")
+	public void verify_audio_indexing_fails(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6069 To Verify For Audio Indexing only the files at Destination location should be sent for Indexing.
+			//
+			//* Assert Indexing for Ingestion fails due to MP3 Doc name changing
+			//
+			throw new ImplementationException("verify_audio_indexing_fails");
+		} else {
+			throw new ImplementationException("NOT verify_audio_indexing_fails");
+		}
+
+	}
+}
