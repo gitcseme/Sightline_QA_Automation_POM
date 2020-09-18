@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -92,13 +93,13 @@ public class ProductionContext extends CommonContext {
 					prod.getDATTab().Visible()  ;}}), Input.wait30); 
 			prod.getDATTab().Click();
 
-			//Broken Right here
-			if (prod.getDATComponentAdvanced().Exists() == false) {
-				pass(dataMap,"Production DAT component removed");
-			} else {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getDATComponentAdvanced().Visible()  ;}}), Input.wait30); 
 
-				fail(dataMap,"Production DAT component not removed");
-			}				
+			if(prod.getDATComponentAdvanced().Visible()) fail(dataMap, "Production DAT component not removed");
+		    else pass(dataMap,"Production DAT component removed");
+
+
 		} catch (Exception e) {
 			if (scriptState) {
 				throw new Exception(e.getMessage());
