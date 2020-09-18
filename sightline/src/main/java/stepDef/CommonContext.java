@@ -33,6 +33,7 @@ public class CommonContext {
 
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
+		driver.Manage().window().maximize();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         

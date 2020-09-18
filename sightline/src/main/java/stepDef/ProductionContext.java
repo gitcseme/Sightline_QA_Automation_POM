@@ -279,23 +279,21 @@ public class ProductionContext extends CommonContext {
 					prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
 			prod.getNativeAdvanced().Click();
 			
-			try {
-				// Verify Native Advanced section displays all options
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				pass(dataMap,"Native advanced options are displayed for Production");
-			} catch (Exception e) {
-				fail(dataMap,"Native advanced options are not displayed for Production");
-				throw new Exception(e.getMessage());
-			}
+			// Verify Native Advanced section displays all options
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedParentsRadio().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedParentsRadio().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedFamilyRadio().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedFamilyRadio().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedLST().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedLST().Click();
+
+			pass(dataMap,"Native advanced options are displayed for Production");
+			
 		} catch (Exception e) {
 			if (scriptState) {
 				throw new Exception(e.getMessage());
@@ -463,6 +461,7 @@ public class ProductionContext extends CommonContext {
 			}
 		}
 	}
+
 
 
 //	//#######################################################################################################################
