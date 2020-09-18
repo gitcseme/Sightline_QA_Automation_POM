@@ -234,8 +234,8 @@ public class ProductionPage {
     public Element getArchiveComponentType() { return driver.FindElementByCssSelector("#ArchiveContainer #lstArchiveType option");}	
 
     public Element getMP3Tab(){ return driver.FindElementByXPath("//a[@href='#MP3FilesContainer']"); }
-    public Element getMP3ChkBox(){ return driver.FindElementByXPath("//input[@name='chkIsMP3Selected']/following-sibling::i"); }
-    
+    //public Element getMP3ChkBox(){ return driver.FindElementByXPath("//input[@name='chkIsMP3Selected']/following-sibling::i"); }
+    public Element getMP3ChkBox(){ return driver.FindElementByCssSelector("#advanced-production-accordion > div:nth-child(1) > div:nth-child(1) > h4:nth-child(1) > label:nth-child(1) > i:nth-child(3)");}
     // Production Home Page
     public Element getProductionSetDropdown() { return driver.FindElementByCssSelector("[value='2063']"); }
     public Element getExportSetDropdown() { return driver.FindElementByCssSelector("[value='2064']"); }
@@ -324,9 +324,11 @@ public class ProductionPage {
     }
     
     public void addNewProduction(String productionName, String template) {
+    	try {
+    	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getProductionSetDropdown().Visible()  ;}}), Input.wait30); 
-		getProductionSetDropdown().Click();
+				 getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+		getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
@@ -337,6 +339,7 @@ public class ProductionPage {
 				getProductionName().Displayed()  ;}}), Input.wait30); 
 		getProductionName().SendKeys(productionName);
 		
+
 		if (template != "false") {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getBasicInfoTemplate(String.format(" [value='%s']",template)).Visible()  ;}}), Input.wait30); 
@@ -347,10 +350,17 @@ public class ProductionPage {
 				getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
 		getBasicInfoCompleteButton().Click();
 
+		//Added to get rid of Toast message, which I think is effecting the rest of Script
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
+		driver.FindElementById("botClose1").Click();
+
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
 		getBasicInfoNextButton().Click();
 		driver.waitForPageToBeReady();
+    	}
+    	catch(Exception e){System.out.println("error occured");}
 
 		
     }
@@ -2964,9 +2974,10 @@ public class ProductionPage {
     public void selectMP3WithLSTOff() 
         		throws InterruptedException {
     	
+    	Thread.sleep(1200);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATComponentAdvanced().Visible()  ;}}), Input.wait30); 
-		getDATComponentAdvanced().Click();
+				getProductionAdvanced().Visible()  ;}}), Input.wait30); 
+		getProductionAdvanced().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getMP3ChkBox().Visible()  ;}}), Input.wait30); 

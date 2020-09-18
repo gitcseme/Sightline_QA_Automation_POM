@@ -72,6 +72,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_dat_contains_production_volume_name() throws Throwable
 	{
@@ -245,7 +246,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive" })
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_When_on_production_home_page_Then_verify_production_tile_count_matches_grid_count() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -257,7 +258,7 @@ public class ProductionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_production_home_page(true, dataMap);
-			//context.verify_production_tile_count_matches_grid_count(true, dataMap);
+			context.verify_production_tile_count_matches_grid_count(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
@@ -324,6 +325,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+	
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_archive_option_is_only_zip() throws Throwable
 	{
@@ -581,6 +583,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+	
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_mp3_redaction_styles() throws Throwable
 	{
@@ -1049,6 +1052,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+	
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_dat_component_removed_advanced_option() throws Throwable
 	{
@@ -1165,7 +1169,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
+	
 	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_tiff_pdf_advanced_options() throws Throwable
 	{

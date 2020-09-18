@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
+import org.testng.Assert;
 
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -58,7 +59,7 @@ public class ProductionContext extends CommonContext {
 		}
 
 		driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-		Thread.sleep(2000);
+		Thread.sleep(1200);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30); 
 		prod.getComponentsMarkComplete().Click();
@@ -92,11 +93,13 @@ public class ProductionContext extends CommonContext {
 					prod.getDATTab().Visible()  ;}}), Input.wait30); 
 			prod.getDATTab().Click();
 
-			if (!prod.getDATComponentAdvanced().Displayed()) {
-				pass(dataMap,"Production DAT component removed");
-			} else {
-				fail(dataMap,"Production DAT component not removed");
-			}				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getDATComponentAdvanced().Visible()  ;}}), Input.wait30); 
+
+			if(prod.getDATComponentAdvanced().Visible()) fail(dataMap, "Production DAT component not removed");
+		    else pass(dataMap,"Production DAT component removed");
+
+
 		} catch (Exception e) {
 			if (scriptState) {
 				throw new Exception(e.getMessage());
@@ -220,9 +223,10 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_mp3_redaction_styles(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		try {
+			Thread.sleep(1000);
 			// Open MP3 section
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getProductionAdvanced().Visible()  ;}}), Input.wait30);
+					prod.getProductionAdvanced().Displayed()  ;}}), Input.wait30);
 			prod.getProductionAdvanced().Click();
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -275,23 +279,21 @@ public class ProductionContext extends CommonContext {
 					prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
 			prod.getNativeAdvanced().Click();
 			
-			try {
-				// Verify Native Advanced section displays all options
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeAdvanced().Displayed()  ;}}), Input.wait30);
-				pass(dataMap,"Native advanced options are displayed for Production");
-			} catch (Exception e) {
-				fail(dataMap,"Native advanced options are not displayed for Production");
-				throw new Exception(e.getMessage());
-			}
+			// Verify Native Advanced section displays all options
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedParentsRadio().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedParentsRadio().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedFamilyRadio().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedFamilyRadio().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeAdvancedLST().Displayed()  ;}}), Input.wait30);
+			prod.getNativeAdvancedLST().Click();
+
+			pass(dataMap,"Native advanced options are displayed for Production");
+			
 		} catch (Exception e) {
 			if (scriptState) {
 				throw new Exception(e.getMessage());
@@ -459,6 +461,7 @@ public class ProductionContext extends CommonContext {
 			}
 		}
 	}
+
 
 
 //	//#######################################################################################################################
