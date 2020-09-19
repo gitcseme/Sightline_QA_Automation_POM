@@ -199,6 +199,7 @@ public class IngestionPage {
     public Element getDATTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > strong");}
     public Element getNativeTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(4) > div > label > strong");}
     public Element getIngestionWizardTitle() {return driver.FindElementByCssSelector("#content > div:nth-child(3) > div > h1");}
+
     
     public IngestionPage(Driver driver){
 
@@ -222,6 +223,7 @@ public class IngestionPage {
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
     		getSpecifyLocation().SendKeys("Ingestion");
 
+    		Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
     		getSpecifySourceFolder().SendKeys("AttachDocument");
