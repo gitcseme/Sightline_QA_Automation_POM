@@ -582,20 +582,15 @@ public class ProductionContext extends CommonContext {
 			//* Verify Specify DAT Field Mapping -> the table contains FIELD CLASSIFICATION, SOURCE FIELD, DAT FIELD, REDACTIONS, and PRIVILEDGED with all of the options set to blank other than FIELD CLASSICATION being set to "Select". 
 			//
 		if (scriptState) {
+
 			try {
-				/*
+
 				System.out.println("I must get here");
 				//Find Ansci Radio Button and make sure it is not checked by default
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiRadioButton().Displayed()  ;}}), Input.wait30);
 				System.out.println("1");
 				Assert.assertFalse(prod.getDATAnsiRadioButton().Selected());
-
-				//Verify Ansci is "deprecated by default"
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDATAnsiType().Displayed()  ;}}), Input.wait30);
-				String defaultAnsciType =  prod.getDATAnsiType().selectFromDropdown().getFirstSelectedOption().getText(); 
-				Assert.assertEquals("(deprecated)", defaultAnsciType);
 
 				System.out.println("2");
 				//Verify Unicode Button is checked
@@ -605,8 +600,13 @@ public class ProductionContext extends CommonContext {
 				
 				System.out.println("3");
 				System.out.println("Made it past first test cases");
-				*/
-				
+
+				//Verify Ansci is "deprecated by default"
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATAnsiType().Displayed()  ;}}), Input.wait30);
+				String defaultAnsciType =  prod.getDATAnsiType().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("(deprecated)", defaultAnsciType);
+
 				
 				//Verify all field delimeters below
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -638,7 +638,6 @@ public class ProductionContext extends CommonContext {
 				System.out.println(defaultDateText);
 				Assert.assertEquals("YYYY/MM/DD HH:MI:SS", defaultDateText);
 				
-				System.out.println("Made it past Third test cases");
 
 				
 				//Verify DAT Field Classification is set to "Selected"
@@ -646,33 +645,31 @@ public class ProductionContext extends CommonContext {
 					prod.getDAT_FieldClassification1().Displayed()  ;}}), Input.wait30);
 				String defaultFieldClass =  prod.getDAT_FieldClassification1().selectFromDropdown().getFirstSelectedOption().getText(); 
 				Assert.assertEquals("Select", defaultFieldClass);
-				System.out.format("Field Class: %s\n", defaultFieldClass);
 
 				//Verify Rest of DAT field Mapping buttons are empty
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDAT_SourceField1().Displayed()  ;}}), Input.wait30);
-				System.out.println(prod.getDAT_SourceField1().selectFromDropdown());
-				//String defaultSourceField =  prod.getDAT_SourceField1().selectFromDropdown().getFirstSelectedOption().getText(); 
-				//Assert.assertNull(prod.getDAT_SourceField1().selectFromDropdown().getFirstSelectedOption());
-				System.out.format("Source Field: %s\n", "jfdjhfdhjfd");
+				int fieldSize = prod.getDAT_SourceField1().selectFromDropdown().getAllSelectedOptions().size();
+				Assert.assertEquals(0, fieldSize);
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
-				//String defaultDatField =  prod.getDAT_DATField1().selectFromDropdown().getFirstSelectedOption().getText(); 
-				Assert.assertNull(prod.getDAT_DATField1().selectFromDropdown().getFirstSelectedOption());
-				System.out.format("Dat Field %s\n", "jdfdhfjkdfjdm");
+				Assert.assertEquals("",prod.getDAT_DATField1().getText());
 				
-				//Verify DAT Field Mapping Buttons are Unchecked
+				System.out.println("Made it past Third test cases");
 
+				//Verify DAT Field Mapping Buttons are Unchecked
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDATRedactionsButton() .Displayed()  ;}}), Input.wait30);
+					prod.getDATRedactionsButton().Displayed()  ;}}), Input.wait30);
 				Assert.assertTrue(prod.getDATRedactionsButton().Selected());
+				System.out.println("X");
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATPrivilegedButton().Displayed()  ;}}), Input.wait30);
 				Assert.assertTrue(prod.getDATPrivilegedButton().Selected());
-
 				
+				System.out.println("Z");
+				pass(dataMap, "All fields passed");
 
 			}
 			catch(Exception e) {
