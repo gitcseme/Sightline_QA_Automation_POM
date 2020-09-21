@@ -573,40 +573,27 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_dat_product_component_displays_the_correct_default_options$")
 	public void verify_the_dat_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-			//TC 4896
-			//*  Verify the options should be displayed in DAT -> 1>Format 2>Field Delimiters 3>Date Format 4> Specify DAT Field Mapping
-			//* Verify Format -> ANSI is not selected by default with the option "(deprecated)" set as the default option in the dropdown.
-			//* Verify Format -> Unicode UTF-16 radio button is selected by default.
-			//* Verify Field Delimeters -> Field Separator is set to ASCII(20), Text Qualifier is set to ASCII(254), Multi-value is set to ASCII(174), and New Line is set to ASCII(10)
-			//* Verify Date Format is set to "YYYY/MM/DD HH:MI:SS" by default.
-			//* Verify Specify DAT Field Mapping -> the table contains FIELD CLASSIFICATION, SOURCE FIELD, DAT FIELD, REDACTIONS, and PRIVILEDGED with all of the options set to blank other than FIELD CLASSICATION being set to "Select". 
-			//
 		if (scriptState) {
 
 			try {
-
-				System.out.println("I must get here");
+				
+				
 				//Find Ansci Radio Button and make sure it is not checked by default
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiRadioButton().Displayed()  ;}}), Input.wait30);
-				System.out.println("1");
 				Assert.assertFalse(prod.getDATAnsiRadioButton().Selected());
 
-				System.out.println("2");
+
 				//Verify Unicode Button is checked
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiUnicode().Displayed()  ;}}), Input.wait30);
 				Assert.assertTrue(prod.getDATAnsiUnicode().Selected());
 				
-				System.out.println("3");
-				System.out.println("Made it past first test cases");
-
 				//Verify Ansci is "deprecated by default"
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiType().Displayed()  ;}}), Input.wait30);
 				String defaultAnsciType =  prod.getDATAnsiType().selectFromDropdown().getFirstSelectedOption().getText(); 
 				Assert.assertEquals("(deprecated)", defaultAnsciType);
-
 				
 				//Verify all field delimeters below
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -629,16 +616,13 @@ public class ProductionContext extends CommonContext {
 				String defaultNewLineText =  prod.getDATNewLine().selectFromDropdown().getFirstSelectedOption().getText(); 
 				Assert.assertEquals("ASCII(10)", defaultNewLineText);
 
-				System.out.println("Made it past Second test cases");
 				
 				//Verify Date Format is /YY/MM/DD HH:MI:SS
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATDateFormat().Displayed()  ;}}), Input.wait30);
 				String defaultDateText =  prod.getDATDateFormat().selectFromDropdown().getFirstSelectedOption().getText(); 
-				System.out.println(defaultDateText);
 				Assert.assertEquals("YYYY/MM/DD HH:MI:SS", defaultDateText);
 				
-
 				
 				//Verify DAT Field Classification is set to "Selected"
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -656,19 +640,15 @@ public class ProductionContext extends CommonContext {
 					prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
 				Assert.assertEquals("",prod.getDAT_DATField1().getText());
 				
-				System.out.println("Made it past Third test cases");
-
 				//Verify DAT Field Mapping Buttons are Unchecked
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATRedactionsButton().Displayed()  ;}}), Input.wait30);
-				Assert.assertTrue(prod.getDATRedactionsButton().Selected());
-				System.out.println("X");
+				Assert.assertFalse(prod.getDATRedactionsButton().Selected());
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATPrivilegedButton().Displayed()  ;}}), Input.wait30);
-				Assert.assertTrue(prod.getDATPrivilegedButton().Selected());
+				Assert.assertFalse(prod.getDATPrivilegedButton().Selected());
 				
-				System.out.println("Z");
 				pass(dataMap, "All fields passed");
 
 			}
