@@ -555,10 +555,16 @@ public class ProductionContext extends CommonContext {
 	public void expanding_the_dat_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//The user should be on the "Production Components" section of Productions.The user should click on "DAT" to expand the Native section.
-			throw new ImplementationException("expanding_the_dat_production_component");
-		} else {
-			throw new ImplementationException("NOT expanding_the_dat_production_component");
+			try {
+				//The user should be on the "Production Components" section of Productions.The user should click on "DAT" to expand the Native section.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATTab().Displayed()  ;}}), Input.wait30);
+				prod.getDATTab().Click();
+				pass(dataMap, "DAT tab was opened");
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not open DAT Tab");
+			}
 		}
 
 	}
@@ -567,7 +573,6 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_dat_product_component_displays_the_correct_default_options$")
 	public void verify_the_dat_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
 			//TC 4896
 			//*  Verify the options should be displayed in DAT -> 1>Format 2>Field Delimiters 3>Date Format 4> Specify DAT Field Mapping
 			//* Verify Format -> ANSI is not selected by default with the option "(deprecated)" set as the default option in the dropdown.
@@ -576,9 +581,104 @@ public class ProductionContext extends CommonContext {
 			//* Verify Date Format is set to "YYYY/MM/DD HH:MI:SS" by default.
 			//* Verify Specify DAT Field Mapping -> the table contains FIELD CLASSIFICATION, SOURCE FIELD, DAT FIELD, REDACTIONS, and PRIVILEDGED with all of the options set to blank other than FIELD CLASSICATION being set to "Select". 
 			//
-			throw new ImplementationException("verify_the_dat_product_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_dat_product_component_displays_the_correct_default_options");
+		if (scriptState) {
+			try {
+				/*
+				System.out.println("I must get here");
+				//Find Ansci Radio Button and make sure it is not checked by default
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATAnsiRadioButton().Displayed()  ;}}), Input.wait30);
+				System.out.println("1");
+				Assert.assertFalse(prod.getDATAnsiRadioButton().Selected());
+
+				//Verify Ansci is "deprecated by default"
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATAnsiType().Displayed()  ;}}), Input.wait30);
+				String defaultAnsciType =  prod.getDATAnsiType().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("(deprecated)", defaultAnsciType);
+
+				System.out.println("2");
+				//Verify Unicode Button is checked
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATAnsiUnicode().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getDATAnsiUnicode().Selected());
+				
+				System.out.println("3");
+				System.out.println("Made it past first test cases");
+				*/
+				
+				
+				//Verify all field delimeters below
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATFieldSeperator().Displayed()  ;}}), Input.wait30);
+				String defaultFieldSeperatorText =  prod.getDATFieldSeperator().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("ASCII(20)", defaultFieldSeperatorText);
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATTextQualifier() .Displayed()  ;}}), Input.wait30);
+				String defaultTextQualifierText =  prod.getDATTextQualifier().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("ASCII(254)", defaultTextQualifierText);
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATMultiValue().Displayed()  ;}}), Input.wait30);
+				String defaultMultiValueText =  prod.getDATMultiValue().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("ASCII(174)", defaultMultiValueText);
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATNewLine().Displayed()  ;}}), Input.wait30);
+				String defaultNewLineText =  prod.getDATNewLine().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("ASCII(10)", defaultNewLineText);
+
+				System.out.println("Made it past Second test cases");
+				
+				//Verify Date Format is /YY/MM/DD HH:MI:SS
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATDateFormat().Displayed()  ;}}), Input.wait30);
+				String defaultDateText =  prod.getDATDateFormat().selectFromDropdown().getFirstSelectedOption().getText(); 
+				System.out.println(defaultDateText);
+				Assert.assertEquals("YYYY/MM/DD HH:MI:SS", defaultDateText);
+				
+				System.out.println("Made it past Third test cases");
+
+				
+				//Verify DAT Field Classification is set to "Selected"
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDAT_FieldClassification1().Displayed()  ;}}), Input.wait30);
+				String defaultFieldClass =  prod.getDAT_FieldClassification1().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertEquals("Select", defaultFieldClass);
+				System.out.format("Field Class: %s\n", defaultFieldClass);
+
+				//Verify Rest of DAT field Mapping buttons are empty
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDAT_SourceField1().Displayed()  ;}}), Input.wait30);
+				System.out.println(prod.getDAT_SourceField1().selectFromDropdown());
+				//String defaultSourceField =  prod.getDAT_SourceField1().selectFromDropdown().getFirstSelectedOption().getText(); 
+				//Assert.assertNull(prod.getDAT_SourceField1().selectFromDropdown().getFirstSelectedOption());
+				System.out.format("Source Field: %s\n", "jfdjhfdhjfd");
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
+				//String defaultDatField =  prod.getDAT_DATField1().selectFromDropdown().getFirstSelectedOption().getText(); 
+				Assert.assertNull(prod.getDAT_DATField1().selectFromDropdown().getFirstSelectedOption());
+				System.out.format("Dat Field %s\n", "jdfdhfjkdfjdm");
+				
+				//Verify DAT Field Mapping Buttons are Unchecked
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATRedactionsButton() .Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getDATRedactionsButton().Selected());
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATPrivilegedButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getDATPrivilegedButton().Selected());
+
+				
+
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not open DAT Tab");
+			}
 		}
 
 	}

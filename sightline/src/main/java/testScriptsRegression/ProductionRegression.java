@@ -60,9 +60,11 @@ public class ProductionRegression extends RegressionBase {
 			context.begin_new_production_process(true, dataMap);
 			context.verify_production_can_use_custom_template_on_basic_info(false, dataMap);
 		} catch (ImplementationException e) {
+			System.out.println("A");
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			System.out.println("B");
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1287,7 +1289,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 /**/
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_dat_production_component_Then_verify_the_dat_product_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

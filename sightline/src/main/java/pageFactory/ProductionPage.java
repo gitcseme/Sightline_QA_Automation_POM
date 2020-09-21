@@ -314,6 +314,19 @@ public class ProductionPage {
                                "the DAT, in order to generate a load file for the generated MP3s files.";
     public Element getMP3WarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }
     
+    
+    //Added on 8/21
+    public Element getDATAnsiRadioButton() {return driver.FindElementById("rdbANSI");}
+    public Element getDATAnsiType() {return driver.FindElementById("lstANSIType");}
+    public Element getDATAnsiUnicode() {return driver.FindElementById("rdbUnicode");}
+    public Element getDATFieldSeperator() {return driver.FindElementById("lstFieldSeparator");}
+    public Element getDATTextQualifier() {return driver.FindElementById("lstTextQualifier");}
+    public Element getDATMultiValue() {return driver.FindElementById("lstMultiValue");}
+    public Element getDATNewLine() {return driver.FindElementById("lstNewLineSeparator");}
+    public Element getDATDateFormat() {return driver.FindElementById("lstDateFormat");}
+    public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
+    public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
+
 
     public ProductionPage(Driver driver){
 
