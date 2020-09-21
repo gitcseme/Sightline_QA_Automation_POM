@@ -577,7 +577,6 @@ public class ProductionContext extends CommonContext {
 
 			try {
 				
-				
 				//Find Ansci Radio Button and make sure it is not checked by default
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiRadioButton().Displayed()  ;}}), Input.wait30);
@@ -676,7 +675,6 @@ public class ProductionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_the_tiff_product_component_displays_the_correct_default_options$")
 	public void verify_the_tiff_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC 4904
 			//* Verify the first section is Page Options
@@ -703,23 +701,74 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates NumberClick the complete buttonClick the next button
-			throw new ImplementationException("complete_default_production_component");
-		} else {
-			throw new ImplementationException("NOT complete_default_production_component");
-		}
+			
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getDATChkBox().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDATTab().Displayed()  ;}}), Input.wait30);
+				prod.getDATTab().Click();
 
-	}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+				prod.getFieldClassification().Click();
+				prod.getFieldClassification().SendKeys("Bates");
+				
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSourceField().Displayed()  ;}}), Input.wait30);
+				prod.getSourceField().Click();
+				prod.getSourceField().SendKeys("BatesNumber");
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatField().Displayed()  ;}}), Input.wait30);
+				prod.getDatField().Click();
+				prod.getDatField().SendKeys("Bates Number");
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+				prod.getComponentsMarkComplete().Click();
+				Thread.sleep(2000);
+					
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getComponentsMarkNext().Visible() ;}}), Input.wait30);
+				prod.getComponentsMarkNext().Click();
+				
+			pass(dataMap,"Default Production Component are completed");	
+				
+			} catch(Exception e) {
+				fail(dataMap,"Default Production Component is not completed");
+			}
+		}else {
+			fail(dataMap,"Default Production Component is not completed");
+			}
 
+			
+			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open
+			//the DAT containerAdd field classification: BatesAdd source field:
+			//BatesNumberEnter DAT field: Bates NumberClick the complete buttonClick the next button
+}
 
 	@And("^.*(\\[Not\\] )? complete_default_numbering_and_sorting$")
 	public void complete_default_numbering_and_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark CompletedClick Next
-			throw new ImplementationException("complete_default_numbering_and_sorting");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumAndSortMarkCompleteBtn().Displayed()  ;}}), Input.wait30);
+				prod.getNumAndSortMarkCompleteBtn().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumAndSortNextBtn().Displayed()  ;}}), Input.wait30);
+				prod.getNumAndSortNextBtn().Click();
+				
+				pass(dataMap,"Default numbering and sorting is complete");
+				//Click Mark CompletedClick Next
 		} else {
-			throw new ImplementationException("NOT complete_default_numbering_and_sorting");
+			fail(dataMap,"Default numbering and sorting is not complete");
+
 		}
 
 	}
@@ -729,10 +778,17 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
+				prod.getFolderRadioButton().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getAllFoldersChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getAllFoldersChkBox().Click();
+				
 			//Make sure "Select Folders:" radio button is selectedClick "All Folders" checkboxClick Mark CompletedClick Next
-			throw new ImplementationException("complete_default_document_selection");
 		} else {
-			throw new ImplementationException("NOT complete_default_document_selection");
+			fail(dataMap,"Did not complete All Folders");
 		}
 
 	}
@@ -742,6 +798,8 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_priv_guard_documents_are_matched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			System.out.println("Testing");
+			
 			//You should be on the section "Priv Guard"Click "+ Add Rule"Click "Redactions"Click "All Redaction Tags" and scroll down and click "Insert into Query"Click "Check for Matching Documents"
 			throw new ImplementationException("complete_default_priv_guard_documents_are_matched");
 		} else {

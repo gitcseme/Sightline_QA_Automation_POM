@@ -326,6 +326,16 @@ public class ProductionPage {
     public Element getDATDateFormat() {return driver.FindElementById("lstDateFormat");}
     public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
     public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
+    
+    //9-21
+    public Element getFieldClassification() {return driver.FindElementById("TY_0");}
+    public Element getSourceField() {return driver.FindElementById("SF_0");}
+    public Element getDatField() {return driver.FindElementById("DATFL_0");}
+    public Element getAllFoldersChkBox() {return driver.FindElementByXPath("//*[@id=\"-1_anchor\"]/i[1]");}
+    public Element getNumAndSortMarkCompleteBtn() {return driver.FindElementById("NumAndSortMarkComplete");}
+    public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}
+
+    
 
 
     public ProductionPage(Driver driver){
