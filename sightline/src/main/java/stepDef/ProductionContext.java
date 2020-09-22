@@ -893,6 +893,7 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			
 			try {
+				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
 				prod.getDATChkBox().Click();
@@ -935,27 +936,34 @@ public class ProductionContext extends CommonContext {
 			fail(dataMap,"Default Production Component is not completed");
 			}
 
-			
-			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open
-			//the DAT containerAdd field classification: BatesAdd source field:
-			//BatesNumberEnter DAT field: Bates NumberClick the complete buttonClick the next button
 }
 
 	@And("^.*(\\[Not\\] )? complete_default_numbering_and_sorting$")
 	public void complete_default_numbering_and_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
+			try {
+				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumAndSortMarkCompleteBtn().Displayed()  ;}}), Input.wait30);
 				prod.getNumAndSortMarkCompleteBtn().Click();
 				
+				
+				
+			Thread.sleep(5000);
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumAndSortNextBtn().Displayed()  ;}}), Input.wait30);
+			System.out.println(prod.getNumAndSortNextBtn().getText());
+
 				prod.getNumAndSortNextBtn().Click();
 				
+			
 				pass(dataMap,"Default numbering and sorting is complete");
 				//Click Mark CompletedClick Next
+			}catch(Exception e) {
+				fail(dataMap,"Default numbering and sorting is not complete");
+			}
 		} else {
 			fail(dataMap,"Default numbering and sorting is not complete");
 
@@ -968,6 +976,8 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
+			try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
 				prod.getFolderRadioButton().Click();
@@ -976,9 +986,13 @@ public class ProductionContext extends CommonContext {
 					prod.getAllFoldersChkBox().Displayed()  ;}}), Input.wait30);
 				prod.getAllFoldersChkBox().Click();
 				
+				pass(dataMap,"Default document sections has been completed");
+			}catch(Exception e) {
+				fail(dataMap,"Default document sections has not been completed");
+			}	
 			//Make sure "Select Folders:" radio button is selectedClick "All Folders" checkboxClick Mark CompletedClick Next
 		} else {
-			fail(dataMap,"Did not complete All Folders");
+			fail(dataMap,"Default document sections has not been completed");
 		}
 
 	}
@@ -988,12 +1002,38 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_priv_guard_documents_are_matched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			System.out.println("Testing");
 			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivAddRuleBtn().Displayed()  ;}}), Input.wait30);
+					prod.getPrivAddRuleBtn().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivRedactionsBtn().Displayed()  ;}}), Input.wait30);
+					prod.getPrivRedactionsBtn().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivAllRedactions().Displayed()  ;}}), Input.wait30);
+					prod.getPrivAllRedactions().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
+					prod.getPrivInsertQuery().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
+					prod.getPrivChkForMatching().Click();
+					
+							
+					pass(dataMap,"Priv guard documents are completed");
+			}catch(Exception e) {
+				fail(dataMap,"Priv guard documents are not completed");
+			}
+		
 			//You should be on the section "Priv Guard"Click "+ Add Rule"Click "Redactions"Click "All Redaction Tags" and scroll down and click "Insert into Query"Click "Check for Matching Documents"
-			throw new ImplementationException("complete_default_priv_guard_documents_are_matched");
 		} else {
-			throw new ImplementationException("NOT complete_default_priv_guard_documents_are_matched");
+			fail(dataMap,"Priv guard documents are not completed");
+
 		}
 
 	}

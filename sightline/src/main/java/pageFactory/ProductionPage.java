@@ -343,6 +343,12 @@ public class ProductionPage {
     public Element getAllFoldersChkBox() {return driver.FindElementByXPath("//*[@id=\"-1_anchor\"]/i[1]");}
     public Element getNumAndSortMarkCompleteBtn() {return driver.FindElementById("NumAndSortMarkComplete");}
     public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}
+    public Element getPrivAddRuleBtn() { return driver.FindElementById("contentmetadata");}
+    public Element getPrivRedactionsBtn() { return driver.FindElementById("redactionsHelper");}
+    public Element getPrivAllRedactions() { return driver.FindElementByCssSelector("#-\\31 _anchor > i.jstree-icon.jstree-checkbox");}
+    public Element getPrivInsertQuery() { return driver.FindElementByCssSelector("insertQueryBtn");}
+    public Element getPrivChkForMatching() { return driver.FindElementById("btnDocumentMatch");}
+
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
