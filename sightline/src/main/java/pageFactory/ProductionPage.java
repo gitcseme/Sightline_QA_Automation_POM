@@ -337,6 +337,8 @@ public class ProductionPage {
     
 
     //9-21
+    public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
+    public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
@@ -348,7 +350,13 @@ public class ProductionPage {
     public Element getPrivAllRedactions() { return driver.FindElementByCssSelector("#-\\31 _anchor > i.jstree-icon.jstree-checkbox");}
     public Element getPrivInsertQuery() { return driver.FindElementByCssSelector("insertQueryBtn");}
     public Element getPrivChkForMatching() { return driver.FindElementById("btnDocumentMatch");}
-
+    public Element getNumDocumentLevelRadioButton() { return driver.FindElementById("rdbDocumentLevel");}
+    public Element getNumPageLevelRadioButton() {return driver.FindElementById("rdbPageLevel");}
+    public Element getNumBatesRadioButton() {return driver.FindElementById("rdbSpecifyNumber");}
+    public Element getNumSortMetaRadioButton() {return driver.FindElementById("#rdbSortByField");}
+    public Element getNumNextBatesLink() {return driver.FindElementByCssSelector("label.col-md-12 > a:nth-child(1)");}
+    public Element getNumSubBatesNum() {return driver.FindElementById("txtSubbatesNumber");}
+    public Element getNumSubBatesMin() {return driver.FindElementById("txtSubbatesNumberMinNoLength");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}

@@ -33,8 +33,13 @@ public class ProductionContext extends CommonContext {
 		String dateTime = new Long((new Date()).getTime()).toString();
 		String template = (String) dataMap.get("prod_template");
 
+
 		try {
 			if (scriptState) {
+				//Change Project Before Starting Process
+				prod.changeProjectSelector().Click();
+				prod.changeProjectSelectorField().Click();
+
 				prod.addNewProduction("AutoProduction"+dateTime, template);
 			} else {
 				pass(dataMap,"Skipped adding new production");
@@ -703,7 +708,6 @@ public class ProductionContext extends CommonContext {
 					   prod.getTIFFFirstPageElement().Displayed()  ;}}), Input.wait30);
 				   Assert.assertEquals("Page Options:", prod.getTIFFFirstPageElement().getText());
 				   
-				   
 				   //Check if Multi Radio button is unchecked by defauly
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					   prod.getTIFFMultiRadio().Displayed()  ;}}), Input.wait30);
@@ -723,11 +727,11 @@ public class ProductionContext extends CommonContext {
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					   prod.getTIFFLetterRadio().Displayed()  ;}}), Input.wait30);
 				   Assert.assertTrue(prod.getTIFFLetterRadio().Selected());
+
 				   System.out.println("First Set of buttons Passed");
 				   
 				    
 				   //Make Sure Preserve Color, Blank Page Removal and Do not produce full content are Disabled by default
-				   
 				    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					   prod.getTIFFColorToggle().Displayed()  ;}}), Input.wait30);
 				    Assert.assertFalse(prod.getTIFFColorToggle().Selected());
@@ -744,7 +748,6 @@ public class ProductionContext extends CommonContext {
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFRotateDropdown().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("No Rotation", prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText());
-				  System.out.println(prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText());
 				  
 				  //Verify All Buttons of Rectangle, (Top Left, Top Center, Top Right, Bottom Left, Bottom Center, Bottom Right)
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -758,7 +761,7 @@ public class ProductionContext extends CommonContext {
 					  prod.getTIFF_LeftFooterBranding().Displayed()  ;}}), Input.wait30);
 
 				  //Verify Top Left is Default Selected
-				  if(!prod.getTIFF_LeftHeaderBranding().getWebElement().isSelected()) System.out.println("Passed 9");
+				  if(!prod.getTIFF_LeftHeaderBranding().Selected()) System.out.println(prod.getTIFF_LeftHeaderBranding().Selected().toString());
 
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFF_RightHeaderBranding().Displayed()  ;}}), Input.wait30);
@@ -769,7 +772,6 @@ public class ProductionContext extends CommonContext {
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFRectangleMiddleText().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("--Page Body--", prod.getTIFFRectangleMiddleText().getText());
-				  System.out.println(prod.getTIFFRectangleMiddleText().getText());
 				  
 
 				  //Verify Location in Branding
@@ -780,33 +782,29 @@ public class ProductionContext extends CommonContext {
 				  //Verify Branding Text in Branding
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFBrandingText().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFBrandingText().getWebElement().getText());
 				  Assert.assertEquals("Branding Text:", prod.getTIFFBrandingText().getWebElement().getText());
 
 				  //Verify Specify Default Branding in Branding
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFSpecifyDefaultBranding().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Specify Default Branding", prod.getTIFFSpecifyDefaultBranding().getText());
-				  System.out.println(prod.getTIFFSpecifyDefaultBranding().getText());
 
 				  //Verify Specify Tags in Branding
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFBrandingTagsLink().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Specify Branding by Selecting Tags:", prod.getTIFFBrandingTagsLink().getText());
-				  System.out.println(prod.getTIFFBrandingTagsLink().getText());
 
 
 				  //Verify Insert Metafield in Branding
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFMetadataField().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Insert Metadata Field", prod.getTIFFMetadataField().getText());
-				  System.out.println(prod.getTIFFMetadataField().getText());
 				  
 				  //Verify Default Branding Inner Rectangle text
 				  //Needs Assert - > find text with placeholder
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFDefaultBrandingRectangleText().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFDefaultBrandingRectangleText().getText());
+				  System.out.println(prod.getTIFFDefaultBrandingRectangleText().GetAttribute("placeholder").toString());
 				  
 				   
 				   //Verify Privileged Docs is Default Green
@@ -819,18 +817,16 @@ public class ProductionContext extends CommonContext {
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getPriveldge_SelectTagButton().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Select Tags", prod.getPriveldge_SelectTagButton().getText());
-				  System.out.println(prod.getPriveldge_SelectTagButton().getText());
 
 				  //Verify Tech Tissue Docs is Selected Red by Default
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTechissue_toggle().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTechissue_toggle().Selected().toString());
+				  Assert.assertFalse(prod.getTechissue_toggle().Selected());
 
 				  //Verify Native Produced Document Link
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFPlaceholderNative().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Enable for Natively Produced Documents:", prod.getTIFFPlaceholderNative().getText());
-				  System.out.println(prod.getTIFFPlaceholderNative().getText());
 
 				  //Verify Question Mark Link, NOT WORKING NEED TO FIX
 				  //driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -841,40 +837,32 @@ public class ProductionContext extends CommonContext {
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFPlaceholderTechTextField().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Enter placeholder text for the privileged docs", prod.getTIFFPlaceholderTechTextField().GetAttribute("Placeholder"));
-				  System.out.println(prod.getTIFFPlaceholderTechTextField().GetAttribute("Placeholder"));
 
 				  //Verify Insert MetaData Field
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFPlaceholderTechMetadataLink().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Insert Metadata Field", prod.getTIFFPlaceholderTechMetadataLink().getText());
-				  System.out.println(prod.getTIFFPlaceholderTechMetadataLink().getText());
 				  
 				  //THE FOLLOWING ALL NEED ASSERTS / CONFRIM CORRECTNESS
 				  //Verify Burn Redactions is Red by Default
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFBurnRedactionToggle().getText());
+				  Assert.assertFalse(prod.getTIFFBurnRedactionToggle().Selected());
 				  
 				  //Verify Generate Load File is Green By Default
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFLSTLoadFileToggle().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFLSTLoadFileToggle().getText());
+				  Assert.assertTrue(prod.getTIFFLSTLoadFileToggle().Selected());
 
 				  //Verify Tiff Slip Sheets are red by Default
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFSlipSheetsToggle().getText());
+				  Assert.assertFalse(prod.getTIFFSlipSheetsToggle().Selected());
 				  
 				  //Verify Load File Type Default is "Log"
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFLSTLoadFileType().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFLSTLoadFileType().selectFromDropdown().getFirstSelectedOption().getText());
-
-				 
-
-				  
-				  
-
+				  Assert.assertEquals("Log", prod.getTIFFLSTLoadFileType().selectFromDropdown().getFirstSelectedOption().getText());
 
 
 				   pass(dataMap, "passed");
@@ -1099,14 +1087,22 @@ public class ProductionContext extends CommonContext {
 	}
 
 
+
 	@When("^.*(\\[Not\\] )? clicking_document_as_the_numbering_default_option$")
 	public void clicking_document_as_the_numbering_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Clicking the Documents radio button
-			throw new ImplementationException("clicking_document_as_the_numbering_default_option");
-		} else {
-			throw new ImplementationException("NOT clicking_document_as_the_numbering_default_option");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
+				prod.getNumDocumentLevelRadioButton().Click();
+				Thread.sleep(5000);
+				pass(dataMap, "Radio Button Succesfully Clicked");
+
+			}
+			catch(Exception e) {fail(dataMap, "Did not Click Documents Radio Button");}
+
 		}
 
 	}
@@ -1127,9 +1123,41 @@ public class ProductionContext extends CommonContext {
 			//* Ignore bullet 2 at the top. 
 			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
 			//
-			throw new ImplementationException("verify_the_numbering_and_sorting_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_numbering_and_sorting_component_displays_the_correct_default_options");
+			try {
+				//Verify Page Radio Button is selected by default
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
+				
+				//Verify Format Section as "Specify Bates Numbering" as default value
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getNumBatesRadioButton().Selected());
+				
+				//Verify Link under Specify Bates Numbering Button
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumNextBatesLink().Displayed()  ;}}), Input.wait30);
+				//IS clickable?
+
+				//Verify in Sorting Section, "Sort by Metadata" is default checked
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumSortMetaRadioButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getNumSortMetaRadioButton().Selected());
+				
+				
+				//Verify Bates Number starts at 1: 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals("1",prod.getNumSubBatesNum().GetAttribute("value").toString());
+				
+				//Verify Min Number starts at 5: 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumSubBatesMin().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals("5",prod.getNumSubBatesMin().GetAttribute("value").toString());
+				
+				
+			}
+			catch(Exception e) {}
 		}
 
 	}
