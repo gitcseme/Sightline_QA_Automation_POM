@@ -38,9 +38,13 @@ public class ProductionPage {
     public Element getDAT_DATField2(){ return driver.FindElementById("DATFL_1"); }
     public Element getDAT_DATField3(){ return driver.FindElementById("DATFL_2"); }
     public Element getTIFF_CenterHeaderBranding(){ return driver.FindElementById("CenterHeaderBranding"); }
+    public Element getTIFF_RightHeaderBranding(){ return driver.FindElementById("RightHeaderBranding"); }
+    public Element getTIFF_LeftHeaderBranding(){ return driver.FindElementById("LeftHeaderBranding"); }
     public Element getPDF_InsertMetadataField(){ return driver.FindElementById("LaunchPDFeditor_0"); }
     public Element getPDF_CenterHeaderBranding(){ return driver.FindElementById("PDFCenterHeaderBranding"); }
     public Element getTIFF_CenterFooterBranding(){ return driver.FindElementById("CenterFooterBranding"); }
+    public Element getTIFF_LeftFooterBranding(){ return driver.FindElementById("LeftFooterBranding"); }
+    public Element getTIFF_RightFooterBranding(){ return driver.FindElementById("RightFooterBranding"); }
     public Element getTIFF_InsertMetadataField(){ return driver.FindElementById("Launcheditor_0"); }
     public Element getTIFF_selectedMetadataField(){ return driver.FindElementById("selectedMetadataField"); }
     public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
@@ -267,11 +271,11 @@ public class ProductionPage {
     
     // Production Components - TIFF
     public Element getTIFFAdvanced() { return driver.FindElementByCssSelector("#TIFFContainer  div.advanced-dd-toggle"); }
-    public Element getTIFFMultiRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='1'] + i"); }
-    public Element getTIFFSingleRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='0'] + i"); }
+    public Element getTIFFMultiRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='1']"); }
+    public Element getTIFFSingleRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='0']"); }
     public Element getTIFFRotateDropdown() { return driver.FindElementByCssSelector("#TIFFContainer #dldPageRotatePreference"); }
-    public Element getTIFFLetterRadio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatLetter + i"); }
-    public Element getTIFFA4Radio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatA4 + i"); }
+    public Element getTIFFLetterRadio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatLetter"); }
+    public Element getTIFFA4Radio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatA4"); }
     public Element getTIFFColorToggle() { return driver.FindElementByCssSelector("#TIFFContainer [name='CommonTIFFSettings.PreseveColor'] + i"); }
     public Element getTIFFBlankRemovalToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkTIFFBlankPageRemove + input + i"); }
     public Element getTIFFTiffToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkShouldSkipTIFFGeneration + input + i"); }
@@ -282,8 +286,12 @@ public class ProductionPage {
     public Element getTIFFPlaceholderPrivilegedTagsButton() { return driver.FindElementByCssSelector("#TIFFContainer #btnSelectPrevTags"); }
     public Element getTIFFPlaceholderPrivilegedTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the privileged docs']"); }
     public Element getTIFFPlaceholderTechTagsButton() { return driver.FindElementByCssSelector("#TIFFContainer #btnSelectTechIssueTags"); }
-    public Element getTIFFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
-    public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
+    //public Element getTIFFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
+    public Element getTIFFPlaceholderTechTextField() { return driver.FindElementByCssSelector(".tiff-img-logic > div:nth-child(3) > div:nth-child(2) > fieldset:nth-child(3) > div:nth-child(1) > div:nth-child(1)"); }
+    //public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
+    public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector(".tiff-img-logic > div:nth-child(3) > div:nth-child(2) > div:nth-child(4) > label:nth-child(1) > a:nth-child(1)"); }
+
+
     public Element getTIFFPlaceholderNative() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic .add-tiff-img-logic"); }
     public Element getTIFFBurnRedactionToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkBurnRedactions + input + i"); }
     public Element getTIFFSlipSheetsToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkIsTIFFSlipSheetEnabled + input + i"); }
@@ -327,6 +335,7 @@ public class ProductionPage {
     public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
     public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
     
+
     //9-21
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
@@ -336,6 +345,17 @@ public class ProductionPage {
     public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}
 
     
+    public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
+    public Element getTIFFRectangleMiddleText() {return driver.FindElementByCssSelector("div[class='title1']");} 
+    public Element getTIFFBrandingLocation() {return driver.FindElementById("divBrandingLocation");} 
+    public Element getTIFFBrandingText() {return driver.FindElementByCssSelector("#divLeftHeaderBranding > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
+    public Element getTIFFSpecifyDefaultBranding() {return driver.FindElementByCssSelector("#divLeftHeaderBranding > div:nth-child(1) > div:nth-child(1) > div:nth-child(2)");}
+    public Element getTIFFMetadataField() {return driver.FindElementById("Launcheditor_0");}
+    public Element getTIFFDefaultBrandingRectangleText() {return driver.FindElementByCssSelector("#divLeftHeaderBranding > div:nth-child(1) > div:nth-child(2) > fieldset:nth-child(2) > div:nth-child(1) > div:nth-child(1)");}
+    public Element getTIFFNativeQuestionMarkLink() {return driver.FindElementByClassName(".tiff-img-logic > div:nth-child(5) > label:nth-child(1) > a:nth-child(2)");}
+    public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
+    public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
+
 
 
     public ProductionPage(Driver driver){

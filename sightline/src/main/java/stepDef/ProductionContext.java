@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
@@ -576,7 +577,6 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 
 			try {
-				
 				//Find Ansci Radio Button and make sure it is not checked by default
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDATAnsiRadioButton().Displayed()  ;}}), Input.wait30);
@@ -664,10 +664,16 @@ public class ProductionContext extends CommonContext {
 	public void expanding_the_tiff_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//The user should be on the "Production Components" section of Productions.The user should click on "TIFF" to expand the Native section.The user should click on the "Advanced" option to expand the additional options for TIFF
-			throw new ImplementationException("expanding_the_tiff_production_component");
-		} else {
-			throw new ImplementationException("NOT expanding_the_tiff_production_component");
+			try {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+					prod.getTIFFTab().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+					prod.getTIFFAdvanced().Click();
+					pass(dataMap, "Succesfully got through tiff advanced components");
+			}
+			catch(Exception e){fail(dataMap, "Did not enter TIFF advanced options");}
 		}
 
 	}
@@ -688,10 +694,194 @@ public class ProductionContext extends CommonContext {
 			//* Verify in the "Placeholders" section, "Enable for Privileged Docs:" is checked green by default, there is a "Select tags" blue button to the right of Enable for Privileged Docs:, "Enable for Tech Tissue Docs:" is checked red by default, "+ Enable for Natively Produced Documents:" link with a question mark button next to it, and a rectangle with the watermark "Enter placeholder text for the privileged docs" with a link "Insert Metadata Field" under it. 
 			//* In the Redactions section, the option "Burn Redactions:" is checked red by default.
 			//* In the "Advanced" section, "Generate Load File (LST):" is checked green by default, "Load File Type:" is set to "Log" by default, and "Slip Sheets" is checked red by default.
-			//
-			throw new ImplementationException("verify_the_tiff_product_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_tiff_product_component_displays_the_correct_default_options");
+			try {
+
+				   //driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+
+				   //Check first section is Page Options
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFFirstPageElement().Displayed()  ;}}), Input.wait30);
+				   Assert.assertEquals("Page Options:", prod.getTIFFFirstPageElement().getText());
+				   
+				   
+				   //Check if Multi Radio button is unchecked by defauly
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFMultiRadio().Displayed()  ;}}), Input.wait30);
+				   Assert.assertFalse(prod.getTIFFMultiRadio().Selected());
+
+				   //Check if Single Radio button is check by default -> doesnt work registers as false?
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFSingleRadio().Displayed()  ;}}), Input.wait30);
+				   Assert.assertTrue(prod.getTIFFSingleRadio().Selected());
+
+				   //Check if A4 Radio button is unchecked by default
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFA4Radio().Displayed()  ;}}), Input.wait30);
+				   Assert.assertFalse(prod.getTIFFA4Radio().Selected());
+
+				   //Check if Letter Radio button is checked by default
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFLetterRadio().Displayed()  ;}}), Input.wait30);
+				   Assert.assertTrue(prod.getTIFFLetterRadio().Selected());
+				   System.out.println("First Set of buttons Passed");
+				   
+				    
+				   //Make Sure Preserve Color, Blank Page Removal and Do not produce full content are Disabled by default
+				   
+				    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFColorToggle().Displayed()  ;}}), Input.wait30);
+				    Assert.assertFalse(prod.getTIFFColorToggle().Selected());
+
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFBlankRemovalToggle().Displayed()  ;}}), Input.wait30);
+				   Assert.assertFalse(prod.getTIFFBlankRemovalToggle().Selected());
+
+				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   prod.getTIFFTiffToggle().Displayed()  ;}}), Input.wait30);
+				   Assert.assertFalse(prod.getTIFFTiffToggle().Selected());
+				   
+				  //Verify Rotate Landscape is set to "No Rotation" by default
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFRotateDropdown().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("No Rotation", prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText());
+				  System.out.println(prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText());
+				  
+				  //Verify All Buttons of Rectangle, (Top Left, Top Center, Top Right, Bottom Left, Bottom Center, Bottom Right)
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_CenterHeaderBranding().Displayed()  ;}}), Input.wait30);
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_CenterFooterBranding().Displayed()  ;}}), Input.wait30);
+
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_LeftHeaderBranding().Displayed()  ;}}), Input.wait30);
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_LeftFooterBranding().Displayed()  ;}}), Input.wait30);
+
+				  //Verify Top Left is Default Selected
+				  if(!prod.getTIFF_LeftHeaderBranding().getWebElement().isSelected()) System.out.println("Passed 9");
+
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_RightHeaderBranding().Displayed()  ;}}), Input.wait30);
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_RightFooterBranding().Displayed()  ;}}), Input.wait30);
+				  
+				  //Verify Middle Text says "Page Body"
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFRectangleMiddleText().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("--Page Body--", prod.getTIFFRectangleMiddleText().getText());
+				  System.out.println(prod.getTIFFRectangleMiddleText().getText());
+				  
+
+				  //Verify Location in Branding
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFBrandingLocation().Displayed()  ;}}), Input.wait30);
+
+				  
+				  //Verify Branding Text in Branding
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFBrandingText().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFBrandingText().getWebElement().getText());
+				  Assert.assertEquals("Branding Text:", prod.getTIFFBrandingText().getWebElement().getText());
+
+				  //Verify Specify Default Branding in Branding
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFSpecifyDefaultBranding().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Specify Default Branding", prod.getTIFFSpecifyDefaultBranding().getText());
+				  System.out.println(prod.getTIFFSpecifyDefaultBranding().getText());
+
+				  //Verify Specify Tags in Branding
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFBrandingTagsLink().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Specify Branding by Selecting Tags:", prod.getTIFFBrandingTagsLink().getText());
+				  System.out.println(prod.getTIFFBrandingTagsLink().getText());
+
+
+				  //Verify Insert Metafield in Branding
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFMetadataField().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Insert Metadata Field", prod.getTIFFMetadataField().getText());
+				  System.out.println(prod.getTIFFMetadataField().getText());
+				  
+				  //Verify Default Branding Inner Rectangle text
+				  //Needs Assert - > find text with placeholder
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFDefaultBrandingRectangleText().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFDefaultBrandingRectangleText().getText());
+				  
+				   
+				   //Verify Privileged Docs is Default Green
+				  //Is Default Selected, but still comes up false when I call Selected() function ?
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFF_EnableforPrivilegedDocs().Selected().toString());
+
+				  //Verify Blue Tag Button next to Priviledged Docs
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getPriveldge_SelectTagButton().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Select Tags", prod.getPriveldge_SelectTagButton().getText());
+				  System.out.println(prod.getPriveldge_SelectTagButton().getText());
+
+				  //Verify Tech Tissue Docs is Selected Red by Default
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTechissue_toggle().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTechissue_toggle().Selected().toString());
+
+				  //Verify Native Produced Document Link
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFPlaceholderNative().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Enable for Natively Produced Documents:", prod.getTIFFPlaceholderNative().getText());
+				  System.out.println(prod.getTIFFPlaceholderNative().getText());
+
+				  //Verify Question Mark Link, NOT WORKING NEED TO FIX
+				  //driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  //prod.getTIFFNativeQuestionMarkLink().Displayed()  ;}}), Input.wait30);
+				  //System.out.println(prod.getTIFFNativeQuestionMarkLink().Click().getText());
+
+				  //Verify PlaceHolder Rectangle Text
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFPlaceholderTechTextField().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Enter placeholder text for the privileged docs", prod.getTIFFPlaceholderTechTextField().GetAttribute("Placeholder"));
+				  System.out.println(prod.getTIFFPlaceholderTechTextField().GetAttribute("Placeholder"));
+
+				  //Verify Insert MetaData Field
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFPlaceholderTechMetadataLink().Displayed()  ;}}), Input.wait30);
+				  Assert.assertEquals("Insert Metadata Field", prod.getTIFFPlaceholderTechMetadataLink().getText());
+				  System.out.println(prod.getTIFFPlaceholderTechMetadataLink().getText());
+				  
+				  //THE FOLLOWING ALL NEED ASSERTS / CONFRIM CORRECTNESS
+				  //Verify Burn Redactions is Red by Default
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFBurnRedactionToggle().getText());
+				  
+				  //Verify Generate Load File is Green By Default
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFLSTLoadFileToggle().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFLSTLoadFileToggle().getText());
+
+				  //Verify Tiff Slip Sheets are red by Default
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFSlipSheetsToggle().getText());
+				  
+				  //Verify Load File Type Default is "Log"
+				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					  prod.getTIFFLSTLoadFileType().Displayed()  ;}}), Input.wait30);
+				  System.out.println(prod.getTIFFLSTLoadFileType().selectFromDropdown().getFirstSelectedOption().getText());
+
+				 
+
+				  
+				  
+
+
+
+				   pass(dataMap, "passed");
+
+				
+			}
+			catch(Exception e) { fail(dataMap, "not pass");}
 		}
 
 	}

@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Regression Suite]">
-  <test name="DocView regression(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [SQA Regression Suite]">
+  <test thread-count="5" name="SiteLine(failed)">
     <groups>
       <run>
-        <include name="regression"/>
+        <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsRegression.DocView_Regression">
+      <class name="testScriptsRegression.ProductionRegression">
         <methods>
-          <include name="VerifyFoldertab"/>
-          <include name="VerifyPersistentHit"/>
-          <include name="NonAudioAnnotation"/>
-          <include name="VerifyAnalyticsthrAssignment"/>
-          <include name="VerifyMiniDoclistFolderAction"/>
-          <include name="VerifyTabswhenAllprefEnabled"/>
-          <include name="VerifyAnalyticsforPA"/>
-          <include name="VerifyAnalyticsConceptual"/>
-          <include name="getPersistentHit"/>
-          <include name="preCondition"/>
-          <include name="VerifyTabswhenAllprefDisabled"/>
-          <include name="takeScreenShot"/>
-          <include name="VerifyAnalyticsChildWinodw"/>
-          <include name="VerifyMiniDoclistConifgSortOrder"/>
-          <include name="VerifyThreadedChildWinodw"/>
-          <include name="NonAudioRemarkAddEditDeletebyReviewer"/>
+          <include name="startTest"/>
+          <include name="test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_tiff_production_component_Then_verify_the_tiff_product_component_displays_the_correct_default_options"/>
+          <include name="end"/>
+          <include name="start"/>
+          <include name="endTest"/>
         </methods>
-      </class> <!-- testScriptsRegression.DocView_Regression -->
+      </class> <!-- testScriptsRegression.ProductionRegression -->
     </classes>
-  </test> <!-- DocView regression(failed) -->
-</suite> <!-- Failed suite [Regression Suite] -->
+  </test> <!-- SiteLine(failed) -->
+</suite> <!-- Failed suite [SQA Regression Suite] -->
