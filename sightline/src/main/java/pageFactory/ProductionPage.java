@@ -337,19 +337,26 @@ public class ProductionPage {
     
 
     //9-21
+
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
+    public Element getNewProject() { return driver.FindElementById("project-selector");}
+
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
-    public Element getAllFoldersChkBox() {return driver.FindElementByXPath("//*[@id=\"-1_anchor\"]/i[1]");}
+    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id=\"1031_anchor\"]/i[1]");}
+    public Element getDocumentCollapseBtn() { return driver.FindElementByXPath("//*[@id=\"2\"]/i");}
     public Element getNumAndSortMarkCompleteBtn() {return driver.FindElementById("NumAndSortMarkComplete");}
     public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}
+    public Element getDocumentMarkCompleteBtn() { return driver.FindElementById("btnDocumentsSelectionMarkComplete");}
+    public Element getDocumentNextBtn() { return driver.FindElementById("btnDocumentsSelectionNext");}
     public Element getPrivAddRuleBtn() { return driver.FindElementById("contentmetadata");}
     public Element getPrivRedactionsBtn() { return driver.FindElementById("redactionsHelper");}
-    public Element getPrivAllRedactions() { return driver.FindElementByCssSelector("#-\\31 _anchor > i.jstree-icon.jstree-checkbox");}
-    public Element getPrivInsertQuery() { return driver.FindElementByCssSelector("insertQueryBtn");}
+    public Element getPrivDefaultAutomation() { return driver.FindElementByXPath("//*[@id=\"7_anchor\"]/i[1]");}
+    public Element getPrivInsertQuery() { return driver.FindElementById("insertQueryBtn");}
     public Element getPrivChkForMatching() { return driver.FindElementById("btnDocumentMatch");}
+    public Element getTotalMatchedDocuments() {return driver.FindElementById("TotalDocumentsCount");}
     public Element getNumDocumentLevelRadioButton() { return driver.FindElementById("rdbDocumentLevel");}
     public Element getNumPageLevelRadioButton() {return driver.FindElementById("rdbPageLevel");}
     public Element getNumBatesRadioButton() {return driver.FindElementById("rdbSpecifyNumber");}
@@ -357,6 +364,10 @@ public class ProductionPage {
     public Element getNumNextBatesLink() {return driver.FindElementByCssSelector("label.col-md-12 > a:nth-child(1)");}
     public Element getNumSubBatesNum() {return driver.FindElementById("txtSubbatesNumber");}
     public Element getNumSubBatesMin() {return driver.FindElementById("txtSubbatesNumberMinNoLength");}
+    public Element getPrivDocViewBtn() { return driver.FindElementById("btnGoToDocView");}
+    public Element getReviewModeText() { return driver.FindElementByCssSelector("#divAssigmnetProgress1 > div > span");}
+
+
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
@@ -382,7 +393,8 @@ public class ProductionPage {
     
     public void addNewProduction(String productionName, String template) {
     	try {
-    	
+    		
+			
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
 		getProdExport_ProductionSets().SendKeys("AutomationProductionSet");

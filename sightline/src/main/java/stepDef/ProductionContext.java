@@ -36,10 +36,6 @@ public class ProductionContext extends CommonContext {
 
 		try {
 			if (scriptState) {
-				//Change Project Before Starting Process
-				prod.changeProjectSelector().Click();
-				prod.changeProjectSelectorField().Click();
-
 				prod.addNewProduction("AutoProduction"+dateTime, template);
 			} else {
 				pass(dataMap,"Skipped adding new production");
@@ -863,8 +859,7 @@ public class ProductionContext extends CommonContext {
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFLSTLoadFileType().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Log", prod.getTIFFLSTLoadFileType().selectFromDropdown().getFirstSelectedOption().getText());
-
-
+				 
 				   pass(dataMap, "passed");
 
 				
@@ -907,12 +902,11 @@ public class ProductionContext extends CommonContext {
 				prod.getDatField().SendKeys("Bates Number");
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+					prod.getComponentsMarkComplete().Enabled()  ;}}), Input.wait30);
 				prod.getComponentsMarkComplete().Click();
-				Thread.sleep(2000);
 					
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getComponentsMarkNext().Visible() ;}}), Input.wait30);
+					prod.getComponentsMarkNext().Enabled() ;}}), Input.wait30);
 				prod.getComponentsMarkNext().Click();
 				
 			pass(dataMap,"Default Production Component are completed");	
@@ -933,20 +927,14 @@ public class ProductionContext extends CommonContext {
 			try {
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumAndSortMarkCompleteBtn().Displayed()  ;}}), Input.wait30);
+					prod.getNumAndSortMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
 				prod.getNumAndSortMarkCompleteBtn().Click();
 				
-				
-				
-			Thread.sleep(5000);
-
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumAndSortNextBtn().Displayed()  ;}}), Input.wait30);
-			System.out.println(prod.getNumAndSortNextBtn().getText());
+					prod.getNumAndSortNextBtn().Enabled()  ;}}), Input.wait30);
 
 				prod.getNumAndSortNextBtn().Click();
-				
-			
+							
 				pass(dataMap,"Default numbering and sorting is complete");
 				//Click Mark CompletedClick Next
 			}catch(Exception e) {
@@ -969,16 +957,29 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
 				prod.getFolderRadioButton().Click();
+				
+			//Collapse folders 
+//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//					prod.getDocumentCollapseBtn().Displayed()  ;}}), Input.wait30);
+//				prod.getDocumentCollapseBtn().Click();
+			
+			//Select Default Automation Folder	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getDefaultAutomationChkBox().Click();
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getAllFoldersChkBox().Displayed()  ;}}), Input.wait30);
-				prod.getAllFoldersChkBox().Click();
+					prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
+				prod.getDocumentMarkCompleteBtn().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
+				prod.getDocumentNextBtn().Click();
 				
 				pass(dataMap,"Default document sections has been completed");
 			}catch(Exception e) {
 				fail(dataMap,"Default document sections has not been completed");
 			}	
-			//Make sure "Select Folders:" radio button is selectedClick "All Folders" checkboxClick Mark CompletedClick Next
 		} else {
 			fail(dataMap,"Default document sections has not been completed");
 		}
@@ -1001,24 +1002,23 @@ public class ProductionContext extends CommonContext {
 					prod.getPrivRedactionsBtn().Click();
 					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivAllRedactions().Displayed()  ;}}), Input.wait30);
-					prod.getPrivAllRedactions().Click();
+						prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
+					prod.getPrivDefaultAutomation().Click();
 					
+									
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
-					
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-					
-							
+
 					pass(dataMap,"Priv guard documents are completed");
 			}catch(Exception e) {
 				fail(dataMap,"Priv guard documents are not completed");
 			}
 		
-			//You should be on the section "Priv Guard"Click "+ Add Rule"Click "Redactions"Click "All Redaction Tags" and scroll down and click "Insert into Query"Click "Check for Matching Documents"
 		} else {
 			fail(dataMap,"Priv guard documents are not completed");
 
@@ -1031,10 +1031,19 @@ public class ProductionContext extends CommonContext {
 	public void clicking_on_the_docview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//In the section "Matched Documents" there should be results here. Click the button named "DocView".
-			throw new ImplementationException("clicking_on_the_docview_button");
+			try {
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivDocViewBtn().Enabled()  ;}}), Input.wait30);
+				prod.getPrivDocViewBtn().Click();
+				pass(dataMap,"Clicking the doc view is successful");
+
+		
+			}catch (Exception e) {
+				fail(dataMap,"Clicking the doc view is not successful");
+			}
 		} else {
-			throw new ImplementationException("NOT clicking_on_the_docview_button");
+			fail(dataMap,"Clicking the doc view is not successful");
 		}
 
 	}
@@ -1044,14 +1053,39 @@ public class ProductionContext extends CommonContext {
 	public void verify_viewing_docview_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4906 part 2:
+			
+			
+			try {
+				String url = driver.getUrl();
+				System.out.println(url);
+				
+				if(url.contains("DocumentViewer/DocView")){
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getReviewModeText().Displayed()  ;}}), Input.wait30);
+					
+					String reviewMode = prod.getReviewModeText().getText();
+					
+					System.out.println(reviewMode);
+					Assert.assertEquals(reviewMode, "REVIEW MODE");
+					pass(dataMap,"You are in the Doc View");
+
+				
+				}}catch(Exception e) {
+					fail(dataMap,"Not in the correct View");
+				}
+				} else {
+					System.out.println("You never left");
+					fail(dataMap,"Not in the correct View");
+
+		
 			//* Verify the user is navigated to the DocView page.
 			//* Top left of the main section should display "REVIEW MODE" with a grid displaying the amount of Matched documents from the prior screen. If 5 documents were matched in the prior screen, the curren screen should show 5 items in the grid.
 			//
-			throw new ImplementationException("verify_viewing_docview_for_priv_guard");
-		} else {
-			throw new ImplementationException("NOT verify_viewing_docview_for_priv_guard");
-		}
+		} 
+		String totalDoc = prod.getTotalMatchedDocuments().getText();
+		System.out.println(totalDoc);
+		
 
 	}
 
