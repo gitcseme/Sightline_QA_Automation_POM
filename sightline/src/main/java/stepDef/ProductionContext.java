@@ -26,7 +26,8 @@ public class ProductionContext extends CommonContext {
 	public void on_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
-    
+
+	
 
 	@When("^.*(\\[Not\\] )? begin_new_production_process$")
 	public void begin_new_production_process(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -35,7 +36,7 @@ public class ProductionContext extends CommonContext {
 
 
 		try {
-			if (scriptState) {
+			if (scriptState) {				
 				prod.addNewProduction("AutoProduction"+dateTime, template);
 			} else {
 				pass(dataMap,"Skipped adding new production");
@@ -1133,7 +1134,6 @@ public class ProductionContext extends CommonContext {
 				prod.getNumDocumentLevelRadioButton().Click();
 				Thread.sleep(5000);
 				pass(dataMap, "Radio Button Succesfully Clicked");
-
 			}
 			catch(Exception e) {fail(dataMap, "Did not Click Documents Radio Button");}
 
@@ -1158,15 +1158,34 @@ public class ProductionContext extends CommonContext {
 			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
 			//
 			try {
-				//Verify Page Radio Button is selected by default
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
-				Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
 				
-				//Verify Format Section as "Specify Bates Numbering" as default value
+				//Find which buttons are default
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
-				Assert.assertTrue(prod.getNumBatesRadioButton().Selected());
+					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
+
+				//If Document is Default Checked
+				if(prod.getNumDocumentLevelRadioButton().Selected()) {
+						//Verify Bates Number starts at 1: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("1",prod.getNumSubBatesNum().GetAttribute("value").toString());
+				
+						//Verify Min Number starts at 5: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesMin().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("5",prod.getNumSubBatesMin().GetAttribute("value").toString());
+				}
+				else {
+					//Verify Page Radio Button is selected by default
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
+				
+					//Verify Format Section as "Specify Bates Numbering" as default value
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertTrue(prod.getNumBatesRadioButton().Selected());
+				}
 				
 				//Verify Link under Specify Bates Numbering Button
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1179,16 +1198,7 @@ public class ProductionContext extends CommonContext {
 				Assert.assertTrue(prod.getNumSortMetaRadioButton().Selected());
 				
 				
-				//Verify Bates Number starts at 1: 
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
-				Assert.assertEquals("1",prod.getNumSubBatesNum().GetAttribute("value").toString());
-				
-				//Verify Min Number starts at 5: 
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumSubBatesMin().Displayed()  ;}}), Input.wait30);
-				Assert.assertEquals("5",prod.getNumSubBatesMin().GetAttribute("value").toString());
-				
+								
 				
 			}
 			catch(Exception e) {}

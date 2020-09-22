@@ -89,15 +89,27 @@ public class CommonContext {
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
+		
+		prod = new ProductionPage(driver);
+		prod.changeProjectSelector().Click();
+	    prod.changeProjectSelectorField().Click();
+
 		if (scriptState) {
-			String url = (String) dataMap.get("URL");
+			/*
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   prod.changeProjectSelector().Enabled()  ;}}), Input.wait30); 
+			System.out.println("1");
+	        */
+	        			String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
+			
 		} else {
 			webDriver.get("http://www.google.com");
 		}
+
+		
 		driver.waitForPageToBeReady();
 
-		prod = new ProductionPage(driver);
 	}
     
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
