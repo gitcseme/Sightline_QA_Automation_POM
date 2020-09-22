@@ -1130,8 +1130,10 @@ public class ProductionContext extends CommonContext {
 			//Clicking the Documents radio button
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
+					prod.getNumDocumentLevelRadioButton().Enabled()  ;}}), Input.wait30);
+				System.out.println("1");
 				prod.getNumDocumentLevelRadioButton().Click();
+				System.out.println("!");
 				Thread.sleep(5000);
 				pass(dataMap, "Radio Button Succesfully Clicked");
 			}
@@ -1146,17 +1148,6 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_numbering_and_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4922
-			//* In the Numbering, Level section, "Page" is selected by default.
-			//* In the Numbering, Format section, "Specify Bates Numbering" should be selected by default with the option to "Click here to view and select the next bates number(s)".
-			//* In the Sorting section, "Sort by Metadata" is chosen by default. 
-			//If Document is selected to be default instead of page:
-			//* Ignore bullet 1 above.
-			//* Verify under Document, "Beginning Sub-bates Number:" starts at 1 and "Min Number Length:" starts at 5.
-			//If Use Metadata field is selected to be default instead of Specify Bates Numbering:
-			//* Ignore bullet 2 at the top. 
-			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
-			//
 			try {
 				
 				//Find which buttons are default
@@ -1164,7 +1155,7 @@ public class ProductionContext extends CommonContext {
 					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
 
 				//If Document is Default Checked
-				if(prod.getNumDocumentLevelRadioButton().Selected()) {
+				if(prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked")!=null && prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked").equals("true")) {
 						//Verify Bates Number starts at 1: 
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
@@ -1181,27 +1172,46 @@ public class ProductionContext extends CommonContext {
 						prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
 					Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
 				
+				}
+
+				if(prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")!=null && (prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")).equals("true")) {
+					System.out.println("dont go in here");
+					//Verify All Custodians is default from dropdown.
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataCustodiansTab().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("AllCustodians",prod.getNumMetaDataCustodiansTab().selectFromDropdown().getFirstSelectedOption().getText());
+					
+					//Verify Both Prefix and Suffix are blank
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataPrefix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataPrefix().selectFromDropdown().getFirstSelectedOption().getText());
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataSuffix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataSuffix().selectFromDropdown().getFirstSelectedOption().getText());
+				}
+				else {
 					//Verify Format Section as "Specify Bates Numbering" as default value
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
-					Assert.assertTrue(prod.getNumBatesRadioButton().Selected());
-				}
-				
-				//Verify Link under Specify Bates Numbering Button
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumNextBatesLink().Displayed()  ;}}), Input.wait30);
-				//IS clickable?
+					Assert.assertEquals("true",prod.getNumBatesRadioButtonCheck().GetAttribute("checked"));
 
+					//Verify Link under Specify Bates Numbering Button
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumNextBatesLink().Displayed()  ;}}), Input.wait30);
+
+				}
 				//Verify in Sorting Section, "Sort by Metadata" is default checked
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumSortMetaRadioButton().Displayed()  ;}}), Input.wait30);
-				Assert.assertTrue(prod.getNumSortMetaRadioButton().Selected());
-				
-				
+					prod.getNumSortMetaRadioButtonCheck().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals("true",prod.getNumSortMetaRadioButtonCheck().GetAttribute("checked"));
+				pass(dataMap,"Passed Verification of Sorting and Nums Page");
 								
 				
 			}
-			catch(Exception e) {}
+			catch(Exception e) { 
+				e.printStackTrace();
+				fail(dataMap,"Did not Pass Verification of Sorting and Nums Page");
+			}
 		}
 
 	}

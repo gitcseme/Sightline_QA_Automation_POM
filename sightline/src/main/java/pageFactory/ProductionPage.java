@@ -357,17 +357,26 @@ public class ProductionPage {
     public Element getPrivInsertQuery() { return driver.FindElementById("insertQueryBtn");}
     public Element getPrivChkForMatching() { return driver.FindElementById("btnDocumentMatch");}
     public Element getTotalMatchedDocuments() {return driver.FindElementById("TotalDocumentsCount");}
-    public Element getNumDocumentLevelRadioButton() { return driver.FindElementById("rdbDocumentLevel");}
-    public Element getNumPageLevelRadioButton() {return driver.FindElementById("rdbPageLevel");}
-    public Element getNumBatesRadioButton() {return driver.FindElementById("rdbSpecifyNumber");}
-    public Element getNumSortMetaRadioButton() {return driver.FindElementById("#rdbSortByField");}
-    public Element getNumNextBatesLink() {return driver.FindElementByCssSelector("label.col-md-12 > a:nth-child(1)");}
-    public Element getNumSubBatesNum() {return driver.FindElementById("txtSubbatesNumber");}
-    public Element getNumSubBatesMin() {return driver.FindElementById("txtSubbatesNumberMinNoLength");}
     public Element getPrivDocViewBtn() { return driver.FindElementById("btnGoToDocView");}
     public Element getReviewModeText() { return driver.FindElementByCssSelector("#divAssigmnetProgress1 > div > span");}
 
 
+    public Element getNumDocumentLevelRadioButton() { return driver.FindElementByCssSelector("div.col-md-8:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementById("rdbDocumentLevel");} 
+    public Element getNumPageLevelRadioButtonCheck() {return driver.FindElementById("rdbPageLevel");} 
+    public Element getNumPageLevelRadioButton() {return driver.FindElementByCssSelector(".Number > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumBatesRadioButton() {return driver.FindElementByCssSelector(".productionOnly > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumBatesRadioButtonCheck() {return driver.FindElementById("rdbSpecifyNumber");}
+    public Element getNumUseMetaFieldButton() {return driver.FindElementById("#divSubDivUserMetaDataField > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumUseMetaFieldButtonCheck() { return driver.FindElementById("rdbUserMetadata");}
+    public Element getNumSortMetaRadioButton() {return driver.FindElementById("div.box:nth-child(2) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumSortMetaRadioButtonCheck() {return driver.FindElementById("rdbSortByField");}
+    public Element getNumNextBatesLink() {return driver.FindElementByCssSelector("label.col-md-12 > a:nth-child(1)");}
+    public Element getNumSubBatesNum() {return driver.FindElementById("txtSubbatesNumber");}
+    public Element getNumSubBatesMin() {return driver.FindElementById("txtSubbatesNumberMinNoLength");}
+    public Element getNumMetaDataCustodiansTab() {return driver.FindElementById("lstNumberingMetaData");}
+    public Element getNumMetaDataPrefix() {return driver.FindElementById("txtUserMetadataFieldPrefix");}
+    public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}

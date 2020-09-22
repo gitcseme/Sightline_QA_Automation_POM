@@ -95,12 +95,8 @@ public class CommonContext {
 	    prod.changeProjectSelectorField().Click();
 
 		if (scriptState) {
-			/*
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   prod.changeProjectSelector().Enabled()  ;}}), Input.wait30); 
-			System.out.println("1");
-	        */
-	        			String url = (String) dataMap.get("URL");
+			
+	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
 			
 		} else {
