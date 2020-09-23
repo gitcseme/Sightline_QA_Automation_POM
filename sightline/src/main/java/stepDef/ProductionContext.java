@@ -3,11 +3,14 @@ package stepDef;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.util.List;
+import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import automationLibrary.ElementCollection;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
@@ -899,7 +902,7 @@ public class ProductionContext extends CommonContext {
 				prod.getDatField().SendKeys("Bates Number");
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getComponentsMarkComplete().Enabled()  ;}}), Input.wait30);
+					prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
 				prod.getComponentsMarkComplete().Click();
 					
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -919,13 +922,13 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? complete_default_numbering_and_sorting$")
 	public void complete_default_numbering_and_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			try {
-				
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumAndSortMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
-				prod.getNumAndSortMarkCompleteBtn().Click();
+					prod.getNumAndSortMarkCompleteBtn().Displayed() ;}}), Input.wait30);
+			Thread.sleep(1000);	
+			prod.getNumAndSortMarkCompleteBtn().Click();
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumAndSortNextBtn().Enabled()  ;}}), Input.wait30);
@@ -933,7 +936,6 @@ public class ProductionContext extends CommonContext {
 				prod.getNumAndSortNextBtn().Click();
 							
 				pass(dataMap,"Default numbering and sorting is complete");
-				//Click Mark CompletedClick Next
 			}catch(Exception e) {
 				fail(dataMap,"Default numbering and sorting is not complete");
 			}
@@ -1011,8 +1013,10 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-				
+					
+
 					pass(dataMap,"Priv guard documents are completed");
+					
 			}
 			catch(Exception e){
 				fail(dataMap,"Priv guard documents are not completed");
@@ -1031,10 +1035,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
+				
 			driver.waitForPageToBeReady();
+			dataMap.put("totalDocuments", prod.getTotalMatchedDocuments().getText());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getPrivDocViewBtn().Displayed() && prod.getPrivDocViewBtn().Enabled() && prod.getPrivDocViewBtn().Visible()  ;}}), Input.wait30);
 				prod.getPrivDocViewBtn().Click();
+				
+	
 				pass(dataMap,"Clicking the doc view is successful");
 
 		
@@ -1056,12 +1064,26 @@ public class ProductionContext extends CommonContext {
 			driver.waitForPageToBeReady();
 			try {
 				String url = driver.getUrl();
+				
 				if(url.contains("DocumentViewer/DocView")){
-					
+
+					//Verify "Review Text is displayed
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getReviewModeText().Displayed()  ;}}), Input.wait30);
 					String reviewMode = prod.getReviewModeText().getText();
+					
+					
+					//Counting the Documents from table 
+					ElementCollection totalDocuments = driver.FindElementsByXPath("//*[@id='SearchDataTable']/tbody/tr");
+					int numOfDocuments = (int)totalDocuments.size();
+					
+										
+					String docs = (String) dataMap.get("totalDocuments");
+					int numDocs = Integer.parseInt(docs);
+										
+					Assert.assertEquals(numDocs, numOfDocuments);
 					Assert.assertEquals(reviewMode, "REVIEW MODE");
+										
 					pass(dataMap,"You are in the Doc View");
 				
 				}
