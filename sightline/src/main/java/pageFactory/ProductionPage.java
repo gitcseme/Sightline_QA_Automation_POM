@@ -276,6 +276,10 @@ public class ProductionPage {
     public Element getTIFFRotateDropdown() { return driver.FindElementByCssSelector("#TIFFContainer #dldPageRotatePreference"); }
     public Element getTIFFLetterRadio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatLetter"); }
     public Element getTIFFA4Radio() { return driver.FindElementByCssSelector("#TIFFContainer #rbdTIFFPageFormatA4"); }
+
+    public Element getTIFFLetterRadioCheck() { return driver.FindElementById("rbdTIFFPageFormatLetter"); }
+    public Element getTIFFA4RadioCheck() { return driver.FindElementById("rbdTIFFPageFormatA4"); }
+
     public Element getTIFFColorToggle() { return driver.FindElementByCssSelector("#TIFFContainer [name='CommonTIFFSettings.PreseveColor'] + i"); }
     public Element getTIFFBlankRemovalToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkTIFFBlankPageRemove + input + i"); }
     public Element getTIFFTiffToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkShouldSkipTIFFGeneration + input + i"); }
@@ -359,7 +363,12 @@ public class ProductionPage {
     public Element getTotalMatchedDocuments() {return driver.FindElementById("TotalDocumentsCount");}
     public Element getPrivDocViewBtn() { return driver.FindElementById("btnGoToDocView");}
     public Element getReviewModeText() { return driver.FindElementByCssSelector("#divAssigmnetProgress1 > div > span");}
-
+    public Element getDocListButton() { return driver.FindElementById("btnGoToDocList");}
+    public Element getDocListSourceCriteria() {return driver.FindElementByXPath("//a[@href='#c1']");}
+    public Element getDocListProductionText() {return driver.FindElementByXPath("//div[@class='panel-body']/p[1]");}
+    public Element getDocListBackToSourceButton() {return driver.FindElementByXPath("//a[text()='Back to Source']");} 
+    public Element getDocListEntryAmountText() {return driver.FindElementById("dtDocList_info");}
+    public Element getDocListTableEntry() {return driver.FindElementByXPath("//table[@id='dtDocList']//tbody");}
 
     public Element getNumDocumentLevelRadioButton() { return driver.FindElementByCssSelector("div.col-md-8:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementById("rdbDocumentLevel");} 
@@ -377,6 +386,8 @@ public class ProductionPage {
     public Element getNumMetaDataCustodiansTab() {return driver.FindElementById("lstNumberingMetaData");}
     public Element getNumMetaDataPrefix() {return driver.FindElementById("txtUserMetadataFieldPrefix");}
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
+    
+    public Element getDocSelectSearchRadioButton() {return driver.FindElementByCssSelector("html body.minified.fixed-header.smart-style-1 div#renderBody div#main div#content div#divLoadView.prod form#frmDocumentsSelection div.prod div.row div.col-md-12 div.col-md-12 div.smart-form div.col-md-12 div.col-md-12 label.radio.col-md-3 i");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}

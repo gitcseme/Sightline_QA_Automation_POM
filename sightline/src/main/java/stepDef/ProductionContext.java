@@ -668,10 +668,10 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			try {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+					   prod.getTIFFTab().Enabled()  ;}}), Input.wait30);
 					prod.getTIFFTab().Click();
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+					   prod.getTIFFAdvanced().Enabled()  ;}}), Input.wait30);
 					prod.getTIFFAdvanced().Click();
 					pass(dataMap, "Succesfully got through tiff advanced components");
 			}
@@ -702,28 +702,28 @@ public class ProductionContext extends CommonContext {
 
 				   //Check first section is Page Options
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFFirstPageElement().Displayed()  ;}}), Input.wait30);
+					   prod.getTIFFFirstPageElement().Enabled()  ;}}), Input.wait30);
 				   Assert.assertEquals("Page Options:", prod.getTIFFFirstPageElement().getText());
 				   
 				   //Check if Multi Radio button is unchecked by defauly
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFMultiRadio().Displayed()  ;}}), Input.wait30);
-				   Assert.assertFalse(prod.getTIFFMultiRadio().Selected());
+					   prod.getTIFFMultiRadio().Enabled()  ;}}), Input.wait30);
+				   Assert.assertNull(prod.getTIFFMultiRadio().GetAttribute("checked"));
 
 				   //Check if Single Radio button is check by default -> doesnt work registers as false?
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFSingleRadio().Displayed()  ;}}), Input.wait30);
-				   Assert.assertTrue(prod.getTIFFSingleRadio().Selected());
+					   prod.getTIFFSingleRadio().Enabled()  ;}}), Input.wait30);
+				   Assert.assertEquals("true",prod.getTIFFSingleRadio().GetAttribute("checked"));
 
 				   //Check if A4 Radio button is unchecked by default
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFA4Radio().Displayed()  ;}}), Input.wait30);
-				   Assert.assertFalse(prod.getTIFFA4Radio().Selected());
+					   prod.getTIFFA4Radio().Enabled()  ;}}), Input.wait30);
+				   Assert.assertNull(prod.getTIFFA4Radio().GetAttribute("checked"));
 
 				   //Check if Letter Radio button is checked by default
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					   prod.getTIFFLetterRadio().Displayed()  ;}}), Input.wait30);
-				   Assert.assertTrue(prod.getTIFFLetterRadio().Selected());
+					   prod.getTIFFLetterRadio().Enabled()  ;}}), Input.wait30);
+				   Assert.assertEquals("true",prod.getTIFFLetterRadio().GetAttribute("checked"));
 
 				   System.out.println("First Set of buttons Passed");
 				   
@@ -801,7 +801,7 @@ public class ProductionContext extends CommonContext {
 				  //Needs Assert - > find text with placeholder
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFDefaultBrandingRectangleText().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFFDefaultBrandingRectangleText().GetAttribute("placeholder").toString());
+				  Assert.assertEquals("Enter default branding for the selected location on the page.", prod.getTIFFDefaultBrandingRectangleText().GetAttribute("placeholder").toString());
 				  
 				   
 				   //Verify Privileged Docs is Default Green
@@ -825,11 +825,7 @@ public class ProductionContext extends CommonContext {
 					  prod.getTIFFPlaceholderNative().Displayed()  ;}}), Input.wait30);
 				  Assert.assertEquals("Enable for Natively Produced Documents:", prod.getTIFFPlaceholderNative().getText());
 
-				  //Verify Question Mark Link, NOT WORKING NEED TO FIX
-				  //driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					  //prod.getTIFFNativeQuestionMarkLink().Displayed()  ;}}), Input.wait30);
-				  //System.out.println(prod.getTIFFNativeQuestionMarkLink().Click().getText());
-
+				  
 				  //Verify PlaceHolder Rectangle Text
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFFPlaceholderTechTextField().Displayed()  ;}}), Input.wait30);
@@ -994,35 +990,37 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			
 			try {
+				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivAddRuleBtn().Displayed()  ;}}), Input.wait30);
+						prod.getPrivAddRuleBtn().Enabled() && prod.getPrivAddRuleBtn().Displayed()  ;}}), Input.wait30);
 					prod.getPrivAddRuleBtn().Click();
-					
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivRedactionsBtn().Displayed()  ;}}), Input.wait30);
+						prod.getPrivRedactionsBtn().Enabled() && prod.getPrivRedactionsBtn().Displayed() ;}}), Input.wait30);
 					prod.getPrivRedactionsBtn().Click();
 					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
+						prod.getPrivDefaultAutomation().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getPrivDefaultAutomation().Click();
 					
 									
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
+						prod.getPrivInsertQuery().Enabled() && prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
+						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-
+				
 					pass(dataMap,"Priv guard documents are completed");
-			}catch(Exception e) {
+			}
+			catch(Exception e){
 				fail(dataMap,"Priv guard documents are not completed");
 			}
 		
-		} else {
+		} 
+		else{
 			fail(dataMap,"Priv guard documents are not completed");
-
 		}
 
 	}
@@ -1033,9 +1031,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
-				
+			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPrivDocViewBtn().Enabled()  ;}}), Input.wait30);
+					prod.getPrivDocViewBtn().Displayed() && prod.getPrivDocViewBtn().Enabled() && prod.getPrivDocViewBtn().Visible()  ;}}), Input.wait30);
 				prod.getPrivDocViewBtn().Click();
 				pass(dataMap,"Clicking the doc view is successful");
 
@@ -1055,37 +1053,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			
-			
+			driver.waitForPageToBeReady();
 			try {
 				String url = driver.getUrl();
-				System.out.println(url);
-				
 				if(url.contains("DocumentViewer/DocView")){
 					
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getReviewModeText().Displayed()  ;}}), Input.wait30);
-					
 					String reviewMode = prod.getReviewModeText().getText();
-					
-					System.out.println(reviewMode);
 					Assert.assertEquals(reviewMode, "REVIEW MODE");
 					pass(dataMap,"You are in the Doc View");
-
 				
-				}}catch(Exception e) {
+				}
+				}catch(Exception e) {
 					fail(dataMap,"Not in the correct View");
 				}
 				} else {
 					System.out.println("You never left");
 					fail(dataMap,"Not in the correct View");
 
-		
-			//* Verify the user is navigated to the DocView page.
-			//* Top left of the main section should display "REVIEW MODE" with a grid displaying the amount of Matched documents from the prior screen. If 5 documents were matched in the prior screen, the curren screen should show 5 items in the grid.
-			//
 		} 
-		String totalDoc = prod.getTotalMatchedDocuments().getText();
-		System.out.println(totalDoc);
 		
 
 	}
@@ -1095,10 +1082,13 @@ public class ProductionContext extends CommonContext {
 	public void clicking_on_the_doclist_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//In the section "Matched Documents" there should be results here. Click the button named "DocList".
-			throw new ImplementationException("clicking_on_the_doclist_button");
-		} else {
-			throw new ImplementationException("NOT clicking_on_the_doclist_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListButton().Displayed() && prod.getDocListButton().Enabled() ;}}), Input.wait30);
+				prod.getDocListButton().Click();
+				pass(dataMap, "Clicked Doc List Button Succesfully");
+			}
+			catch(Exception e) {fail(dataMap,"Could not click docList Button");}
 		}
 
 	}
@@ -1114,9 +1104,30 @@ public class ProductionContext extends CommonContext {
 			//* The number of matched documents listed in the Priv Guard screen should be displayed here. If 5 documented were said to be matched in the prior screen, make sure 5 documents are listed here.
 			//* Verify there should be text displaying "Showing 1 to x of x entries", replacing x with the number of matched documents. 
 			//
-			throw new ImplementationException("verify_viewing_doclist_for_priv_guard");
-		} else {
-			throw new ImplementationException("NOT verify_viewing_doclist_for_priv_guard");
+			driver.waitForPageToBeReady();
+			String url = driver.getUrl();
+			if(url.contains("Document/DocList")) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListSourceCriteria().Enabled()  ;}}), Input.wait30);
+				Assert.assertEquals("SOURCE CRITERIA", prod.getDocListSourceCriteria().getText());
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListProductionText().Enabled()  ;}}), Input.wait30);
+				Assert.assertEquals("Production",prod.getDocListProductionText().getText());
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListBackToSourceButton().Enabled() && prod.getDocListBackToSourceButton().Displayed()  ;}}), Input.wait30);
+
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListEntryAmountText().Enabled()  ;}}), Input.wait30);
+				Assert.assertEquals("Showing 1 to 5 of 5 entries",prod.getDocListEntryAmountText().getText());
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocListTableEntry().Enabled()  ;}}), Input.wait30);
+				Assert.assertEquals(5, prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size());
+
+
+			}
 		}
 
 	}
@@ -1131,10 +1142,7 @@ public class ProductionContext extends CommonContext {
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumDocumentLevelRadioButton().Enabled()  ;}}), Input.wait30);
-				System.out.println("1");
 				prod.getNumDocumentLevelRadioButton().Click();
-				System.out.println("!");
-				Thread.sleep(5000);
 				pass(dataMap, "Radio Button Succesfully Clicked");
 			}
 			catch(Exception e) {fail(dataMap, "Did not Click Documents Radio Button");}
@@ -1221,15 +1229,19 @@ public class ProductionContext extends CommonContext {
 	public void clicking_use_metadata_field_as_the_format_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click the Metadata field radio button
-			throw new ImplementationException("clicking_use_metadata_field_as_the_format_default_option");
-		} else {
-			throw new ImplementationException("NOT clicking_use_metadata_field_as_the_format_default_option");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumUseMetaFieldButton().Enabled()  ;}}), Input.wait30);
+				prod.getNumUseMetaFieldButton().Click();
+				pass(dataMap, "Succesfully clicked useMeta Field Button");
+			}
+			catch(Exception e) {fail(dataMap, "Could not click UseMeta Field Button");}
 		}
 
 	}
 
 
+	//Duplicate Function -> Already Done
 	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
 	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1251,6 +1263,7 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
 
 
 	@When("^.*(\\[Not\\] )? clicking_the_document_selection_select_searches_option$")
@@ -1258,9 +1271,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the radio button Select Searches:
-			throw new ImplementationException("clicking_the_document_selection_select_searches_option");
-		} else {
-			throw new ImplementationException("NOT clicking_the_document_selection_select_searches_option");
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocSelectSearchRadioButton().Enabled()  ;}}), Input.wait30);
+				prod.getDocSelectSearchRadioButton().Click();
+				pass(dataMap, "Succesfully clicked useMeta Field Button");
+			}
+			catch(Exception e) {fail(dataMap, "Could not press Select Search Radio Button");}
 		}
 
 	}
@@ -1270,7 +1288,16 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_document_selection_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4923In all cases, verify the option "Include Families" is checked green at the bottom by default.If Select Folders is selected:1. Verify a grid of folders appears with the first option being "All Folders".2. Verify no folders are selected by default.3. Verify clicking All Folders and clicking Mark complete returns "Total Docs Selected Incl. Families: x".The amount of documents should equal the number of docs here: http://mtpvtsslwb01.consilio.com/ICE/Datasets If Select Tags is selected:1. Verify a list of tags should appear in a grid. 2. Verify no tags are selected by default.3.  Verify multiple tags can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the tags associated to documents. You can tag documents here: http://mtpvtsslwb01.consilio.com/DocExplorer/Explorer.You can create new tags here: http://mtpvtsslwb01.consilio.com/TagsAndFolders/TagsAndFoldersIf Searches is selected:1. Verify a grid of Searches appear.2. Verify no Searches are selected by default.3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
+			//TC 4923In all cases, verify the option "Include Families" is checked green at the bottom by default.
+			//If Select Folders is selected:1. Verify a grid of folders appears with the first option being "All Folders".
+			//2. Verify no folders are selected by default.
+			//3. Verify clicking All Folders and clicking Mark complete returns "Total Docs Selected Incl. Families: x".The amount of documents should equal the number of docs here: http://mtpvtsslwb01.consilio.com/ICE/Datasets 
+			//If Select Tags is selected:1. Verify a list of tags should appear in a grid. 
+			//2. Verify no tags are selected by default.
+			//3.  Verify multiple tags can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the tags associated to documents. You can tag documents here: http://mtpvtsslwb01.consilio.com/DocExplorer/Explorer.You can create new tags here: http://mtpvtsslwb01.consilio.com/TagsAndFolders/TagsAndFolders
+			//If Searches is selected:1. Verify a grid of Searches appear.
+			//2. Verify no Searches are selected by default.
+			//3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
 			throw new ImplementationException("verify_the_document_selection_component_displays_the_correct_default_options");
 		} else {
 			throw new ImplementationException("NOT verify_the_document_selection_component_displays_the_correct_default_options");
