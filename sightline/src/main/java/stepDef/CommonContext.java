@@ -91,9 +91,9 @@ public class CommonContext {
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
 		
-		//prod = new ProductionPage(driver);
-		//prod.changeProjectSelector().Click();
-	    //prod.changeProjectSelectorField().Click();
+		prod = new ProductionPage(driver);
+		prod.changeProjectSelector().Click();
+	    prod.changeProjectSelectorField().Click();
 
 		if (scriptState) {
 			
@@ -114,6 +114,10 @@ public class CommonContext {
 		dataMap = new HashMap();
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		
+		ingest = new IngestionPage(driver);
+		ingest.changeProjectSelector().Click();
+		ingest.changeProjectSelectorField().Click();
+
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
 			webDriver.get(url+"Ingestion/Home");
@@ -122,7 +126,6 @@ public class CommonContext {
 		}
 		driver.waitForPageToBeReady();
 								
-		ingest = new IngestionPage(driver);
 	}
 
     

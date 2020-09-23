@@ -210,6 +210,8 @@ public class IngestionPage {
     public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
+    public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
+    public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
     
     public IngestionPage(Driver driver){
 
