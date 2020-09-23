@@ -2371,7 +2371,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_When_clicking_document_as_the_numbering_default_option_Then_verify_the_numbering_and_sorting_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

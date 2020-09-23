@@ -33,9 +33,7 @@ public class IngestionPage {
     public Element getDocumentKey(){ return driver.FindElementById("ddlKeyDatFile"); }
     public Element getNativeLST(){ return driver.FindElementById("ddlLoadNativeFile"); }
     
-    public Element getDATCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i"); }
-    public Element getLoadFile(){ return driver.FindElementById("ddlLoadDatFile"); }
-
+  
     public Element getNativeFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathNative"); }
     public Element getTextLST(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getTextFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathText"); }
@@ -163,7 +161,9 @@ public class IngestionPage {
     public Element getMP3Count(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[6]/td[2]"); }
     public Element getIngestionNameText(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div"); }
     public Element getIncrementalAnalyticsbutton(){ return driver.FindElementByXPath(".//*[@id='IncrementalAnalytics']/following-sibling::i"); }
-    
+    public Element getDATCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i"); }
+    public Element getLoadFile(){ return driver.FindElementById("ddlLoadDatFile"); }
+
     //added on 04-04
     public Element getIngestionName_CloseButton(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/se//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionName_ExecCloseButton(){ return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']"); }
@@ -222,54 +222,58 @@ public class IngestionPage {
 
     }
     
-    public void requiredFieldsAreEntered(boolean scriptState) 
+    public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) 
     		throws InterruptedException {
     	
     	driver.waitForPageToBeReady();
     	if (scriptState) {
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceSystem().SendKeys("TRUE");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
-    		getSpecifyLocation().SendKeys("Ingestion");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	if(dataMap.containsKey("source_system")) {
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
+	    		getSpecifySourceSystem().SendKeys(dataMap.get("source_system").toString());
+    		}
+	    	if(dataMap.containsKey("source_location")) {
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getSpecifyLocation().Visible()  ;}}), Input.wait30); 
+	    		getSpecifyLocation().SendKeys(dataMap.get("source_location").toString());
+	    	}
+	    	
+	    	if(dataMap.containsKey("source_folder")) {	
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("AttachDocument");    		
+	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
+	    	}
+	    	
+	    	if(dataMap.containsKey("")) {	
+	    		//DAT Options
+	    		getDAToptions(dataMap); 
+	    	}
     		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getDocumentKey().Visible()  ;}}), Input.wait30); 
-    		getDocumentKey().SendKeys("DocFileType");
-    		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
-    		getNativeCheckBox().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getNativeLST().Visible()  ;}}), Input.wait30); 
-    		getNativeLST().SendKeys("native_file");
-    		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
-    		getMP3CheckBoxstionButton().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getMP3LST().Visible()  ;}}), Input.wait30); 
-    		getMP3LST().SendKeys("AttachDocIDs.dat");
-    		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptCheckBoxstionButton().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptLST().SendKeys("AttachDocIDs2.dat");
-    		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getDateFormat().Visible()  ;}}), Input.wait30); 
-    		getDateFormat().SendKeys("MM/DD/YYY");
+	    	if(dataMap.containsKey("native_file")) {
+	    		//Native CheckBox
+	    		getNativeoptions(dataMap);
+	    		
+	    	}
+	    	
+//    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+//    		getMP3CheckBoxstionButton().Click();
+//
+//    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				getMP3LST().Visible()  ;}}), Input.wait30); 
+//    		getMP3LST().SendKeys("AttachDocIDs.dat");
+//    		
+//    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+//    		getAudioTranscriptCheckBoxstionButton().Click();
+//
+//    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
+//    		getAudioTranscriptLST().SendKeys("AttachDocIDs2.dat");
+//    		
+//    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				getDateFormat().Visible()  ;}}), Input.wait30); 
+//    		getDateFormat().SendKeys("MM/DD/YYY");
 
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -281,6 +285,40 @@ public class IngestionPage {
     		getAudioTranscriptLST().SendKeys("audio_file");
 		}
 
+    }
+    
+    public void getDAToptions(HashMap dataMap) throws InterruptedException {
+    	// Check DAT CHECKBOX
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getDATCheckbox().Visible()  ;}}), Input.wait30); 
+    	getDATCheckbox().Click();
+    	
+    	//Select load file
+    	
+    	
+    	//Select Documents Key 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDocumentKey().Visible()  ;}}), Input.wait30); 
+		getDocumentKey().SendKeys("DocFileType");
+		
+		
+    }
+    
+    public void getNativeoptions(HashMap dataMap) throws InterruptedException {
+    	//click Native checkbox 
+    	//select file
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
+    	getNativeCheckBox().Click();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getNativeLST().Visible()  ;}}), Input.wait30); 
+    	getNativeLST().SendKeys(dataMap.get("source_folder").toString());
+    }
+    
+    public void getTextoptions(HashMap dataMap) 
+    		throws InterruptedException {
+    	
     }
     
     public void openFirstIngestionSettings(boolean scriptState) 

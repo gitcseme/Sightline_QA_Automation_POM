@@ -58,10 +58,10 @@ public class IngestionContext extends CommonContext {
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30);
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 			click_next_button(scriptState, dataMap);
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
 		System.out.print("i am noe here");
 	}
@@ -86,10 +86,10 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
 
 	}
