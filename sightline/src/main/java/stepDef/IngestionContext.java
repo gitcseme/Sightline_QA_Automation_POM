@@ -52,7 +52,7 @@ public class IngestionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? new_ingestion_created$")
 	public void new_ingestion_created(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		System.out.print("i am here");
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30);
@@ -63,7 +63,7 @@ public class IngestionContext extends CommonContext {
 		} else {
 			ingest.requiredFieldsAreEntered(scriptState);
 		}
-
+		System.out.print("i am noe here");
 	}
 
 
@@ -1042,6 +1042,20 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
+			
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
+			ingest.getCopyPlayButton().Click();
+			
+			
 			throw new ImplementationException("click_copy_play_button");
 		} else {
 			throw new ImplementationException("NOT click_copy_play_button");

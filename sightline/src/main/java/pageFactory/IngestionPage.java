@@ -32,6 +32,10 @@ public class IngestionPage {
     public Element getSourceSelectionTextLoadFile(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getDocumentKey(){ return driver.FindElementById("ddlKeyDatFile"); }
     public Element getNativeLST(){ return driver.FindElementById("ddlLoadNativeFile"); }
+    
+    public Element getDATCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i"); }
+    public Element getLoadFile(){ return driver.FindElementById("ddlLoadDatFile"); }
+
     public Element getNativeFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathNative"); }
     public Element getTextLST(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getTextFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathText"); }
@@ -166,6 +170,7 @@ public class IngestionPage {
     public Element getIngestionActionButton(){ return driver.FindElementByXPath(".//*[@id='cardCanvas']//div[1]/a"); }
     public Element getFirstIngestionActionButton() {return driver.FindElementByXPath(".//*[@id='cardCanvas']//li[1]//div[1]/a");}
     public Element getIngestionAction_Wizard(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Open in Wizard')]"); }
+
     public Element getIngestionAction_Delete(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Delete')]"); }
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
@@ -199,7 +204,12 @@ public class IngestionPage {
     public Element getDATTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > strong");}
     public Element getNativeTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(4) > div > label > strong");}
     public Element getIngestionWizardTitle() {return driver.FindElementByCssSelector("#content > div:nth-child(3) > div > h1");}
-
+    
+    
+    //added on 200923
+    public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
+    public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
     
     public IngestionPage(Driver driver){
 
@@ -223,15 +233,14 @@ public class IngestionPage {
     				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
     		getSpecifyLocation().SendKeys("Ingestion");
 
-    		Thread.sleep(2000);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("AttachDocument");
-
+    		getSpecifySourceFolder().SendKeys("AttachDocument");    		
+    		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDocumentKey().Visible()  ;}}), Input.wait30); 
     		getDocumentKey().SendKeys("DocFileType");
-
+    		
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
     		getNativeCheckBox().Click();
@@ -269,7 +278,7 @@ public class IngestionPage {
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptLST().SendKeys("audio_file");
 		}
-		
+
     }
     
     public void openFirstIngestionSettings(boolean scriptState) 

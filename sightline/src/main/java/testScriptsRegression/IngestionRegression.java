@@ -2966,7 +2966,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_button_and_rename_MP3_doc_file_When_click_run_indexing_play_button_Then_verify_audio_indexing_fails() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

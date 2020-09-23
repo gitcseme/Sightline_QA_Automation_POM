@@ -90,9 +90,9 @@ public class CommonContext {
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
 		
-		prod = new ProductionPage(driver);
-		prod.changeProjectSelector().Click();
-	    prod.changeProjectSelectorField().Click();
+		//prod = new ProductionPage(driver);
+		//prod.changeProjectSelector().Click();
+	    //prod.changeProjectSelectorField().Click();
 
 		if (scriptState) {
 			/*
