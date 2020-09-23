@@ -86,7 +86,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search, Positive"})
+	@Test(groups = {"Search, Positive", "smoke"})
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_previous_search_query_selection() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -667,8 +667,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -702,8 +702,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -736,8 +736,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1014,8 +1014,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1054,8 +1054,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1089,8 +1089,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1127,8 +1127,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1163,8 +1163,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1200,8 +1200,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);

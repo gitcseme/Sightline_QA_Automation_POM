@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [SQA Regression Suite]" guice-stage="DEVELOPMENT">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [SQA Regression Suite]">
   <test thread-count="5" name="SiteLine(failed)">
     <groups>
       <run>
@@ -8,15 +8,15 @@
       </run>
     </groups>
     <classes>
-      <class name="testScriptsRegression.IngestionRegression">
+      <class name="testScriptsRegression.SearchRegression">
         <methods>
           <include name="startTest"/>
-          <include name="test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_button_and_rename_MP3_doc_file_When_click_run_indexing_play_button_Then_verify_audio_indexing_fails"/>
+          <include name="test_Given_verify_searched_save_When_Then_verify_current_login_session_previous_search_query_selection"/>
           <include name="end"/>
           <include name="start"/>
           <include name="endTest"/>
         </methods>
-      </class> <!-- testScriptsRegression.IngestionRegression -->
+      </class> <!-- testScriptsRegression.SearchRegression -->
     </classes>
   </test> <!-- SiteLine(failed) -->
 </suite> <!-- Failed suite [SQA Regression Suite] -->

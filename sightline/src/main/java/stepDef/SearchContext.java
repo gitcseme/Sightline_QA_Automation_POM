@@ -1,6 +1,7 @@
 package stepDef;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebDriver;
@@ -100,15 +101,20 @@ public class SearchContext extends CommonContext {
 			
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
-			sessionSearch.getNewSearch().Click();
+				sessionSearch.getNewSearch().Displayed()  ;}}), Input.wait30); 
+			if(sessionSearch.getNewSearch().Enabled())
+				sessionSearch.getNewSearch().Click();
 
+			/*
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSelectMetaData().Visible()  ;}}), Input.wait30);
-			
+		*/	
+
 			String metaDataOption = (String)dataMap.get("metaDataOption");
 			String metaDataValue = (String)dataMap.get("metaDataValue");
-			
+			if(metaDataOption == null) metaDataOption = "CustodianName";
+			if(metaDataValue == null) metaDataValue = "Testing_Purposes";
+
 			if (searchType.equalsIgnoreCase("metaData")) {
 				sessionSearch.selectMetaDataOption(metaDataOption);
 				sessionSearch.setMetaDataValue( null,metaDataValue,null);
@@ -124,7 +130,10 @@ public class SearchContext extends CommonContext {
 			} else if (searchType.equalsIgnoreCase("fulltext")) {
 				throw new ImplementationException("create search - fulltext");
 			}
-		
+
+			
+						
+
 			
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -137,26 +146,53 @@ public class SearchContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? save_search$")
 	public void save_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
+		Random rand = new Random();
 		if (scriptState) {
 			String metaDataOption = (String) dataMap.get("metaDataOption");
-			//
-			throw new ImplementationException("save_search");
-		} else {
-			throw new ImplementationException("NOT save_search");
+			String tempString = Integer.toString(rand.nextInt());
+			dataMap.put("CurrentSaveValue",tempString);
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSaveSearch_Button().Enabled()  ;}}), Input.wait30); 
+				sessionSearch.getSaveSearch_Button().Click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSavedSearch_MySearchesTab().Enabled()  ;}}), Input.wait30); 
+				sessionSearch.getSavedSearch_MySearchesTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSaveSearch_Name().Enabled()  ;}}), Input.wait30); 
+				sessionSearch.getSaveSearch_Name().SendKeys("Test Search"+ tempString);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSaveSearch_SaveButton().Enabled()  ;}}), Input.wait30); 
+				sessionSearch.getSaveSearch_SaveButton().Click();
+				pass(dataMap, "Saved a search successfully");
+			}
+			catch(Exception e) { fail(dataMap, "Failed To Click Save Search Button");}
 		}
+		else {fail(dataMap, "Failed To Click Save Search Button");}
 
 	}
 
 	@When("^.*(\\[Not\\] )? verify_searched_save$")
 	public void verify_searched_save(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
+		if(scriptState){
 			//
-			throw new ImplementationException("verify_searched_save");
-		} else {
-			throw new ImplementationException("NOT verify_searched_save");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchTable().Displayed()  ;}}), Input.wait30); 
+				System.out.println("1");
+				System.out.println(sessionSearch.getSearchTable().getText());
+
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not find the required search term");
+				
+			}
 		}
+		else {fail(dataMap,"Could not find the required search term");}
 
 	}
 

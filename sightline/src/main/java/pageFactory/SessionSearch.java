@@ -216,6 +216,8 @@ public class SessionSearch {
     public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
     public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
     public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
+    
+    public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
@@ -598,8 +600,7 @@ public class SessionSearch {
 		getBasicSearch_MetadataBtn().Click();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectMetaData().Visible()  ;}}), Input.wait30); 
-		
+				getSelectMetaData().Enabled() && getSelectMetaData().Visible()  ;}}), Input.wait30); 
 	    try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
