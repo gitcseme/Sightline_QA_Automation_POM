@@ -34,6 +34,7 @@ public class CommonContext {
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 		driver.Manage().window().maximize();
+		//driver.Manage().window().fullscreen();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         

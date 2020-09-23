@@ -65,7 +65,6 @@ public class ProductionContext extends CommonContext {
 		}
 
 		driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-		Thread.sleep(1200);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30); 
 		prod.getComponentsMarkComplete().Click();
@@ -229,7 +228,6 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_mp3_redaction_styles(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		try {
-			Thread.sleep(1000);
 			// Open MP3 section
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getProductionAdvanced().Displayed()  ;}}), Input.wait30);
@@ -687,21 +685,7 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_tiff_product_component_displays_the_correct_default_options$")
 	public void verify_the_tiff_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			//TC 4904
-			//* Verify the first section is Page Options
-			//* Verify in Page Options, the section "Single / Multiple:" has the options "Multi-page" and "Single Page" with Single Page selected as the default option with a radio button.
-			//* Verify in Page Options, the section "Format" has the options "Letter" and "A4" with Letter selected as the default option with a radio button.
-			//* Verify in Page Options, Blank Page Removal, Preserve Color, and Do not produce full content TIFFs or placeholder TIFFs for Natively Produced Docs: all have the option set to the red "x" by default. 
-			//* Verify in Page Options, the option "Rotate Landscape pages to portrait layout:" has the option "No Rotation" set to default.
-			//* Verify the "Branding" section contains the fields "Location", "Branding Text", "Speicify Default Branding", "Insert Metadata Field" link, and "+ Specify Branding by Selecting Tags:" link.
-			//* Verify in the Branding section for Location, there is a rectangle with the options, "LEFT", "CENTER", "RIGHT" at the top and bottom of the rectable with the words "--Page Body--" in the middle, and the top left "LEFT" option selected by default.
-			//* Verify in the Branding section, Specify Default Branding contains a section with the text "Enter default branding for the selection location on the page."
-			//* Verify in the "Placeholders" section, "Enable for Privileged Docs:" is checked green by default, there is a "Select tags" blue button to the right of Enable for Privileged Docs:, "Enable for Tech Tissue Docs:" is checked red by default, "+ Enable for Natively Produced Documents:" link with a question mark button next to it, and a rectangle with the watermark "Enter placeholder text for the privileged docs" with a link "Insert Metadata Field" under it. 
-			//* In the Redactions section, the option "Burn Redactions:" is checked red by default.
-			//* In the "Advanced" section, "Generate Load File (LST):" is checked green by default, "Load File Type:" is set to "Log" by default, and "Slip Sheets" is checked red by default.
-			try {
-
-				   //driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				try {
 
 				   //Check first section is Page Options
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -728,8 +712,6 @@ public class ProductionContext extends CommonContext {
 					   prod.getTIFFLetterRadio().Enabled()  ;}}), Input.wait30);
 				   Assert.assertEquals("true",prod.getTIFFLetterRadio().GetAttribute("checked"));
 
-				   System.out.println("First Set of buttons Passed");
-				   
 				    
 				   //Make Sure Preserve Color, Blank Page Removal and Do not produce full content are Disabled by default
 				    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -761,7 +743,7 @@ public class ProductionContext extends CommonContext {
 					  prod.getTIFF_LeftFooterBranding().Displayed()  ;}}), Input.wait30);
 
 				  //Verify Top Left is Default Selected
-				  if(!prod.getTIFF_LeftHeaderBranding().Selected()) System.out.println(prod.getTIFF_LeftHeaderBranding().Selected().toString());
+				  Assert.assertFalse(prod.getTIFF_LeftHeaderBranding().Selected());
 
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFF_RightHeaderBranding().Displayed()  ;}}), Input.wait30);
@@ -811,7 +793,7 @@ public class ProductionContext extends CommonContext {
 				  //Is Default Selected, but still comes up false when I call Selected() function ?
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					  prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
-				  System.out.println(prod.getTIFF_EnableforPrivilegedDocs().Selected().toString());
+				  if(prod.getTiFFPrivToggleButton().GetAttribute("checked") != null) Assert.assertEquals("true", prod.getTiFFPrivToggleButton().GetAttribute("checked").toString());
 
 				  //Verify Blue Tag Button next to Priviledged Docs
 				  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -924,10 +906,9 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_numbering_and_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			try {
-			
+			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumAndSortMarkCompleteBtn().Displayed() ;}}), Input.wait30);
-			Thread.sleep(1000);	
 			prod.getNumAndSortMarkCompleteBtn().Click();
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1120,12 +1101,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_viewing_doclist_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4906 part 1:
-			//* Verify the user is navigated to the DocList page.
-			//* Top left of the main page should display "SOURCE CRITERIA" with "Production" listed below with the button "Back to Source"
-			//* The number of matched documents listed in the Priv Guard screen should be displayed here. If 5 documented were said to be matched in the prior screen, make sure 5 documents are listed here.
-			//* Verify there should be text displaying "Showing 1 to x of x entries", replacing x with the number of matched documents. 
-			//
+			
 			driver.waitForPageToBeReady();
 			String url = driver.getUrl();
 			if(url.contains("Document/DocList")) {

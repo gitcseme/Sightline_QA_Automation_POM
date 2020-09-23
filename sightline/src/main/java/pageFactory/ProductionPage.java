@@ -401,6 +401,7 @@ public class ProductionPage {
     public Element getTIFFNativeQuestionMarkLink() {return driver.FindElementByClassName(".tiff-img-logic > div:nth-child(5) > label:nth-child(1) > a:nth-child(2)");}
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
+    public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
 
 
 
