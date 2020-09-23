@@ -139,7 +139,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"    })
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_source_doc_id_is_auto_mapped()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1706,7 +1706,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = { "Ingestion, Positive"})
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_first_50_records_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1746,7 +1746,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion, Positive"})
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_source_selection_types_are_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -1777,7 +1777,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion, Positive" })
+	@Test(groups = { "Ingestion", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_all_components_are_displayed_on_the_wizard()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -2151,7 +2151,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_multi_value_ascii_is_set_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2180,7 +2180,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingest_execution_details_page_When_click_copy_button_Then_verify_multi_value_ascii_is_set_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2385,7 +2385,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_Then_click_preview_run_button() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2423,7 +2423,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_source_field_is_auto_populated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2452,7 +2452,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_destination_field_is_auto_populated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2481,7 +2481,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_verify_mandatory_toast_message_is_displayed_When_Then_click_preview_run_button() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2825,7 +2825,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_and_create_saved_search_When_unpublish_ingestion_files_Then_verify_unpublish_for_audio_documents_is_successful() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2867,7 +2867,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_select_audio_indexing_Then_verify_no_error_message_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2896,7 +2896,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_error_messaged_displays_mp3_variant() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2926,7 +2926,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_When_run_ingestion_indexing_Then_verify_document_and_audio_docs_count_are_the_same() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2966,7 +2966,11 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
+<<<<<<< HEAD
 	@Test(groups = {"Ingestion", "Positive", "smoke"})
+=======
+	@Test(groups = {"Ingestion", "Positive"})
+>>>>>>> c86006d7c4fa261a11003aa227bbd1916477e7d8
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_button_and_rename_MP3_doc_file_When_click_run_indexing_play_button_Then_verify_audio_indexing_fails() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

@@ -34,6 +34,7 @@ public class CommonContext {
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 		driver.Manage().window().maximize();
+		//driver.Manage().window().fullscreen();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         
@@ -95,12 +96,8 @@ public class CommonContext {
 	    //prod.changeProjectSelectorField().Click();
 
 		if (scriptState) {
-			/*
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   prod.changeProjectSelector().Enabled()  ;}}), Input.wait30); 
-			System.out.println("1");
-	        */
-	        			String url = (String) dataMap.get("URL");
+			
+	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
 			
 		} else {
