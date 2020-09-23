@@ -9,11 +9,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -784,14 +786,22 @@ public class IngestionContext extends CommonContext {
 	public void verify_multi_value_ascii_is_set_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC6315 To verify In Ingestion, ADD Only ,ASCII(59) should be default New Line delimiterTC6316 To verify In Ingestion, Copy ,ASCII(59) should be default New Line delimiter
-			//
-			//* Verify multi-value section is set to ASCII(59) by default
-			//
-			throw new ImplementationException("verify_multi_value_ascii_is_set_by_default");
-		} else {
-			throw new ImplementationException("NOT verify_multi_value_ascii_is_set_by_default");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					ingest.getDATDelimitersNewLine().Displayed()  ;}}), Input.wait30);
+				//Get First Default Text of Dropdown
+				String defaultAsciiText = ingest.getDATDelimitersNewLine().selectFromDropdown().getFirstSelectedOption().getText();
+
+				//Make sure value is correct Ascii(59)
+				if(defaultAsciiText.equals("ASCII(59)")) pass(dataMap, "Default Value is Ascii 59");
+				else fail(dataMap, "Default Value is not Ascii 59");
+			}
+			catch(Exception e) {
+				fail(dataMap, "Was not able to parse default Ascii Value");
+				
+			}
 		}
+			
 
 	}
 
@@ -806,9 +816,15 @@ public class IngestionContext extends CommonContext {
 			//* Click on Copy option
 			//* Ingestion Wizard page is displayed
 			//
-			throw new ImplementationException("click_copy_button");
-		} else {
-			throw new ImplementationException("NOT click_copy_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getFirstIngestionTileName().Visible()  ;}}), Input.wait30); 
+				ingest.getFirstIngestionTileName().Click();
+
+				//Wait and Click Action Dropdown
+
+			}
+			catch(Exception e) {}
 		}
 
 	}

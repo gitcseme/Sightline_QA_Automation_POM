@@ -34,6 +34,7 @@ public class CommonContext {
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 		driver.Manage().window().maximize();
+		//driver.Manage().window().fullscreen();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         
@@ -89,15 +90,23 @@ public class CommonContext {
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
+		
+		prod = new ProductionPage(driver);
+		prod.changeProjectSelector().Click();
+	    prod.changeProjectSelectorField().Click();
+
 		if (scriptState) {
-			String url = (String) dataMap.get("URL");
+			
+	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
+			
 		} else {
 			webDriver.get("http://www.google.com");
 		}
+
+		
 		driver.waitForPageToBeReady();
 
-		prod = new ProductionPage(driver);
 	}
     
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
