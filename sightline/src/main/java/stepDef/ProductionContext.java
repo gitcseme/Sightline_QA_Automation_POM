@@ -1123,8 +1123,14 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocListTableEntry().Enabled()  ;}}), Input.wait30);
 				Assert.assertEquals(5, prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size());
+<<<<<<< HEAD
 
 
+=======
+				pass(dataMap,"You are in the Doc List View");
+			} else {
+				fail(dataMap,"You are not in the Doc List view");
+>>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 			}
 		}
 
