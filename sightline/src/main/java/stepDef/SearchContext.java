@@ -1,9 +1,11 @@
 package stepDef;
 
+import java.awt.List;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -11,6 +13,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
@@ -101,9 +104,10 @@ public class SearchContext extends CommonContext {
 			
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				sessionSearch.getNewSearch().Displayed()  ;}}), Input.wait30); 
+				sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
 			if(sessionSearch.getNewSearch().Enabled())
 				sessionSearch.getNewSearch().Click();
+				driver.waitForPageToBeReady();
 
 			/*
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -151,21 +155,32 @@ public class SearchContext extends CommonContext {
 		if (scriptState) {
 			String metaDataOption = (String) dataMap.get("metaDataOption");
 			String tempString = Integer.toString(rand.nextInt());
-			dataMap.put("CurrentSaveValue",tempString);
+			dataMap.put("CurrentSaveValue","Test Search" + tempString);
+			//Get #of Search Buttons on Page
+			int searchSize = sessionSearch.getSaveSearchButtons().FindWebElements().size();
 			try {
+
+				//Get Current Search Button (Last Index of List)
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getSaveSearch_Button().Enabled()  ;}}), Input.wait30); 
-				sessionSearch.getSaveSearch_Button().Click();
+					sessionSearch.getSaveSearchButtons().FindWebElements().get(searchSize-1).isEnabled()  ;}}), Input.wait30); 
+				sessionSearch.getSaveSearchButtons().FindWebElements().get(searchSize-1).click();
+
+				//Choose Correct Search Tree
 				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSavedSearch_MySearchesTab().Enabled()  ;}}), Input.wait30); 
 				sessionSearch.getSavedSearch_MySearchesTab().Click();
+
+				//Put in Random Test Name
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSaveSearch_Name().Enabled()  ;}}), Input.wait30); 
 				sessionSearch.getSaveSearch_Name().SendKeys("Test Search"+ tempString);
+
+				//Submit Save Search
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSaveSearch_SaveButton().Enabled()  ;}}), Input.wait30); 
 				sessionSearch.getSaveSearch_SaveButton().Click();
+				driver.waitForPageToBeReady();
 				pass(dataMap, "Saved a search successfully");
 			}
 			catch(Exception e) { fail(dataMap, "Failed To Click Save Search Button");}
@@ -180,12 +195,15 @@ public class SearchContext extends CommonContext {
 		if(scriptState){
 			//
 			try {
+				int searchSize = sessionSearch.getSearchTabName().FindWebElements().size();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getSearchTable().Displayed()  ;}}), Input.wait30); 
-				System.out.println("1");
-				System.out.println(sessionSearch.getSearchTable().getText());
-
+					sessionSearch.getSearchTabName().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
 				
+				String nameToCompare = sessionSearch.getSearchTabName().FindWebElements().get(0).getText();
+				System.out.println(nameToCompare);
+				System.out.println(((String)dataMap.get("CurrentSaveValue")).toLowerCase());
+				System.out.println((nameToCompare.split(":")[1]).toLowerCase());
+				Assert.assertEquals(((String)dataMap.get("CurrentSaveValue")).toLowerCase(), (nameToCompare.split(":")[1]).toLowerCase());
 			}
 			catch(Exception e) {
 				fail(dataMap, "Could not find the required search term");

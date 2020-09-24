@@ -218,6 +218,13 @@ public class SessionSearch {
     public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
     
     public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
+    //public Element getSearchTabName() {return driver.FindElementByXPath("span[@class = 'tablbl']");}
+    //public Element getSearchTabName() { return driver.FindElementByXPath("//span[@class = 'SrchText']");}
+    public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
+    //public ElementCollection getSearchTabName() { return driver.FindElementsByClassName("tablbl");
+    
+    public ElementCollection getMetaDataSearchButtons() {return driver.FindElementsById("metadataHelper");}
+    public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
@@ -595,18 +602,19 @@ public class SessionSearch {
    }
     
     public void selectMetaDataOption(String metaDataField) {
+
+		driver.waitForPageToBeReady();
+		//Get Dynamic MetaData Button List Size
+		int metaDataButtonSize = getMetaDataSearchButtons().FindWebElements().size();
+
+				
+		//Choose Current MetaData Button (Last Index of List)
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicSearch_MetadataBtn().Enabled()  ;}}), Input.wait30); 
-		getBasicSearch_MetadataBtn().Click();
+			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
+		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Enabled() && getSelectMetaData().Visible()  ;}}), Input.wait30); 
-	    try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
     	
     }
