@@ -87,7 +87,7 @@ public class CommonContext {
 	public void login_as_sau(boolean scriptState, HashMap dataMap) {
 		lp = new LoginPage(driver);
 		if (scriptState) {
-			lp.loginToSightLine("juan.guzman@consilio.com","", true, dataMap);
+			lp.loginToSightLine("juan.guzman@consilio.com","Q@test_10", true, dataMap);
 			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
 		} else {
 			String uid = (String) dataMap.get("uid");
@@ -148,10 +148,9 @@ public class CommonContext {
 		dataMap = new HashMap();
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		
-
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"User/UserListView");
+			webDriver.get(url+"Project/Project");
 		} else {
 			webDriver.get("http://www.google.com");
 		}

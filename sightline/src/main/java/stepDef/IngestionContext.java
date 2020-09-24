@@ -52,7 +52,6 @@ public class IngestionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? new_ingestion_created$")
 	public void new_ingestion_created(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		System.out.print("i am here");
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30);
@@ -1112,4 +1111,53 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@And("^.*(\\[Not\\] )? click_add_project_button$")
+	public void click_add_project_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		driver.waitForPageToBeReady();
+
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30); 
+			ingest.getAddNewProjectBtn().Click();
+			pass(dataMap,"You clicked Add project succesfully");
+		} else {
+			fail(dataMap,"You didn't click Add project succesfully");
+
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? click_kick_off_help_icon$")
+	public void click_kick_off_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffHelpIcon().Visible() ;}}), Input.wait30); 
+					ingest.getKickOffHelpIcon().Click();
+			pass(dataMap,"You clicked Kick off Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Kick off Help Icon succesfully");
+
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? click_run_analytics_help_icon$")
+	public void click_run_analytics_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalytics().Visible() ;}}), Input.wait30); 
+					ingest.getRunIncAnalytics().Click();
+			pass(dataMap,"You clicked Run Analytics Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Run Analytics off Help Icon succesfully");
+
+		}
+
+	}
+	
+	
+	
+	
 }

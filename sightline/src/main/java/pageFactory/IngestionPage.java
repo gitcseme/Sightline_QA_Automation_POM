@@ -226,16 +226,12 @@ public class IngestionPage {
     
     
     //System Admin Profile
-    public Element getAddNewProject() { return driver.FindElementById("btnAdd");}
+    public Element getAddNewProjectBtn() { return driver.FindElementById("btnAdd");}
     public Element getKickOffText() { return driver.FindElementByCssSelector("#popover818726 > div.popover-content");}
     public Element getRunIncAnalyticsText() {return driver.FindElementByCssSelector("#popover207925 > div.popover-content");}
-    //public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("IngestionErrorsHelp");}
-    
-    //We need to iterate through the help icons to click the correct one
-    public ElementCollection getKickOffHelpIcon() { return driver.FindElementsById("IngestionErrorsHelp");}
+    public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label>#IngestionErrorsHelp");}
+    public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
 
-
-    
     public IngestionPage(Driver driver){
 
         this.driver = driver;
