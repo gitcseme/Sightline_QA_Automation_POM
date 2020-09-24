@@ -612,6 +612,7 @@ public class SessionSearch {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
 		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
+		System.out.println("Clicked");
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Enabled() && getSelectMetaData().Visible()  ;}}), Input.wait30); 

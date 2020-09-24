@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -121,6 +122,8 @@ public class SearchContext extends CommonContext {
 
 			if (searchType.equalsIgnoreCase("metaData")) {
 				sessionSearch.selectMetaDataOption(metaDataOption);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataSearchText1().Enabled()  ;}}), Input.wait30); 
 				sessionSearch.setMetaDataValue( null,metaDataValue,null);
 			} else if (searchType.equalsIgnoreCase("is")) {
 				sessionSearch.selectMetaDataOption(metaDataOption);
@@ -154,7 +157,7 @@ public class SearchContext extends CommonContext {
 		Random rand = new Random();
 		if (scriptState) {
 			String metaDataOption = (String) dataMap.get("metaDataOption");
-			String tempString = Integer.toString(rand.nextInt());
+			String tempString = Integer.toString(rand.nextInt(2000) +1);
 			dataMap.put("CurrentSaveValue","Test Search" + tempString);
 			//Get #of Search Buttons on Page
 			int searchSize = sessionSearch.getSaveSearchButtons().FindWebElements().size();
@@ -195,19 +198,15 @@ public class SearchContext extends CommonContext {
 		if(scriptState){
 			//
 			try {
-				int searchSize = sessionSearch.getSearchTabName().FindWebElements().size();
+				System.out.print("round enter: ");
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchTabName().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
-				
 				String nameToCompare = sessionSearch.getSearchTabName().FindWebElements().get(0).getText();
-				System.out.println(nameToCompare);
-				System.out.println(((String)dataMap.get("CurrentSaveValue")).toLowerCase());
-				System.out.println((nameToCompare.split(":")[1]).toLowerCase());
 				Assert.assertEquals(((String)dataMap.get("CurrentSaveValue")).toLowerCase(), (nameToCompare.split(":")[1]).toLowerCase());
+				System.out.println("and Passed");
 			}
 			catch(Exception e) {
 				fail(dataMap, "Could not find the required search term");
-				
 			}
 		}
 		else {fail(dataMap,"Could not find the required search term");}
@@ -218,10 +217,16 @@ public class SearchContext extends CommonContext {
 	public void verify_current_login_session_previous_search_query_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_current_login_session_previous_search_query_selection");
-		} else {
-			throw new ImplementationException("NOT verify_current_login_session_previous_search_query_selection");
+			//Click on all Search Queries in Right Side Tab
+			//Verify That Queries Still exist from previous Searches of the Session
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTabName().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+			for(WebElement element: sessionSearch.getSearchTabName().FindWebElements()){
+				if(!element.isSelected()){
+					element.click();
+				}
+			}
+			
 		}
 
 	}
