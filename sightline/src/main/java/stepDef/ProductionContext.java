@@ -1124,7 +1124,6 @@ public class ProductionContext extends CommonContext {
 					prod.getDocListTableEntry().Enabled()  ;}}), Input.wait30);
 				Assert.assertEquals(5, prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size());
 
-
 				pass(dataMap,"You are in the Doc List View");
 			} else {
 				fail(dataMap,"You are not in the Doc List view");
