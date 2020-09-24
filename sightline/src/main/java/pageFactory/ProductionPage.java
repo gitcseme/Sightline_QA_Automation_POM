@@ -344,10 +344,7 @@ public class ProductionPage {
 
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
-<<<<<<< HEAD
-=======
     public Element getNewProject() { return driver.FindElementById("project-selector");}
->>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}

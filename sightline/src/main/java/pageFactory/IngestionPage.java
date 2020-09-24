@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import testScriptsSmoke.Input;
 
 public class IngestionPage {
@@ -212,6 +213,18 @@ public class IngestionPage {
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
+    
+    
+    //System Admin Profile
+    public Element getAddNewProject() { return driver.FindElementById("btnAdd");}
+    public Element getKickOffText() { return driver.FindElementByCssSelector("#popover818726 > div.popover-content");}
+    public Element getRunIncAnalyticsText() {return driver.FindElementByCssSelector("#popover207925 > div.popover-content");}
+    //public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("IngestionErrorsHelp");}
+    
+    //We need to iterate through the help icons to click the correct one
+    public ElementCollection getKickOffHelpIcon() { return driver.FindElementsById("IngestionErrorsHelp");}
+
+
     
     public IngestionPage(Driver driver){
 

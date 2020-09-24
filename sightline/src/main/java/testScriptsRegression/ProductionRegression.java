@@ -1010,10 +1010,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 	@Test(groups = {"Production", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_tech_issue_placeholder_is_available() throws Throwable
 	{
@@ -1265,10 +1262,6 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-<<<<<<< HEAD
-=======
-	
->>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 	@Test(groups = {"Production", "Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_begin_new_production_process_Then_verify_production_tiff_pdf_advanced_options() throws Throwable
 	{
@@ -1467,10 +1460,6 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_on_the_docview_button_Then_verify_viewing_docview_for_priv_guard() throws Throwable
 	{
@@ -2383,12 +2372,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-<<<<<<< HEAD
-	@Test(groups = {"Production", "Positive"})
-=======
-
 	@Test(groups = {"Production", "Positive", "smoke"})
->>>>>>> 2ae8b084a33fcb9f83984127d6d296990aaab8ae
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_When_clicking_document_as_the_numbering_default_option_Then_verify_the_numbering_and_sorting_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
