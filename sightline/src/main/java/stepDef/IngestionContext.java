@@ -1,5 +1,7 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +12,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.JavascriptExecutor;  
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -36,6 +39,7 @@ public class IngestionContext extends CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	 JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
 	@And("^.*(\\[Not\\] )? add_a_new_ingestion_btn_is_clicked$")
@@ -52,18 +56,17 @@ public class IngestionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? new_ingestion_created$")
 	public void new_ingestion_created(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30);
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 			click_next_button(scriptState, dataMap);
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
-
+		System.out.print("i am noe here");
 	}
 
 
@@ -86,10 +89,10 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
 
 	}
@@ -1042,6 +1045,20 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
+			
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
+			ingest.getCopyPlayButton().Click();
+			
+			
 			throw new ImplementationException("click_copy_play_button");
 		} else {
 			throw new ImplementationException("NOT click_copy_play_button");
@@ -1098,4 +1115,120 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@And("^.*(\\[Not\\] )? click_add_project_button$")
+	public void click_add_project_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		driver.waitForPageToBeReady();
+		if (scriptState) {
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getAddNewProjectBtn().Enabled() && ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30);
+				ingest.getAddNewProjectBtn().Click();
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You didn't click Add project succesfully");
+			}
+			
+			pass(dataMap,"You clicked Add project succesfully");
+
+		} else {
+			fail(dataMap,"You didn't click Add project succesfully");
+
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? click_kick_off_help_icon$")
+	public void click_kick_off_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffHelpIcon().Visible() ;}}), Input.wait30); 
+					ingest.getKickOffHelpIcon().Click();
+			pass(dataMap,"You clicked Kick off Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Kick off Help Icon succesfully");
+
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? click_run_analytics_help_icon$")
+	public void click_run_analytics_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalytics().Visible() ;}}), Input.wait30); 
+					ingest.getRunIncAnalytics().Click();
+			pass(dataMap,"You clicked Run Analytics Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Run Analytics off Help Icon succesfully");
+
+		}	}
+	
+	@Then("^.*(\\[Not\\] )? verify_project_screen_displays_expected_options$")
+	public void verify_project_screen_displays_expected_options (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30);
+						
+			assertEquals("Kick Off Analytics Automatically: ", ingest.getKickOffText().getText());
+			assertEquals("Run Incremental Analytics for New Small Data(<20%): ",ingest.getRunIncAnalyticsText().getText());
+			
+			pass(dataMap,"Kick off Text and Run Analytics Text are displayed");
+		} else {
+			fail(dataMap,"Kick off Text and Run Analytics Text are not displayed");
+		}
+	
+	}
+	@Then("^.*(\\[Not\\] )? verify_run_incremental_analytics_option_displays_correct_message$")
+	public void verify_run_incremental_analytics_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			String AnalyticsMsg = "If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is <=20% of the existing data.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsPopUpText().Visible() ;}}), Input.wait30); 
+			
+			String RunIncAnalyticsText = ingest.getRunIncAnalyticsPopUpText().getText();
+			
+			Assert.assertEquals(AnalyticsMsg, RunIncAnalyticsText);
+			pass(dataMap,"Run Analytics Message is displayed correctly");
+			
+		} 
+	
+	}
+	
+	@Then("^.*(\\[Not\\] )?  verify_kick_off_analytics_help_option_displays_correct_message$")
+	public void  verify_kick_off_analytics_help_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			String KickOffMsg = "If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffPopUpText().Visible() ;}}), Input.wait30); 
+			
+			String KickOffAnalytics = ingest.getKickOffPopUpText().getText();
+			
+			Assert.assertEquals(KickOffMsg, KickOffAnalytics);
+			pass(dataMap,"Kick Off Analytics Message is displayed correctly");
+			
+		} else {
+			fail(dataMap,"Kick Off Analytics Message is not displayed correctly");
+		}
+
+	
+	}
+	
+	
+	
+	
 }
