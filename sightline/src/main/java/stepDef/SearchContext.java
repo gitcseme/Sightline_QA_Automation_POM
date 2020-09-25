@@ -150,9 +150,6 @@ public class SearchContext extends CommonContext {
 			} 
 
 			
-						
-
-			
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
@@ -222,6 +219,7 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Test Case 84?
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_previous_search_query_selection$")
 	public void verify_current_login_session_previous_search_query_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -254,14 +252,44 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Test Case 80
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_saved_search_SEARCH5$")
 	public void verify_current_login_session_saved_search_SEARCH5(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//[Test Case 80 - verify_current_login_session_saved_search_SEARCH5]
-			throw new ImplementationException("verify_current_login_session_saved_search_SEARCH5");
-		} else {
-			throw new ImplementationException("NOT verify_current_login_session_saved_search_SEARCH5");
+			//On 5th Search - > Click Search Button
+			//Click add new Search
+			//Verify 5th Search Query Was Stored Succesfully
+			try {
+				int numOfSearches = sessionSearch.getSavedQueryButtons().FindWebElements().size();
+
+				//After 5th Search Query is Saved -> Click on Search Button 
+				//6th Query Will be created Automatically?
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchButtons().FindWebElements().get(numOfSearches-1).isDisplayed()  ;}}), Input.wait30); 
+				sessionSearch.getSearchButtons().FindWebElements().get(numOfSearches-1).click();
+
+				
+				//Need to think of a better way to deal with this wait after search
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+					
+				//Click on 5th Saved Search
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isEnabled() &&  sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isDisplayed() ;}}), Input.wait30); 
+				Thread.sleep(3000);
+				sessionSearch.getSavedQueryButtons().FindWebElements().get(1).click();
+
+				for(int i =0; i<numOfSearches; i++) {
+					if(!sessionSearch.getQueryText2(i).getText().equals("")) {
+						Assert.assertEquals((sessionSearch.getQueryText2(i).getText()), ((ArrayList<String>)dataMap.get("queryText")).get(4));
+					}
+				}
+
+			}
+			catch(Exception e) {e.printStackTrace();}
+
 		}
 
 	}

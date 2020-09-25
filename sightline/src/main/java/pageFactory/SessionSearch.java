@@ -218,16 +218,15 @@ public class SessionSearch {
     public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
     
     public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
-    //public Element getSearchTabName() {return driver.FindElementByXPath("span[@class = 'tablbl']");}
-    //public Element getSearchTabName() { return driver.FindElementByXPath("//span[@class = 'SrchText']");}
     public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
-    //public ElementCollection getSearchTabName() { return driver.FindElementsByClassName("tablbl");
-    
+    public Element getSearchLoadingGIF() {return driver.FindElementById("imgLoadPM");}
     public ElementCollection getMetaDataSearchButtons() {return driver.FindElementsById("metadataHelper");}
     public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
-    public ElementCollection getSavedQueryButtons() {return driver.FindElementsByXPath("//a[@class = 'liClick ui-tabs-anchor']");}
+    public ElementCollection getSearchButtons() {return driver.FindElementsById("btnBasicSearch");}
+    public ElementCollection getSavedQueryButtons() {return driver.FindElementsByXPath("//a[contains(@class,  'liClick ui-tabs-anchor')]");}
     public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
-    public Element getQueryText3() {return driver.FindElementByXPath("div[@id='tabs-1']//li[contains(@class, 'textboxlist-bit-box-deletable')]/span");}
+    public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
+    public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
