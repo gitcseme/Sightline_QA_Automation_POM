@@ -10,6 +10,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.JavascriptExecutor;  
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -36,6 +37,7 @@ public class IngestionContext extends CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	 JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
 	@And("^.*(\\[Not\\] )? add_a_new_ingestion_btn_is_clicked$")
@@ -1115,12 +1117,19 @@ public class IngestionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? click_add_project_button$")
 	public void click_add_project_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		driver.waitForPageToBeReady();
-
 		if (scriptState) {
+			try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30); 
-			ingest.getAddNewProjectBtn().Click();
+	    			ingest.getAddNewProjectBtn().Enabled() && ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30);
+				ingest.getAddNewProjectBtn().Click();
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You didn't click Add project succesfully");
+			}
+			
 			pass(dataMap,"You clicked Add project succesfully");
+
 		} else {
 			fail(dataMap,"You didn't click Add project succesfully");
 
@@ -1129,8 +1138,9 @@ public class IngestionContext extends CommonContext {
 	
 	@And("^.*(\\[Not\\] )? click_kick_off_help_icon$")
 	public void click_kick_off_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
 		if (scriptState) {
-			
+			driver.scrollingToBottomofAPage();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getKickOffHelpIcon().Visible() ;}}), Input.wait30); 
 					ingest.getKickOffHelpIcon().Click();
@@ -1139,7 +1149,6 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap,"You didn't clicked Kick off Help Icon succesfully");
 
 		}
-
 	}
 	
 	@And("^.*(\\[Not\\] )? click_run_analytics_help_icon$")
@@ -1154,7 +1163,46 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap,"You didn't clicked Run Analytics off Help Icon succesfully");
 
 		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? verify_run_incremental_analytics_option_displays_correct_message$")
+	public void verify_run_incremental_analytics_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			
+			String AnalyticsMsg = "If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is <=20% of the existing data.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30); 
+			
+			String RunIncAnalyticsText = ingest.getRunIncAnalyticsText().toString();
+			
+			Assert.assertEquals(AnalyticsMsg, RunIncAnalyticsText);
+			pass(dataMap,"Run Analytics Message is displayed correctly");
+			
+		} 
+	
+	}
+	
+	@Then("^.*(\\[Not\\] )?  verify_kick_off_analytics_help_option_displays_correct_message$")
+	public void  verify_kick_off_analytics_help_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			String KickOffMsg = "If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
+			
+			String KickOffAnalytics = ingest.getKickOffText().toString();
+			
+			Assert.assertEquals(KickOffMsg, KickOffAnalytics);
+			pass(dataMap,"Kick Off Analytics Message is displayed correctly");
+		} else {
+			fail(dataMap,"Kick Off Analytics Message is not displayed correctly");
+		}
+
+	
 	}
 	
 	

@@ -86,6 +86,9 @@ public class CommonContext {
     @And("^(.*\\[Not\\] )?login_as_sau$")
 	public void login_as_sau(boolean scriptState, HashMap dataMap) {
 		lp = new LoginPage(driver);
+		
+		ingest = new IngestionPage(driver);
+		
 		if (scriptState) {
 			lp.loginToSightLine("juan.guzman@consilio.com","Q@test_10", true, dataMap);
 			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
@@ -154,7 +157,7 @@ public class CommonContext {
 		} else {
 			webDriver.get("http://www.google.com");
 		}
-		driver.waitForPageToBeReady();
+			driver.waitForPageToBeReady();
 								
 	}
     
