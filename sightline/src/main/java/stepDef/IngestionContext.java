@@ -1177,9 +1177,7 @@ public class IngestionContext extends CommonContext {
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30);
-			
-			System.out.println("Text from selector   " + ingest.getKickOffText().getText());
-			
+						
 			assertEquals("Kick Off Analytics Automatically: ", ingest.getKickOffText().getText());
 			assertEquals("Run Incremental Analytics for New Small Data(<20%): ",ingest.getRunIncAnalyticsText().getText());
 			
