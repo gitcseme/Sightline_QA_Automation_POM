@@ -234,8 +234,10 @@ public class IngestionPage {
     //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//a[@href ='/en-us/Project/CreateProject']");}
     
     public Element getAddNewProjectBtn() {return driver.FindElementByCssSelector("#content > form > div:nth-child(3) > div > div.entityDiv > div > div.col-md-4 > p> #btnAdd");}
-    public Element getKickOffText() { return driver.FindElementByCssSelector("#popover818726 > div.popover-content");}
-    public Element getRunIncAnalyticsText() {return driver.FindElementByCssSelector("#popover207925 > div.popover-content");}
+    public Element getKickOffPopUpText() { return driver.FindElementByCssSelector("#popover818726 > div.popover-content");}
+    public Element getKickOffText() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label");}
+    public Element getRunIncAnalyticsText() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label");}
+    public Element getRunIncAnalyticsPopUpText() {return driver.FindElementByCssSelector("#popover207925 > div.popover-content");}
     public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label>#IngestionErrorsHelp");}
     public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
 

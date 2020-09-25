@@ -4893,42 +4893,6 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-
-	//Jose Testing 
-	//
-	//
-	//
-	@Test(groups = {"Ingestion, Positive","smoke"})
-	public void test_Jose_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_button_and_Not_rename_MP3_doc_file_When_click_run_indexing_play_button_Then_Not_verify_audio_indexing_fails() throws Throwable
-	{
-		HashMap dataMap = new HashMap();
-
-		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and click_preview_run_button and click_run_ingest_button and click_copy_play_button and [Not] rename_MP3_doc_file When click_run_indexing_play_button Then [Not] verify_audio_indexing_fails");
-
-		dataMap.put("ExtentTest",test);
-
-		try {
-			context.sightline_is_launched(true, dataMap);
-			context.login_as_sau(true, dataMap);
-			context.on_admin_home_page(true, dataMap);
-			context.click_add_project_button(true, dataMap);
-			context.click_kick_off_help_icon(true, dataMap);
-			context.click_run_analytics_help_icon(true, dataMap);
-			
-
-		} catch (ImplementationException e) {
-			test.log(LogStatus.SKIP, e.getMessage());
-			Assert.assertTrue(e.getMessage(), false);;
-		} catch (Exception e) {
-			test.log(LogStatus.FATAL, e.getMessage());
-			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
-			context.close_browser(true, dataMap);
-		}
-
-		report.endTest(test);
-	}
-	
 	
 	@Test(groups = {"Ingestion, Negative"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_button_and_Not_rename_MP3_doc_file_When_click_run_indexing_play_button_Then_Not_verify_audio_indexing_fails() throws Throwable

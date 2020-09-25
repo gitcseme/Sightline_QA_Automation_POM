@@ -1,5 +1,7 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1165,6 +1167,28 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 	
+	@Then("^.*(\\[Not\\] )? verify_project_screen_displays_expected_options$")
+	public void verify_project_screen_displays_expected_options (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
+			
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30);
+			
+			assertEquals("Kick Off Analytics Automatically", ingest.getKickOffText().GetAttribute("title").toString());
+			assertEquals("Run Incremental Analytics for New Small Data(<20%)",ingest.getRunIncAnalyticsText().GetAttribute("title").toString());
+			
+			pass(dataMap,"Kick off Text and Run Analytics Text are displayed");
+		} else {
+			fail(dataMap,"Kick off Text and Run Analytics Text are not displayed");
+		}
+	
+	}
 	@Then("^.*(\\[Not\\] )? verify_run_incremental_analytics_option_displays_correct_message$")
 	public void verify_run_incremental_analytics_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1173,9 +1197,9 @@ public class IngestionContext extends CommonContext {
 			String AnalyticsMsg = "If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is <=20% of the existing data.";
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30); 
+	    			ingest.getRunIncAnalyticsPopUpText().Visible() ;}}), Input.wait30); 
 			
-			String RunIncAnalyticsText = ingest.getRunIncAnalyticsText().toString();
+			String RunIncAnalyticsText = ingest.getRunIncAnalyticsPopUpText().toString();
 			
 			Assert.assertEquals(AnalyticsMsg, RunIncAnalyticsText);
 			pass(dataMap,"Run Analytics Message is displayed correctly");
@@ -1192,9 +1216,9 @@ public class IngestionContext extends CommonContext {
 			String KickOffMsg = "If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.";
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
+	    			ingest.getKickOffPopUpText().Visible() ;}}), Input.wait30); 
 			
-			String KickOffAnalytics = ingest.getKickOffText().toString();
+			String KickOffAnalytics = ingest.getKickOffPopUpText().toString();
 			
 			Assert.assertEquals(KickOffMsg, KickOffAnalytics);
 			pass(dataMap,"Kick Off Analytics Message is displayed correctly");
