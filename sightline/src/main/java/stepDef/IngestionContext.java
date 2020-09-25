@@ -1156,7 +1156,7 @@ public class IngestionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? click_run_analytics_help_icon$")
 	public void click_run_analytics_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			
+			driver.scrollingToBottomofAPage();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getRunIncAnalytics().Visible() ;}}), Input.wait30); 
 					ingest.getRunIncAnalytics().Click();
@@ -1164,8 +1164,7 @@ public class IngestionContext extends CommonContext {
 		} else {
 			fail(dataMap,"You didn't clicked Run Analytics off Help Icon succesfully");
 
-		}
-	}
+		}	}
 	
 	@Then("^.*(\\[Not\\] )? verify_project_screen_displays_expected_options$")
 	public void verify_project_screen_displays_expected_options (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -1176,12 +1175,13 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
 			
 			
-			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30);
 			
-			assertEquals("Kick Off Analytics Automatically", ingest.getKickOffText().GetAttribute("title").toString());
-			assertEquals("Run Incremental Analytics for New Small Data(<20%)",ingest.getRunIncAnalyticsText().GetAttribute("title").toString());
+			System.out.println("Text from selector   " + ingest.getKickOffText().getText());
+			
+			assertEquals("Kick Off Analytics Automatically: ", ingest.getKickOffText().getText());
+			assertEquals("Run Incremental Analytics for New Small Data(<20%): ",ingest.getRunIncAnalyticsText().getText());
 			
 			pass(dataMap,"Kick off Text and Run Analytics Text are displayed");
 		} else {
@@ -1199,7 +1199,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getRunIncAnalyticsPopUpText().Visible() ;}}), Input.wait30); 
 			
-			String RunIncAnalyticsText = ingest.getRunIncAnalyticsPopUpText().toString();
+			String RunIncAnalyticsText = ingest.getRunIncAnalyticsPopUpText().getText();
 			
 			Assert.assertEquals(AnalyticsMsg, RunIncAnalyticsText);
 			pass(dataMap,"Run Analytics Message is displayed correctly");
@@ -1218,10 +1218,11 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getKickOffPopUpText().Visible() ;}}), Input.wait30); 
 			
-			String KickOffAnalytics = ingest.getKickOffPopUpText().toString();
+			String KickOffAnalytics = ingest.getKickOffPopUpText().getText();
 			
 			Assert.assertEquals(KickOffMsg, KickOffAnalytics);
 			pass(dataMap,"Kick Off Analytics Message is displayed correctly");
+			
 		} else {
 			fail(dataMap,"Kick Off Analytics Message is not displayed correctly");
 		}

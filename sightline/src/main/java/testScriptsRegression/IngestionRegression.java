@@ -4934,5 +4934,92 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+	
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_When_click_add_project_button_Then_verify_project_screen_displays_expected_options() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_When_click_add_project_button_Then_verify_project_screen_displays_expected_options");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_sau(true, dataMap);
+			context.on_admin_home_page(true, dataMap);
+			context.click_add_project_button(true, dataMap);
+			context.verify_project_screen_displays_expected_options(true, dataMap);;
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+	
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_and_click_add_project_button_When_click_kick_off_help_icon_Then_verify_kick_off_analytics_help_option_displays_correct_message() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_and_click_add_project_button_When_click_kick_off_help_icon_Then_verify_kick_off_analytics_help_option_displays_correct_message");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_sau(true, dataMap);
+			context.on_admin_home_page(true, dataMap);
+			context.click_add_project_button(true, dataMap);
+			context.click_kick_off_help_icon(true, dataMap);
+			context.verify_kick_off_analytics_help_option_displays_correct_message(true, dataMap);	
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+	
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_and_click_add_project_button_When_click_run_incremental_help_icon_Then_verify_run_incremental_analytics_option_displays_correct_message () throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given_sightline_is_launched_and_login_as_sau_and_on_project_home_page_and_click_add_project_button_When_click_run_incremental_help_icon_Then_verify_run_incremental_analytics_option_displays_correct_message");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_sau(true, dataMap);
+			context.on_admin_home_page(true, dataMap);
+			context.click_add_project_button(true, dataMap);
+			context.click_run_analytics_help_icon(true, dataMap);
+			context.verify_run_incremental_analytics_option_displays_correct_message(true, dataMap);	
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+	
 
 }
