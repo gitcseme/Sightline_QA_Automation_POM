@@ -98,7 +98,7 @@ public class SearchRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("pwd", "Q@test_10");
-			dataMap.put("uid", "qapau5@consilio.com");
+			dataMap.put("uid", "qapau4@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -110,6 +110,7 @@ public class SearchRegression extends RegressionBase {
 				context.save_search(true, dataMap);
 				context.verify_searched_save(true, dataMap);
 			}
+			Thread.sleep(2000);
 			//context.(true, dataMap);
 			context.verify_current_login_session_previous_search_query_selection(true, dataMap);
 		} catch (ImplementationException e) {

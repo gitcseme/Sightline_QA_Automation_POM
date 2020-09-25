@@ -1,6 +1,7 @@
 package stepDef;
 
 import java.awt.List;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -99,8 +100,13 @@ public class SearchContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? create_search$")
 	public void create_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+
 		if (scriptState) {
 			String searchType = (String) dataMap.get("searchType");
+			if(!dataMap.containsKey("queryText")) {
+				ArrayList<String> queryText = new ArrayList<String>();
+				dataMap.put("queryText", queryText);
+			}
 			if (searchType==null) searchType = "metaData";
 			
 			
@@ -110,33 +116,38 @@ public class SearchContext extends CommonContext {
 				sessionSearch.getNewSearch().Click();
 				driver.waitForPageToBeReady();
 
-			/*
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getSelectMetaData().Visible()  ;}}), Input.wait30);
-		*/	
-
 			String metaDataOption = (String)dataMap.get("metaDataOption");
 			String metaDataValue = (String)dataMap.get("metaDataValue");
 			if(metaDataOption == null) metaDataOption = "CustodianName";
 			if(metaDataValue == null) metaDataValue = "Testing_Purposes";
 
 			if (searchType.equalsIgnoreCase("metaData")) {
+				((ArrayList<String>)dataMap.get("queryText")).add(metaDataOption + ": ( " + metaDataValue + ')');
 				sessionSearch.selectMetaDataOption(metaDataOption);
+				Thread.sleep(2000);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getMetaDataSearchText1().Enabled()  ;}}), Input.wait30); 
+					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 				sessionSearch.setMetaDataValue( null,metaDataValue,null);
-			} else if (searchType.equalsIgnoreCase("is")) {
+				Thread.sleep(2000);
+				driver.waitForPageToBeReady();
+			} 
+			else if (searchType.equalsIgnoreCase("is")) {
 				sessionSearch.selectMetaDataOption(metaDataOption);
 				sessionSearch.setMetaDataValue( "IS",metaDataValue,null);
-			} else if (searchType.equalsIgnoreCase("range")) {
+			} 
+			else if (searchType.equalsIgnoreCase("range")) {
 				sessionSearch.selectMetaDataOption(metaDataOption);
 				String metaDataVal2 = (String)dataMap.get("metaDataVal2");
 				sessionSearch.setMetaDataValue( "RANGE",metaDataValue,metaDataVal2);
-			} else if (searchType.equalsIgnoreCase("long")) {
+			} 
+			else if (searchType.equalsIgnoreCase("long")) {
 				throw new ImplementationException("create search - long");
-			} else if (searchType.equalsIgnoreCase("fulltext")) {
+			} 
+			else if (searchType.equalsIgnoreCase("fulltext")) {
 				throw new ImplementationException("create search - fulltext");
-			}
+			} 
 
 			
 						
@@ -157,7 +168,7 @@ public class SearchContext extends CommonContext {
 		Random rand = new Random();
 		if (scriptState) {
 			String metaDataOption = (String) dataMap.get("metaDataOption");
-			String tempString = Integer.toString(rand.nextInt(2000) +1);
+			String tempString = Integer.toString(rand.nextInt(20000) +1);
 			dataMap.put("CurrentSaveValue","Test Search" + tempString);
 			//Get #of Search Buttons on Page
 			int searchSize = sessionSearch.getSaveSearchButtons().FindWebElements().size();
@@ -198,12 +209,10 @@ public class SearchContext extends CommonContext {
 		if(scriptState){
 			//
 			try {
-				System.out.print("round enter: ");
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchTabName().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
 				String nameToCompare = sessionSearch.getSearchTabName().FindWebElements().get(0).getText();
 				Assert.assertEquals(((String)dataMap.get("CurrentSaveValue")).toLowerCase(), (nameToCompare.split(":")[1]).toLowerCase());
-				System.out.println("and Passed");
 			}
 			catch(Exception e) {
 				fail(dataMap, "Could not find the required search term");
@@ -217,17 +226,31 @@ public class SearchContext extends CommonContext {
 	public void verify_current_login_session_previous_search_query_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click on all Search Queries in Right Side Tab
-			//Verify That Queries Still exist from previous Searches of the Session
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				sessionSearch.getSearchTabName().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
-			for(WebElement element: sessionSearch.getSearchTabName().FindWebElements()){
-				if(!element.isSelected()){
-					element.click();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+
+				//Get Size of Saved Searches That we need to click through.
+				int buttonSize2 = sessionSearch.getSavedQueryButtons().FindWebElements().size();
+
+				//Click through Rest of Saved Searches Starting From the Bottom
+				for(int i=buttonSize2-1; i>=0; i--) {
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
+					Thread.sleep(3000);
+					//For Each SavedSearch -> Find its corresponding Query Text. 
+					for(int j =0; j<buttonSize2; j++) {
+						if(!sessionSearch.getQueryText2(j).getText().equals("")) {
+							//Verify Query Text is Equal to what user Inputed Previously before Save
+							Assert.assertEquals(sessionSearch.getQueryText2(j).getText(),((ArrayList<String>)dataMap.get("queryText")).get(buttonSize2-i-1));
+						}
+					}
 				}
-			}
+				pass(dataMap, "Saved Query Text Was Verified");
 			
+			}
+			catch(Exception e) { fail(dataMap, "Saved Query Text Was Not Verified");}
 		}
+		else fail(dataMap, "Saved Query Text Was Not Verified");
 
 	}
 
