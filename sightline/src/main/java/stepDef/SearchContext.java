@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -97,6 +98,7 @@ public class SearchContext extends CommonContext {
 	}
 
 
+	//Complete
 	@And("^.*(\\[Not\\] )? create_search$")
 	public void create_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -124,13 +126,13 @@ public class SearchContext extends CommonContext {
 			if (searchType.equalsIgnoreCase("metaData")) {
 				((ArrayList<String>)dataMap.get("queryText")).add(metaDataOption + ": ( " + metaDataValue + ')');
 				sessionSearch.selectMetaDataOption(metaDataOption);
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 				sessionSearch.setMetaDataValue( null,metaDataValue,null);
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				driver.waitForPageToBeReady();
 			} 
 			else if (searchType.equalsIgnoreCase("is")) {
@@ -159,6 +161,7 @@ public class SearchContext extends CommonContext {
 	}
 
 
+	//Complete
 	@And("^.*(\\[Not\\] )? save_search$")
 	public void save_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		
@@ -200,6 +203,7 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@When("^.*(\\[Not\\] )? verify_searched_save$")
 	public void verify_searched_save(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -219,7 +223,7 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Test Case 84?
+	//Test Case 84: Complete
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_previous_search_query_selection$")
 	public void verify_current_login_session_previous_search_query_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -252,15 +256,11 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Test Case 80
+	//Test Case 80 : Complete
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_saved_search_SEARCH5$")
 	public void verify_current_login_session_saved_search_SEARCH5(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//[Test Case 80 - verify_current_login_session_saved_search_SEARCH5]
-			//On 5th Search - > Click Search Button
-			//Click add new Search
-			//Verify 5th Search Query Was Stored Succesfully
 			try {
 				int numOfSearches = sessionSearch.getSavedQueryButtons().FindWebElements().size();
 
@@ -269,11 +269,11 @@ public class SearchContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchButtons().FindWebElements().get(numOfSearches-1).isDisplayed()  ;}}), Input.wait30); 
 				sessionSearch.getSearchButtons().FindWebElements().get(numOfSearches-1).click();
-
 				
 				//Need to think of a better way to deal with this wait after search
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+				driver.waitForPageToBeReady();
+				//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					//sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
 					
 				//Click on 5th Saved Search
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -295,14 +295,38 @@ public class SearchContext extends CommonContext {
 	}
 
 
+	//Test Case 85: Still in Progress
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_edit_previous_search_query$")
 	public void verify_current_login_session_edit_previous_search_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//[Test Case 85 - verify the current login session save search edit on selected previous search query\
-			throw new ImplementationException("verify_current_login_session_edit_previous_search_query");
-		} else {
-			throw new ImplementationException("NOT verify_current_login_session_edit_previous_search_query");
+			//[Test Case 85 - verify the current login session save search edit on selected previous search query
+			driver.waitForPageToBeReady();
+			try {
+				int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();
+				System.out.format("Size of Searches: %d\n", searchSessionSize);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).isDisplayed()  ;}}), Input.wait30); 
+
+				for(int i = searchSessionSize-1; i>=0; i--) {
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
+					for(int j=0; j<searchSessionSize; j++) {
+						if(!sessionSearch.getQueryText2(j).getText().equals("")) {
+							System.out.format("%s: at%d\n",sessionSearch.getQueryText2(j).getText(),j);
+							sessionSearch.setQueryText(j).Click();
+							sessionSearch.setQueryText(j).getWebElement().sendKeys("AND TEST" + Keys.TAB);
+						}
+					}
+				}
+				
+
+				pass(dataMap,"Was Able to Edit Previous Searches");
+			}
+			catch(Exception e) { e.printStackTrace();
+				fail(dataMap, "Could not Edit Previous Search Queries");}
+
+
+
 		}
 
 	}
@@ -321,14 +345,12 @@ public class SearchContext extends CommonContext {
 	}
 
 
+	//Test Case 149
 	@Then("^.*(\\[Not\\] )? verify_user_modified_session_query_not_changed_saved_query$")
 	public void verify_user_modified_session_query_not_changed_saved_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//[Test Case 149. - Verify that if user modified an In-Session search query then existing query should not get changed.
-			throw new ImplementationException("verify_user_modified_session_query_not_changed_saved_query");
-		} else {
-			throw new ImplementationException("NOT verify_user_modified_session_query_not_changed_saved_query");
 		}
 
 	}
