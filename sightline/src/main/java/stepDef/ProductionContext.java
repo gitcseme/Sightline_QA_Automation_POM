@@ -1313,12 +1313,19 @@ public class ProductionContext extends CommonContext {
 					prod.getFolderDropBox().Displayed()  ;}}), Input.wait30);
 				prod.getFolderDropBox().Click();
 			
+				
+				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getCheckedFolder().Selected()  ;}}), Input.wait30);
-			prod.getCheckedFolder().getText(); 
-			int totalFolder = Integer.parseInt(prod.getCheckedFolder().getText());
-			System.out.println(	prod.getCheckedFolder().getText());
-			System.out.println(totalFolder);
+					prod.getCheckedFolder().Present()  ;}}), Input.wait30);
+			
+			
+			
+			System.out.println(prod.getCheckedFolder().FindWebElements().size());
+			
+			
+//			int totalFolder = Integer.parseInt(prod.getCheckedFolder().getText());
+//			System.out.println(	prod.getCheckedFolder().getText());
+//			System.out.println(totalFolder);
 			
 				
 				

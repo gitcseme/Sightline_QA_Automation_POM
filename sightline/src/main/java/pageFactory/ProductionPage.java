@@ -109,8 +109,8 @@ public class ProductionPage {
     public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
     
     //09252020
-    public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id=\"-1_anchor\"]"); }
-    public Element getCheckedFolder(){ return driver.FindElementByXPath("//*[@class='jstree-anchor jstree-clicked']"); }
+    public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id='-1_anchor']"); }
+    public ElementCollection getCheckedFolder(){ return driver.FindElementsByXPath("//*[@class='jstree-anchor jstree-clicked']"); }
     
     
     public Element getIncludeFamilies(){ return driver.FindElementByXPath(".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i"); }
