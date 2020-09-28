@@ -145,7 +145,10 @@ public class SearchContext extends CommonContext {
 				sessionSearch.setMetaDataValue( "IS",metaDataValue,null);
 			} 
 			else if (searchType.equalsIgnoreCase("range")) {
+				System.out.println("Here we are");
 				sessionSearch.selectMetaDataOption(metaDataOption);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
 				String metaDataVal2 = (String)dataMap.get("metaDataVal2");
 				sessionSearch.setMetaDataValue( "RANGE",metaDataValue,metaDataVal2);
 			} 
@@ -485,11 +488,24 @@ public class SearchContext extends CommonContext {
 	public void verify_range_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_range_search_criteria");
-		} else {
-			throw new ImplementationException("NOT verify_range_search_criteria");
+
+			try {
+				String searchQuery = "";
+				String metaDataOption = (String)dataMap.get("metaDataOption"); 
+				String metaDataValue = (String)dataMap.get("metaDataValue");
+				String metaDataValue2 = (String)dataMap.get("metaDataVal2"); 
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						searchQuery = x.getText();
+					}
+				}
+				Assert.assertEquals(searchQuery, String.format("%s: [%s TO %s]",metaDataOption,metaDataValue,metaDataValue2));
+				
+			}
+			catch(Exception e) {fail(dataMap, "Could not Verify Range Search Criteria");}
+			
 		}
+		else fail(dataMap, "Could not Verify Range Search Criteria");
 
 	}
 

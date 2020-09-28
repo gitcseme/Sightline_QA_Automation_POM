@@ -737,13 +737,13 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			dataMap.put("searchType","RANGE");
-			dataMap.put("metaDataOption","");
+			dataMap.put("searchType","range");
+			dataMap.put("metaDataOption","AttachCount");
 			dataMap.put("metaDataValue","100");
 			dataMap.put("metaDataVal2","1000");
 			context.create_search(true, dataMap);

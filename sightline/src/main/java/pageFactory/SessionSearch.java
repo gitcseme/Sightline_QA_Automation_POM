@@ -632,7 +632,7 @@ public class SessionSearch {
 		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectMetaData().Enabled() && getSelectMetaData().Visible()  ;}}), Input.wait30); 
+				getSelectMetaData().Enabled() && getSelectMetaData().Displayed()  ;}}), Input.wait30); 
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
     	
     }
