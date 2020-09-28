@@ -1308,8 +1308,8 @@ public class ProductionContext extends CommonContext {
 			 Assert.assertFalse(prod.getIncludeFamilies().Selected());
 			 
 					
-					if(dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn")) { 
-
+					if((dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn"))){ 
+						Assert.assertFalse(prod.AnyCheckBoxClicked().Exists());
 						//Select Default Automation Folder
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 								prod.getDefaultAutomationChkBox().Displayed() ;}}), Input.wait30);

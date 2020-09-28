@@ -113,6 +113,8 @@ public class ProductionPage {
     public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id='-1_anchor']"); }
     public ElementCollection getCheckedFolder(){ return driver.FindElementsByXPath("//*[@class='jstree-anchor jstree-clicked']"); }
     public Element getTotalDocProduction(){ return driver.FindElementById("TotalDocumentsCount");}
+    public Element AnyCheckBoxClicked(){ return driver.FindElementByXPath("//*[@class='jstree-anchor jstree-clicked']");}
+    
     
     
     public Element getIncludeFamilies(){ return driver.FindElementByXPath(".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i"); }
