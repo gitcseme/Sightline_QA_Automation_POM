@@ -1299,6 +1299,11 @@ public class ProductionContext extends CommonContext {
 			//2. Verify no Searches are selected by default.
 			//3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
 			
+			//Include Families is selected
+	 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   prod.getIncludeFamilies().Displayed()  ;}}), Input.wait30);
+			 Assert.assertFalse(prod.getIncludeFamilies().Selected());
+			   
 			//Option1: 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
@@ -1307,6 +1312,15 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFolderDropBox().Displayed()  ;}}), Input.wait30);
 				prod.getFolderDropBox().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getCheckedFolder().Selected()  ;}}), Input.wait30);
+			prod.getCheckedFolder().getText(); 
+			int totalFolder = Integer.parseInt(prod.getCheckedFolder().getText());
+			System.out.println(	prod.getCheckedFolder().getText());
+			System.out.println(totalFolder);
+			
+				
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
