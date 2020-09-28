@@ -224,8 +224,13 @@ public class SessionSearch {
     public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
     public ElementCollection getSearchButtons() {return driver.FindElementsById("btnBasicSearch");}
     public ElementCollection getSavedQueryButtons() {return driver.FindElementsByXPath("//a[contains(@class,  'liClick ui-tabs-anchor')]");}
+
     public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
-    public Element setQueryText(int i) {return driver .FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d])/../../..",i+1));}
+    public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
+    //public Element setQueryText(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])[%d]/input",i));}
+    public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
+    //public Element setQueryText(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d])/../../..",i+1));}
+    public Element setQueryText3(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[1])/../..//input[@class = 'textboxlist-bit-editable-input']",i+1));}
     public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
     public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
 

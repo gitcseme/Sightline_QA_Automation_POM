@@ -295,31 +295,60 @@ public class SearchContext extends CommonContext {
 	}
 
 
-	//Test Case 85: Still in Progress
+	//Test Case 85: Completed
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_edit_previous_search_query$")
 	public void verify_current_login_session_edit_previous_search_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//[Test Case 85 - verify the current login session save search edit on selected previous search query
 			driver.waitForPageToBeReady();
+			ArrayList<String> query = new ArrayList<>();
+			StringBuilder temp = new StringBuilder();
+
 			try {
 				int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();
-				System.out.format("Size of Searches: %d\n", searchSessionSize);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).isDisplayed()  ;}}), Input.wait30); 
 
+				//Loop to Click through our Previous Queries
 				for(int i = searchSessionSize-1; i>=0; i--) {
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
-					for(int j=0; j<searchSessionSize; j++) {
-						if(!sessionSearch.getQueryText2(j).getText().equals("")) {
-							System.out.format("%s: at%d\n",sessionSearch.getQueryText2(j).getText(),j);
-							sessionSearch.setQueryText(j).Click();
-							sessionSearch.setQueryText(j).getWebElement().sendKeys("AND TEST" + Keys.TAB);
+					Thread.sleep(2000);
+					//Loop To Modify Query Text, for each of our Previous Queries
+					for(WebElement j: sessionSearch.setQueryText().FindWebElements()) {
+						if(j.isDisplayed()) {
+							j.click();
+							Thread.sleep(2000);
+							j.sendKeys("Test");
+							j.sendKeys(Keys.ENTER);
+							//Loop To find and save the final new modified Query  
+							for(WebElement k: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+								if(!k.getText().equals("") && k.isDisplayed()) {
+									temp.append(k.getText());
+									temp.append(" ");
+								}
+							}
+							query.add(temp.toString());
+							temp = new StringBuilder();
 						}
 					}
+					
 				}
-				
 
+				//Final loop To iterate back through our Queries, and make sure the modified Query Text has Persisted
+				for(int i = searchSessionSize-1; i>=0; i--){
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
+					for(WebElement k: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+						if(!k.getText().equals("") && k.isDisplayed()) {
+							temp.append(k.getText());
+							temp.append(" ");
+						}
+					}
+					Assert.assertEquals(temp.toString(), query.get(searchSessionSize-i-1));
+					temp = new StringBuilder();
+				}
+					
+				
 				pass(dataMap,"Was Able to Edit Previous Searches");
 			}
 			catch(Exception e) { e.printStackTrace();
