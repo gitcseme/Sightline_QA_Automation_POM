@@ -114,7 +114,7 @@ public class ProductionPage {
     public ElementCollection getCheckedFolder(){ return driver.FindElementsByXPath("//*[@class='jstree-anchor jstree-clicked']"); }
     public Element getTotalDocProduction(){ return driver.FindElementById("TotalDocumentsCount");}
     public Element AnyCheckBoxClicked(){ return driver.FindElementByXPath("//*[@class='jstree-anchor jstree-clicked']");}
-    
+    public ElementCollection getAllDefaultFolderCheckboxes() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
     
     
     public Element getIncludeFamilies(){ return driver.FindElementByXPath(".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i"); }

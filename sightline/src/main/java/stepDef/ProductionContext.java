@@ -1309,7 +1309,12 @@ public class ProductionContext extends CommonContext {
 			 
 					
 					if((dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn"))){ 
-						Assert.assertFalse(prod.AnyCheckBoxClicked().Exists());
+
+						//For Each CheckBox, Assert That Each Value is Not Selected by Default
+						for(WebElement x: prod.getAllDefaultFolderCheckboxes().FindWebElements()) {
+							if(x.isDisplayed()) Assert.assertFalse(x.isSelected());
+						}
+
 						//Select Default Automation Folder
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 								prod.getDefaultAutomationChkBox().Displayed() ;}}), Input.wait30);
