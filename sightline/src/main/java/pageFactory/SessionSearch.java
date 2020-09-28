@@ -244,6 +244,8 @@ public class SessionSearch {
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
+    //Similar to the overloaded Function of the same name
+    //This one does not rely on the appropriate ListItem Index, instead deleting the first avaliable item
     public Element removeSearchQueryRemove() {
     	Actions builder  = new Actions(driver.getWebDriver());
     	for(WebElement x: getQueryTextBoxes().FindWebElements()) {
@@ -629,10 +631,6 @@ public class SessionSearch {
 			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
 		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
 
-		try {
-			Thread.sleep(2000);
-		}
-		catch(Exception e) {}
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Enabled() && getSelectMetaData().Visible()  ;}}), Input.wait30); 
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);

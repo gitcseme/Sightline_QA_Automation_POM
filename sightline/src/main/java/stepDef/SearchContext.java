@@ -433,15 +433,30 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@Then("^.*(\\[Not\\] )? verify_is_search_criteria$")
 	public void verify_is_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_is_search_criteria");
-		} else {
-			throw new ImplementationException("NOT verify_is_search_criteria");
+			try {
+				String metaDataOption = (String)dataMap.get("metaDataOption");
+				String metaDataValue= (String)dataMap.get("metaDataValue");
+				String searchQuery = "";
+				//Find our Search Query 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getQueryTextBoxes().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						searchQuery = x.getText();
+					}
+				}
+				//Verify it
+				Assert.assertEquals(String.format("%s: [%s TO %s]", metaDataOption, metaDataValue, metaDataValue), searchQuery);
+				
+			}
+			catch(Exception e) {fail(dataMap, "Could not verify IS search criteria");}
 		}
+		else fail(dataMap, "Could not verify IS search criteria");
 
 	}
 
