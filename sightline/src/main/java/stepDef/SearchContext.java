@@ -132,7 +132,6 @@ public class SearchContext extends CommonContext {
 			if (searchType.equalsIgnoreCase("metaData")) {
 				((ArrayList<String>)dataMap.get("queryText")).add(metaDataOption + ": ( " + metaDataValue + ')');
 				sessionSearch.selectMetaDataOption(metaDataOption);
-				Thread.sleep(1000);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -151,10 +150,11 @@ public class SearchContext extends CommonContext {
 				sessionSearch.setMetaDataValue( "RANGE",metaDataValue,metaDataVal2);
 			} 
 			else if (searchType.equalsIgnoreCase("long")) {
-				throw new ImplementationException("create search - long");
 			} 
 			else if (searchType.equalsIgnoreCase("fulltext")) {
-				throw new ImplementationException("create search - fulltext");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.setQueryText().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+				sessionSearch.insertLongText((String)dataMap.get("FullText"));
 			} 
 
 			
@@ -460,15 +460,24 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@Then("^.*(\\[Not\\] )? verify_fulltext_search_criteria$")
 	public void verify_fulltext_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_fulltext_search_criteria");
-		} else {
-			throw new ImplementationException("NOT verify_fulltext_search_criteria");
-		}
+			try {
+				String searchQuery = "";
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						searchQuery = x.getText();
+					}
+				}
+				Assert.assertEquals(searchQuery,(String)dataMap.get("FullText"));
+				
+			}
+			catch(Exception e) {fail(dataMap, "Could not Verify FullText Search Criteria");}
+		}	
+		else fail(dataMap,"Could not Verify FullText Search Criteria");
 
 	}
 

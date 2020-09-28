@@ -1785,6 +1785,17 @@ public void Removedocsfromresults() {
 			
 
 	}
+  
+  //Insert Directly into Search Query -> inserts into the current selected query
+   public void insertLongText(String searchQuery) {
+	   for(WebElement j: setQueryText().FindWebElements()) {
+		   if(j.isDisplayed()) {
+			   j.click();
+			   j.sendKeys(searchQuery);
+			   j.sendKeys(Keys.ENTER);
+		   }
+	  }
 
 
  }
+}

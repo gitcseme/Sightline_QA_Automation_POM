@@ -657,7 +657,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search, Positive", "smoke"})
+	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchis_When_Then_verify_is_search_criteria() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -703,7 +703,7 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
@@ -726,7 +726,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Search, Positive"})
+	@Test(groups = {"Search, Positive", "smoke"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -744,8 +744,8 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("searchType","RANGE");
 			dataMap.put("metaDataOption","");
-			dataMap.put("metaDataValue","");
-			dataMap.put("metaDataVal2","");
+			dataMap.put("metaDataValue","100");
+			dataMap.put("metaDataVal2","1000");
 			context.create_search(true, dataMap);
 			context.verify_range_search_criteria(true, dataMap);
 		} catch (ImplementationException e) {
