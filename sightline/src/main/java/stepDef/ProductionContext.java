@@ -1272,16 +1272,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the radio button Select Searches:
-
-			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocSelectSearchRadioButton().Enabled()  ;}}), Input.wait30);
+					prod.getDocSelectSearchRadioButton().Displayed()  ;}}), Input.wait30);
 				prod.getDocSelectSearchRadioButton().Click();
 				
 				dataMap.put("DocumentRadioBtn","selectSearchBtn");
-				pass(dataMap, "Succesfully clicked useMeta Field Button");
-			}
-			catch(Exception e) {fail(dataMap, "Could not press Select Search Radio Button");}
+				pass(dataMap,"You succesfully clicked the Search Options");
+		}else {
+			pass(dataMap,"You NOT succesfully clicked the Search Options");
 		}
 
 	}
@@ -1309,47 +1307,71 @@ public class ProductionContext extends CommonContext {
 			   prod.getIncludeFamilies().Displayed()  ;}}), Input.wait30);
 			 Assert.assertFalse(prod.getIncludeFamilies().Selected());
 			 
-			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
-					prod.getFolderRadioButton().Click();
-			   
 					
-			if(dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn")) {	
-					
-					//Select Default Automation Folder
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
+					if(dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn")) { 
+
+						//Select Default Automation Folder
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDefaultAutomationChkBox().Displayed() ;}}), Input.wait30);
 						prod.getDefaultAutomationChkBox().Click();
-					
-					//Mark Complete
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
+
+						//Mark Complete
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDocumentMarkCompleteBtn().Enabled() ;}}), Input.wait30);
 						prod.getDocumentMarkCompleteBtn().Click();
+
+						//Total documents 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
+						Thread.sleep(1000); 
+						Assert.assertEquals(prod.getTotalDocProduction().getText(), "20"); 
+					}
 					
-					//Total documents 
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getTotalDocProduction().Enabled()  ;}}), Input.wait30);	
-					System.out.println("Lable" + prod.getTotalDocProduction().getText());
+					if(dataMap.get("DocumentRadioBtn").equals("selectTagsBtn")) { 
+						//Select Default Tag Folder
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDefaultTagsChkBox().Displayed() ;}}), Input.wait30);
+						prod.getDefaultTagsChkBox().Click();
+						
+						//Mark Complete
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDocumentMarkCompleteBtn().Enabled() ;}}), Input.wait30);
+						prod.getDocumentMarkCompleteBtn().Click();
+
+						//Total documents 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
+						Thread.sleep(1000); 
+						Assert.assertEquals(prod.getTotalDocProduction().getText(), "6"); 
+						
+					}
 					
-					
-					
-					Assert.assertEquals(prod.getTotalDocProduction().getText(), 20);
+					if(dataMap.get("DocumentRadioBtn").equals("selectSearchBtn")) { 
+						//Select Default Search Folder
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDefaultSecurityGroupChkBox().Displayed() ;}}), Input.wait30);
+						prod.getDefaultSecurityGroupChkBox().Click();
+						
+						//Mark Complete
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getDocumentMarkCompleteBtn().Enabled() ;}}), Input.wait30);
+						prod.getDocumentMarkCompleteBtn().Click();
+
+						//Total documents 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
+						Thread.sleep(1000); 
+						Assert.assertEquals(prod.getTotalDocProduction().getText(), "1223"); 
+					}
 			
-			}
-			
-			
-			
-				
-		
 	
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
 				prod.getDocumentNextBtn().Click();
 			
-	
-			throw new ImplementationException("verify_the_document_selection_component_displays_the_correct_default_options");
+				pass(dataMap,"Succesfully verify_the document_selection_component_displays_the_correct_default_options");
 		} else {
-			throw new ImplementationException("NOT verify_the_document_selection_component_displays_the_correct_default_options");
+				fail(dataMap,"NOT Succesfully verify_the document_selection_component_displays_the_correct_default_options");
 		}
 
 	}
@@ -1379,9 +1401,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the radio button Select Tags:
-			throw new ImplementationException("clicking_the_document_selection_select_tags_option");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTagsRadioButton().Displayed()  ;}}), Input.wait30);
+				prod.getTagsRadioButton().Click();
+				dataMap.put("DocumentRadioBtn", "selectTagsBtn");
+				pass(dataMap,"You succesfully clicked the Tags Options");
 		} else {
-			throw new ImplementationException("NOT clicking_the_document_selection_select_tags_option");
+			fail(dataMap,"You unsuccesfully clicked the Tags Options");
 		}
 
 	}

@@ -107,6 +107,7 @@ public class ProductionPage {
     public Element getSelectFolder(String foldername){ return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]"); }
   
     public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
+    public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbTags']/following-sibling::i"); }
     
     //09252020
     public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id='-1_anchor']"); }
@@ -356,6 +357,9 @@ public class ProductionPage {
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
     public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id='1031_anchor']/i[1]");}
+    public Element getDefaultTagsChkBox() {return driver.FindElementByXPath("//*[@id='26_anchor']/i[1]");}
+    public Element getDefaultSecurityGroupChkBox() {return driver.FindElementByXPath("//*[@id='1g_anchor']/i[1]");}
+    
     public Element getDocumentCollapseBtn() { return driver.FindElementByXPath("//*[@id=\"2\"]/i");}
     public Element getNumAndSortMarkCompleteBtn() {return driver.FindElementById("NumAndSortMarkComplete");}
     public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}
@@ -394,7 +398,7 @@ public class ProductionPage {
     public Element getNumMetaDataPrefix() {return driver.FindElementById("txtUserMetadataFieldPrefix");}
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
     
-    public Element getDocSelectSearchRadioButton() {return driver.FindElementByCssSelector("html body.minified.fixed-header.smart-style-1 div#renderBody div#main div#content div#divLoadView.prod form#frmDocumentsSelection div.prod div.row div.col-md-12 div.col-md-12 div.smart-form div.col-md-12 div.col-md-12 label.radio.col-md-3 i");}
+    public Element getDocSelectSearchRadioButton() {return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
