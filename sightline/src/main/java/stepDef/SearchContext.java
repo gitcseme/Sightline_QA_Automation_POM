@@ -416,35 +416,20 @@ public class SearchContext extends CommonContext {
 
 	}
 	
+	//Completed
 	@Then("^.*(\\[Not\\] )? remove_search_criteria$")
 	public void remove_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			/*
-					sessionSearch.getSearchQueryText(1).Exists()  ;}}), Input.wait30); 
-			sessionSearch.getSearchQueryText(1).Visible();
-			*/
 			try {
-				/*
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						sessionSearch.removeSearchQueryRemove(1).Visible()  ;}}), Input.wait30);
-				sessionSearch.removeSearchQueryRemove(1).Click();
-				sessionSearch.getSearchQueryText(1).Visible();
-				*/
-				
-				System.out.println("Before");
-				sessionSearch.removeSearchQueryRemove();
-				Thread.sleep(2000);
+					sessionSearch.getQueryTextBoxes().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+				sessionSearch.removeSearchQueryRemove().Click();
+				pass(dataMap, "Search Criteria Removed Successfully");
 
-					
-
-			} catch (Exception e) {
-				// should be removed
-			}
+			} catch (Exception e) {fail(dataMap, "Could not remove Search Criteria");}
 			
-		} else {
-			
-		}
+		} else { fail(dataMap, "Could not remove Search Criteria");}	
 
 	}
 

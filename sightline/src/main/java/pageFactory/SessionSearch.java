@@ -245,15 +245,10 @@ public class SessionSearch {
 
     }
     public Element removeSearchQueryRemove() {
-    	System.out.println("?");
     	Actions builder  = new Actions(driver.getWebDriver());
-    	System.out.println(getQueryTextBoxes().FindWebElements().size());
     	for(WebElement x: getQueryTextBoxes().FindWebElements()) {
     		if(x.isDisplayed() && !x.getText().equals("")) {
-    			System.out.println("Am I  Here");
     			builder.moveToElement(x).perform();
-    			try {Thread.sleep(5000);}
-    			catch(Exception e){}
     			return getRemoveSearchQuery();
     		}
     	}
