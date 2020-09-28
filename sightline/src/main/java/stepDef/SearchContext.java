@@ -120,8 +120,14 @@ public class SearchContext extends CommonContext {
 
 			String metaDataOption = (String)dataMap.get("metaDataOption");
 			String metaDataValue = (String)dataMap.get("metaDataValue");
-			if(metaDataOption == null) metaDataOption = "CustodianName";
-			if(metaDataValue == null) metaDataValue = "Testing_Purposes";
+			if(metaDataOption == null){
+				metaDataOption = "CustodianName";
+				dataMap.put("metaDataOption", metaDataOption);
+			}
+			if(metaDataValue == null) {
+				metaDataValue = "Testing_Purposes";
+				dataMap.put("metaDataValue", metaDataValue);
+			}
 
 			if (searchType.equalsIgnoreCase("metaData")) {
 				((ArrayList<String>)dataMap.get("queryText")).add(metaDataOption + ": ( " + metaDataValue + ')');
@@ -272,8 +278,6 @@ public class SearchContext extends CommonContext {
 				
 				//Need to think of a better way to deal with this wait after search
 				driver.waitForPageToBeReady();
-				//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					//sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
 					
 				//Click on 5th Saved Search
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -286,11 +290,14 @@ public class SearchContext extends CommonContext {
 						Assert.assertEquals((sessionSearch.getQueryText2(i).getText()), ((ArrayList<String>)dataMap.get("queryText")).get(4));
 					}
 				}
+				pass(dataMap, "Passed Search 5 Verification");
 
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {fail(dataMap, "Failed Search 5 Verification");
+}
 
 		}
+		else fail(dataMap, "Failed Search 5 Verification");
 
 	}
 
@@ -334,7 +341,6 @@ public class SearchContext extends CommonContext {
 					}
 					
 				}
-
 				//Final loop To iterate back through our Queries, and make sure the modified Query Text has Persisted
 				for(int i = searchSessionSize-1; i>=0; i--){
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
@@ -347,8 +353,6 @@ public class SearchContext extends CommonContext {
 					Assert.assertEquals(temp.toString(), query.get(searchSessionSize-i-1));
 					temp = new StringBuilder();
 				}
-					
-				
 				pass(dataMap,"Was Able to Edit Previous Searches");
 			}
 			catch(Exception e) { e.printStackTrace();
@@ -384,16 +388,21 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@Then("^.*(\\[Not\\] )? verify_search_criteria$")
 	public void verify_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			String metadataOption = (String) dataMap.get("metaDataOption");
 			String metadataValue = (String) dataMap.get("metaDataValue");
-			
-			String searchQuery = sessionSearch.getSearchQueryText(1).getText();
-			
+			String searchQuery = "";
+
+			//Simply go through Query's and get the current displayed text
+			for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+				if(x.isDisplayed() && x.getText()!= "") searchQuery = x.getText();
+			}
+
+			//Verify Text here
 			if (searchQuery.equals(String.format("%s: ( %s)", metadataOption, metadataValue))) {
 				pass(dataMap,String.format("Search criterial matches for %s with value %s", metadataOption, metadataValue));
 			} else {
@@ -402,7 +411,7 @@ public class SearchContext extends CommonContext {
 
 			
 		} else {
-			throw new ImplementationException("NOT verify_search_criteria");
+			fail(dataMap,"NOT verify_search_criteria");
 		}
 
 	}
@@ -411,21 +420,30 @@ public class SearchContext extends CommonContext {
 	public void remove_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			/*
 					sessionSearch.getSearchQueryText(1).Exists()  ;}}), Input.wait30); 
 			sessionSearch.getSearchQueryText(1).Visible();
+			*/
 			try {
+				/*
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						sessionSearch.removeSearchQueryRemove(1).Visible()  ;}}), Input.wait30);
 				sessionSearch.removeSearchQueryRemove(1).Click();
 				sessionSearch.getSearchQueryText(1).Visible();
-				fail(dataMap,"Unable to remove search criteria");
+				*/
+				
+				System.out.println("Before");
+				sessionSearch.removeSearchQueryRemove();
+				Thread.sleep(2000);
+
+					
+
 			} catch (Exception e) {
 				// should be removed
 			}
 			
 		} else {
-			throw new ImplementationException("NOT remove_search_criteria");
+			
 		}
 
 	}

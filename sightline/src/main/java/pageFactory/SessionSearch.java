@@ -220,6 +220,7 @@ public class SessionSearch {
     public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
     public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
     public Element getSearchLoadingGIF() {return driver.FindElementById("imgLoadPM");}
+
     public ElementCollection getMetaDataSearchButtons() {return driver.FindElementsById("metadataHelper");}
     public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
     public ElementCollection getSearchButtons() {return driver.FindElementsById("btnBasicSearch");}
@@ -227,10 +228,7 @@ public class SessionSearch {
 
     public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
     public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
-    //public Element setQueryText(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])[%d]/input",i));}
     public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
-    //public Element setQueryText(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d])/../../..",i+1));}
-    public Element setQueryText3(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[1])/../..//input[@class = 'textboxlist-bit-editable-input']",i+1));}
     public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
     public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
 
@@ -245,6 +243,21 @@ public class SessionSearch {
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
+    }
+    public Element removeSearchQueryRemove() {
+    	System.out.println("?");
+    	Actions builder  = new Actions(driver.getWebDriver());
+    	System.out.println(getQueryTextBoxes().FindWebElements().size());
+    	for(WebElement x: getQueryTextBoxes().FindWebElements()) {
+    		if(x.isDisplayed() && !x.getText().equals("")) {
+    			System.out.println("Am I  Here");
+    			builder.moveToElement(x).perform();
+    			try {Thread.sleep(5000);}
+    			catch(Exception e){}
+    			return getRemoveSearchQuery();
+    		}
+    	}
+		return null;
     }
     
     public Element removeSearchQueryRemove(int listItem){ 
