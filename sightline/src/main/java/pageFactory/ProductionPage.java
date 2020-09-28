@@ -111,6 +111,7 @@ public class ProductionPage {
     //09252020
     public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id='-1_anchor']"); }
     public ElementCollection getCheckedFolder(){ return driver.FindElementsByXPath("//*[@class='jstree-anchor jstree-clicked']"); }
+    public Element getTotalDocProduction(){ return driver.FindElementById("TotalDocumentsCount");}
     
     
     public Element getIncludeFamilies(){ return driver.FindElementByXPath(".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i"); }
@@ -354,7 +355,7 @@ public class ProductionPage {
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
-    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id=\"1031_anchor\"]/i[1]");}
+    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id='1031_anchor']/i[1]");}
     public Element getDocumentCollapseBtn() { return driver.FindElementByXPath("//*[@id=\"2\"]/i");}
     public Element getNumAndSortMarkCompleteBtn() {return driver.FindElementById("NumAndSortMarkComplete");}
     public Element getNumAndSortNextBtn() { return driver.FindElementById("NumAndSortNext");}

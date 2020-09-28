@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -1276,6 +1277,8 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocSelectSearchRadioButton().Enabled()  ;}}), Input.wait30);
 				prod.getDocSelectSearchRadioButton().Click();
+				
+				dataMap.put("DocumentRadioBtn","selectSearchBtn");
 				pass(dataMap, "Succesfully clicked useMeta Field Button");
 			}
 			catch(Exception e) {fail(dataMap, "Could not press Select Search Radio Button");}
@@ -1289,50 +1292,56 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 4923In all cases, verify the option "Include Families" is checked green at the bottom by default.
-			//If Select Folders is selected:1. Verify a grid of folders appears with the first option being "All Folders".
+			//If Select Folders is selected:1. Verify a grid of folders appears with the first option being "Default Automation Folder".
 			//2. Verify no folders are selected by default.
-			//3. Verify clicking All Folders and clicking Mark complete returns "Total Docs Selected Incl. Families: x".The amount of documents should equal the number of docs here: http://mtpvtsslwb01.consilio.com/ICE/Datasets 
+			//3. Verify clicking All Folders and clicking Mark complete returns "Total Docs Selected Incl. Families: 20". 
 			//If Select Tags is selected:1. Verify a list of tags should appear in a grid. 
 			//2. Verify no tags are selected by default.
-			//3.  Verify multiple tags can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the tags associated to documents. You can tag documents here: http://mtpvtsslwb01.consilio.com/DocExplorer/Explorer.You can create new tags here: http://mtpvtsslwb01.consilio.com/TagsAndFolders/TagsAndFolders
+			//3.  Verify default automation tags is selected. can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: 6".
 			//If Searches is selected:1. Verify a grid of Searches appear.
 			//2. Verify no Searches are selected by default.
-			//3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
+			//3. Verify the search name "shared with default security group" is checked and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: 1223"
+			
+			
 			
 			//Include Families is selected
 	 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   prod.getIncludeFamilies().Displayed()  ;}}), Input.wait30);
 			 Assert.assertFalse(prod.getIncludeFamilies().Selected());
+			 
+			 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
+					prod.getFolderRadioButton().Click();
 			   
-			//Option1: 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
-				prod.getFolderRadioButton().Click();
-
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getFolderDropBox().Displayed()  ;}}), Input.wait30);
-				prod.getFolderDropBox().Click();
+					
+			if(dataMap.get("DocumentRadioBtn").equals("selectedFolderBtn")) {	
+					
+					//Select Default Automation Folder
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
+						prod.getDefaultAutomationChkBox().Click();
+					
+					//Mark Complete
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
+						prod.getDocumentMarkCompleteBtn().Click();
+					
+					//Total documents 
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTotalDocProduction().Enabled()  ;}}), Input.wait30);	
+					System.out.println("Lable" + prod.getTotalDocProduction().getText());
+					
+					
+					
+					Assert.assertEquals(prod.getTotalDocProduction().getText(), 20);
+			
+			}
+			
+			
 			
 				
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getCheckedFolder().Present()  ;}}), Input.wait30);
-			
-			
-			
-			System.out.println(prod.getCheckedFolder().FindWebElements().size());
-			
-			
-//			int totalFolder = Integer.parseInt(prod.getCheckedFolder().getText());
-//			System.out.println(	prod.getCheckedFolder().getText());
-//			System.out.println(totalFolder);
-			
-				
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
-				prod.getDocumentMarkCompleteBtn().Click();
-			
+		
+	
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
 				prod.getDocumentNextBtn().Click();
@@ -1351,9 +1360,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the radio button Select Folders:
-			throw new ImplementationException("clicking_the_document_selection_select_folders_option");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFolderRadioButton().Enabled()  ;}}), Input.wait30);
+				prod.getFolderRadioButton().Click();
+				dataMap.put("DocumentRadioBtn", "selectedFolderBtn");
+				pass(dataMap,"You succesfully clicked the Folder Options");
+			
 		} else {
-			throw new ImplementationException("NOT clicking_the_document_selection_select_folders_option");
+			fail(dataMap,"You unsuccesfully clicked the Folder Options");
+
 		}
 
 	}
