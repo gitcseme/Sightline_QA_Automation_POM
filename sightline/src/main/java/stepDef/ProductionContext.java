@@ -1298,6 +1298,25 @@ public class ProductionContext extends CommonContext {
 			//If Searches is selected:1. Verify a grid of Searches appear.
 			//2. Verify no Searches are selected by default.
 			//3. Verify multiple Searches can be checked off and clicking "Mark Complete" returns "Total Docs Selected Incl. Families: x".The number of docs that is returned is based off the searches found here: http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches
+			
+			//Option1: 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
+				prod.getFolderRadioButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFolderDropBox().Displayed()  ;}}), Input.wait30);
+				prod.getFolderDropBox().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
+				prod.getDocumentMarkCompleteBtn().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
+				prod.getDocumentNextBtn().Click();
+			
+	
 			throw new ImplementationException("verify_the_document_selection_component_displays_the_correct_default_options");
 		} else {
 			throw new ImplementationException("NOT verify_the_document_selection_component_displays_the_correct_default_options");
