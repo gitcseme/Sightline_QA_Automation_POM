@@ -1333,6 +1333,12 @@ public class ProductionContext extends CommonContext {
 					}
 					
 					if(dataMap.get("DocumentRadioBtn").equals("selectTagsBtn")) { 
+
+						//For Each CheckBox, Assert That Each Value is Not Selected by Default
+						for(WebElement x: prod.getAllDefaultFolderCheckboxes().FindWebElements()) {
+							if(x.isDisplayed()) Assert.assertFalse(x.isSelected());
+						}
+
 						//Select Default Tag Folder
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 								prod.getDefaultTagsChkBox().Displayed() ;}}), Input.wait30);
@@ -1352,6 +1358,12 @@ public class ProductionContext extends CommonContext {
 					}
 					
 					if(dataMap.get("DocumentRadioBtn").equals("selectSearchBtn")) { 
+
+						//For Each CheckBox, Assert That Each Value is Not Selected by Default
+						for(WebElement x: prod.getAllDefaultFolderCheckboxes().FindWebElements()) {
+							if(x.isDisplayed()) Assert.assertFalse(x.isSelected());
+						}
+
 						//Select Default Search Folder
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 								prod.getDefaultSecurityGroupChkBox().Displayed() ;}}), Input.wait30);
