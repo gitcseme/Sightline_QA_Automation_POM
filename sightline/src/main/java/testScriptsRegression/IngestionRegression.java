@@ -2845,6 +2845,14 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("dat_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID"); 
+//			dataMap.put("native_file", "native.lst");
+//			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+//			dataMap.put("source_folder", "AudioDocsTest");
+//			dataMap.put("audio_file", "Transcript.lst");
+//			dataMap.put("mp3_file", "MP3.lst");
+//			dataMap.put("date_time", "MM/DD/YYY");
+//			dataMap.put("doc_key", "FileType");
+//			dataMap.put("source_system", "TRUE");
 			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
@@ -2866,7 +2874,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_select_audio_indexing_Then_verify_no_error_message_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2887,6 +2895,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("dat_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID");
 			context.new_ingestion_created(true, dataMap);
+			context.click_source_DAT_field(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.select_audio_indexing(true, dataMap);
 			context.verify_no_error_message_is_displayed(true, dataMap);

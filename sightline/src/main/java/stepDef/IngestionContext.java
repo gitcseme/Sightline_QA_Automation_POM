@@ -576,6 +576,22 @@ public class IngestionContext extends CommonContext {
 		} else {
 			ingest.getToastMessage();
 		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? verify_audio_indexing_fails$")
+	public void click_source_DAT_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getSourceDATField().Displayed()  ;}}), Input.wait30); 
+			ingest.SecondRow().Click();
+			ingest.ThrirdRow().Click();
+			ingest.FourthRow().Click();
+			
+			throw new ImplementationException("verify_audio_indexing_fails");
+		} else {
+			throw new ImplementationException("NOT verify_audio_indexing_fails");
+		}
 
 	}
 
@@ -1157,12 +1173,13 @@ public class IngestionContext extends CommonContext {
 
 	}
 	
+	
 	@And("^.*(\\[Not\\] )? click_add_project_button$")
 	public void click_add_project_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		driver.waitForPageToBeReady();
 		if (scriptState) {
 			try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getAddNewProjectBtn().Enabled() && ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30);
 				ingest.getAddNewProjectBtn().Click();
 

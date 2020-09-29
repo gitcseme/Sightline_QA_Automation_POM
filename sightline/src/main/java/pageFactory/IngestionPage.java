@@ -233,7 +233,6 @@ public class IngestionPage {
     //public Element getAddNewProjectBtn() { return driver.FindElementByCssSelector("a#f.btn.btn-primary");}
    // public Element getAddNewProjectBtn() {return driver.FindElement(By.linkText("Add Project"));}
     //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//a[@href ='/en-us/Project/CreateProject']");}
-    
     public Element getAddNewProjectBtn() {return driver.FindElementByCssSelector("#content > form > div:nth-child(3) > div > div.entityDiv > div > div.col-md-4 > p> #btnAdd");}
     public Element getKickOffPopUpText() { return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
     public Element getKickOffText() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label");}
@@ -241,11 +240,22 @@ public class IngestionPage {
     public Element getRunIncAnalyticsPopUpText() {return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
     public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label>#IngestionErrorsHelp");}
     public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
+
     public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
     public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
     public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
     public Element getSeachBtn() {return driver.FindElementById("btnBasicSearch");}
     
+    public Element getSourceDATField() {return driver.FindElementByXPath("//*[@id=\"dt_basic\"]/thead/tr/td[1]");}
+    public ElementCollection getSelectTable() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
+    
+    //hard-coded selecting options
+    public Element SecondRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(8)");}
+    public Element ThrirdRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(4)");}
+    public Element FourthRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(6)");}
+    
+
+
     public IngestionPage(Driver driver){
 
         this.driver = driver;
@@ -279,7 +289,6 @@ public class IngestionPage {
 	    	
 	    	if(dataMap.containsKey("doc_key")) {	
 	    		//getDAToptions(dataMap); 
-
 	    	    if(dataMap.containsKey("dat_file")) {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
