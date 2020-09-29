@@ -1326,9 +1326,9 @@ public class ProductionContext extends CommonContext {
 						prod.getDocumentMarkCompleteBtn().Click();
 
 						//Total documents 
+						//Wait for Docuemnts number to change from 0 -> to another value before retrieving the value
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
-						Thread.sleep(1000); 
+						!(prod.getTotalDocProduction().getText()).equals("0") ;}}), Input.wait30); 
 						Assert.assertEquals(prod.getTotalDocProduction().getText(), "20"); 
 					}
 					
@@ -1351,8 +1351,7 @@ public class ProductionContext extends CommonContext {
 
 						//Total documents 
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
-						Thread.sleep(1000); 
+						!(prod.getTotalDocProduction().getText()).equals("0") ;}}), Input.wait30); 
 						Assert.assertEquals(prod.getTotalDocProduction().getText(), "6"); 
 						
 					}
@@ -1376,8 +1375,7 @@ public class ProductionContext extends CommonContext {
 
 						//Total documents 
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getTotalDocProduction().Displayed() ;}}), Input.wait30); 
-						Thread.sleep(1000); 
+							!(prod.getTotalDocProduction().getText()).equals("0") ;}}), Input.wait30); 
 						Assert.assertEquals(prod.getTotalDocProduction().getText(), "1223"); 
 					}
 			
