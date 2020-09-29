@@ -1,16 +1,24 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.JavascriptExecutor;  
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -22,12 +30,7 @@ import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
 public class IngestionContext extends CommonContext {
-	Driver driver;
-	WebDriver webDriver;
-	LoginPage lp;
-
-    IngestionPage ingest;
-
+	
 	/* 
 	 * moved to CommonContext
 	 * 
@@ -36,14 +39,13 @@ public class IngestionContext extends CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	 JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
 	@And("^.*(\\[Not\\] )? add_a_new_ingestion_btn_is_clicked$")
 	public void add_a_new_ingestion_btn_is_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30); 
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
 		} else {
@@ -54,18 +56,17 @@ public class IngestionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? new_ingestion_created$")
 	public void new_ingestion_created(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getAddanewIngestionButton().Visible()  ;}}), Input.wait30);
 			ingest.getAddanewIngestionButton().Click();
 			driver.waitForPageToBeReady();
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 			click_next_button(scriptState, dataMap);
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
-
+		System.out.print("i am noe here");
 	}
 
 
@@ -88,10 +89,10 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30);
-			ingest.requiredFieldsAreEntered(scriptState);
-			click_next_button(scriptState, dataMap);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
+
 		} else {
-			ingest.requiredFieldsAreEntered(scriptState);
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
 
 	}
@@ -102,9 +103,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Thread.sleep(2000);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getNextButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+			Thread.sleep(2000);
+	    	ingest.getApproveMessageOKButton().Click(); 
 		} else {
 			ingest.getRunIndexing().Click();
 		}
@@ -133,14 +139,13 @@ public class IngestionContext extends CommonContext {
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSaveDraftButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
-	    	
+	    	Thread.sleep(2000);
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+	    			ingest.getApproveMessageOKButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getApproveMessageOKButton().Click();
 	    	on_ingestion_home_page(scriptState, dataMap);
-	    
 	    	ingest.openFirstIngestionSettings(scriptState);
 		} else {
 			on_ingestion_home_page(scriptState, dataMap);
@@ -172,9 +177,7 @@ public class IngestionContext extends CommonContext {
 			
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
-	    	ingest.getPreviewRun().Click();
+			click_preview_run_button(scriptState, dataMap);
 	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -256,8 +259,8 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
+
 			String totalIngestCountText = ingest.getTotalIngestCount().getText();
-			
 			if (totalIngestCountText.equals(dataMap.get("actualCount"))) {
 				pass(dataMap,"Ingestion Tile and Count Have Increased");
 			} else {
@@ -376,9 +379,9 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+
 			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			
-			if (specifySourceSystemText.equals("TRUE")
+			if (specifySourceSystemText.contains("TRUE")
 							) {
 						pass(dataMap,"TRUE was found in the dropdown for Source System");
 					} else {
@@ -397,6 +400,7 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_expected_source_fields_are_displayed$")
 	public void verify_expected_source_fields_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceSystemTitleText = ingest.getSourceSystemTitle().getText();
@@ -405,13 +409,14 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceLocationTitleText = ingest.getSourceLocationTitle().getText();
 			
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSourceFolderTitle().Displayed()  ;}}), Input.wait30); 
 			String sourceFolderTitleText = ingest.getSourceFolderTitle().getText();
 			
-			if (sourceSystemTitleText.equals("Source System") &&
-				sourceLocationTitleText.equals("Source Location") &&
-				sourceFolderTitleText.equals("Source Folder")
+			if ((sourceSystemTitleText.split(":")[0]).equals("Source System") &&
+				(sourceLocationTitleText.split(":")[0]).equals("Source Location") &&
+				(sourceFolderTitleText.split(":")[0]).equals("Source Folder")
 						) {
 					pass(dataMap,"Source System, Location and Folder Fields are Displayed");
 				} else {
@@ -426,24 +431,42 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
-
-		
+	
 	@Then("^.*(\\[Not\\] )? verify_close_button_redirects_to_ingestion_home_page$")
 	public void verify_close_button_redirects_to_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
+			String url = driver.getUrl();
+			
+			if(url.contains("Ingestion/Home")){
+				pass(dataMap,"Close Button redirects to Ingestion Home Page");
+			} else {
+				fail(dataMap,"Close Button does not redirect to Ingestion Home Page");
+			}
 		}
-	}
+		else {
+			 throw new ImplementationException("Close Button does not redirect to Ingestion Home Page");
+			}
+		}
+	
 
 	@Then("^.*(\\[Not\\] )? verify_delete_button_is_available_on_tile$")
 	public void verify_delete_button_is_available_on_tile(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		if (scriptState) {
-			throw new ImplementationException("verify_delete_button_is_available_on_tile");
-		} else {
-			throw new ImplementationException("NOT verify_delete_button_is_available_on_tile");
-		}
+		
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionAction_Delete().Visible()  ;}}), Input.wait30); 
+				ingest.getIngestionAction_Delete().Exists();
+				pass(dataMap, "Ingestion Action Delete Button is Avaliable");
+				}
+			catch (Exception e) {
+				if (scriptState) {
+				throw new Exception(e.getMessage());
+			} else {
+				pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
+				}
+			}
+			
+			
 	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
@@ -452,6 +475,12 @@ public class IngestionContext extends CommonContext {
 		try {
 			
 			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+
+			//Deselect Required Field
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getMappingSOURCEFIELD4().Displayed()  ;}}), Input.wait30); 
+			ingest.getMappingSOURCEFIELD4().SendKeys("Select");
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getPreviewRun().Displayed()  ;}}), Input.wait30); 
 			ingest.getPreviewRun().Click();
@@ -477,10 +506,10 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getActualSourceSys().Displayed()  ;}}), Input.wait30); 
 			String actualSourceSysText = ingest.getActualSourceSys().getText();
 			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+;			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcLoc().Displayed()  ;}}), Input.wait30); 
 			String actualSrcLocText = ingest.getActualSrcLoc().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualSrcFolder().Displayed()  ;}}), Input.wait30); 
 			String actualSrcFolderText = ingest.getActualSrcFolder().getText();
@@ -488,7 +517,7 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualDocKey().Displayed()  ;}}), Input.wait30); 
 			String actualDocKeyText= ingest.getActualDocKey().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualNativeFile().Displayed()  ;}}), Input.wait30); 
 			String actualNativeFileText = ingest.getActualNativeFile().getText();
@@ -496,12 +525,10 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualMp3File().Displayed()  ;}}), Input.wait30); 
 			String actualMp3FileText = ingest.getActualMp3File().getText();
-			
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getActualAudioFile().Displayed()  ;}}), Input.wait30); 
 			String actualAudioFileText = ingest.getActualAudioFile().getText();
-			
-			
 			
 			if (actualSourceSysText.equals(dataMap.get("source_system")) &&
 					actualSrcLocText.equals(dataMap.get("source_location")) &&
@@ -529,13 +556,23 @@ public class IngestionContext extends CommonContext {
 	public void click_preview_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Text Qualifier
-			//* Column and Data delimeter
-			//
-			throw new ImplementationException("click_preview_run_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
+				ingest.getPreviewRun().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			        ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+	    	    ingest.getApproveMessageOKButton().Click(); 
+
+				pass(dataMap, "Get Preview Run Button is Clickable");
+			}
+			catch (Exception e) {
+				fail(dataMap, "Get Preview Run Button could not be Clicked");
+			}
+
 		} else {
-			throw new ImplementationException("NOT click_preview_run_button");
+			ingest.getToastMessage();
 		}
 
 	}
@@ -544,43 +581,168 @@ public class IngestionContext extends CommonContext {
 	public void verify_first_50_records_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1421 verify Preview Records pop up display.
-			//* Click the Preview and Run button
-			//* On the Preview pop up page
-			//* Click on "Run Ingestion" button
-			//* Verify url changed from "/Ingestion/Wizard" to "/Ingestion/Home"
-			//Test Cases Covered:
-			//
-			//* TC264 Verify the Preview of Igestion display for the frist 50 records with valid inputs
-			//
-			throw new ImplementationException("verify_first_50_records_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_first_50_records_are_displayed");
-		}
-
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getRecordTable().Visible()  ;}}), Input.wait30); 
+				int recordSize =  ingest.getRecordTable().getWebElement().findElements(By.tagName("tr")).size();
+				if(recordSize <=50) pass(dataMap, "There are less than 50 records");
+				else fail(dataMap, "There are more than 50 records");
+			}
+			catch(Exception e) {
+				ingest.getToastMessage();
+			}
+		} 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_source_selection_types_are_displayed$")
 	public void verify_source_selection_types_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1414 verify the Source Selection in Ingestion Wizard Page.
-			//* Verify Native, Text, PDF, TIFF and DAT sources are displayed
-			//* Verify DAT displays a "Load File" and "Key" fields
-			//* Verify Key field is only displayed ONCE in DAT section
-			//* Verify Native, Text, PDF and TIFF display "Load File" field and "IS DAT?" checkbox
-			//* Verify when "IS DAT?" is checked, a file path field is displayed
-			//* Verify when "IS DAT?" is checked, Load field is disabled for that section
-			//* Verify when "IS DAT?" is checked, File Path field is enabled
-			//* Verify selecting "Other" option, then Link Type, Load File and "IS DAT?" fields are displayed
-			//* Verify Link Type drop down displays "Translation" and "Related" options
-			//
-			throw new ImplementationException("verify_source_selection_types_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_source_selection_types_are_displayed");
-		}
+			
+				try {
+			// Checkbox
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFCheckBoxstionButton().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFCheckBox().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getDATcheckbox().Displayed()  ;}}), Input.wait30);	
+				System.out.println("Made it past preliminary checks");
+				
+				//DAT files
+				ingest.getDATcheckbox().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getSourceSelectionDATLoadFile().Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getDocumentKey().Displayed()  ;}}), Input.wait30);
+				
+				//Make sure Key Field is displayed once in DAT Section
+				Assert.assertEquals(1, driver.FindElements(By.id("ddlKeyDatFile")).size());
+				
+				
+				//Open Native Field
+				ingest.getNativeCheckBox().Click();
+				
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsNativeInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeLST().Displayed()  ;}}), Input.wait30);
 
+				//Click Native DAT Checkbox 
+				ingest.getIsNativeInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getNativeFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getNativeLST().Enabled());
+
+				
+				
+				//Open Text Field
+				ingest.getTextCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTextInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click Text DAT Checkbox
+				ingest.getIsTextInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTextFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTextLST().Enabled());
+
+
+				
+				//Open PDF Field
+				ingest.getPDFCheckBoxstionButton().Click();
+
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsPDFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click PDF DAT Checkbox
+				ingest.getIsPDFInPathInDAT().Click();
+
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getPDFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getPDFLST().Enabled());
+
+
+				
+				//Open TIFF DAT Checkbox
+				ingest.getTIFFCheckBox().Click();
+
+				//Verify Both DAT Checkbox and Load File Field are displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIsTIFFInPathInDAT().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFLST().Displayed()  ;}}), Input.wait30);
+				
+				//Click TIFF DAT Checkbox
+				ingest.getIsTIFFInPathInDAT().Click();
+				
+				//Check to see after DAT Checkbox is selected if File Path Field is displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getTIFFFilePathFieldinDAT().Displayed()  ;}}), Input.wait30);
+				
+				//Make Sure Load File Field is disabled
+				Assert.assertFalse(ingest.getTIFFLST().Enabled());
+
+				
+				//Other Option Checks
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Click "Other" field
+				ingest.getOtherCheckBox().Click();
+
+				//Wait for Link Dropdown, Load File Dropdown and DAT Checkbox to be displayed
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLinkType().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherLoadFile().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getOtherCheckBox().Displayed()  ;}}), Input.wait30);
+
+				//Get Link Type Drop down contents, and make sure it contains "Translation and Related"
+				String LinkTypeContents = ingest.getOtherLinkType().getText();
+				Assert.assertTrue(LinkTypeContents.contains("Translation") && LinkTypeContents.contains("Related"));
+
+				pass(dataMap,"Selection types are displayed");
+				
+				
+			}
+			catch(Exception e) {
+				fail(dataMap,"Selection types are not displayed");
+			}
+		} else {
+			fail(dataMap,"Selection types are not displayed");
+		}
 	}
 
 
@@ -588,19 +750,485 @@ public class IngestionContext extends CommonContext {
 	public void verify_all_components_are_displayed_on_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1412 verify the display of all the ingestion pages in the new Wizard view.
+				try {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceSystemTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSourceLocationTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getDATTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getNativeTitle().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getConfigureMappingText().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getPreviewRun().Displayed()  ;}}), Input.wait30);
+			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getIngestionWizardTitle().Displayed()  ;}}), Input.wait30);
+	    			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+							ingest.getSaveDraftButton().Displayed()  ;}}), Input.wait30);
+	    	
+					pass(dataMap,"All components are displayed on the wizard");
+
+			}
+			catch(Exception e) {
+				fail(dataMap,"All components are NOT displayed on the wizard");}}
+		else {
+			fail(dataMap,"All components are NOT displayed on the wizard");
+				}
+		}
+  
+	@Then("^.*(\\[Not\\] )? verify_multi_value_ascii_is_set_by_default$")
+	public void verify_multi_value_ascii_is_set_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					ingest.getDATDelimitersNewLine().Displayed()  ;}}), Input.wait30);
+				//Get First Default Text of Dropdown
+				String defaultAsciiText = ingest.getDATDelimitersNewLine().selectFromDropdown().getFirstSelectedOption().getText();
+
+				//Make sure value is correct Ascii(59)
+				if(defaultAsciiText.equals("ASCII(59)")) pass(dataMap, "Default Value is Ascii 59");
+				else fail(dataMap, "Default Value is not Ascii 59");
+			}
+			catch(Exception e) {
+				fail(dataMap, "Was not able to parse default Ascii Value");
+				
+			}
+		}
+			
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_copy_button$")
+	public void click_copy_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
 			//
-			//* Verify source fields are displayed (Source System, Location, etc.)
-			//* Verify Ingestion types are displayed (DAT, Native, etc.)
-			//* Verify Configure Mapping section is displayed
-			//* Verify Preview Run button is displayed
-			//* Verify "Ingestion Wizard" header is displayed
-			//* Verify Save button is displayed
+			//* On the Ingestion Execution page
+			//* Click on the Action dropdown
+			//* Click on Copy option
+			//* Ingestion Wizard page is displayed
 			//
-			throw new ImplementationException("verify_all_components_are_displayed_on_the_wizard");
-		} else {
-			throw new ImplementationException("NOT verify_all_components_are_displayed_on_the_wizard");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getFirstIngestionTileName().Visible()  ;}}), Input.wait30); 
+				ingest.getFirstIngestionTileName().Click();
+
+				//Wait and Click Action Dropdown
+
+			}
+			catch(Exception e) {}
 		}
 
 	}
+
+	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
+	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2559 To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file.
+			//
+			//* When choosing a DAT file to upload, the fields specified in the file are auto populated in the Source Field section
+			//* Number of headers specified should match the number of fields that were auto populated
+			//
+			throw new ImplementationException("verify_source_field_is_auto_populated");
+		} else {
+			throw new ImplementationException("NOT verify_source_field_is_auto_populated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_destination_field_is_auto_populated$")
+	public void verify_destination_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2558 To Verify -> No of Headers in DAT < No. of headers in Destination field in Configure mapping page.
+			//
+			//* After a file has been selected or uploaded for DAT file and Source Field is auto populated, the Destination Field is auto mapped
+			//* Number of headers populated on the source field section should match the number of fields mapped on Destination field section
+			//
+			throw new ImplementationException("verify_destination_field_is_auto_populated");
+		} else {
+			throw new ImplementationException("NOT verify_destination_field_is_auto_populated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? publish_ingested_files$")
+	public void publish_ingested_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Ingestion/Analytics
+			//* ??? Unable to select Incrmental Analysis and unable to click Publish Button
+			//* Select "Incremental Analysis"
+			//* Click Publish button
+			//
+			throw new ImplementationException("publish_ingested_files");
+		} else {
+			throw new ImplementationException("NOT publish_ingested_files");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? create_saved_search$")
+	public void create_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Search/Searches
+			//* Enter "AudioPlayerReady=1" into the text box
+			//* Click Search Button
+			//* Assert Audio file is displayed after search is completed
+			//* Click Save Button
+			//* Save Search modal is displayed
+			//* Click on "My Saved Search" 
+			//* Enter a valid name into the text box
+			//* Click Save
+			//
+			throw new ImplementationException("create_saved_search");
+		} else {
+			throw new ImplementationException("NOT create_saved_search");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")
+	public void unpublish_ingestion_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Ingestion/UnPublish
+			//* Select saved filter created
+			//* Click Unpublish button
+			//
+			throw new ImplementationException("unpublish_ingestion_files");
+		} else {
+			throw new ImplementationException("NOT unpublish_ingestion_files");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unpublish_for_audio_documents_is_successful$")
+	public void verify_unpublish_for_audio_documents_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6067 To Verify Unpublish for Ingested audio documents
+			//
+			//* Verify successful toast message appears
+			//
+			throw new ImplementationException("verify_unpublish_for_audio_documents_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_unpublish_for_audio_documents_is_successful");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_audio_indexing$")
+	public void select_audio_indexing(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Return to Ingestion/Home
+			//* Look for Ingestion Tile created
+			//* Click on Ingestion Title
+			//* Run the Catalog step
+			//* Run the Copy step
+			//* Click on Audio checkbox
+			//* Select 3 language packs (Norh American English/United Kingdom English/German)
+			//* Run Indexing
+			//
+			throw new ImplementationException("select_audio_indexing");
+		} else {
+			throw new ImplementationException("NOT select_audio_indexing");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_no_error_message_is_displayed$")
+	public void verify_no_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6001 To Verify In Ingestions, for audio indexing, there should not be any error message.
+			//* Validate no errors are displayed when indexing
+			//
+			throw new ImplementationException("verify_no_error_message_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_no_error_message_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_error_messaged_displays_mp3_variant$")
+	public void verify_error_messaged_displays_mp3_variant(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5961 To Verify In Ingestion, the error message for audio ingestions should display "MP3 Variant"
+			//* Return to Ingestion/Home
+			//* Look for Ingestion Tile created
+			//* Click on Ingestion Title
+			//* Run the Catalog step
+			//* Remove files ingested from source location/folder
+			//* Run the Copy step in the ingestion
+			//* Verify "MP3 Variant:File Not Found" error is displayed
+			//
+			throw new ImplementationException("verify_error_messaged_displays_mp3_variant");
+		} else {
+			throw new ImplementationException("NOT verify_error_messaged_displays_mp3_variant");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? run_ingestion_indexing$")
+	public void run_ingestion_indexing(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After ingestion has been created
+			//* Go to Ingestion/Home page
+			//* Open the Ingestion tile created
+			//* Take note of the Audio Document Count in the Copy Step
+			//* Run Indexing step
+			//* Take note of the Audio Doucment Count in the Indeing Step
+			//
+			throw new ImplementationException("run_ingestion_indexing");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_indexing");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_document_and_audio_docs_count_are_the_same$")
+	public void verify_document_and_audio_docs_count_are_the_same(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6022 To verify Document Count for Audio Docs in Indexing section
+			//
+			//* Open Ingestion Tile from Ingestion/Home page
+			//* Validate Audio Document count and Indexing have the same count
+			//
+			throw new ImplementationException("verify_document_and_audio_docs_count_are_the_same");
+		} else {
+			throw new ImplementationException("NOT verify_document_and_audio_docs_count_are_the_same");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_copy_play_button$")
+	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Find Ingested tile created
+			//* Click on the Ingestion Name
+			//* Modal is displayed
+			//* After Cataloging, click Copy play button
+			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
+			
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
+			ingest.getCopyPlayButton().Click();
+			
+			
+			throw new ImplementationException("click_copy_play_button");
+		} else {
+			throw new ImplementationException("NOT click_copy_play_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? rename_MP3_doc_file$")
+	public void rename_MP3_doc_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Destination Location where file is located
+			//* Find MP3 file used in the ingestion
+			//* Rename the file and save
+			//
+			throw new ImplementationException("rename_MP3_doc_file");
+		} else {
+			throw new ImplementationException("NOT rename_MP3_doc_file");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_run_indexing_play_button$")
+	public void click_run_indexing_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Ingestion/Home page
+			//* Find Ingestion Created by filtering by Copied
+			//* Click on the Indexing play button
+			//
+			throw new ImplementationException("click_run_indexing_play_button");
+		} else {
+			throw new ImplementationException("NOT click_run_indexing_play_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_audio_indexing_fails$")
+	public void verify_audio_indexing_fails(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6069 To Verify For Audio Indexing only the files at Destination location should be sent for Indexing.
+			//
+			//* Assert Indexing for Ingestion fails due to MP3 Doc name changing
+			//
+			throw new ImplementationException("verify_audio_indexing_fails");
+		} else {
+			throw new ImplementationException("NOT verify_audio_indexing_fails");
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? click_add_project_button$")
+	public void click_add_project_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		driver.waitForPageToBeReady();
+		if (scriptState) {
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getAddNewProjectBtn().Enabled() && ingest.getAddNewProjectBtn().Displayed()  ;}}), Input.wait30);
+				ingest.getAddNewProjectBtn().Click();
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You didn't click Add project succesfully");
+			}
+			
+			pass(dataMap,"You clicked Add project succesfully");
+
+		} else {
+			fail(dataMap,"You didn't click Add project succesfully");
+
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? click_kick_off_help_icon$")
+	public void click_kick_off_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffHelpIcon().Visible() ;}}), Input.wait30); 
+					ingest.getKickOffHelpIcon().Click();
+			pass(dataMap,"You clicked Kick off Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Kick off Help Icon succesfully");
+
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? click_run_analytics_help_icon$")
+	public void click_run_analytics_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			driver.scrollingToBottomofAPage();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalytics().Visible() ;}}), Input.wait30); 
+					ingest.getRunIncAnalytics().Click();
+			pass(dataMap,"You clicked Run Analytics Help Icon succesfully");
+		} else {
+			fail(dataMap,"You didn't clicked Run Analytics off Help Icon succesfully");
+
+		}	}
+	
+	@Then("^.*(\\[Not\\] )? verify_project_screen_displays_expected_options$")
+	public void verify_project_screen_displays_expected_options (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffText().Visible() ;}}), Input.wait30); 
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsText().Visible() ;}}), Input.wait30);
+						
+			assertEquals("Kick Off Analytics Automatically: ", ingest.getKickOffText().getText());
+			assertEquals("Run Incremental Analytics for New Small Data(<20%): ",ingest.getRunIncAnalyticsText().getText());
+			
+			pass(dataMap,"Kick off Text and Run Analytics Text are displayed");
+		} else {
+			fail(dataMap,"Kick off Text and Run Analytics Text are not displayed");
+		}
+	
+	}
+	@Then("^.*(\\[Not\\] )? verify_run_incremental_analytics_option_displays_correct_message$")
+	public void verify_run_incremental_analytics_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			String AnalyticsMsg = "If this option is disabled, full analytics is always executed automatically by Sightline. If this option is enabled, Sightline runs full analytics when the new data being ingested is >20% of the existing data and runs incremental analytics when the new data being ingests is <=20% of the existing data.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getRunIncAnalyticsPopUpText().Visible() ;}}), Input.wait30); 
+			
+			String RunIncAnalyticsText = ingest.getRunIncAnalyticsPopUpText().getText();
+			
+			Assert.assertEquals(AnalyticsMsg, RunIncAnalyticsText);
+			pass(dataMap,"Run Analytics Message is displayed correctly");
+			
+		} 
+	
+	}
+	
+	@Then("^.*(\\[Not\\] )?  verify_kick_off_analytics_help_option_displays_correct_message$")
+	public void  verify_kick_off_analytics_help_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			
+			String KickOffMsg = "If this option is disabled, the ingestion will not kick off analytics after the ingestion is complete. The user needs to manually run analytics and publish the documents. If this option is enabled, the analytics is automatically kicked off after the data is ingested after all the datasets being ingested are complete, and automatically publishes the documents into the project. Sightline will wait until all the datasets are complete to kick off analytics.";
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getKickOffPopUpText().Visible() ;}}), Input.wait30); 
+			
+			String KickOffAnalytics = ingest.getKickOffPopUpText().getText();
+			
+			Assert.assertEquals(KickOffMsg, KickOffAnalytics);
+			pass(dataMap,"Kick Off Analytics Message is displayed correctly");
+			
+		} else {
+			fail(dataMap,"Kick Off Analytics Message is not displayed correctly");
+		}
+
+	
+	}
+	
+	
+	
+	
 }

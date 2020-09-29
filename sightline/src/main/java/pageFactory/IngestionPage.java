@@ -3,10 +3,12 @@ package pageFactory;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import testScriptsSmoke.Input;
 
 public class IngestionPage {
@@ -31,6 +33,8 @@ public class IngestionPage {
     public Element getSourceSelectionTextLoadFile(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getDocumentKey(){ return driver.FindElementById("ddlKeyDatFile"); }
     public Element getNativeLST(){ return driver.FindElementById("ddlLoadNativeFile"); }
+    
+  
     public Element getNativeFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathNative"); }
     public Element getTextLST(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getTextFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathText"); }
@@ -108,10 +112,13 @@ public class IngestionPage {
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
     
-   // Xpaths    
-    public Element getAddanewIngestionButton(){ return driver.FindElementByXPath("//a[text()='Add a new Ingestion']"); }
+    //Xpaths    
+    //public Element getAddanewIngestionButton(){return driver.FindElementByXPath("//a[text()='Addx a new Ingestion']"); }
+    public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
+
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
-    public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    //public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
+    public Element getNextButton(){ return driver.FindElementById("NextButton"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
     public Element getIsNativeInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
     public Element getIsTextInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATText']/following-sibling::i"); }
@@ -156,12 +163,25 @@ public class IngestionPage {
     public Element getIngestionNameText(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div"); }
     public Element getIncrementalAnalyticsbutton(){ return driver.FindElementByXPath(".//*[@id='IncrementalAnalytics']/following-sibling::i"); }
     
+    //added on 09-23
+    public Element getDATCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i"); }
+    public Element getDATLoadFile(){ return driver.FindElementById("ddlLoadDatFile"); }
+    public Element getNativePathCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
+    public Element getFilePathNative(){ return driver.FindElementById("ddlFilesPathNative"); }
+    public Element getgenerateSearchablePDFs(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATTIFF']/following-sibling::i"); }
+    public Element getIsMP3InPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATMP3Variant']/following-sibling::i"); }
+    public Element getMP3FilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathMP3Variant"); }
+    public Element getIsTransciptInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATTranscript']/following-sibling::i"); }
+    public Element getTransciptFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathTranscript"); }
+    public Element getLinkType(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATTranscript']/following-sibling::i"); }
+    
     //added on 04-04
     public Element getIngestionName_CloseButton(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/se//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionName_ExecCloseButton(){ return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionActionButton(){ return driver.FindElementByXPath(".//*[@id='cardCanvas']//div[1]/a"); }
     public Element getFirstIngestionActionButton() {return driver.FindElementByXPath(".//*[@id='cardCanvas']//li[1]//div[1]/a");}
     public Element getIngestionAction_Wizard(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Open in Wizard')]"); }
+
     public Element getIngestionAction_Delete(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Delete')]"); }
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
@@ -189,8 +209,38 @@ public class IngestionPage {
     public Element getActualAudioFile() {return driver.FindElementByCssSelector("#ddlLoadTranscriptfile > option[selected]");}
     public Element getSourceSystemTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(2) > div.col-md-5 > label");}
     public Element getSourceLocationTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
-    public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(3) > div.col-md-5 > label");}
+    public Element getSourceFolderTitle() {return driver.FindElementByCssSelector("fieldset:nth-child(1) > section > div:nth-child(4) > div.col-md-5 > label");}
+    public Element getRecordTable() {return driver.FindElementByCssSelector("#previewRecords > div > table > tbody");}
+    public Element getDATcheckbox() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > i");}
+    public Element getDATTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(2) > div > label > strong");}
+    public Element getNativeTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(4) > div > label > strong");}
+    public Element getIngestionWizardTitle() {return driver.FindElementByCssSelector("#content > div:nth-child(3) > div > h1");}
     
+    
+    //added on 200923
+    public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
+    public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
+    public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
+    public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
+    
+    
+    //System Admin Profile
+    
+    //public Element getAddNewProjectBtn() {return driver.FindElementById("btnAdd");}
+    //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//*[.='Add Project']");}
+    //public Element getAddNewProjectBtn() { return driver.FindElementByCssSelector("a#f.btn.btn-primary");}
+   // public Element getAddNewProjectBtn() {return driver.FindElement(By.linkText("Add Project"));}
+    //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//a[@href ='/en-us/Project/CreateProject']");}
+    
+    public Element getAddNewProjectBtn() {return driver.FindElementByCssSelector("#content > form > div:nth-child(3) > div > div.entityDiv > div > div.col-md-4 > p> #btnAdd");}
+    public Element getKickOffPopUpText() { return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
+    public Element getKickOffText() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label");}
+    public Element getRunIncAnalyticsText() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label");}
+    public Element getRunIncAnalyticsPopUpText() {return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
+    public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label>#IngestionErrorsHelp");}
+    public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
+
     public IngestionPage(Driver driver){
 
         this.driver = driver;
@@ -200,53 +250,68 @@ public class IngestionPage {
 
     }
     
-    public void requiredFieldsAreEntered(boolean scriptState) 
+    public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) 
     		throws InterruptedException {
     	
+    	driver.waitForPageToBeReady();
     	if (scriptState) {
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceSystem().SendKeys("source_system");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifyLocation().Visible()  ;}}), Input.wait30); 
-    		getSpecifyLocation().SendKeys("source_location");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceFolder().Visible()  ;}}), Input.wait30); 
-    		getSpecifySourceFolder().SendKeys("source_folder");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getDocumentKey().Visible()  ;}}), Input.wait30); 
-    		getDocumentKey().SendKeys("doc_key");
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
-    		getNativeCheckBox().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getNativeLST().Visible()  ;}}), Input.wait30); 
-    		getNativeLST().SendKeys("native_file");
+	    	if(dataMap.containsKey("source_system")) {
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
+	    		getSpecifySourceSystem().SendKeys(dataMap.get("source_system").toString());
+    		}
+	    	if(dataMap.containsKey("source_location")) {
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getSpecifyLocation().Visible()  ;}}), Input.wait30); 
+	    		getSpecifyLocation().SendKeys(dataMap.get("source_location").toString());
+	    	}
+	    	
+	    	if(dataMap.containsKey("source_folder")) {	
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
+	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
+	    	}
+	    	
+	    	if(dataMap.containsKey("doc_key")) {	
+	    		//getDAToptions(dataMap); 
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				getDocumentKey().Visible()  ;}}), Input.wait30);
+	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
+	    	}
     		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
-    		getMP3CheckBoxstionButton().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getMP3LST().Visible()  ;}}), Input.wait30); 
-    		getMP3LST().SendKeys("mp3_file");
-    		
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptCheckBoxstionButton().Click();
-
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
-    		getAudioTranscriptLST().SendKeys("audio_file");
-    		
+	    	if(dataMap.containsKey("native_file") || dataMap.containsKey("native_path_file")) {
+	    		getNativeoptions(dataMap);
+	    	}
+	    	
+	    	if(dataMap.containsKey("text_file") || dataMap.containsKey("text_path_file")){
+	    		getTextoptions(dataMap);	
+	    	}
+	    	
+	    	if(dataMap.containsKey("PDF_file") || dataMap.containsKey("PDF_path_file")) {
+	    		getPDFoptions(dataMap);
+	    	}
+	    	
+	    	if(dataMap.containsKey("TIFF_file")) {
+	    		getTIFFoptions(dataMap);	
+	    	}
+	
+	    	if(dataMap.containsKey("mp3_file") || dataMap.containsKey("mp3_path_file")) {
+	
+	    		getMP3options(dataMap);	
+	    	}
+	    	
+	    	if(dataMap.containsKey("audio_file") || dataMap.containsKey("audio_path_file")) {
+	    		getTransciptoptions(dataMap);	
+	    	}
+	        
+	    	if(dataMap.containsKey("other_file") || dataMap.containsKey("other_path_file")) {
+	    		getTransciptoptions(dataMap);	
+	    	}
+	    	
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
-    		getDateFormat().SendKeys("date_time");
+    		getDateFormat().SendKeys(dataMap.get("date_time").toString());
+
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
@@ -256,19 +321,206 @@ public class IngestionPage {
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptLST().SendKeys("audio_file");
 		}
+
+    }
+    
+    public void getDAToptions(HashMap dataMap) throws InterruptedException {
+
+	    if(getDATCheckbox().Selected() == true) {	
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getDATCheckbox().Visible()  ;}}), Input.wait30); 
+	    	getDATCheckbox().Click();
+	    }	
+
+	    if(dataMap.containsKey("dat_file")) {
+        	System.out.print("inIFclikec");
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
+	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	    }
+	    
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDocumentKey().Enabled()  ;}}), Input.wait30);
+		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
 		
     }
+    
+    public void getNativeoptions(HashMap dataMap) throws InterruptedException {
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
+    	getNativeCheckBox().Click();
+    	
+    	if(dataMap.containsKey("")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getNativePathCheckbox().Visible()  ;}}), Input.wait30); 
+    		getNativePathCheckbox().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getFilePathNative().Visible()  ;}}), Input.wait30); 
+        	getFilePathNative().SendKeys(dataMap.get("native_path_file").toString());
+    	}
+    	else{
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getNativeLST().Visible()  ;}}), Input.wait30); 
+        	getNativeLST().SendKeys(dataMap.get("native_file").toString());	
+    	}
+    }
+    
+    public void getTextoptions(HashMap dataMap) throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getTextCheckBox().Visible()  ;}}), Input.wait30); 
+    	getTextCheckBox().Click();
+    	
+    	if(dataMap.containsKey("text_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsTextInPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsTextInPathInDAT().Click();
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getTextFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+        	getTextFilePathFieldinDAT().SendKeys(dataMap.get("text_path_file").toString());
+    	}
+    	else{
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		getTextLST().Visible()  ;}}), Input.wait30); 
+        	getTextLST().SendKeys(dataMap.get("test_file").toString());	
+    	}
+    	
+    }
+    
+    public void getPDFoptions(HashMap dataMap) throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getPDFCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    	getPDFCheckBoxstionButton().Click();   
+    	
+    	if(dataMap.containsKey("PDF_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsPDFInPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsPDFInPathInDAT().Click();  
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getPDFFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+    		getPDFFilePathFieldinDAT().SendKeys(dataMap.get("PDF_path_file").toString());  
+    	}
+    	else {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getPDFLST().Visible()  ;}}), Input.wait30); 
+    		getPDFLST().SendKeys(dataMap.get("PDF_file").toString()); 
+    	}
+    }
+    
+    public void getTIFFoptions(HashMap dataMap) throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getTIFFCheckBox().Visible()  ;}}), Input.wait30); 
+    	getTIFFCheckBox().Click();   
+    	
+    	if(dataMap.containsKey("TIFF_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsTIFFInPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsTIFFInPathInDAT().Click();  
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getTIFFFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+    		getTIFFFilePathFieldinDAT().SendKeys(dataMap.get("TIFF_path_file").toString());  
+    	}
+    	else {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getTIFFLST().Visible()  ;}}), Input.wait30); 
+    		getTIFFLST().SendKeys(dataMap.get("TIFF_file").toString()); 
+    	}
+    	
+    	if(dataMap.get("").toString().equals("true")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getgenerateSearchablePDFs().Visible()  ;}}), Input.wait30); 
+    		getgenerateSearchablePDFs().Click();  
+    	}
+    }
+    
+    public void getMP3options(HashMap dataMap) throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3CheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+		getMP3CheckBoxstionButton().Click();
+		
+		if(dataMap.containsKey("mp3_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsMP3InPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsMP3InPathInDAT().Click();  
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getTIFFFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+    		getTIFFFilePathFieldinDAT().SendKeys(dataMap.get("mp3_path_file").toString());  
+    	}
+    	else {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMP3LST().Visible()  ;}}), Input.wait30); 
+    		getMP3LST().SendKeys(dataMap.get("mp3_file").toString()); 
+		}
+    }
+    
+    public void getTransciptoptions(HashMap dataMap) throws InterruptedException{
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getAudioTranscriptCheckBoxstionButton().Visible()  ;}}), Input.wait30); 
+    	getAudioTranscriptCheckBoxstionButton().Click();
+
+    	if(dataMap.containsKey("audio_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsTransciptInPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsTransciptInPathInDAT().Click();  
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getTransciptFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+    		getTransciptFilePathFieldinDAT().SendKeys(dataMap.get("audio_path_file").toString());  
+    	}
+    	else {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
+    		getAudioTranscriptLST().SendKeys(dataMap.get("audio_file").toString());; 
+    		System.out.print("audio_file");
+    	}
+    }
+    
+    public void getOtheroptions(HashMap dataMap) throws InterruptedException{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getOtherCheckBox().Visible()  ;}}), Input.wait30); 
+    	getOtherCheckBox().Click();
+    	
+    	if(dataMap.containsKey("Other_linktype")){
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			getOtherLinkType().Visible()  ;}}), Input.wait30); 
+	    	getOtherLinkType().SendKeys(dataMap.get("other_linktype").toString());;;
+    	}
+    	
+    	if(dataMap.containsKey("other_path_file")) {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getIsOtherInPathInDAT().Visible()  ;}}), Input.wait30); 
+    		getIsOtherInPathInDAT().Click();  
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getOtherFilePathFieldinDAT().Visible()  ;}}), Input.wait30); 
+    		getOtherFilePathFieldinDAT().SendKeys(dataMap.get("other_path_file").toString());  
+    	}
+    	else {
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getOtherLoadFile().Visible()  ;}}), Input.wait30); 
+    		getOtherLoadFile().SendKeys(dataMap.get("other_file").toString());; 
+    	}
+    }
+    
+    
     
     public void openFirstIngestionSettings(boolean scriptState) 
     		throws InterruptedException {
     	
     	if (scriptState) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByButton().Visible()  ;}}), Input.wait30); 
+    				getFilterByButton().Displayed()  ;}}), Input.wait30); 
     		getFilterByButton().Click();
+    		Thread.sleep(500);
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
+    				getFilterByDRAFT().Displayed()  ;}}), Input.wait30); 
     		getFilterByDRAFT().Click();
+    		getTotalIngestCount().Click();
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFirstIngestionActionButton().Displayed()  ;}}), Input.wait30); 
 	    	getFirstIngestionActionButton().Click();
