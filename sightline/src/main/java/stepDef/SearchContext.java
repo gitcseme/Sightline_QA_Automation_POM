@@ -137,7 +137,6 @@ public class SearchContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 				sessionSearch.setMetaDataValue( null,metaDataValue,null);
-				Thread.sleep(1000);
 				driver.waitForPageToBeReady();
 			} 
 			else if (searchType.equalsIgnoreCase("is")) {
@@ -145,7 +144,6 @@ public class SearchContext extends CommonContext {
 				sessionSearch.setMetaDataValue( "IS",metaDataValue,null);
 			} 
 			else if (searchType.equalsIgnoreCase("range")) {
-				System.out.println("Here we are");
 				sessionSearch.selectMetaDataOption(metaDataOption);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
@@ -153,11 +151,13 @@ public class SearchContext extends CommonContext {
 				sessionSearch.setMetaDataValue( "RANGE",metaDataValue,metaDataVal2);
 			} 
 			else if (searchType.equalsIgnoreCase("long")) {
+				sessionSearch.insertLongText((String)dataMap.get("metaDataOption"), (String)dataMap.get("metaDataOption2"),
+					(String)dataMap.get("condition"), (String)dataMap.get("metaDataValue"), (String)dataMap.get("metaDataValue2"));
 			} 
 			else if (searchType.equalsIgnoreCase("fulltext")) {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.setQueryText().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
-				sessionSearch.insertLongText((String)dataMap.get("FullText"));
+				sessionSearch.insertFullText((String)dataMap.get("FullText"));
 			} 
 
 			
@@ -246,8 +246,10 @@ public class SearchContext extends CommonContext {
 
 				//Click through Rest of Saved Searches Starting From the Bottom
 				for(int i=buttonSize2-1; i>=0; i--) {
+					int curr = i;
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSavedQueryButtons().FindWebElements().get(curr).isDisplayed()  ;}}), Input.wait30); 
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
-					Thread.sleep(3000);
 					//For Each SavedSearch -> Find its corresponding Query Text. 
 					for(int j =0; j<buttonSize2; j++) {
 						if(!sessionSearch.getQueryText2(j).getText().equals("")) {
@@ -285,7 +287,6 @@ public class SearchContext extends CommonContext {
 				//Click on 5th Saved Search
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isEnabled() &&  sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isDisplayed() ;}}), Input.wait30); 
-				Thread.sleep(3000);
 				sessionSearch.getSavedQueryButtons().FindWebElements().get(1).click();
 
 				for(int i =0; i<numOfSearches; i++) {
@@ -322,13 +323,14 @@ public class SearchContext extends CommonContext {
 
 				//Loop to Click through our Previous Queries
 				for(int i = searchSessionSize-1; i>=0; i--) {
+					int curr = i;
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSavedQueryButtons().FindWebElements().get(curr).isEnabled()  ;}}), Input.wait30); 
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click(); // Click on each search query,starting with last search
-					Thread.sleep(2000);
 					//Loop To Modify Query Text, for each of our Previous Queries
 					for(WebElement j: sessionSearch.setQueryText().FindWebElements()) {
-						if(j.isDisplayed()) {
+						if(j.isDisplayed() &&j.isEnabled()) {
 							j.click();
-							Thread.sleep(2000);
 							j.sendKeys("Test");
 							j.sendKeys(Keys.ENTER);
 							//Loop To find and save the final new modified Query  
@@ -360,8 +362,6 @@ public class SearchContext extends CommonContext {
 			}
 			catch(Exception e) { e.printStackTrace();
 				fail(dataMap, "Could not Edit Previous Search Queries");}
-
-
 
 		}
 
@@ -396,15 +396,30 @@ public class SearchContext extends CommonContext {
 
 				sessionSearch.getSearchButton().Click();
 				driver.waitForPageToBeReady();
-				System.out.println("page is ready");
-				
-				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						sessionSearch.getSaveSearchButtons().FindWebElements().get(operatorButtonSize+1).isEnabled()  ;}}), Input.wait30); 
-					//Thread.sleep(3000);
+					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+				System.out.println("page is ready");
+
+				
+				//Insert Operator
+				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						 sessionSearch.getOperatorDropdown().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+				 for(WebElement x: sessionSearch.getOperatorDropdown().FindWebElements()) {
+					 if(x.isDisplayed() && x.isEnabled()) {
+						 x.click();
+						 for(WebElement y: sessionSearch.getOperatorDropDownOP("AND").FindWebElements()) {
+							 if(y.isDisplayed() && y.isEnabled())
+								 y.click();
+						 }
+					 }
+				 }				
+
+				 /*
 					System.out.println("before clicking operator button");
 					sessionSearch.getOperatorDropdown().FindWebElements().get(operatorButtonSize).click();
 					System.out.println("It clicked the operator button");
+					
 					
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						sessionSearch.getSaveSearchButtons().FindWebElements().get(operatorButtonANDSize+1).isEnabled()  ;}}), Input.wait30);
@@ -414,6 +429,7 @@ public class SearchContext extends CommonContext {
 					
 					sessionSearch.getOperatorDropdownAND().FindWebElements().get(operatorButtonANDSize).click();
 					System.out.println("After AND click");
+					*/
 					
 					
 					//Insert new AND MetaData 
@@ -427,45 +443,53 @@ public class SearchContext extends CommonContext {
 					System.out.println("MetaData value inserted");
 					
 					//Need to click search button
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							sessionSearch.getSearchButtons().FindWebElements().get(searchButtonSize+1).isEnabled()  ;}}), Input.wait30); 
-					sessionSearch.getSearchButtons().FindWebElements().get(searchButtonSize).click();
+
+					for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+						if(x.isDisplayed() && x.isEnabled()) {
+							x.click();
+						}
+					}
 					System.out.println("Search button clicked");
+
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+					for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+						System.out.println("?");
+						if(x.isDisplayed() && !x.getText().equals("")) {
+							temp.append(x.getText());
+							temp.append(" ");
+						}
+					}
+					System.out.format("Our Modiefied query: %s\n", temp.toString());
 									
 					//Store Values of edited search 
 					int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();  //Total number of search queries (It is 3)
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize).isDisplayed()  ;}}), Input.wait30); 
+							sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).isEnabled()  ;}}), Input.wait30); 
 					System.out.println("Before clicking last element");
-					sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize).click();	//Should click bottom most
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).click();	//Should click bottom most
+					Thread.sleep(5000);
 					System.out.println("After clicking last element");
-					//System.out.println(searchSessionSize);
 					
-					/*for(int i = searchSessionSize-1; i>=0; i--){
-						sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click(); //Clicks on original search
-						for(WebElement k: sessionSearch.getQueryTextBoxes().FindWebElements()) {
-							if(!k.getText().equals("") && k.isDisplayed()) {
-								temp.append(k.getText());
-								temp.append(" ");
-							}
+					String originalQuery = "";
+					for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+						if(x.isDisplayed() && !x.getText().equals("")) {
+							originalQuery = x.getText();
 						}
-						Assert.assertEquals(temp.toString(), query.get(searchSessionSize-i-1));
-						temp = new StringBuilder();
-					}*/
+					}
+					System.out.format("Our Orignal: %s\n", originalQuery);
+					System.out.println(originalQuery + "AND " + metaDataOption + ": (" + metaDataValue + ") ");
+					Assert.assertEquals(temp.toString(), originalQuery + " AND " + metaDataOption + ": ( " + metaDataValue + ") ");
+					pass(dataMap, "Original Query was not Modified");
 					
-					//Click on Original Search and store those values somewhere
-					
-					//Compare edited values and original values and ensure they are not equal
 			}
+			catch(Exception e) {fail(dataMap, "Could not Verify Orginal Query Not Modified");}
 			
-			catch(Exception e) { 
-				fail(dataMap, "modified session query was not modified");
-				}
-			throw new ImplementationException("verify_user_modified_session_query_not_changed_saved_query");
-		} else {
-			throw new ImplementationException("NOT verify_user_modified_session_query_not_changed_saved_query");
 
 		}
+		else fail(dataMap, "Could not Verify Orginal Query Not Modified");
 
 	}
 
@@ -497,7 +521,7 @@ public class SearchContext extends CommonContext {
 
 	}
 	
-	//Completed
+	//Complete
 	@Then("^.*(\\[Not\\] )? remove_search_criteria$")
 	public void remove_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -562,6 +586,7 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@Then("^.*(\\[Not\\] )? verify_range_search_criteria$")
 	public void verify_range_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -587,27 +612,65 @@ public class SearchContext extends CommonContext {
 
 	}
 
+	//Complete
 	@Then("^.*(\\[Not\\] )? verify_long_search_criteria$")
 	public void verify_long_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_long_search_criteria");
-		} else {
-			throw new ImplementationException("NOT verify_long_search_criteria");
-		}
+			try{
+				StringBuilder searchQuery = new StringBuilder();
+				String metaDataOption = (String)dataMap.get("metaDataOption"); 
+				String metaDataValue = (String)dataMap.get("metaDataValue");
+				String metaDataValue2 = (String)dataMap.get("metaDataValue2"); 
+				String metaDataOption2 = (String)dataMap.get("metaDataOption2"); 
+				String condition = (String)dataMap.get("condition");
+				//Grab Each String from All Query Boxes, and Combine them into one final SearchQuery to compare
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						searchQuery.append(x.getText());
+						searchQuery.append(" ");
+					}
+				}
+				Assert.assertEquals((searchQuery.toString()), String.format("%s: ( %s) %s %s: ( %s) ", 
+						metaDataOption,metaDataValue,condition,metaDataOption2,metaDataValue2));
+				pass(dataMap, "Verified the Long Text Search Criteria");
+
+				
+			}
+			catch(Exception e) {fail(dataMap, "Could Not Verify Long Text Search Criteria");}
+
+		}	
+		else fail(dataMap, "Could Not Verify Long Text Search Criteria");
 
 	}
+
 
 	@When("^.*(\\[Not\\] )? click_search$")
 	public void click_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		String searchType = (String)dataMap.get("searchType");
 		if (scriptState) {
-			//
-			throw new ImplementationException("click_search");
-		} else {
-			throw new ImplementationException("NOT click_search");
+			try {
+				//Find the valid search Button through the DOM list
+				for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+					//If its displayed and enabled that is a valid search button to use
+					if(x.isDisplayed() && x.isEnabled()) {
+						x.click(); 
+						driver.waitForPageToBeReady();
+						//A warning message arises when using the long search type, this check clicks continue on that popup
+						if(searchType.equalsIgnoreCase("long")){
+							if(sessionSearch.getQueryPossibleWrongAlertContinueButton().Displayed() && sessionSearch.getQueryPossibleWrongAlertContinueButton().Enabled()) {
+								sessionSearch.getQueryPossibleWrongAlertContinueButton().Click();
+							}
+						}
+						driver.waitForPageToBeReady();
+											}
+				}
+			pass(dataMap, "Successfully Clicked the search button");
+			}
+			catch(Exception e) {fail(dataMap, "Could not click the search button");}
 		}
+		else fail(dataMap, "Could not click the search button");
 
 	}
 
@@ -616,11 +679,16 @@ public class SearchContext extends CommonContext {
 	public void verify_search_returned(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_search_returned");
-		} else {
-			throw new ImplementationException("NOT verify_search_returned");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(sessionSearch.getSearchTableResults().Displayed());
+				pass(dataMap, "Able to verify our search went through");
+			}
+			catch(Exception e) {fail(dataMap, "Could not verify Search Returned");}
+
 		}
+	    else fail(dataMap, "Could not verify Search Returned");
 
 	}
 }
