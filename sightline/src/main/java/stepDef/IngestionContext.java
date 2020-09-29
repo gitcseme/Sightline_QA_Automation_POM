@@ -66,7 +66,6 @@ public class IngestionContext extends CommonContext {
 		} else {
 			ingest.requiredFieldsAreEntered(scriptState, dataMap);
 		}
-		System.out.print("i am noe here");
 	}
 
 
@@ -77,8 +76,11 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
 			ingest.getbtnRunIngestion().Click();
+			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			ingest.getPreviewRun().Click();
+			fail(dataMap,"Clicking Ingest Button was unsuccessful");
+
 		}
 
 	}
@@ -869,20 +871,33 @@ public class IngestionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? publish_ingested_files$")
 	public void publish_ingested_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//
+		//* Navigate to Ingestion/Analytics
+		//* ??? Unable to select Incrmental Analysis and unable to click Publish Button
+		//* Select "Incremental Analysis"
+		//* Click Publish button
+		//
 		if (scriptState) {
-			//
-			//* Navigate to Ingestion/Analytics
-			//* ??? Unable to select Incrmental Analysis and unable to click Publish Button
-			//* Select "Incremental Analysis"
-			//* Click Publish button
-			//
-			throw new ImplementationException("publish_ingested_files");
-		} else {
-			throw new ImplementationException("NOT publish_ingested_files");
-		}
+		    String url = (String) dataMap.get("URL");
+		    System.out.println(url);
+			driver.Navigate().to(url + "Ingestion/Analytics");
+			driver.waitForPageToBeReady();
+						
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					ingest.getIncrementalAnalysisBtn().Displayed()  ;}}), Input.wait30);
+				ingest.getIncrementalAnalysisBtn().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+						ingest.getPublishAnalyticsBtn().Displayed() && ingest.getPublishAnalyticsBtn().Enabled() ;}}), Input.wait30);
+					ingest.getPublishAnalyticsBtn().Click();
+					
+			pass(dataMap,"You succesfully published a file");
+			} else {
+				webDriver.get("http://www.google.com");
+				fail(dataMap,"You unsuccesfully published a file");
 
-	}
-
+			}
+		} 
 
 	@And("^.*(\\[Not\\] )? create_saved_search$")
 	public void create_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {

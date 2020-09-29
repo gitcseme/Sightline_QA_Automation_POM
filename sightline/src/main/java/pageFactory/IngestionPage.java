@@ -219,6 +219,7 @@ public class IngestionPage {
     
     //added on 200923
     public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
@@ -240,7 +241,9 @@ public class IngestionPage {
     public Element getRunIncAnalyticsPopUpText() {return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
     public Element getKickOffHelpIcon() { return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label>#IngestionErrorsHelp");}
     public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
-
+    public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
+    public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
+    
     public IngestionPage(Driver driver){
 
         this.driver = driver;
