@@ -283,12 +283,15 @@ public class SearchContext extends CommonContext {
 				
 				//Need to think of a better way to deal with this wait after search
 				driver.waitForPageToBeReady();
-					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
 				//Click on 5th Saved Search
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isEnabled() &&  sessionSearch.getSavedQueryButtons().FindWebElements().get(1).isDisplayed() ;}}), Input.wait30); 
 				sessionSearch.getSavedQueryButtons().FindWebElements().get(1).click();
-
+				
+				
 				for(int i =0; i<numOfSearches; i++) {
 					if(!sessionSearch.getQueryText2(i).getText().equals("")) {
 						Assert.assertEquals((sessionSearch.getQueryText2(i).getText()), ((ArrayList<String>)dataMap.get("queryText")).get(4));
@@ -386,20 +389,15 @@ public class SearchContext extends CommonContext {
 	public void verify_user_modified_session_query_not_changed_saved_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			ArrayList<String> query = new ArrayList<>();
 			StringBuilder temp = new StringBuilder();
-			int operatorButtonSize = sessionSearch.getOperatorDropdown().FindWebElements().size();
-			int operatorButtonANDSize = sessionSearch.getOperatorDropdownAND().FindWebElements().size();
-			int searchButtonSize = sessionSearch.getSearchButtons().FindWebElements().size();
 			try {
 			//[Test Case 149. - Verify that if user modified an In-Session search query then existing query should not get changed.
 
+				//First Search and Wait For Search Results to Load
 				sessionSearch.getSearchButton().Click();
 				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
-
-				System.out.println("page is ready");
 
 				
 				//Insert Operator
@@ -415,74 +413,50 @@ public class SearchContext extends CommonContext {
 					 }
 				 }				
 
-				 /*
-					System.out.println("before clicking operator button");
-					sessionSearch.getOperatorDropdown().FindWebElements().get(operatorButtonSize).click();
-					System.out.println("It clicked the operator button");
 					
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						sessionSearch.getSaveSearchButtons().FindWebElements().get(operatorButtonANDSize+1).isEnabled()  ;}}), Input.wait30);
-					System.out.println("Before AND click");
-					//Thread.sleep(3000);
-					
-					
-					sessionSearch.getOperatorDropdownAND().FindWebElements().get(operatorButtonANDSize).click();
-					System.out.println("After AND click");
-					*/
-					
-					
-					//Insert new AND MetaData 
-					String metaDataOption = (String)dataMap.get("metaDataOption");
-					String metaDataValue = (String)dataMap.get("metaDataValue");
-					if(metaDataOption == null) metaDataOption = "CustodianName";
-					if(metaDataValue == null) metaDataValue = "Other_Testing_Purposes";
-					sessionSearch.selectMetaDataOption(metaDataOption);
-					System.out.println("MetaData button is clicked");
-					sessionSearch.setMetaDataValue( null,metaDataValue,null);
-					System.out.println("MetaData value inserted");
-					
-					//Need to click search button
-
-					for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
-						if(x.isDisplayed() && x.isEnabled()) {
-							x.click();
-						}
+				//Insert new AND MetaData 
+				String metaDataOption = (String)dataMap.get("metaDataOption");
+				String metaDataValue = (String)dataMap.get("metaDataValue");
+				if(metaDataOption == null) metaDataOption = "CustodianName";
+				if(metaDataValue == null) metaDataValue = "Other_Testing_Purposes";
+				sessionSearch.selectMetaDataOption(metaDataOption);
+				sessionSearch.setMetaDataValue( null,metaDataValue,null);
+				
+				//Find The Correct Search Button in DOM Tree
+				for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+					if(x.isDisplayed() && x.isEnabled()) {
+						x.click();
 					}
-					System.out.println("Search button clicked");
+				}
 
-					driver.waitForPageToBeReady();
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
 
-					for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
-						System.out.println("?");
-						if(x.isDisplayed() && !x.getText().equals("")) {
-							temp.append(x.getText());
-							temp.append(" ");
-						}
+				//Get our Modified Text through each Query Text Box
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						temp.append(x.getText());
+						temp.append(" ");
 					}
-					System.out.format("Our Modiefied query: %s\n", temp.toString());
-									
-					//Store Values of edited search 
-					int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();  //Total number of search queries (It is 3)
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).isEnabled()  ;}}), Input.wait30); 
-					System.out.println("Before clicking last element");
-					sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).click();	//Should click bottom most
-					Thread.sleep(5000);
-					System.out.println("After clicking last element");
-					
-					String originalQuery = "";
-					for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
-						if(x.isDisplayed() && !x.getText().equals("")) {
-							originalQuery = x.getText();
-						}
+				}
+								
+				//Click The Original Query -> First Query we Entered 
+				int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();  //Total number of search queries (It is 3)
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).isEnabled()  ;}}), Input.wait30); 
+				sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize-1).click();	//Should click bottom most
+				
+				//Get Original Query Text from Query Text Boxes
+				String originalQuery = "";
+				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+					if(x.isDisplayed() && !x.getText().equals("")) {
+						originalQuery = x.getText();
 					}
-					System.out.format("Our Orignal: %s\n", originalQuery);
-					System.out.println(originalQuery + "AND " + metaDataOption + ": (" + metaDataValue + ") ");
-					Assert.assertEquals(temp.toString(), originalQuery + " AND " + metaDataOption + ": ( " + metaDataValue + ") ");
-					pass(dataMap, "Original Query was not Modified");
+				}
+				//Verify That Original Query Text has not Changed, by Adding the difference of the Final Query and Comparing their equality
+				Assert.assertEquals(temp.toString(), originalQuery + " AND " + metaDataOption + ": ( " + metaDataValue + ") ");
+				pass(dataMap, "Original Query was not Modified");
 					
 			}
 			catch(Exception e) {fail(dataMap, "Could not Verify Orginal Query Not Modified");}
@@ -527,6 +501,7 @@ public class SearchContext extends CommonContext {
 
 		if (scriptState) {
 			try {
+				//Wait for Query Textbox to appear, then call function to Hover over that Element
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getQueryTextBoxes().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
 				sessionSearch.removeSearchQueryRemove().Click();
@@ -572,11 +547,13 @@ public class SearchContext extends CommonContext {
 		if (scriptState) {
 			try {
 				String searchQuery = "";
+				//Find our Search Query
 				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
 					if(x.isDisplayed() && !x.getText().equals("")) {
 						searchQuery = x.getText();
 					}
 				}
+				//Verify it
 				Assert.assertEquals(searchQuery,(String)dataMap.get("FullText"));
 				
 			}
@@ -597,11 +574,13 @@ public class SearchContext extends CommonContext {
 				String metaDataOption = (String)dataMap.get("metaDataOption"); 
 				String metaDataValue = (String)dataMap.get("metaDataValue");
 				String metaDataValue2 = (String)dataMap.get("metaDataVal2"); 
+				//Find our Query
 				for(WebElement x: sessionSearch.getQueryTextBoxes().FindWebElements()) {
 					if(x.isDisplayed() && !x.getText().equals("")) {
 						searchQuery = x.getText();
 					}
 				}
+				//Verify it
 				Assert.assertEquals(searchQuery, String.format("%s: [%s TO %s]",metaDataOption,metaDataValue,metaDataValue2));
 				
 			}
@@ -680,6 +659,7 @@ public class SearchContext extends CommonContext {
 
 		if (scriptState) {
 			try {
+				//Verify that The Search Results table has spawned. Is this a good enough verification?
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
 				Assert.assertTrue(sessionSearch.getSearchTableResults().Displayed());
