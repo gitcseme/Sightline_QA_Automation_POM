@@ -2842,7 +2842,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("mp3_file", "MP3.lst");
-			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("dat_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID"); 
 			context.new_ingestion_created(true, dataMap);
@@ -2888,7 +2888,6 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("doc_key", "DOCID");
 			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
-			
 			context.select_audio_indexing(true, dataMap);
 			context.verify_no_error_message_is_displayed(true, dataMap);
 		} catch (ImplementationException e) {

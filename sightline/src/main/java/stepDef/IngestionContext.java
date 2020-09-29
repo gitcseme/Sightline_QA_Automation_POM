@@ -914,12 +914,38 @@ public class IngestionContext extends CommonContext {
 			//* Enter a valid name into the text box
 			//* Click Save
 			//
+			
+			String url = (String) dataMap.get("URL");
+		    System.out.println(url);
+			driver.Navigate().to(url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			
+			//Insert Text into Search Text box
+			insertLongText("AudioPlayerReady=1");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					ingest.getSeachBtn().Displayed() && ingest.getSeachBtn().Enabled() ;}}), Input.wait30);
+				ingest.getSeachBtn().Click();
+			
+		
+			
 			throw new ImplementationException("create_saved_search");
 		} else {
 			throw new ImplementationException("NOT create_saved_search");
 		}
 
 	}
+	
+	  //Insert Directly into Search Query -> inserts into the current selected query
+	 public void insertLongText(String searchQuery) {
+		   for(WebElement j: ingest.setQueryText().FindWebElements()) {
+			   if(j.isDisplayed()) {
+				   j.click();
+				   j.sendKeys(searchQuery);
+				   j.sendKeys(Keys.ENTER);
+			   }
+		  }
+	 }
 
 
 	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")

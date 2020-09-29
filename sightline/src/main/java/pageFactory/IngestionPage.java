@@ -243,6 +243,8 @@ public class IngestionPage {
     public Element getRunIncAnalytics() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(2) > label>#IngestionErrorsHelp");}
     public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
     public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
+    public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
+    public Element getSeachBtn() {return driver.FindElementById("btnBasicSearch");}
     
     public IngestionPage(Driver driver){
 
