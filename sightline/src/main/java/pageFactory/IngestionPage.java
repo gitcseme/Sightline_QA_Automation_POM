@@ -250,10 +250,17 @@ public class IngestionPage {
     public ElementCollection getSelectTable() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
     
     //hard-coded selecting options
-    public Element SecondRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(8)");}
-    public Element ThrirdRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(4)");}
-    public Element FourthRow(){return driver.FindElementByXPath("#SF_2 > option:nth-child(6)");}
+    public Element SecondRow(){return driver.FindElementByCssSelector("#SF_2");}
+    public Element SecondRowOptions(){return driver.FindElementByCssSelector("#SF_2 > option:nth-child(8)");}
+
+
+    public Element ThrirdRow(){return driver.FindElementByCssSelector("#SF_3");}
+    public Element ThrirdRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(4)");}
     
+    
+    public Element FourthRow(){return driver.FindElementByCssSelector("#SF_4");}
+    public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(6)");}
+
 
 
     public IngestionPage(Driver driver){

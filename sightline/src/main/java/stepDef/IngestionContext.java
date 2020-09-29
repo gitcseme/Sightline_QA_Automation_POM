@@ -585,8 +585,12 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSourceDATField().Displayed()  ;}}), Input.wait30); 
 			ingest.SecondRow().Click();
+			ingest.SecondRowOptions().Click();
 			ingest.ThrirdRow().Click();
+			ingest.ThrirdRowOptions().Click();
 			ingest.FourthRow().Click();
+			ingest.FourthRowOptions().Click();
+
 			
 			throw new ImplementationException("verify_audio_indexing_fails");
 		} else {
