@@ -229,8 +229,22 @@ public class SessionSearch {
     public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
     public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
     public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
+
+    //public Element setQueryText(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d])/../../..",i+1));}
+    public Element setQueryText3(int i) {return driver.FindElementByXPath(String.format("((//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[1])/../..//input[@class = 'textboxlist-bit-editable-input']",i+1));}
+
+
+
     public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
     public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
+
+
+    public Element getQueryText3() {return driver.FindElementByXPath("div[@id='tabs-1']//li[contains(@class, 'textboxlist-bit-box-deletable')]/span");}
+    
+    //My Stuff
+    public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
+    public ElementCollection getOperatorDropdownAND() {return driver.FindElementsByXPath("//a[@id='opAND']") ;}
+    
 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);

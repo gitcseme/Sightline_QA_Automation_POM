@@ -322,7 +322,7 @@ public class SearchContext extends CommonContext {
 
 				//Loop to Click through our Previous Queries
 				for(int i = searchSessionSize-1; i>=0; i--) {
-					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click();
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click(); // Click on each search query,starting with last search
 					Thread.sleep(2000);
 					//Loop To Modify Query Text, for each of our Previous Queries
 					for(WebElement j: sessionSearch.setQueryText().FindWebElements()) {
@@ -386,7 +386,85 @@ public class SearchContext extends CommonContext {
 	public void verify_user_modified_session_query_not_changed_saved_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			ArrayList<String> query = new ArrayList<>();
+			StringBuilder temp = new StringBuilder();
+			int operatorButtonSize = sessionSearch.getOperatorDropdown().FindWebElements().size();
+			int operatorButtonANDSize = sessionSearch.getOperatorDropdownAND().FindWebElements().size();
+			int searchButtonSize = sessionSearch.getSearchButtons().FindWebElements().size();
+			try {
 			//[Test Case 149. - Verify that if user modified an In-Session search query then existing query should not get changed.
+
+				sessionSearch.getSearchButton().Click();
+				driver.waitForPageToBeReady();
+				System.out.println("page is ready");
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSaveSearchButtons().FindWebElements().get(operatorButtonSize+1).isEnabled()  ;}}), Input.wait30); 
+					//Thread.sleep(3000);
+					System.out.println("before clicking operator button");
+					sessionSearch.getOperatorDropdown().FindWebElements().get(operatorButtonSize).click();
+					System.out.println("It clicked the operator button");
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getSaveSearchButtons().FindWebElements().get(operatorButtonANDSize+1).isEnabled()  ;}}), Input.wait30);
+					System.out.println("Before AND click");
+					//Thread.sleep(3000);
+					
+					
+					sessionSearch.getOperatorDropdownAND().FindWebElements().get(operatorButtonANDSize).click();
+					System.out.println("After AND click");
+					
+					
+					//Insert new AND MetaData 
+					String metaDataOption = (String)dataMap.get("metaDataOption");
+					String metaDataValue = (String)dataMap.get("metaDataValue");
+					if(metaDataOption == null) metaDataOption = "CustodianName";
+					if(metaDataValue == null) metaDataValue = "Other_Testing_Purposes";
+					sessionSearch.selectMetaDataOption(metaDataOption);
+					System.out.println("MetaData button is clicked");
+					sessionSearch.setMetaDataValue( null,metaDataValue,null);
+					System.out.println("MetaData value inserted");
+					
+					//Need to click search button
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							sessionSearch.getSearchButtons().FindWebElements().get(searchButtonSize+1).isEnabled()  ;}}), Input.wait30); 
+					sessionSearch.getSearchButtons().FindWebElements().get(searchButtonSize).click();
+					System.out.println("Search button clicked");
+									
+					//Store Values of edited search 
+					int searchSessionSize = sessionSearch.getSavedQueryButtons().FindWebElements().size();  //Total number of search queries (It is 3)
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize).isDisplayed()  ;}}), Input.wait30); 
+					System.out.println("Before clicking last element");
+					sessionSearch.getSavedQueryButtons().FindWebElements().get(searchSessionSize).click();	//Should click bottom most
+					System.out.println("After clicking last element");
+					//System.out.println(searchSessionSize);
+					
+					/*for(int i = searchSessionSize-1; i>=0; i--){
+						sessionSearch.getSavedQueryButtons().FindWebElements().get(i).click(); //Clicks on original search
+						for(WebElement k: sessionSearch.getQueryTextBoxes().FindWebElements()) {
+							if(!k.getText().equals("") && k.isDisplayed()) {
+								temp.append(k.getText());
+								temp.append(" ");
+							}
+						}
+						Assert.assertEquals(temp.toString(), query.get(searchSessionSize-i-1));
+						temp = new StringBuilder();
+					}*/
+					
+					//Click on Original Search and store those values somewhere
+					
+					//Compare edited values and original values and ensure they are not equal
+			}
+			
+			catch(Exception e) { 
+				fail(dataMap, "modified session query was not modified");
+				}
+			throw new ImplementationException("verify_user_modified_session_query_not_changed_saved_query");
+		} else {
+			throw new ImplementationException("NOT verify_user_modified_session_query_not_changed_saved_query");
+
 		}
 
 	}
