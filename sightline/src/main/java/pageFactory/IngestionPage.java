@@ -274,6 +274,12 @@ public class IngestionPage {
 	    	
 	    	if(dataMap.containsKey("doc_key")) {	
 	    		//getDAToptions(dataMap); 
+
+	    	    if(dataMap.containsKey("dat_file")) {
+	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
+	    	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	    	    }
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				getDocumentKey().Visible()  ;}}), Input.wait30);
 	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
