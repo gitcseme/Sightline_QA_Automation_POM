@@ -939,12 +939,14 @@ public class IngestionContext extends CommonContext {
 			//Enter Search into text box
 			session.insertFullText("AudioPlayerReady=1");
 			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-					ingest.getSeachBtn().Displayed() && ingest.getSeachBtn().Enabled() ;}}), Input.wait30);
-				ingest.getSeachBtn().Click();
-				
 			//Saves, Clicks on "My saved Search,Enter valid name and save
 			sessionContext.save_search(true,dataMap);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					ingest.getSearchBtn().Displayed() && ingest.getSearchBtn().Enabled() ;}}), Input.wait30);
+				ingest.getSearchBtn().Click();
+				
+			
 			pass(dataMap,"You have successfully Saved a search");
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -966,13 +968,28 @@ public class IngestionContext extends CommonContext {
 			//* Select saved filter created
 			//* Click Unpublish button
 			//
-			
+			try {
 			 String url = (String) dataMap.get("URL");
-			 driver.Navigate().to(url + "Ingestion/Analytics");
+			 driver.Navigate().to(url + "Ingestion/UnPublish");
 			 driver.waitForPageToBeReady();
-			throw new ImplementationException("unpublish_ingestion_files");
-		} else {
-			throw new ImplementationException("NOT unpublish_ingestion_files");
+			 
+			//Clicks on your saved filter
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+						ingest.getIngestionPageSavedFilterCreated().Displayed();}}), Input.wait30);
+					ingest.getIngestionPageSavedFilterCreated().Click();
+			 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+						ingest.getIngestionPageUnPublishBtn().Displayed() && ingest.getIngestionPageUnPublishBtn().Enabled() ;}}), Input.wait30);
+					ingest.getIngestionPageUnPublishBtn().Click();
+						
+						pass(dataMap,"You successfully unpublished");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You unsuccessfully unpublished");
+			}
+					
+			} else {
+				fail(dataMap,"You unsuccessfully unpublished");
 		}
 
 	}

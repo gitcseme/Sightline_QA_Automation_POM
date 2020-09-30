@@ -248,7 +248,7 @@ public class IngestionPage {
     public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
     public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
     public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
-    public Element getSeachBtn() {return driver.FindElementById("btnBasicSearch");}
+    public Element getSearchBtn() {return driver.FindElementById("btnBasicSearch");}
     
     public Element getSourceDATField() {return driver.FindElementByXPath("//*[@id=\"dt_basic\"]/thead/tr/td[1]");}
     public ElementCollection getSelectTable() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
@@ -264,6 +264,8 @@ public class IngestionPage {
     
     public Element FourthRow(){return driver.FindElementByCssSelector("#SF_4");}
     public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_4 > option:nth-child(4)");}
+    public Element getIngestionPageSavedFilterCreated() {return driver.FindElementByCssSelector("#-\\31 g > ul > li:last-child");}
+    public Element getIngestionPageUnPublishBtn() { return driver.FindElementById("Analyze");}
 
 
 
