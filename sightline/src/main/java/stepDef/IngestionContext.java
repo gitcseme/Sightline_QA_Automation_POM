@@ -22,6 +22,7 @@ import automationLibrary.Element;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -76,6 +77,10 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
 			ingest.getbtnRunIngestion().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			ingest.getPreviewRun().Click();
@@ -180,7 +185,6 @@ public class IngestionContext extends CommonContext {
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			click_preview_run_button(scriptState, dataMap);
-	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getFirstIngestionTileName().Visible()  ;}}), Input.wait30); 
@@ -578,19 +582,25 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 	
-	@Then("^.*(\\[Not\\] )? verify_audio_indexing_fails$")
+	
+	@Then("^.*(\\[Not\\] )? click_source_DAT_field$")
 	public void click_source_DAT_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getSourceDATField().Displayed()  ;}}), Input.wait30); 
-			ingest.SecondRow().Click();
-			ingest.ThrirdRow().Click();
-			ingest.FourthRow().Click();
+					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
 			
-			throw new ImplementationException("verify_audio_indexing_fails");
+			ingest.SecondRow().Click();
+			ingest.SecondRowOptions().Click();
+			ingest.ThrirdRow().Click();
+			ingest.ThrirdRowOptions().Click();
+			ingest.FourthRow().Click();
+			ingest.FourthRowOptions().Click();
+			Thread.sleep(2000);
+						
+			throw new ImplementationException("click_source_DAT_field");
 		} else {
-			throw new ImplementationException("NOT verify_audio_indexing_fails");
+			throw new ImplementationException("NOT click_source_DAT_field");
+
 		}
 
 	}
@@ -895,7 +905,6 @@ public class IngestionContext extends CommonContext {
 		//
 		if (scriptState) {
 		    String url = (String) dataMap.get("URL");
-		    System.out.println(url);
 			driver.Navigate().to(url + "Ingestion/Analytics");
 			driver.waitForPageToBeReady();
 						
@@ -918,52 +927,36 @@ public class IngestionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? create_saved_search$")
 	public void create_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			//* Navigate to /Search/Searches
-			//* Enter "AudioPlayerReady=1" into the text box
-			//* Click Search Button
-			//* Assert Audio file is displayed after search is completed
-			//* Click Save Button
-			//* Save Search modal is displayed
-			//* Click on "My Saved Search" 
-			//* Enter a valid name into the text box
-			//* Click Save
-			//
+		if	(scriptState) {
+			try {
+			SessionSearch session = new SessionSearch(driver);
+			SearchContext sessionContext = new SearchContext();
 			
 			String url = (String) dataMap.get("URL");
-		    System.out.println(url);
 			driver.Navigate().to(url + "Search/Searches");
 			driver.waitForPageToBeReady();
 			
-			//Insert Text into Search Text box
-			insertLongText("AudioPlayerReady=1");
+			//Enter Search into text box
+			session.insertFullText("AudioPlayerReady=1");
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					ingest.getSeachBtn().Displayed() && ingest.getSeachBtn().Enabled() ;}}), Input.wait30);
 				ingest.getSeachBtn().Click();
-			
-		
-			
-			throw new ImplementationException("create_saved_search");
+				
+			//Saves, Clicks on "My saved Search,Enter valid name and save
+			sessionContext.save_search(true,dataMap);
+			pass(dataMap,"You have successfully Saved a search");
+			}catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You were not able to save a search");
+			}
 		} else {
-			throw new ImplementationException("NOT create_saved_search");
-		}
+			fail(dataMap,"You were not able to save a search");
 
+		}
 	}
 	
-	  //Insert Directly into Search Query -> inserts into the current selected query
-	 public void insertLongText(String searchQuery) {
-		   for(WebElement j: ingest.setQueryText().FindWebElements()) {
-			   if(j.isDisplayed()) {
-				   j.click();
-				   j.sendKeys(searchQuery);
-				   j.sendKeys(Keys.ENTER);
-			   }
-		  }
-	 }
-
-
+	//skip
 	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")
 	public void unpublish_ingestion_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -973,6 +966,10 @@ public class IngestionContext extends CommonContext {
 			//* Select saved filter created
 			//* Click Unpublish button
 			//
+			
+			 String url = (String) dataMap.get("URL");
+			 driver.Navigate().to(url + "Ingestion/Analytics");
+			 driver.waitForPageToBeReady();
 			throw new ImplementationException("unpublish_ingestion_files");
 		} else {
 			throw new ImplementationException("NOT unpublish_ingestion_files");
@@ -980,7 +977,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	//skip
 	@Then("^.*(\\[Not\\] )? verify_unpublish_for_audio_documents_is_successful$")
 	public void verify_unpublish_for_audio_documents_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1091,7 +1088,37 @@ public class IngestionContext extends CommonContext {
 
 	}
 
+	@And("^.*(\\[Not\\] )? click_catalog_play_button$")
+	public void click_catalog_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			//Find Ingested tile created
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
+			System.out.println("Clicked");
+			
+			Thread.sleep(2000);
+
+			//* Modal is displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+
+			System.out.println(ingest.getIngestionTileText().getText()); // get the name of the automation project 
+			
+			Thread.sleep(4000);
+			
+			//now have to wait until it pass or fail
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
+			
+			throw new ImplementationException("click_catalog_play_button");
+		} else {
+			throw new ImplementationException("NOT click_catalog_play_button");
+
+		}
+	}
+	
 	@And("^.*(\\[Not\\] )? click_copy_play_button$")
 	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1102,10 +1129,11 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-			ingest.getIngestionTile().Click();
 			
+//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+//			ingest.getIngestionTile().Click();
+//			
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 

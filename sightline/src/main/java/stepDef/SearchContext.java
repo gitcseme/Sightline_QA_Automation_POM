@@ -98,7 +98,6 @@ public class SearchContext extends CommonContext {
 	}
 
 
-	//Complete
 	@And("^.*(\\[Not\\] )? create_search$")
 	public void create_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -114,9 +113,10 @@ public class SearchContext extends CommonContext {
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
-			if(sessionSearch.getNewSearch().Enabled())
+			if(sessionSearch.getNewSearch().Enabled()) {
 				sessionSearch.getNewSearch().Click();
 				driver.waitForPageToBeReady();
+			}
 
 			String metaDataOption = (String)dataMap.get("metaDataOption");
 			String metaDataValue = (String)dataMap.get("metaDataValue");
@@ -170,7 +170,6 @@ public class SearchContext extends CommonContext {
 	}
 
 
-	//Complete
 	@And("^.*(\\[Not\\] )? save_search$")
 	public void save_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		
@@ -212,7 +211,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@When("^.*(\\[Not\\] )? verify_searched_save$")
 	public void verify_searched_save(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -232,7 +230,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Test Case 84: Complete
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_previous_search_query_selection$")
 	public void verify_current_login_session_previous_search_query_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -267,7 +264,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Test Case 80 : Complete
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_saved_search_SEARCH5$")
 	public void verify_current_login_session_saved_search_SEARCH5(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -309,7 +305,6 @@ public class SearchContext extends CommonContext {
 	}
 
 
-	//Test Case 85: Completed
 	@Then("^.*(\\[Not\\] )? verify_current_login_session_edit_previous_search_query$")
 	public void verify_current_login_session_edit_previous_search_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -384,14 +379,12 @@ public class SearchContext extends CommonContext {
 	}
 
 
-	//Test Case 149
 	@Then("^.*(\\[Not\\] )? verify_user_modified_session_query_not_changed_saved_query$")
 	public void verify_user_modified_session_query_not_changed_saved_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			StringBuilder temp = new StringBuilder();
 			try {
-			//[Test Case 149. - Verify that if user modified an In-Session search query then existing query should not get changed.
 
 				//First Search and Wait For Search Results to Load
 				sessionSearch.getSearchButton().Click();
@@ -467,7 +460,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@Then("^.*(\\[Not\\] )? verify_search_criteria$")
 	public void verify_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -495,7 +487,6 @@ public class SearchContext extends CommonContext {
 
 	}
 	
-	//Complete
 	@Then("^.*(\\[Not\\] )? remove_search_criteria$")
 	public void remove_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -513,7 +504,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@Then("^.*(\\[Not\\] )? verify_is_search_criteria$")
 	public void verify_is_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -540,7 +530,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@Then("^.*(\\[Not\\] )? verify_fulltext_search_criteria$")
 	public void verify_fulltext_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -563,7 +552,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@Then("^.*(\\[Not\\] )? verify_range_search_criteria$")
 	public void verify_range_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -591,7 +579,6 @@ public class SearchContext extends CommonContext {
 
 	}
 
-	//Complete
 	@Then("^.*(\\[Not\\] )? verify_long_search_criteria$")
 	public void verify_long_search_criteria(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -637,17 +624,19 @@ public class SearchContext extends CommonContext {
 						x.click(); 
 						driver.waitForPageToBeReady();
 						//A warning message arises when using the long search type, this check clicks continue on that popup
-						if(searchType.equalsIgnoreCase("long")){
+						if(searchType!=null && searchType.equalsIgnoreCase("long")){
 							if(sessionSearch.getQueryPossibleWrongAlertContinueButton().Displayed() && sessionSearch.getQueryPossibleWrongAlertContinueButton().Enabled()) {
 								sessionSearch.getQueryPossibleWrongAlertContinueButton().Click();
 							}
 						}
-						driver.waitForPageToBeReady();
-											}
+					}
 				}
 			pass(dataMap, "Successfully Clicked the search button");
 			}
-			catch(Exception e) {fail(dataMap, "Could not click the search button");}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click the search button");
+				}
 		}
 		else fail(dataMap, "Could not click the search button");
 
@@ -662,7 +651,7 @@ public class SearchContext extends CommonContext {
 				//Verify that The Search Results table has spawned. Is this a good enough verification?
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
-				Assert.assertTrue(sessionSearch.getSearchTableResults().Displayed());
+				Assert.assertTrue(sessionSearch.getResultsTab().Displayed());
 				pass(dataMap, "Able to verify our search went through");
 			}
 			catch(Exception e) {fail(dataMap, "Could not verify Search Returned");}
