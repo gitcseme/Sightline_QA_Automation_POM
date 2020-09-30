@@ -259,7 +259,7 @@ public class IngestionPage {
     
     
     public Element FourthRow(){return driver.FindElementByCssSelector("#SF_4");}
-    public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(6)");}
+    public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_4 > option:nth-child(4)");}
 
 
 

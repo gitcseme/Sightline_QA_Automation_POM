@@ -76,6 +76,10 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
 			ingest.getbtnRunIngestion().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			ingest.getPreviewRun().Click();
@@ -590,7 +594,7 @@ public class IngestionContext extends CommonContext {
 			ingest.ThrirdRowOptions().Click();
 			ingest.FourthRow().Click();
 			ingest.FourthRowOptions().Click();
-
+			Thread.sleep(2000);
 			
 			throw new ImplementationException("verify_audio_indexing_fails");
 		} else {
@@ -968,6 +972,7 @@ public class IngestionContext extends CommonContext {
 	 }
 
 
+	//skip
 	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")
 	public void unpublish_ingestion_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -984,7 +989,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	//skip
 	@Then("^.*(\\[Not\\] )? verify_unpublish_for_audio_documents_is_successful$")
 	public void verify_unpublish_for_audio_documents_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1095,7 +1100,31 @@ public class IngestionContext extends CommonContext {
 
 	}
 
+	@And("^.*(\\[Not\\] )? click_catalog_play_button$")
+	public void click_catalog_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			//Find Ingested tile created
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
+			System.out.println(ingest.getIngestionTile().getText());
+			
+			//* Modal is displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+			//click cataloging
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getCatelogingButton().Displayed()  ;}}), Input.wait30); 
+			ingest.getCatelogingButton().Click();
+			 
+			
+			throw new ImplementationException("click_copy_play_button");
+		} else {
+			throw new ImplementationException("NOT click_copy_play_button");
+		}
+	}
+	
 	@And("^.*(\\[Not\\] )? click_copy_play_button$")
 	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1106,10 +1135,11 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-			ingest.getIngestionTile().Click();
 			
+//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+//			ingest.getIngestionTile().Click();
+//			
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
