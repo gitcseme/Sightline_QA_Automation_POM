@@ -180,6 +180,7 @@ public class SearchContext extends CommonContext {
 			dataMap.put("CurrentSaveValue","Test Search" + tempString);
 			//Get #of Search Buttons on Page
 			int searchSize = sessionSearch.getSaveSearchButtons().FindWebElements().size();
+			System.out.println(searchSize);
 			try {
 
 				//Get Current Search Button (Last Index of List)
