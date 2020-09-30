@@ -22,6 +22,7 @@ import automationLibrary.Element;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -925,57 +926,35 @@ public class IngestionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? create_saved_search$")
 	public void create_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			//* Navigate to /Search/Searches
-			//* Enter "AudioPlayerReady=1" into the text box
-			//* Click Search Button
-			//* Assert Audio file is displayed after search is completed
-			//* Click Save Button
-			//* Save Search modal is displayed
-			//* Click on "My Saved Search" 
-			//* Enter a valid name into the text box
-			//* Click Save
-			//
+		if	(scriptState) {
+			try {
+			SessionSearch session = new SessionSearch(driver);
+			SearchContext sessionContext = new SearchContext();
 			
 			String url = (String) dataMap.get("URL");
-		    System.out.println(url);
 			driver.Navigate().to(url + "Search/Searches");
 			driver.waitForPageToBeReady();
 			
-			//Insert Text into Search Text box
-			insertLongText("AudioPlayerReady=1");
+			//Enter Search into text box
+			session.insertFullText("AudioPlayerReady=1");
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					ingest.getSeachBtn().Displayed() && ingest.getSeachBtn().Enabled() ;}}), Input.wait30);
 				ingest.getSeachBtn().Click();
 				
-			//Assert Audio 
-				
-			
-				
-				
-			
-		
-			
-			throw new ImplementationException("create_saved_search");
+			//Saves, Clicks on "My saved Search,Enter valid name and save
+			sessionContext.save_search(true,dataMap);
+			pass(dataMap,"You have successfully Saved a search");
+			}catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"You were not able to save a search");
+			}
 		} else {
-			throw new ImplementationException("NOT create_saved_search");
-		}
+			fail(dataMap,"You were not able to save a search");
 
+		}
 	}
 	
-	  //Insert Directly into Search Query -> inserts into the current selected query
-	 public void insertLongText(String searchQuery) {
-		   for(WebElement j: ingest.setQueryText().FindWebElements()) {
-			   if(j.isDisplayed()) {
-				   j.click();
-				   j.sendKeys(searchQuery);
-				   j.sendKeys(Keys.ENTER);
-			   }
-		  }
-	 }
-
-
 	//skip
 	@When("^.*(\\[Not\\] )? unpublish_ingestion_files$")
 	public void unpublish_ingestion_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -986,6 +965,10 @@ public class IngestionContext extends CommonContext {
 			//* Select saved filter created
 			//* Click Unpublish button
 			//
+			
+			 String url = (String) dataMap.get("URL");
+			 driver.Navigate().to(url + "Ingestion/Analytics");
+			 driver.waitForPageToBeReady();
 			throw new ImplementationException("unpublish_ingestion_files");
 		} else {
 			throw new ImplementationException("NOT unpublish_ingestion_files");

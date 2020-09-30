@@ -2825,7 +2825,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive","smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_and_create_saved_search_When_unpublish_ingestion_files_Then_verify_unpublish_for_audio_documents_is_successful() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2841,10 +2841,11 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("source_system", "NUIX");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("mp3_file", "MP3.lst");
-			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("dat_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID"); 
+			dataMap.put("mp3_file", "MP3.lst");
+			dataMap.put("date_time", "MM/DD/YYY");
+			
 //			dataMap.put("native_file", "native.lst");
 //			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 //			dataMap.put("source_folder", "AudioDocsTest");
@@ -2874,7 +2875,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "smoke"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_select_audio_indexing_Then_verify_no_error_message_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
