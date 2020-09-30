@@ -903,7 +903,6 @@ public class IngestionContext extends CommonContext {
 		//
 		if (scriptState) {
 		    String url = (String) dataMap.get("URL");
-		    System.out.println(url);
 			driver.Navigate().to(url + "Ingestion/Analytics");
 			driver.waitForPageToBeReady();
 						
@@ -946,10 +945,15 @@ public class IngestionContext extends CommonContext {
 			
 			//Insert Text into Search Text box
 			insertLongText("AudioPlayerReady=1");
-			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					ingest.getSeachBtn().Displayed() && ingest.getSeachBtn().Enabled() ;}}), Input.wait30);
 				ingest.getSeachBtn().Click();
+				
+			//Assert Audio 
+				
+			
+				
+				
 			
 		
 			

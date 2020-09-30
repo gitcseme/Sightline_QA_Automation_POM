@@ -290,7 +290,9 @@ public class IngestionPage {
 	    	
 	    	if(dataMap.containsKey("source_folder")) {	
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30); 
+    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
 	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
 	    	}
 	    	
@@ -300,6 +302,9 @@ public class IngestionPage {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
 	    	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_file")) ;}}), Input.wait30); 
+	        		
 	    	    }
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				getDocumentKey().Visible()  ;}}), Input.wait30);
