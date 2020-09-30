@@ -220,8 +220,12 @@ public class IngestionPage {
     //added on 200923
     public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
+
+    public Element getCatelogingStatus() {return driver.FindElementByCssSelector("//*[@id=\"Catalogingblock\"]/div[1]/div/div[1]");}
+
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
-    public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a ");}
+    public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
+    public Element getIngestionTileText() {return driver.FindElementByCssSelector("#IngestionDetailsPopUp1 > section > div > div > div.smart-form.client-form.ingestionPopup > fieldset > div:nth-child(2) > div > label");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
     
@@ -290,8 +294,11 @@ public class IngestionPage {
 	    	if(dataMap.containsKey("source_folder")) {	
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
+
+	    		
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
+	    				!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
+	    		
 	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
 	    	}
 	    	
@@ -300,11 +307,13 @@ public class IngestionPage {
 	    	    if(dataMap.containsKey("dat_file")) {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
-	    	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+
+	       
+	        		getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	        		
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_file")) ;}}), Input.wait30); 
-	        		
-	    	    }
+	   	    	    }
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				getDocumentKey().Visible()  ;}}), Input.wait30);
 	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
@@ -342,6 +351,8 @@ public class IngestionPage {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
     		getDateFormat().SendKeys(dataMap.get("date_time").toString());
+    		
+    		
 
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

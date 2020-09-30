@@ -185,7 +185,6 @@ public class IngestionContext extends CommonContext {
 			on_ingestion_home_page(scriptState, dataMap);
 			new_ingestion_created(scriptState, dataMap);
 			click_preview_run_button(scriptState, dataMap);
-	    	click_run_ingest_button(scriptState, dataMap);
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getFirstIngestionTileName().Visible()  ;}}), Input.wait30); 
@@ -583,12 +582,13 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 	
-	@Then("^.*(\\[Not\\] )? verify_audio_indexing_fails$")
+	
+	@Then("^.*(\\[Not\\] )? click_source_DAT_field$")
 	public void click_source_DAT_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getSourceDATField().Displayed()  ;}}), Input.wait30); 
+					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
+			
 			ingest.SecondRow().Click();
 			ingest.SecondRowOptions().Click();
 			ingest.ThrirdRow().Click();
@@ -596,10 +596,11 @@ public class IngestionContext extends CommonContext {
 			ingest.FourthRow().Click();
 			ingest.FourthRowOptions().Click();
 			Thread.sleep(2000);
-			
-			throw new ImplementationException("verify_audio_indexing_fails");
+						
+			throw new ImplementationException("click_source_DAT_field");
 		} else {
-			throw new ImplementationException("NOT verify_audio_indexing_fails");
+			throw new ImplementationException("NOT click_source_DAT_field");
+
 		}
 
 	}
@@ -1093,22 +1094,28 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//Find Ingested tile created
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
-			System.out.println(ingest.getIngestionTile().getText());
+			System.out.println("Clicked");
 			
+			Thread.sleep(2000);
+
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
-			//click cataloging
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getCatelogingButton().Displayed()  ;}}), Input.wait30); 
-			ingest.getCatelogingButton().Click();
-			 
+
+			System.out.println(ingest.getIngestionTileText().getText()); // get the name of the automation project 
 			
-			throw new ImplementationException("click_copy_play_button");
+			Thread.sleep(4000);
+			
+			//now have to wait until it pass or fail
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
+			
+			throw new ImplementationException("click_catalog_play_button");
 		} else {
-			throw new ImplementationException("NOT click_copy_play_button");
+			throw new ImplementationException("NOT click_catalog_play_button");
+
 		}
 	}
 	

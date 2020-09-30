@@ -18,7 +18,15 @@
      
         <!-- CPA -->
         <pa1FullName>Shilpi PA1</pa1FullName>
+<<<<<<< Updated upstream
         <pa1userName>qapau5@consilio.com</pa1userName>
+=======
+<<<<<<< Updated upstream
+        <pa1userName>qapau2@consilio.com</pa1userName>
+=======
+        <pa1userName>qapau3@consilio.com</pa1userName>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         <pa1password>Q@test_10</pa1password>
 
         
