@@ -156,6 +156,7 @@ public class SessionSearch {
     //search query alerts
     public Element getQueryAlertGetText(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]"); } 
     public Element getQueryAlertGetTextSingleLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/p"); } 
+    public Element getQueryPossibleWrongAlertContinueButton() {return driver.FindElementById("bot1-Msg1");}
     
   //shilpi
     public Element getSaveSearch_AdvButton(){ return driver.FindElementByXPath(".//*[@id='tabsResult-1']//a[@id='qSave']"); }
@@ -213,9 +214,26 @@ public class SessionSearch {
     public Element getPageTitle() {return driver.FindElementByCssSelector("h1.page-title"); }
     public Element getHelpTip() {return driver.FindElementByCssSelector("a.helptip[data-original-title='Searching Help']"); }
     public Element getUniqueCount(){ return driver.FindElementByCssSelector("h1.page-title span label"); }
-    public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
+    public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("//*[@id='xEdit']/li)[%s]",listItem+1)); }
     public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
     public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
+    
+    public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
+    public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
+    public ElementCollection getMetaDataSearchButtons() {return driver.FindElementsById("metadataHelper");}
+    public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
+    public ElementCollection getSearchButtons() {return driver.FindElementsById("btnBasicSearch");}
+    public ElementCollection getSavedQueryButtons() {return driver.FindElementsByXPath("//a[contains(@class,  'liClick ui-tabs-anchor')]");}
+    public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
+    public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
+    public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
+    public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
+    public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
+    public Element getOperatorDropDown() {return driver.FindElementByXPath("//button[@class = 'btn btn-default dropdown-toggle insertOpHelper']");}
+    public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
+    public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
+    public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
+    
 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
@@ -228,6 +246,18 @@ public class SessionSearch {
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
+    }
+    //Similar to the overloaded Function of the same name
+    //This one does not rely on the appropriate ListItem Index, instead deleting the first avaliable item
+    public Element removeSearchQueryRemove() {
+    	Actions builder  = new Actions(driver.getWebDriver());
+    	for(WebElement x: getQueryTextBoxes().FindWebElements()) {
+    		if(x.isDisplayed() && !x.getText().equals("")) {
+    			builder.moveToElement(x).perform();
+    			return getRemoveSearchQuery();
+    		}
+    	}
+		return null;
     }
     
     public Element removeSearchQueryRemove(int listItem){ 
@@ -593,26 +623,30 @@ public class SessionSearch {
    }
     
     public void selectMetaDataOption(String metaDataField) {
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicSearch_MetadataBtn().Enabled()  ;}}), Input.wait30); 
-		getBasicSearch_MetadataBtn().Click();
+
+		driver.waitForPageToBeReady();
+		//Get Dynamic MetaData Button List Size
+		int metaDataButtonSize = getMetaDataSearchButtons().FindWebElements().size();
 		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectMetaData().Visible()  ;}}), Input.wait30); 
+				
 		
-	    try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+		//Choose Current MetaData Button (Last Index of List)
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
+		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
+		
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSelectMetaData().Enabled() && getSelectMetaData().Displayed()  ;}}), Input.wait30); 
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
     	
     }
     
     public void setMetaDataValue(String option, String val1, String val2) {
+
+    	driver.waitForPageToBeReady();
 		if(option == null){
-			
 			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
 		}
 		else if(option.equalsIgnoreCase("IS")){
@@ -625,6 +659,8 @@ public class SessionSearch {
 			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
 			
 		}
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataInserQuery().Enabled() && getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 		getMetaDataInserQuery().Click();    	
     }
     
@@ -1755,5 +1791,50 @@ public void Removedocsfromresults() {
 			
 
 	}
+  
+   //Insert Directly into Search Query -> inserts into the current selected query
+   public void insertFullText(String searchQuery) {
+	   for(WebElement j: setQueryText().FindWebElements()) {
+		   if(j.isDisplayed()) {
+			   j.click();
+			   j.sendKeys(searchQuery);
+			   j.sendKeys(Keys.ENTER);
+		   }
+	  }
+   }	   
 
- }
+   //Insert Two MetaData Values/Fields with a Condition Operator Between Them
+   public void insertLongText(String metaData1, String metaData2, String condition, String metaVal1, String metaVal2) {
+
+	   //Enter First Field MetaData and Value
+	   selectMetaDataOption(metaData1);   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       setMetaDataValue(null,metaVal1,null);
+       
+       //Insert Condition Operator
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		getOperatorDropdown().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+       for(WebElement x: getOperatorDropdown().FindWebElements()) {
+    	   if(x.isDisplayed() && x.isEnabled()) {
+    		   x.click();
+    		   for(WebElement y: getOperatorDropDownOP(condition).FindWebElements()) {
+    			   if(y.isDisplayed() && y.isEnabled())
+    				   y.click();
+    		   }
+    	   }
+       }
+
+       //Enter Second Field MetaData and Value
+       selectMetaDataOption(metaData2);   
+	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       setMetaDataValue(null,metaVal2,null);
+	   
+   }
+
+}

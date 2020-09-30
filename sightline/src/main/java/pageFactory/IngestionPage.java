@@ -250,9 +250,8 @@ public class IngestionPage {
 
     }
     
-    public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) 
-    		throws InterruptedException {
-    	
+    public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) throws InterruptedException 
+    {
     	driver.waitForPageToBeReady();
     	if (scriptState) {
 	    	if(dataMap.containsKey("source_system")) {
@@ -322,6 +321,9 @@ public class IngestionPage {
     		getAudioTranscriptLST().SendKeys("audio_file");
 		}
 
+    }
+    public void requiredAudioField(){
+    	
     }
     
     public void getDAToptions(HashMap dataMap) throws InterruptedException {
