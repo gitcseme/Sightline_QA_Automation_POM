@@ -98,7 +98,7 @@ public class SearchRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("pwd", "Q@test_10");
-			dataMap.put("uid", "qapau5@consilio.com");
+			dataMap.put("uid", "qapau4@consilio.com");
 			context.login(true, dataMap);
 			dataMap.put("prod_template", "1");
 			dataMap.put("A", "");
@@ -110,6 +110,7 @@ public class SearchRegression extends RegressionBase {
 				context.save_search(true, dataMap);
 				context.verify_searched_save(true, dataMap);
 			}
+			Thread.sleep(2000);
 			//context.(true, dataMap);
 			context.verify_current_login_session_previous_search_query_selection(true, dataMap);
 		} catch (ImplementationException e) {
@@ -258,7 +259,7 @@ public class SearchRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("pwd", "Q@test_10");
-			dataMap.put("uid", "qapau5@consilio.com");
+			dataMap.put("uid", "qapau4@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -667,13 +668,13 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "5");
-			dataMap.put("metaDataOption", "EmailDomainClount");
+			dataMap.put("metaDataOption", "EmailAllDomainCount");
 			dataMap.put("searchType","IS");
 			context.create_search(true, dataMap);
 			context.verify_is_search_criteria(true, dataMap);
@@ -702,8 +703,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -725,7 +726,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Search, Positive"})
+	@Test(groups = {"Search, Positive", "smoke"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -736,15 +737,15 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			dataMap.put("searchType","RANGE");
-			dataMap.put("metaDataOption","");
-			dataMap.put("metaDataValue","");
-			dataMap.put("metaDataVal2","");
+			dataMap.put("searchType","range");
+			dataMap.put("metaDataOption","AttachCount");
+			dataMap.put("metaDataValue","100");
+			dataMap.put("metaDataVal2","1000");
 			context.create_search(true, dataMap);
 			context.verify_range_search_criteria(true, dataMap);
 		} catch (ImplementationException e) {
@@ -1014,8 +1015,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1054,8 +1055,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1089,8 +1090,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1127,8 +1128,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1163,8 +1164,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
@@ -1200,8 +1201,8 @@ public class SearchRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("PWD", "Consilio!SQRdIam1!");
-			dataMap.put("UID", "qapau5");
+			dataMap.put("pwd", "Consilio!SQRdIam1!");
+			dataMap.put("uid", "qapau5@consilio.com");
 			context.login(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
