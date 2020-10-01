@@ -2268,4 +2268,274 @@ public class SearchRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_Number_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10298");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_Number|TC#10298} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "##0\\.375");
+			dataMap.put("State", "yes");
+			dataMap.put("metaDataOption", "Number");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_Phone_Number_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10299");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_Phone_Number|TC#10299} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "##[0-9]{3}-[0-9][3]-[0-9]{4}");
+			dataMap.put("State", "yes");
+			dataMap.put("metaDataOption", "Phone Number");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailAuthorAddress_regex_all_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10303");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_EmailAuthorAddress_regex_all|TC#10303} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "##all");
+			dataMap.put("metaDataOption", "EmailAuthorAddress");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailSubject_regex_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10305");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_EmailSubject_regex|TC#10305} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "## Test mail [0-9]{4}/[0-9]{2}/[07]");
+			dataMap.put("metaDataOption", "EmailSubject");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailSubject_regex_numeric_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10313");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_EmailSubject_regex_numeric|TC#10313} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "##[0-9]{2}[0-9]{2}[0-9]{2}");
+			dataMap.put("metaDataOption", "EmailSubject");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_Comments_regex_PF_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10322");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_Comments_regex_PF|TC#10322} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "##PF[09]{4}");
+			dataMap.put("metaDataOption", "Comments");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_symbol_in_search_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10484");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_@_symbol_in_search|TC#10484} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "this is a @subject");
+			dataMap.put("metaDataOption", "EmailSubject");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_with_symbol_in_email_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10487");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{_with_@_symbol_in_email|TC#10487} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "gnunez@concilio.com");
+			dataMap.put("metaDataOption", "EmailAuthorAddress");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchTitle_When_Then_Not_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search{Title} When  Then [Not] verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			context.create_search(false, dataMap);
+			context.verify_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//end
+
