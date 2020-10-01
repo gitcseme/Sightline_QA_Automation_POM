@@ -297,7 +297,7 @@ public class SearchContext extends CommonContext {
 
 			}
 			catch(Exception e) {fail(dataMap, "Failed Search 5 Verification");
-}
+			}
 
 		}
 		else fail(dataMap, "Failed Search 5 Verification");
@@ -660,4 +660,98 @@ public class SearchContext extends CommonContext {
 	    else fail(dataMap, "Could not verify Search Returned");
 
 	}
-}
+
+	@And("^.*(\\[Not\\] )? select_advanced_search$")
+	public void select_advanced_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify button [+ New Search]
+			//* Verify Advanced Search Link
+			//* Click Advanced Search link
+			//* Verify [MetaData] button is enabled
+			//* Click [MetaData] button
+			//* Verify "Insert MetaData" popup
+			//* Verify "Select a Field" dropdown is enabled
+			//* Click "Select a Field" dropdown
+			//* Select "MetaDataOption"
+			//* Verify "Enter Value" Text box is enabled
+			//* Enter {ing} in Text Box
+			//* Verify Autosuggest appears
+			//
+			throw new ImplementationException("select_advanced_search");
+		} else {
+			throw new ImplementationException("NOT select_advanced_search");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_autosuggest$")
+	public void verify_autosuggest(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* check for autosuggest within 3 seconds timer|TC#5768
+			//* Enter {additionalKeys}
+			//* check for autosuggest
+			//
+			throw new ImplementationException("verify_autosuggest");
+		} else {
+			throw new ImplementationException("NOT verify_autosuggest");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_search$")
+	public void select_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify button [+ New Search]
+			//* Click [+ New Search]
+			//* Verify [MetaData] button is enabled
+			//* Click [MetaData] button
+			//* Verify "Insert MetaData" popup
+			//* Verify "Select a Field" dropdown is enabled
+			//* Click "Select a Field" dropdown
+			//* Select "{DocFileExtension}"
+			//* Type metaDataValue letters quickly then pause
+			//* Start Timer
+			//
+			// 
+			throw new ImplementationException("select_search");
+		} else {
+			throw new ImplementationException("NOT select_search");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? create_advanced_search$")
+	public void create_advanced_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify button [+ New Search]
+			//* Verify Advanced Search Link
+			//* Click Advanced Search link
+			//* Verify [MetaData] button is enabled
+			//* Click [MetaData] button
+			//* Verify "Insert MetaData" popup
+			//* Verify "Select a Field" dropdown is enabled
+			//* Click "Select a Field" dropdown
+			//* Select "MetaDataOption"
+			//* Verify "Enter Value" Text box is enabled
+			//* Enter {MetaDataValue} in Text Box
+			//
+			//Click "Select a Field" dropdownSelect "All Custodian"Verify "Enter Value" Text box is enabledEnter "Test" in Text BoxVerify [Insert into Query] button is enabledClick [Insert into Query]Verify "AllCustodians: (test)" query entry is addedClick [Save]Verify "Save Search" popupClick "Save as new search" optionClick "My Saved Search"Enter Name of search as Search[timestamp]Click "Save"Confirm searched saved on Search List with provided name
+			throw new ImplementationException("create_advanced_search");
+		} else {
+			throw new ImplementationException("NOT create_advanced_search");
+		}
+
+	}
+}//end
+
+	
