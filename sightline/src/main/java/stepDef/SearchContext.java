@@ -727,4 +727,31 @@ public class SearchContext extends CommonContext {
 		}
 
 	}
+
+	@And("^.*(\\[Not\\] )? create_advanced_search$")
+	public void create_advanced_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify button [+ New Search]
+			//* Verify Advanced Search Link
+			//* Click Advanced Search link
+			//* Verify [MetaData] button is enabled
+			//* Click [MetaData] button
+			//* Verify "Insert MetaData" popup
+			//* Verify "Select a Field" dropdown is enabled
+			//* Click "Select a Field" dropdown
+			//* Select "MetaDataOption"
+			//* Verify "Enter Value" Text box is enabled
+			//* Enter {MetaDataValue} in Text Box
+			//
+			//Click "Select a Field" dropdownSelect "All Custodian"Verify "Enter Value" Text box is enabledEnter "Test" in Text BoxVerify [Insert into Query] button is enabledClick [Insert into Query]Verify "AllCustodians: (test)" query entry is addedClick [Save]Verify "Save Search" popupClick "Save as new search" optionClick "My Saved Search"Enter Name of search as Search[timestamp]Click "Save"Confirm searched saved on Search List with provided name
+			throw new ImplementationException("create_advanced_search");
+		} else {
+			throw new ImplementationException("NOT create_advanced_search");
+		}
+
+	}
 }//end
+
+	

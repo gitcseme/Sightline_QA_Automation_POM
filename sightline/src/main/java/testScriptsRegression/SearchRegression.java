@@ -1662,4 +1662,610 @@ public class SearchRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_simple_regex_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10268");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_simple_regex|TC#10268} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"(\"##[a-z]{3}\") Truthful\"~6");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_simple_regex_hyphen_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10270");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_simple_regex_hyphen|TC#10270} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"##235-[0-9]{3}-[0-9]{4} Number\"~7");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_boolean_or_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11549");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_boolean_or|TC#11549} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "company OR (\"ProximitySearch Iterative\"~15 OR m0ney) OR TruthFinder");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_boolean_and_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11550");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_boolean_and|TC#11550} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "(\"ProximitySearch Iterative\"~15 AND financial) OR m0ney");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_boolean_not_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11551");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_boolean_not|TC#11551} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "( \"ProximitySearch Iterative\"~15 AND financial ) NOT m0ney");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_boolean_regex_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11552");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_boolean_regex|TC#11552} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"(SmartSea* Reca*) ((\"##[a-z]{8}\") develope*)\"~20");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_boolean_regex_combo_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11553");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_boolean_regex_combo|TC#11553} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"(SmartSearch  OR  develope*) (\"##precis?on.\"  OR  w?ere   OR  m?ne*)\"~10");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#9601");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity|TC#9601} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"Truthful\"~6");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_wildcard_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10521");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_wildcard|TC#10521} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"Truth*\"~6");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetaData_with_proximity_wildcard_warning_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10240");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_search{MetaData}{_with_proximity_wildcard_warning|TC#10240} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "\"Truth*\"~6");
+			dataMap.put("searchType", "MetaData");
+			context.create_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_simple_regex_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10267");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_simple_regex|TC#10267} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "\"(\"##[a-z]{3}\") Truthful\"~6");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_simple_regex_hyphen_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#10269");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_simple_regex_hyphen|TC#10269} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "\"##235-[0-9]{3}-[0-9]{4} Number\"~7");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_or_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11554");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_boolean_or|TC#11554} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "company OR (\"ProximitySearch Iterative\"~15 OR m0ney) OR TruthFinder");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_and_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11555");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_boolean_and|TC#11555} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "(\"ProximitySearch Iterative\"~15 AND financial) OR m0ney");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_not_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11556");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_boolean_not|TC#11556} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "( \"ProximitySearch Iterative\"~15 AND financial ) NOT m0ney");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_regex_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11557");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_boolean_regex|TC#11557} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "\"(SmartSea* Reca*) ((\"##[a-z]{8}\") develope*)\"~20");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_regex_combo_When_Then_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11558");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and create_advanced_search{MetaData}{_with_proximity_boolean_regex_combo|TC#11558} When  Then verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "\"(SmartSearch  OR  develope*) (\"##precis?on.\"  OR  w?ere   OR  m?ne*)\"~10");
+			dataMap.put("metaDataOption", "CustodianName");
+			dataMap.put("searchType", "MetaData");
+			context.create_advanced_search(true, dataMap);
+			context.verify_search_criteria(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_searchsearchTypeTitle_When_Then_Not_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_search{searchType}{Title} When  Then [Not] verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			context.create_search(false, dataMap);
+			context.verify_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_create_advanced_searchsearchTypeTitle_When_Then_Not_verify_search_criteria() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] create_advanced_search{searchType}{Title} When  Then [Not] verify_search_criteria");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			context.create_advanced_search(false, dataMap);
+			context.verify_search_criteria(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//end
