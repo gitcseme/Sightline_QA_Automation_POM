@@ -1422,7 +1422,8 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Search, Positive"})
+	//Complete + Pass
+	@Test(groups = {"Search, Positive", "smoke"})
 	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1433,9 +1434,10 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			dataMap.put("metaDataValue", "pdf");
-			dataMap.put("AdditionalKeys", "xx");
+			dataMap.put("metaDataValue", ".doc");
+			dataMap.put("AdditionalKeys", "x");
 			dataMap.put("metaDataOption", "DocFileExtension");
 			context.select_search(true, dataMap);
 			context.verify_autosuggest(true, dataMap);
@@ -2011,7 +2013,8 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Search, Positive", "smoke"})
+	//Come back
+	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_simple_regex_When_Then_verify_search_criteria() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
