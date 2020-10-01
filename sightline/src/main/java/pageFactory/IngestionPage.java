@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
@@ -113,11 +114,9 @@ public class IngestionPage {
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
     
     //Xpaths    
-    //public Element getAddanewIngestionButton(){return driver.FindElementByXPath("//a[text()='Addx a new Ingestion']"); }
     public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
 
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
-    //public Element getNextButton(){ return driver.FindElementByXPath(".//*[@class='btn btn-primary btn-next']"); }
     public Element getNextButton(){ return driver.FindElementById("NextButton"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
     public Element getIsNativeInPathInDAT(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
@@ -232,11 +231,6 @@ public class IngestionPage {
     
     //System Admin Profile
     
-    //public Element getAddNewProjectBtn() {return driver.FindElementById("btnAdd");}
-    //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//*[.='Add Project']");}
-    //public Element getAddNewProjectBtn() { return driver.FindElementByCssSelector("a#f.btn.btn-primary");}
-   // public Element getAddNewProjectBtn() {return driver.FindElement(By.linkText("Add Project"));}
-    //public Element getAddNewProjectBtn() {return driver.FindElementByXPath("//a[@href ='/en-us/Project/CreateProject']");}
     public Element getAddNewProjectBtn() {return driver.FindElementByCssSelector("#content > form > div:nth-child(3) > div > div.entityDiv > div > div.col-md-4 > p> #btnAdd");}
     public Element getKickOffPopUpText() { return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
     public Element getKickOffText() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label");}
@@ -247,17 +241,17 @@ public class IngestionPage {
 
     public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
     public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
-    public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
     public Element getSearchBtn() {return driver.FindElementById("btnBasicSearch");}
     
     public Element getSourceDATField() {return driver.FindElementByXPath("//*[@id=\"dt_basic\"]/thead/tr/td[1]");}
     public ElementCollection getSelectTable() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
     
+    public Element getIngestionConfigureMappingRequiredDropDownFields(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s", index));}
+    public Element getIngestionConfigureMappingRequiredDropDownOptions(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s > option:nth-child(4)", index));}
+
     //hard-coded selecting options
     public Element SecondRow(){return driver.FindElementByCssSelector("#SF_2");}
     public Element SecondRowOptions(){return driver.FindElementByCssSelector("#SF_2 > option:nth-child(8)");}
-
-
     public Element ThrirdRow(){return driver.FindElementByCssSelector("#SF_3");}
     public Element ThrirdRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(4)");}
     
@@ -266,6 +260,12 @@ public class IngestionPage {
     public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_4 > option:nth-child(4)");}
     public Element getIngestionPageSavedFilterCreated() {return driver.FindElementByCssSelector("#-\\31 g > ul > li:last-child");}
     public Element getIngestionPageUnPublishBtn() { return driver.FindElementById("Analyze");}
+    public Element getIngestionUnpublishToastPopup() {return driver.FindElementById("bigBoxColor1");}
+    
+    //public Element getIngestionExecutionAudioIndexingCheckbox() { return driver.FindElementByCssSelector(".checkbox >i");}
+    public Element getIngestionExecutionAudioIndexingCheckbox() { return driver.FindElementByCssSelector("#Indexingblock > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
+    public ElementCollection getIngestionExecutionAudioLanguagePackOptions(){ return driver.FindElementsByCssSelector("#worldSelect >option ");}
+    
 
 
 
@@ -600,7 +600,6 @@ public class IngestionPage {
 		
     }
 
-    
     public void AddOnlyNewIngestion(String dataset) throws InterruptedException {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

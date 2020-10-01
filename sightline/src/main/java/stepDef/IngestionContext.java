@@ -2,8 +2,10 @@ package stepDef;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.JavascriptExecutor;  
 
@@ -588,20 +591,26 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
-			
+			/*
 			ingest.SecondRow().Click();
 			ingest.SecondRowOptions().Click();
 			ingest.ThrirdRow().Click();
 			ingest.ThrirdRowOptions().Click();
 			ingest.FourthRow().Click();
 			ingest.FourthRowOptions().Click();
-			Thread.sleep(2000);
-						
-			throw new ImplementationException("click_source_DAT_field");
-		} else {
-			throw new ImplementationException("NOT click_source_DAT_field");
-
+			*/
+			for(int i=2; i<=4; i++) {
+				int index = i;
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownFields(index).Displayed()  ;}}), Input.wait30); 
+				ingest.getIngestionConfigureMappingRequiredDropDownFields(i).Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownOptions(index).Enabled()  ;}}), Input.wait30); 
+				ingest.getIngestionConfigureMappingRequiredDropDownOptions(i).Click();
+			}
+			pass(dataMap, "We Put the options in Successfully");
 		}
+		else fail(dataMap, "Could Not Click DAT Source Fields");
 
 	}
 
@@ -929,15 +938,18 @@ public class IngestionContext extends CommonContext {
 
 		if	(scriptState) {
 			try {
-			SessionSearch session = new SessionSearch(driver);
 			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
 			
 			String url = (String) dataMap.get("URL");
 			driver.Navigate().to(url + "Search/Searches");
 			driver.waitForPageToBeReady();
 			
+			
 			//Enter Search into text box
-			session.insertFullText("AudioPlayerReady=1");
+			sessionContext.sessionSearch.insertFullText("AudioPlayerReady=1");
 			
 			//Saves, Clicks on "My saved Search,Enter valid name and save
 			sessionContext.save_search(true,dataMap);
@@ -982,7 +994,7 @@ public class IngestionContext extends CommonContext {
 						ingest.getIngestionPageUnPublishBtn().Displayed() && ingest.getIngestionPageUnPublishBtn().Enabled() ;}}), Input.wait30);
 					ingest.getIngestionPageUnPublishBtn().Click();
 						
-						pass(dataMap,"You successfully unpublished");
+			pass(dataMap,"You successfully unpublished");
 			} catch(Exception e) {
 				e.printStackTrace();
 				fail(dataMap,"You unsuccessfully unpublished");
@@ -1003,10 +1015,13 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Verify successful toast message appears
 			//
-			throw new ImplementationException("verify_unpublish_for_audio_documents_is_successful");
-		} else {
-			throw new ImplementationException("NOT verify_unpublish_for_audio_documents_is_successful");
+			//Wait for popup, and confirm that it is displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				ingest.getIngestionUnpublishToastPopup().Displayed();}}), Input.wait30);
+			Assert.assertTrue(ingest.getIngestionUnpublishToastPopup().Displayed());
+			pass(dataMap, "Ingested Audio Document Verified to be Unpublished");
 		}
+		else fail(dataMap, "Ingested Audio Document was not Verified to be Unpublished");
 
 	}
 
@@ -1015,20 +1030,56 @@ public class IngestionContext extends CommonContext {
 	public void select_audio_indexing(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Return to Ingestion/Home
-			//* Look for Ingestion Tile created
-			//* Click on Ingestion Title
-			//* Run the Catalog step
-			//* Run the Copy step
-			//* Click on Audio checkbox
-			//* Select 3 language packs (Norh American English/United Kingdom English/German)
+			try
+			{
+				HashSet<String> audioOptions = new HashSet<>(Arrays.asList("North American English", "United Kingdom English", "German"));
+				//
+
+				//* Return to Ingestion/Home
+
+				//* Look for Ingestion Tile created
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+				//* Click on Ingestion Title
+				ingest.getIngestionTile().Click();
+
+				// CANT DO THESE TWO YET
+				//* Run the Catalog step
+				//* Run the Copy step
+
+				//* Click on Audio checkbox (This is a really ugly CSS selector, maybe you can find a better one.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionExecutionAudioIndexingCheckbox().Displayed()
+	    				&& ingest.getIngestionExecutionAudioIndexingCheckbox().Enabled() ;}}), Input.wait30); 
+				ingest.getIngestionExecutionAudioIndexingCheckbox().Click();
+				Thread.sleep(5000);
+
+				//Wait for Language Pack Box to be enabled
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionExecutionAudioLanguagePackOptions().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			    //* Select 3 language packs (Norh American English/United Kingdom English/German)
+				//Use Action Class because we need to shiftclick to select multiple packs 
+				Actions actions = new Actions(driver.getWebDriver());
+				actions.sendKeys(Keys.PAGE_DOWN).build().perform();
+				for(WebElement x: ingest.getIngestionExecutionAudioLanguagePackOptions().FindWebElements()) {
+					if(x.isDisplayed()) {
+						if(audioOptions.contains(x.getText())) {
+							actions.keyDown(Keys.SHIFT).click(x).build().perform();
+							Thread.sleep(1000);
+						}
+					}
+					
+				}
+				Thread.sleep(5000);
+			}
+			catch(Exception e) {e.printStackTrace();}
+
 			//* Run Indexing
 			//
-			throw new ImplementationException("select_audio_indexing");
-		} else {
-			throw new ImplementationException("NOT select_audio_indexing");
+
 		}
+		else fail(dataMap, "Could Not Run Audio Indexing");
 
 	}
 
