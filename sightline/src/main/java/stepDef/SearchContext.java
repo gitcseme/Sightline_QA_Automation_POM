@@ -668,24 +668,65 @@ public class SearchContext extends CommonContext {
 	public void select_advanced_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Verify button [+ New Search]
-			//* Verify Advanced Search Link
-			//* Click Advanced Search link
-			//* Verify [MetaData] button is enabled
-			//* Click [MetaData] button
-			//* Verify "Insert MetaData" popup
-			//* Verify "Select a Field" dropdown is enabled
-			//* Click "Select a Field" dropdown
-			//* Select "MetaDataOption"
-			//* Verify "Enter Value" Text box is enabled
-			//* Enter {ing} in Text Box
-			//* Verify Autosuggest appears
-			//
-			throw new ImplementationException("select_advanced_search");
-		} else {
-			throw new ImplementationException("NOT select_advanced_search");
+			try
+			{
+
+				String metaDataOption = (String)dataMap.get("MetaDataOption");
+				String metaDataValue = (String)dataMap.get("MetaDataValue");
+				String metaDataValue2 = (String)dataMap.get("MetaDataValue2");
+				//
+				//
+
+				//* Verify button [+ New Search]
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
+				Assert.assertTrue(sessionSearch.getNewSearch().Displayed() && sessionSearch.getNewSearch().Enabled());
+				
+				//* Verify Advanced Search Link
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getAdvancedSearchLink().Enabled()  ;}}), Input.wait30); 
+				Assert.assertTrue(sessionSearch.getAdvancedSearchLink().Displayed() && sessionSearch.getAdvancedSearchLink().Enabled());
+
+				//* Click Advanced Search link
+				sessionSearch.getAdvancedSearchLink().Click();
+				
+				//Click Content and MetaData
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getContentAndMetaDatabtn().Displayed()  ;}}), Input.wait30); 
+				sessionSearch.getContentAndMetaDatabtn().Click();
+
+				
+				//* Verify [MetaData] button is enabled
+				//* Click [MetaData] button
+				//* Verify "Insert MetaData" popup
+				//* Verify "Select a Field" dropdown is enabled
+				//* Click "Select a Field" dropdown
+				//* Select "MetaDataOption"
+				sessionSearch.selectMetaDataOption(metaDataOption);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataSearchText1().Enabled() && sessionSearch.getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+
+				//* Verify "Enter Value" Text box is enabled
+				//* Enter {ing} in Text Box
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
+				sessionSearch.setMetaDataValueNoEnter( null,metaDataValue,null);
+
+				//* Verify Autosuggest appears
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getSearchAutoCompletePopup().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(sessionSearch.getSearchAutoCompletePopup().Displayed());
+
+				Thread.sleep(5000);
+				driver.waitForPageToBeReady();
+			}
+			catch(Exception e) {e.printStackTrace();}
+
+			
+
 		}
+		else fail(dataMap, "Could not use Advanced Search Options"); 
+		
 
 	}
 
@@ -699,9 +740,25 @@ public class SearchContext extends CommonContext {
 			//* Enter {additionalKeys}
 			//* check for autosuggest
 			//
-			throw new ImplementationException("verify_autosuggest");
-		} else {
-			throw new ImplementationException("NOT verify_autosuggest");
+		}
+		else {
+			try {
+				//TC 11228: Verify that Auto suggest disappearing when user  type a letter  which does not match in the CustodianName Metadata in Advanced Search 
+				if(((String)dataMap.get("TestCase")).equals("TC#11228")){
+
+					//Enter Last Part of Invalid String, to remove Auto Suggest Box
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
+					sessionSearch.setMetaDataValueNoEnter(null, (String)dataMap.get("MetaDataValue2"), null);
+
+					//Verify Auto Complete Pop Up is gone
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!sessionSearch.getSearchAutoCompletePopup().Displayed()  ;}}), Input.wait30); 
+					Assert.assertTrue(!sessionSearch.getSearchAutoCompletePopup().Displayed());
+				}
+			}
+			catch(Exception e) {e.printStackTrace();}
+			
 		}
 
 	}

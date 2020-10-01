@@ -233,6 +233,7 @@ public class SessionSearch {
     public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
     public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
     public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
+    public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
     
 
     public SessionSearch(Driver driver){
@@ -635,6 +636,7 @@ public class SessionSearch {
 			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
 		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
 		
+		
 
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -662,6 +664,24 @@ public class SessionSearch {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getMetaDataInserQuery().Enabled() && getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 		getMetaDataInserQuery().Click();    	
+    }
+    
+    public void setMetaDataValueNoEnter(String option, String val1, String val2) {
+
+    	driver.waitForPageToBeReady();
+
+		if(option == null){
+			getMetaDataSearchText1().SendKeys(val1);
+		}
+		else if(option.equalsIgnoreCase("IS")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+		}
+		else if(option.equalsIgnoreCase("RANGE")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
+		}
     }
     
     public int basicMetaDataSearch(String metaDataField, String option, String val1, String val2) {
