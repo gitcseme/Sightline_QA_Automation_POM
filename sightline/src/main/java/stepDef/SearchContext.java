@@ -608,8 +608,13 @@ public class SearchContext extends CommonContext {
 						searchQuery.append(" ");
 					}
 				}
-				Assert.assertEquals((searchQuery.toString()), String.format("%s: ( %s) %s %s: ( %s) ", 
+				if(metaDataOption2 == null) {
+					Assert.assertEquals(searchQuery.toString(), String.format("%s %s %s ", metaDataValue,condition,metaDataValue2));
+				}
+				else {
+					Assert.assertEquals((searchQuery.toString()), String.format("%s: ( %s) %s %s: ( %s) ", 
 						metaDataOption,metaDataValue,condition,metaDataOption2,metaDataValue2));
+				}
 				pass(dataMap, "Verified the Long Text Search Criteria");
 
 				
@@ -682,8 +687,6 @@ public class SearchContext extends CommonContext {
 				String metaDataOption = (String)dataMap.get("MetaDataOption");
 				String metaDataValue = (String)dataMap.get("MetaDataValue");
 				String metaDataValue2 = (String)dataMap.get("MetaDataValue2");
-				//
-				//
 
 				//* Verify button [+ New Search]
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -741,6 +744,7 @@ public class SearchContext extends CommonContext {
 	public void verify_autosuggest(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//
 			//* check for autosuggest within 3 seconds timer|TC#5768
 			//* Enter {additionalKeys}
@@ -783,10 +787,9 @@ public class SearchContext extends CommonContext {
 			//* Verify "Select a Field" dropdown is enabled
 			//* Click "Select a Field" dropdown
 			//* Select "{DocFileExtension}"
-			//* Type metaDataValue letters quickly then pause
-			//* Start Timer
-			//
-			// 
+			
+
+			
 			throw new ImplementationException("select_search");
 		} else {
 			throw new ImplementationException("NOT select_search");
@@ -811,7 +814,8 @@ public class SearchContext extends CommonContext {
 			//* Verify "Enter Value" Text box is enabled
 			//* Enter {MetaDataValue} in Text Box
 			//
-			//Click "Select a Field" dropdownSelect "All Custodian"Verify "Enter Value" Text box is enabledEnter "Test" in Text BoxVerify [Insert into Query] button is enabledClick [Insert into Query]Verify "AllCustodians: (test)" query entry is addedClick [Save]Verify "Save Search" popupClick "Save as new search" optionClick "My Saved Search"Enter Name of search as Search[timestamp]Click "Save"Confirm searched saved on Search List with provided name
+			//Click "Select a Field" dropdownSelect "All Custodian"Verify "Enter Value" Text box is enabledEnter "Test" in Text BoxVerify [Insert into Query] button is enabledClick [Insert into Query]Verify "AllCustodians: (test)" query entry is addedClick [Save]Verify "Save Search" popupClick "Save as new search" optionClick "My Saved Search"Enter Name of search as Search[timestamp]Click "Save"
+			//Confirm searched saved on Search List with provided name
 			throw new ImplementationException("create_advanced_search");
 		} else {
 			throw new ImplementationException("NOT create_advanced_search");
