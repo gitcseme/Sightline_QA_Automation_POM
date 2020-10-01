@@ -1391,4 +1391,275 @@ public class SearchRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-}
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_select_advanced_search_with_CustodianName_When_Then_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and select_advanced_search{_with_CustodianName} When  Then verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "test");
+			dataMap.put("MetaDataValue", "ing");
+			context.select_advanced_search(true, dataMap);
+			context.verify_autosuggest(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Positive"})
+	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#5708");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and select_search{_with_metaDataValue_causes_autosuggest|TC#5708} When  Then verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("metaDataValue", "pdf");
+			dataMap.put("AdditionalKeys", "xx");
+			dataMap.put("metaDataOption", "DocFileExtension");
+			context.select_search(true, dataMap);
+			context.verify_autosuggest(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_Not_on_production_Search_Session_page_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given [Not] on_production_Search_Session_page When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_custodianName_not_match_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11228");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_advanced_search{_with_custodianName_not_match|TC#11228} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "Testing");
+			dataMap.put("MetaDataValue2", "ing");
+			context.select_advanced_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_UpperCase_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11284");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_advanced_search{_with_CustodianName_not_match_UpperCase|TC#11284} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "P");
+			dataMap.put("MetaDataValue2", "Axxx");
+			context.select_advanced_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_Special_Character_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11286");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_advanced_search{_with_CustodianName_not_match_Special_Character|TC#11286} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "P");
+			dataMap.put("MetaDataValue2", "&%s");
+			context.select_advanced_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_White_Space_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11287");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_advanced_search{_with_CustodianName_not_match_White_Space|TC#11287} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "P");
+			dataMap.put("MetaDataValue2", "A  Loyd");
+			context.select_advanced_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_searchwith_matching_letters_for_autosuggest_till_not_match_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11233");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_search{with_matching_letters_for_autosuggest_till_not_match|TC#11233} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("AdditionalKeys", "de");
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "abc");
+			context.select_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Search, Negative"})
+	public void test_Given_on_production_Search_Session_page_and_Not_select_search_with_matching_digits_for_autosuggest_till_not_match_When_Then_Not_verify_autosuggest() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		dataMap.put("TestCase","TC#11280");
+		ExtentTest test = report.startTest("Given on_production_Search_Session_page and [Not] select_search{_with_matching_digits_for_autosuggest_till_not_match|TC#11280} When  Then [Not] verify_autosuggest");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.on_production_Search_Session_page(true, dataMap);
+			dataMap.put("AdditionalKeys", "45");
+			dataMap.put("MetaDataOption", "CustodianName");
+			dataMap.put("MetaDataValue", "123");
+			context.select_search(false, dataMap);
+			context.verify_autosuggest(false, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+}//end
