@@ -39,6 +39,12 @@ public class IngestionContext extends CommonContext {
 	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	/* 
+	 * ignore
+	 * 
+	public void (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+	 */
 	 JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
@@ -1187,6 +1193,7 @@ public class IngestionContext extends CommonContext {
 		}
 	
 	}
+	
 	@Then("^.*(\\[Not\\] )? verify_run_incremental_analytics_option_displays_correct_message$")
 	public void verify_run_incremental_analytics_option_displays_correct_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1227,8 +1234,1020 @@ public class IngestionContext extends CommonContext {
 
 	
 	}
+		
+	@And("^.*(\\[Not\\] )? map_configuration_fields$")
+	public void map_configuration_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("map_configuration_fields");
+		} else {
+			throw new ImplementationException("NOT map_configuration_fields");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
+	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Open ingested file
+			//* If other steps have not been started, start Catalogue and copy steps before Indexing
+			//* On the ingestion deatils page
+			//* After the ingestion has been catalogued
+			//* Click on the Play button for the Copy step of the ingestion
+			//
+			throw new ImplementationException("click_copy_play_icon");
+		} else {
+			throw new ImplementationException("NOT click_copy_play_icon");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_indexing_play_icon$")
+	public void click_indexing_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Open ingested file
+			//* If other steps have not been started, start Catalogue and copy steps before Indexing
+			//* Click the play button for Indexing step
+			//
+			throw new ImplementationException("click_indexing_play_icon");
+		} else {
+			throw new ImplementationException("NOT click_indexing_play_icon");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? start_analysing_step$")
+	public void start_analysing_step(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Open ingested file
+			//* If other steps have not been started, start Catalogue and copy steps before Indexing
+			//* Click the play button for Indexing step
+			//* Select Start option to begin Analysing
+			//
+			throw new ImplementationException("start_analysing_step");
+		} else {
+			throw new ImplementationException("NOT start_analysing_step");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_being_analysed_can_not_be_searched$")
+	public void verify_ingestion_being_analysed_can_not_be_searched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC873:To verify that user is not able to search the data if Ingestions Analysing is running
+			//* Once the ingestion has begun the analysing process
+			//* Navigate to Search page
+			//* Search for ingestion that is being analysed
+			//* validate that no search results for the specified ingestion is displayed
+			//
+			throw new ImplementationException("verify_ingestion_being_analysed_can_not_be_searched");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_being_analysed_can_not_be_searched");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_mp3_attached_files$")
+	public void remove_mp3_attached_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to source location
+			//* Locate mp3 files specified in the dat file
+			//* remove the mp3 files from the directory
+			//
+			throw new ImplementationException("remove_mp3_attached_files");
+		} else {
+			throw new ImplementationException("NOT remove_mp3_attached_files");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_copy_step_fails_for_mp3_ingestion$")
+	public void verify_copy_step_fails_for_mp3_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6110:To Verify Copy Error Count for MP3 Doc in Ingestion UI.
+			//* Open the ingestion, to view the error in the copy step
+			//* Validate the copy step fails and displays how many documents are missing
+			//
+			throw new ImplementationException("verify_copy_step_fails_for_mp3_ingestion");
+		} else {
+			throw new ImplementationException("NOT verify_copy_step_fails_for_mp3_ingestion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_in_progress_can_not_be_searched$")
+	public void verify_ingestion_in_progress_can_not_be_searched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC871:To verify that user is not able to search the data if Ingestion is Inprogress.
+			//* Once the ingestion has started (in progress status)
+			//* Navigate to Search page
+			//* Search for ingestion that is in progress
+			//* validate that no search results for the specified ingestion is displayed
+			//
+			throw new ImplementationException("verify_ingestion_in_progress_can_not_be_searched");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_in_progress_can_not_be_searched");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? rename_mp3_doc_file$")
+	public void rename_mp3_doc_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* navigate to document location
+			//* Rename the mp3 file that was ingested
+			//
+			throw new ImplementationException("rename_mp3_doc_file");
+		} else {
+			throw new ImplementationException("NOT rename_mp3_doc_file");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_renaming_doc_fails_indexing_step$")
+	public void verify_renaming_doc_fails_indexing_step(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6069:To Verify For Audio Indexing only the files at Destination location should be sent for Indexing.Validate that the indexing step fails when running the index step after renaming the document ingested
+			throw new ImplementationException("verify_renaming_doc_fails_indexing_step");
+		} else {
+			throw new ImplementationException("NOT verify_renaming_doc_fails_indexing_step");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? start_indexing_step$")
+	public void start_indexing_step(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Open ingested file
+			//* If other steps have not been started, start Catalogue and copy steps before Indexing
+			//* Click the play button for Indexing step
+			//* Select Start Indexing option to begin Indexing
+			//
+			throw new ImplementationException("start_indexing_step");
+		} else {
+			throw new ImplementationException("NOT start_indexing_step");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_being_indexed_can_not_be_searched$")
+	public void verify_ingestion_being_indexed_can_not_be_searched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC872:To verify that user is not able to search the data if Ingestions Indexing is running
+			//* Once the ingestion has begun the indexing process
+			//* Navigate to Search page
+			//* Search for ingestion that is being indexed
+			//* validate that no search results for the specified ingestion is displayed
+			//
+			throw new ImplementationException("verify_ingestion_being_indexed_can_not_be_searched");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_being_indexed_can_not_be_searched");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? on_search_home_page$")
+	public void on_search_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Search/Searches
+			//
+			throw new ImplementationException("on_search_home_page");
+		} else {
+			throw new ImplementationException("NOT on_search_home_page");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? search_for_ingestion$")
+	public void search_for_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* On the search page
+			//* Enter the following into the search query:
+			//IngestionName: (Ingestion Name Goes here)
+			//* Click Search button
+			//* Add the documents that were generated to the right hand side by clicking the Plus symbol
+			//* Click the dropdown action button
+			//* Click on View DocView
+			//
+			throw new ImplementationException("search_for_ingestion");
+		} else {
+			throw new ImplementationException("NOT search_for_ingestion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_file_description_is_tally_searchable$")
+	public void verify_file_description_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5548:To Verify FileDescription in Tally and Search.
+			//* validate FileDescription is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_file_description_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_file_description_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_metadata_is_populated_correctly$")
+	public void verify_email_metadata_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5267:To Verify email metadata field is populated correctly for ingested data
+			//
+			//* Select the following columns:
+			//
+			//
+			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and RecipientDomainCoun
+			//
+			//
+			//* Validate the value displayed from the search
+			//* Values will match those of the Ingested Email Document
+			//
+			throw new ImplementationException("verify_email_metadata_is_populated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_email_metadata_is_populated_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_expected_fields_are_in_data_set$")
+	public void verify_expected_fields_are_in_data_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5527:To Verify Field ParentDocID ,HeadOfHouseholdDocID and FamilyID in Ingested Data Set.Verify ingestion is successfully published and no errors are displayed
+			//* Validate the following fields are displayed for the ingestion published
+			//* You can selet the fields as columns if that makes things easier to validate
+			//
+			//
+			//* ParentDocId
+			//* HeadOfHouseholdDocID
+			//* FamilyID
+			//
+			throw new ImplementationException("verify_expected_fields_are_in_data_set");
+		} else {
+			throw new ImplementationException("NOT verify_expected_fields_are_in_data_set");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_processing_ocr_completed_is_tally_searchable$")
+	public void verify_processing_ocr_completed_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5554:To Verify ProcessingOCRComplete in Tally and Search
+			//
+			//* validate ProcessingOCRComplete is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_processing_ocr_completed_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_processing_ocr_completed_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_family_relationship_is_tally_searchable$")
+	public void verify_family_relationship_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5555:To Verify FamilyRelationship in Tally and Search.
+			//* validate FamilyRelationship is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_family_relationship_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_family_relationship_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_exception_resolution_is_tally_searchable$")
+	public void verify_exception_resolution_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5556:To Verify ExceptionResolution in Tally
+			//* validate ExceptionResolution is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_exception_resolution_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_exception_resolution_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_duplicated_doc_id_is_populated_correctly$")
+	public void verify_email_duplicated_doc_id_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5265:To Verify EmailDuplicateDocID field is populated correctly for ingested data
+			//
+			//* Click on Select Column button and select the following columns:
+			//
+			//
+			//* Email DuplicateDocID
+			//* EmailsDuplicates
+			//
+			//
+			//* Validate that values are displayed for the ingested email docuements.
+			//
+			throw new ImplementationException("verify_email_duplicated_doc_id_is_populated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_email_duplicated_doc_id_is_populated_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_excel_protected_workbook_is_tally_searchable$")
+	public void verify_excel_protected_workbook_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5558:To Verify ExcelProtectedWorkbook in Tally and Search.
+			//* validate ExcelProtectedWorkbook is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_excel_protected_workbook_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_excel_protected_workbook_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_all_custodians_is_tally_searchable$")
+	public void verify_all_custodians_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5560:To Verify AllCustodians in Tally and Search
+			//* validate the following field when searching the ingested document
+			//
+			//
+			//* AllCustodians
+			//
+			throw new ImplementationException("verify_all_custodians_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_all_custodians_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_review_export_id_is_tally_searchable$")
+	public void verify_review_export_id_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5561:To Verify ReviewExportID in Tally and Search.
+			//* validate ReviewExportID is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_review_export_id_is_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_review_export_id_is_tally_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_attach_doc_ids_are_searchable$")
+	public void verify_attach_doc_ids_are_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5552:To Verify SourceAttachDocIDs and AttachDocIDs in Search
+			//
+			//* validate SourceAttachDocIDs is displayed on the metadata on the right side
+			//* validate AttachDocIDs is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_attach_doc_ids_are_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_attach_doc_ids_are_searchable");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_hidden_properties_are_tally_searchable$")
+	public void verify_hidden_properties_are_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5557:To Verify HiddenProperties in Tally and Search.
+			//* validate HiddenProperties is displayed on the metadata on the right side
+			//
+			throw new ImplementationException("verify_hidden_properties_are_tally_searchable");
+		} else {
+			throw new ImplementationException("NOT verify_hidden_properties_are_tally_searchable");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_save_button$")
+	public void click_save_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After clicking Next button
+			//* Click the save button 
+			//* Click Yes
+			//* Ingestion is saved as a draft
+			//
+			throw new ImplementationException("click_save_button");
+		} else {
+			throw new ImplementationException("NOT click_save_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_draft_ingestion_files_are_not_found$")
+	public void verify_draft_ingestion_files_are_not_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC869: To verify that user is not able to search the Ingested data if Ingestion is in Draft Mode
+			//
+			//* Validate the ingested files and ingestion saved can't be found in the search
+			//
+			throw new ImplementationException("verify_draft_ingestion_files_are_not_found");
+		} else {
+			throw new ImplementationException("NOT verify_draft_ingestion_files_are_not_found");
+		}
+
+	}
 	
+	@Then("^.*(\\[Not\\] )? verify_components_are_displayed_correctly$")
+	public void verify_components_are_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC275: To verify that progress bar is displayed on tiles and Counts of Ingested and Errors keeps on updated once Ingestion process is started.Covered:TC235: New Ingestion with Overwrite option as 'Add Only'
+			//
+			//* On the Ingestion Home page
+			//* Validate the Ingestion displays a progress bar when the ingestion is processing each step (catalog, copy, index)
+			//* Validate Source, publish and error counts are updated
+			//* validate progress status is updated (In Progress, Catalogued, Copied, Indexed)
+			//
+			throw new ImplementationException("verify_components_are_displayed_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_components_are_displayed_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_user_can_ingest_a_saved_draft$")
+	public void verify_user_can_ingest_a_saved_draft(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC315:To verify that user can Ingest the files which are in Draft Mode
+			//* Once the Saved Draft is opened in the wizard
+			//* Validate that the user can still ingest the saved draft opened
+			//
+			throw new ImplementationException("verify_user_can_ingest_a_saved_draft");
+		} else {
+			throw new ImplementationException("NOT verify_user_can_ingest_a_saved_draft");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_filter_by_dropdown");
+		} else {
+			throw new ImplementationException("NOT click_filter_by_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_filter_by_dropdown_displays_expected_options$")
+	public void verify_filter_by_dropdown_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC842 To verify that Filter by dorpdown has following options: Draft,In progress,Failed,Cataloged,Copied,Indexed,Approved & PublishedValidate the following options are displayed when opening the filter:
+			//* Draft
+			//* In Progress
+			//* Failed
+			//* Cataloged
+			//* Copied
+			//* Indexed
+			//* Approved
+			//* Published
+			//
+			throw new ImplementationException("verify_filter_by_dropdown_displays_expected_options");
+		} else {
+			throw new ImplementationException("NOT verify_filter_by_dropdown_displays_expected_options");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_view_options_are_displayed$")
+	public void verify_view_options_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC852:To verify that user is able to view two buttons of Grid and Tile view.Validate the following options are displayed:
+			//
+			//* Grid view
+			//* Tile View
+			//
+			throw new ImplementationException("verify_view_options_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_view_options_are_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_filter_by_dropdown_has_default_option_selected$")
+	public void verify_filter_by_dropdown_has_default_option_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC843:To verify that in filter, follwing options are selected by default: In progress
+			//* Validate the following option is selected by default
+			//
+			//
+			//* In Progress
+			//
+			throw new ImplementationException("verify_filter_by_dropdown_has_default_option_selected");
+		} else {
+			throw new ImplementationException("NOT verify_filter_by_dropdown_has_default_option_selected");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_on_rollback_option$")
+	public void click_on_rollback_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After item has been ingested
+			//* Click on the setting for grid tile on the ingested item
+			//* Click Rollback option
+			//* Click Yes to confirm rollback
+			//
+			throw new ImplementationException("click_on_rollback_option");
+		} else {
+			throw new ImplementationException("NOT click_on_rollback_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_rolled_back_ingestion_can_be_deleted$")
+	public void verify_rolled_back_ingestion_can_be_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC830:To verify that ingestion which is Rolled back can be deleted once it is in Draft modeCovered:TC888 To verify that ingestion which is Rolled back can be deleted.
+			//* Once an Ingested item has been rolledback
+			//* Check the DB to make sure the value has changed to Draft Mode (Pending DB access) ???
+			//* Click on the Settings gear for the ingested grid item
+			//* Click on Delete
+			//* Validate the item is deleted
+			//
+			throw new ImplementationException("verify_rolled_back_ingestion_can_be_deleted");
+		} else {
+			throw new ImplementationException("NOT verify_rolled_back_ingestion_can_be_deleted");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_grid_view_displays_expected_fields$")
+	public void verify_ingestion_grid_view_displays_expected_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC853:To verify that in Grid view, information of tiles are displayed in tabular with the following columns: Project Name,Ingestion Name,Percentage Completed Total document count, Ingested document count, Error document count, Last Modified By, Last Modified atCovered:TC276:To verify that Counts displayed on Tiles on Ingestion home page are correct.TC277:To verify that Ingestion Count on Ingested Home page is displayed correctly
+			//
+			//
+			//* Once an Ingestion is created and redirected to the Ingestion/Home page
+			//* Validate the following fields are displayed on the Grid Tile for the ingestion
+			//
+			//
+			//* Project 
+			//* Ingestion Name
+			//* Ingestion Type
+			//* % Completed
+			//* Start Date
+			//* End Date
+			//* Source Docs
+			//* Ingested Docs
+			//* Error
+			//* Last Modified By
+			//* Last Modified at
+			//* Ingestion Status
+			//
+			throw new ImplementationException("verify_ingestion_grid_view_displays_expected_fields");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_grid_view_displays_expected_fields");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_home_page_displays_default_tile_count$")
+	public void verify_ingestion_home_page_displays_default_tile_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1129:To verify that on Ingesion Home page displays default 10 tiles.
+			//
+			//* Validate default 10 tiles are displayed
+			//
+			throw new ImplementationException("verify_ingestion_home_page_displays_default_tile_count");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_home_page_displays_default_tile_count");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_home_page_is_refreshed$")
+	public void verify_ingestion_home_page_is_refreshed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC257:To Verify the reload of the ingestion with the 'Refresh' option.
+			//
+			//* validate the ingestion tile is refreshed
+			//* validate the count on the page is also updated correctly
+			//
+			throw new ImplementationException("verify_ingestion_home_page_is_refreshed");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_home_page_is_refreshed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_all_filter_by_options$")
+	public void select_all_filter_by_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click filter by dropdown
+			//* Select all options displayed
+			//
+			throw new ImplementationException("select_all_filter_by_options");
+		} else {
+			throw new ImplementationException("NOT select_all_filter_by_options");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_sort_by_option$")
+	public void select_sort_by_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("select_sort_by_option");
+		} else {
+			throw new ImplementationException("NOT select_sort_by_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_sort_by_works_as_expected$")
+	public void verify_sort_by_works_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC845:To verify that Filter options work with the sort by functionality.Covers:TC846:To verify that Sort by in Grid View.
+			//* Validate the different sort by options work as expected
+			//
+			//
+			//* Last Modified Date
+			//* Status
+			//* Last modified user
+			//* Project Name
+			//
+			throw new ImplementationException("verify_sort_by_works_as_expected");
+		} else {
+			throw new ImplementationException("NOT verify_sort_by_works_as_expected");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? click_grid_view$")
+	public void click_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_grid_view");
+		} else {
+			throw new ImplementationException("NOT click_grid_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pagination_exists_on_grid_view$")
+	public void verify_pagination_exists_on_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC848:To verify that on Ingesion Home page is having pagination for Grid View only
+			//* Validate the grid view displays pagination 
+			//
+			throw new ImplementationException("verify_pagination_exists_on_grid_view");
+		} else {
+			throw new ImplementationException("NOT verify_pagination_exists_on_grid_view");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? scroll_click_load_more_button$")
+	public void scroll_click_load_more_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("scroll_click_load_more_button");
+		} else {
+			throw new ImplementationException("NOT scroll_click_load_more_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_load_more_button_is_displayed$")
+	public void verify_load_more_button_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1130:To verify that on Ingesion Home page, on scrolling down next 10 tiles are loaded and displayed and with sort options
+			//
+			//* Validate more tiles are loaded
+			//
+			throw new ImplementationException("verify_load_more_button_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_load_more_button_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_load_more_button_disappears$")
+	public void verify_load_more_button_disappears(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1133:To verify that "Load More" button enable or disable as per the availabilty of Tiles.validate load more button is no longer displayed when no more tiles are available
+			throw new ImplementationException("verify_load_more_button_disappears");
+		} else {
+			throw new ImplementationException("NOT verify_load_more_button_disappears");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? click_copy_option$")
+	public void click_copy_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click settings (gear icon) on ingested tile
+			//* Click on Copy
+			//
+			throw new ImplementationException("click_copy_option");
+		} else {
+			throw new ImplementationException("NOT click_copy_option");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_copy_ingestion_does_not_display_warning_message$")
+	public void verify_copy_ingestion_does_not_display_warning_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2564:To verify that on "Copy Ingestion" once the Configure mapping is matched between Current and Copied Ingestion then Warning message should not displayed.
+			//
+			//* Once and ingestion has been copied, select the same files previously selected when it was ingested
+			//* Clicking on the next button, will not throw a warning for fields not matching
+			//
+			throw new ImplementationException("verify_copy_ingestion_does_not_display_warning_message");
+		} else {
+			throw new ImplementationException("NOT verify_copy_ingestion_does_not_display_warning_message");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_back_button$")
+	public void click_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* validate source selection and ingestion type section is disabled
+			//* Click on the Back button, next to the preview and run button
+			//
+			throw new ImplementationException("click_back_button");
+		} else {
+			throw new ImplementationException("NOT click_back_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_back_button_works_as_expected$")
+	public void verify_back_button_works_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1420:To verify Back button functionality for ingestion wizard
+			//
+			//* Once the back button has been clicked
+			//* Validate Configure Field Mapping section is disabled
+			//
+			throw new ImplementationException("verify_back_button_works_as_expected");
+		} else {
+			throw new ImplementationException("NOT verify_back_button_works_as_expected");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_copy_ingestion_displays_warning_message$")
+	public void verify_copy_ingestion_displays_warning_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2565:To verify that on "Copy Ingestion" once the Configure mapping is not matched between Current and Copied Ingestion then Warning message should displayed.
+			//* Once you copy the ingestion and are on the Ingestion Wizard page.
+			//* Select different files than the one selected prior to copying
+			//* Click on the Next button
+			//* Validate an error warning with the following message is displayed:
+			//* Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?"
+			//
+			throw new ImplementationException("verify_copy_ingestion_displays_warning_message");
+		} else {
+			throw new ImplementationException("NOT verify_copy_ingestion_displays_warning_message");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? select_valid_email_metadata$")
+	public void select_valid_email_metadata(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After Configure Mapping is enabled
+			//* Select options for all Required Source DAT Fields
+			//* Select valid Source DAT Field for one additional field
+			//* Select Email option in the Field Category option
+			//* Select valid option for Destination Field
+			//
+			throw new ImplementationException("select_valid_email_metadata");
+		} else {
+			throw new ImplementationException("NOT select_valid_email_metadata");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_with_email_metadata_is_published$")
+	public void verify_ingestion_with_email_metadata_is_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10203 Verify Ingestion should published successfully with new Email metadata
+			//
+			//* Verify ingestion is successfully published and no errors are displayed
+			//
+			throw new ImplementationException("verify_ingestion_with_email_metadata_is_published");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_with_email_metadata_is_published");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_datasets_home_page$")
+	public void on_datasets_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to "/ICE/Datasets" url
+			//* Document tiles are displayed
+			//
+			throw new ImplementationException("on_datasets_home_page");
+		} else {
+			throw new ImplementationException("NOT on_datasets_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? search_for_dataset$")
+	public void search_for_dataset(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Once on the Datasets home page
+			//* Search for value set in dataMap.dataset_name
+			//* Click Enter key or Click search magnify glass icon
+			//
+			throw new ImplementationException("search_for_dataset");
+		} else {
+			throw new ImplementationException("NOT search_for_dataset");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_doc_view$")
+	public void on_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Once a dataset has been searched for
+			//* Click on the "View Set in..." action button
+			//* Click on the "DocView" option
+			//* A Review Mode and list of Emails will be displayed
+			//
+			throw new ImplementationException("on_doc_view");
+		} else {
+			throw new ImplementationException("NOT on_doc_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_concatenated_values_are_displayed_correctly_in_the_email$")
+	public void verify_concatenated_values_are_displayed_correctly_in_the_email(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10579 Verify concatenated email value should be displayed correctly for CCName and CCAddress fields in Doc ListTC10580 Verify concatenated email value should be displayed correctly for BCCName and BCCAddress fields in Doc ListTC10581 Verify concatenated email value should be displayed correctly for ToName and ToAddress fields in Doc ListTC10582 Verify concatenated email value should be displayed correctly for AuthorName and AuthorAddress fields in Doc List
+			//
+			//* For the test cases above we are validating conactenation of names and addresses in the emails
+			//* We need to look into the Metadata tab that is displayed to the right in the DocView
+			//* Scroll down until you see the field needed, eg. "EmailAuthorNameAndAddress" 
+			//* In this field we can see, name and email address all together
+			//* To validate the test cases, we need to make sure that the Name fields are displayed correctly without the email address
+			//* eg. EmailAuthorNameAndAddress displays "sreekanth medarametla (/o=exchangelabs/ou=exchange administrative group (fydibohf23spdlt)/cn=recipients/cn=1255874db783428c8d670e68de56349f-sreekanth m)"
+			//* but EmailAuthorName only displays sreekanth medarametla
+			//* This example, the test would pass
+			//
+			throw new ImplementationException("verify_concatenated_values_are_displayed_correctly_in_the_email");
+		} else {
+			throw new ImplementationException("NOT verify_concatenated_values_are_displayed_correctly_in_the_email");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_valid_email_metadata_option_is_available$")
+	public void verify_valid_email_metadata_option_is_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10199 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10198 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10200 Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is availableTC10201 Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is availableTC10202 Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available
+			//* Once Field Cateogry is set to 'Email'
+			//* Click the destination field dropdown corresponding to Field Category with Email selected
+			//* Validate 'EmailToNamesAndAddresses' option is displayed
+			//* Validate 'EmailAuthorNameAndAddresses' option is displayed
+			//* Validate 'EmailCCNamesAndAddresses' option is displayed
+			//* Validate 'EmailBCCNamesAndAddresses' option is displayed
+			//
+			throw new ImplementationException("verify_valid_email_metadata_option_is_available");
+		} else {
+			throw new ImplementationException("NOT verify_valid_email_metadata_option_is_available");
+		}
+
+	}
 	
-	
-	
-}
+} //end
+

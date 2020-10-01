@@ -12,6 +12,7 @@ import org.testng.Assert;
 
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
@@ -1426,4 +1427,545 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
-}
+
+	@When("^.*(\\[Not\\] )? selecting_the_production$")
+	public void selecting_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("selecting_the_production");
+		} else {
+			throw new ImplementationException("NOT selecting_the_production");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? locking_the_production$")
+	public void locking_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the clog/settings icon to the right of the production's nameClick LockClick OK on the warning messageThe home page will refresh and the filter will reset.Filter the dropdown to show only Completed productions again.Verify the icon changed to the locked icon.
+			throw new ImplementationException("locking_the_production");
+		} else {
+			throw new ImplementationException("NOT locking_the_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_locked_production_is_set_to_read_only$")
+	public void verify_the_locked_production_is_set_to_read_only(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3412 / 3509
+			//* Click the locked Production's name.
+			//* Try and click Mark Incomplete on Quality Control and Confirmation. It should not let you.
+			//* Click Back to go to the Generate section.
+			//* Try and click Mark Incomplete on Quality Control and Confirmation. It should not let you.
+			//* Do the same until you get to "Production Components".
+			//* Afterwards go to the production's homepage and unlock the production to "reset the test".
+			//
+			throw new ImplementationException("verify_the_locked_production_is_set_to_read_only");
+		} else {
+			throw new ImplementationException("NOT verify_the_locked_production_is_set_to_read_only");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_manage_templates_tab$")
+	public void on_the_manage_templates_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Manage Templates
+			throw new ImplementationException("on_the_manage_templates_tab");
+		} else {
+			throw new ImplementationException("NOT on_the_manage_templates_tab");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_view_on_the_production_template$")
+	public void clicking_view_on_the_production_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click "View" on the Template named "DefaultAutomationTemplate".
+			throw new ImplementationException("clicking_view_on_the_production_template");
+		} else {
+			throw new ImplementationException("NOT clicking_view_on_the_production_template");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? the_default_production_template_loaded_successfully$")
+	public void the_default_production_template_loaded_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4913Verify the user is able to open a saved template from the Manage Template tab.
+			throw new ImplementationException("the_default_production_template_loaded_successfully");
+		} else {
+			throw new ImplementationException("NOT the_default_production_template_loaded_successfully");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_summary_preview_section$")
+	public void on_the_summary_preview_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Verify you are on the Summary and Preview section. If you are not, click Next until you can.
+			throw new ImplementationException("on_the_summary_preview_section");
+		} else {
+			throw new ImplementationException("NOT on_the_summary_preview_section");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_preview_button$")
+	public void clicking_the_productions_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_the_productions_preview_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_preview_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_preview_of_the_pdf_should_display_the_branding$")
+	public void verify_the_preview_of_the_pdf_should_display_the_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5096 
+			//* Verify the branding on the PDF should display from the Tiff section information provided
+			//
+			throw new ImplementationException("verify_the_preview_of_the_pdf_should_display_the_branding");
+		} else {
+			throw new ImplementationException("NOT verify_the_preview_of_the_pdf_should_display_the_branding");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? navigated_back_onto_the_production_components_section$")
+	public void navigated_back_onto_the_production_components_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the production you want to openClick the "<Back" link as many times as it takes to get back to the "Production Components" section of Productions
+			throw new ImplementationException("navigated_back_onto_the_production_components_section");
+		} else {
+			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? editing_the_completed_production_component$")
+	public void editing_the_completed_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click "Mark Incomplete"Change the DAT configuration to have the DAT field to be "CNG"Click "Mark Complete"
+			throw new ImplementationException("editing_the_completed_production_component");
+		} else {
+			throw new ImplementationException("NOT editing_the_completed_production_component");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? navigating_back_to_the_generate_section$")
+	public void navigating_back_to_the_generate_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click "Next" until you get to the Generate tab
+			throw new ImplementationException("navigating_back_to_the_generate_section");
+		} else {
+			throw new ImplementationException("NOT navigating_back_to_the_generate_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_can_be_regenerated$")
+	public void verify_the_production_can_be_regenerated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5075
+			//* Verify the Generate button is enabled
+			//* Verify clicking the Generate button will change the status to "Pre generation check in progress" with the button changed to "in progress".
+			//
+			throw new ImplementationException("verify_the_production_can_be_regenerated");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_can_be_regenerated");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? navigating_to_the_production_selected$")
+	public void navigating_to_the_production_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("navigating_to_the_production_selected");
+		} else {
+			throw new ImplementationException("NOT navigating_to_the_production_selected");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_document_level_numbers_displays_bate_number_on_production_home_page$")
+	public void verify_document_level_numbers_displays_bate_number_on_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5081
+			//* Verify the bates number on the document level numbering production that is completed is displaying correctly on the home page.
+			//* It will be under the fields "Start" and "End". Those fields should have a number/value each on them representing the start number and end number.
+			//
+			throw new ImplementationException("verify_document_level_numbers_displays_bate_number_on_production_home_page");
+		} else {
+			throw new ImplementationException("NOT verify_document_level_numbers_displays_bate_number_on_production_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_the_production_export_set$")
+	public void select_the_production_export_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Store the first two production names in the list of productions.This will be used for validation in the outcome.
+			//* Clicks the "Select a Production/Export Set" dropdown
+			//* Select the option in the dropdown by Index. 0 = the first option, 1 = the second option, etc. 
+			//
+			throw new ImplementationException("select_the_production_export_set");
+		} else {
+			throw new ImplementationException("NOT select_the_production_export_set");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? storing_the_productions_in_the_home_page$")
+	public void storing_the_productions_in_the_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This method will just store the name of the first two productions displaying on the list of productions. If none appear, store them at "None". 
+			throw new ImplementationException("storing_the_productions_in_the_home_page");
+		} else {
+			throw new ImplementationException("NOT storing_the_productions_in_the_home_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_productions_from_one_production_set_does_not_exist_in_another$")
+	public void verify_the_productions_from_one_production_set_does_not_exist_in_another(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5869Verify that the first two production's in the previous Production/Export set do not appear when switching to the other production set.Productions do not carry over from 1 production set to another, so they should never have 1 production in both sets.
+			throw new ImplementationException("verify_the_productions_from_one_production_set_does_not_exist_in_another");
+		} else {
+			throw new ImplementationException("NOT verify_the_productions_from_one_production_set_does_not_exist_in_another");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_grid_is_set_to_view$")
+	public void the_production_grid_is_set_to_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//In the middle of the production's home page, there are two buttons. It is by default set to Tile view.Depending on the parameter, you will either click on the Grid View button or the Tile View button.
+			throw new ImplementationException("the_production_grid_is_set_to_view");
+		} else {
+			throw new ImplementationException("NOT the_production_grid_is_set_to_view");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_settings_button$")
+	public void clicking_the_productions_settings_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//If the mode is set to Grid View:You will need to click on the "Action" dropdownIf the mode is set to Tile View:You will need to click on the Settings button on the tile of the production you are testing with.
+			throw new ImplementationException("clicking_the_productions_settings_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_settings_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_productions_allowed_actions_in_settings_based_on_status$")
+	public void verify_the_productions_allowed_actions_in_settings_based_on_status(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4911 / 3509If Status is DRAFT:
+			//* Verify the settings button will display the following options are active/available to be selected:
+			//* Open in Wizard
+			//* Delete
+			//* Save as Template
+			//* Lock is disabled
+			//* If in Grid View also check for:
+			//* "Add Docs"
+			//* "Remove Docs"
+			//* Lock is disabled
+			//If Status is INPROGRESS:
+			//* Verify the settings button will display the following options are active/available to be selected:
+			//* Open in Wizard
+			//* Save as Template
+			//* Lock is disabled
+			//* If in Grid View also check for:
+			//* "Add Docs"
+			//* "Remove Docs"
+			//* Lock is disabled
+			//If Status is COMPLETED:
+			//* Verify the settings button will display the following options are active/available to be selected:
+			//* Open in Wizard
+			//* Lock
+			//* Save as Template
+			//* If in Grid View also check for:
+			//* "Add Docs"
+			//* "Remove Docs"
+			//* If in Grid View, also check that each Completed production display a Start Date and End Date. None should be empty in Completed Status.
+			//
+			throw new ImplementationException("verify_the_productions_allowed_actions_in_settings_based_on_status");
+		} else {
+			throw new ImplementationException("NOT verify_the_productions_allowed_actions_in_settings_based_on_status");
+		}
+
+	}
+	
+	@Given("^.*(\\[Not\\] )? verify_the_next_bates_number_generation_is_stored_in_the_correct_fields$")
+	public void verify_the_next_bates_number_generation_is_stored_in_the_correct_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+		} else {
+			throw new ImplementationException("NOT verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? selecting_a_different_generated_bates_number$")
+	public void selecting_a_different_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark IncompleteClick on the Click Here linkSelect the first option in the bates number grid
+			throw new ImplementationException("selecting_a_different_generated_bates_number");
+		} else {
+			throw new ImplementationException("NOT selecting_a_different_generated_bates_number");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_mark_complete_button$")
+	public void clicking_the_productions_mark_complete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_the_productions_mark_complete_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_specifying_the_next_bates_number$")
+	public void complete_specifying_the_next_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click the link named "Click here" hunter the format section
+			//* Store the second bates number listed as two values.
+			//* The first should be the letter the number starts with. That should be stored as the "Prefix".
+			//* The rest of the bates number should be stored as "beginning_bates"
+			//* Example: A500.
+			//* A is the Prefix
+			//* 500 is the Beginning Bates
+			//* Click Select on the second bates number listed.
+			//
+			throw new ImplementationException("complete_specifying_the_next_bates_number");
+		} else {
+			throw new ImplementationException("NOT complete_specifying_the_next_bates_number");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_production_location_component$")
+	public void complete_default_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.2. Type in a Production Directory:      2 a. The directory should be "Automation" + random 7 digit number + _ + dir     2 b. Ex: Automation5264345_dirMake sure to store the value for the Root Path and directory as it will be used later3. Click Mark Complete4. Click Next
+			throw new ImplementationException("complete_default_production_location_component");
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completed_summary_preview_component$")
+	public void completed_summary_preview_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
+			throw new ImplementationException("completed_summary_preview_component");
+		} else {
+			throw new ImplementationException("NOT completed_summary_preview_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? starting_the_production_generation$")
+	public void starting_the_production_generation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Generate button
+			throw new ImplementationException("starting_the_production_generation");
+		} else {
+			throw new ImplementationException("NOT starting_the_production_generation");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? waiting_for_production_to_be_in_progress$")
+	public void waiting_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("waiting_for_production_to_be_in_progress");
+		} else {
+			throw new ImplementationException("NOT waiting_for_production_to_be_in_progress");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_using_the_next_bates_generations_a_production_successfully$")
+	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
+			throw new ImplementationException("verify_using_the_next_bates_generations_a_production_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_using_the_next_bates_generations_a_production_successfully");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? editing_the_generated_bates_number$")
+	public void editing_the_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1. Get the value stored for the beginning bates and add a random 6 digit number at the end of it. This will be your new beginning bates number.2. Get the Prefix and add the letter E to it. 3. Add the Suffix Q and store this value for later. We will verify the bates number is displayed with these options later.4. Click Mark Complete
+			throw new ImplementationException("editing_the_generated_bates_number");
+		} else {
+			throw new ImplementationException("NOT editing_the_generated_bates_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_editing_the_bates_number_after_generation_is_displaying_correctly$")
+	public void verify_editing_the_bates_number_after_generation_is_displaying_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8353If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
+			throw new ImplementationException("verify_editing_the_bates_number_after_generation_is_displaying_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_editing_the_bates_number_after_generation_is_displaying_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_numbering_is_set_to_document_with_no_sub_bates$")
+	public void the_numbering_is_set_to_document_with_no_sub_bates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Under NUMBERING, click Document Erase the value in Beginning Sub-bates NumberErase the value in Min Number Length
+			throw new ImplementationException("the_numbering_is_set_to_document_with_no_sub_bates");
+		} else {
+			throw new ImplementationException("NOT the_numbering_is_set_to_document_with_no_sub_bates");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_document_level_numbering_can_be_empty_for_sub_bates$")
+	public void verify_document_level_numbering_can_be_empty_for_sub_bates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5188Verify when marking the numbering and sorting complete, it successfully marks it completed with no error.
+			throw new ImplementationException("verify_document_level_numbering_can_be_empty_for_sub_bates");
+		} else {
+			throw new ImplementationException("NOT verify_document_level_numbering_can_be_empty_for_sub_bates");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_save_button$")
+	public void clicking_the_productions_save_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//The user should click Save from the Production page.
+			throw new ImplementationException("clicking_the_productions_save_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_save_button");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_numbering_format_click_here_link$")
+	public void clicking_the_numbering_format_click_here_link(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the link named "Click here" hunter the format section
+			throw new ImplementationException("clicking_the_numbering_format_click_here_link");
+		} else {
+			throw new ImplementationException("NOT clicking_the_numbering_format_click_here_link");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_next_bates_number_dialog_displays_correctly$")
+	public void verify_the_next_bates_number_dialog_displays_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8347 
+			//* Verify the dialog is named "Next Bates Numbers"
+			//* Verify the production name is displayed correctly.
+			//* Verify a grid should display with the title "NEXT BATES NUMBER" and "ACTION".
+			//* Verify at least one bates number is listed with the button "Select" next to it.
+			//
+			throw new ImplementationException("verify_the_next_bates_number_dialog_displays_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_next_bates_number_dialog_displays_correctly");
+		}
+
+	}
+}//end
+
