@@ -50,6 +50,14 @@ public class SearchContext extends CommonContext {
 	public void create_search[long_search](boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	public void (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	 */
+	public void startUP(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState) {
+			sightline_is_launched(scriptState, dataMap);
+			login_as_pau(scriptState, dataMap);
+			goto_search_session_page(scriptState, dataMap);
+			on_production_Search_Session_page(scriptState, dataMap);
+		}
+	}
     
 	@When("^.*(\\[Not\\] )? goto_search_session_page$")
 	public void goto_search_session_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -717,8 +725,6 @@ public class SearchContext extends CommonContext {
 					sessionSearch.getSearchAutoCompletePopup().Displayed()  ;}}), Input.wait30); 
 				Assert.assertTrue(sessionSearch.getSearchAutoCompletePopup().Displayed());
 
-				Thread.sleep(5000);
-				driver.waitForPageToBeReady();
 			}
 			catch(Exception e) {e.printStackTrace();}
 
@@ -743,21 +749,21 @@ public class SearchContext extends CommonContext {
 		}
 		else {
 			try {
-				//TC 11228: Verify that Auto suggest disappearing when user  type a letter  which does not match in the CustodianName Metadata in Advanced Search 
-				if(((String)dataMap.get("TestCase")).equals("TC#11228")){
+				//Enter Last Part of Invalid String, to remove Auto Suggest Box
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
+				sessionSearch.setMetaDataValueNoEnter(null, (String)dataMap.get("MetaDataValue2"), null);
 
-					//Enter Last Part of Invalid String, to remove Auto Suggest Box
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						sessionSearch.getMetaDataInserQuery().Enabled() && sessionSearch.getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
-					sessionSearch.setMetaDataValueNoEnter(null, (String)dataMap.get("MetaDataValue2"), null);
-
-					//Verify Auto Complete Pop Up is gone
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						!sessionSearch.getSearchAutoCompletePopup().Displayed()  ;}}), Input.wait30); 
-					Assert.assertTrue(!sessionSearch.getSearchAutoCompletePopup().Displayed());
-				}
+				//Verify Auto Complete Pop Up is gone
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!sessionSearch.getSearchAutoCompletePopup().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(!sessionSearch.getSearchAutoCompletePopup().Displayed());
+				pass(dataMap, "AutoSuggest Was Removed with invalid input");
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "AutoSuggest Was Not Removed with invalid input");
+			}
 			
 		}
 
