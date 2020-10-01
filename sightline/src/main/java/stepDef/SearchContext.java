@@ -186,7 +186,7 @@ public class SearchContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getSaveSearchButtons().FindWebElements().get(searchSize-1).isEnabled()  ;}}), Input.wait30); 
 				sessionSearch.getSaveSearchButtons().FindWebElements().get(searchSize-1).click();
-
+				
 				//Choose Correct Search Tree
 				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -205,7 +205,10 @@ public class SearchContext extends CommonContext {
 				driver.waitForPageToBeReady();
 				pass(dataMap, "Saved a search successfully");
 			}
-			catch(Exception e) { fail(dataMap, "Failed To Click Save Search Button");}
+			catch(Exception e){ 
+				e.printStackTrace();
+				fail(dataMap, "Failed To Click Save Search Button")
+			;}
 		}
 		else {fail(dataMap, "Failed To Click Save Search Button");}
 
