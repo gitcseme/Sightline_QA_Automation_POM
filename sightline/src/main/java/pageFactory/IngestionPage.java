@@ -221,8 +221,10 @@ public class IngestionPage {
     
     //added on 200923
     public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    public Element getCopyingStatus() {return driver.FindElementByCssSelector("#Copyingblock > div:nth-child(1) > div > div:nth-child(3)");}
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
-    public Element getCatelogingStatus() {return driver.FindElementByCssSelector("//*[@id=\"Catalogingblock\"]/div[1]/div/div[1]");}
+    public Element getCatelogingStatus() {return driver.FindElementByCssSelector("#Catalogingblock > div:nth-child(1) > div > div:nth-child(3)");}
+    
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
     public Element getIngestionTileText() {return driver.FindElementByCssSelector("#IngestionDetailsPopUp1 > section > div > div > div.smart-form.client-form.ingestionPopup > fieldset > div:nth-child(2) > div > label");}
@@ -269,12 +271,14 @@ public class IngestionPage {
     public ElementCollection getIngestionExecutionAudioLanguagePackOptions(){ return driver.FindElementsByCssSelector("#worldSelect >option ");}
     
     //10012020
-    public Element backButton() {return driver.FindElementById("BackButton");}
-    public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
-    public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
-    public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
- 
-    
+    public Element getcardCanvas() {return driver.FindElementById("cardCanvas");}
+    public Element getBackButton() {return driver.FindElementById("BackButton");}
+    public Element getGearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
+    public Element getErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
+    public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
+    public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
+    public Element getFilterByOption(){return driver.FindElementByCssSelector("#multiselect dropdown-toggle btn");}
+    public Element getSelectFilterByOption(int index){return driver.FindElementByCssSelector("#cardGrid > div.col-md-12.gridHeader > div.col-sm-12.col-md-5 > div:nth-child(3) > div > div > ul > li:nth-child(#SF_%s) > a > label");}
 
     public IngestionPage(Driver driver){
 

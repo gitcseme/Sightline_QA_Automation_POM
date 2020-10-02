@@ -1156,8 +1156,8 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-	@And("^.*(\\[Not\\] )? click_catalog_play_button$")
-	public void click_catalog_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_catalog_play_icon$")
+	public void click_catalog_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Find Ingested tile created
@@ -1180,15 +1180,15 @@ public class IngestionContext extends CommonContext {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
 			
-			throw new ImplementationException("click_catalog_play_button");
+			throw new ImplementationException("click_catalog_play_icon");
 		} else {
-			throw new ImplementationException("NOT click_catalog_play_button");
+			throw new ImplementationException("NOT click_catalog_play_icon");
 
 		}
 	}
 	
-	@And("^.*(\\[Not\\] )? click_copy_play_button$")
-	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
+	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//
@@ -1197,24 +1197,45 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
-			
-//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-//			ingest.getIngestionTile().Click();
-//			
-
+			//click on the 1st file
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
-
+	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+			ingest.getIngestionTile().Click();
 			
+			//wait until cataloged updated
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
+			//Clicked the play buttons
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
 			ingest.getCopyPlayButton().Click();
+			//click the close button 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getCopyingStatus().getText().equals("In Progress")  ;}}), Input.wait30); 
 			
+			ingest.CloseButton().Click();
+			ingest.getRefreshButton().Click();
 			
-			throw new ImplementationException("click_copy_play_button");
+			throw new ImplementationException("click_copy_play_icon");
 		} else {
-			throw new ImplementationException("NOT click_copy_play_button");
+			throw new ImplementationException("NOT click_copy_play_icon");
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? click_filter$")
+	public void click_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			for(int i = 4; i<7;i++) {
+				int index =i;
+				ingest.getSelectFilterByOption(index).Click();
+			}
+			ingest.getcardCanvas().Click();
+			throw new ImplementationException("click_filter");
+		} else {
+			throw new ImplementationException("NOT click_filter");
 		}
 
 	}
@@ -2182,9 +2203,9 @@ public class IngestionContext extends CommonContext {
 			//* Click on Copy
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.GearButton().Visible()  ;}}), Input.wait30);
-			ingest.GearButton().Click();
-			ingest.CopyOptionButton().Click();
+					ingest.getGearButton().Visible()  ;}}), Input.wait30);
+			ingest.getGearButton().Click();
+			ingest.getCopyOptionButton().Click();
 			pass(dataMap,"Clicked copy button");
 		} else {
 			fail(dataMap,"NOT click_copy_option");
@@ -2225,8 +2246,8 @@ public class IngestionContext extends CommonContext {
 			//* Click on the Back button, next to the preview and run button
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.backButton().Visible()  ;}}), Input.wait30);
-			ingest.backButton().Click();
+					ingest.getBackButton().Visible()  ;}}), Input.wait30);
+			ingest.getBackButton().Click();
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			fail(dataMap,"Clicking Ingest Button was NOT successful");
@@ -2245,8 +2266,8 @@ public class IngestionContext extends CommonContext {
 			//* Validate Configure Field Mapping section is disabled
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.backButton().Displayed()  ;}}), Input.wait30);
-			Assert.assertTrue(ingest.backButton().GetAttribute("disabled"), true);
+					ingest.getBackButton().Displayed()  ;}}), Input.wait30);
+			Assert.assertTrue(ingest.getBackButton().GetAttribute("disabled"), true);
 			pass(dataMap,"verify_back_button_works_as_expected");
 			
 		} else {
@@ -2438,7 +2459,7 @@ public class IngestionContext extends CommonContext {
 					ingest.getPreviewRun().Visible() && ingest.getResetMappingReqiredDropDown(2).getText().equalsIgnoreCase("Select") ;}}), Input.wait30); 
 			ingest.getPreviewRun().Click();
 			
-			Assert.assertTrue(ingest.ErrorWarningMessagePopUp().Visible());
+			Assert.assertTrue(ingest.getErrorWarningMessagePopUp().Visible());
 			
 			
 			pass(dataMap,"verify_valid_email_metadata_option_is_available");
