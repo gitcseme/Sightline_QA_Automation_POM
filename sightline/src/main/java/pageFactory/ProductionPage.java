@@ -399,7 +399,7 @@ public class ProductionPage {
     public Element getNumMetaDataCustodiansTab() {return driver.FindElementById("lstNumberingMetaData");}
     public Element getNumMetaDataPrefix() {return driver.FindElementById("txtUserMetadataFieldPrefix");}
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
-    
+     
     public Element getDocSelectSearchRadioButton() {return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");}
 
     
@@ -414,7 +414,24 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
+    
 
+    public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
+    public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
+    public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}
+    public Element getProductionGridViewActionLock() {return driver.FindElementById("Lock");}
+    public Element getProductionGridViewActionSaveTemplate() {return driver.FindElementByCssSelector("ul.dropdown-menu:nth-child(3) > li:nth-child(5) > a:nth-child(1)");}
+    public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
+    public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
+
+
+    //Quick Function to get rows of Grid View Production Table
+    public WebElement getProductionListGridViewTableRows(int row) {
+    	if(row< driver.FindElementsByCssSelector("#ProductionListGridViewTable >tbody>tr").FindWebElements().size()){
+    		return driver.FindElementsByCssSelector("#ProductionListGridViewTable >tbody>tr").FindWebElements().get(row);
+    	}
+    	return null;
+    }
 
 
     public ProductionPage(Driver driver){

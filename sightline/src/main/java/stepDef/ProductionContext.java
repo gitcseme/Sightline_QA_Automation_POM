@@ -1431,12 +1431,23 @@ public class ProductionContext extends CommonContext {
 	@When("^.*(\\[Not\\] )? selecting_the_production$")
 	public void selecting_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			throw new ImplementationException("selecting_the_production");
-		} else {
-			throw new ImplementationException("NOT selecting_the_production");
+		if (scriptState){
+			
+			try {
+				String viewMode = (String)dataMap.get("mode");
+				//Just Need to Select, if we are in Grid mode, Tile Mode has no Select
+				if(viewMode != null && viewMode.equals("grid")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
+					prod.getProductionListGridViewTableRows(0).click();
+				}
+				pass(dataMap, "Selected the production based on grid view");
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
+			
 		}
+		else fail(dataMap,"Could Not Select Production");
 
 	}
 
@@ -1686,10 +1697,32 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//In the middle of the production's home page, there are two buttons. It is by default set to Tile view.Depending on the parameter, you will either click on the Grid View button or the Tile View button.
-			throw new ImplementationException("the_production_grid_is_set_to_view");
-		} else {
-			throw new ImplementationException("NOT the_production_grid_is_set_to_view");
+			try {
+
+				//Get the view mode we should be in
+				String viewMode = (String)dataMap.get("mode");
+				
+				//If grid, click grid
+				if(viewMode != null && viewMode.equals("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGridView().Displayed() && prod.getGridView().Enabled()  ;}}), Input.wait30);
+				     	prod.getGridView().Click();
+				}
+				//If tile, click tile
+				else if(viewMode!= null && viewMode.equals("tile")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTileViewIcon().Displayed() && prod.getTileViewIcon().Enabled()  ;}}), Input.wait30);
+				     	prod.getTileViewIcon().Click();
+				}
+				else fail(dataMap, "Valid view mode was not selected");
+				
+				pass(dataMap, "View Mode was Selected Successfully");
+				
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not set production grid view");
 
 	}
 
@@ -1699,10 +1732,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//If the mode is set to Grid View:You will need to click on the "Action" dropdownIf the mode is set to Tile View:You will need to click on the Settings button on the tile of the production you are testing with.
-			throw new ImplementationException("clicking_the_productions_settings_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_productions_settings_button");
+			try {
+				String viewMode = (String)dataMap.get("mode");
+				if(viewMode != null && viewMode.equals("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionGridViewActionDropDown().Enabled()  ;}}), Input.wait30);
+					prod.getProductionGridViewActionDropDown().Click();
+				}
+				else if(viewMode!= null && viewMode.equals("tile")) {
+					//Implement this Later
+				}
+				else fail(dataMap, "A Valid View mode was not selected");
+				pass(dataMap, "Settings button for a production was Successful");
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not click productions settings buttons");
 
 	}
 
@@ -1713,37 +1759,92 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC4911 / 3509If Status is DRAFT:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Delete
 			//* Save as Template
 			//* Lock is disabled
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* Lock is disabled
 			//If Status is INPROGRESS:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Save as Template
 			//* Lock is disabled
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* Lock is disabled
 			//If Status is COMPLETED:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Lock
 			//* Save as Template
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* If in Grid View, also check that each Completed production display a Start Date and End Date. None should be empty in Completed Status.
-			//
-			throw new ImplementationException("verify_the_productions_allowed_actions_in_settings_based_on_status");
-		} else {
-			throw new ImplementationException("NOT verify_the_productions_allowed_actions_in_settings_based_on_status");
+			try {
+				String status = (String)dataMap.get("status");
+				String viewMode = (String)dataMap.get("mode");
+				if(status != null && viewMode.equalsIgnoreCase("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionGridViewActionOpenWizard().Displayed()  ;}}), Input.wait30);
+
+					//Open in Wizard is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getProductionGridViewActionOpenWizard().Displayed() &&
+							prod.getProductionGridViewActionOpenWizard().Enabled());
+
+					//Delete is Displayed and Enabled for Drafts only
+					if(status.equalsIgnoreCase("DRAFT")) {
+						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
+							prod.getProductionGridViewActionDelete().Enabled());
+					}
+					//Otherwise make sure its Disabled
+					else {
+						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
+							!prod.getProductionGridViewActionDelete().Enabled());
+					}
+					
+					//Checks that Draft and Inprogess have in Common
+					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")) {
+						
+						//Save Template is Displayed and Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionSaveTemplate().Displayed() &&
+							prod.getProductionGridViewActionSaveTemplate().Enabled());
+
+						//Lock is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
+							!prod.getProductionGridViewActionLock().Enabled());
+						
+						//Add Doc is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed() &&
+							!prod.getProductionGridViewActionAddDoc().Enabled());
+
+						//Remove Doc is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionRemoveDoc().Displayed() &&
+							!prod.getProductionGridViewActionRemoveDoc().Enabled());
+
+					}
+					//else if(status.equalsIgnoreCase("COMPLETED")){
+						
+					}
+
+
+
+				}
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not verify Production Settings Options");
 
 	}
 	
