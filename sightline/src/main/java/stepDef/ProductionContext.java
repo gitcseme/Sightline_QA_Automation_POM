@@ -1456,9 +1456,8 @@ public class ProductionContext extends CommonContext {
 					//Select our filter, if it isn't already
 					if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 					
+					driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 					//Click out of dropdown, then wait for table to update, and click first element 
-					Actions actions = new Actions(driver.getWebDriver());
-					actions.moveToElement(prod.getProductionListGridViewTableRows(0));
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
 					prod.getProductionListGridViewTableRows(0).click();
@@ -1841,7 +1840,7 @@ public class ProductionContext extends CommonContext {
 
 					//Open in Wizard is Displayed and Enabled For all Status
 					Assert.assertTrue(prod.getProductionGridViewActionOpenWizard().Displayed() &&
-							prod.getProductionGridViewActionOpenWizard().Enabled());
+							!prod.getProductionGridViewActionOpenWizard().GetAttribute("class").contains("disable"));
 
 					//Save Template is Displayed and Enabled For all Status
 					Assert.assertTrue(prod.getProductionGridViewActionSaveTemplate().Displayed() &&
@@ -1851,38 +1850,35 @@ public class ProductionContext extends CommonContext {
 					//Delete is Displayed and Enabled for Drafts only
 					if(status.equalsIgnoreCase("DRAFT")) {
 						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
-							prod.getProductionGridViewActionDelete().Enabled());
+							!prod.getProductionGridViewActionDelete().GetAttribute("class").contains("disable"));
 					}
 					//Delete is Displayed and NOT Enabled for InProgress
 					else if(status.equalsIgnoreCase("INPROGRESS")){
 						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
-							!prod.getProductionGridViewActionDelete().Enabled());
+							prod.getProductionGridViewActionDelete().GetAttribute("class").contains("disable"));
 					}
 					
 					//Checks that Draft and Inprogess have in Common
 					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")) {
 						
-						
-						System.out.println(prod.getProductionGridViewActionLock().Displayed());
-						System.out.println(prod.getProductionGridViewActionLock().Enabled());
 						//Lock is Displayed and NOT Enabled
 						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
-							!prod.getProductionGridViewActionLock().Enabled());
+							prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
 						
 						//Add Doc is Displayed and NOT Enabled
 						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed() &&
-							!prod.getProductionGridViewActionAddDoc().Enabled());
+							prod.getProductionGridViewActionAddDoc().GetAttribute("class").contains("disable"));
 
 						//Remove Doc is Displayed and NOT Enabled
 						Assert.assertTrue(prod.getProductionGridViewActionRemoveDoc().Displayed() &&
-							!prod.getProductionGridViewActionRemoveDoc().Enabled());
+							prod.getProductionGridViewActionRemoveDoc().GetAttribute("class").contains("disable"));
 
 					}
 					//Check Completed 
 					else if(status.equalsIgnoreCase("COMPLETED")){
 						//Lock is Displayed and Enabled
 						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
-							prod.getProductionGridViewActionLock().Enabled());
+							!prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
 
 						//Add Doc is Displayed
 						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed());
