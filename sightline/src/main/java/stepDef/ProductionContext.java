@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.List;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -1444,6 +1444,7 @@ public class ProductionContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
 
+					//Get Filter dropdown
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
 					prod.getFilterByButton().Click();
@@ -1456,7 +1457,8 @@ public class ProductionContext extends CommonContext {
 					if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 					
 					//Click out of dropdown, then wait for table to update, and click first element 
-					prod.getProductionListGridViewTableRows(0).click();
+					Actions actions = new Actions(driver.getWebDriver());
+					actions.moveToElement(prod.getProductionListGridViewTableRows(0));
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
 					prod.getProductionListGridViewTableRows(0).click();
@@ -1833,7 +1835,6 @@ public class ProductionContext extends CommonContext {
 			try {
 				String status = (String)dataMap.get("status");
 				String viewMode = (String)dataMap.get("mode");
-				Thread.sleep(5000);
 				if(status != null && viewMode.equalsIgnoreCase("grid")){
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionGridViewActionOpenWizard().Displayed()  ;}}), Input.wait30);
@@ -1842,13 +1843,18 @@ public class ProductionContext extends CommonContext {
 					Assert.assertTrue(prod.getProductionGridViewActionOpenWizard().Displayed() &&
 							prod.getProductionGridViewActionOpenWizard().Enabled());
 
+					//Save Template is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getProductionGridViewActionSaveTemplate().Displayed() &&
+						 prod.getProductionGridViewActionSaveTemplate().Enabled());
+
+
 					//Delete is Displayed and Enabled for Drafts only
 					if(status.equalsIgnoreCase("DRAFT")) {
 						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
 							prod.getProductionGridViewActionDelete().Enabled());
 					}
-					//Otherwise make sure its Disabled
-					else {
+					//Delete is Displayed and NOT Enabled for InProgress
+					else if(status.equalsIgnoreCase("INPROGRESS")){
 						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
 							!prod.getProductionGridViewActionDelete().Enabled());
 					}
@@ -1856,10 +1862,9 @@ public class ProductionContext extends CommonContext {
 					//Checks that Draft and Inprogess have in Common
 					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")) {
 						
-						//Save Template is Displayed and Enabled
-						Assert.assertTrue(prod.getProductionGridViewActionSaveTemplate().Displayed() &&
-							prod.getProductionGridViewActionSaveTemplate().Enabled());
-
+						
+						System.out.println(prod.getProductionGridViewActionLock().Displayed());
+						System.out.println(prod.getProductionGridViewActionLock().Enabled());
 						//Lock is Displayed and NOT Enabled
 						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
 							!prod.getProductionGridViewActionLock().Enabled());
@@ -1873,7 +1878,24 @@ public class ProductionContext extends CommonContext {
 							!prod.getProductionGridViewActionRemoveDoc().Enabled());
 
 					}
-					//else if(status.equalsIgnoreCase("COMPLETED")){
+					//Check Completed 
+					else if(status.equalsIgnoreCase("COMPLETED")){
+						//Lock is Displayed and Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
+							prod.getProductionGridViewActionLock().Enabled());
+
+						//Add Doc is Displayed
+						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed());
+
+						//Remove Doc is Displayed
+						Assert.assertTrue(prod.getProductionGridViewActionRemoveDoc().Displayed());
+						
+						//Make Sure Start Time is Not Empty
+						Assert.assertFalse(prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(5).getText().equals(""));
+
+						//Make Sure End Time is Not Empty
+						Assert.assertFalse(prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(6).getText().equals(""));
+					}
 				}
 				
 			}
