@@ -1,6 +1,7 @@
 package stepDef;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -592,19 +593,12 @@ public class IngestionContext extends CommonContext {
 	}
 	
 	
-	@Then("^.*(\\[Not\\] )? click_source_DAT_field$")
-	public void click_source_DAT_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@Then("^.*(\\[Not\\] )? map_configuration_fields$")
+	public void map_configuration_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
-			/*
-			ingest.SecondRow().Click();
-			ingest.SecondRowOptions().Click();
-			ingest.ThrirdRow().Click();
-			ingest.ThrirdRowOptions().Click();
-			ingest.FourthRow().Click();
-			ingest.FourthRowOptions().Click();
-			*/
+			
 			for(int i=2; i<=4; i++) {
 				int index = i;
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -614,9 +608,9 @@ public class IngestionContext extends CommonContext {
 					ingest.getIngestionConfigureMappingRequiredDropDownOptions(index).Enabled()  ;}}), Input.wait30); 
 				ingest.getIngestionConfigureMappingRequiredDropDownOptions(i).Click();
 			}
-			pass(dataMap, "We Put the options in Successfully");
+			pass(dataMap, "map_configuration_fields Successfully");
 		}
-		else fail(dataMap, "Could Not Click DAT Source Fields");
+		else fail(dataMap, "map_configuration_fields NOT Successfully");
 
 	}
 
@@ -1387,18 +1381,6 @@ public class IngestionContext extends CommonContext {
 		}
 
 	
-	}
-		
-	@And("^.*(\\[Not\\] )? map_configuration_fields$")
-	public void map_configuration_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			throw new ImplementationException("map_configuration_fields");
-		} else {
-			throw new ImplementationException("NOT map_configuration_fields");
-		}
-
 	}
 
 
@@ -2199,9 +2181,13 @@ public class IngestionContext extends CommonContext {
 			//* Click settings (gear icon) on ingested tile
 			//* Click on Copy
 			//
-			throw new ImplementationException("click_copy_option");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.GearButton().Visible()  ;}}), Input.wait30);
+			ingest.GearButton().Click();
+			ingest.CopyOptionButton().Click();
+			pass(dataMap,"Clicked copy button");
 		} else {
-			throw new ImplementationException("NOT click_copy_option");
+			fail(dataMap,"NOT click_copy_option");
 		}
 
 	}
@@ -2216,9 +2202,15 @@ public class IngestionContext extends CommonContext {
 			//* Once and ingestion has been copied, select the same files previously selected when it was ingested
 			//* Clicking on the next button, will not throw a warning for fields not matching
 			//
-			throw new ImplementationException("verify_copy_ingestion_does_not_display_warning_message");
+			//input the data again
+			driver.waitForPageToBeReady();
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
+			click_next_button(scriptState, dataMap);
+			
+			Assert.assertTrue(ingest.getSourceDATField().Visible());
+			pass(dataMap, "verify_copy_ingestion_does_not_display_warning_message");
 		} else {
-			throw new ImplementationException("NOT verify_copy_ingestion_does_not_display_warning_message");
+			fail(dataMap, "NOT verify_copy_ingestion_does_not_display_warning_message");
 		}
 
 	}
@@ -2232,9 +2224,12 @@ public class IngestionContext extends CommonContext {
 			//* validate source selection and ingestion type section is disabled
 			//* Click on the Back button, next to the preview and run button
 			//
-			throw new ImplementationException("click_back_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.backButton().Visible()  ;}}), Input.wait30);
+			ingest.backButton().Click();
+			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
-			throw new ImplementationException("NOT click_back_button");
+			fail(dataMap,"Clicking Ingest Button was NOT successful");
 		}
 
 	}
@@ -2249,9 +2244,14 @@ public class IngestionContext extends CommonContext {
 			//* Once the back button has been clicked
 			//* Validate Configure Field Mapping section is disabled
 			//
-			throw new ImplementationException("verify_back_button_works_as_expected");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.backButton().Displayed()  ;}}), Input.wait30);
+			Assert.assertTrue(ingest.backButton().GetAttribute("disabled"), true);
+			pass(dataMap,"verify_back_button_works_as_expected");
+			
 		} else {
-			throw new ImplementationException("NOT verify_back_button_works_as_expected");
+			fail(dataMap,"verify_back_button_works_as_expected");
+
 		}
 
 	}
@@ -2268,9 +2268,24 @@ public class IngestionContext extends CommonContext {
 			//* Validate an error warning with the following message is displayed:
 			//* Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?"
 			//
-			throw new ImplementationException("verify_copy_ingestion_displays_warning_message");
+			String ExpectedWarningMessage = "Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?";
+		
+			driver.waitForPageToBeReady();
+			dataMap.put("dat_load_file", "AttachDocIDs.dat");
+			dataMap.put("doc_key", "DocFileType");
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
+			click_next_button(scriptState, dataMap);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getApproveMessageHeader().Visible()  ;}}), Input.wait30);
+			String actualMessage = ingest.getWarningMessageContent().getText();
+			System.out.println(actualMessage);
+			assertEquals(ExpectedWarningMessage, actualMessage);
+			ingest.getWarningMessageOKButton().Click();
+			
+			pass(dataMap, "verify_copy_ingestion_displays_warning_message");
 		} else {
-			throw new ImplementationException("NOT verify_copy_ingestion_displays_warning_message");
+			fail(dataMap, "NOt verify_copy_ingestion_displays_warning_message");
 		}
 
 	}
@@ -2400,7 +2415,36 @@ public class IngestionContext extends CommonContext {
 		} else {
 			throw new ImplementationException("NOT verify_valid_email_metadata_option_is_available");
 		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? verify_mandatory_error_message_is_displayed$")
+	public void verify_mandatory_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownFields(2).Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionConfigureMappingRequiredDropDownFields(2).Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownOptions(2).Enabled()  ;}}), Input.wait30); 
+			ingest.getResetMappingReqiredDropDown(2).Click();
+			System.out.println(ingest.getResetMappingReqiredDropDown(2).getText());
+			
+			//*[@class="fa fa-warning shake animated"]
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getPreviewRun().Visible() && ingest.getResetMappingReqiredDropDown(2).getText().equalsIgnoreCase("Select") ;}}), Input.wait30); 
+			ingest.getPreviewRun().Click();
+			
+			Assert.assertTrue(ingest.ErrorWarningMessagePopUp().Visible());
+			
+			
+			pass(dataMap,"verify_valid_email_metadata_option_is_available");
+		} else {
+			fail(dataMap,"verify_valid_email_metadata_option_is_available");
+		}
 	}
 	
 } //end

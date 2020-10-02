@@ -109,6 +109,7 @@ public class IngestionPage {
     public Element getbtnRunIngestion(){ return driver.FindElementById("btnRunIngestion"); }
     public Element getRefreshButton(){ return driver.FindElementById("refresh"); }
     public Element getApproveMessageOKButton(){ return driver.FindElementById("bot1-Msg1"); }
+    public Element getWarningMessageOKButton(){ return driver.FindElementById("bot1-Msg2"); }
     public Element getRunAnalyticsRunButton(){ return driver.FindElementById("run"); }
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }
     public Element getLanguage(){ return driver.FindElementById("worldSelect"); }
@@ -153,6 +154,8 @@ public class IngestionPage {
     public Element getActionApprove(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']//a[text()='Approve']"); }
     public Element getApproveMessageHeader(){ return driver.FindElementByXPath(".//*[@id='Msg1']/div/span"); }
     public Element getApproveMessageContent(){ return driver.FindElementByXPath(".//*[@id='Msg1']/div/p"); }
+    public Element getWarningMessageContent(){ return driver.FindElementByCssSelector("#Msg2 > div > p"); }
+    
     public Element getAnalyticsCAATINGESTIONCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ANALYTICS_INGESTION_COMPLETED')]"); }
     public Element getAnalyticsCAATSTAGINGCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ANALYTICS_STAGING_COMPLETED')]"); }
     public Element getAnalyticsCAATINDEXINGCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ANALYTICS_INDEXING_COMPLETED')]"); }
@@ -219,9 +222,7 @@ public class IngestionPage {
     //added on 200923
     public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
-
     public Element getCatelogingStatus() {return driver.FindElementByCssSelector("//*[@id=\"Catalogingblock\"]/div[1]/div/div[1]");}
-
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
     public Element getIngestionTileText() {return driver.FindElementByCssSelector("#IngestionDetailsPopUp1 > section > div > div > div.smart-form.client-form.ingestionPopup > fieldset > div:nth-child(2) > div > label");}
@@ -248,6 +249,7 @@ public class IngestionPage {
     
     public Element getIngestionConfigureMappingRequiredDropDownFields(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s", index));}
     public Element getIngestionConfigureMappingRequiredDropDownOptions(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s > option:nth-child(4)", index));}
+    public Element getResetMappingReqiredDropDown(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s > option:nth-child(1)", index));}
 
     //hard-coded selecting options
     public Element SecondRow(){return driver.FindElementByCssSelector("#SF_2");}
@@ -266,8 +268,13 @@ public class IngestionPage {
     public Element getIngestionExecutionAudioIndexingCheckbox() { return driver.FindElementByCssSelector("#Indexingblock > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
     public ElementCollection getIngestionExecutionAudioLanguagePackOptions(){ return driver.FindElementsByCssSelector("#worldSelect >option ");}
     
-
-
+    //10012020
+    public Element backButton() {return driver.FindElementById("BackButton");}
+    public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
+    public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
+    public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
+ 
+    
 
     public IngestionPage(Driver driver){
 
@@ -306,15 +313,14 @@ public class IngestionPage {
 	    	
 	    	if(dataMap.containsKey("doc_key")) {	
 	    		//getDAToptions(dataMap); 
-	    	    if(dataMap.containsKey("dat_file")) {
+	    	    if(dataMap.containsKey("dat_load_file")) {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
-
 	       
-	        		getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	        		getDATLoadFile().SendKeys(dataMap.get("dat_load_file").toString());
 	        		
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_file")) ;}}), Input.wait30); 
+	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_load_file")) ;}}), Input.wait30); 
 	   	    	    }
 	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				getDocumentKey().Visible()  ;}}), Input.wait30);
@@ -380,7 +386,6 @@ public class IngestionPage {
 	    }	
 
 	    if(dataMap.containsKey("dat_file")) {
-        	System.out.print("inIFclikec");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
 	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
@@ -397,7 +402,7 @@ public class IngestionPage {
 				getNativeCheckBox().Visible()  ;}}), Input.wait30); 
     	getNativeCheckBox().Click();
     	
-    	if(dataMap.containsKey("")) {
+    	if(dataMap.containsKey("native_path_file")) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getNativePathCheckbox().Visible()  ;}}), Input.wait30); 
     		getNativePathCheckbox().Click();
@@ -407,11 +412,17 @@ public class IngestionPage {
         	getFilePathNative().SendKeys(dataMap.get("native_path_file").toString());
     	}
     	else{
+    		System.out.println("here");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeLST().Visible()  ;}}), Input.wait30); 
         	getNativeLST().SendKeys(dataMap.get("native_file").toString());	
+        	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getNativeLST().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("native_file")) ;}}), Input.wait30); 
+	    	}
+        	
     	}
-    }
+    
     
     public void getTextoptions(HashMap dataMap) throws InterruptedException{
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

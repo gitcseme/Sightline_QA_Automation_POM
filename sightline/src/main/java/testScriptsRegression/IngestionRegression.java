@@ -3237,13 +3237,10 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("native_file", "native.lst");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("audio_file", "Transcript.lst");
-			dataMap.put("mp3_file", "MP3.lst");
 			dataMap.put("date_time", "MM/DD/YYY");
-			dataMap.put("doc_key", "DocID");
+			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "TRUE");
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
@@ -6244,13 +6241,15 @@ public class IngestionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
-			dataMap.put("dat_load_file", "PDF.LST");
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "4 Files");
+			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "NUIX");
 			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.click_copy_option(true, dataMap);
@@ -6280,15 +6279,15 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("dat_load_file", "PDF.LST");
-			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "4 Files");
-			dataMap.put("date_time", "MM/DD/YYYY");
-			dataMap.put("doc_key", "DOCID");
-			dataMap.put("source_system", "NUIX");
-			context.new_ingestion_created(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "NUIX");			
+			context.new_ingestion_created(true, dataMap);
 			context.click_back_button(true, dataMap);
 			context.verify_back_button_works_as_expected(true, dataMap);
 		} catch (ImplementationException e) {
@@ -6317,13 +6316,15 @@ public class IngestionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
-			dataMap.put("dat_load_file", "PDF.LST");
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "4 Files");
+			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "NUIX");
 			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.click_copy_option(true, dataMap);
@@ -6444,5 +6445,47 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+	
+	@Test(groups = {"Ingestion, Positive",  })
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_deselect_all_mandatory_fields_When_click_next_button_Then_verify_mandatory_error_message_is_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_deselect_all_mandatory_fields_When_click_next_button_Then_verify_mandatory_error_message_is_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "NUIX");
+			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_copy_option(true, dataMap);
+			context.verify_copy_ingestion_displays_warning_message(true, dataMap);
+			context.verify_mandatory_error_message_is_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+	
+	
+	
 } //end
 
