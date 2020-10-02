@@ -1490,7 +1490,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Manage Templates
-			throw new ImplementationException("on_the_manage_templates_tab");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getManageTemplatesTab().Displayed() && prod.getManageTemplatesTab().Enabled() ;}}), Input.wait30);
+				prod.getManageTemplatesTab().Click();
+			}
+			catch(Exception e) {fail(dataMap,"Could not click Manage Templates Tab");}
+			//throw new ImplementationException("on_the_manage_templates_tab");
 		} else {
 			throw new ImplementationException("NOT on_the_manage_templates_tab");
 		}
@@ -1503,7 +1509,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click "View" on the Template named "DefaultAutomationTemplate".
-			throw new ImplementationException("clicking_view_on_the_production_template");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDefaultAutomationTemplateView().Displayed() && prod.getDefaultAutomationTemplateView().Enabled() ;}}), Input.wait30);
+				prod.getDefaultAutomationTemplateView().Click();		
+			}
+			catch(Exception e) {fail(dataMap, "Could not click View button for template named DefaultAutomationTemplate");}
+			//throw new ImplementationException("clicking_view_on_the_production_template");
 		} else {
 			throw new ImplementationException("NOT clicking_view_on_the_production_template");
 		}
@@ -1516,7 +1528,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4913Verify the user is able to open a saved template from the Manage Template tab.
-			throw new ImplementationException("the_default_production_template_loaded_successfully");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSavedTemplate().Displayed()  ;}}), Input.wait30);
+				prod.getSavedTemplate().Visible();
+				pass(dataMap,"User is able to open a saved template from the Manage Template tab.");
+			}
+			catch(Exception e) {fail(dataMap, "Could not open saved template from Manage Template tab."); }
+			//throw new ImplementationException("the_default_production_template_loaded_successfully");
 		} else {
 			throw new ImplementationException("NOT the_default_production_template_loaded_successfully");
 		}
@@ -1835,7 +1854,7 @@ public class ProductionContext extends CommonContext {
 					}
 					//else if(status.equalsIgnoreCase("COMPLETED")){
 						
-					}
+
 
 
 

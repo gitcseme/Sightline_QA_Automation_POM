@@ -424,6 +424,11 @@ public class ProductionPage {
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
 
+    
+    //Added 10/2/20
+    public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
+    public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
+    public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
 
     //Quick Function to get rows of Grid View Production Table
     public WebElement getProductionListGridViewTableRows(int row) {
