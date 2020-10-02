@@ -1423,7 +1423,7 @@ public class SearchRegression extends RegressionBase {
 
 
 	//Complete + Pass
-	@Test(groups = {"Search, Positive", "smoke"})
+	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

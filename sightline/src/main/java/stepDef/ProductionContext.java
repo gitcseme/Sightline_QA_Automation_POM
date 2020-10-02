@@ -1435,10 +1435,30 @@ public class ProductionContext extends CommonContext {
 			
 			try {
 				String viewMode = (String)dataMap.get("mode");
+				String status = (String)dataMap.get("status");
+				int index = 1;
+				if(status.equalsIgnoreCase("INPROGRESS")) index = 2;
+				else if(status.equalsIgnoreCase("COMPLETED")) index = 4;
 				//Just Need to Select, if we are in Grid mode, Tile Mode has no Select
 				if(viewMode != null && viewMode.equals("grid")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
+					prod.getFilterByButton().Click();
+					//Deselect Filters we dont want
+					for(int i =1; i<=4; i++) {
+						if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
+					}
+
+					//Select our filter, if it isn't already
+					if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
+					
+					//Click out of dropdown, then wait for table to update, and click first element 
+					prod.getProductionListGridViewTableRows(0).click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
 					prod.getProductionListGridViewTableRows(0).click();
 				}
 				pass(dataMap, "Selected the production based on grid view");
@@ -1813,6 +1833,7 @@ public class ProductionContext extends CommonContext {
 			try {
 				String status = (String)dataMap.get("status");
 				String viewMode = (String)dataMap.get("mode");
+				Thread.sleep(5000);
 				if(status != null && viewMode.equalsIgnoreCase("grid")){
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionGridViewActionOpenWizard().Displayed()  ;}}), Input.wait30);
@@ -1853,11 +1874,6 @@ public class ProductionContext extends CommonContext {
 
 					}
 					//else if(status.equalsIgnoreCase("COMPLETED")){
-						
-
-
-
-
 				}
 				
 			}
