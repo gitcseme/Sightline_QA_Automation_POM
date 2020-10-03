@@ -1660,12 +1660,14 @@ public class ProductionContext extends CommonContext {
 	}
 
 
-	@When("^.*(\\[Not\\] )? navigating_to_the_production_selected$")
+	@When("^.*(\\[Not\\] )? c$")
 	public void navigating_to_the_production_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("navigating_to_the_production_selected");
+			prod.getProductionGridViewActionDropDown().click();
+			prod.getProductionGridViewActionOpenWizard().click();
+			pass(dataMap, "getProductionGridViewActionOpenWizard");
 		} else {
 			throw new ImplementationException("NOT navigating_to_the_production_selected");
 		}

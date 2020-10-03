@@ -31,6 +31,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
@@ -48,6 +49,8 @@ public  class Driver  {
        /// </summary>
        /// <param name="url">The URL which the driver will try to connect to when created</param>
        /// <param name="browserType">Currently only Chrome, IE and Firefox supported</param>
+	   
+	   public WebDriverWait wait = new WebDriverWait(driver, 30);
 	
 	public Driver() { 
 		//System.out.println(Input.browserName);
