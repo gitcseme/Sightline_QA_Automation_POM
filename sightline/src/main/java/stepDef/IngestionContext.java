@@ -1198,45 +1198,71 @@ public class IngestionContext extends CommonContext {
 			//* After Cataloging, click Copy play button
 			//
 			//click on the 1st file
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
-			ingest.getIngestionTile().Click();
+			try{
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+				ingest.getIngestionTile().Click();
+				Thread.sleep(5000);
+				//wait until cataloged updated
+				/*
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    					ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
+    					*/
+				while(ingest.getCopyPlayButton().getText().contains("disable")) {
+					System.out.println("made it in");
+					ingest.CloseButton().Click();
+					ingest.getRefreshButton().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+					ingest.getIngestionTile().Click();
+
+				}
+
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				//Clicked the play buttons
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
+				ingest.getCopyPlayButton().Click();
+				Thread.sleep(5000);
+				//click the close button 
+				
+				ingest.CloseButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getRefreshButton().Enabled()  ;}}), Input.wait30); 
+
+				ingest.getRefreshButton().Click();
+				pass(dataMap, "Passed the click copy play icon function");
+			}
+			catch(Exception e) {e.printStackTrace();}
 			
-			//wait until cataloged updated
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
-			//Clicked the play buttons
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
-			ingest.getCopyPlayButton().Click();
-			//click the close button 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getCopyingStatus().getText().equals("In Progress")  ;}}), Input.wait30); 
-			
-			ingest.CloseButton().Click();
-			ingest.getRefreshButton().Click();
-			
-			throw new ImplementationException("click_copy_play_icon");
-		} else {
-			throw new ImplementationException("NOT click_copy_play_icon");
 		}
+		else fail(dataMap, "could not click copy play_icon");
 
 	}
 	
 	@And("^.*(\\[Not\\] )? click_filter$")
 	public void click_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
-			for(int i = 4; i<7;i++) {
-				int index =i;
-				ingest.getSelectFilterByOption(index).Click();
+			try{
+				//Open Filter menu
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+				ingest.getFilterByOption().Click();
+
+				//Deselect all non Catalog options 
+				for(int i =1; i<=8; ++i){
+					if(ingest.getSelectFilterByOption(i).Selected() && i!=4) ingest.getSelectFilterByOption(i).Click();
+				}
+
+				//Make sure catalog is clicked
+				if(!ingest.getSelectFilterByOption(4).Selected()) ingest.getSelectFilterByOption(4).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+				pass(dataMap, "Filted Easily");
 			}
-			ingest.getcardCanvas().Click();
-			throw new ImplementationException("click_filter");
-		} else {
-			throw new ImplementationException("NOT click_filter");
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "could not filter");
 
 	}
 
@@ -1405,6 +1431,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	/*
 	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
 	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1416,12 +1443,15 @@ public class IngestionContext extends CommonContext {
 			//* After the ingestion has been catalogued
 			//* Click on the Play button for the Copy step of the ingestion
 			//
-			throw new ImplementationException("click_copy_play_icon");
-		} else {
-			throw new ImplementationException("NOT click_copy_play_icon");
+			try {
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "could not click copy play icon");
 
 	}
+	*/
 
 
 	@And("^.*(\\[Not\\] )? click_indexing_play_icon$")
@@ -1441,6 +1471,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	//DONT DO THIS
 	@When("^.*(\\[Not\\] )? start_analysing_step$")
 	public void start_analysing_step(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1459,6 +1490,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	//Dont do this
 	@Then("^.*(\\[Not\\] )? verify_ingestion_being_analysed_can_not_be_searched$")
 	public void verify_ingestion_being_analysed_can_not_be_searched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1520,10 +1552,30 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is in progress
 			//* validate that no search results for the specified ingestion is displayed
 			//
-			throw new ImplementationException("verify_ingestion_in_progress_can_not_be_searched");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_in_progress_can_not_be_searched");
+
+			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			dataMap.put("ingestionName", ingest.getIngestionTileName(0));
+			String url = (String) dataMap.get("URL");
+			driver.Navigate().to(url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			
+			sessionSearch.insertFullText(ingest.getIngestionTileName(0));
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+			sessionSearch.getSearchButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+			//Should be 0
+			System.out.println(sessionSearch.getSearchDocsResults().getText());
+			Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+			pass(dataMap, "Was able to Verify Search results are 0 when ingestion is in progress");
+
 		}
+		else fail(dataMap, "Could not verify ingetsion in progress can not be searched");
 
 	}
 
@@ -1585,10 +1637,62 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is being indexed
 			//* validate that no search results for the specified ingestion is displayed
 			//
-			throw new ImplementationException("verify_ingestion_being_indexed_can_not_be_searched");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_being_indexed_can_not_be_searched");
+			try{
+				
+				//Filter by Copied, unselect all other options
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+				ingest.getFilterByOption().Click();
+				if(ingest.getSelectFilterByOption(4).Selected()) ingest.getSelectFilterByOption(4).Click();
+				if(!ingest.getSelectFilterByOption(5).Selected()) ingest.getSelectFilterByOption(5).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				
+				driver.waitForPageToBeReady();
+
+							
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile().Enabled()  ;}}), Input.wait30); 
+				String query =ingest.getIngestionTileName(0);
+				ingest.getIngestionTile().Click();
+
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+				//Click it + Close menu
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getRunIndexing().Enabled()  ;}}), Input.wait30); 
+
+				ingest.getRunIndexing().Click();
+				ingest.CloseButton().Click();
+				
+				//Go to search page
+				String url = (String) dataMap.get("URL");
+				driver.Navigate().to(url + "Search/Searches");
+				driver.waitForPageToBeReady();
+				SearchContext sessionContext = new SearchContext();
+				SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+				sessionContext.sessionSearch = sessionSearch;
+				sessionContext.driver = driver;
+
+				//Insert our query
+				sessionSearch.insertFullText(query);
+				//Hit Search
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+				sessionSearch.getSearchButton().Click();
+
+				//Wait for results
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+				//Should be 0
+				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+				pass(dataMap, "Was able to Verify Search results are 0 when indexing is in progress");
+			}
+			catch(Exception e) {e.printStackTrace();}
+
 		}
+		else fail(dataMap, "Was not able to verify indexing ingestion cannot be searched");
 
 	}
 

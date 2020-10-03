@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
@@ -220,7 +221,8 @@ public class IngestionPage {
     
     
     //added on 200923
-    public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    //public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    public Element getCopyPlayButton() {return driver.FindElementByCssSelector("#RunCopying>i");}
     public Element getCopyingStatus() {return driver.FindElementByCssSelector("#Copyingblock > div:nth-child(1) > div > div:nth-child(3)");}
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
     public Element getCatelogingStatus() {return driver.FindElementByCssSelector("#Catalogingblock > div:nth-child(1) > div > div:nth-child(3)");}
@@ -277,8 +279,28 @@ public class IngestionPage {
     public Element getErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
-    public Element getFilterByOption(){return driver.FindElementByCssSelector("#multiselect dropdown-toggle btn");}
-    public Element getSelectFilterByOption(int index){return driver.FindElementByCssSelector("#cardGrid > div.col-md-12.gridHeader > div.col-sm-12.col-md-5 > div:nth-child(3) > div > div > ul > li:nth-child(#SF_%s) > a > label");}
+    //public Element getFilterByOption(){return driver.FindElementByCssSelector("#multiselect dropdown-toggle btn");}
+    public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
+    //public Element getSelectFilterByOption(int index){return driver.FindElementByCssSelector("#cardGrid > div.col-md-12.gridHeader > div.col-sm-12.col-md-5 > div:nth-child(3) > div > div > ul > li:nth-child(#SF_%s) > a > label");}
+    public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
+    public Element backButton() {return driver.FindElementById("BackButton");}
+    public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
+    public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
+    public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
+    
+    public String getIngestionTileName(int index){
+    	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
+    		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
+    	}
+    	return null;
+    }
+ 
+    public WebElement getIngestionTile(int index){
+    	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
+    		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index);
+    	}
+    	return null;
+    }
 
     public IngestionPage(Driver driver){
 
