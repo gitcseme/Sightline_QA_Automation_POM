@@ -180,6 +180,7 @@ public class ProductionPage {
     public Element getNative_text(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong"); }
     public Element getNative_text_Color(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p"); }
     public Element getMarkCompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Complete']");}
+    public Element getMarkInompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
 	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
 	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
 	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
@@ -425,10 +426,14 @@ public class ProductionPage {
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
 
     
-    //Added 10/2/20
+    //Added 10/2/20 
     public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
     public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
     public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
+    public Element getBackLink() {return driver.FindElementByXPath("//a[text()='< Back']");}
+    public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
+    public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
+    
 
 
     //Quick Function to get rows of Grid View Production Table
@@ -3014,7 +3019,7 @@ public class ProductionPage {
 			
 			System.out.println("Verified Advance Show/Hide Button wworking as expected");
 			
-			Assert.assertTrue(getGenerateLoadFile().Enabled());
+//			Assert.assertTrue(getGenerateLoadFile().Enabled());
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getGenerateLoadFile().Enabled() ;}}), Input.wait30); 
