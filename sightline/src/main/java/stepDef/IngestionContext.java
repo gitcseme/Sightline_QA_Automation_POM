@@ -1156,8 +1156,8 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-	@And("^.*(\\[Not\\] )? click_catalog_play_icon$")
-	public void click_catalog_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_ingrestion_title$")
+	public void click_ingrestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Find Ingested tile created
@@ -1165,20 +1165,12 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
 			System.out.println("Clicked");
-			
-			Thread.sleep(2000);
 
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
-
-			System.out.println(ingest.getIngestionTileText().getText()); // get the name of the automation project 
 			
-			Thread.sleep(4000);
-			
-			//now have to wait until it pass or fail
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
+			System.out.println(ingest.getIngestionTileText().getText());
 			
 			throw new ImplementationException("click_catalog_play_icon");
 		} else {
@@ -1552,26 +1544,32 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is in progress
 			//* validate that no search results for the specified ingestion is displayed
 			//
-
-			SearchContext sessionContext = new SearchContext();
-			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
-			sessionContext.sessionSearch = sessionSearch;
-			sessionContext.driver = driver;
-			dataMap.put("ingestionName", ingest.getIngestionTileName(0));
-			String url = (String) dataMap.get("URL");
-			driver.Navigate().to(url + "Search/Searches");
-			driver.waitForPageToBeReady();
-			
-			sessionSearch.insertFullText(ingest.getIngestionTileName(0));
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
-			sessionSearch.getSearchButton().Click();
-
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
-			//Should be 0
-			System.out.println(sessionSearch.getSearchDocsResults().getText());
-			Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+			try{
+				String query = ingest.getIngestionTitle().GetAttribute("title");
+				dataMap.put("ingestionName", ingest.getIngestionTitle().GetAttribute("title"));
+				
+				String url = (String) dataMap.get("URL");
+				driver.Navigate().to(url + "Search/Searches");
+				driver.waitForPageToBeReady();
+				SearchContext sessionContext = new SearchContext();
+				SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+				sessionContext.sessionSearch = sessionSearch;
+				sessionContext.driver = driver;
+				
+				sessionSearch.insertFullText(query);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+				sessionSearch.getSearchButton().Click();
+	
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+				//Should be 0
+				System.out.println(sessionSearch.getSearchDocsResults().getText());
+				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			} 
 			pass(dataMap, "Was able to Verify Search results are 0 when ingestion is in progress");
 
 		}

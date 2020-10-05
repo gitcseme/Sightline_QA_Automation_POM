@@ -3246,7 +3246,6 @@ public class IngestionRegression extends RegressionBase {
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
-			//context.click_catalog_play_icon(true, dataMap);
 			context.click_filter(true, dataMap);
 			context.click_copy_play_icon(true, dataMap);
 			context.click_indexing_play_icon(true, dataMap);
@@ -3323,18 +3322,16 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("native_file", "native.lst");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("audio_file", "Transcript.lst");
-			dataMap.put("mp3_file", "MP3.lst");
 			dataMap.put("date_time", "MM/DD/YYY");
-			dataMap.put("doc_key", "DocID");
+			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "TRUE");
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			//context.click_ingrestion_title(true, dataMap);
 			context.verify_ingestion_in_progress_can_not_be_searched(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -3394,7 +3391,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive","smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_icon_and_click_indexing_play_icon_When_start_indexing_step_Then_verify_ingestion_being_indexed_can_not_be_searched() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6424,12 +6421,12 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("dat_load_file", "DAT4_STC_newdateformatEmailData - Copy.dat");
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "GD_994_Native_Text_ForProduction");
 			dataMap.put("date_time", "MM/DD/YYY");
-			dataMap.put("doc_key", "EmailCCNameAndCCAddress");
-			dataMap.put("source_system", "TRUE");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "NUIX");
 			context.new_ingestion_created(true, dataMap);
 			context.select_valid_email_metadata(true, dataMap);
 			context.verify_valid_email_metadata_option_is_available(true, dataMap);

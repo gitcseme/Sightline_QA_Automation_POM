@@ -229,7 +229,9 @@ public class IngestionPage {
     
     public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
-    public Element getIngestionTileText() {return driver.FindElementByCssSelector("#IngestionDetailsPopUp1 > section > div > div > div.smart-form.client-form.ingestionPopup > fieldset > div:nth-child(2) > div > label");}
+    public Element getIngestionTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li/a/span");}
+    
+    public Element getIngestionTileText() {return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div/label");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
     
