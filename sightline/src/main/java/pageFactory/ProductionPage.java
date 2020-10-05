@@ -76,6 +76,7 @@ public class ProductionPage {
     public Element getbtnProductionLocationMarkComplete(){ return driver.FindElementById("btnProductionLocationMarkComplete"); }
     public Element getbtnProductionLocationNext(){ return driver.FindElementById("btnProductionLocationNext"); }
     public Element getbtnProductionSummaryMarkComplete(){ return driver.FindElementById("btnProductionSummaryMarkComplete"); }
+    public Element getbtnProductionSummaryMarkInComplete(){ return driver.FindElementById("btnProductionSummaryMarkInComplete"); }
     public Element getbtnProductionSummaryNext(){ return driver.FindElementById("btnProductionSummaryNext"); }
     public Element getbtnProductionGenerate(){ return driver.FindElementById("btnProductionGenerate"); }
     public Element getProductionSettxt(){ return driver.FindElementById("ProductionSettxt"); }
@@ -427,6 +428,7 @@ public class ProductionPage {
     public Element getProductionGridViewActionSaveTemplate() {return driver.FindElementByCssSelector("ul.dropdown-menu:nth-child(3) > li:nth-child(5) > a:nth-child(1)");}
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
+    public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
     
     //Return Production Based on Name
     public WebElement getProductionTileByName(String name) {

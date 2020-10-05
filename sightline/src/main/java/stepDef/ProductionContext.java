@@ -1468,8 +1468,6 @@ public class ProductionContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
 					prod.getProductionTileByName(prodName).click();
-					Thread.sleep(5000);
-					
 				}
 
 				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
@@ -1597,10 +1595,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview section. If you are not, click Next until you can.
-			throw new ImplementationException("on_the_summary_preview_section");
-		} else {
-			throw new ImplementationException("NOT on_the_summary_preview_section");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				while(!prod.getProductionSectionPageTitle().getText().equals("Summary and Preview")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getBackLink().Displayed() && prod.getBackLink().Enabled() ;}}), Input.wait30);
+					prod.getBackLink().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				}
+			pass(dataMap, "Got to Summary and preview");
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not get to the summar preview Section");
 
 	}
 
@@ -1609,11 +1618,16 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_productions_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_the_productions_preview_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_productions_preview_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				prod.getbtnProductionSummaryMarkInComplete().click();
+				prod.getPreviewprod().click();
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Failed to click the production preview button");
 
 	}
 
