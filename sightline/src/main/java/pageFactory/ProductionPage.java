@@ -427,6 +427,14 @@ public class ProductionPage {
     public Element getProductionGridViewActionSaveTemplate() {return driver.FindElementByCssSelector("ul.dropdown-menu:nth-child(3) > li:nth-child(5) > a:nth-child(1)");}
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
+    
+    //Return Production Based on Name
+    public WebElement getProductionTileByName(String name) {
+    	for(WebElement x: driver.FindElementsByCssSelector(".prod-Title").FindWebElements()) {
+    		if((x.getText()).equals(name)) return x;
+    	}
+    	return null;
+    }
 
     public WebElement getProductionTileViewBates(int index) { 
     	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){

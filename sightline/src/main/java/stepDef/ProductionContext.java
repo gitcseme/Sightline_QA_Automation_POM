@@ -1436,6 +1436,8 @@ public class ProductionContext extends CommonContext {
 			try {
 				String viewMode = (String)dataMap.get("mode");
 				String status = (String)dataMap.get("status");
+				String prodName = "";
+				if(dataMap.get("production_name") != null) prodName = (String)dataMap.get("production_name");
 				String prodCount = prod.getProductionItemsTileItems().getText();
 
 				//Use These Index's to Select the correct Status Option in the  Dropdown
@@ -1456,8 +1458,17 @@ public class ProductionContext extends CommonContext {
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
+				if(prodName != null || !prodName.equals("")){
+					String temp  = prodName;
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
+					prod.getProductionTileByName(prodName).click();
+					Thread.sleep(5000);
+					
+				}
+
 				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
-				if(viewMode != null && viewMode.equals("grid")) {
+				else if(viewMode != null && viewMode.equals("grid")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
 
