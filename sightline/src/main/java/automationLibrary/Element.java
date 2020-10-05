@@ -227,7 +227,7 @@ private  Driver driver;
      }
      
      public void click() {
-    	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by));
+    	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by)).click();
      }
      
      public void waitAndClick(int waitTime) {
