@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
@@ -1598,6 +1599,7 @@ public class ProductionContext extends CommonContext {
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				//Move back till we are at our desired page
 				while(!prod.getProductionSectionPageTitle().getText().equals("Summary and Preview")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getBackLink().Displayed() && prod.getBackLink().Enabled() ;}}), Input.wait30);
@@ -1621,8 +1623,11 @@ public class ProductionContext extends CommonContext {
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				//Move page back to incomplete, then click Preview Button
 				prod.getbtnProductionSummaryMarkInComplete().click();
 				prod.getPreviewprod().click();
+				driver.waitForPageToBeReady();
+				pass(dataMap, "Clicked preview button");
 				
 			}
 			catch(Exception e) {e.printStackTrace();}
@@ -1639,21 +1644,30 @@ public class ProductionContext extends CommonContext {
 			//TC5096 
 			//* Verify the branding on the PDF should display from the Tiff section information provided
 			//
-			PDDocument document = PDDocument.load(new File("/home/jtran/Download/S00012332Q.pdf"));
-			PDFTextStripper pdfTextStripper = new PDFTextStripper();
 			
-			String text = pdfTextStripper.getText(document);
+				PDDocument document = null;
+				String home = System.getProperty("user.home");
+				if(SystemUtils.IS_OS_LINUX){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/S00012332Q.pdf"));}
+				else if(SystemUtils.IS_OS_WINDOWS){
+					while(document == null) document = PDDocument.load(new File(home + "\\Download\\S00012332Q.pdf"));
+				}
+
+				PDFTextStripper pdfTextStripper = new PDFTextStripper();
 			
-			Pattern p = Pattern.compile("Default Tiff Branding");
-			Matcher matcher = p.matcher(text);
+				String text = pdfTextStripper.getText(document);
 			
-			if (matcher.find()) {
+				Pattern p = Pattern.compile("Default Tiff Branding");
+				Matcher matcher = p.matcher(text);
+			
+				if (matcher.find()) {
 				pass(dataMap, "Branding is displayed in the preview of the pdf");
-			} else {
-				fail(dataMap, "Branding is not displayed in the preview of the pdf");
-			}
+				} else {
+					fail(dataMap, "Branding is not displayed in the preview of the pdf");
+				}
 			
-			document.close();
+				document.close();
+				
 			
 		} else {
 			fail(dataMap, "Branding is not displayed in the preview of the pdf");
