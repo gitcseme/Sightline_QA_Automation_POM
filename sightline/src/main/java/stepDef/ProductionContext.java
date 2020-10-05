@@ -1,11 +1,16 @@
 package stepDef;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.List;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -1612,7 +1617,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-
+	// Working
 	@Then("^.*(\\[Not\\] )? verify_the_preview_of_the_pdf_should_display_the_branding$")
 	public void verify_the_preview_of_the_pdf_should_display_the_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1620,9 +1625,24 @@ public class ProductionContext extends CommonContext {
 			//TC5096 
 			//* Verify the branding on the PDF should display from the Tiff section information provided
 			//
-			throw new ImplementationException("verify_the_preview_of_the_pdf_should_display_the_branding");
+			PDDocument document = PDDocument.load(new File("/home/jtran/Download/S00012332Q.pdf"));
+			PDFTextStripper pdfTextStripper = new PDFTextStripper();
+			
+			String text = pdfTextStripper.getText(document);
+			
+			Pattern p = Pattern.compile("Default Tiff Branding");
+			Matcher matcher = p.matcher(text);
+			
+			if (matcher.find()) {
+				pass(dataMap, "Branding is displayed in the preview of the pdf");
+			} else {
+				fail(dataMap, "Branding is not displayed in the preview of the pdf");
+			}
+			
+			document.close();
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_preview_of_the_pdf_should_display_the_branding");
+			fail(dataMap, "Branding is not displayed in the preview of the pdf");
 		}
 
 	}
