@@ -289,6 +289,9 @@ public class IngestionPage {
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
     public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
+    public Element getIngestedGridView() { return driver.FindElementById("GridView");}
+    public Element getIngestTileView() { return driver.FindElementById("TileView");}
+    public Element getIngestionGridPaginationTable() { return driver.FindElementById("IngestionGridViewtable_paginate");}
     
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){

@@ -1156,8 +1156,8 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-	@And("^.*(\\[Not\\] )? click_ingrestion_title$")
-	public void click_ingrestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_catalog_play_icon$")
+	public void click_catalog_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Find Ingested tile created
@@ -1165,12 +1165,20 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
 			System.out.println("Clicked");
+			
+			Thread.sleep(2000);
 
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+
+			System.out.println(ingest.getIngestionTileText().getText()); // get the name of the automation project 
 			
-			System.out.println(ingest.getIngestionTileText().getText());
+			Thread.sleep(4000);
+			
+			//now have to wait until it pass or fail
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
 			
 			throw new ImplementationException("click_catalog_play_icon");
 		} else {
@@ -1544,32 +1552,30 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is in progress
 			//* validate that no search results for the specified ingestion is displayed
 			//
-			try{
-				String query = ingest.getIngestionTitle().GetAttribute("title");
-				dataMap.put("ingestionName", ingest.getIngestionTitle().GetAttribute("title"));
-				
-				String url = (String) dataMap.get("URL");
-				driver.Navigate().to(url + "Search/Searches");
-				driver.waitForPageToBeReady();
-				SearchContext sessionContext = new SearchContext();
-				SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
-				sessionContext.sessionSearch = sessionSearch;
-				sessionContext.driver = driver;
-				
-				sessionSearch.insertFullText(query);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
-				sessionSearch.getSearchButton().Click();
-	
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
-				//Should be 0
-				System.out.println(sessionSearch.getSearchDocsResults().getText());
-				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			} 
+
+			
+			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			dataMap.put("ingestionName", ingest.getIngestionTileName(0));
+			String url = (String) dataMap.get("URL");
+			driver.Navigate().to(url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			
+			System.out.println(ingest.getIngestionTileName(0));
+			
+			sessionSearch.insertFullText(ingest.getIngestionTileName(0));
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+			sessionSearch.getSearchButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+			//Should be 0
+			System.out.println(sessionSearch.getSearchDocsResults().getText());
+			Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
 			pass(dataMap, "Was able to Verify Search results are 0 when ingestion is in progress");
 
 		}
@@ -2050,11 +2056,31 @@ public class IngestionContext extends CommonContext {
 			//* Grid view
 			//* Tile View
 			//
-			throw new ImplementationException("verify_view_options_are_displayed");
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+			
+			//Click on filter button and select Published Ingestions 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFilterByOption().Displayed() ;}}), Input.wait30); 
+					ingest.getFilterByOption().Click();
+					
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getSelectFilterByOption(8).Displayed() ;}}), Input.wait30); 
+						ingest.getSelectFilterByOption(8).Click();		
+			
+			pass(dataMap,"View Options are available");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"View Options are not available");
+			}
 		} else {
-			throw new ImplementationException("NOT verify_view_options_are_displayed");
-		}
+			fail(dataMap,"View Options are not available");
 
+		}
 	}
 
 
@@ -2231,13 +2257,21 @@ public class IngestionContext extends CommonContext {
 	public void click_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("click_grid_view");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+				ingest.getIngestedGridView().Click();
+				pass(dataMap,"Successfullly clicked on Grid View option");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Clicking on Grid View option was unsuccessful ");
+			}
 		} else {
-			throw new ImplementationException("NOT click_grid_view");
+			fail(dataMap,"Clicking on Grid View option was unsuccessful ");
 		}
 
 	}
+	
 
 
 	@Then("^.*(\\[Not\\] )? verify_pagination_exists_on_grid_view$")
@@ -2247,9 +2281,16 @@ public class IngestionContext extends CommonContext {
 			//TC848:To verify that on Ingesion Home page is having pagination for Grid View only
 			//* Validate the grid view displays pagination 
 			//
-			throw new ImplementationException("verify_pagination_exists_on_grid_view");
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridPaginationTable().Displayed() ;}}), Input.wait30);
+				pass(dataMap,"Pagination Exist on Grid view");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Pagination does Exist on Grid view");
+			}
 		} else {
-			throw new ImplementationException("NOT verify_pagination_exists_on_grid_view");
+			fail(dataMap,"Pagination does Exist on Grid view");
 		}
 
 	}
