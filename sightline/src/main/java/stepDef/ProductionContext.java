@@ -1741,10 +1741,18 @@ public class ProductionContext extends CommonContext {
 			//* Verify the bates number on the document level numbering production that is completed is displaying correctly on the home page.
 			//* It will be under the fields "Start" and "End". Those fields should have a number/value each on them representing the start number and end number.
 			//
-			throw new ImplementationException("verify_document_level_numbers_displays_bate_number_on_production_home_page");
-		} else {
-			throw new ImplementationException("NOT verify_document_level_numbers_displays_bate_number_on_production_home_page");
+			try {
+				//Make Sure both Start and End have a Value to them
+				String startBates = (prod.getProductionTileViewBates(0).getText().split("START"))[1].split("END")[0];
+				String endBates  = (prod.getProductionTileViewBates(0).getText().split("END"))[1].split("END")[0];
+				Assert.assertFalse(startBates.equals(""));
+				Assert.assertFalse(endBates.equals(""));
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
+		else fail(dataMap, "Could not verify Bates number");
 
 	}
 

@@ -428,6 +428,11 @@ public class ProductionPage {
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
 
+    public WebElement getProductionTileViewBates(int index) { 
+    	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
+    		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
+    	else return null;
+}
     
     //Added 10/2/20 
     public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
