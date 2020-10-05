@@ -184,6 +184,7 @@ public class ProductionPage {
 	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
 	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
 	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
+	public Element getProductionTileStatusTypeText() {return driver.FindElementByXPath("(//div[@class = 'col-md-12 font-xs']/strong)[1]");}
 	public Element getprod_Templatetext(){ return driver.FindElementById("templatesettxt"); }
 	public Element getprod_LoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
 	public Element getTechissue_toggle(){ return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i"); }
@@ -221,6 +222,7 @@ public class ProductionPage {
     public Element getSetName(){ return driver.FindElementById("ProductionSettxt"); }
     public Element getDeleteProd(){ return driver.FindElementById("DeleteProd"); }
     public Element getLock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Lock')]"); }
+    public Element getUnlock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Unlock')]"); }
     public Element getDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
     public Element getTileDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
     public Element getAction(){ return driver.FindElementByXPath(" //span[@class='fa fa-chevron-down']"); }
@@ -421,6 +423,7 @@ public class ProductionPage {
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
     public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}
     public Element getProductionGridViewActionLock() {return driver.FindElementById("Lock");}
+    public Element getProductionGridViewActionUnLock() {return driver.FindElementById("Unlock");}
     public Element getProductionGridViewActionSaveTemplate() {return driver.FindElementByCssSelector("ul.dropdown-menu:nth-child(3) > li:nth-child(5) > a:nth-child(1)");}
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}

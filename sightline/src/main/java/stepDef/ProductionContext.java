@@ -1436,31 +1436,43 @@ public class ProductionContext extends CommonContext {
 			try {
 				String viewMode = (String)dataMap.get("mode");
 				String status = (String)dataMap.get("status");
+				String prodCount = prod.getProductionItemsTileItems().getText();
+
+				//Use These Index's to Select the correct Status Option in the  Dropdown
 				int index = 1;
 				if(status.equalsIgnoreCase("INPROGRESS")) index = 2;
 				else if(status.equalsIgnoreCase("COMPLETED")) index = 4;
-				//Just Need to Select, if we are in Grid mode, Tile Mode has no Select
+
+				
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
+				prod.getFilterByButton().Click();
+				//Deselect Filters we dont want
+				for(int i =1; i<=4; i++) {
+					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
+				}
+				//Select our filter, if it isn't already
+				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
 				if(viewMode != null && viewMode.equals("grid")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
 
-					//Get Filter dropdown
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
-					prod.getFilterByButton().Click();
-					//Deselect Filters we dont want
-					for(int i =1; i<=4; i++) {
-						if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
-					}
-
-					//Select our filter, if it isn't already
-					if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
-					
-					driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
-					//Click out of dropdown, then wait for table to update, and click first element 
+					//Wait for table to update, and click first element 
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
 					prod.getProductionListGridViewTableRows(0).click();
+				}
+				else if(viewMode != null && viewMode.equalsIgnoreCase("tile")) {
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getProductionItemsTileItems().getText().equals(prodCount) ;}}), Input.wait30);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionTileStatusTypeText().getText().equalsIgnoreCase(status) ;}}), Input.wait30);
+
 				}
 				pass(dataMap, "Selected the production based on grid view");
 				
@@ -1827,8 +1839,10 @@ public class ProductionContext extends CommonContext {
 						prod.getProductionGridViewActionDropDown().Enabled()  ;}}), Input.wait30);
 					prod.getProductionGridViewActionDropDown().Click();
 				}
-				else if(viewMode!= null && viewMode.equals("tile")) {
-					//Implement this Later
+				else if(viewMode!= null && viewMode.equalsIgnoreCase("tile")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getprod_ActionButton().Enabled()  ;}}), Input.wait30);
+					prod.getprod_ActionButton().Click();
 				}
 				else fail(dataMap, "A Valid View mode was not selected");
 				pass(dataMap, "Settings button for a production was Successful");
@@ -1925,8 +1939,13 @@ public class ProductionContext extends CommonContext {
 					//Check Completed 
 					else if(status.equalsIgnoreCase("COMPLETED")){
 						//Lock is Displayed and Enabled
-						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
-							!prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
+						if(prod.getProductionGridViewActionUnLock().Displayed()) {
+							Assert.assertFalse(prod.getProductionGridViewActionUnLock().GetAttribute("class").contains("disable"));
+						}
+						else {
+							Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
+								!prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
+						}
 
 						//Add Doc is Displayed
 						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed());
@@ -1941,6 +1960,44 @@ public class ProductionContext extends CommonContext {
 						Assert.assertFalse(prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(6).getText().equals(""));
 					}
 				}
+				
+				//Tile uses seperate CSS selectors, same logic follows, minus Add/Remove Docs, and Start-End time
+				else if(status != null && viewMode.equalsIgnoreCase("tile")) {
+					//Open in Wizard is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getOpenWizard().Displayed() && prod.getOpenWizard().Enabled() && !prod.getOpenWizard().GetAttribute("class").contains("disable"));
+
+					//Save Template Is Displayed and Enabled for all Status
+					Assert.assertTrue(prod.getSaveTemplate().Displayed() &&
+						 !prod.getSaveTemplate().GetAttribute("class").contains("disable"));
+
+					//Delete is Displayed and Enabled for Drafts only
+					if(status.equalsIgnoreCase("DRAFT")) {
+						Assert.assertTrue(prod.getDelete().Displayed() &&
+							!prod.getDelete().GetAttribute("class").contains("disable"));
+					}
+					//Delete is Displayed and NOT Enabled for InProgress
+					else if(status.equalsIgnoreCase("INPROGRESS")){
+						Assert.assertTrue(prod.getDelete().Displayed() &&
+							prod.getDelete().GetAttribute("class").contains("disable"));
+					}
+					//Check Lock for Draft and Inprogess
+					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")){
+						//Lock is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getLock().Displayed() &&
+							prod.getLock().GetAttribute("class").contains("disable"));
+					}	
+					else if(status.equalsIgnoreCase("COMPLETED")){
+						//Lock is Displayed and Enabled
+						if(prod.getUnlock().Displayed()) Assert.assertTrue(!prod.getLock().GetAttribute("class").contains("disable"));
+						else {
+						Assert.assertTrue(prod.getLock().Displayed() &&
+							!prod.getLock().GetAttribute("class").contains("disable"));
+						}
+					}
+				}
+
+
+				pass(dataMap, "Verified Production Settings Options");
 				
 			}
 			catch(Exception e) {e.printStackTrace();}
