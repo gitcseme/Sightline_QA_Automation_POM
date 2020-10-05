@@ -2179,6 +2179,20 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate default 10 tiles are displayed
 			//
+			
+			//open the approved options 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			ingest.getSelectFilterByOption(8).Click();
+			
+			
+//			
+//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile().Enabled()  ;}}), Input.wait30); 
+//			
+//			ingest.getIngestionTile().Click();
+			
 			throw new ImplementationException("verify_ingestion_home_page_displays_default_tile_count");
 		} else {
 			throw new ImplementationException("NOT verify_ingestion_home_page_displays_default_tile_count");

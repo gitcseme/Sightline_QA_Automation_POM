@@ -443,7 +443,6 @@ public class IngestionPage {
         	getFilePathNative().SendKeys(dataMap.get("native_path_file").toString());
     	}
     	else{
-    		System.out.println("here");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeLST().Visible()  ;}}), Input.wait30); 
         	getNativeLST().SendKeys(dataMap.get("native_file").toString());	
