@@ -1156,8 +1156,8 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-	@And("^.*(\\[Not\\] )? click_ingrestion_title$")
-	public void click_ingrestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_ingestion_title$")
+	public void click_ingestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Find Ingested tile created
@@ -1168,13 +1168,13 @@ public class IngestionContext extends CommonContext {
 
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+	    			ingest.getIngestionModal().Displayed()  ;}}), Input.wait30); 
 			
 			System.out.println(ingest.getIngestionTileText().getText());
 			
-			throw new ImplementationException("click_catalog_play_icon");
+			throw new ImplementationException("click_ingrestion_title");
 		} else {
-			throw new ImplementationException("NOT click_catalog_play_icon");
+			throw new ImplementationException("NOT click_ingrestion_title");
 
 		}
 	}
@@ -1195,13 +1195,8 @@ public class IngestionContext extends CommonContext {
 	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 				ingest.getIngestionTile().Click();
 				Thread.sleep(5000);
-				//wait until cataloged updated
-				/*
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    					ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
-    					*/
+				
 				while(ingest.getCopyPlayButton().getText().contains("disable")) {
-					System.out.println("made it in");
 					ingest.CloseButton().Click();
 					ingest.getRefreshButton().Click();
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1216,8 +1211,8 @@ public class IngestionContext extends CommonContext {
 	    				ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
 				ingest.getCopyPlayButton().Click();
 				Thread.sleep(5000);
-				//click the close button 
 				
+				//click the close button 
 				ingest.CloseButton().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getRefreshButton().Enabled()  ;}}), Input.wait30); 
@@ -1423,29 +1418,6 @@ public class IngestionContext extends CommonContext {
 	}
 
 
-	/*
-	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
-	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* Open ingested file
-			//* If other steps have not been started, start Catalogue and copy steps before Indexing
-			//* On the ingestion deatils page
-			//* After the ingestion has been catalogued
-			//* Click on the Play button for the Copy step of the ingestion
-			//
-			try {
-				
-			}
-			catch(Exception e) {e.printStackTrace();}
-		}
-		else fail(dataMap, "could not click copy play icon");
-
-	}
-	*/
-
-
 	@And("^.*(\\[Not\\] )? click_indexing_play_icon$")
 	public void click_indexing_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1564,7 +1536,6 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
 				//Should be 0
-				System.out.println(sessionSearch.getSearchDocsResults().getText());
 				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
 			}
 			catch (Exception e) {
@@ -2402,7 +2373,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getApproveMessageHeader().Visible()  ;}}), Input.wait30);
 			String actualMessage = ingest.getWarningMessageContent().getText();
-			System.out.println(actualMessage);
 			assertEquals(ExpectedWarningMessage, actualMessage);
 			ingest.getWarningMessageOKButton().Click();
 			

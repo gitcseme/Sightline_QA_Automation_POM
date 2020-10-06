@@ -227,7 +227,7 @@ public class IngestionPage {
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
     public Element getCatelogingStatus() {return driver.FindElementByCssSelector("#Catalogingblock > div:nth-child(1) > div > div:nth-child(3)");}
     
-    public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
+    public Element getIngestionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
     public Element getIngestionTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li/a/span");}
     
@@ -281,9 +281,7 @@ public class IngestionPage {
     public Element getErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
-    //public Element getFilterByOption(){return driver.FindElementByCssSelector("#multiselect dropdown-toggle btn");}
     public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
-    //public Element getSelectFilterByOption(int index){return driver.FindElementByCssSelector("#cardGrid > div.col-md-12.gridHeader > div.col-sm-12.col-md-5 > div:nth-child(3) > div > div > ul > li:nth-child(#SF_%s) > a > label");}
     public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
     public Element backButton() {return driver.FindElementById("BackButton");}
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
@@ -340,7 +338,6 @@ public class IngestionPage {
 	    	}
 	    	
 	    	if(dataMap.containsKey("doc_key")) {	
-	    		//getDAToptions(dataMap); 
 	    	    if(dataMap.containsKey("dat_load_file")) {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
@@ -413,10 +410,10 @@ public class IngestionPage {
 	    	getDATCheckbox().Click();
 	    }	
 
-	    if(dataMap.containsKey("dat_file")) {
+	    if(dataMap.containsKey("dat_load_file")) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
-	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	    	getDATLoadFile().SendKeys(dataMap.get("dat_load_file").toString());
 	    }
 	    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -440,7 +437,6 @@ public class IngestionPage {
         	getFilePathNative().SendKeys(dataMap.get("native_path_file").toString());
     	}
     	else{
-    		System.out.println("here");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeLST().Visible()  ;}}), Input.wait30); 
         	getNativeLST().SendKeys(dataMap.get("native_file").toString());	
@@ -469,7 +465,7 @@ public class IngestionPage {
     	else{
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getTextLST().Visible()  ;}}), Input.wait30); 
-        	getTextLST().SendKeys(dataMap.get("test_file").toString());	
+        	getTextLST().SendKeys(dataMap.get("text_file").toString());	
     	}
     	
     }
@@ -562,7 +558,6 @@ public class IngestionPage {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptLST().SendKeys(dataMap.get("audio_file").toString());; 
-    		System.out.print("audio_file");
     	}
     }
     
