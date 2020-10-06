@@ -38,11 +38,12 @@ public class ProductionContext extends CommonContext {
 	public void begin_new_production_process(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		String dateTime = new Long((new Date()).getTime()).toString();
 		String template = (String) dataMap.get("prod_template");
-
+		String productionName = "AutoProduction" + dateTime;
 
 		try {
-			if (scriptState) {				
-				prod.addNewProduction("AutoProduction"+dateTime, template);
+			if (scriptState) {
+				prod.addNewProduction(productionName, template);
+				dataMap.put("productionName", productionName);
 			} else {
 				pass(dataMap,"Skipped adding new production");
 			} 
@@ -1967,5 +1968,31 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+	@Then("^.*(\\[Not\\] )? delete_created_productions$")
+	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		try {
+			// Go to Home Page
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/Production/Home");
+			
+			// Find prod based on name
+			WebElement prodElement = webDriver.findElement(By.xpath("//*[contains(text(), '" + dataMap.get("productionName") + "')]"));
+			// Get parent node
+			WebElement prodParentElement = prodElement.findElement(By.xpath("./.."));
+			// Click Gear button
+			prodParentElement.findElement(By.cssSelector("[class=\"dropdown pull-right actionBtn font-xs\"]")).click();
+			
+			// This selector just clicks on the first gear element if we don't need to find the name of prod
+			// prod.getProductionGear().Click();
+			prod.getProductionDeleteButton().Click();
+			prod.getProductionDeleteOkButton().Click();
+			System.out.println("Deleted prod: " + dataMap.get("productionName"));			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	
 }//end
 

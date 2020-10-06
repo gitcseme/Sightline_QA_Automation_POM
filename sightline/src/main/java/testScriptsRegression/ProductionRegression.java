@@ -3208,6 +3208,7 @@ public class ProductionRegression extends RegressionBase {
 			context.complete_default_numbering_and_sorting(true, dataMap);
 			context.clicking_the_document_selection_select_searches_option(true, dataMap);
 			context.verify_the_document_selection_component_displays_the_correct_default_options(true, dataMap);
+			context.delete_created_productions(true,  dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);
