@@ -2431,10 +2431,9 @@ public class ProductionContext extends CommonContext {
 			
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
-			
-			System.out.println("Deleted prod: " + dataMap.get("productionName"));			
+			pass(dataMap, "Successfully deleted the target production");
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			fail(dataMap, "Target production could not be deleted");
 		}
 	}
 	
