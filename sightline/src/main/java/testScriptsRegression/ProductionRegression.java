@@ -2796,6 +2796,7 @@ public class ProductionRegression extends RegressionBase {
 			context.begin_new_production_process(true, dataMap);
 			context.complete_default_production_component(true, dataMap);
 			context.clicking_document_as_the_numbering_default_option(true, dataMap);
+			dataMap.put("numbering_option", "Document");
 			context.verify_the_numbering_also_sorting_component_displays_the_correct_default_options(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -4377,7 +4378,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_specifying_the_next_bates_number_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_When_waiting_for_production_to_be_in_progress_Then_verify_using_the_next_bates_generations_a_production_successfully() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4497,7 +4498,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_the_numbering_is_set_to_document_with_no_sub_bates_When_clicking_the_productions_mark_complete_button_Then_verify_document_level_numbering_can_be_empty_for_sub_bates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

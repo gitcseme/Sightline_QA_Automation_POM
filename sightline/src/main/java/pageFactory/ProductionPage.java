@@ -414,7 +414,13 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
-
+    
+    public Element getClickHereToViewNextBatesNumbers() {return driver.FindElementByCssSelector(".radio.col-md-12");}
+    public Element getMarkCompleteSuccessfulText() { return driver.FindElementByXPath("//*[text()='Mark Complete successful']"); }
+    public Element getClickHereLink() { return driver.FindElementByCssSelector("a[onclick='javascript:NextBatesNumber();']"); }
+    public Element getNextBatesNumbersDialog() { return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front"); }
+    public Element getSecondBatesNumberValue() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td"); }
+    public Element getSecondBatesNumberSelectButton() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td[2]/button"); }
 
 
     public ProductionPage(Driver driver){

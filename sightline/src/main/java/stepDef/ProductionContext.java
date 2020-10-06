@@ -1259,10 +1259,22 @@ public class ProductionContext extends CommonContext {
 			//* Ignore bullet 2 at the top. 
 			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
 			//
-			throw new ImplementationException("verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
-		}
+			String numberingOption = (String) dataMap.get("numbering_option");
+			try {
+				if (numberingOption.equalsIgnoreCase("Document")) {
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+					Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "1");
+					Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "5");
+					Assert.assertEquals(prod.getClickHereToViewNextBatesNumbers().getText(), "Click here to view and select the next bates number(s)");
+					pass(dataMap, "The default values are displayed!");
+				}
+			} catch (Exception e) {
+				fail(dataMap,"The default values are not displayed!");
+			}
+			
+		} 
 
 	}
 	
@@ -1778,7 +1790,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("clicking_the_productions_mark_complete_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to click the Mark Complete button");
+			}
+
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
 		}
@@ -1800,7 +1821,30 @@ public class ProductionContext extends CommonContext {
 			//* 500 is the Beginning Bates
 			//* Click Select on the second bates number listed.
 			//
-			throw new ImplementationException("complete_specifying_the_next_bates_number");
+
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getClickHereLink().Displayed()  ;}}), Input.wait30); 
+
+				prod.getClickHereLink().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNextBatesNumbersDialog().Displayed()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSecondBatesNumberValue().Displayed()  ;}}), Input.wait30); 
+
+				String secondBatesNumber = prod.getSecondBatesNumberValue().getText();
+				String beginningBatesNumber = secondBatesNumber.substring(1);
+				String prefix = secondBatesNumber.substring(0, 1);
+
+				prod.getSecondBatesNumberSelectButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+				
+				
+			} catch (Exception e) {
+				fail(dataMap,"");
+			}
 		} else {
 			throw new ImplementationException("NOT complete_specifying_the_next_bates_number");
 		}
@@ -1904,7 +1948,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Under NUMBERING, click Document Erase the value in Beginning Sub-bates NumberErase the value in Min Number Length
-			throw new ImplementationException("the_numbering_is_set_to_document_with_no_sub_bates");
+			try {
+				clicking_document_as_the_numbering_default_option(scriptState, dataMap);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+				prod.getNumSubBatesNum().Clear();
+				prod.getNumSubBatesMin().Clear();
+			} catch (Exception e) {
+				fail(dataMap, "Unable to clear input fields");
+			}
 		} else {
 			throw new ImplementationException("NOT the_numbering_is_set_to_document_with_no_sub_bates");
 		}
@@ -1917,9 +1969,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5188Verify when marking the numbering and sorting complete, it successfully marks it completed with no error.
-			throw new ImplementationException("verify_document_level_numbering_can_be_empty_for_sub_bates");
+			
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
+
 		} else {
-			throw new ImplementationException("NOT verify_document_level_numbering_can_be_empty_for_sub_bates");
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "1");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "5");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
 		}
 
 	}
