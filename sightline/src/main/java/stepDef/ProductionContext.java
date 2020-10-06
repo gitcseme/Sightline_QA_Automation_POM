@@ -2424,21 +2424,14 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
-			// Go to Home Page
-			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"/Production/Home");
+			prod.goToProductionHomePage().click();
+			driver.waitForPageToBeReady();
 			
-			// Find prod based on name
-			WebElement prodElement = webDriver.findElement(By.xpath("//*[contains(text(), '" + dataMap.get("productionName") + "')]"));
-			// Get parent node
-			WebElement prodParentElement = prodElement.findElement(By.xpath("./.."));
-			// Click Gear button
-			prodParentElement.findElement(By.cssSelector("[class=\"dropdown pull-right actionBtn font-xs\"]")).click();
+			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("productionName").toString())).click();
 			
-			// This selector just clicks on the first gear element if we don't need to find the name of prod
-			// prod.getProductionGear().Click();
-			prod.getProductionDeleteButton().Click();
-			prod.getProductionDeleteOkButton().Click();
+			prod.getDelete().click();
+			prod.getProductionDeleteOkButton().click();
+			
 			System.out.println("Deleted prod: " + dataMap.get("productionName"));			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
