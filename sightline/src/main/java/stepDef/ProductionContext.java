@@ -1,11 +1,18 @@
 package stepDef;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.List;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.interactions.Actions;
+import org.apache.commons.lang3.SystemUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -1432,12 +1439,69 @@ public class ProductionContext extends CommonContext {
 	@When("^.*(\\[Not\\] )? selecting_the_production$")
 	public void selecting_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			throw new ImplementationException("selecting_the_production");
-		} else {
-			throw new ImplementationException("NOT selecting_the_production");
+		if (scriptState){
+			
+			try {
+				String viewMode = (String)dataMap.get("mode");
+				String status = (String)dataMap.get("status");
+				String prodName = "";
+				if(dataMap.get("production_name") != null) prodName = (String)dataMap.get("production_name");
+				String prodCount = prod.getProductionItemsTileItems().getText();
+
+				//Use These Index's to Select the correct Status Option in the  Dropdown
+				int index = 1;
+				if(status.equalsIgnoreCase("INPROGRESS")) index = 2;
+				else if(status.equalsIgnoreCase("COMPLETED")) index = 4;
+
+				
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
+				prod.getFilterByButton().Click();
+				//Deselect Filters we dont want
+				for(int i =1; i<=4; i++) {
+					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
+				}
+				//Select our filter, if it isn't already
+				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+
+				if(!prodName.equals("")){
+					String temp  = prodName;
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
+					//prod.getProductionTileByName(prodName).click();
+					dataMap.put("targetProduction", prod.getProductionTileByName(temp));
+				}
+
+				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
+				else if(viewMode != null && viewMode.equals("grid")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
+
+					//Wait for table to update, and click first element 
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
+					prod.getProductionListGridViewTableRows(0).click();
+				}
+				else if(viewMode != null && viewMode.equalsIgnoreCase("tile")) {
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getProductionItemsTileItems().getText().equals(prodCount) ;}}), Input.wait30);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionTileStatusTypeText().getText().equalsIgnoreCase(status) ;}}), Input.wait30);
+
+				}
+				pass(dataMap, "Selected the production based on grid view");
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not Select Prodution");
+				e.printStackTrace();}
+			
 		}
+		else fail(dataMap,"Could Not Select Production");
 
 	}
 
@@ -1447,10 +1511,32 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the clog/settings icon to the right of the production's nameClick LockClick OK on the warning messageThe home page will refresh and the filter will reset.Filter the dropdown to show only Completed productions again.Verify the icon changed to the locked icon.
-			throw new ImplementationException("locking_the_production");
-		} else {
-			throw new ImplementationException("NOT locking_the_production");
+			try {
+				//Select our target production's settings option
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				prod.getProductionTileSettingsByName(((WebElement)dataMap.get("targetProduction"))).click();
+
+				//Click Lock 
+				prod.getLock().click();
+
+				//Click okayMessage
+				prod.getOK().click();
+				driver.waitForPageToBeReady();
+
+				//Refilter menu
+				selecting_the_production(true,dataMap);
+
+				//Make sure Element is Locked based on lock Attribute 
+				Assert.assertTrue(((WebElement)dataMap.get("targetProduction")).findElement(By.cssSelector("i.fa-lock")).isDisplayed());
+				
+				pass(dataMap, "Clicked lock settings successfully");
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not click lock settings button");
+				e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not click lock settings button");
 
 	}
 
@@ -1467,10 +1553,60 @@ public class ProductionContext extends CommonContext {
 			//* Do the same until you get to "Production Components".
 			//* Afterwards go to the production's homepage and unlock the production to "reset the test".
 			//
-			throw new ImplementationException("verify_the_locked_production_is_set_to_read_only");
-		} else {
-			throw new ImplementationException("NOT verify_the_locked_production_is_set_to_read_only");
+			try {
+				String[] pages = {"Confirmation", "Generate", "ProductionSummary", "ProductionLocation",
+						"ProductionGuard", "DocumentsSelection", "NumAndSort", "Components"}; 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				((WebElement)dataMap.get("targetProduction")).click();
+
+				for(int i =0; i <pages.length; i++) {
+					String temp = pages[i];
+					if(pages[i].equals("NumAndSort") || pages[i].equals("Components")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionMarkIncompleteLastBtn(temp).Displayed() ;}}), Input.wait30);
+						Assert.assertEquals("true",prod.getProductionMarkIncompleteLastBtn(temp).GetAttribute("disabled"));
+					}
+					else {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionMarkIncompleteBtnByPage(temp).Displayed() ;}}), Input.wait30);
+						Assert.assertEquals("true",prod.getProductionMarkIncompleteBtnByPage(temp).GetAttribute("disabled"));
+					}
+					prod.getBackLink().click();
+					driver.waitForPageToBeReady();
+				}
+				
+				//Go back to Production Home and Filter again
+				prod.goToProductionHomePage().click();
+				driver.waitForPageToBeReady();
+				selecting_the_production(true,dataMap);
+
+				//Get Target Prodution's settings 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				prod.getProductionTileSettingsByName(((WebElement)dataMap.get("targetProduction"))).click();
+				
+				//Unlock production
+				prod.getUnlock().click();
+
+				//Click okayMessage
+				prod.getOK().click();
+				driver.waitForPageToBeReady();
+				selecting_the_production(true,dataMap);
+
+				//Make sure production is unlocked based on Element's Attribute
+				Assert.assertTrue(((WebElement)dataMap.get("targetProduction")).findElement(By.cssSelector("i.fa-unlock")).isDisplayed());
+
+				pass(dataMap, "Verified the locked productcion is read only");
+			}
+			catch(Exception e) {
+
+				e.printStackTrace();
+				fail(dataMap, "Could not verify the locked production set is read only");
+			}
 		}
+		else fail(dataMap,"Could not verify the locked production set is read only");
 
 	}
 
@@ -1480,7 +1616,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Manage Templates
-			throw new ImplementationException("on_the_manage_templates_tab");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getManageTemplatesTab().Displayed() && prod.getManageTemplatesTab().Enabled() ;}}), Input.wait30);
+				prod.getManageTemplatesTab().Click();
+			}
+			catch(Exception e) {fail(dataMap,"Could not click Manage Templates Tab");}
+			//throw new ImplementationException("on_the_manage_templates_tab");
 		} else {
 			throw new ImplementationException("NOT on_the_manage_templates_tab");
 		}
@@ -1493,7 +1635,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click "View" on the Template named "DefaultAutomationTemplate".
-			throw new ImplementationException("clicking_view_on_the_production_template");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDefaultAutomationTemplateView().Displayed() && prod.getDefaultAutomationTemplateView().Enabled() ;}}), Input.wait30);
+				prod.getDefaultAutomationTemplateView().Click();		
+			}
+			catch(Exception e) {fail(dataMap, "Could not click View button for template named DefaultAutomationTemplate");}
+			//throw new ImplementationException("clicking_view_on_the_production_template");
 		} else {
 			throw new ImplementationException("NOT clicking_view_on_the_production_template");
 		}
@@ -1506,7 +1654,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4913Verify the user is able to open a saved template from the Manage Template tab.
-			throw new ImplementationException("the_default_production_template_loaded_successfully");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSavedTemplate().Displayed()  ;}}), Input.wait30);
+				prod.getSavedTemplate().Visible();
+				pass(dataMap,"User is able to open a saved template from the Manage Template tab.");
+			}
+			catch(Exception e) {fail(dataMap, "Could not open saved template from Manage Template tab."); }
+			//throw new ImplementationException("the_default_production_template_loaded_successfully");
 		} else {
 			throw new ImplementationException("NOT the_default_production_template_loaded_successfully");
 		}
@@ -1519,10 +1674,24 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview section. If you are not, click Next until you can.
-			throw new ImplementationException("on_the_summary_preview_section");
-		} else {
-			throw new ImplementationException("NOT on_the_summary_preview_section");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				//Move back till we are at our desired page
+				while(!prod.getProductionSectionPageTitle().getText().equals("Summary and Preview")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getBackLink().Displayed() && prod.getBackLink().Enabled() ;}}), Input.wait30);
+					prod.getBackLink().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				}
+			pass(dataMap, "Got to Summary and preview");
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not get to the summar preview Section");
+				e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not get to the summar preview Section");
 
 	}
 
@@ -1531,15 +1700,25 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_productions_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_the_productions_preview_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_productions_preview_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				//Move page back to incomplete, then click Preview Button
+				prod.getbtnProductionSummaryMarkInComplete().click();
+				prod.getPreviewprod().click();
+				driver.waitForPageToBeReady();
+				pass(dataMap, "Clicked preview button");
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Preview button was not clicked");
+				e.printStackTrace();}
 		}
+		else fail(dataMap, "Failed to click the production preview button");
 
 	}
 
-
+	// Working
 	@Then("^.*(\\[Not\\] )? verify_the_preview_of_the_pdf_should_display_the_branding$")
 	public void verify_the_preview_of_the_pdf_should_display_the_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1547,9 +1726,33 @@ public class ProductionContext extends CommonContext {
 			//TC5096 
 			//* Verify the branding on the PDF should display from the Tiff section information provided
 			//
-			throw new ImplementationException("verify_the_preview_of_the_pdf_should_display_the_branding");
+			
+				PDDocument document = null;
+				String home = System.getProperty("user.home");
+				if(SystemUtils.IS_OS_LINUX){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/S00012332Q.pdf"));}
+				else if(SystemUtils.IS_OS_WINDOWS){
+					while(document == null) document = PDDocument.load(new File(home + "\\Download\\S00012332Q.pdf"));
+				}
+
+				PDFTextStripper pdfTextStripper = new PDFTextStripper();
+			
+				String text = pdfTextStripper.getText(document);
+			
+				Pattern p = Pattern.compile("Default Tiff Branding");
+				Matcher matcher = p.matcher(text);
+			
+				if (matcher.find()) {
+				pass(dataMap, "Branding is displayed in the preview of the pdf");
+				} else {
+					fail(dataMap, "Branding is not displayed in the preview of the pdf");
+				}
+			
+				document.close();
+				
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_preview_of_the_pdf_should_display_the_branding");
+			fail(dataMap, "Branding is not displayed in the preview of the pdf");
 		}
 
 	}
@@ -1560,7 +1763,32 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the production you want to openClick the "<Back" link as many times as it takes to get back to the "Production Components" section of Productions
-			throw new ImplementationException("navigated_back_onto_the_production_components_section");
+			try {
+ 
+				//Click into target Production
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						((WebElement)dataMap.get("targetProduction")).isEnabled() && ((WebElement)dataMap.get("targetProduction")).isDisplayed() ;}}), Input.wait30);
+				((WebElement)dataMap.get("targetProduction")).click();
+
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionComponentTitle().Displayed()  ;}}), Input.wait30);
+				while(!prod.getProductionComponentTitle().Displayed()) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getBackLink().Displayed() && prod.getBackLink().Enabled() ;}}), Input.wait30);
+					prod.getBackLink().Click();
+					if(prod.getProductionComponentTitle().Visible()) {
+						break;
+					}
+					
+				}
+				
+				pass(dataMap,"User is able to open a saved template from the Manage Template tab.");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click <Back link."); }
+			//throw new ImplementationException("navigated_back_onto_the_production_components_section");
 		} else {
 			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
 		}
@@ -1573,7 +1801,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click "Mark Incomplete"Change the DAT configuration to have the DAT field to be "CNG"Click "Mark Complete"
-			throw new ImplementationException("editing_the_completed_production_component");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkInompleteLink().Displayed() && prod.getMarkInompleteLink().Enabled() ;}}), Input.wait30);
+				prod.getMarkInompleteLink().Click();		
+			}
+			catch(Exception e) {fail(dataMap, "Could not click Mark Incomplete Button");}
+			
+			
+			//throw new ImplementationException("editing_the_completed_production_component");
 		} else {
 			throw new ImplementationException("NOT editing_the_completed_production_component");
 		}
@@ -1586,6 +1822,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click "Next" until you get to the Generate tab
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenarateTitle().Displayed()  ;}}), Input.wait30);
+					while(!prod.getGenarateTitle().Displayed()) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getNextButton().Displayed() && prod.getNextButton().Enabled() ;}}), Input.wait30);
+						prod.getNextButton().Click();
+						if(prod.getGenarateTitle().Visible()) {
+							break;
+						}
+						
+					}
+			}
+			catch(Exception e) {fail(dataMap, "Could not click Next button");}
 			throw new ImplementationException("navigating_back_to_the_generate_section");
 		} else {
 			throw new ImplementationException("NOT navigating_back_to_the_generate_section");
@@ -1599,9 +1850,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5075
-			//* Verify the Generate button is enabled
-			//* Verify clicking the Generate button will change the status to "Pre generation check in progress" with the button changed to "in progress".
+
 			//
+			try {
+				//* Verify the Generate button is enabled
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerateButton().Displayed() && prod.getGenerateButton().Enabled() ;}}), Input.wait30);
+				prod.getGenerateButton().Click();
+				//* Verify clicking the Generate button will change the status to "Pre generation check in progress" with the button changed to "in progress".
+				
+			}
+			catch (Exception e) {fail(dataMap, "Could not verify production can be generated");}
 			throw new ImplementationException("verify_the_production_can_be_regenerated");
 		} else {
 			throw new ImplementationException("NOT verify_the_production_can_be_regenerated");
@@ -1610,12 +1869,14 @@ public class ProductionContext extends CommonContext {
 	}
 
 
-	@When("^.*(\\[Not\\] )? navigating_to_the_production_selected$")
+	@When("^.*(\\[Not\\] )? c$")
 	public void navigating_to_the_production_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("navigating_to_the_production_selected");
+			prod.getProductionGridViewActionDropDown().click();
+			prod.getProductionGridViewActionOpenWizard().click();
+			pass(dataMap, "getProductionGridViewActionOpenWizard");
 		} else {
 			throw new ImplementationException("NOT navigating_to_the_production_selected");
 		}
@@ -1631,10 +1892,23 @@ public class ProductionContext extends CommonContext {
 			//* Verify the bates number on the document level numbering production that is completed is displaying correctly on the home page.
 			//* It will be under the fields "Start" and "End". Those fields should have a number/value each on them representing the start number and end number.
 			//
-			throw new ImplementationException("verify_document_level_numbers_displays_bate_number_on_production_home_page");
-		} else {
-			throw new ImplementationException("NOT verify_document_level_numbers_displays_bate_number_on_production_home_page");
+			try {
+				driver.waitForPageToBeReady();
+				//Grab The numbers under the Start and End tags on the given production Tile
+				String startBates = (prod.getProductionTileViewBates(0).getText().split("START"))[1].split("END")[0];
+				String endBates  = (prod.getProductionTileViewBates(0).getText().split("END"))[1].split("END")[0];
+
+				//Make Sure both Start and End have a Value to them
+				Assert.assertFalse(startBates.equals(""));
+				Assert.assertFalse(endBates.equals(""));
+				pass(dataMap, "Verified Bates Number");
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not verify Bates Number");
+			}
 		}
+		else fail(dataMap, "Could not verify Bates number");
 
 	}
 
@@ -1643,15 +1917,26 @@ public class ProductionContext extends CommonContext {
 	public void select_the_production_export_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			int index = Integer.parseInt((String)dataMap.get("index"));
+			String[] firstSetNames = new String[2]; 
+			firstSetNames[0] = prod.getProductionTileNameByIndex(0);
+			firstSetNames[1] = prod.getProductionTileNameByIndex(1);
+			dataMap.put("firstSet", firstSetNames);
+
+			//Click and wait for dropdown
+			prod.getProdExport_ProductionSets().click();
+			prod.clickProductionSetByIndex(index);
+			driver.waitForPageToBeReady();
 			//
 			//* Store the first two production names in the list of productions.This will be used for validation in the outcome.
 			//* Clicks the "Select a Production/Export Set" dropdown
 			//* Select the option in the dropdown by Index. 0 = the first option, 1 = the second option, etc. 
 			//
-			throw new ImplementationException("select_the_production_export_set");
-		} else {
-			throw new ImplementationException("NOT select_the_production_export_set");
+			pass(dataMap, "Stored prod names, and clicked the correct export set");
+
 		}
+
+		else fail(dataMap, "Could not select the production export set");
 
 	}
 
@@ -1661,10 +1946,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//This method will just store the name of the first two productions displaying on the list of productions. If none appear, store them at "None". 
-			throw new ImplementationException("storing_the_productions_in_the_home_page");
-		} else {
-			throw new ImplementationException("NOT storing_the_productions_in_the_home_page");
+			String[] secondSetNames = new String[2];
+
+			if(prod.getProductionTileNameByIndex(0) == null)secondSetNames[0] = "None1";
+			else secondSetNames[0] = prod.getProductionTileNameByIndex(0);
+
+			if(prod.getProductionTileNameByIndex(1) == null)secondSetNames[1] = "None2";
+			else secondSetNames[1] = prod.getProductionTileNameByIndex(1);
+
+			dataMap.put("secondSet", secondSetNames);
+			pass(dataMap, "Saved the productions from the second set successfully");
 		}
+		else fail(dataMap, "Could not store the productions from the second export set");
 
 	}
 
@@ -1674,10 +1967,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5869Verify that the first two production's in the previous Production/Export set do not appear when switching to the other production set.Productions do not carry over from 1 production set to another, so they should never have 1 production in both sets.
-			throw new ImplementationException("verify_the_productions_from_one_production_set_does_not_exist_in_another");
-		} else {
-			throw new ImplementationException("NOT verify_the_productions_from_one_production_set_does_not_exist_in_another");
+			HashSet<String> productionSet = new HashSet<>();
+			productionSet.add(((String[])dataMap.get("firstSet"))[0]);
+			productionSet.add(((String[])dataMap.get("firstSet"))[1]);
+			productionSet.add(((String[])dataMap.get("secondSet"))[0]);
+			productionSet.add(((String[])dataMap.get("secondSet"))[1]);
+
+			//If the productions are unique, the set will be of size 4
+			Assert.assertEquals(4, productionSet.size());
+			pass(dataMap, "Sets were unique");
 		}
+		else fail(dataMap, "Sets were not unique");
 
 	}
 
@@ -1687,10 +1987,32 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//In the middle of the production's home page, there are two buttons. It is by default set to Tile view.Depending on the parameter, you will either click on the Grid View button or the Tile View button.
-			throw new ImplementationException("the_production_grid_is_set_to_view");
-		} else {
-			throw new ImplementationException("NOT the_production_grid_is_set_to_view");
+			try {
+
+				//Get the view mode we should be in
+				String viewMode = (String)dataMap.get("mode");
+				
+				//If grid, click grid
+				if(viewMode != null && viewMode.equals("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGridView().Displayed() && prod.getGridView().Enabled()  ;}}), Input.wait30);
+				     	prod.getGridView().Click();
+				}
+				//If tile, click tile
+				else if(viewMode!= null && viewMode.equals("tile")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTileViewIcon().Displayed() && prod.getTileViewIcon().Enabled()  ;}}), Input.wait30);
+				     	prod.getTileViewIcon().Click();
+				}
+				else fail(dataMap, "Valid view mode was not selected");
+				
+				pass(dataMap, "View Mode was Selected Successfully");
+				
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not set production grid view");
 
 	}
 
@@ -1700,10 +2022,27 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//If the mode is set to Grid View:You will need to click on the "Action" dropdownIf the mode is set to Tile View:You will need to click on the Settings button on the tile of the production you are testing with.
-			throw new ImplementationException("clicking_the_productions_settings_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_productions_settings_button");
+			try {
+				String viewMode = (String)dataMap.get("mode");
+				if(viewMode != null && viewMode.equals("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionGridViewActionDropDown().Enabled()  ;}}), Input.wait30);
+					prod.getProductionGridViewActionDropDown().Click();
+				}
+				else if(viewMode!= null && viewMode.equalsIgnoreCase("tile")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getprod_ActionButton().Enabled()  ;}}), Input.wait30);
+					prod.getprod_ActionButton().Click();
+				}
+				else fail(dataMap, "A Valid View mode was not selected");
+				pass(dataMap, "Settings button for a production was Successful");
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Could not click productions settings buttons");
+				e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not click productions settings buttons");
 
 	}
 
@@ -1714,37 +2053,150 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC4911 / 3509If Status is DRAFT:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Delete
 			//* Save as Template
 			//* Lock is disabled
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* Lock is disabled
 			//If Status is INPROGRESS:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Save as Template
 			//* Lock is disabled
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* Lock is disabled
 			//If Status is COMPLETED:
 			//* Verify the settings button will display the following options are active/available to be selected:
+
 			//* Open in Wizard
 			//* Lock
 			//* Save as Template
+
 			//* If in Grid View also check for:
 			//* "Add Docs"
 			//* "Remove Docs"
 			//* If in Grid View, also check that each Completed production display a Start Date and End Date. None should be empty in Completed Status.
-			//
-			throw new ImplementationException("verify_the_productions_allowed_actions_in_settings_based_on_status");
-		} else {
-			throw new ImplementationException("NOT verify_the_productions_allowed_actions_in_settings_based_on_status");
+			try {
+				String status = (String)dataMap.get("status");
+				String viewMode = (String)dataMap.get("mode");
+				if(status != null && viewMode.equalsIgnoreCase("grid")){
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionGridViewActionOpenWizard().Displayed()  ;}}), Input.wait30);
+
+					//Open in Wizard is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getProductionGridViewActionOpenWizard().Displayed() &&
+							!prod.getProductionGridViewActionOpenWizard().GetAttribute("class").contains("disable"));
+
+					//Save Template is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getProductionGridViewActionSaveTemplate().Displayed() &&
+						 prod.getProductionGridViewActionSaveTemplate().Enabled());
+
+
+					//Delete is Displayed and Enabled for Drafts only
+					if(status.equalsIgnoreCase("DRAFT")) {
+						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
+							!prod.getProductionGridViewActionDelete().GetAttribute("class").contains("disable"));
+					}
+					//Delete is Displayed and NOT Enabled for InProgress
+					else if(status.equalsIgnoreCase("INPROGRESS")){
+						Assert.assertTrue(prod.getProductionGridViewActionDelete().Displayed() &&
+							prod.getProductionGridViewActionDelete().GetAttribute("class").contains("disable"));
+					}
+					
+					//Checks that Draft and Inprogess have in Common
+					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")) {
+						
+						//Lock is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
+							prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
+						
+						//Add Doc is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed() &&
+							prod.getProductionGridViewActionAddDoc().GetAttribute("class").contains("disable"));
+
+						//Remove Doc is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getProductionGridViewActionRemoveDoc().Displayed() &&
+							prod.getProductionGridViewActionRemoveDoc().GetAttribute("class").contains("disable"));
+
+					}
+					//Check Completed 
+					else if(status.equalsIgnoreCase("COMPLETED")){
+						//Lock is Displayed and Enabled
+						if(prod.getProductionGridViewActionUnLock().Displayed()) {
+							Assert.assertFalse(prod.getProductionGridViewActionUnLock().GetAttribute("class").contains("disable"));
+						}
+						else {
+							Assert.assertTrue(prod.getProductionGridViewActionLock().Displayed() &&
+								!prod.getProductionGridViewActionLock().GetAttribute("class").contains("disable"));
+						}
+
+						//Add Doc is Displayed
+						Assert.assertTrue(prod.getProductionGridViewActionAddDoc().Displayed());
+
+						//Remove Doc is Displayed
+						Assert.assertTrue(prod.getProductionGridViewActionRemoveDoc().Displayed());
+						
+						//Make Sure Start Time is Not Empty
+						Assert.assertFalse(prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(5).getText().equals(""));
+
+						//Make Sure End Time is Not Empty
+						Assert.assertFalse(prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(6).getText().equals(""));
+					}
+				}
+				
+				//Tile uses seperate CSS selectors, same logic follows, minus Add/Remove Docs, and Start-End time
+				else if(status != null && viewMode.equalsIgnoreCase("tile")) {
+					//Open in Wizard is Displayed and Enabled For all Status
+					Assert.assertTrue(prod.getOpenWizard().Displayed() && prod.getOpenWizard().Enabled() && !prod.getOpenWizard().GetAttribute("class").contains("disable"));
+
+					//Save Template Is Displayed and Enabled for all Status
+					Assert.assertTrue(prod.getSaveTemplate().Displayed() &&
+						 !prod.getSaveTemplate().GetAttribute("class").contains("disable"));
+
+					//Delete is Displayed and Enabled for Drafts only
+					if(status.equalsIgnoreCase("DRAFT")) {
+						Assert.assertTrue(prod.getDelete().Displayed() &&
+							!prod.getDelete().GetAttribute("class").contains("disable"));
+					}
+					//Delete is Displayed and NOT Enabled for InProgress
+					else if(status.equalsIgnoreCase("INPROGRESS")){
+						Assert.assertTrue(prod.getDelete().Displayed() &&
+							prod.getDelete().GetAttribute("class").contains("disable"));
+					}
+					//Check Lock for Draft and Inprogess
+					if(status.equalsIgnoreCase("DRAFT") || status.equalsIgnoreCase("INPROGRESS")){
+						//Lock is Displayed and NOT Enabled
+						Assert.assertTrue(prod.getLock().Displayed() &&
+							prod.getLock().GetAttribute("class").contains("disable"));
+					}	
+					else if(status.equalsIgnoreCase("COMPLETED")){
+						//Lock is Displayed and Enabled
+						if(prod.getUnlock().Displayed()) Assert.assertTrue(!prod.getLock().GetAttribute("class").contains("disable"));
+						else {
+						Assert.assertTrue(prod.getLock().Displayed() &&
+							!prod.getLock().GetAttribute("class").contains("disable"));
+						}
+					}
+				}
+
+
+				pass(dataMap, "Verified Production Settings Options");
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Settings could not be verified");
+				e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not verify Production Settings Options");
 
 	}
 	

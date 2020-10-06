@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -76,6 +77,7 @@ public class ProductionPage {
     public Element getbtnProductionLocationMarkComplete(){ return driver.FindElementById("btnProductionLocationMarkComplete"); }
     public Element getbtnProductionLocationNext(){ return driver.FindElementById("btnProductionLocationNext"); }
     public Element getbtnProductionSummaryMarkComplete(){ return driver.FindElementById("btnProductionSummaryMarkComplete"); }
+    public Element getbtnProductionSummaryMarkInComplete(){ return driver.FindElementById("btnProductionSummaryMarkInComplete"); }
     public Element getbtnProductionSummaryNext(){ return driver.FindElementById("btnProductionSummaryNext"); }
     public Element getbtnProductionGenerate(){ return driver.FindElementById("btnProductionGenerate"); }
     public Element getProductionSettxt(){ return driver.FindElementById("ProductionSettxt"); }
@@ -180,9 +182,11 @@ public class ProductionPage {
     public Element getNative_text(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong"); }
     public Element getNative_text_Color(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p"); }
     public Element getMarkCompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Complete']");}
+    public Element getMarkInompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
 	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
 	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
 	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
+	public Element getProductionTileStatusTypeText() {return driver.FindElementByXPath("(//div[@class = 'col-md-12 font-xs']/strong)[1]");}
 	public Element getprod_Templatetext(){ return driver.FindElementById("templatesettxt"); }
 	public Element getprod_LoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
 	public Element getTechissue_toggle(){ return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i"); }
@@ -192,7 +196,7 @@ public class ProductionPage {
    
     //added by Narendra
     public ElementCollection getFilterOptions(){ return driver.FindElementsByXPath("//div[@class='col-md-9']//select//option"); }
-    public Element getFilter(int i){ return driver.FindElementByXPath("//div[@class='col-md-5']//li["+i+"]//a[1]"); }
+    public Element getFilter(int i){ return driver.FindElementByXPath("//div[@class='col-md-5']//li["+i+"]//a[1]/label/input"); }
     public Element getFilterByButton(){ return driver.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']"); }
     public Element getFilterByDRAFT(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='DRAFT']"); }
     public Element getFilterByINPROGRESS(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']"); }
@@ -220,6 +224,7 @@ public class ProductionPage {
     public Element getSetName(){ return driver.FindElementById("ProductionSettxt"); }
     public Element getDeleteProd(){ return driver.FindElementById("DeleteProd"); }
     public Element getLock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Lock')]"); }
+    public Element getUnlock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Unlock')]"); }
     public Element getDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
     public Element getTileDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
     public Element getAction(){ return driver.FindElementByXPath(" //span[@class='fa fa-chevron-down']"); }
@@ -399,7 +404,7 @@ public class ProductionPage {
     public Element getNumMetaDataCustodiansTab() {return driver.FindElementById("lstNumberingMetaData");}
     public Element getNumMetaDataPrefix() {return driver.FindElementById("txtUserMetadataFieldPrefix");}
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
-    
+     
     public Element getDocSelectSearchRadioButton() {return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");}
 
     
@@ -414,10 +419,75 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
+    
 
+    public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
+    public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
+    public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}
+    public Element getProductionGridViewActionLock() {return driver.FindElementById("Lock");}
+    public Element getProductionGridViewActionUnLock() {return driver.FindElementById("Unlock");}
+    public Element getProductionGridViewActionSaveTemplate() {return driver.FindElementByCssSelector("ul.dropdown-menu:nth-child(3) > li:nth-child(5) > a:nth-child(1)");}
+    public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
+    public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
+    public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
+    public Element getProductionMarkIncompleteBtnByPage(String pageName) {return driver.FindElementById(String.format("btn%sMarkInComplete", pageName));}
+    public Element getProductionMarkIncompleteLastBtn(String pageName) {return driver.FindElementById(String.format("%sMarkInComplete", pageName));}
+    //public Element getProdutionQualityControlMarkIncompleteButton() {return driver.FindElementById("btnConfirmationMarkInComplete");}
+    
+    
+        
+    //Added 10/2/20 
+    public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
+    public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
+    public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
+    public Element getBackLink() {return driver.FindElementByXPath("//a[text()[contains(.,'Back')]]");}
+    public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
+    public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
+    public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
+    
     public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
     public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
     public Element getProductionDeleteOkButton() {return driver.FindElementByCssSelector("[class=\"btn btn-default btn-sm botTempo\"]");}
+    
+    
+    public void clickProductionSetByIndex(int index) {
+    	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
+    		driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().get(index).click();
+    	}
+    }
+    public String getProductionTileNameByIndex(int index) {
+    	if(driver.FindElementsByCssSelector("#pName").FindWebElements().size() > index) {
+    		return driver.FindElementsByCssSelector("#pName").FindWebElements().get(index).findElement(By.cssSelector("a[title]")).getText(); 
+    	}
+    	return null;
+    }
+    //Return Production Based on Name
+    public WebElement getProductionTileByName(String name) {
+    	for(WebElement x: driver.FindElementsByCssSelector("#pName").FindWebElements()) {
+    		if(x.findElement(By.cssSelector("a[title]")).getText().equals(name)) return x;
+    		//if((x.getText()).equals(name)) return x;
+    	}
+    	return null;
+    }
+    //Return Settings for a given Tile based on its WebElement
+    public WebElement getProductionTileSettingsByName(WebElement x){
+    	return x.findElement(By.cssSelector("a[data-toggle=dropdown]"));
+    }
+    
+    //Get Bates Count for a given Tile based on its Index
+    public WebElement getProductionTileViewBates(int index) { 
+    	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
+    		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
+    	else return null;
+    }
+
+    //Quick Function to get rows of Grid View Production Table
+    public WebElement getProductionListGridViewTableRows(int row) {
+    	if(row< driver.FindElementsByCssSelector("#ProductionListGridViewTable >tbody>tr").FindWebElements().size()){
+    		return driver.FindElementsByCssSelector("#ProductionListGridViewTable >tbody>tr").FindWebElements().get(row);
+    	}
+    	return null;
+    }
 
     public ProductionPage(Driver driver){
 
@@ -2993,7 +3063,7 @@ public class ProductionPage {
 			
 			System.out.println("Verified Advance Show/Hide Button wworking as expected");
 			
-			Assert.assertTrue(getGenerateLoadFile().Enabled());
+//			Assert.assertTrue(getGenerateLoadFile().Enabled());
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getGenerateLoadFile().Enabled() ;}}), Input.wait30); 
