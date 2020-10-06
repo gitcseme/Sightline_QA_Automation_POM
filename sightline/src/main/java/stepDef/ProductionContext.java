@@ -1466,7 +1466,7 @@ public class ProductionContext extends CommonContext {
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
-				if(prodName != null || !prodName.equals("")){
+				if(!prodName.equals("")){
 					String temp  = prodName;
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
@@ -1686,7 +1686,9 @@ public class ProductionContext extends CommonContext {
 				}
 			pass(dataMap, "Got to Summary and preview");
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Could not get to the summar preview Section");
+				e.printStackTrace();}
 		}
 		else fail(dataMap, "Could not get to the summar preview Section");
 
@@ -1707,7 +1709,9 @@ public class ProductionContext extends CommonContext {
 				pass(dataMap, "Clicked preview button");
 				
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Preview button was not clicked");
+				e.printStackTrace();}
 		}
 		else fail(dataMap, "Failed to click the production preview button");
 
@@ -1888,14 +1892,19 @@ public class ProductionContext extends CommonContext {
 			//* It will be under the fields "Start" and "End". Those fields should have a number/value each on them representing the start number and end number.
 			//
 			try {
-				//Make Sure both Start and End have a Value to them
+				driver.waitForPageToBeReady();
+				//Grab The numbers under the Start and End tags on the given production Tile
 				String startBates = (prod.getProductionTileViewBates(0).getText().split("START"))[1].split("END")[0];
 				String endBates  = (prod.getProductionTileViewBates(0).getText().split("END"))[1].split("END")[0];
+
+				//Make Sure both Start and End have a Value to them
 				Assert.assertFalse(startBates.equals(""));
 				Assert.assertFalse(endBates.equals(""));
+				pass(dataMap, "Verified Bates Number");
 			}
 			catch(Exception e) {
 				e.printStackTrace();
+				fail(dataMap, "Could not verify Bates Number");
 			}
 		}
 		else fail(dataMap, "Could not verify Bates number");
@@ -2028,7 +2037,9 @@ public class ProductionContext extends CommonContext {
 				pass(dataMap, "Settings button for a production was Successful");
 				
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Could not click productions settings buttons");
+				e.printStackTrace();}
 		}
 		else fail(dataMap, "Could not click productions settings buttons");
 
@@ -2180,7 +2191,9 @@ public class ProductionContext extends CommonContext {
 				pass(dataMap, "Verified Production Settings Options");
 				
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Settings could not be verified");
+				e.printStackTrace();}
 		}
 		else fail(dataMap, "Could not verify Production Settings Options");
 

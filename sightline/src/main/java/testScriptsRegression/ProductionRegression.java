@@ -3939,6 +3939,7 @@ public class ProductionRegression extends RegressionBase {
 			context.locking_the_production(true, dataMap);
 			context.verify_the_locked_production_is_set_to_read_only(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
@@ -4037,7 +4038,8 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("status", "INPROGRESS_GREEN");
+			dataMap.put("status", "DRAFT");
+			dataMap.put("production_name", "DefaultInProgressProduction"); 
 			context.selecting_the_production(true, dataMap);
 			context.navigated_back_onto_the_production_components_section(true, dataMap);
 			context.editing_the_completed_production_component(true, dataMap);
@@ -4074,9 +4076,9 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("status", "COMPLETED");
-			dataMap.put("production_name", "DocLvlNumbering");
+			//dataMap.put("production_name", "DocLvlNumbering");
 			context.selecting_the_production(true, dataMap);
-			context.navigating_to_the_production_selected(true, dataMap);
+			//context.navigating_to_the_production_selected(true, dataMap);
 			context.verify_document_level_numbers_displays_bate_number_on_production_home_page(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -4113,10 +4115,12 @@ public class ProductionRegression extends RegressionBase {
 			context.storing_the_productions_in_the_home_page(true, dataMap);
 			context.verify_the_productions_from_one_production_set_does_not_exist_in_another(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
+			e.printStackTrace();
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
 			context.close_browser(true, dataMap);
@@ -4126,7 +4130,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_and_selecting_the_DRAFT_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4163,7 +4167,6 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	//Next
 	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_and_selecting_the_INPROGRESS_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
@@ -4201,7 +4204,6 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	//Next
 	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_and_selecting_the_COMPLETED_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
@@ -4239,7 +4241,6 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	//Next
 	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_tile_view_and_selecting_the_DRAFT_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
@@ -4277,8 +4278,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	//Next
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive" })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_tile_view_and_selecting_the_INPROGRESS_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4315,7 +4315,6 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	//Next
 	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_tile_view_and_selecting_the_COMPLETED_production_When_clicking_the_productions_settings_button_Then_verify_the_productions_allowed_actions_in_settings_based_on_status() throws Throwable
 	{
