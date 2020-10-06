@@ -3,6 +3,7 @@ package stepDef;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1494,7 +1495,9 @@ public class ProductionContext extends CommonContext {
 				pass(dataMap, "Selected the production based on grid view");
 				
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Could not Select Prodution");
+				e.printStackTrace();}
 			
 		}
 		else fail(dataMap,"Could Not Select Production");
@@ -1528,7 +1531,9 @@ public class ProductionContext extends CommonContext {
 				
 				pass(dataMap, "Clicked lock settings successfully");
 			}
-			catch(Exception e) {e.printStackTrace();}
+			catch(Exception e) {
+				fail(dataMap, "Could not click lock settings button");
+				e.printStackTrace();}
 		}
 		else fail(dataMap, "Could not click lock settings button");
 
@@ -1902,15 +1907,26 @@ public class ProductionContext extends CommonContext {
 	public void select_the_production_export_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			int index = Integer.parseInt((String)dataMap.get("index"));
+			String[] firstSetNames = new String[2]; 
+			firstSetNames[0] = prod.getProductionTileNameByIndex(0);
+			firstSetNames[1] = prod.getProductionTileNameByIndex(1);
+			dataMap.put("firstSet", firstSetNames);
+
+			//Click and wait for dropdown
+			prod.getProdExport_ProductionSets().click();
+			prod.clickProductionSetByIndex(index);
+			driver.waitForPageToBeReady();
 			//
 			//* Store the first two production names in the list of productions.This will be used for validation in the outcome.
 			//* Clicks the "Select a Production/Export Set" dropdown
 			//* Select the option in the dropdown by Index. 0 = the first option, 1 = the second option, etc. 
 			//
-			throw new ImplementationException("select_the_production_export_set");
-		} else {
-			throw new ImplementationException("NOT select_the_production_export_set");
+			pass(dataMap, "Stored prod names, and clicked the correct export set");
+
 		}
+
+		else fail(dataMap, "Could not select the production export set");
 
 	}
 
@@ -1920,10 +1936,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//This method will just store the name of the first two productions displaying on the list of productions. If none appear, store them at "None". 
-			throw new ImplementationException("storing_the_productions_in_the_home_page");
-		} else {
-			throw new ImplementationException("NOT storing_the_productions_in_the_home_page");
+			String[] secondSetNames = new String[2];
+
+			if(prod.getProductionTileNameByIndex(0) == null)secondSetNames[0] = "None1";
+			else secondSetNames[0] = prod.getProductionTileNameByIndex(0);
+
+			if(prod.getProductionTileNameByIndex(1) == null)secondSetNames[1] = "None2";
+			else secondSetNames[1] = prod.getProductionTileNameByIndex(1);
+
+			dataMap.put("secondSet", secondSetNames);
+			pass(dataMap, "Saved the productions from the second set successfully");
 		}
+		else fail(dataMap, "Could not store the productions from the second export set");
 
 	}
 
@@ -1933,10 +1957,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5869Verify that the first two production's in the previous Production/Export set do not appear when switching to the other production set.Productions do not carry over from 1 production set to another, so they should never have 1 production in both sets.
-			throw new ImplementationException("verify_the_productions_from_one_production_set_does_not_exist_in_another");
-		} else {
-			throw new ImplementationException("NOT verify_the_productions_from_one_production_set_does_not_exist_in_another");
+			HashSet<String> productionSet = new HashSet<>();
+			productionSet.add(((String[])dataMap.get("firstSet"))[0]);
+			productionSet.add(((String[])dataMap.get("firstSet"))[1]);
+			productionSet.add(((String[])dataMap.get("secondSet"))[0]);
+			productionSet.add(((String[])dataMap.get("secondSet"))[1]);
+
+			//If the productions are unique, the set will be of size 4
+			Assert.assertEquals(4, productionSet.size());
+			pass(dataMap, "Sets were unique");
 		}
+		else fail(dataMap, "Sets were not unique");
 
 	}
 

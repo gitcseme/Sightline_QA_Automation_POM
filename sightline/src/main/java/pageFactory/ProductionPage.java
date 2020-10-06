@@ -445,6 +445,17 @@ public class ProductionPage {
     public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
     public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
     
+    public void clickProductionSetByIndex(int index) {
+    	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
+    		driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().get(index).click();
+    	}
+    }
+    public String getProductionTileNameByIndex(int index) {
+    	if(driver.FindElementsByCssSelector("#pName").FindWebElements().size() > index) {
+    		return driver.FindElementsByCssSelector("#pName").FindWebElements().get(index).findElement(By.cssSelector("a[title]")).getText(); 
+    	}
+    	return null;
+    }
     //Return Production Based on Name
     public WebElement getProductionTileByName(String name) {
     	for(WebElement x: driver.FindElementsByCssSelector("#pName").FindWebElements()) {
