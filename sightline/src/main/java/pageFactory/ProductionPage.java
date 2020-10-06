@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
@@ -430,12 +431,22 @@ public class ProductionPage {
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
     public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
     
+    
     //Return Production Based on Name
     public WebElement getProductionTileByName(String name) {
-    	for(WebElement x: driver.FindElementsByCssSelector(".prod-Title").FindWebElements()) {
-    		if((x.getText()).equals(name)) return x;
+    	for(WebElement x: driver.FindElementsByCssSelector("#pName").FindWebElements()) {
+    		if(x.findElement(By.cssSelector("a[title]")).getText().equals(name)) return x;
+    		//if((x.getText()).equals(name)) return x;
     	}
     	return null;
+    }
+    public WebElement getProductionTileSettingsByName(WebElement x){
+    	return x.findElement(By.cssSelector("a[data-toggle=dropdown]"));
+    }
+    
+    public void clickProductionTileByName(WebElement x) {
+    	WebElement y = x.findElement(By.cssSelector("a[title]"));
+    	y.click();
     }
 
     public WebElement getProductionTileViewBates(int index) { 

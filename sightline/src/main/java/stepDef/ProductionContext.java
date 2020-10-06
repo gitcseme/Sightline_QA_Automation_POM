@@ -1464,11 +1464,13 @@ public class ProductionContext extends CommonContext {
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
+
 				if(prodName != null || !prodName.equals("")){
 					String temp  = prodName;
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
-					prod.getProductionTileByName(prodName).click();
+					//prod.getProductionTileByName(prodName).click();
+					dataMap.put("targetProduction", prod.getProductionTileByName(temp));
 				}
 
 				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
@@ -1682,6 +1684,13 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Click on the production you want to openClick the "<Back" link as many times as it takes to get back to the "Production Components" section of Productions
 			try {
+ 
+				//Click into target Production
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						((WebElement)dataMap.get("targetProduction")).isEnabled() && ((WebElement)dataMap.get("targetProduction")).isDisplayed() ;}}), Input.wait30);
+				((WebElement)dataMap.get("targetProduction")).click();
+
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getProductionComponentTitle().Displayed()  ;}}), Input.wait30);
 				while(!prod.getProductionComponentTitle().Displayed()) {
@@ -1693,9 +1702,12 @@ public class ProductionContext extends CommonContext {
 					}
 					
 				}
+				
 				pass(dataMap,"User is able to open a saved template from the Manage Template tab.");
 			}
-			catch(Exception e) {fail(dataMap, "Could not click <Back link."); }
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click <Back link."); }
 			//throw new ImplementationException("navigated_back_onto_the_production_components_section");
 		} else {
 			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
