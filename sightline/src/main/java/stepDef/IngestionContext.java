@@ -1203,11 +1203,7 @@ public class IngestionContext extends CommonContext {
 	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 				ingest.getIngestionTile().Click();
 				Thread.sleep(5000);
-				//wait until cataloged updated
-				/*
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    					ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
-    					*/
+				
 				while(ingest.getCopyPlayButton().getText().contains("disable")) {
 					System.out.println("made it in");
 					ingest.CloseButton().Click();
@@ -1553,7 +1549,6 @@ public class IngestionContext extends CommonContext {
 			//* validate that no search results for the specified ingestion is displayed
 			//
 
-			
 			SearchContext sessionContext = new SearchContext();
 			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
 			sessionContext.sessionSearch = sessionSearch;
@@ -1981,16 +1976,31 @@ public class IngestionContext extends CommonContext {
 	public void verify_components_are_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC275: To verify that progress bar is displayed on tiles and Counts of Ingested and Errors keeps on updated once Ingestion process is started.Covered:TC235: New Ingestion with Overwrite option as 'Add Only'
+			//TC275: To verify that progress bar is displayed on tiles and Counts of Ingested and Errors keeps on updated once Ingestion process is started.
+			//Covered:TC235: New Ingestion with Overwrite option as 'Add Only'
 			//
 			//* On the Ingestion Home page
 			//* Validate the Ingestion displays a progress bar when the ingestion is processing each step (catalog, copy, index)
 			//* Validate Source, publish and error counts are updated
 			//* validate progress status is updated (In Progress, Catalogued, Copied, Indexed)
 			//
-			throw new ImplementationException("verify_components_are_displayed_correctly");
+			
+			for(int i =4; i<=6;i++) {
+				click_filter_by_dropdown(true,dataMap,4);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
+				Assert.assertTrue(ingest.getIngestSource().Displayed());
+				Assert.assertTrue(ingest.getIngestPublish().Displayed());
+				Assert.assertTrue(ingest.getIngestError().Displayed());
+				
+				
+			}
+			
+			
+			pass(dataMap, "verify_components_are_displayed_correctly");
 		} else {
-			throw new ImplementationException("NOT verify_components_are_displayed_correctly");
+			fail(dataMap, "NOT verify_components_are_displayed_correctly");
 		}
 
 	}
@@ -2013,10 +2023,22 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
 		if (scriptState) {
-			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			
+			//Deselect all options 
+			for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
+			}
+			//select the option
+			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
+			ingest.getcardCanvas().Click();
+			ingest.getRefreshButton().Click();
+			
+			
 			throw new ImplementationException("click_filter_by_dropdown");
 		} else {
 			throw new ImplementationException("NOT click_filter_by_dropdown");
@@ -2184,18 +2206,20 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
 			ingest.getFilterByOption().Click();
-			ingest.getSelectFilterByOption(8).Click();
+			if(!ingest.getSelectFilterByOption(8).Selected()) ingest.getSelectFilterByOption(8).Click();
+			if(ingest.getSelectFilterByOption(2).Selected()) ingest.getSelectFilterByOption(2).Click();
+			ingest.getcardCanvas().Click();;
+			ingest.getRefreshButton().Click();
+			driver.waitForPageToBeReady();
 			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 			
-//			
-//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile().Enabled()  ;}}), Input.wait30); 
-//			
-//			ingest.getIngestionTile().Click();
+			Assert.assertEquals(10, ingest.getIngestTile().size());
 			
-			throw new ImplementationException("verify_ingestion_home_page_displays_default_tile_count");
+			pass(dataMap,"verify_ingestion_home_page_displays_default_tile_count");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_home_page_displays_default_tile_count");
+			fail(dataMap, "NOT verify_ingestion_home_page_displays_default_tile_count");
 		}
 
 	}
@@ -2312,12 +2336,15 @@ public class IngestionContext extends CommonContext {
 
 	@When("^.*(\\[Not\\] )? scroll_click_load_more_button$")
 	public void scroll_click_load_more_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
 		if (scriptState) {
-			//
-			throw new ImplementationException("scroll_click_load_more_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getclickMoreButton().Displayed() ;}}), Input.wait30);
+			ingest.getclickMoreButton().Click();
+			
+			pass(dataMap,"scroll_click_load_more_button");
 		} else {
-			throw new ImplementationException("NOT scroll_click_load_more_button");
+			fail(dataMap,"NOT scroll_click_load_more_button");
 		}
 
 	}
@@ -2331,9 +2358,16 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate more tiles are loaded
 			//
-			throw new ImplementationException("verify_load_more_button_is_displayed");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+			
+			Assert.assertEquals(20, ingest.getIngestTile().size());
+			Assert.assertTrue(ingest.getclickMoreButton().Displayed());
+			
+			pass(dataMap,"verify_load_more_button_is_displayed");
 		} else {
-			throw new ImplementationException("NOT verify_load_more_button_is_displayed");
+			fail(dataMap, "NOT verify_load_more_button_is_displayed");
 		}
 
 	}
@@ -2344,9 +2378,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC1133:To verify that "Load More" button enable or disable as per the availabilty of Tiles.validate load more button is no longer displayed when no more tiles are available
-			throw new ImplementationException("verify_load_more_button_disappears");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+			
+			Assert.assertFalse(ingest.getclickMoreButton().Displayed());
+			pass(dataMap, "verify_load_more_button_disappears");
 		} else {
-			throw new ImplementationException("NOT verify_load_more_button_disappears");
+			fail(dataMap, "NOT verify_load_more_button_disappears");
 		}
 
 	}

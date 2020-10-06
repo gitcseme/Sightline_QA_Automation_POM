@@ -277,13 +277,12 @@ public class IngestionPage {
     //10012020
     public Element getcardCanvas() {return driver.FindElementById("cardCanvas");}
     public Element getBackButton() {return driver.FindElementById("BackButton");}
+    public Element getclickMoreButton() {return driver.FindElementById("btnLoadTile");}
     public Element getGearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
     public Element getErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
-    //public Element getFilterByOption(){return driver.FindElementByCssSelector("#multiselect dropdown-toggle btn");}
     public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
-    //public Element getSelectFilterByOption(int index){return driver.FindElementByCssSelector("#cardGrid > div.col-md-12.gridHeader > div.col-sm-12.col-md-5 > div:nth-child(3) > div > div > ul > li:nth-child(#SF_%s) > a > label");}
     public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
     public Element backButton() {return driver.FindElementById("BackButton");}
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
@@ -292,7 +291,12 @@ public class IngestionPage {
     public Element getIngestedGridView() { return driver.FindElementById("GridView");}
     public Element getIngestTileView() { return driver.FindElementById("TileView");}
     public Element getIngestionGridPaginationTable() { return driver.FindElementById("IngestionGridViewtable_paginate");}
-    
+    public ElementCollection getIngestTile() { return driver.FindElementsByXPath("//span[@class = 'pTime font-md']");}
+    public ElementCollection getIngestProgressBar() { return driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']");}
+    public Element getIngestSource() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestPublish() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestError() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
@@ -303,6 +307,13 @@ public class IngestionPage {
     public WebElement getIngestionTile(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index);
+    	}
+    	return null;
+    }
+    
+    public WebElement getIngestionProgressBar(int index){
+    	if(index < driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().size()){
+    		return driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().get(index);
     	}
     	return null;
     }
@@ -471,7 +482,7 @@ public class IngestionPage {
     	else{
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getTextLST().Visible()  ;}}), Input.wait30); 
-        	getTextLST().SendKeys(dataMap.get("test_file").toString());	
+        	getTextLST().SendKeys(dataMap.get("text_file").toString());	
     	}
     	
     }

@@ -3052,7 +3052,7 @@ public class IngestionRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
-			context.close_browser(true, dataMap);
+			context.close_browser(true, dataMap); 
 		}
 
 		report.endTest(test);
@@ -3390,7 +3390,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "need"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_click_copy_play_icon_and_click_indexing_play_icon_When_start_indexing_step_Then_verify_ingestion_being_indexed_can_not_be_searched() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5245,7 +5245,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_login_as_pau_When_click_run_ingest_button_Then_verify_components_are_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5256,18 +5256,18 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("pdf_checkbox", "true");
-			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("source_system", "NUIX");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID");
-			dataMap.put("source_system", "ICE");
+			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("date_time", "MM/DD/YYY");
 			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
-			context.login_as_pau(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.verify_components_are_displayed_correctly(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5334,7 +5334,7 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			context.click_filter_by_dropdown(true, dataMap);
+			//context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_displays_expected_options(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5391,7 +5391,7 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			context.click_filter_by_dropdown(true, dataMap);
+			//context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_has_default_option_selected(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5520,7 +5520,7 @@ public class IngestionRegression extends RegressionBase {
 	{
 		HashMap dataMap = new HashMap();
 
-		ExtentTest test = report.startTest("Given verify_user_can_ingest_a_saved_draft When  Then verify_ingestion_home_page_is_refreshed");
+		ExtentTest test = report.startTest("Given verify_user_can_ingest_a_saved_draft When Then verify_ingestion_home_page_is_refreshed");
 
 		dataMap.put("ExtentTest",test);
 
@@ -5916,7 +5916,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_verify_ingestion_home_page_displays_default_tile_count_When_scroll_click_load_more_button_Then_verify_load_more_button_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5929,7 +5929,7 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			context.click_filter(true, dataMap);
+			//context.click_filter(true, dataMap);
 			context.verify_ingestion_home_page_displays_default_tile_count(true, dataMap);
 			context.scroll_click_load_more_button(true, dataMap);
 			context.verify_load_more_button_is_displayed(true, dataMap);
