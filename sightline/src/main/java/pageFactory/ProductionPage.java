@@ -419,7 +419,6 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
-    
 
     public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
@@ -483,6 +482,7 @@ public class ProductionPage {
     	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
     		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
     	else return null;
+
 
     }
 
