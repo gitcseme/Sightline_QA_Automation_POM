@@ -1,6 +1,7 @@
 package stepDef;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -592,19 +593,12 @@ public class IngestionContext extends CommonContext {
 	}
 	
 	
-	@Then("^.*(\\[Not\\] )? click_source_DAT_field$")
-	public void click_source_DAT_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@Then("^.*(\\[Not\\] )? map_configuration_fields$")
+	public void map_configuration_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
-			/*
-			ingest.SecondRow().Click();
-			ingest.SecondRowOptions().Click();
-			ingest.ThrirdRow().Click();
-			ingest.ThrirdRowOptions().Click();
-			ingest.FourthRow().Click();
-			ingest.FourthRowOptions().Click();
-			*/
+			
 			for(int i=2; i<=4; i++) {
 				int index = i;
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -614,9 +608,9 @@ public class IngestionContext extends CommonContext {
 					ingest.getIngestionConfigureMappingRequiredDropDownOptions(index).Enabled()  ;}}), Input.wait30); 
 				ingest.getIngestionConfigureMappingRequiredDropDownOptions(i).Click();
 			}
-			pass(dataMap, "We Put the options in Successfully");
+			pass(dataMap, "map_configuration_fields Successfully");
 		}
-		else fail(dataMap, "Could Not Click DAT Source Fields");
+		else fail(dataMap, "map_configuration_fields NOT Successfully");
 
 	}
 
@@ -1162,8 +1156,8 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-	@And("^.*(\\[Not\\] )? click_catalog_play_button$")
-	public void click_catalog_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_ingrestion_title$")
+	public void click_ingrestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//Find Ingested tile created
@@ -1171,30 +1165,22 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
 			System.out.println("Clicked");
-			
-			Thread.sleep(2000);
 
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
-
-			System.out.println(ingest.getIngestionTileText().getText()); // get the name of the automation project 
 			
-			Thread.sleep(4000);
+			System.out.println(ingest.getIngestionTileText().getText());
 			
-			//now have to wait until it pass or fail
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
-			
-			throw new ImplementationException("click_catalog_play_button");
+			throw new ImplementationException("click_catalog_play_icon");
 		} else {
-			throw new ImplementationException("NOT click_catalog_play_button");
+			throw new ImplementationException("NOT click_catalog_play_icon");
 
 		}
 	}
 	
-	@And("^.*(\\[Not\\] )? click_copy_play_button$")
-	public void click_copy_play_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
+	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//
@@ -1203,25 +1189,72 @@ public class IngestionContext extends CommonContext {
 			//* Modal is displayed
 			//* After Cataloging, click Copy play button
 			//
-			
-//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-//			ingest.getIngestionTile().Click();
-//			
+			//click on the 1st file
+			try{
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+				ingest.getIngestionTile().Click();
+				Thread.sleep(5000);
+				//wait until cataloged updated
+				/*
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    					ingest.getCatelogingStatus().getText().equals("Cataloged") ;}}), Input.wait30);
+    					*/
+				while(ingest.getCopyPlayButton().getText().contains("disable")) {
+					System.out.println("made it in");
+					ingest.CloseButton().Click();
+					ingest.getRefreshButton().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
+					ingest.getIngestionTile().Click();
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngressionModal().Displayed()  ;}}), Input.wait30); 
+				}
 
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				//Clicked the play buttons
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
+				ingest.getCopyPlayButton().Click();
+				Thread.sleep(5000);
+				//click the close button 
+				
+				ingest.CloseButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getRefreshButton().Enabled()  ;}}), Input.wait30); 
+
+				ingest.getRefreshButton().Click();
+				pass(dataMap, "Passed the click copy play icon function");
+			}
+			catch(Exception e) {e.printStackTrace();}
 			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getCopyPlayButton().Displayed()  ;}}), Input.wait30); 
-			ingest.getCopyPlayButton().Click();
-			
-			
-			throw new ImplementationException("click_copy_play_button");
-		} else {
-			throw new ImplementationException("NOT click_copy_play_button");
 		}
+		else fail(dataMap, "could not click copy play_icon");
+
+	}
+	
+	@And("^.*(\\[Not\\] )? click_filter$")
+	public void click_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			try{
+				//Open Filter menu
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+				ingest.getFilterByOption().Click();
+
+				//Deselect all non Catalog options 
+				for(int i =1; i<=8; ++i){
+					if(ingest.getSelectFilterByOption(i).Selected() && i!=4) ingest.getSelectFilterByOption(i).Click();
+				}
+
+				//Make sure catalog is clicked
+				if(!ingest.getSelectFilterByOption(4).Selected()) ingest.getSelectFilterByOption(4).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+				pass(dataMap, "Filted Easily");
+			}
+			catch(Exception e) {e.printStackTrace();}
+		}
+		else fail(dataMap, "could not filter");
 
 	}
 
@@ -1388,20 +1421,9 @@ public class IngestionContext extends CommonContext {
 
 	
 	}
-		
-	@And("^.*(\\[Not\\] )? map_configuration_fields$")
-	public void map_configuration_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			throw new ImplementationException("map_configuration_fields");
-		} else {
-			throw new ImplementationException("NOT map_configuration_fields");
-		}
-
-	}
 
 
+	/*
 	@And("^.*(\\[Not\\] )? click_copy_play_icon$")
 	public void click_copy_play_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1413,12 +1435,15 @@ public class IngestionContext extends CommonContext {
 			//* After the ingestion has been catalogued
 			//* Click on the Play button for the Copy step of the ingestion
 			//
-			throw new ImplementationException("click_copy_play_icon");
-		} else {
-			throw new ImplementationException("NOT click_copy_play_icon");
+			try {
+				
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "could not click copy play icon");
 
 	}
+	*/
 
 
 	@And("^.*(\\[Not\\] )? click_indexing_play_icon$")
@@ -1438,6 +1463,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	//DONT DO THIS
 	@When("^.*(\\[Not\\] )? start_analysing_step$")
 	public void start_analysing_step(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1456,6 +1482,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	//Dont do this
 	@Then("^.*(\\[Not\\] )? verify_ingestion_being_analysed_can_not_be_searched$")
 	public void verify_ingestion_being_analysed_can_not_be_searched(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1517,10 +1544,36 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is in progress
 			//* validate that no search results for the specified ingestion is displayed
 			//
-			throw new ImplementationException("verify_ingestion_in_progress_can_not_be_searched");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_in_progress_can_not_be_searched");
+			try{
+				String query = ingest.getIngestionTitle().GetAttribute("title");
+				dataMap.put("ingestionName", ingest.getIngestionTitle().GetAttribute("title"));
+				
+				String url = (String) dataMap.get("URL");
+				driver.Navigate().to(url + "Search/Searches");
+				driver.waitForPageToBeReady();
+				SearchContext sessionContext = new SearchContext();
+				SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+				sessionContext.sessionSearch = sessionSearch;
+				sessionContext.driver = driver;
+				
+				sessionSearch.insertFullText(query);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+				sessionSearch.getSearchButton().Click();
+	
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+				//Should be 0
+				System.out.println(sessionSearch.getSearchDocsResults().getText());
+				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			} 
+			pass(dataMap, "Was able to Verify Search results are 0 when ingestion is in progress");
+
 		}
+		else fail(dataMap, "Could not verify ingetsion in progress can not be searched");
 
 	}
 
@@ -1582,10 +1635,62 @@ public class IngestionContext extends CommonContext {
 			//* Search for ingestion that is being indexed
 			//* validate that no search results for the specified ingestion is displayed
 			//
-			throw new ImplementationException("verify_ingestion_being_indexed_can_not_be_searched");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_being_indexed_can_not_be_searched");
+			try{
+				
+				//Filter by Copied, unselect all other options
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+				ingest.getFilterByOption().Click();
+				if(ingest.getSelectFilterByOption(4).Selected()) ingest.getSelectFilterByOption(4).Click();
+				if(!ingest.getSelectFilterByOption(5).Selected()) ingest.getSelectFilterByOption(5).Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				
+				driver.waitForPageToBeReady();
+
+							
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile().Enabled()  ;}}), Input.wait30); 
+				String query =ingest.getIngestionTileName(0);
+				ingest.getIngestionTile().Click();
+
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+				//Click it + Close menu
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getRunIndexing().Enabled()  ;}}), Input.wait30); 
+
+				ingest.getRunIndexing().Click();
+				ingest.CloseButton().Click();
+				
+				//Go to search page
+				String url = (String) dataMap.get("URL");
+				driver.Navigate().to(url + "Search/Searches");
+				driver.waitForPageToBeReady();
+				SearchContext sessionContext = new SearchContext();
+				SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+				sessionContext.sessionSearch = sessionSearch;
+				sessionContext.driver = driver;
+
+				//Insert our query
+				sessionSearch.insertFullText(query);
+				//Hit Search
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				sessionSearch.getSearchButton().Enabled() ;}}), Input.wait30); 
+				sessionSearch.getSearchButton().Click();
+
+				//Wait for results
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+				//Should be 0
+				Assert.assertEquals("0", (sessionSearch.getSearchDocsResults().getText()));
+				pass(dataMap, "Was able to Verify Search results are 0 when indexing is in progress");
+			}
+			catch(Exception e) {e.printStackTrace();}
+
 		}
+		else fail(dataMap, "Was not able to verify indexing ingestion cannot be searched");
 
 	}
 
@@ -2199,9 +2304,13 @@ public class IngestionContext extends CommonContext {
 			//* Click settings (gear icon) on ingested tile
 			//* Click on Copy
 			//
-			throw new ImplementationException("click_copy_option");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getGearButton().Visible()  ;}}), Input.wait30);
+			ingest.getGearButton().Click();
+			ingest.getCopyOptionButton().Click();
+			pass(dataMap,"Clicked copy button");
 		} else {
-			throw new ImplementationException("NOT click_copy_option");
+			fail(dataMap,"NOT click_copy_option");
 		}
 
 	}
@@ -2216,9 +2325,15 @@ public class IngestionContext extends CommonContext {
 			//* Once and ingestion has been copied, select the same files previously selected when it was ingested
 			//* Clicking on the next button, will not throw a warning for fields not matching
 			//
-			throw new ImplementationException("verify_copy_ingestion_does_not_display_warning_message");
+			//input the data again
+			driver.waitForPageToBeReady();
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
+			click_next_button(scriptState, dataMap);
+			
+			Assert.assertTrue(ingest.getSourceDATField().Visible());
+			pass(dataMap, "verify_copy_ingestion_does_not_display_warning_message");
 		} else {
-			throw new ImplementationException("NOT verify_copy_ingestion_does_not_display_warning_message");
+			fail(dataMap, "NOT verify_copy_ingestion_does_not_display_warning_message");
 		}
 
 	}
@@ -2232,9 +2347,12 @@ public class IngestionContext extends CommonContext {
 			//* validate source selection and ingestion type section is disabled
 			//* Click on the Back button, next to the preview and run button
 			//
-			throw new ImplementationException("click_back_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getBackButton().Visible()  ;}}), Input.wait30);
+			ingest.getBackButton().Click();
+			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
-			throw new ImplementationException("NOT click_back_button");
+			fail(dataMap,"Clicking Ingest Button was NOT successful");
 		}
 
 	}
@@ -2249,9 +2367,14 @@ public class IngestionContext extends CommonContext {
 			//* Once the back button has been clicked
 			//* Validate Configure Field Mapping section is disabled
 			//
-			throw new ImplementationException("verify_back_button_works_as_expected");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getBackButton().Displayed()  ;}}), Input.wait30);
+			Assert.assertTrue(ingest.getBackButton().GetAttribute("disabled"), true);
+			pass(dataMap,"verify_back_button_works_as_expected");
+			
 		} else {
-			throw new ImplementationException("NOT verify_back_button_works_as_expected");
+			fail(dataMap,"verify_back_button_works_as_expected");
+
 		}
 
 	}
@@ -2268,9 +2391,24 @@ public class IngestionContext extends CommonContext {
 			//* Validate an error warning with the following message is displayed:
 			//* Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?"
 			//
-			throw new ImplementationException("verify_copy_ingestion_displays_warning_message");
+			String ExpectedWarningMessage = "Fields in the selected DAT file do not match with the source fields specified in the existing mappings. Existing mappings will be reset. Do you want to continue?";
+		
+			driver.waitForPageToBeReady();
+			dataMap.put("dat_load_file", "AttachDocIDs.dat");
+			dataMap.put("doc_key", "DocFileType");
+			ingest.requiredFieldsAreEntered(scriptState, dataMap);
+			click_next_button(scriptState, dataMap);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getApproveMessageHeader().Visible()  ;}}), Input.wait30);
+			String actualMessage = ingest.getWarningMessageContent().getText();
+			System.out.println(actualMessage);
+			assertEquals(ExpectedWarningMessage, actualMessage);
+			ingest.getWarningMessageOKButton().Click();
+			
+			pass(dataMap, "verify_copy_ingestion_displays_warning_message");
 		} else {
-			throw new ImplementationException("NOT verify_copy_ingestion_displays_warning_message");
+			fail(dataMap, "NOt verify_copy_ingestion_displays_warning_message");
 		}
 
 	}
@@ -2400,7 +2538,36 @@ public class IngestionContext extends CommonContext {
 		} else {
 			throw new ImplementationException("NOT verify_valid_email_metadata_option_is_available");
 		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? verify_mandatory_error_message_is_displayed$")
+	public void verify_mandatory_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getSourceDATField().Visible()  ;}}), Input.wait30); 
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownFields(2).Displayed()  ;}}), Input.wait30); 
+			ingest.getIngestionConfigureMappingRequiredDropDownFields(2).Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestionConfigureMappingRequiredDropDownOptions(2).Enabled()  ;}}), Input.wait30); 
+			ingest.getResetMappingReqiredDropDown(2).Click();
+			System.out.println(ingest.getResetMappingReqiredDropDown(2).getText());
+			
+			//*[@class="fa fa-warning shake animated"]
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getPreviewRun().Visible() && ingest.getResetMappingReqiredDropDown(2).getText().equalsIgnoreCase("Select") ;}}), Input.wait30); 
+			ingest.getPreviewRun().Click();
+			
+			Assert.assertTrue(ingest.getErrorWarningMessagePopUp().Visible());
+			
+			
+			pass(dataMap,"verify_valid_email_metadata_option_is_available");
+		} else {
+			fail(dataMap,"verify_valid_email_metadata_option_is_available");
+		}
 	}
 	
 } //end

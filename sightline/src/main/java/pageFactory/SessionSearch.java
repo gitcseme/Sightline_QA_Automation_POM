@@ -234,6 +234,8 @@ public class SessionSearch {
     public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
     public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
     public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
+
+    public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
     
 
     public SessionSearch(Driver driver){
