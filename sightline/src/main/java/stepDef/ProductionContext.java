@@ -1507,10 +1507,30 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the clog/settings icon to the right of the production's nameClick LockClick OK on the warning messageThe home page will refresh and the filter will reset.Filter the dropdown to show only Completed productions again.Verify the icon changed to the locked icon.
-			throw new ImplementationException("locking_the_production");
-		} else {
-			throw new ImplementationException("NOT locking_the_production");
+			try {
+				//Select our target production's settings option
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				prod.getProductionTileSettingsByName(((WebElement)dataMap.get("targetProduction"))).click();
+
+				//Click Lock 
+				prod.getLock().click();
+
+				//Click okayMessage
+				prod.getOK().click();
+				driver.waitForPageToBeReady();
+
+				//Refilter menu
+				selecting_the_production(true,dataMap);
+
+				//Make sure Element is Locked based on lock Attribute 
+				Assert.assertTrue(((WebElement)dataMap.get("targetProduction")).findElement(By.cssSelector("i.fa-lock")).isDisplayed());
+				
+				pass(dataMap, "Clicked lock settings successfully");
+			}
+			catch(Exception e) {e.printStackTrace();}
 		}
+		else fail(dataMap, "Could not click lock settings button");
 
 	}
 
@@ -1527,10 +1547,60 @@ public class ProductionContext extends CommonContext {
 			//* Do the same until you get to "Production Components".
 			//* Afterwards go to the production's homepage and unlock the production to "reset the test".
 			//
-			throw new ImplementationException("verify_the_locked_production_is_set_to_read_only");
-		} else {
-			throw new ImplementationException("NOT verify_the_locked_production_is_set_to_read_only");
+			try {
+				String[] pages = {"Confirmation", "Generate", "ProductionSummary", "ProductionLocation",
+						"ProductionGuard", "DocumentsSelection", "NumAndSort", "Components"}; 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				((WebElement)dataMap.get("targetProduction")).click();
+
+				for(int i =0; i <pages.length; i++) {
+					String temp = pages[i];
+					if(pages[i].equals("NumAndSort") || pages[i].equals("Components")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionMarkIncompleteLastBtn(temp).Displayed() ;}}), Input.wait30);
+						Assert.assertEquals("true",prod.getProductionMarkIncompleteLastBtn(temp).GetAttribute("disabled"));
+					}
+					else {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionMarkIncompleteBtnByPage(temp).Displayed() ;}}), Input.wait30);
+						Assert.assertEquals("true",prod.getProductionMarkIncompleteBtnByPage(temp).GetAttribute("disabled"));
+					}
+					prod.getBackLink().click();
+					driver.waitForPageToBeReady();
+				}
+				
+				//Go back to Production Home and Filter again
+				prod.goToProductionHomePage().click();
+				driver.waitForPageToBeReady();
+				selecting_the_production(true,dataMap);
+
+				//Get Target Prodution's settings 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
+				prod.getProductionTileSettingsByName(((WebElement)dataMap.get("targetProduction"))).click();
+				
+				//Unlock production
+				prod.getUnlock().click();
+
+				//Click okayMessage
+				prod.getOK().click();
+				driver.waitForPageToBeReady();
+				selecting_the_production(true,dataMap);
+
+				//Make sure production is unlocked based on Element's Attribute
+				Assert.assertTrue(((WebElement)dataMap.get("targetProduction")).findElement(By.cssSelector("i.fa-unlock")).isDisplayed());
+
+				pass(dataMap, "Verified the locked productcion is read only");
+			}
+			catch(Exception e) {
+
+				e.printStackTrace();
+				fail(dataMap, "Could not verify the locked production set is read only");
+			}
 		}
+		else fail(dataMap,"Could not verify the locked production set is read only");
 
 	}
 

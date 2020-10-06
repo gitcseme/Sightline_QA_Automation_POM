@@ -430,7 +430,20 @@ public class ProductionPage {
     public Element getProductionGridViewActionAddDoc() {return driver.FindElementById("AddDocuments");}
     public Element getProductionGridViewActionRemoveDoc() {return driver.FindElementById("RemoveDocuments");}
     public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
+    public Element getProductionMarkIncompleteBtnByPage(String pageName) {return driver.FindElementById(String.format("btn%sMarkInComplete", pageName));}
+    public Element getProductionMarkIncompleteLastBtn(String pageName) {return driver.FindElementById(String.format("%sMarkInComplete", pageName));}
+    //public Element getProdutionQualityControlMarkIncompleteButton() {return driver.FindElementById("btnConfirmationMarkInComplete");}
     
+    
+        
+    //Added 10/2/20 
+    public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
+    public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
+    public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
+    public Element getBackLink() {return driver.FindElementByXPath("//a[text()[contains(.,'Back')]]");}
+    public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
+    public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
+    public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
     
     //Return Production Based on Name
     public WebElement getProductionTileByName(String name) {
@@ -440,29 +453,17 @@ public class ProductionPage {
     	}
     	return null;
     }
+    //Return Settings for a given Tile based on its WebElement
     public WebElement getProductionTileSettingsByName(WebElement x){
     	return x.findElement(By.cssSelector("a[data-toggle=dropdown]"));
     }
     
-    public void clickProductionTileByName(WebElement x) {
-    	WebElement y = x.findElement(By.cssSelector("a[title]"));
-    	y.click();
-    }
-
+    //Get Bates Count for a given Tile based on its Index
     public WebElement getProductionTileViewBates(int index) { 
     	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
     		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
     	else return null;
-}
-    
-    //Added 10/2/20 
-    public Element getManageTemplatesTab() { return driver.FindElementByXPath("//a[text()='MANAGE TEMPLATES']");}
-    public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
-    public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
-    public Element getBackLink() {return driver.FindElementByXPath("//a[text()='< Back']");}
-    public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
-    public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
-    
+    }
 
 
     //Quick Function to get rows of Grid View Production Table
