@@ -46,11 +46,12 @@ public class ProductionContext extends CommonContext {
 	public void begin_new_production_process(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		String dateTime = new Long((new Date()).getTime()).toString();
 		String template = (String) dataMap.get("prod_template");
-
+		String productionName = "AutoProduction" + dateTime;
 
 		try {
-			if (scriptState) {				
-				prod.addNewProduction("AutoProduction"+dateTime, template);
+			if (scriptState) {
+				prod.addNewProduction(productionName, template);
+				dataMap.put("productionName", productionName);
 			} else {
 				pass(dataMap,"Skipped adding new production");
 			} 
@@ -2380,5 +2381,23 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+	@Then("^.*(\\[Not\\] )? delete_created_productions$")
+	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		try {
+			prod.goToProductionHomePage().click();
+			driver.waitForPageToBeReady();
+			
+			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("productionName").toString())).click();
+			
+			prod.getDelete().click();
+			prod.getProductionDeleteOkButton().click();
+			pass(dataMap, "Successfully deleted the target production");
+		} catch (Exception e) {
+			fail(dataMap, "Target production could not be deleted");
+		}
+	}
+	
+	
 }//end
 

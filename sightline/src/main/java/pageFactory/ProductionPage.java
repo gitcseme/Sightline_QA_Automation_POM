@@ -446,9 +446,12 @@ public class ProductionPage {
     public Element getGenerateInProgressButton() {return driver.FindElementByXPath("//button[text()='in progress']");}
     public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
     public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
-    //public Element getGeneratePostGenStatus() {return driver.FindElementByXPath("//label[text()='Post generation check complete']");}
     public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
-    //public WebElement getGeneratePostGenStatus() {return driver.FindElementsByXPath("//div//button[@id='btnProductionReGenerate']/preceding-sibling::label ").FindWebElements().get(1);}    
+    
+    public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
+    public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
+    public Element getProductionDeleteOkButton() {return driver.FindElementByCssSelector("[class=\"btn btn-default btn-sm botTempo\"]");}
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
@@ -492,7 +495,6 @@ public class ProductionPage {
     	}
     	return null;
     }
-
 
     public ProductionPage(Driver driver){
 
