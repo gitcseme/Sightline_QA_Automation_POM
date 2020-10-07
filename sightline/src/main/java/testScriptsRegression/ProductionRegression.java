@@ -4022,7 +4022,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive"})//last test case
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_INPROGRESS_GREEN_production_and_navigated_back_onto_the_production_components_section_and_editing_the_completed_production_component_When_navigating_back_to_the_generate_section_Then_verify_the_production_can_be_regenerated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4033,13 +4033,13 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("status", "DRAFT");
-			dataMap.put("production_name", "DefaultInProgressProduction"); 
+			dataMap.put("status", "INPROGRESS");
+			dataMap.put("production_name", "Testing Testing 123 ");
 			context.selecting_the_production(true, dataMap);
 			context.navigated_back_onto_the_production_components_section(true, dataMap);
 			context.editing_the_completed_production_component(true, dataMap);
@@ -4141,7 +4141,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau5@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");

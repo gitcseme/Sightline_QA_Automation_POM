@@ -443,6 +443,11 @@ public class ProductionPage {
     public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
     public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
     public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
+    public Element getGenerateInProgressButton() {return driver.FindElementByXPath("//button[text()='in progress']");}
+    public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
+    public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
+    public Element getGeneratePostGenStatus() {return driver.FindElementByXPath("//label[text()='Post generation check complete']");}
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
@@ -474,7 +479,9 @@ public class ProductionPage {
     	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
     		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
     	else return null;
+
     }
+
 
 
     //Quick Function to get rows of Grid View Production Table

@@ -17,6 +17,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import cucumber.api.java.en.Given;
@@ -1450,6 +1451,7 @@ public class ProductionContext extends CommonContext {
 				//Use These Index's to Select the correct Status Option in the  Dropdown
 				int index = 1;
 				if(status.equalsIgnoreCase("INPROGRESS")) index = 2;
+				else if(status.equalsIgnoreCase("FAILED")) index = 3;
 				else if(status.equalsIgnoreCase("COMPLETED")) index = 4;
 
 				
@@ -1751,30 +1753,22 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Click on the production you want to openClick the "<Back" link as many times as it takes to get back to the "Production Components" section of Productions
 			try {
- 
-				//Click into target Production
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						((WebElement)dataMap.get("targetProduction")).isEnabled() && ((WebElement)dataMap.get("targetProduction")).isDisplayed() ;}}), Input.wait30);
-				((WebElement)dataMap.get("targetProduction")).click();
-
+					prod.getProductionSectionPageTitle().Displayed()  ;}}), Input.wait30);
 				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getProductionComponentTitle().Displayed()  ;}}), Input.wait30);
-				while(!prod.getProductionComponentTitle().Displayed()) {
+				while(!prod.getProductionSectionPageTitle().getText().equals("Production Components")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getBackLink().Displayed() && prod.getBackLink().Enabled() ;}}), Input.wait30);
 					prod.getBackLink().Click();
-					if(prod.getProductionComponentTitle().Visible()) {
-						break;
-					}
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
 					
 				}
-				
-				pass(dataMap,"User is able to open a saved template from the Manage Template tab.");
+				driver.waitForPageToBeReady();
+				//pass(dataMap,"Navigated to Production Components section");
 			}
-			catch(Exception e) {
-				e.printStackTrace();
-				fail(dataMap, "Could not click <Back link."); }
+			catch(Exception e) {fail(dataMap, "Could not click <Back link."); }
+			//throw new ImplementationException("navigated_back_onto_the_production_components_section");
 		} else {
 			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
 		}
@@ -1789,8 +1783,24 @@ public class ProductionContext extends CommonContext {
 			//Click "Mark Incomplete"Change the DAT configuration to have the DAT field to be "CNG"Click "Mark Complete"
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMarkInompleteLink().Displayed() && prod.getMarkInompleteLink().Enabled() ;}}), Input.wait30);
-				prod.getMarkInompleteLink().Click();		
+					prod.getMarkInompleteLink().Displayed() ;}}), Input.wait30);
+				prod.getMarkInompleteLink().Click();	
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDATTab().Displayed()  ;}}), Input.wait30);
+				prod.getDATTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
+				prod.getDAT_DATField1().Click();
+				prod.getDAT_DATField1().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getDAT_DATField1().SendKeys("CNG");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteLink().Displayed() && prod.getMarkCompleteLink().Enabled() ;}}), Input.wait30);
+				prod.getMarkCompleteLink().Click();
+				
+				//pass(dataMap, "Edited the Production DAT field");
 			}
 			catch(Exception e) {fail(dataMap, "Could not click Mark Incomplete Button");}
 			
@@ -1808,19 +1818,23 @@ public class ProductionContext extends CommonContext {
 			//Click "Next" until you get to the Generate tab
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getGenarateTitle().Displayed()  ;}}), Input.wait30);
-					while(!prod.getGenarateTitle().Displayed()) {
-						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getNextButton().Displayed() && prod.getNextButton().Enabled() ;}}), Input.wait30);
-						prod.getNextButton().Click();
-						if(prod.getGenarateTitle().Visible()) {
-							break;
-						}
-						
-					}
+						prod.getNextButton().Displayed() && prod.getNextButton().Enabled() ;}}), Input.wait30);
+				prod.getNextButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				while(!prod.getProductionSectionPageTitle().getText().equals("Generate")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getMarkCompleteLink().Displayed() && prod.getMarkCompleteLink().Enabled() ;}}), Input.wait30);
+					prod.getMarkCompleteLink().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNextButton().Displayed() && prod.getNextButton().Enabled() ;}}), Input.wait30);
+					prod.getNextButton().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
+				}
 			}
 			catch(Exception e) {fail(dataMap, "Could not click Next button");}
-			throw new ImplementationException("navigating_back_to_the_generate_section");
+			//throw new ImplementationException("navigating_back_to_the_generate_section");
 		} else {
 			throw new ImplementationException("NOT navigating_back_to_the_generate_section");
 		}
@@ -1838,11 +1852,37 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getGenerateButton().Displayed() && prod.getGenerateButton().Enabled() ;}}), Input.wait30);
 				prod.getGenerateButton().Click();
+	
 				//* Verify clicking the Generate button will change the status to "Pre generation check in progress" with the button changed to "in progress".
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerateInProgressButton().Displayed()  ;}}), Input.wait30);
+				prod.getGenerateInProgressButton().Visible();
+				System.out.println("checked button");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerateInProgressStatus().Displayed()  ;}}), Input.wait30);
+				prod.getGenerateInProgressStatus().Visible();
+				System.out.println("checked IN PROGRESS");
+			//	driver.Navigate();
 				
+				String URL = driver.getUrl();
+				driver.Navigate().to(URL);
+				
+				
+				//prod.getGenerateInProgressButton().SendKeys(Keys.chord(Keys.CONTROL, "r"));
+				driver.waitForPageToBeReady();
+				System.out.println("before status2 Pre generation check in progress");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGeneratePreGenStatus().Displayed()  ;}}), Input.wait30);
+				prod.getGeneratePreGenStatus().Visible();
+				System.out.println("checked Pre generation check in progress");
+				
+				pass(dataMap, "Production was regenerated");
 			}
-			catch (Exception e) {fail(dataMap, "Could not verify production can be generated");}
-			throw new ImplementationException("verify_the_production_can_be_regenerated");
+			catch(Exception e) { 
+				e.printStackTrace();
+				fail(dataMap,"Did not regenerate");
+			}
+			//throw new ImplementationException("verify_the_production_can_be_regenerated");
 		} else {
 			throw new ImplementationException("NOT verify_the_production_can_be_regenerated");
 		}
