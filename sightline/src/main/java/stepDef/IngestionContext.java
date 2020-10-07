@@ -2270,13 +2270,20 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//
 			String option = (String)dataMap.get("sort_by_options");
+			
 			if(option.equals("Last Modified Date")) option = "IngestionDate";
-			ingest.getIngestSortDropDown().click();
-			ingest.getIngestSortOption(option).click();
-			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-			ingest.getIngestedGridView().click();
-			driver.waitForPageToBeReady();
-			pass(dataMap, "Clicked the Right option");
+				else if(option.equals("Status")) option = "IngestionStatus";
+				else if(option.equals("Last Modified user")) option = "UserName";
+				else if(option.equals("Project Name")) option = "ProjectName";
+				
+				ingest.getIngestSortDropDown().click();
+				ingest.getIngestSortOption(option).click();
+				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				//ingest.getIngestedGridView().click();
+				driver.waitForPageToBeReady();
+				pass(dataMap, "Clicked the Right option");
+		
+			
 		}
 		else fail(dataMap, "Failed to sort by option");
 
@@ -2297,21 +2304,38 @@ public class IngestionContext extends CommonContext {
 			//* Project Name
 			//
 			
-			ArrayList<String> res = new ArrayList<>();
-			String option = (String)dataMap.get("sort_by_options");
-			while(ingest.getIngestGridViewNextBtn().Enabled()){
-				for(WebElement x: ingest.getIngestGridTableRows().FindWebElements()) {
-					res.add(x.findElement(By.cssSelector("td.sorting_1")).getText());
-				}
-				ingest.getIngestGridViewNextBtn().click();
+			ArrayList<String> statusList = new ArrayList<>();
+			String option  = (String)dataMap.get("sort_by_options");
+						
+			
+			//Loads all the tiles 
+			while(ingest.getclickMoreButton().Displayed()) {
+				scroll_click_load_more_button(true,dataMap);
+				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
 				driver.waitForPageToBeReady();
 			}
-			Boolean pass = true;
-			for(int i =0; i<res.size()-2; i++) {
-				if(res.get(i).compareTo(res.get(i+1))<0) pass = false;
+			for(WebElement x: ingest.getIngestionStatus().FindWebElements()) {
+				statusList.add(x.getText().substring(8));
+			}
+			for(String x: statusList) {
+				System.out.println(x);
+			}
+			
+			
+			Boolean pass =true;
+			for (int i = 0 ; i < statusList.size()-2; i++){
+				if(statusList.get(i).compareTo(statusList.get(i+1))<0) {
+					pass = false;
+				}
 			}
 			Assert.assertTrue(pass);
-			pass(dataMap, "Passed the sorting verification");
+			
+//			Boolean pass = true;
+//			for(int i =0; i<res.size()-2; i++) {
+//				if(res.get(i).compareTo(res.get(i+1))<0) pass = false;
+//			}
+//			Assert.assertTrue(pass);
+//			pass(dataMap, "Passed the sorting verification");
 		}
 		else fail(dataMap, "Could not verify Sort is correct");
 
