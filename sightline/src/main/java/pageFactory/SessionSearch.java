@@ -233,6 +233,7 @@ public class SessionSearch {
     public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
     public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
     public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
+    public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
 
     public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
     
@@ -637,6 +638,7 @@ public class SessionSearch {
 			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
 		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
 		
+		
 
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -664,6 +666,24 @@ public class SessionSearch {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getMetaDataInserQuery().Enabled() && getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
 		getMetaDataInserQuery().Click();    	
+    }
+    
+    public void setMetaDataValueNoEnter(String option, String val1, String val2) {
+
+    	driver.waitForPageToBeReady();
+
+		if(option == null){
+			getMetaDataSearchText1().SendKeys(val1);
+		}
+		else if(option.equalsIgnoreCase("IS")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+		}
+		else if(option.equalsIgnoreCase("RANGE")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
+		}
     }
     
     public int basicMetaDataSearch(String metaDataField, String option, String val1, String val2) {
@@ -1808,14 +1828,18 @@ public void Removedocsfromresults() {
    //Insert Two MetaData Values/Fields with a Condition Operator Between Them
    public void insertLongText(String metaData1, String metaData2, String condition, String metaVal1, String metaVal2) {
 
+	   if(metaData2 == null){
+		  insertFullText(metaVal1); 
+	   }
+	   else{
 	   //Enter First Field MetaData and Value
-	   selectMetaDataOption(metaData1);   
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
-       setMetaDataValue(null,metaVal1,null);
-       
+	   	selectMetaDataOption(metaData1);   
+	   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	   	     	getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+	   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	   	     	getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+           	setMetaDataValue(null,metaVal1,null);
+       } 
        //Insert Condition Operator
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		getOperatorDropdown().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
@@ -1828,14 +1852,19 @@ public void Removedocsfromresults() {
     		   }
     	   }
        }
-
-       //Enter Second Field MetaData and Value
-       selectMetaDataOption(metaData2);   
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
-       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
-       setMetaDataValue(null,metaVal2,null);
+       if(metaData2 == null){
+		  insertFullText(metaVal2); 
+	   }
+       else
+       {
+       		//Enter Second Field MetaData and Value
+       		selectMetaDataOption(metaData2);   
+       		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       		 		getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       		 		getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       		setMetaDataValue(null,metaVal2,null);
+	   }
 	   
    }
 
