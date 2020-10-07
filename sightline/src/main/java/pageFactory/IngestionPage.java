@@ -303,7 +303,9 @@ public class IngestionPage {
     public ElementCollection getIngestGridTableRows() {return driver.FindElementsByCssSelector("#IngestionGridViewtable >tbody>tr");}
     public Element getIngestGridViewNextBtn() {return driver.FindElementById("IngestionGridViewtable_next");}
     public ElementCollection getIngestionStatus() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
-    		
+    public Element getIngestRollbackButton() {return driver.FindElementByXPath("//*[contains(text(), 'Rollback')] ");}
+    public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
+    public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
 
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){

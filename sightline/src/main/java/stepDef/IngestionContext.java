@@ -2109,6 +2109,11 @@ public class IngestionContext extends CommonContext {
 			//* Click Rollback option
 			//* Click Yes to confirm rollback
 			//
+			
+			
+			ingest.getGearButton().Click();			
+			ingest.getIngestRollbackConfirmButton().Click();
+			
 			throw new ImplementationException("click_on_rollback_option");
 		} else {
 			throw new ImplementationException("NOT click_on_rollback_option");
