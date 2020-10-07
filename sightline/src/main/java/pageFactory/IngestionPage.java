@@ -302,11 +302,13 @@ public class IngestionPage {
     public Element getIngestSortOption(String option) {return driver.FindElementByCssSelector(String.format("[id='SortBy'] option[value='%s']", option));}
     public ElementCollection getIngestGridTableRows() {return driver.FindElementsByCssSelector("#IngestionGridViewtable >tbody>tr");}
     public Element getIngestGridViewNextBtn() {return driver.FindElementById("IngestionGridViewtable_next");}
+    
     public ElementCollection getIngestionStatus() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
     public Element getIngestRollbackButton() {return driver.FindElementByXPath("//*[contains(text(), 'Rollback')] ");}
     public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
     public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
-
+    public ElementCollection getIngestionFilterStatus() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
+ 
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
@@ -324,6 +326,13 @@ public class IngestionPage {
     public WebElement getIngestionProgressBar(int index){
     	if(index < driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().get(index);
+    	}
+    	return null;
+    }
+    
+    public WebElement getIngestionTileFilterStatus(int index){
+    	if(index < getIngestionFilterStatus().FindWebElements().size()){
+    		return getIngestionFilterStatus().FindWebElements().get(index);
     	}
     	return null;
     }

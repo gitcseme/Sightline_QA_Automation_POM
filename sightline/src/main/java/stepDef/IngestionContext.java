@@ -1961,7 +1961,7 @@ public class IngestionContext extends CommonContext {
 			//
 			
 			for(int i =4; i<=6;i++) {
-				click_filter_by_dropdown(true,dataMap,4);
+				click_filter_by_dropdown(true,dataMap);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
@@ -1998,8 +1998,9 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
 			ingest.getFilterByOption().Click();
@@ -2009,14 +2010,33 @@ public class IngestionContext extends CommonContext {
 				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
 			}
 			//select the option
-			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
+			String option = dataMap.get("filter_option").toString();
+			
+			if(option.equals("Draft"))
+				ingest.getSelectFilterByOption(1).Click();
+			if(option.equals("In Progress") )
+				ingest.getSelectFilterByOption(2).Click();
+			if(option.equals("Failed") )
+				ingest.getSelectFilterByOption(3).Click();
+			if(option.equals("Cataloged") )
+				ingest.getSelectFilterByOption(4).Click();
+			if(option.equals("Copied") )
+				ingest.getSelectFilterByOption(5).Click();
+			if(option.equals("Indexed") )
+				ingest.getSelectFilterByOption(6).Click();
+			if(option.equals("Approved") )
+				ingest.getSelectFilterByOption(7).Click();
+			if(option.equals("Published") )
+				ingest.getSelectFilterByOption(8).Click();
+			Thread.sleep(1000);
+			
 			ingest.getcardCanvas().Click();
 			ingest.getRefreshButton().Click();
 			
 			
-			throw new ImplementationException("click_filter_by_dropdown");
+			pass(dataMap,"click_filter_by_dropdown");
 		} else {
-			throw new ImplementationException("NOT click_filter_by_dropdown");
+			fail(dataMap,"NOT click_filter_by_dropdown");
 		}
 
 	}
@@ -2036,9 +2056,29 @@ public class IngestionContext extends CommonContext {
 			//* Approved
 			//* Published
 			//
-			throw new ImplementationException("verify_filter_by_dropdown_displays_expected_options");
+			try {
+			//click all load more button
+			scroll_click_load_more_button(true,dataMap);
+			while(ingest.getclickMoreButton().Displayed()) {
+				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
+			}
+			driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
+			driver.waitForPageToBeReady();
+
+			int size = ingest.getIngestionFilterStatus().FindWebElements().size();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				!ingest.getclickMoreButton().Displayed() && ingest.getIngestionTileFilterStatus(size).isDisplayed()  ;}}), Input.wait30); 
+			
+			for(int i=0; i <= size;i++) {
+				Assert.assertTrue(ingest.getIngestionTileFilterStatus(i).getText().substring(8).equals(dataMap.get("filter_option").toString()));
+			}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap, "verify_filter_by_dropdown_displays_expected_options");
 		} else {
-			throw new ImplementationException("NOT verify_filter_by_dropdown_displays_expected_options");
+			fail(dataMap, "NOT verify_filter_by_dropdown_displays_expected_options");
 		}
 
 	}
@@ -2091,6 +2131,23 @@ public class IngestionContext extends CommonContext {
 			//
 			//* In Progress
 			//
+			int count =0;
+			String actual ="";
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			
+			//Deselect all options 
+			for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected()) { 
+					actual = ingest.getSelectFilterByOption(i).GetAttribute("value").toString();
+					System.out.println(actual);
+					count++;
+				}
+			}
+			
+			Assert.assertEquals(1, count); //check if more then one is selected
+			Assert.assertEquals("INPROGRESS", actual); 
 			throw new ImplementationException("verify_filter_by_dropdown_has_default_option_selected");
 		} else {
 			throw new ImplementationException("NOT verify_filter_by_dropdown_has_default_option_selected");
@@ -2282,11 +2339,6 @@ public class IngestionContext extends CommonContext {
 			//* Last modified user
 			//* Project Name
 			//
-			
-			ArrayList<String> statusList = new ArrayList<>();
-			String option  = (String)dataMap.get("sort_by_options");
-						
-			
 			//Loads all the tiles 
 			while(ingest.getclickMoreButton().Displayed()) {
 				scroll_click_load_more_button(true,dataMap);
@@ -2368,7 +2420,7 @@ public class IngestionContext extends CommonContext {
 		
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getclickMoreButton().Displayed() ;}}), Input.wait30);
+    				ingest.getclickMoreButton().Displayed() && ingest.getclickMoreButton().Enabled() ;}}), Input.wait30);
 			ingest.getclickMoreButton().Click();
 			
 			pass(dataMap,"scroll_click_load_more_button");

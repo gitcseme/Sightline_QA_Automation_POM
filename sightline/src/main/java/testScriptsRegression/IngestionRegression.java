@@ -5245,7 +5245,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive" ,"wait"})
 	public void test_Given_sightline_is_launched_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_login_as_pau_When_click_run_ingest_button_Then_verify_components_are_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5334,7 +5334,15 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			//context.click_filter_by_dropdown(true, dataMap);
+			//dataMap.put("filter_option", "Draft");
+			//dataMap.put("filter_option", "In Progress");
+			//dataMap.put("filter_option", "Failed");
+			//dataMap.put("filter_option", "Cataloged");
+			//dataMap.put("filter_option", "Copied");
+			//dataMap.put("filter_option", "Indexed");
+			//dataMap.put("filter_option", "Approved");
+			dataMap.put("filter_option", "Published");
+			context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_displays_expected_options(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5378,7 +5386,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_has_default_option_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5391,7 +5399,6 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			//context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_has_default_option_selected(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5448,7 +5455,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "other"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_grid_view_displays_expected_fields() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5763,7 +5770,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive", "Jose"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_LastModifiedDate_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
