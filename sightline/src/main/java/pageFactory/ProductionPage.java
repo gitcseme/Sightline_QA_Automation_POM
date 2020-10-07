@@ -432,7 +432,6 @@ public class ProductionPage {
     public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
     public Element getProductionMarkIncompleteBtnByPage(String pageName) {return driver.FindElementById(String.format("btn%sMarkInComplete", pageName));}
     public Element getProductionMarkIncompleteLastBtn(String pageName) {return driver.FindElementById(String.format("%sMarkInComplete", pageName));}
-    //public Element getProdutionQualityControlMarkIncompleteButton() {return driver.FindElementById("btnConfirmationMarkInComplete");}
     
     
         
@@ -445,11 +444,13 @@ public class ProductionPage {
     public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
     public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
     
+    //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
     		driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().get(index).click();
     	}
     }
+    //Return the name of a production based on it's index on the production page
     public String getProductionTileNameByIndex(int index) {
     	if(driver.FindElementsByCssSelector("#pName").FindWebElements().size() > index) {
     		return driver.FindElementsByCssSelector("#pName").FindWebElements().get(index).findElement(By.cssSelector("a[title]")).getText(); 
@@ -460,7 +461,6 @@ public class ProductionPage {
     public WebElement getProductionTileByName(String name) {
     	for(WebElement x: driver.FindElementsByCssSelector("#pName").FindWebElements()) {
     		if(x.findElement(By.cssSelector("a[title]")).getText().equals(name)) return x;
-    		//if((x.getText()).equals(name)) return x;
     	}
     	return null;
     }

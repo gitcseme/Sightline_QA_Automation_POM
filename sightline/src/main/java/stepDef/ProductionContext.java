@@ -1466,11 +1466,11 @@ public class ProductionContext extends CommonContext {
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
+				//For Name Selection, this saves the target Production Tile Element into our dataMap for use in other contexts
 				if(!prodName.equals("")){
 					String temp  = prodName;
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionTileByName(temp).isEnabled()  ;}}), Input.wait30);
-					//prod.getProductionTileByName(prodName).click();
 					dataMap.put("targetProduction", prod.getProductionTileByName(temp));
 				}
 
@@ -1484,8 +1484,8 @@ public class ProductionContext extends CommonContext {
 						prod.getProductionListGridViewTableRows(0).findElements(By.tagName("td")).get(1).getText().equalsIgnoreCase(status)  ;}}), Input.wait30);
 					prod.getProductionListGridViewTableRows(0).click();
 				}
+				//If we are in tile, all we need to do is wait for the filter to update the page
 				else if(viewMode != null && viewMode.equalsIgnoreCase("tile")) {
-
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						!prod.getProductionItemsTileItems().getText().equals(prodCount) ;}}), Input.wait30);
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1543,19 +1543,14 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_locked_production_is_set_to_read_only$")
 	public void verify_the_locked_production_is_set_to_read_only(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC 3412 / 3509
 		if (scriptState) {
-			//TC 3412 / 3509
-			//* Click the locked Production's name.
-			//* Try and click Mark Incomplete on Quality Control and Confirmation. It should not let you.
-			//* Click Back to go to the Generate section.
-			//* Try and click Mark Incomplete on Quality Control and Confirmation. It should not let you.
-			//* Do the same until you get to "Production Components".
-			//* Afterwards go to the production's homepage and unlock the production to "reset the test".
-			//
 			try {
+				//Pages we use for our dynamic selectors
 				String[] pages = {"Confirmation", "Generate", "ProductionSummary", "ProductionLocation",
 						"ProductionGuard", "DocumentsSelection", "NumAndSort", "Components"}; 
 				
+				//Click into our desired production (saved in datamap from previous context)
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					((WebElement)dataMap.get("targetProduction")).isEnabled()  ;}}), Input.wait30);
 				((WebElement)dataMap.get("targetProduction")).click();
@@ -1651,8 +1646,8 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? the_default_production_template_loaded_successfully$")
 	public void the_default_production_template_loaded_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4913
 		if (scriptState) {
-			//TC4913Verify the user is able to open a saved template from the Manage Template tab.
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getSavedTemplate().Displayed()  ;}}), Input.wait30);
@@ -1672,7 +1667,6 @@ public class ProductionContext extends CommonContext {
 	public void on_the_summary_preview_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Verify you are on the Summary and Preview section. If you are not, click Next until you can.
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
@@ -1684,7 +1678,7 @@ public class ProductionContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
 				}
-			pass(dataMap, "Got to Summary and preview");
+				pass(dataMap, "Got to Summary and preview");
 			}
 			catch(Exception e) {
 				fail(dataMap, "Could not get to the summar preview Section");
@@ -1717,15 +1711,11 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-	// Working
 	@Then("^.*(\\[Not\\] )? verify_the_preview_of_the_pdf_should_display_the_branding$")
 	public void verify_the_preview_of_the_pdf_should_display_the_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC5096 
 		if (scriptState) {
-			//TC5096 
-			//* Verify the branding on the PDF should display from the Tiff section information provided
-			//
-			
 				PDDocument document = null;
 				String home = System.getProperty("user.home");
 				if(SystemUtils.IS_OS_LINUX){
@@ -1746,9 +1736,7 @@ public class ProductionContext extends CommonContext {
 				} else {
 					fail(dataMap, "Branding is not displayed in the preview of the pdf");
 				}
-			
 				document.close();
-				
 			
 		} else {
 			fail(dataMap, "Branding is not displayed in the preview of the pdf");
@@ -1787,7 +1775,6 @@ public class ProductionContext extends CommonContext {
 			catch(Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Could not click <Back link."); }
-			//throw new ImplementationException("navigated_back_onto_the_production_components_section");
 		} else {
 			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
 		}
@@ -1807,8 +1794,6 @@ public class ProductionContext extends CommonContext {
 			}
 			catch(Exception e) {fail(dataMap, "Could not click Mark Incomplete Button");}
 			
-			
-			//throw new ImplementationException("editing_the_completed_production_component");
 		} else {
 			throw new ImplementationException("NOT editing_the_completed_production_component");
 		}
@@ -1821,7 +1806,6 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click "Next" until you get to the Generate tab
-			
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getGenarateTitle().Displayed()  ;}}), Input.wait30);
@@ -1849,8 +1833,6 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5075
-
-			//
 			try {
 				//* Verify the Generate button is enabled
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1888,9 +1870,6 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5081
-			//* Verify the bates number on the document level numbering production that is completed is displaying correctly on the home page.
-			//* It will be under the fields "Start" and "End". Those fields should have a number/value each on them representing the start number and end number.
-			//
 			try {
 				driver.waitForPageToBeReady();
 				//Grab The numbers under the Start and End tags on the given production Tile
@@ -1926,13 +1905,7 @@ public class ProductionContext extends CommonContext {
 			prod.getProdExport_ProductionSets().click();
 			prod.clickProductionSetByIndex(index);
 			driver.waitForPageToBeReady();
-			//
-			//* Store the first two production names in the list of productions.This will be used for validation in the outcome.
-			//* Clicks the "Select a Production/Export Set" dropdown
-			//* Select the option in the dropdown by Index. 0 = the first option, 1 = the second option, etc. 
-			//
 			pass(dataMap, "Stored prod names, and clicked the correct export set");
-
 		}
 
 		else fail(dataMap, "Could not select the production export set");
@@ -1944,9 +1917,9 @@ public class ProductionContext extends CommonContext {
 	public void storing_the_productions_in_the_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This method will just store the name of the first two productions displaying on the list of productions. If none appear, store them at "None". 
 			String[] secondSetNames = new String[2];
-
+			
+			//Grab the names of the first two production tiles on this Set page, if there isn't one, assign name as None
 			if(prod.getProductionTileNameByIndex(0) == null)secondSetNames[0] = "None1";
 			else secondSetNames[0] = prod.getProductionTileNameByIndex(0);
 
@@ -1965,7 +1938,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_productions_from_one_production_set_does_not_exist_in_another(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 5869Verify that the first two production's in the previous Production/Export set do not appear when switching to the other production set.Productions do not carry over from 1 production set to another, so they should never have 1 production in both sets.
+			//Put all four of our names into a Set
 			HashSet<String> productionSet = new HashSet<>();
 			productionSet.add(((String[])dataMap.get("firstSet"))[0]);
 			productionSet.add(((String[])dataMap.get("firstSet"))[1]);
@@ -1985,7 +1958,6 @@ public class ProductionContext extends CommonContext {
 	public void the_production_grid_is_set_to_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//In the middle of the production's home page, there are two buttons. It is by default set to Tile view.Depending on the parameter, you will either click on the Grid View button or the Tile View button.
 			try {
 
 				//Get the view mode we should be in
@@ -2020,7 +1992,6 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_productions_settings_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//If the mode is set to Grid View:You will need to click on the "Action" dropdownIf the mode is set to Tile View:You will need to click on the Settings button on the tile of the production you are testing with.
 			try {
 				String viewMode = (String)dataMap.get("mode");
 				if(viewMode != null && viewMode.equals("grid")){
@@ -2050,43 +2021,12 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_productions_allowed_actions_in_settings_based_on_status(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4911 / 3509If Status is DRAFT:
-			//* Verify the settings button will display the following options are active/available to be selected:
-
-			//* Open in Wizard
-			//* Delete
-			//* Save as Template
-			//* Lock is disabled
-
-			//* If in Grid View also check for:
-			//* "Add Docs"
-			//* "Remove Docs"
-			//* Lock is disabled
-			//If Status is INPROGRESS:
-			//* Verify the settings button will display the following options are active/available to be selected:
-
-			//* Open in Wizard
-			//* Save as Template
-			//* Lock is disabled
-
-			//* If in Grid View also check for:
-			//* "Add Docs"
-			//* "Remove Docs"
-			//* Lock is disabled
-			//If Status is COMPLETED:
-			//* Verify the settings button will display the following options are active/available to be selected:
-
-			//* Open in Wizard
-			//* Lock
-			//* Save as Template
-
-			//* If in Grid View also check for:
-			//* "Add Docs"
-			//* "Remove Docs"
-			//* If in Grid View, also check that each Completed production display a Start Date and End Date. None should be empty in Completed Status.
+			
 			try {
 				String status = (String)dataMap.get("status");
 				String viewMode = (String)dataMap.get("mode");
+
+				//Grid view verifications
 				if(status != null && viewMode.equalsIgnoreCase("grid")){
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionGridViewActionOpenWizard().Displayed()  ;}}), Input.wait30);
@@ -2127,7 +2067,7 @@ public class ProductionContext extends CommonContext {
 							prod.getProductionGridViewActionRemoveDoc().GetAttribute("class").contains("disable"));
 
 					}
-					//Check Completed 
+					//Check Completed Status  
 					else if(status.equalsIgnoreCase("COMPLETED")){
 						//Lock is Displayed and Enabled
 						if(prod.getProductionGridViewActionUnLock().Displayed()) {
@@ -2186,8 +2126,6 @@ public class ProductionContext extends CommonContext {
 						}
 					}
 				}
-
-
 				pass(dataMap, "Verified Production Settings Options");
 				
 			}
