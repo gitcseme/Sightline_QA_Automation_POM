@@ -284,6 +284,7 @@ public class IngestionPage {
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
     public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
     public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
+    public ElementCollection getAllFilterOptions() { return driver.FindElementsByCssSelector(".multiselect-container>li");}
     public Element backButton() {return driver.FindElementById("BackButton");}
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
     public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
@@ -296,6 +297,11 @@ public class IngestionPage {
     public Element getIngestSource() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
     public Element getIngestPublish() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
     public Element getIngestError() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestGridView() {return driver.FindElementById("GridView");}
+    public Element getIngestSortDropDown() {return driver.FindElementById("SortBy");}
+    public Element getIngestSortOption(String option) {return driver.FindElementByCssSelector(String.format("[id='SortBy'] option[value='%s']", option));}
+    public ElementCollection getIngestGridTableRows() {return driver.FindElementsByCssSelector("#IngestionGridViewtable >tbody>tr");}
+    public Element getIngestGridViewNextBtn() {return driver.FindElementById("IngestionGridViewtable_next");}
 
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){

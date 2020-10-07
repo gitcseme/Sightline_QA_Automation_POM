@@ -5245,7 +5245,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_login_as_pau_When_click_run_ingest_button_Then_verify_components_are_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5763,7 +5763,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_LastModifiedDate_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5781,9 +5781,11 @@ public class IngestionRegression extends RegressionBase {
 			context.select_sort_by_option(true, dataMap);
 			context.verify_sort_by_works_as_expected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

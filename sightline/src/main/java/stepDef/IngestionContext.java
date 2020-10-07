@@ -3,6 +3,7 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -2250,10 +2251,15 @@ public class IngestionContext extends CommonContext {
 			//* Click filter by dropdown
 			//* Select all options displayed
 			//
-			throw new ImplementationException("select_all_filter_by_options");
-		} else {
-			throw new ImplementationException("NOT select_all_filter_by_options");
+			int numOfOptions = ingest.getAllFilterOptions().FindWebElements().size();
+			ingest.getFilterByOption().click();
+			for(int i =1; i<=numOfOptions; i++) {
+				if(!ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).click();
+			}
+			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			pass(dataMap, "Filtered by every option");
 		}
+		else fail(dataMap, "Could not filter by all options");
 
 	}
 
@@ -2263,10 +2269,16 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_sort_by_option");
-		} else {
-			throw new ImplementationException("NOT select_sort_by_option");
+			String option = (String)dataMap.get("sort_by_options");
+			if(option.equals("Last Modified Date")) option = "IngestionDate";
+			ingest.getIngestSortDropDown().click();
+			ingest.getIngestSortOption(option).click();
+			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			ingest.getIngestedGridView().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Clicked the Right option");
 		}
+		else fail(dataMap, "Failed to sort by option");
 
 	}
 
@@ -2284,10 +2296,24 @@ public class IngestionContext extends CommonContext {
 			//* Last modified user
 			//* Project Name
 			//
-			throw new ImplementationException("verify_sort_by_works_as_expected");
-		} else {
-			throw new ImplementationException("NOT verify_sort_by_works_as_expected");
+			
+			ArrayList<String> res = new ArrayList<>();
+			String option = (String)dataMap.get("sort_by_options");
+			while(ingest.getIngestGridViewNextBtn().Enabled()){
+				for(WebElement x: ingest.getIngestGridTableRows().FindWebElements()) {
+					res.add(x.findElement(By.cssSelector("td.sorting_1")).getText());
+				}
+				ingest.getIngestGridViewNextBtn().click();
+				driver.waitForPageToBeReady();
+			}
+			Boolean pass = true;
+			for(int i =0; i<res.size()-2; i++) {
+				if(res.get(i).compareTo(res.get(i+1))<0) pass = false;
+			}
+			Assert.assertTrue(pass);
+			pass(dataMap, "Passed the sorting verification");
 		}
+		else fail(dataMap, "Could not verify Sort is correct");
 
 	}
 
