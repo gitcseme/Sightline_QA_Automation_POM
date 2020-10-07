@@ -227,7 +227,7 @@ public class IngestionPage {
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
     public Element getCatelogingStatus() {return driver.FindElementByCssSelector("#Catalogingblock > div:nth-child(1) > div > div:nth-child(3)");}
     
-    public Element getIngressionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
+    public Element getIngestionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
     public Element getIngestionTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li/a/span");}
     
@@ -362,7 +362,6 @@ public class IngestionPage {
 	    	}
 	    	
 	    	if(dataMap.containsKey("doc_key")) {	
-	    		//getDAToptions(dataMap); 
 	    	    if(dataMap.containsKey("dat_load_file")) {
 	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
@@ -435,10 +434,10 @@ public class IngestionPage {
 	    	getDATCheckbox().Click();
 	    }	
 
-	    if(dataMap.containsKey("dat_file")) {
+	    if(dataMap.containsKey("dat_load_file")) {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
-	    	getDATLoadFile().SendKeys(dataMap.get("dat_file").toString());
+	    	getDATLoadFile().SendKeys(dataMap.get("dat_load_file").toString());
 	    }
 	    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -583,7 +582,6 @@ public class IngestionPage {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getAudioTranscriptLST().Visible()  ;}}), Input.wait30); 
     		getAudioTranscriptLST().SendKeys(dataMap.get("audio_file").toString());; 
-    		System.out.print("audio_file");
     	}
     }
     
