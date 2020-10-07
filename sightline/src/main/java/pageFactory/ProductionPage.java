@@ -182,7 +182,7 @@ public class ProductionPage {
     public Element getNative_text(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong"); }
     public Element getNative_text_Color(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p"); }
     public Element getMarkCompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Complete']");}
-    public Element getMarkInompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
+    public Element getMarkIncompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
 	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
 	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
 	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
@@ -446,8 +446,9 @@ public class ProductionPage {
     public Element getGenerateInProgressButton() {return driver.FindElementByXPath("//button[text()='in progress']");}
     public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
     public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
-    public Element getGeneratePostGenStatus() {return driver.FindElementByXPath("//label[text()='Post generation check complete']");}
-    
+    //public Element getGeneratePostGenStatus() {return driver.FindElementByXPath("//label[text()='Post generation check complete']");}
+    public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
+    //public WebElement getGeneratePostGenStatus() {return driver.FindElementsByXPath("//div//button[@id='btnProductionReGenerate']/preceding-sibling::label ").FindWebElements().get(1);}    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

@@ -1751,8 +1751,12 @@ public class ProductionContext extends CommonContext {
 	public void navigated_back_onto_the_production_components_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click on the production you want to openClick the "<Back" link as many times as it takes to get back to the "Production Components" section of Productions
 			try {
+				WebElement temp  = (WebElement)dataMap.get("targetProduction");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					temp.isDisplayed()  ;}}), Input.wait30);
+				temp.click();
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getProductionSectionPageTitle().Displayed()  ;}}), Input.wait30);
 				
@@ -1765,12 +1769,13 @@ public class ProductionContext extends CommonContext {
 					
 				}
 				driver.waitForPageToBeReady();
-				//pass(dataMap,"Navigated to Production Components section");
+				pass(dataMap,"Navigated to Production Components section");
 			}
-			catch(Exception e) {fail(dataMap, "Could not click <Back link."); }
-			//throw new ImplementationException("navigated_back_onto_the_production_components_section");
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click <Back link."); }
 		} else {
-			throw new ImplementationException("NOT navigated_back_onto_the_production_components_section");
+			fail(dataMap, "Could not click <Back link."); 
 		}
 
 	}
@@ -1780,32 +1785,22 @@ public class ProductionContext extends CommonContext {
 	public void editing_the_completed_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click "Mark Incomplete"Change the DAT configuration to have the DAT field to be "CNG"Click "Mark Complete"
 			try {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMarkInompleteLink().Displayed() ;}}), Input.wait30);
-				prod.getMarkInompleteLink().Click();	
+				prod.getMarkIncompleteLink().click();	
 				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDATTab().Displayed()  ;}}), Input.wait30);
-				prod.getDATTab().Click();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
-				prod.getDAT_DATField1().Click();
+				prod.getDATTab().click();
+				prod.getDAT_DATField1().click();
 				prod.getDAT_DATField1().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getDAT_DATField1().SendKeys("CNG");
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDAT_DATField1().Displayed()  ;}}), Input.wait30);
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getMarkCompleteLink().Displayed() && prod.getMarkCompleteLink().Enabled() ;}}), Input.wait30);
-				prod.getMarkCompleteLink().Click();
-				
-				//pass(dataMap, "Edited the Production DAT field");
+				prod.getMarkCompleteLink().click();
+				pass(dataMap, "Edited the completed production component");
 			}
-			catch(Exception e) {fail(dataMap, "Could not click Mark Incomplete Button");}
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click Mark Incomplete Button");}
 			
 		} else {
-			throw new ImplementationException("NOT editing_the_completed_production_component");
+			fail(dataMap, "Could not click Mark Incomplete Button");
 		}
 
 	}
@@ -1832,11 +1827,14 @@ public class ProductionContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getProductionSectionPageTitle().Displayed() ;}}), Input.wait30);
 				}
+				pass(dataMap, "Navigated back to the generate section");
 			}
-			catch(Exception e) {fail(dataMap, "Could not click Next button");}
-			//throw new ImplementationException("navigating_back_to_the_generate_section");
+			catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not click Next button");}
 		} else {
-			throw new ImplementationException("NOT navigating_back_to_the_generate_section");
+			fail(dataMap, "Could not click Next button");
+
 		}
 
 	}
@@ -1849,42 +1847,27 @@ public class ProductionContext extends CommonContext {
 			//TC 5075
 			try {
 				//* Verify the Generate button is enabled
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getGenerateButton().Displayed() && prod.getGenerateButton().Enabled() ;}}), Input.wait30);
-				prod.getGenerateButton().Click();
-	
-				//* Verify clicking the Generate button will change the status to "Pre generation check in progress" with the button changed to "in progress".
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getGenerateInProgressButton().Displayed()  ;}}), Input.wait30);
-				prod.getGenerateInProgressButton().Visible();
-				System.out.println("checked button");
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getGenerateInProgressStatus().Displayed()  ;}}), Input.wait30);
-				prod.getGenerateInProgressStatus().Visible();
-				System.out.println("checked IN PROGRESS");
-			//	driver.Navigate();
+				prod.getGenerateButton().click();
 				
-				String URL = driver.getUrl();
-				driver.Navigate().to(URL);
-				
-				
-				//prod.getGenerateInProgressButton().SendKeys(Keys.chord(Keys.CONTROL, "r"));
-				driver.waitForPageToBeReady();
-				System.out.println("before status2 Pre generation check in progress");
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getGeneratePreGenStatus().Displayed()  ;}}), Input.wait30);
-				prod.getGeneratePreGenStatus().Visible();
-				System.out.println("checked Pre generation check in progress");
+					prod.getGeneratePostGenStatus().isDisplayed() ;}}), Input.wait30);
 				
+				int i =0;
+				while(!prod.getGeneratePostGenStatus().getText().equals("Post generation check complete") && i<50){
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGeneratePostGenStatus().isDisplayed() ;}}), Input.wait30);
+				}
+				Assert.assertEquals(prod.getGeneratePostGenStatus().getText(), "Post generation check complete");
 				pass(dataMap, "Production was regenerated");
 			}
 			catch(Exception e) { 
 				e.printStackTrace();
 				fail(dataMap,"Did not regenerate");
 			}
-			//throw new ImplementationException("verify_the_production_can_be_regenerated");
 		} else {
-			throw new ImplementationException("NOT verify_the_production_can_be_regenerated");
+			fail(dataMap, "Could not regenerate");
 		}
 
 	}
