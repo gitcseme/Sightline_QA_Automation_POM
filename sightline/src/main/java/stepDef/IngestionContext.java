@@ -1961,7 +1961,7 @@ public class IngestionContext extends CommonContext {
 			//
 			
 			for(int i =4; i<=6;i++) {
-				click_filter_by_dropdown(true,dataMap);
+				click_filter_by_dropdown(true,dataMap,4);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
@@ -1998,9 +1998,8 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
 		if (scriptState) {
-			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
 			ingest.getFilterByOption().Click();
@@ -2010,33 +2009,14 @@ public class IngestionContext extends CommonContext {
 				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
 			}
 			//select the option
-			String option = dataMap.get("filter_option").toString();
-			
-			if(option.equals("Draft"))
-				ingest.getSelectFilterByOption(1).Click();
-			if(option.equals("In Progress") )
-				ingest.getSelectFilterByOption(2).Click();
-			if(option.equals("Failed") )
-				ingest.getSelectFilterByOption(3).Click();
-			if(option.equals("Cataloged") )
-				ingest.getSelectFilterByOption(4).Click();
-			if(option.equals("Copied") )
-				ingest.getSelectFilterByOption(5).Click();
-			if(option.equals("Indexed") )
-				ingest.getSelectFilterByOption(6).Click();
-			if(option.equals("Approved") )
-				ingest.getSelectFilterByOption(7).Click();
-			if(option.equals("Published") )
-				ingest.getSelectFilterByOption(8).Click();
-			Thread.sleep(1000);
-			
+			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
 			ingest.getcardCanvas().Click();
 			ingest.getRefreshButton().Click();
 			
 			
-			pass(dataMap,"click_filter_by_dropdown");
+			throw new ImplementationException("click_filter_by_dropdown");
 		} else {
-			fail(dataMap,"NOT click_filter_by_dropdown");
+			throw new ImplementationException("NOT click_filter_by_dropdown");
 		}
 
 	}
@@ -2056,29 +2036,9 @@ public class IngestionContext extends CommonContext {
 			//* Approved
 			//* Published
 			//
-			try {
-			//click all load more button
-			scroll_click_load_more_button(true,dataMap);
-			while(ingest.getclickMoreButton().Displayed()) {
-				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
-			}
-			driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
-			driver.waitForPageToBeReady();
-
-			int size = ingest.getIngestionFilterStatus().FindWebElements().size();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				!ingest.getclickMoreButton().Displayed() && ingest.getIngestionTileFilterStatus(size).isDisplayed()  ;}}), Input.wait30); 
-			
-			for(int i=0; i <= size;i++) {
-				Assert.assertTrue(ingest.getIngestionTileFilterStatus(i).getText().substring(8).equals(dataMap.get("filter_option").toString()));
-			}
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
-			pass(dataMap, "verify_filter_by_dropdown_displays_expected_options");
+			throw new ImplementationException("verify_filter_by_dropdown_displays_expected_options");
 		} else {
-			fail(dataMap, "NOT verify_filter_by_dropdown_displays_expected_options");
+			throw new ImplementationException("NOT verify_filter_by_dropdown_displays_expected_options");
 		}
 
 	}
@@ -2131,23 +2091,6 @@ public class IngestionContext extends CommonContext {
 			//
 			//* In Progress
 			//
-			int count =0;
-			String actual ="";
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
-			ingest.getFilterByOption().Click();
-			
-			//Deselect all options 
-			for(int i =1; i<=8; ++i){
-				if(ingest.getSelectFilterByOption(i).Selected()) { 
-					actual = ingest.getSelectFilterByOption(i).GetAttribute("value").toString();
-					System.out.println(actual);
-					count++;
-				}
-			}
-			
-			Assert.assertEquals(1, count); //check if more then one is selected
-			Assert.assertEquals("INPROGRESS", actual); 
 			throw new ImplementationException("verify_filter_by_dropdown_has_default_option_selected");
 		} else {
 			throw new ImplementationException("NOT verify_filter_by_dropdown_has_default_option_selected");
@@ -2166,11 +2109,6 @@ public class IngestionContext extends CommonContext {
 			//* Click Rollback option
 			//* Click Yes to confirm rollback
 			//
-			
-			
-			ingest.getGearButton().Click();			
-			ingest.getIngestRollbackConfirmButton().Click();
-			
 			throw new ImplementationException("click_on_rollback_option");
 		} else {
 			throw new ImplementationException("NOT click_on_rollback_option");
@@ -2332,41 +2270,54 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//TC845:To verify that Filter options work with the sort by functionality.Covers:TC846:To verify that Sort by in Grid View.
 			//* Validate the different sort by options work as expected
-			//
-			//
-			//* Last Modified Date
-			//* Status
-			//* Last modified user
-			//* Project Name
-			//
-			//Loads all the tiles 
+			try {
+			String option  = (String)dataMap.get("sort_by_options");
+			ArrayList<String> pageElements = new ArrayList<>();
+			
+			//Scrolls to the end of page
 			while(ingest.getclickMoreButton().Displayed()) {
 				scroll_click_load_more_button(true,dataMap);
 				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
 				driver.waitForPageToBeReady();
 			}
-			for(WebElement x: ingest.getIngestionStatus().FindWebElements()) {
-				statusList.add(x.getText().substring(8));
+
+
+			if(option.equals("Last Modified Date")) {
+				for(WebElement x: ingest.getIngestionModifiedDates().FindWebElements()) {
+					pageElements.add(x.getText());
+				}
 			}
-			for(String x: statusList) {
-				System.out.println(x);
+			else if(option.equals("Status")) {
+				for(WebElement x: ingest.getIngestionStatus().FindWebElements()) {
+					pageElements.add(x.getText().substring(8));
+				}
 			}
-			
+			else if(option.equals("Last Modified user")) {
+				for(WebElement x: ingest.getIngestionModifiedUser().FindWebElements()) {
+					pageElements.add(x.getText().substring(0, x.getText().toString().length()-4));
+				}
+		
+			}
+			else if(option.equals("Project Name")) {
+				for(WebElement x: ingest.getIngestionProjectName().FindWebElements()) {
+					pageElements.add(x.getText());
+				}
+			}
 			
 			Boolean pass =true;
-			for (int i = 0 ; i < statusList.size()-2; i++){
-				if(statusList.get(i).compareTo(statusList.get(i+1))<0) {
+			for (int i = 0 ; i < pageElements.size()-2; i++){
+				if(pageElements.get(i).compareTo(pageElements.get(i+1))<0) {
 					pass = false;
 				}
 			}
 			Assert.assertTrue(pass);
 			
-//			Boolean pass = true;
-//			for(int i =0; i<res.size()-2; i++) {
-//				if(res.get(i).compareTo(res.get(i+1))<0) pass = false;
-//			}
-//			Assert.assertTrue(pass);
-//			pass(dataMap, "Passed the sorting verification");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not verify Sort is correct");
+			}
+			
+			
 		}
 		else fail(dataMap, "Could not verify Sort is correct");
 
@@ -2420,7 +2371,7 @@ public class IngestionContext extends CommonContext {
 		
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getclickMoreButton().Displayed() && ingest.getclickMoreButton().Enabled() ;}}), Input.wait30);
+    				ingest.getclickMoreButton().Displayed() ;}}), Input.wait30);
 			ingest.getclickMoreButton().Click();
 			
 			pass(dataMap,"scroll_click_load_more_button");
