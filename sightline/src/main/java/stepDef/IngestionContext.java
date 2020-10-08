@@ -1757,8 +1757,9 @@ public class IngestionContext extends CommonContext {
 				Assert.assertTrue(docView.getMetaDataTableRowByName("FileDescription").Displayed());
 				Assert.assertFalse(docView.getMetaDataTableRowValueByName("FileDescription").getText().equals(""));
 			}
+			pass(dataMap, "tally description is searchable");
 		} else {
-			throw new ImplementationException("NOT verify_file_description_is_tally_searchable");
+			fail(dataMap, "tally description is not searchable");
 		}
 
 	}
@@ -2073,8 +2074,9 @@ public class IngestionContext extends CommonContext {
 				Assert.assertTrue(docView.getMetaDataTableRowByName("AttachDocIDs").Displayed());
 				Assert.assertFalse(docView.getMetaDataTableRowValueByName("AttachDocIDs").getText().equals(""));
 			}
+			pass(dataMap, "Doc_Ids are searchable");
 		} else {
-			throw new ImplementationException("NOT verify_attach_doc_ids_are_searchable");
+			fail(dataMap, "Doc_IDs are not searchable");
 		}
 
 	}
