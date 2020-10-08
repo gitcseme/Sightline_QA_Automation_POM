@@ -237,7 +237,7 @@ public class SessionSearch {
 
     public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
     
-    public ElementCollection getSearchResultDocsMetCriteriaPlusButton() { return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title=\"Docs That Met Your Criteria\"] i.fa-plus-circle");}
+    public ElementCollection getSearchResultDocsMetCriteriaPlusButton() { return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title='Docs That Met Your Criteria'] i.fa-plus-circle");}
     
 
     public SessionSearch(Driver driver){

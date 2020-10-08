@@ -1676,6 +1676,7 @@ public class IngestionContext extends CommonContext {
 			
 			pass(dataMap, "Navigated to Session Search home page");
 		} else {
+
 			fail(dataMap, "NOT on_search_home_page");
 		}
 
@@ -1691,14 +1692,19 @@ public class IngestionContext extends CommonContext {
 			//* Enter the following into the search query:
 			//IngestionName: (Ingestion Name Goes here)
 			//* Click Search button
+
 			//* Add the documents that were generated to the right hand side by clicking the Plus symbol
 			//* Click the dropdown action button
 			//* Click on View D	ocView
 			//
-			sessionSearch.insertFullText("0C8A_SQA_Default_Automation_20201007154004823");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.insertFullText("0C8A_SQA_Default_Automation_20201007144534140");
 			sessionSearch.getSearchButton().click();
-			
-			sessionSearch.getSearchResultDocsMetCriteriaPlusButton().getElementByIndex(0).click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+
+			sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
 			sessionSearch.getBulkActionButton().click();
 			
 			if (dataMap.get("actionNavigateDoc").equals("docList")) {
