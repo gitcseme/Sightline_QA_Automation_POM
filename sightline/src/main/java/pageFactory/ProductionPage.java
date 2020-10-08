@@ -182,7 +182,7 @@ public class ProductionPage {
     public Element getNative_text(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong"); }
     public Element getNative_text_Color(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p"); }
     public Element getMarkCompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Complete']");}
-    public Element getMarkInompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
+    public Element getMarkIncompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Incomplete']");}
 	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
 	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
 	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
@@ -432,7 +432,6 @@ public class ProductionPage {
     public Element getProductionSectionPageTitle() {return driver.FindElementByXPath("//h2[@class = 'col-md-8']");}
     public Element getProductionMarkIncompleteBtnByPage(String pageName) {return driver.FindElementById(String.format("btn%sMarkInComplete", pageName));}
     public Element getProductionMarkIncompleteLastBtn(String pageName) {return driver.FindElementById(String.format("%sMarkInComplete", pageName));}
-    //public Element getProdutionQualityControlMarkIncompleteButton() {return driver.FindElementById("btnConfirmationMarkInComplete");}
     
     
         
@@ -444,12 +443,23 @@ public class ProductionPage {
     public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
     public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
     public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
+    public Element getGenerateInProgressButton() {return driver.FindElementByXPath("//button[text()='in progress']");}
+    public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
+    public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
+    public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
     
+    public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
+    public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
+    public Element getProductionDeleteOkButton() {return driver.FindElementByCssSelector("[class=\"btn btn-default btn-sm botTempo\"]");}
+    
+    
+    //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
     		driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().get(index).click();
     	}
     }
+    //Return the name of a production based on it's index on the production page
     public String getProductionTileNameByIndex(int index) {
     	if(driver.FindElementsByCssSelector("#pName").FindWebElements().size() > index) {
     		return driver.FindElementsByCssSelector("#pName").FindWebElements().get(index).findElement(By.cssSelector("a[title]")).getText(); 
@@ -460,7 +470,6 @@ public class ProductionPage {
     public WebElement getProductionTileByName(String name) {
     	for(WebElement x: driver.FindElementsByCssSelector("#pName").FindWebElements()) {
     		if(x.findElement(By.cssSelector("a[title]")).getText().equals(name)) return x;
-    		//if((x.getText()).equals(name)) return x;
     	}
     	return null;
     }
@@ -474,7 +483,9 @@ public class ProductionPage {
     	if(index < driver.FindElementsById("batesCount").FindWebElements().size()){
     		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
     	else return null;
+
     }
+
 
 
     //Quick Function to get rows of Grid View Production Table
@@ -484,7 +495,6 @@ public class ProductionPage {
     	}
     	return null;
     }
-
 
     public ProductionPage(Driver driver){
 
