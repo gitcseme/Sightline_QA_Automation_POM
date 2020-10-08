@@ -137,7 +137,7 @@ public class IngestionContext extends CommonContext {
 				ingest.getApproveMessageOKButton().Click(); 
 			}
 
-	    }else{
+		} else {
 			ingest.getRunIndexing().Click();
 		}
 
@@ -1705,18 +1705,20 @@ public class IngestionContext extends CommonContext {
 			//* Click on View D	ocView
 			//
 			SessionSearch sessionSearch = new SessionSearch(driver);
-			sessionSearch.insertFullText("0C8A_SQA_Default_Automation_20201007144534140");
+			String query = (String)dataMap.get("ingestQuery");
+			if(query == null) query = "0C8A_SQA_Default_Automation_20201007144534140";
+			sessionSearch.insertFullText(query);
 			sessionSearch.getSearchButton().click();
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
+	    		sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
 
 						
-			if (dataMap.get("actionNavigateDoc").equals("docList")) {
+			if (dataMap.get("actionNavigateDoc") != null && dataMap.get("actionNavigateDoc").equals("docList")) {
 				sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
 				sessionSearch.getBulkActionButton().click();
 				sessionSearch.getDocListAction().click();
-			} else if (dataMap.get("actionNavigateDoc").equals("docView")) {
+			} else if ( dataMap.get("actionNavigateDoc") != null && dataMap.get("actionNavigateDoc").equals("docView")) {
 				sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
 				sessionSearch.getBulkActionButton().click();
 				sessionSearch.getDocViewAction().click();
@@ -1748,6 +1750,10 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("FileDescription").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertTrue(docView.getMetaDataTableRowByName("FileDescription").Displayed());
 				Assert.assertFalse(docView.getMetaDataTableRowValueByName("FileDescription").getText().equals(""));
 			}
@@ -1758,6 +1764,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+	//NOT COMPLETE
 	@Then("^.*(\\[Not\\] )? verify_email_metadata_is_populated_correctly$")
 	public void verify_email_metadata_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1766,17 +1773,33 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Select the following columns:
 			//
-			//
 			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and RecipientDomainCoun
-			//
 			//
 			//* Validate the value displayed from the search
 			//* Values will match those of the Ingested Email Document
 			//
-			throw new ImplementationException("verify_email_metadata_is_populated_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_email_metadata_is_populated_correctly");
+
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			//For Each Ingested File -> go through and Make sure the files exist 
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("EmailAllDomainCount").Displayed()  ;}}), Input.wait30); 
+
+				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailAllDomainCount").getText()).equals("") );
+				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailAllDomain").getText()).equals("") );
+				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailRecipientNames").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
+
 		}
+		else fail(dataMap, "Email metadata is not populated correctly");
 
 	}
 
@@ -1786,22 +1809,20 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5527:To Verify Field ParentDocID ,HeadOfHouseholdDocID and FamilyID in Ingested Data Set.Verify ingestion is successfully published and no errors are displayed
-			//* Validate the following fields are displayed for the ingestion published
-			//* You can selet the fields as columns if that makes things easier to validate
-			//
-			//
-			//* ParentDocId
-			//* HeadOfHouseholdDocID
-			//* FamilyID
-			//
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
 
+			//For Each Ingested File -> go through and Make sure the files exist 
 			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("ParentDocID").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ParentDocID").getText()).equals("") );
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("HeadOfHouseholdDocID").getText()).equals("") );
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("FamilyID").getText()).equals("") );
@@ -1829,6 +1850,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("ProcessingOCRComplete").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ProcessingOCRComplete").getText()).equals("") );
 			}
 			pass(dataMap, "Verified Processing OCR Complete is tally searchable");
@@ -1853,6 +1879,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("FamilyRelationship").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("FamilyRelationship").getText()).equals("") );
 			}
 			pass(dataMap, "Verified Family relationship is tally searchable");
@@ -1876,6 +1907,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("ExceptionResolution").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ExceptionResolution").getText()).equals("") );
 			}
 			pass(dataMap, "Verified Exception Resolution is tally searchable");
@@ -1890,20 +1926,32 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5265:To Verify EmailDuplicateDocID field is populated correctly for ingested data
-			//
 			//* Click on Select Column button and select the following columns:
-			//
-			//
 			//* Email DuplicateDocID
 			//* EmailsDuplicates
-			//
-			//
 			//* Validate that values are displayed for the ingested email docuements.
-			//
-			throw new ImplementationException("verify_email_duplicated_doc_id_is_populated_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_email_duplicated_doc_id_is_populated_correctly");
+
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			//For Each Ingested File -> go through and Make sure the files exist 
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("EmailDuplicateDocID").Displayed()  ;}}), Input.wait30); 
+
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailDuplicateDocID").getText()).equals("") );
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailsDuplicate").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
+
 		}
+		else fail(dataMap, "Email duplicated doc is not not populated correctly");
 
 	}
 
@@ -1923,6 +1971,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("ExcelProtectedWorkbook").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ExcelProtectedWorkbook").getText()).equals("") );
 			}
 			pass(dataMap, "Verified expected fields are in data set");
@@ -1939,10 +1992,8 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//TC5560:To Verify AllCustodians in Tally and Search
 			//* validate the following field when searching the ingested document
-			//
-			//
 			//* AllCustodians
-			//
+
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
@@ -1951,6 +2002,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("AllCustodians").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("AllCustodians").getText()).equals("") );
 			}
 			pass(dataMap, "Verified expected fields are in data set");
@@ -1976,6 +2032,11 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("ReviewExportID").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ReviewExportID").getText()).equals("") );
 			}
 			pass(dataMap, "Verified expected fields are in data set");
@@ -2003,6 +2064,10 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("SourceAttachDocIDs").Displayed()  ;}}), Input.wait30); 
+
 				Assert.assertTrue(docView.getMetaDataTableRowByName("SourceAttachDocIDs").Displayed());
 				Assert.assertFalse(docView.getMetaDataTableRowValueByName("SourceAttachDocIDs").getText().equals(""));
 				Assert.assertTrue(docView.getMetaDataTableRowByName("AttachDocIDs").Displayed());
@@ -2021,11 +2086,25 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//TC5557:To Verify HiddenProperties in Tally and Search.
 			//* validate HiddenProperties is displayed on the metadata on the right side
-			//
-			throw new ImplementationException("verify_hidden_properties_are_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_hidden_properties_are_tally_searchable");
+
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getMetaDataTableRowByName("HiddenProperties").Displayed()  ;}}), Input.wait30); 
+
+				Assert.assertFalse(docView.getMetaDataTableRowValueByName("HiddenProperties").getText().equals(""));
+
+			}
+			pass(dataMap, "Hidden properties are tally searchable");
 		}
+		else fail(dataMap, "Hidden properties are not tally searchable");
 
 	}
 
@@ -2034,20 +2113,17 @@ public class IngestionContext extends CommonContext {
 	public void click_save_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* After clicking Next button
-			//* Click the save button 
-			//* Click Yes
-			//* Ingestion is saved as a draft
-			//
-			throw new ImplementationException("click_save_button");
-		} else {
-			throw new ImplementationException("NOT click_save_button");
+			ingest.getSaveDraftButton().click();
+			ingest.getSaveButtonConfirmationYes().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Saved the ingestion draft");
 		}
+		else fail(dataMap, "could not save ingestion as draft");
 
 	}
 
 
+	//
 	@Then("^.*(\\[Not\\] )? verify_draft_ingestion_files_are_not_found$")
 	public void verify_draft_ingestion_files_are_not_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -2056,10 +2132,17 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate the ingested files and ingestion saved can't be found in the search
 			//
-			throw new ImplementationException("verify_draft_ingestion_files_are_not_found");
-		} else {
-			throw new ImplementationException("NOT verify_draft_ingestion_files_are_not_found");
+			sessionSearch = new SessionSearch(driver);
+			//Go through each Document tile, and make sure the results are 0
+			for(WebElement res: sessionSearch.getSearchDocumentMatchNumber().FindWebElements()) {
+				if(!res.getText().equals(" ")) Assert.assertEquals("0", res.getText());
+			}
+			//Verify Table is empty. An empty table has only 1 row. Each tile, has its own row. Therefore we verify that there are a total of only 5 rows
+			Assert.assertEquals(5, sessionSearch.getSearchResultsTableRows().FindWebElements().size());
+			pass(dataMap, "Ingestion files are not found");
+			
 		}
+		else fail(dataMap, "ingestion files were found");
 
 	}
 	

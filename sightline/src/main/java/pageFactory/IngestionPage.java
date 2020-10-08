@@ -291,6 +291,7 @@ public class IngestionPage {
     
     public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
     public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public Element getSaveButtonConfirmationYes() { return driver.FindElementById("bot1-Msg1");}
     
     
     public String getIngestionTileName(int index){
