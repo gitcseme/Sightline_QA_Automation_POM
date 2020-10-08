@@ -110,6 +110,7 @@ public class IngestionPage {
     public Element getbtnRunIngestion(){ return driver.FindElementById("btnRunIngestion"); }
     public Element getRefreshButton(){ return driver.FindElementById("refresh"); }
     public Element getApproveMessageOKButton(){ return driver.FindElementById("bot1-Msg1"); }
+    public ElementCollection getApproveMessageButton() { return driver.FindElementsById("bot1-Msg1");}
     public Element getWarningMessageOKButton(){ return driver.FindElementById("bot1-Msg2"); }
     public Element getRunAnalyticsRunButton(){ return driver.FindElementById("run"); }
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }

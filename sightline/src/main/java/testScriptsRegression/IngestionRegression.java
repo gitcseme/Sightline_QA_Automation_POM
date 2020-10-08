@@ -4754,7 +4754,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positiveverify_draft_ingestion_files_are_not_found"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_expected_fields_are_in_data_set() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5210,7 +5210,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_save_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_draft_ingestion_files_are_not_found() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5239,9 +5239,11 @@ public class IngestionRegression extends RegressionBase {
 			context.search_for_ingestion(true, dataMap);
 			context.verify_draft_ingestion_files_are_not_found(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

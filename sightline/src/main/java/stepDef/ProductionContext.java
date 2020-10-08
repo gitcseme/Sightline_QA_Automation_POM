@@ -2398,6 +2398,20 @@ public class ProductionContext extends CommonContext {
 		}
 	}
 	
+	//Not working
+	@Then("^.*(\\[Not\\] )? deleteAll$")
+	public void deleteAll(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		while(true) {
+			selecting_the_production(true,dataMap);
+			prod.getprod_ActionButton().click();
+			prod.getDelete().click();
+			prod.getProductionDeleteOkButton().click();
+
+
+		}
+	}
+
+	
 	
 }//end
 

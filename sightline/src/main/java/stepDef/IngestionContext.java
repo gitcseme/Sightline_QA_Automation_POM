@@ -128,11 +128,16 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getNextButton().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getNextButton().Click();
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    	ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+
 			Thread.sleep(2000);
-	    	ingest.getApproveMessageOKButton().Click(); 
-		} else {
+
+			if(ingest.getApproveMessageButton().FindWebElements().size()>0) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
+				ingest.getApproveMessageOKButton().Click(); 
+			}
+
+	    }else{
 			ingest.getRunIndexing().Click();
 		}
 
@@ -1706,12 +1711,14 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				sessionSearch.getSearchTableResults().Displayed() ;}}), Input.wait30); 
 
-			sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
-			sessionSearch.getBulkActionButton().click();
-			
+						
 			if (dataMap.get("actionNavigateDoc").equals("docList")) {
+				sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
+				sessionSearch.getBulkActionButton().click();
 				sessionSearch.getDocListAction().click();
 			} else if (dataMap.get("actionNavigateDoc").equals("docView")) {
+				sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0).click(); 
+				sessionSearch.getBulkActionButton().click();
 				sessionSearch.getDocViewAction().click();
 			}
 			
