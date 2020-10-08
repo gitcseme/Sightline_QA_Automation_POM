@@ -1961,19 +1961,22 @@ public class IngestionContext extends CommonContext {
 			//* validate progress status is updated (In Progress, Catalogued, Copied, Indexed)
 			//
 			
-			for(int i =4; i<=6;i++) {
-				//click_filter_by_dropdown(true,dataMap,4);
+			try {
+				Boolean progressStatusUpdated =false;
+				String status =ingest.getIngestionTileFilterStatus(0).getText().substring(8);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+		    		ingest.getIngestionTile().Displayed() ;}}), Input.wait30); 
 				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
 				Assert.assertTrue(ingest.getIngestSource().Displayed());
 				Assert.assertTrue(ingest.getIngestPublish().Displayed());
 				Assert.assertTrue(ingest.getIngestError().Displayed());
-				
-				
+				if(status.equals("In Progess") || status.equals("Catalogued") || status.equals("Copied") || status.equals("Indexed")){
+					progressStatusUpdated = true ;
+				}
 			}
-			
-			
+			catch(Exception e){
+				e.printStackTrace();
+			}
 			pass(dataMap, "verify_components_are_displayed_correctly");
 		} else {
 			fail(dataMap, "NOT verify_components_are_displayed_correctly");
@@ -2297,16 +2300,19 @@ public class IngestionContext extends CommonContext {
 			//* validate the ingestion tile is refreshed
 			//* validate the count on the page is also updated correctly
 			//
-			while (ingest.getIngestionTileFilterStatus(0).getText().substring(8).equals("In Progress"))
-				ingest.getRefreshButton().Click();
-			int TileSize = ingest.getIngestTile().size();
-			String totalIngestions= ingest.getTotalIngestCount().getText();
-			
-			Assert.assertEquals(0, TileSize);
-			Assert.assertEquals("0", totalIngestions);
-			
-			
-			pass(dataMap,"verify_ingestion_home_page_is_refreshed");
+			try {
+				while(ingest.getSavedIngestTile().Displayed()){
+					ingest.getRefreshButton().click();
+				}
+				driver.waitForPageToBeReady();
+	
+				int TileSize = ingest.getIngestTile().size();
+				Assert.assertEquals(0, TileSize);
+				
+				pass(dataMap,"verify_ingestion_home_page_is_refreshed");}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			fail(dataMap,"NOT verify_ingestion_home_page_is_refreshed");
 		}

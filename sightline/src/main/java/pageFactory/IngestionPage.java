@@ -296,12 +296,13 @@ public class IngestionPage {
     public Element getIngestSource() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
     public Element getIngestPublish() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
     public Element getIngestError() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getSavedIngestTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > a > span");}
+
     public Element getIngestGridView() {return driver.FindElementById("GridView");}
     public Element getIngestSortDropDown() {return driver.FindElementById("SortBy");}
     public Element getIngestSortOption(String option) {return driver.FindElementByCssSelector(String.format("[id='SortBy'] option[value='%s']", option));}
     public ElementCollection getIngestGridTableRows() {return driver.FindElementsByCssSelector("#IngestionGridViewtable >tbody>tr");}
     public Element getIngestGridViewNextBtn() {return driver.FindElementById("IngestionGridViewtable_next");}
-    
     public ElementCollection getIngestionStatus() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
     public ElementCollection getIngestionModifiedDates() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li div.bottomStamps.row > div:nth-child(2) > div");}
     public ElementCollection getIngestionModifiedUser() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(1) > span");}
@@ -310,6 +311,7 @@ public class IngestionPage {
     public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
     public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
     public ElementCollection getIngestionFilterStatus() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
+
     public Element getIngestionGridTableProject() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[1]");}
     public Element getIngestionGridTableIngestionName() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[2]");}
     public Element getIngestionGridTableIngestionType() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[3]");}
@@ -324,15 +326,13 @@ public class IngestionPage {
     public Element getIngestionGridTableIngestionStatus(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[12]");}
     public Element getIngestionGridTableAction(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[13]");}
 
-    
-  
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
     	}
     	return null;
     }
- 
+    
     public WebElement getIngestionTile(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index);

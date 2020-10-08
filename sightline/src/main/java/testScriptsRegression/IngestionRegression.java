@@ -5245,7 +5245,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive" ,"wait"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_login_as_pau_When_click_run_ingest_button_Then_verify_components_are_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5269,6 +5269,7 @@ public class IngestionRegression extends RegressionBase {
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			context.click_filter_by_dropdown(true, dataMap);
 			context.verify_components_are_displayed_correctly(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5327,7 +5328,6 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_displays_expected_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5528,7 +5528,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive","wait"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_verify_user_can_ingest_a_saved_draft_When_Then_verify_ingestion_home_page_is_refreshed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5873,7 +5873,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive","smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_ProjectName_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
