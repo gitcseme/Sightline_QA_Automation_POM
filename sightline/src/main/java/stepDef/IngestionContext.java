@@ -154,8 +154,9 @@ public class IngestionContext extends CommonContext {
 	public void on_saved_draft_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			on_ingestion_home_page(scriptState, dataMap);
-			new_ingestion_created(scriptState, dataMap);
+			on_ingestion_home_page(true, dataMap);
+			new_ingestion_created(true, dataMap);
+			map_configuration_fields(true, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
@@ -177,7 +178,7 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionAction_Wizard().Displayed()  ;}}), Input.wait30); 
+					ingest.getFirstIngestionActionButton().Enabled() && ingest.getIngestionAction_Wizard().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Wizard().Click();
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1961,7 +1962,7 @@ public class IngestionContext extends CommonContext {
 			//
 			
 			for(int i =4; i<=6;i++) {
-				click_filter_by_dropdown(true,dataMap,4);
+				//click_filter_by_dropdown(true,dataMap,4);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
@@ -1989,16 +1990,18 @@ public class IngestionContext extends CommonContext {
 			//* Once the Saved Draft is opened in the wizard
 			//* Validate that the user can still ingest the saved draft opened
 			//
-			throw new ImplementationException("verify_user_can_ingest_a_saved_draft");
+			Assert.assertEquals("In Progress", ingest.getIngestionTileFilterStatus(0).getText().substring(8));
+			
+			pass(dataMap, "verify_user_can_ingest_a_saved_draft");
 		} else {
-			throw new ImplementationException("NOT verify_user_can_ingest_a_saved_draft");
+			fail(dataMap, "NOT verify_user_can_ingest_a_saved_draft");
 		}
 
 	}
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
@@ -2009,14 +2012,31 @@ public class IngestionContext extends CommonContext {
 				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
 			}
 			//select the option
-			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
+			
+			if(dataMap.get("filter_option").equals("Draft"))
+				ingest.getSelectFilterByOption(1).Click();
+			if(dataMap.get("filter_option").equals("In Progress"))
+				ingest.getSelectFilterByOption(2).Click();
+			if(dataMap.get("filter_option").equals("Failed"))
+				ingest.getSelectFilterByOption(3).Click();
+			if(dataMap.get("filter_option").equals("Cataloged"))
+				ingest.getSelectFilterByOption(4).Click();
+			if(dataMap.get("filter_option").equals("Copied"))
+				ingest.getSelectFilterByOption(5).Click();	
+			if(dataMap.get("filter_option").equals("Indexed"))
+				ingest.getSelectFilterByOption(6).Click();
+			if(dataMap.get("filter_option").equals("Approved"))
+				ingest.getSelectFilterByOption(7).Click();
+			if(dataMap.get("filter_option").equals("Published"))
+				ingest.getSelectFilterByOption(8).Click();	
+			
 			ingest.getcardCanvas().Click();
 			ingest.getRefreshButton().Click();
 			
 			
-			throw new ImplementationException("click_filter_by_dropdown");
+			pass(dataMap, "click_filter_by_dropdown");
 		} else {
-			throw new ImplementationException("NOT click_filter_by_dropdown");
+			fail(dataMap, "NOT click_filter_by_dropdown");
 		}
 
 	}
@@ -2036,7 +2056,27 @@ public class IngestionContext extends CommonContext {
 			//* Approved
 			//* Published
 			//
-			throw new ImplementationException("verify_filter_by_dropdown_displays_expected_options");
+			try {
+			//click all load more button
+			scroll_click_load_more_button(true,dataMap);
+			while(ingest.getclickMoreButton().Displayed()) {
+				scroll_click_load_more_button(true,dataMap);
+				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
+			}
+			driver.waitForPageToBeReady();
+
+			int size = ingest.getIngestionFilterStatus().FindWebElements().size();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				!ingest.getclickMoreButton().Displayed() && ingest.getIngestionTileFilterStatus(size).isDisplayed()  ;}}), Input.wait30); 
+			
+			for(int i=0; i <= size;i++) {
+				Assert.assertTrue(ingest.getIngestionTileFilterStatus(i).getText().substring(8).equals(dataMap.get("filter_option").toString()));
+			}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap, "verify_filter_by_dropdown_displays_expected_options");
 		} else {
 			throw new ImplementationException("NOT verify_filter_by_dropdown_displays_expected_options");
 		}
@@ -2090,10 +2130,29 @@ public class IngestionContext extends CommonContext {
 			//
 			//
 			//* In Progress
-			//
-			throw new ImplementationException("verify_filter_by_dropdown_has_default_option_selected");
+			//			
+			try {
+			int count =0;
+			String actual ="";
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			
+			for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected()) { 
+					actual = ingest.getSelectFilterByOption(i).GetAttribute("value");
+					count++;
+				}
+			}
+			
+			Assert.assertEquals(1, count); //check if more then one is selected
+			Assert.assertEquals("INPROGRESS", actual); 
+			pass(dataMap, "verify_filter_by_dropdown_has_default_option_selected");}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		} else {
-			throw new ImplementationException("NOT verify_filter_by_dropdown_has_default_option_selected");
+			fail(dataMap, "NOT verify_filter_by_dropdown_has_default_option_selected");
 		}
 
 	}
@@ -2209,9 +2268,18 @@ public class IngestionContext extends CommonContext {
 			//* validate the ingestion tile is refreshed
 			//* validate the count on the page is also updated correctly
 			//
-			throw new ImplementationException("verify_ingestion_home_page_is_refreshed");
+			while (ingest.getIngestionTileFilterStatus(0).getText().substring(8).equals("In Progress"))
+				ingest.getRefreshButton().Click();
+			int TileSize = ingest.getIngestTile().size();
+			String totalIngestions= ingest.getTotalIngestCount().getText();
+			
+			Assert.assertEquals(0, TileSize);
+			Assert.assertEquals("0", totalIngestions);
+			
+			
+			pass(dataMap,"verify_ingestion_home_page_is_refreshed");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_home_page_is_refreshed");
+			fail(dataMap,"NOT verify_ingestion_home_page_is_refreshed");
 		}
 
 	}
@@ -2275,6 +2343,7 @@ public class IngestionContext extends CommonContext {
 			ArrayList<String> pageElements = new ArrayList<>();
 			
 			//Scrolls to the end of page
+
 			while(ingest.getclickMoreButton().Displayed()) {
 				scroll_click_load_more_button(true,dataMap);
 				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());

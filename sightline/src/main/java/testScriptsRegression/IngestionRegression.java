@@ -5296,14 +5296,19 @@ public class IngestionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
-			dataMap.put("dat_load_file", "DAT4_STC_newdateformatEmailData - Copy.dat");
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("source_system", "NUIX");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "GD_994_Native_Text_ForProduction");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("pdf_file", "PDF.LST");
 			dataMap.put("date_time", "MM/DD/YYY");
-			dataMap.put("doc_key", "EmailCCNameAndCCAddress");
-			dataMap.put("source_system", "TRUE");
+			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
 			context.on_saved_draft_ingestion(true, dataMap);
 			context.click_open_wizard_option(true, dataMap);
+			context.click_next_button(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.verify_user_can_ingest_a_saved_draft(true, dataMap);
@@ -5311,6 +5316,7 @@ public class IngestionRegression extends RegressionBase {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -5321,7 +5327,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_displays_expected_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5338,10 +5344,10 @@ public class IngestionRegression extends RegressionBase {
 			//dataMap.put("filter_option", "In Progress");
 			//dataMap.put("filter_option", "Failed");
 			//dataMap.put("filter_option", "Cataloged");
-			//dataMap.put("filter_option", "Copied");
+			dataMap.put("filter_option", "Copied");
 			//dataMap.put("filter_option", "Indexed");
 			//dataMap.put("filter_option", "Approved");
-			dataMap.put("filter_option", "Published");
+			//dataMap.put("filter_option", "Published");
 			context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_displays_expected_options(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5386,7 +5392,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_has_default_option_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5522,7 +5528,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive","wait"})
 	public void test_Given_verify_user_can_ingest_a_saved_draft_When_Then_verify_ingestion_home_page_is_refreshed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5534,14 +5540,16 @@ public class IngestionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
-			dataMap.put("dat_load_file", "DAT4_STC_newdateformatEmailData - Copy.dat");
+			dataMap.put("source_system", "NUIX");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "GD_994_Native_Text_ForProduction");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("pdf_file", "PDF.LST");
 			dataMap.put("date_time", "MM/DD/YYY");
-			dataMap.put("doc_key", "EmailCCNameAndCCAddress");
-			dataMap.put("source_system", "TRUE");
 			context.on_saved_draft_ingestion(true, dataMap);
 			context.click_open_wizard_option(true, dataMap);
+			context.click_next_button(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.verify_user_can_ingest_a_saved_draft(true, dataMap);
@@ -5552,6 +5560,7 @@ public class IngestionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
+			e.printStackTrace();
 		} finally { 
 			context.close_browser(true, dataMap);
 		}
@@ -5770,7 +5779,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "Jose"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_LastModifiedDate_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5938,7 +5947,6 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			//context.click_filter(true, dataMap);
 			context.verify_ingestion_home_page_displays_default_tile_count(true, dataMap);
 			context.scroll_click_load_more_button(true, dataMap);
 			context.verify_load_more_button_is_displayed(true, dataMap);

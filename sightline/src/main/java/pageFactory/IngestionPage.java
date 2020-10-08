@@ -183,8 +183,7 @@ public class IngestionPage {
     public Element getIngestionName_ExecCloseButton(){ return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionActionButton(){ return driver.FindElementByXPath(".//*[@id='cardCanvas']//div[1]/a"); }
     public Element getFirstIngestionActionButton() {return driver.FindElementByXPath(".//*[@id='cardCanvas']//li[1]//div[1]/a");}
-    public Element getIngestionAction_Wizard(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Open in Wizard')]"); }
-
+    public Element getIngestionAction_Wizard(){ return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div.pName.font-xs > div > dl > dt:nth-child(1) > a"); }
     public Element getIngestionAction_Delete(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Delete')]"); }
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
@@ -283,7 +282,7 @@ public class IngestionPage {
     public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
     public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
-    public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
+    public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu']//li[%s]//a[1]/label/input",index));}
     public ElementCollection getAllFilterOptions() { return driver.FindElementsByCssSelector(".multiselect-container>li");}
     public Element backButton() {return driver.FindElementById("BackButton");}
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
