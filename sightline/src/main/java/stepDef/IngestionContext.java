@@ -50,7 +50,9 @@ public class IngestionContext extends CommonContext {
 	public void (boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
-	 JavascriptExecutor js = (JavascriptExecutor)driver; 
+	
+	SessionSearch sessionSearch;
+	JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
 	@And("^.*(\\[Not\\] )? add_a_new_ingestion_btn_is_clicked$")
@@ -1669,12 +1671,12 @@ public class IngestionContext extends CommonContext {
 	public void on_search_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Navigate to /Search/Searches
-			//
-			throw new ImplementationException("on_search_home_page");
+			ingest.getNavigateToSearchMenuButton().click();
+			ingest.getNavigateToSessionSearchPageMenuButton().click();
+			
+			pass(dataMap, "Navigated to Session Search home page");
 		} else {
-			throw new ImplementationException("NOT on_search_home_page");
+			fail(dataMap, "NOT on_search_home_page");
 		}
 
 	}
@@ -1691,11 +1693,26 @@ public class IngestionContext extends CommonContext {
 			//* Click Search button
 			//* Add the documents that were generated to the right hand side by clicking the Plus symbol
 			//* Click the dropdown action button
-			//* Click on View DocView
+			//* Click on View D	ocView
 			//
-			throw new ImplementationException("search_for_ingestion");
+			sessionSearch.insertFullText("0C8A_SQA_Default_Automation_20201007154004823");
+			sessionSearch.getSearchButton().click();
+			
+			sessionSearch.getSearchResultDocsMetCriteriaPlusButton().getElementByIndex(0).click();
+			sessionSearch.getBulkActionButton().click();
+			
+			if (dataMap.get("actionNavigateDoc").equals("docList")) {
+				sessionSearch.getDocListAction().click();
+			} else if (dataMap.get("actionNavigateDoc").equals("docView")) {
+				sessionSearch.getDocViewAction().click();
+			}
+			
+			driver.waitForPageToBeReady();
+			
+			pass(dataMap, "Successfully searched for ingestions");
+			
 		} else {
-			throw new ImplementationException("NOT search_for_ingestion");
+			fail(dataMap, "NOT search_for_ingestion");
 		}
 
 	}

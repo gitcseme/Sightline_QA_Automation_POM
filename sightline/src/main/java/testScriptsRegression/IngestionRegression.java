@@ -4782,6 +4782,7 @@ public class IngestionRegression extends RegressionBase {
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.on_search_home_page(true, dataMap);
+			dataMap.put("actionNavigateDoc", "docList");
 			context.search_for_ingestion(true, dataMap);
 			context.verify_expected_fields_are_in_data_set(true, dataMap);
 		} catch (ImplementationException e) {

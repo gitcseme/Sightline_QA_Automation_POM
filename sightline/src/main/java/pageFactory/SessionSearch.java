@@ -63,8 +63,8 @@ public class SessionSearch {
   
     //Actions
     public Element getas_Action_Exportdata(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[text()='Export Data']"); }
-    public Element getDocListAction(){ return driver.FindElementByXPath("//a[contains(text(),'View In DocList')]"); }
-    public Element getDocViewAction(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]"); }
+    public Element getDocListAction(){ return driver.FindElementByCssSelector("[id=DoclistOpt] a"); }
+    public Element getDocViewAction(){ return driver.FindElementByCssSelector("[id=DocviewOpt] a"); }
     public Element getDocViewActionDL(){ return driver.FindElementByXPath("//a[contains(.,'View in DocView')]"); }
     
     public Element getTallyResults(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'Tally Results')]"); }
@@ -236,6 +236,8 @@ public class SessionSearch {
     public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
 
     public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
+    
+    public ElementCollection getSearchResultDocsMetCriteriaPlusButton() { return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title=\"Docs That Met Your Criteria\"] i.fa-plus-circle");}
     
 
     public SessionSearch(Driver driver){

@@ -288,6 +288,10 @@ public class IngestionPage {
     public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     
+    public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
+    public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    
+    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
