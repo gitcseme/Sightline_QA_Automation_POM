@@ -1855,6 +1855,7 @@ public class ProductionContext extends CommonContext {
 				
 				int i =0;
 				while(!prod.getGeneratePostGenStatus().getText().equals("Post generation check complete") && i<50){
+					i++;
 					driver.getWebDriver().navigate().refresh();
 					driver.waitForPageToBeReady();
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
