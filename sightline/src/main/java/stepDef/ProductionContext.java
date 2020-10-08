@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.List;
+import java.util.Random;
+
 import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.By;
@@ -987,17 +989,15 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivDefaultAutomation().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getPrivDefaultAutomation().Click();
-					
-									
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivInsertQuery().Enabled() && prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
-
+					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-					
-
+										
 					pass(dataMap,"Priv guard documents are completed");
 					
 			}
@@ -1840,10 +1840,13 @@ public class ProductionContext extends CommonContext {
 				prod.getSecondBatesNumberSelectButton().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+				dataMap.put("beginning_bates_number", beginningBatesNumber);
+				dataMap.put("prefix", prefix);
 				
 				
 			} catch (Exception e) {
-				fail(dataMap,"");
+				fail(dataMap,"Unable to complete specifying the next bates number");
 			}
 		} else {
 			throw new ImplementationException("NOT complete_specifying_the_next_bates_number");
@@ -1851,13 +1854,111 @@ public class ProductionContext extends CommonContext {
 
 	}
 
+	@And("^.*(\\[Not\\] )? marking_complete_the_next_available_bates_number$")
+	public void marking_complete_the_next_available_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortNextButton().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortNextButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbDocumentSelection().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? mark_complete_default_priv_guard$")
+	public void mark_complete_default_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardMarkComplete().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
+					prod.getbtnProductionGuardMarkComplete().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+				prod.getbtnProductionGuardNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbProductionLocation().Displayed()  ;}}), Input.wait30); 
+				
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
 
 	@And("^.*(\\[Not\\] )? complete_default_production_location_component$")
 	public void complete_default_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.2. Type in a Production Directory:      2 a. The directory should be "Automation" + random 7 digit number + _ + dir     2 b. Ex: Automation5264345_dirMake sure to store the value for the Root Path and directory as it will be used later3. Click Mark Complete4. Click Next
-			throw new ImplementationException("complete_default_production_location_component");
+			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.
+			//2. Type in a Production Directory:      
+			//2 a. The directory should be "Automation" + random 7 digit number + _ + dir     
+			//2 b. Ex: Automation5264345_dir Make sure to store the value for the Root Path and directory as it will be used later
+			//3. Click Mark Complete
+			//4. Click Next
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+
+				prod.getlstProductionRootPaths().Click();
+
+				prod.getSecondRootPathOption().Click();
+				Random rnd = new Random();
+				int number = rnd.nextInt(9999999);
+				String selectedRootPath = prod.getSecondRootPathOption().getText();
+				String productionDirectory = "Automation" + number + "_dir";
+				dataMap.put("root_path", selectedRootPath);
+				dataMap.put("production_directory", productionDirectory);
+				prod.getProductionOutputLocation_ProductionDirectory().SendKeys(productionDirectory);
+		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationMarkComplete().Enabled() ;}}), Input.wait30);
+
+				prod.getbtnProductionLocationMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+				prod.getbtnProductionLocationNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbSummaryAndPreview().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to complete Production Location section");
+			}
+
+
+			
 		} else {
 			throw new ImplementationException("NOT complete_default_production_location_component");
 		}
@@ -1870,7 +1971,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
-			throw new ImplementationException("completed_summary_preview_component");
+			try {
+				System.out.println("1");
+				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
+				System.out.println("2");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
+				System.out.println("3");
+				prod.getbtnProductionSummaryMarkComplete().Click();
+				System.out.println("4");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
+				System.out.println("5");
+				prod.getbtnProductionSummaryNext().Click();
+				System.out.println("6");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbGenerate().Displayed()  ;}}), Input.wait30); 
+				System.out.println("7");
+			} catch (Exception e) {
+				fail(dataMap, "User is not on the Summery & Preview page");
+			}
 		} else {
 			throw new ImplementationException("NOT completed_summary_preview_component");
 		}
@@ -1880,10 +2000,23 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? starting_the_production_generation$")
 	public void starting_the_production_generation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		String url = driver.driver.getCurrentUrl();
+		System.out.println("URL1: " + url);
 		if (scriptState) {
-			//Click the Generate button
-			throw new ImplementationException("starting_the_production_generation");
+			try {
+				System.out.println("Waiting to click generate button...");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGenerate().Displayed()  ;}}), Input.wait30); 
+				System.out.println("About to click generate button...");
+				prod.getbtnProductionGenerate().Click();
+				System.out.println("Clicked generate button...");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerationStartedSuccessfullyText().Displayed()  ;}}), Input.wait30); 
+				System.out.println("generate started message displayed");
+			} catch (Exception e) {
+				fail(dataMap, "Unable to start production generation");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT starting_the_production_generation");
 		}
@@ -1896,7 +2029,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("waiting_for_production_to_be_in_progress");
+			System.out.println("Made it to waiting_for_production_to_be_in_progress");
+			try {
+				System.out.println("waiting for in progress status...");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getInProgressStatus().Displayed()  ;}}), Input.wait30); 
+				System.out.println("progress status displayed!");
+
+			} catch (Exception e) {
+				fail(dataMap, "Production was not set to In Progress");
+			}
 		} else {
 			throw new ImplementationException("NOT waiting_for_production_to_be_in_progress");
 		}
@@ -1908,8 +2050,31 @@ public class ProductionContext extends CommonContext {
 	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_using_the_next_bates_generations_a_production_successfully");
+			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in 
+			//"custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.
+			//For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), 
+			//then a sample bates number generated would look like "B00001001T".
+			int refreshCount = 1000;
+			System.out.println("Starting outcome...");
+			String url = driver.driver.getCurrentUrl();
+
+//			for (int i = 0; i < refreshCount; i++) {
+//				System.out.println("Made it in loop");
+//				if (prod.getRegenerateButtonElCollection().size() > 0) {
+//					System.out.println("Completed!");
+//					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//							prod.getExportBatesButton().Enabled() ;}}), Input.wait30); 
+//					String batesRange = prod.getProd_BatesRange().getText();
+//					System.out.println("bates range: " + batesRange);
+//					break;
+//				} else {
+//					System.out.println("Refreshing " + i + " times");
+//					// Using driver.get() instead of driver.Navigate().refresh(). Using the refresh function does not take user back on Generate page
+//					driver.getWebDriver().navigate().refresh();
+//					driver.waitForPageToBeReady();
+//				}
+//			}
+
 		} else {
 			throw new ImplementationException("NOT verify_using_the_next_bates_generations_a_production_successfully");
 		}

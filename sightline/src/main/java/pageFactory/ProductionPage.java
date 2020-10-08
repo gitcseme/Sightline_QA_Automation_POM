@@ -421,7 +421,18 @@ public class ProductionPage {
     public Element getNextBatesNumbersDialog() { return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front"); }
     public Element getSecondBatesNumberValue() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td"); }
     public Element getSecondBatesNumberSelectButton() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td[2]/button"); }
-
+    public Element getNumAndSortMarkCompleteButton() { return driver.FindElementById("NumAndSortMarkInComplete"); }
+    public Element getNumAndSortNextButton() { return driver.FindElementById("NumAndSortNext"); }
+    public Element getCurrentCrumbDocumentSelection() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Document Selection']"); }
+    public Element getCurrentCrumbProductionLocation() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Production Location']"); }
+    public Element getCurrentCrumbSummaryAndPreview() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Summary & Preview']"); }
+    public Element getCurrentCrumbGenerate() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Generate']"); }
+    public Element getSecondRootPathOption() { return driver.FindElementByXPath("//select[@id='lstProductionRootPaths']/option[2]"); }
+    public Element getGenerationStartedSuccessfullyText() { return driver.FindElementByXPath("//*[text()='Generation Started Successfully']"); }
+    public Element getInProgressStatus() { return driver.FindElementByXPath("//label[text()='IN PROGRESS']"); }
+    public ElementCollection getRegenerateButtonElCollection() { return driver.FindElementsById("btnProductionReGenerate"); }
+    public Element getExportBatesButton() { return driver.FindElementById("btnProductionGeneratedBatesRangeExport"); }
+    public Element getProductionLocationMarkIncompleteButton() { return driver.FindElementById("btnProductionLocationMarkInComplete"); }
 
     public ProductionPage(Driver driver){
 
