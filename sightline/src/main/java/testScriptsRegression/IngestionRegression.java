@@ -3052,7 +3052,7 @@ public class IngestionRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
-			context.close_browser(true, dataMap);
+			context.close_browser(true, dataMap); 
 		}
 
 		report.endTest(test);
@@ -4723,16 +4723,18 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("pdf_checkbox", "true");
-			dataMap.put("text_file", "text.lst");
-			dataMap.put("dat_load_file", "AttachDocIDs.dat");
-			dataMap.put("text_checkbox", "true");
-			dataMap.put("pdf_file", "PDF.LST");
-			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator);
-			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("date_time", "MM/DD/YYYY");
-			dataMap.put("doc_key", "SourceDocID");
-			dataMap.put("source_system", "NUIX");
+
+			dataMap.put("source_system", "ICE"); 
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator); 
+			dataMap.put("source_folder", "SQA_Default_Automation"); 
+			dataMap.put("dat_load_file", "EmailData.dat"); 
+			//dataMap.put("native_checkbox", "true"); 
+			dataMap.put("text_file", "TextEmailData.lst");
+			//dataMap.put("dat_load_file", "EmailData.dat"); 
+			//dataMap.put("text_checkbox", "true"); 
+			dataMap.put("native_file", "NativeEmailData.LST"); 
+			dataMap.put("date_time", "MM/DD/YYYY"); 
+			dataMap.put("doc_key", "DocID"); 
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
@@ -5243,7 +5245,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive" ,"wait"})
 	public void test_Given_sightline_is_launched_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_login_as_pau_When_click_run_ingest_button_Then_verify_components_are_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5254,18 +5256,18 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("pdf_checkbox", "true");
-			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("source_system", "NUIX");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("doc_key", "DOCID");
-			dataMap.put("source_system", "ICE");
+			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("date_time", "MM/DD/YYY");
 			context.new_ingestion_created(true, dataMap);
+			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
-			context.login_as_pau(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.verify_components_are_displayed_correctly(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5332,6 +5334,14 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
+			//dataMap.put("filter_option", "Draft");
+			//dataMap.put("filter_option", "In Progress");
+			//dataMap.put("filter_option", "Failed");
+			//dataMap.put("filter_option", "Cataloged");
+			//dataMap.put("filter_option", "Copied");
+			//dataMap.put("filter_option", "Indexed");
+			//dataMap.put("filter_option", "Approved");
+			dataMap.put("filter_option", "Published");
 			context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_displays_expected_options(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5376,7 +5386,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_has_default_option_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5389,7 +5399,6 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			context.click_filter_by_dropdown(true, dataMap);
 			context.verify_filter_by_dropdown_has_default_option_selected(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5446,7 +5455,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "other"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_grid_view_displays_expected_fields() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5518,7 +5527,7 @@ public class IngestionRegression extends RegressionBase {
 	{
 		HashMap dataMap = new HashMap();
 
-		ExtentTest test = report.startTest("Given verify_user_can_ingest_a_saved_draft When  Then verify_ingestion_home_page_is_refreshed");
+		ExtentTest test = report.startTest("Given verify_user_can_ingest_a_saved_draft When Then verify_ingestion_home_page_is_refreshed");
 
 		dataMap.put("ExtentTest",test);
 
@@ -5761,7 +5770,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "Jose"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_LastModifiedDate_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5779,9 +5788,11 @@ public class IngestionRegression extends RegressionBase {
 			context.select_sort_by_option(true, dataMap);
 			context.verify_sort_by_works_as_expected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -5927,6 +5938,7 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
+			//context.click_filter(true, dataMap);
 			context.verify_ingestion_home_page_displays_default_tile_count(true, dataMap);
 			context.scroll_click_load_more_button(true, dataMap);
 			context.verify_load_more_button_is_displayed(true, dataMap);

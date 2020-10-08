@@ -1392,6 +1392,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	//Start Here
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_select_advanced_search_with_CustodianName_When_Then_verify_autosuggest() throws Throwable
 	{
@@ -1421,6 +1422,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
 	{
@@ -1432,9 +1434,10 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			dataMap.put("metaDataValue", "pdf");
-			dataMap.put("AdditionalKeys", "xx");
+			dataMap.put("metaDataValue", ".doc");
+			dataMap.put("AdditionalKeys", "x");
 			dataMap.put("metaDataOption", "DocFileExtension");
 			context.select_search(true, dataMap);
 			context.verify_autosuggest(true, dataMap);
@@ -1478,6 +1481,8 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	
+	//Complete + Pass
 	@Test(groups = {"Search, Negative"})
 	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_custodianName_not_match_When_Then_Not_verify_autosuggest() throws Throwable
 	{
@@ -1489,11 +1494,14 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("MetaDataOption", "CustodianName");
-			dataMap.put("MetaDataValue", "Testing");
-			dataMap.put("MetaDataValue2", "ing");
-			context.select_advanced_search(false, dataMap);
+			dataMap.put("MetaDataValue", "Andr");
+			dataMap.put("MetaDataValue2", "pppp");
+			context.select_advanced_search(true, dataMap);
 			context.verify_autosuggest(false, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -1508,7 +1516,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
+	//Complete + Pass
 	@Test(groups = {"Search, Negative"})
 	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_UpperCase_When_Then_Not_verify_autosuggest() throws Throwable
 	{
@@ -1520,11 +1528,12 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("MetaDataOption", "CustodianName");
-			dataMap.put("MetaDataValue", "P");
-			dataMap.put("MetaDataValue2", "Axxx");
-			context.select_advanced_search(false, dataMap);
+			dataMap.put("MetaDataValue", "AndR");
+			dataMap.put("MetaDataValue2", "Z");
+			context.select_advanced_search(true, dataMap);
 			context.verify_autosuggest(false, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -1540,6 +1549,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Negative"})
 	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_Special_Character_When_Then_Not_verify_autosuggest() throws Throwable
 	{
@@ -1551,11 +1561,12 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("MetaDataOption", "CustodianName");
-			dataMap.put("MetaDataValue", "P");
+			dataMap.put("MetaDataValue", "Andr");
 			dataMap.put("MetaDataValue2", "&%s");
-			context.select_advanced_search(false, dataMap);
+			context.select_advanced_search(true, dataMap);
 			context.verify_autosuggest(false, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -1571,6 +1582,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Negative"})
 	public void test_Given_on_production_Search_Session_page_and_Not_select_advanced_search_with_CustodianName_not_match_White_Space_When_Then_Not_verify_autosuggest() throws Throwable
 	{
@@ -1582,11 +1594,12 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("MetaDataOption", "CustodianName");
-			dataMap.put("MetaDataValue", "P");
-			dataMap.put("MetaDataValue2", "A  Loyd");
-			context.select_advanced_search(false, dataMap);
+			dataMap.put("MetaDataValue", "Andr");
+			dataMap.put("MetaDataValue2", "  Loyd");
+			context.select_advanced_search(true, dataMap);
 			context.verify_autosuggest(false, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -1663,6 +1676,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	//What is this?
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -1999,6 +2013,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Come back
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_simple_regex_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2270,6 +2285,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Completed + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_Number_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2281,12 +2297,26 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "##0\\.375");
+			/*
 			dataMap.put("State", "yes");
 			dataMap.put("metaDataOption", "Number");
-			context.create_search(true, dataMap);
 			context.verify_search_criteria(true, dataMap);
+			*/
+
+			//Changed Contexts Based on the following
+			//	 There Is no "Number metaDataOption"
+			//   on TFS: For this test case it states: Enter query as "##12" OR "##0\.375" 
+			//   Therefor This is a "Long" Query, with OR operator. And should have the correct dataMap Parameters 
+			//   Verify Long Search context should be used as outcome 
+
+			dataMap.put("searchType", "LONG");
+			dataMap.put("condition", "OR");
+			dataMap.put("metaDataValue2", "##12");
+			context.create_search(true, dataMap);
+			context.verify_long_search_criteria(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
@@ -2301,6 +2331,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Missing MetaDataOption from Consilio? Phone Number
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_Phone_Number_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2332,6 +2363,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailAuthorAddress_regex_all_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2343,6 +2375,7 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "##all");
 			dataMap.put("metaDataOption", "EmailAuthorAddress");
@@ -2362,6 +2395,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailSubject_regex_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2373,6 +2407,7 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "## Test mail [0-9]{4}/[0-9]{2}/[07]");
 			dataMap.put("metaDataOption", "EmailSubject");
@@ -2392,6 +2427,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_EmailSubject_regex_numeric_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2403,6 +2439,7 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "##[0-9]{2}[0-9]{2}[0-9]{2}");
 			dataMap.put("metaDataOption", "EmailSubject");
@@ -2422,6 +2459,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Missing MetaDataOption from Consilio? Comments
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_Comments_regex_PF_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2433,6 +2471,8 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "##PF[09]{4}");
 			dataMap.put("metaDataOption", "Comments");
@@ -2452,6 +2492,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_symbol_in_search_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2463,6 +2504,8 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "this is a @subject");
 			dataMap.put("metaDataOption", "EmailSubject");
@@ -2482,6 +2525,7 @@ public class SearchRegression extends RegressionBase {
 	}
 
 
+	//Complete + Pass
 	@Test(groups = {"Search, Positive"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_symbol_in_email_When_Then_verify_search_criteria() throws Throwable
 	{
@@ -2493,6 +2537,8 @@ public class SearchRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+
+			context.startUP(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			dataMap.put("metaDataValue", "gnunez@concilio.com");
 			dataMap.put("metaDataOption", "EmailAuthorAddress");

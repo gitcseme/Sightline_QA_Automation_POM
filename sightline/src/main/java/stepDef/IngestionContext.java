@@ -3,6 +3,7 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -1156,21 +1157,25 @@ public class IngestionContext extends CommonContext {
 
 	}
 
+
 	@And("^.*(\\[Not\\] )? click_ingestion_title$")
 	public void click_ingestion_title(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//Find Ingested tile created
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
 			System.out.println("Clicked");
+			
+			Thread.sleep(2000);
 
 			//* Modal is displayed
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionModal().Displayed()  ;}}), Input.wait30); 
 			
-			System.out.println(ingest.getIngestionTileText().getText());
+			//now have to wait until it pass or fail
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
 			
 			throw new ImplementationException("click_ingrestion_title");
 		} else {
@@ -1946,16 +1951,31 @@ public class IngestionContext extends CommonContext {
 	public void verify_components_are_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC275: To verify that progress bar is displayed on tiles and Counts of Ingested and Errors keeps on updated once Ingestion process is started.Covered:TC235: New Ingestion with Overwrite option as 'Add Only'
+			//TC275: To verify that progress bar is displayed on tiles and Counts of Ingested and Errors keeps on updated once Ingestion process is started.
+			//Covered:TC235: New Ingestion with Overwrite option as 'Add Only'
 			//
 			//* On the Ingestion Home page
 			//* Validate the Ingestion displays a progress bar when the ingestion is processing each step (catalog, copy, index)
 			//* Validate Source, publish and error counts are updated
 			//* validate progress status is updated (In Progress, Catalogued, Copied, Indexed)
 			//
-			throw new ImplementationException("verify_components_are_displayed_correctly");
+			
+			for(int i =4; i<=6;i++) {
+				click_filter_by_dropdown(true,dataMap,4);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
+				Assert.assertTrue(ingest.getIngestSource().Displayed());
+				Assert.assertTrue(ingest.getIngestPublish().Displayed());
+				Assert.assertTrue(ingest.getIngestError().Displayed());
+				
+				
+			}
+			
+			
+			pass(dataMap, "verify_components_are_displayed_correctly");
 		} else {
-			throw new ImplementationException("NOT verify_components_are_displayed_correctly");
+			fail(dataMap, "NOT verify_components_are_displayed_correctly");
 		}
 
 	}
@@ -1978,10 +1998,22 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
 		if (scriptState) {
-			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			
+			//Deselect all options 
+			for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
+			}
+			//select the option
+			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
+			ingest.getcardCanvas().Click();
+			ingest.getRefreshButton().Click();
+			
+			
 			throw new ImplementationException("click_filter_by_dropdown");
 		} else {
 			throw new ImplementationException("NOT click_filter_by_dropdown");
@@ -2021,11 +2053,31 @@ public class IngestionContext extends CommonContext {
 			//* Grid view
 			//* Tile View
 			//
-			throw new ImplementationException("verify_view_options_are_displayed");
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+			
+			//Click on filter button and select Published Ingestions 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFilterByOption().Displayed() ;}}), Input.wait30); 
+					ingest.getFilterByOption().Click();
+					
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getSelectFilterByOption(8).Displayed() ;}}), Input.wait30); 
+						ingest.getSelectFilterByOption(8).Click();		
+			
+			pass(dataMap,"View Options are available");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"View Options are not available");
+			}
 		} else {
-			throw new ImplementationException("NOT verify_view_options_are_displayed");
-		}
+			fail(dataMap,"View Options are not available");
 
+		}
 	}
 
 
@@ -2124,9 +2176,25 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate default 10 tiles are displayed
 			//
-			throw new ImplementationException("verify_ingestion_home_page_displays_default_tile_count");
+			
+			//open the approved options 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			if(!ingest.getSelectFilterByOption(8).Selected()) ingest.getSelectFilterByOption(8).Click();
+			if(ingest.getSelectFilterByOption(2).Selected()) ingest.getSelectFilterByOption(2).Click();
+			ingest.getcardCanvas().Click();;
+			ingest.getRefreshButton().Click();
+			driver.waitForPageToBeReady();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+			
+			Assert.assertEquals(10, ingest.getIngestTile().size());
+			
+			pass(dataMap,"verify_ingestion_home_page_displays_default_tile_count");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_home_page_displays_default_tile_count");
+			fail(dataMap, "NOT verify_ingestion_home_page_displays_default_tile_count");
 		}
 
 	}
@@ -2157,10 +2225,15 @@ public class IngestionContext extends CommonContext {
 			//* Click filter by dropdown
 			//* Select all options displayed
 			//
-			throw new ImplementationException("select_all_filter_by_options");
-		} else {
-			throw new ImplementationException("NOT select_all_filter_by_options");
+			int numOfOptions = ingest.getAllFilterOptions().FindWebElements().size();
+			ingest.getFilterByOption().click();
+			for(int i =1; i<=numOfOptions; i++) {
+				if(!ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).click();
+			}
+			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			pass(dataMap, "Filtered by every option");
 		}
+		else fail(dataMap, "Could not filter by all options");
 
 	}
 
@@ -2170,10 +2243,23 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_sort_by_option");
-		} else {
-			throw new ImplementationException("NOT select_sort_by_option");
+			String option = (String)dataMap.get("sort_by_options");
+			
+			if(option.equals("Last Modified Date")) option = "IngestionDate";
+				else if(option.equals("Status")) option = "IngestionStatus";
+				else if(option.equals("Last Modified user")) option = "UserName";
+				else if(option.equals("Project Name")) option = "ProjectName";
+				
+				ingest.getIngestSortDropDown().click();
+				ingest.getIngestSortOption(option).click();
+				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				//ingest.getIngestedGridView().click();
+				driver.waitForPageToBeReady();
+				pass(dataMap, "Clicked the Right option");
+		
+			
 		}
+		else fail(dataMap, "Failed to sort by option");
 
 	}
 
@@ -2184,17 +2270,56 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			//TC845:To verify that Filter options work with the sort by functionality.Covers:TC846:To verify that Sort by in Grid View.
 			//* Validate the different sort by options work as expected
-			//
-			//
-			//* Last Modified Date
-			//* Status
-			//* Last modified user
-			//* Project Name
-			//
-			throw new ImplementationException("verify_sort_by_works_as_expected");
-		} else {
-			throw new ImplementationException("NOT verify_sort_by_works_as_expected");
+			try {
+			String option  = (String)dataMap.get("sort_by_options");
+			ArrayList<String> pageElements = new ArrayList<>();
+			
+			//Scrolls to the end of page
+			while(ingest.getclickMoreButton().Displayed()) {
+				scroll_click_load_more_button(true,dataMap);
+				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
+				driver.waitForPageToBeReady();
+			}
+
+
+			if(option.equals("Last Modified Date")) {
+				for(WebElement x: ingest.getIngestionModifiedDates().FindWebElements()) {
+					pageElements.add(x.getText());
+				}
+			}
+			else if(option.equals("Status")) {
+				for(WebElement x: ingest.getIngestionStatus().FindWebElements()) {
+					pageElements.add(x.getText().substring(8));
+				}
+			}
+			else if(option.equals("Last Modified user")) {
+				for(WebElement x: ingest.getIngestionModifiedUser().FindWebElements()) {
+					pageElements.add(x.getText().substring(0, x.getText().toString().length()-4));
+				}
+		
+			}
+			else if(option.equals("Project Name")) {
+				for(WebElement x: ingest.getIngestionProjectName().FindWebElements()) {
+					pageElements.add(x.getText());
+				}
+			}
+			
+			Boolean pass =true;
+			for (int i = 0 ; i < pageElements.size()-2; i++){
+				if(pageElements.get(i).compareTo(pageElements.get(i+1))<0) {
+					pass = false;
+				}
+			}
+			Assert.assertTrue(pass);
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Could not verify Sort is correct");
+			}
+			
+			
 		}
+		else fail(dataMap, "Could not verify Sort is correct");
 
 	}
 
@@ -2202,13 +2327,21 @@ public class IngestionContext extends CommonContext {
 	public void click_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("click_grid_view");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestedGridView().Displayed() ;}}), Input.wait30);
+				ingest.getIngestedGridView().Click();
+				pass(dataMap,"Successfullly clicked on Grid View option");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Clicking on Grid View option was unsuccessful ");
+			}
 		} else {
-			throw new ImplementationException("NOT click_grid_view");
+			fail(dataMap,"Clicking on Grid View option was unsuccessful ");
 		}
 
 	}
+	
 
 
 	@Then("^.*(\\[Not\\] )? verify_pagination_exists_on_grid_view$")
@@ -2218,9 +2351,16 @@ public class IngestionContext extends CommonContext {
 			//TC848:To verify that on Ingesion Home page is having pagination for Grid View only
 			//* Validate the grid view displays pagination 
 			//
-			throw new ImplementationException("verify_pagination_exists_on_grid_view");
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridPaginationTable().Displayed() ;}}), Input.wait30);
+				pass(dataMap,"Pagination Exist on Grid view");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Pagination does Exist on Grid view");
+			}
 		} else {
-			throw new ImplementationException("NOT verify_pagination_exists_on_grid_view");
+			fail(dataMap,"Pagination does Exist on Grid view");
 		}
 
 	}
@@ -2228,12 +2368,15 @@ public class IngestionContext extends CommonContext {
 
 	@When("^.*(\\[Not\\] )? scroll_click_load_more_button$")
 	public void scroll_click_load_more_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
 		if (scriptState) {
-			//
-			throw new ImplementationException("scroll_click_load_more_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getclickMoreButton().Displayed() ;}}), Input.wait30);
+			ingest.getclickMoreButton().Click();
+			
+			pass(dataMap,"scroll_click_load_more_button");
 		} else {
-			throw new ImplementationException("NOT scroll_click_load_more_button");
+			fail(dataMap,"NOT scroll_click_load_more_button");
 		}
 
 	}
@@ -2247,9 +2390,16 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate more tiles are loaded
 			//
-			throw new ImplementationException("verify_load_more_button_is_displayed");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+			
+			Assert.assertEquals(20, ingest.getIngestTile().size());
+			Assert.assertTrue(ingest.getclickMoreButton().Displayed());
+			
+			pass(dataMap,"verify_load_more_button_is_displayed");
 		} else {
-			throw new ImplementationException("NOT verify_load_more_button_is_displayed");
+			fail(dataMap, "NOT verify_load_more_button_is_displayed");
 		}
 
 	}
@@ -2260,9 +2410,14 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC1133:To verify that "Load More" button enable or disable as per the availabilty of Tiles.validate load more button is no longer displayed when no more tiles are available
-			throw new ImplementationException("verify_load_more_button_disappears");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+			
+			Assert.assertFalse(ingest.getclickMoreButton().Displayed());
+			pass(dataMap, "verify_load_more_button_disappears");
 		} else {
-			throw new ImplementationException("NOT verify_load_more_button_disappears");
+			fail(dataMap, "NOT verify_load_more_button_disappears");
 		}
 
 	}
