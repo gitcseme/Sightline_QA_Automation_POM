@@ -1882,10 +1882,20 @@ public class IngestionContext extends CommonContext {
 			//TC5558:To Verify ExcelProtectedWorkbook in Tally and Search.
 			//* validate ExcelProtectedWorkbook is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_excel_protected_workbook_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_excel_protected_workbook_is_tally_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ExcelProtectedWorkbook").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
 		}
+		
+		else fail(dataMap, "Could not verify expected field");
 
 	}
 
@@ -1900,10 +1910,20 @@ public class IngestionContext extends CommonContext {
 			//
 			//* AllCustodians
 			//
-			throw new ImplementationException("verify_all_custodians_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_all_custodians_is_tally_searchable");
-		}
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("AllCustodians").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
+		} 
+		
+		else fail(dataMap, "Could not verify expected field");
 
 	}
 
@@ -1915,11 +1935,21 @@ public class IngestionContext extends CommonContext {
 			//TC5561:To Verify ReviewExportID in Tally and Search.
 			//* validate ReviewExportID is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_review_export_id_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_review_export_id_is_tally_searchable");
-		}
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
 
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ReviewExportID").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
+		}
+		
+		else fail(dataMap, "Could not verify expected field");
+		
 	}
 
 
