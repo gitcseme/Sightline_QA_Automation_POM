@@ -1733,7 +1733,17 @@ public class IngestionContext extends CommonContext {
 			//TC5548:To Verify FileDescription in Tally and Search.
 			//* validate FileDescription is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_file_description_is_tally_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertTrue(docView.getMetaDataTableRowByName("FileDescription").Displayed());
+				Assert.assertFalse(docView.getMetaDataTableRowValueByName("FileDescription").getText().equals(""));
+			}
 		} else {
 			throw new ImplementationException("NOT verify_file_description_is_tally_searchable");
 		}
@@ -1922,7 +1932,19 @@ public class IngestionContext extends CommonContext {
 			//* validate SourceAttachDocIDs is displayed on the metadata on the right side
 			//* validate AttachDocIDs is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_attach_doc_ids_are_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertTrue(docView.getMetaDataTableRowByName("SourceAttachDocIDs").Displayed());
+				Assert.assertFalse(docView.getMetaDataTableRowValueByName("SourceAttachDocIDs").getText().equals(""));
+				Assert.assertTrue(docView.getMetaDataTableRowByName("AttachDocIDs").Displayed());
+				Assert.assertFalse(docView.getMetaDataTableRowValueByName("AttachDocIDs").getText().equals(""));
+			}
 		} else {
 			throw new ImplementationException("NOT verify_attach_doc_ids_are_searchable");
 		}
