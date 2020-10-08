@@ -447,6 +447,7 @@ public class ProductionPage {
     public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
     public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
     
+<<<<<<< HEAD
     public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
     public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
     public Element getProductionDeleteOkButton() {return driver.FindElementByCssSelector("[class=\"btn btn-default btn-sm botTempo\"]");}
@@ -495,6 +496,7 @@ public class ProductionPage {
     	}
     	return null;
     }
+
 
     public ProductionPage(Driver driver){
 

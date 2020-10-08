@@ -4411,8 +4411,10 @@ public class ProductionRegression extends RegressionBase {
 			context.begin_new_production_process(true, dataMap);
 			context.complete_default_production_component(true, dataMap);
 			context.complete_specifying_the_next_bates_number(true, dataMap);
+			context.marking_complete_the_next_available_bates_number(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
 			context.complete_default_priv_guard_documents_are_matched(true, dataMap);
+			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
 			context.starting_the_production_generation(true, dataMap);
