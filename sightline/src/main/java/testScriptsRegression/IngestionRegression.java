@@ -4666,7 +4666,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_file_description_is_tally_searchable() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4689,11 +4689,12 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
-			context.new_ingestion_created(true, dataMap);
-			context.map_configuration_fields(true, dataMap);
-			context.click_preview_run_button(true, dataMap);
-			context.click_run_ingest_button(true, dataMap);
+//			context.new_ingestion_created(true, dataMap);
+//			context.map_configuration_fields(true, dataMap);
+//			context.click_preview_run_button(true, dataMap);
+//			context.click_run_ingest_button(true, dataMap);
 			context.on_search_home_page(true, dataMap);
+			dataMap.put("actionNavigateDoc", "docView");
 			context.search_for_ingestion(true, dataMap);
 			context.verify_file_description_is_tally_searchable(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5008,12 +5009,15 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
+			/*
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			*/
 			context.on_search_home_page(true, dataMap);
 			dataMap.put("map_field", "DocBasic");
+			dataMap.put("actionNavigateDoc", "docView");
 			context.search_for_ingestion(true, dataMap);
 			context.verify_excel_protected_workbook_is_tally_searchable(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5053,11 +5057,14 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
+			/*
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			*/
 			context.on_search_home_page(true, dataMap);
+			dataMap.put("actionNavigateDoc", "docView");
 			context.search_for_ingestion(true, dataMap);
 			dataMap.put("map_field", "DocBasic");
 			dataMap.put("A", "");
@@ -5099,12 +5106,15 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
+			/*
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			*/
 			context.on_search_home_page(true, dataMap);
 			dataMap.put("map_field", "DocBasic");
+			dataMap.put("actionNavigateDoc", "docView");
 			context.search_for_ingestion(true, dataMap);
 			context.verify_review_export_id_is_tally_searchable(true, dataMap);
 		} catch (ImplementationException e) {
@@ -5121,7 +5131,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_attach_doc_ids_are_searchable() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5144,12 +5154,13 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
-			context.new_ingestion_created(true, dataMap);
-			context.map_configuration_fields(true, dataMap);
-			context.click_preview_run_button(true, dataMap);
-			context.click_run_ingest_button(true, dataMap);
+//			context.new_ingestion_created(true, dataMap);
+//			context.map_configuration_fields(true, dataMap);
+//			context.click_preview_run_button(true, dataMap);
+//			context.click_run_ingest_button(true, dataMap);
 			context.on_search_home_page(true, dataMap);
 			dataMap.put("map_field", "Family");
+			dataMap.put("actionNavigateDoc", "docView");
 			context.search_for_ingestion(true, dataMap);
 			context.verify_attach_doc_ids_are_searchable(true, dataMap);
 		} catch (ImplementationException e) {
