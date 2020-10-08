@@ -23,6 +23,7 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import pageFactory.DocViewPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -52,6 +53,7 @@ public class IngestionContext extends CommonContext {
 	 */
 	
 	SessionSearch sessionSearch;
+	DocViewPage docView;
 	JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
@@ -1775,10 +1777,21 @@ public class IngestionContext extends CommonContext {
 			//* HeadOfHouseholdDocID
 			//* FamilyID
 			//
-			throw new ImplementationException("verify_expected_fields_are_in_data_set");
-		} else {
-			throw new ImplementationException("NOT verify_expected_fields_are_in_data_set");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ParentDocID").getText()).equals("") );
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("HeadOfHouseholdDocID").getText()).equals("") );
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("FamilyID").getText()).equals("") );
+			}
+			pass(dataMap, "Verified expected fields are in data set");
 		}
+		else fail(dataMap, "Could not verify expected field");
 
 	}
 
