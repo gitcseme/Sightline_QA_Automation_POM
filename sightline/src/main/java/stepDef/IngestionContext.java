@@ -2204,26 +2204,55 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Once an Ingestion is created and redirected to the Ingestion/Home page
 			//* Validate the following fields are displayed on the Grid Tile for the ingestion
-			//
-			//
-			//* Project 
-			//* Ingestion Name
-			//* Ingestion Type
-			//* % Completed
-			//* Start Date
-			//* End Date
-			//* Source Docs
-			//* Ingested Docs
-			//* Error
-			//* Last Modified By
-			//* Last Modified at
-			//* Ingestion Status
-			//
-			throw new ImplementationException("verify_ingestion_grid_view_displays_expected_fields");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_grid_view_displays_expected_fields");
-		}
+		
+			  
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableProject().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableIngestionName().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableIngestionType().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableComplete().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableStart().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableEnd().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableSourceDocs().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableSourceIngestedDocs().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableErrors().Displayed() ;}}), Input.wait30);
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableLastModifiedBy().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableLastModifiedDate().Displayed() ;}}), Input.wait30);
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getIngestionGridTableIngestionStatus().Displayed() ;}}), Input.wait30);
+			
+			pass(dataMap,"The fields are displayed");
 
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"The fields are not displayed");
+			}
+		} else {
+			fail(dataMap,"The fields are not displayed");
+		}
 	}
 
 

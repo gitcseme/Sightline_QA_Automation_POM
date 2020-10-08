@@ -5873,7 +5873,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive","smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_select_all_filter_by_options_and_select_sort_by_ProjectName_option_When_Then_verify_sort_by_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

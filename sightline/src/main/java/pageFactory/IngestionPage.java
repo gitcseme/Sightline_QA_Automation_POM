@@ -310,7 +310,22 @@ public class IngestionPage {
     public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
     public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
     public ElementCollection getIngestionFilterStatus() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
+    public Element getIngestionGridTableProject() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[1]");}
+    public Element getIngestionGridTableIngestionName() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[2]");}
+    public Element getIngestionGridTableIngestionType() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[3]");}
+    public Element getIngestionGridTableComplete(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[4]");}
+    public Element getIngestionGridTableStart(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[5]");}
+    public Element getIngestionGridTableEnd(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[6]");}
+    public Element getIngestionGridTableSourceDocs(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[7]");}
+    public Element getIngestionGridTableSourceIngestedDocs(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[8]");}
+    public Element getIngestionGridTableErrors(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[9]");}
+    public Element getIngestionGridTableLastModifiedBy(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[10]");}
+    public Element getIngestionGridTableLastModifiedDate(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[11]");}
+    public Element getIngestionGridTableIngestionStatus(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[12]");}
+    public Element getIngestionGridTableAction(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[13]");}
+
     
+  
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
