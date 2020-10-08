@@ -5444,8 +5444,14 @@ public class IngestionRegression extends RegressionBase {
 			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
+			context.click_ingestion_title(true, dataMap);						
+			dataMap.put("filter_option", "Cataloged");
+			context.click_filter_by_dropdown(true, dataMap);
 			context.click_on_rollback_option(true, dataMap);
-			context.click_delete_option(true, dataMap);
+			dataMap.put("filter_option", "Draft");
+			context.click_filter_by_dropdown(true,  dataMap);
+			context.click_grid_view(true, dataMap);
+			context.delete_grid_ingestion(true, dataMap);
 			context.verify_rolled_back_ingestion_can_be_deleted(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());

@@ -185,6 +185,7 @@ public class IngestionPage {
     public Element getFirstIngestionActionButton() {return driver.FindElementByXPath(".//*[@id='cardCanvas']//li[1]//div[1]/a");}
     public Element getIngestionAction_Wizard(){ return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div.pName.font-xs > div > dl > dt:nth-child(1) > a"); }
     public Element getIngestionAction_Delete(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Delete')]"); }
+    public Element getIngestionAction_Grid_Delete(){return driver.FindElementByXPath("//ul[@class='dropdown-menu']//a[contains(text(),'Delete')]");}
     public Element getIngestionAction_Copy(){ return driver.FindElementByXPath("//dl[@class='dropdown-menu']//a[contains(text(),'Copy')]"); }
     public Element getIngestion_IngestionType(){ return driver.FindElementById("ddlOverwrite"); }
     public Element getDateFormat(){ return driver.FindElementById("ddlDateFormat"); }
@@ -307,9 +308,9 @@ public class IngestionPage {
     public ElementCollection getIngestionModifiedDates() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li div.bottomStamps.row > div:nth-child(2) > div");}
     public ElementCollection getIngestionModifiedUser() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(1) > span");}
     public ElementCollection getIngestionProjectName() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.pName.font-xs");}
-    public Element getIngestRollbackButton() {return driver.FindElementByXPath("//*[contains(text(), 'Rollback')] ");}
-    public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
-    public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
+    public Element getIngestionRollbackButton() {return driver.FindElementByXPath("//*[contains(text(), 'Rollback')] ");}
+    public Element getIngestionRollbackConfirmButton() {return driver.FindElementByCssSelector("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
+    public Element getIngestionRollbackCancelButton() {return driver.FindElementByCssSelector("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
     public ElementCollection getIngestionFilterStatus() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
 
     public Element getIngestionGridTableProject() {return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[1]");}
@@ -325,6 +326,12 @@ public class IngestionPage {
     public Element getIngestionGridTableLastModifiedDate(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[11]");}
     public Element getIngestionGridTableIngestionStatus(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[12]");}
     public Element getIngestionGridTableAction(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[13]");}
+
+
+    public Element getIngestionGridDetailsButton(String ingestName) {return driver.FindElementByXPath("//*[contains(text(), " + ingestName + ")]/parent::*//a ");}
+    public Element getIngestionExecutionDetailActionButton() {return driver.FindElementByCssSelector("[[class=\"btn btn-defualt dropdown-toggle\"]]");}
+    public Element getIngestionDeleteConfirmationButton() {return driver.FindElementByCssSelector("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
+    
 
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){

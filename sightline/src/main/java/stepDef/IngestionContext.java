@@ -1177,7 +1177,7 @@ public class IngestionContext extends CommonContext {
 			//now have to wait until it pass or fail
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
-			
+			dataMap.put("ingestName", ingest.getIngestionTile().GetAttribute("title"));
 			throw new ImplementationException("click_ingrestion_title");
 		} else {
 			throw new ImplementationException("NOT click_ingrestion_title");
@@ -2171,9 +2171,19 @@ public class IngestionContext extends CommonContext {
 			//* Click Rollback option
 			//* Click Yes to confirm rollback
 			//
-			throw new ImplementationException("click_on_rollback_option");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
+				ingest.getGearButton().click();
+				ingest.getIngestionRollbackButton().click();
+				ingest.getIngestionRollbackConfirmButton().click();
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT click_on_rollback_option");
+			}
+			pass(dataMap, "click_on_rollback_option");
 		} else {
-			throw new ImplementationException("NOT click_on_rollback_option");
+			fail(dataMap, "NOT click_on_rollback_option");
 		}
 
 	}
@@ -2183,16 +2193,19 @@ public class IngestionContext extends CommonContext {
 	public void verify_rolled_back_ingestion_can_be_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC830:To verify that ingestion which is Rolled back can be deleted once it is in Draft modeCovered:TC888 To verify that ingestion which is Rolled back can be deleted.
-			//* Once an Ingested item has been rolledback
-			//* Check the DB to make sure the value has changed to Draft Mode (Pending DB access) ???
-			//* Click on the Settings gear for the ingested grid item
-			//* Click on Delete
-			//* Validate the item is deleted
-			//
-			throw new ImplementationException("verify_rolled_back_ingestion_can_be_deleted");
+			try {
+				String ingestName = (String)dataMap.get("ingestName");				
+				if(!ingest.getIngestionGridDetailsButton(ingestName).Displayed()) {
+					pass(dataMap, "verify_rolled_back_ingestion_can_be_deleted");
+				} else {
+					fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
+				}				
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
+			}			
 		} else {
-			throw new ImplementationException("NOT verify_rolled_back_ingestion_can_be_deleted");
+			fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
 		}
 
 	}
@@ -2400,7 +2413,11 @@ public class IngestionContext extends CommonContext {
 				for(WebElement x: ingest.getIngestionModifiedUser().FindWebElements()) {
 					pageElements.add(x.getText().substring(0, x.getText().toString().length()-4));
 				}
-		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
+				ingest.getGearButton().click();
+				ingest.getIngestionRollbackButton().click();
+				ingest.getIngestionRollbackConfirmButton().click();
 			}
 			else if(option.equals("Project Name")) {
 				for(WebElement x: ingest.getIngestionProjectName().FindWebElements()) {
@@ -2796,6 +2813,25 @@ public class IngestionContext extends CommonContext {
 			pass(dataMap,"verify_valid_email_metadata_option_is_available");
 		} else {
 			fail(dataMap,"verify_valid_email_metadata_option_is_available");
+		}
+	}
+
+	@When("^.*(\\\\[Not\\\\] )? delete_grid_ingestion$")
+	public void delete_grid_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			try {
+				String ingestName = (String)dataMap.get("ingestName");
+				ingest.getIngestionGridDetailsButton(ingestName).click();
+				ingest.getIngestionExecutionDetailActionButton().click();
+				ingest.getIngestionAction_Grid_Delete().click();
+				ingest.getIngestionDeleteConfirmationButton().click();								
+				pass(dataMap, "select_grid_ingestion_details_button");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT select_grid_ingestion_details_button");
+			}
+		} else {
+			fail(dataMap, "NOT select_grid_ingestion_details_button");
 		}
 	}
 	
