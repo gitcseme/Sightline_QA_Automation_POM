@@ -1814,10 +1814,19 @@ public class IngestionContext extends CommonContext {
 			//
 			//* validate ProcessingOCRComplete is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_processing_ocr_completed_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_processing_ocr_completed_is_tally_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ProcessingOCRComplete").getText()).equals("") );
+			}
+			pass(dataMap, "Verified Processing OCR Complete is tally searchable");
 		}
+		else fail(dataMap, "Could not verify Processing OCR complete is tally searchable");
 
 	}
 
@@ -1829,13 +1838,21 @@ public class IngestionContext extends CommonContext {
 			//TC5555:To Verify FamilyRelationship in Tally and Search.
 			//* validate FamilyRelationship is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_family_relationship_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_family_relationship_is_tally_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("FamilyRelationship").getText()).equals("") );
+			}
+			pass(dataMap, "Verified Family relationship is tally searchable");
 		}
+		else fail(dataMap, "Could not verify Family relationship is tally searchable");
 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_exception_resolution_is_tally_searchable$")
 	public void verify_exception_resolution_is_tally_searchable(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -1844,10 +1861,19 @@ public class IngestionContext extends CommonContext {
 			//TC5556:To Verify ExceptionResolution in Tally
 			//* validate ExceptionResolution is displayed on the metadata on the right side
 			//
-			throw new ImplementationException("verify_exception_resolution_is_tally_searchable");
-		} else {
-			throw new ImplementationException("NOT verify_exception_resolution_is_tally_searchable");
+			docView = new DocViewPage(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+
+			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
+				row.click();
+				Assert.assertFalse( (docView.getMetaDataTableRowValueByName("ExceptionResolution").getText()).equals("") );
+			}
+			pass(dataMap, "Verified Exception Resolution is tally searchable");
 		}
+		else fail(dataMap, "Could not verify Exception Resolution is tally searchable");
 
 	}
 
