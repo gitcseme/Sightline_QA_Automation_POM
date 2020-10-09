@@ -3,11 +3,13 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -84,10 +86,13 @@ public class IngestionContext extends CommonContext {
 	}
 
 
+
+	
 	@When("^.*(\\[Not\\] )? click_run_ingest_button$")
 	public void click_run_ingest_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
 			ingest.getbtnRunIngestion().Click();
@@ -582,6 +587,7 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
 				ingest.getPreviewRun().Click();
@@ -589,6 +595,10 @@ public class IngestionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			        ingest.getApproveMessageOKButton().Visible() ;}}), Input.wait30); 
 	    	    ingest.getApproveMessageOKButton().Click(); 
+	    	    Thread.sleep(2000);
+	    	    
+	    	    HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation((HashSet<String>)dataMap.get("targetColumns"));
+	    	    dataMap.put("ingestPreviewData", ingestPreviewData);
 
 				pass(dataMap, "Get Preview Run Button is Clickable");
 			}
@@ -1774,7 +1784,7 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Select the following columns:
 			//
-			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and RecipientDomainCoun
+			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and EmailRecipientDomainCoun
 			//
 			//* Validate the value displayed from the search
 			//* Values will match those of the Ingested Email Document
@@ -1784,18 +1794,22 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
 
+			int i = 0;
 			//For Each Ingested File -> go through and Make sure the files exist 
 			for(WebElement row: docView.getDocViewTableRows().FindWebElements()) {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			row.isEnabled() && row.isDisplayed()  ;}}), Input.wait30); 
 				row.click();
 				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getMetaDataTableRowByName("EmailAllDomainCount").Displayed()  ;}}), Input.wait30); 
-
-				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailAllDomainCount").getText()).equals("") );
-				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailAllDomain").getText()).equals("") );
-				//Assert.assertFalse( (docView.getMetaDataTableRowValueByName("EmailRecipientNames").getText()).equals("") );
+				
+				//Go through Each TargetColumn(The MetaData Values we want) and get it's corresponding row data
+				for(Map.Entry e: ((HashMap<String, ArrayList<String>>)dataMap.get("ingestionPreviewData")).entrySet()) {
+					Assert.assertEquals(((ArrayList<String>)e.getValue()).get(i++), docView.getMetaDataTableRowValueByName((String)e.getKey()).getText());
+				}
+				
 			}
 			pass(dataMap, "Verified expected fields are in data set");
 

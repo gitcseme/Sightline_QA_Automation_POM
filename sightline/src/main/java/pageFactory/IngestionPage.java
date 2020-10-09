@@ -1,6 +1,8 @@
 package pageFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -292,6 +294,9 @@ public class IngestionPage {
     public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
     public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
     public Element getSaveButtonConfirmationYes() { return driver.FindElementById("bot1-Msg1");}
+    public ElementCollection getIngestDATPreviewColumnHeader() {return driver.FindElementsByCssSelector("#previewRecords thead th");}
+    public ElementCollection getIngestDATPreviewRows() {return driver.FindElementsByCssSelector("#previewRecords tbody tr ");}
+    public ElementCollection getIngestDATPreviewRowValues() {return driver.FindElementsByCssSelector("#previewRecords tbody tr td");}
     
     
     public String getIngestionTileName(int index){
@@ -316,6 +321,47 @@ public class IngestionPage {
         driver.waitForPageToBeReady();
 
     }
+    
+    //A function that stores all DAT information on the preview run page and returns it in a HashMap
+    //The column name will be the key(I.E "AllCustodians") -> The value will be a list of the corresponding values for each row
+    public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(){
+    	
+    	HashMap<String, ArrayList<String>> table = new HashMap<>();
+    	int count = 0;
+    	for(WebElement column: getIngestDATPreviewColumnHeader().FindWebElements()) {
+    		String currentColumn = (column.getText().split(" =>"))[0];
+    		System.out.println((column.getText().split(" =>"))[0]);
+   			ArrayList<String> temp = new ArrayList<>();
+   			for(WebElement rows: getIngestDATPreviewRows().FindWebElements()) {
+    			temp.add(rows.findElements(By.cssSelector("td")).get(count).getText());
+    		}
+    		table.put( (column.getText().split(" =>"))[0] , temp);
+   			count++;
+    		
+    	}
+		return table;
+    }
+
+    //Same as the above function, however this only returns columns that we are interested in
+    public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(HashSet<String> targetColumns){
+    	
+    	HashMap<String, ArrayList<String>> table = new HashMap<>();
+    	int count = 0;
+    	for(WebElement column: getIngestDATPreviewColumnHeader().FindWebElements()) {
+    		String currentColumn = (column.getText().split(" =>"))[0];
+    		if(targetColumns.contains(currentColumn)){
+    			System.out.println((column.getText().split(" =>"))[0]);
+    			ArrayList<String> temp = new ArrayList<>();
+    			for(WebElement rows: getIngestDATPreviewRows().FindWebElements()) {
+    				temp.add(rows.findElements(By.cssSelector("td")).get(count).getText());
+    			}
+    			table.put( (column.getText().split(" =>"))[0] , temp);
+    			count++;
+    		}
+    	}
+		return table;
+    }
+    
     
     public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) throws InterruptedException 
     {

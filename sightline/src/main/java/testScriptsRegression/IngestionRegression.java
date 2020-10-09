@@ -2,6 +2,7 @@ package testScriptsRegression;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.testng.annotations.Test;
 
@@ -4666,7 +4667,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_file_description_is_tally_searchable() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4711,10 +4712,11 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_email_metadata_is_populated_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
+		HashSet<String> targetColumns = new HashSet();
 
 		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and map_configuration_fields and click_preview_run_button and click_run_ingest_button and on_search_home_page When search_for_ingestion Then verify_email_metadata_is_populated_correctly");
 
@@ -4734,17 +4736,30 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
+
+			targetColumns.add("FAMILYID");
+			targetColumns.add("DOCDATE");
+			targetColumns.add("GUID");
+			targetColumns.add("RECORDTYPE");
+			targetColumns.add("EMAILSUBJECT");
+			targetColumns.add("SOURCEDOCID");
+			dataMap.put("targetColumns", targetColumns);
+			
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
-			context.click_run_ingest_button(true, dataMap);
+			//context.click_run_ingest_button(true, dataMap);
+			
+			dataMap.put("actionNavigateDoc", "docView");
 			context.on_search_home_page(true, dataMap);
 			context.search_for_ingestion(true, dataMap);
 			context.verify_email_metadata_is_populated_correctly(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -4755,7 +4770,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positiveverify_draft_ingestion_files_are_not_found"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_expected_fields_are_in_data_set() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5131,7 +5146,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_attach_doc_ids_are_searchable() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5221,7 +5236,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_save_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_draft_ingestion_files_are_not_found() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5244,6 +5259,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYYY");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "NUIX");
+			dataMap.put("ingestQuery", "0C8A_SQA_Default_Automation_20201008214417943");
 			context.new_ingestion_created(true, dataMap);
 			context.click_save_button(true, dataMap);
 			context.on_search_home_page(true, dataMap);
