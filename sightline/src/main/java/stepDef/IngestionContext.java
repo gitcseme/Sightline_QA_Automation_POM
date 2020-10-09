@@ -2223,42 +2223,42 @@ public class IngestionContext extends CommonContext {
 		
 			  
 			try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableProject().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableIngestionName().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableIngestionType().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableComplete().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableStart().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableEnd().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableSourceDocs().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableSourceIngestedDocs().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableErrors().Displayed() ;}}), Input.wait30);
-			
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableLastModifiedBy().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableLastModifiedDate().Displayed() ;}}), Input.wait30);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				ingest.getIngestionGridTableIngestionStatus().Displayed() ;}}), Input.wait30);
+				click_grid_view(true,dataMap);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableProject().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionName().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionType().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableComplete().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableStart().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableEnd().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableSourceDocs().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableSourceIngestedDocs().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableErrors().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableLastModifiedBy().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableLastModifiedDate().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionStatus().Displayed() ;}}), Input.wait30);
 			
 			pass(dataMap,"The fields are displayed");
 
