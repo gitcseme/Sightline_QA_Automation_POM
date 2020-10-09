@@ -36,7 +36,6 @@ public class IngestionPage {
     public Element getDocumentKey(){ return driver.FindElementById("ddlKeyDatFile"); }
     public Element getNativeLST(){ return driver.FindElementById("ddlLoadNativeFile"); }
     
-  
     public Element getNativeFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathNative"); }
     public Element getTextLST(){ return driver.FindElementById("ddlLoadTextFile"); }
     public Element getTextFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathText"); }
@@ -117,7 +116,6 @@ public class IngestionPage {
     
     //Xpaths    
     public Element getAddanewIngestionButton(){return driver.FindElement(By.linkText("Add a new Ingestion"));}
-
     public Element getSourceSelectionText(){ return driver.FindElementByXPath("//strong[contains(.,'Text')]/../i"); }
     public Element getNextButton(){ return driver.FindElementById("NextButton"); }
     public Element getNativeCheckBox(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsNativeFolder']/following-sibling::i"); }
@@ -166,7 +164,7 @@ public class IngestionPage {
     public Element getIngestionNameText(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div"); }
     public Element getIncrementalAnalyticsbutton(){ return driver.FindElementByXPath(".//*[@id='IncrementalAnalytics']/following-sibling::i"); }
     
-    //added on 09-23
+    //Required Ingestion Field
     public Element getDATCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATFolder']/following-sibling::i"); }
     public Element getDATLoadFile(){ return driver.FindElementById("ddlLoadDatFile"); }
     public Element getNativePathCheckbox(){ return driver.FindElementById(".//*[@name='IngestionSpecifySetting.IsDATNative']/following-sibling::i"); }
@@ -178,7 +176,7 @@ public class IngestionPage {
     public Element getTransciptFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathTranscript"); }
     public Element getLinkType(){ return driver.FindElementByXPath(".//*[@name='IngestionSpecifySetting.IsDATTranscript']/following-sibling::i"); }
     
-    //added on 04-04
+    //Ingestion Home Page Tile
     public Element getIngestionName_CloseButton(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/se//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionName_ExecCloseButton(){ return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']"); }
     public Element getIngestionActionButton(){ return driver.FindElementByXPath(".//*[@id='cardCanvas']//div[1]/a"); }
@@ -191,7 +189,6 @@ public class IngestionPage {
     public Element getDateFormat(){ return driver.FindElementById("ddlDateFormat"); }
     public Element getIndexBlock(){ return driver.FindElementById("Indexingblock"); }
 	
-    //added on 200831
     public Element getDateTimeOption(){ return driver.FindElementByXPath("ddlDateFormat//option[text='YYYY/MM/DD HH:MM:SS']"); }
     public Element getTimeZone(){ return driver.FindElementByXPath("ddlTimeZone//option[text='UTC']"); }
     public Element getDESTINATIONFIELD1OPTION(){ return driver.FindElementByXPath("//select[@id='DF_1']//option[@value='-54']"); }
@@ -219,14 +216,11 @@ public class IngestionPage {
     public Element getNativeTitle() {return driver.FindElementByCssSelector("#formSpecify > fieldset:nth-child(4) > div:nth-child(4) > div > label > strong");}
     public Element getIngestionWizardTitle() {return driver.FindElementByCssSelector("#content > div:nth-child(3) > div > h1");}
     
-    
-    //added on 200923
-    //public Element getCopyPlayButton() {return driver.FindElementById("RunCopying");}
+    //Cataloged, Copied, Indexed CSS selectors
     public Element getCopyPlayButton() {return driver.FindElementByCssSelector("#RunCopying>i");}
     public Element getCopyingStatus() {return driver.FindElementByCssSelector("#Copyingblock > div:nth-child(1) > div > div:nth-child(3)");}
     public Element getCatelogingButton() {return driver.FindElementById("RunCataloging");}
     public Element getCatelogingStatus() {return driver.FindElementByCssSelector("#Catalogingblock > div:nth-child(1) > div > div:nth-child(3)");}
-    
     public Element getIngestionModal() {return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons");}
     public Element getIngestionTile() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > a");}
     public Element getIngestionTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li/a/span");}
@@ -237,7 +231,6 @@ public class IngestionPage {
     
     
     //System Admin Profile
-    
     public Element getAddNewProjectBtn() {return driver.FindElementByCssSelector("#content > form > div:nth-child(3) > div > div.entityDiv > div > div.col-md-4 > p> #btnAdd");}
     public Element getKickOffPopUpText() { return driver.FindElementByXPath("//*[@class='popover fade right in']//*[@class='popover-content']");}
     public Element getKickOffText() {return driver.FindElementByCssSelector("#iss1 > section:nth-child(5) > div > div:nth-child(1) > label");}
@@ -249,10 +242,8 @@ public class IngestionPage {
     public Element getIncrementalAnalysisBtn() { return driver.FindElementById("IncrementalAnalytics");}
     public Element getPublishAnalyticsBtn() { return driver.FindElementById("publish");}
     public Element getSearchBtn() {return driver.FindElementById("btnBasicSearch");}
-    
     public Element getSourceDATField() {return driver.FindElementByXPath("//*[@id=\"dt_basic\"]/thead/tr/td[1]");}
     public ElementCollection getSelectTable() {return driver.FindElementsByXPath("//i[@class='jstree-icon jstree-checkbox']");}
-    
     public Element getIngestionConfigureMappingRequiredDropDownFields(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s", index));}
     public Element getIngestionConfigureMappingRequiredDropDownOptions(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s > option:nth-child(4)", index));}
     public Element getResetMappingReqiredDropDown(int index) {return driver.FindElementByCssSelector(String.format("#SF_%s > option:nth-child(1)", index));}
@@ -274,7 +265,7 @@ public class IngestionPage {
     public Element getIngestionExecutionAudioIndexingCheckbox() { return driver.FindElementByCssSelector("#Indexingblock > div:nth-child(1) > div:nth-child(1) > div:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
     public ElementCollection getIngestionExecutionAudioLanguagePackOptions(){ return driver.FindElementsByCssSelector("#worldSelect >option ");}
     
-    //10012020
+    //Tile View and Grid View
     public Element getcardCanvas() {return driver.FindElementById("cardCanvas");}
     public Element getBackButton() {return driver.FindElementById("BackButton");}
     public Element getclickMoreButton() {return driver.FindElementById("btnLoadTile");}
@@ -327,7 +318,6 @@ public class IngestionPage {
     public Element getIngestionGridTableIngestionStatus(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[12]");}
     public Element getIngestionGridTableAction(){return driver.FindElementByXPath("//*[@id='IngestionGridViewtable_wrapper']/div[2]/div[1]/div/table/thead/tr/th[13]");}
 
-
     public Element getIngestionGridDetailsButton(String ingestName) {return driver.FindElementByXPath("//*[contains(text(), " + ingestName + ")]/parent::*//a ");}
     public Element getIngestionExecutionDetailActionButton() {return driver.FindElementByCssSelector("[[class=\"btn btn-defualt dropdown-toggle\"]]");}
     public Element getIngestionDeleteConfirmationButton() {return driver.FindElementByCssSelector("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
@@ -362,12 +352,9 @@ public class IngestionPage {
     }
 
     public IngestionPage(Driver driver){
-
         this.driver = driver;
-        //this.driver.getWebDriver().get(Input.url+"Ingestion/Home");
         base = new BaseClass(driver);
         driver.waitForPageToBeReady();
-
     }
     
     public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) throws InterruptedException 
@@ -411,40 +398,23 @@ public class IngestionPage {
 	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
 	    	}
     		
-	    	if(dataMap.containsKey("native_file") || dataMap.containsKey("native_path_file")) {
-	    		getNativeoptions(dataMap);
-	    	}
+	    	if(dataMap.containsKey("native_file") || dataMap.containsKey("native_path_file")) getNativeoptions(dataMap);
 	    	
-	    	if(dataMap.containsKey("text_file") || dataMap.containsKey("text_path_file")){
-	    		getTextoptions(dataMap);	
-	    	}
+	    	if(dataMap.containsKey("text_file") || dataMap.containsKey("text_path_file")) getTextoptions(dataMap);	
 	    	
-	    	if(dataMap.containsKey("PDF_file") || dataMap.containsKey("PDF_path_file")) {
-	    		getPDFoptions(dataMap);
-	    	}
+	    	if(dataMap.containsKey("PDF_file") || dataMap.containsKey("PDF_path_file")) getPDFoptions(dataMap);
 	    	
-	    	if(dataMap.containsKey("TIFF_file")) {
-	    		getTIFFoptions(dataMap);	
-	    	}
+	    	if(dataMap.containsKey("TIFF_file")) getTIFFoptions(dataMap);
 	
-	    	if(dataMap.containsKey("mp3_file") || dataMap.containsKey("mp3_path_file")) {
-	
-	    		getMP3options(dataMap);	
-	    	}
+	    	if(dataMap.containsKey("mp3_file") || dataMap.containsKey("mp3_path_file")) getMP3options(dataMap);	
 	    	
-	    	if(dataMap.containsKey("audio_file") || dataMap.containsKey("audio_path_file")) {
-	    		getTransciptoptions(dataMap);	
-	    	}
+	    	if(dataMap.containsKey("audio_file") || dataMap.containsKey("audio_path_file")) getTransciptoptions(dataMap);	
 	        
-	    	if(dataMap.containsKey("other_file") || dataMap.containsKey("other_path_file")) {
-	    		getTransciptoptions(dataMap);	
-	    	}
+	    	if(dataMap.containsKey("other_file") || dataMap.containsKey("other_path_file")) getTransciptoptions(dataMap);
 	    	
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				getDateFormat().Visible()  ;}}), Input.wait30); 
     		getDateFormat().SendKeys(dataMap.get("date_time").toString());
-    		
-    		
 
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -457,12 +427,8 @@ public class IngestionPage {
 		}
 
     }
-    public void requiredAudioField(){
-    	
-    }
     
     public void getDAToptions(HashMap dataMap) throws InterruptedException {
-
 	    if(getDATCheckbox().Selected() == true) {	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getDATCheckbox().Visible()  ;}}), Input.wait30); 

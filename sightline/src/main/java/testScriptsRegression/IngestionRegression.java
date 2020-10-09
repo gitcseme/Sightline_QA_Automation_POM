@@ -139,7 +139,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_source_doc_id_is_auto_mapped()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -2407,7 +2407,6 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("doc_key", "DocFileType");
 			dataMap.put("source_system", "TRUE");
 			context.new_ingestion_created(true, dataMap);
-
 			context.click_preview_run_button(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -3246,7 +3245,7 @@ public class IngestionRegression extends RegressionBase {
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
-			context.click_filter(true, dataMap);
+			context.click_cataloged_filter(true, dataMap);
 			context.click_copy_play_icon(true, dataMap);
 			context.click_indexing_play_icon(true, dataMap);
 			//context.start_analysing_step(true, dataMap);
@@ -3413,7 +3412,7 @@ public class IngestionRegression extends RegressionBase {
 			context.map_configuration_fields(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
-			context.click_filter(true, dataMap);
+			context.click_cataloged_filter(true, dataMap);
 			context.click_copy_play_icon(true, dataMap);
 			context.verify_ingestion_being_indexed_can_not_be_searched(true, dataMap);
 		} catch (ImplementationException e) {
@@ -4728,10 +4727,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator); 
 			dataMap.put("source_folder", "SQA_Default_Automation"); 
 			dataMap.put("dat_load_file", "EmailData.dat"); 
-			//dataMap.put("native_checkbox", "true"); 
 			dataMap.put("text_file", "TextEmailData.lst");
-			//dataMap.put("dat_load_file", "EmailData.dat"); 
-			//dataMap.put("text_checkbox", "true"); 
 			dataMap.put("native_file", "NativeEmailData.LST"); 
 			dataMap.put("date_time", "MM/DD/YYYY"); 
 			dataMap.put("doc_key", "DocID"); 
@@ -6218,7 +6214,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Ingestion, Positive",  })
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_deselect_all_mandatory_fields_When_click_next_button_Then_verify_mandatory_error_message_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

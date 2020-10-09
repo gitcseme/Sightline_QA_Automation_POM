@@ -1079,7 +1079,6 @@ public class IngestionContext extends CommonContext {
 
 			//* Run Indexing
 			//
-
 		}
 		else fail(dataMap, "Could Not Run Audio Indexing");
 
@@ -1166,7 +1165,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
-			System.out.println("Clicked");
 			
 			Thread.sleep(2000);
 
@@ -1178,9 +1176,9 @@ public class IngestionContext extends CommonContext {
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
 			dataMap.put("ingestName", ingest.getIngestionTile().GetAttribute("title"));
-			throw new ImplementationException("click_ingrestion_title");
+			throw new ImplementationException("click_ingestion_title");
 		} else {
-			throw new ImplementationException("NOT click_ingrestion_title");
+			throw new ImplementationException("NOT click_ingestion_title");
 
 		}
 	}
@@ -1234,7 +1232,7 @@ public class IngestionContext extends CommonContext {
 	}
 	
 	@And("^.*(\\[Not\\] )? click_filter$")
-	public void click_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void click_cataloged_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			try{
 				//Open Filter menu
@@ -1970,7 +1968,7 @@ public class IngestionContext extends CommonContext {
 				Assert.assertTrue(ingest.getIngestSource().Displayed());
 				Assert.assertTrue(ingest.getIngestPublish().Displayed());
 				Assert.assertTrue(ingest.getIngestError().Displayed());
-				if(status.equals("In Progess") || status.equals("Catalogued") || status.equals("Copied") || status.equals("Indexed")){
+				if(status.equals("In Progess") || status.equals("Cataloged") || status.equals("Copied") || status.equals("Indexed")){
 					progressStatusUpdated = true ;
 				}
 			}
@@ -2015,7 +2013,6 @@ public class IngestionContext extends CommonContext {
 				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
 			}
 			//select the option
-			
 			if(dataMap.get("filter_option").equals("Draft"))
 				ingest.getSelectFilterByOption(1).Click();
 			if(dataMap.get("filter_option").equals("In Progress"))
@@ -2035,8 +2032,7 @@ public class IngestionContext extends CommonContext {
 			
 			ingest.getcardCanvas().Click();
 			ingest.getRefreshButton().Click();
-			
-			
+				
 			pass(dataMap, "click_filter_by_dropdown");
 		} else {
 			fail(dataMap, "NOT click_filter_by_dropdown");
@@ -2061,7 +2057,6 @@ public class IngestionContext extends CommonContext {
 			//
 			try {
 			//click all load more button
-			scroll_click_load_more_button(true,dataMap);
 			while(ingest.getclickMoreButton().Displayed()) {
 				scroll_click_load_more_button(true,dataMap);
 				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
@@ -2221,7 +2216,6 @@ public class IngestionContext extends CommonContext {
 			//* Once an Ingestion is created and redirected to the Ingestion/Home page
 			//* Validate the following fields are displayed on the Grid Tile for the ingestion
 		
-			  
 			try {
 				click_grid_view(true,dataMap);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2295,7 +2289,6 @@ public class IngestionContext extends CommonContext {
     				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 			
 			Assert.assertEquals(10, ingest.getIngestTile().size());
-			
 			pass(dataMap,"verify_ingestion_home_page_displays_default_tile_count");
 		} else {
 			fail(dataMap, "NOT verify_ingestion_home_page_displays_default_tile_count");
