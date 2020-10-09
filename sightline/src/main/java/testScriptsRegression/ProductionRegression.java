@@ -1411,6 +1411,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -1447,6 +1448,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -1487,6 +1489,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -1527,6 +1530,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -3217,6 +3221,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -3255,6 +3260,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -3705,6 +3711,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);
 			;
 		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -4033,22 +4040,24 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("status", "DRAFT");
-			dataMap.put("production_name", "DefaultInProgressProduction"); 
+			dataMap.put("status", "INPROGRESS");
+			dataMap.put("production_name", "Testing Testing 123");
 			context.selecting_the_production(true, dataMap);
 			context.navigated_back_onto_the_production_components_section(true, dataMap);
 			context.editing_the_completed_production_component(true, dataMap);
 			context.navigating_back_to_the_generate_section(true, dataMap);
 			context.verify_the_production_can_be_regenerated(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -4141,7 +4150,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau5@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
