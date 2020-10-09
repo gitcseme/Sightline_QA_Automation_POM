@@ -280,16 +280,40 @@ public class IngestionPage {
     //10012020
     public Element getcardCanvas() {return driver.FindElementById("cardCanvas");}
     public Element getBackButton() {return driver.FindElementById("BackButton");}
+    public Element getclickMoreButton() {return driver.FindElementById("btnLoadTile");}
     public Element getGearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
     public Element getErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element getCopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
     public Element CloseButton() {return driver.FindElementByCssSelector("div.ui-dialog-buttonpane.ui-widget-content.ui-helper-clearfix > div >button");}
     public Element getFilterByOption(){return driver.FindElementByXPath("//button[@class = 'multiselect dropdown-toggle btn']");}
     public Element getSelectFilterByOption(int index){return driver.FindElementByXPath(String.format("//ul[@class = 'multiselect-container dropdown-menu' ]//li[%s]//a[1]/label/input",index));}
+    public ElementCollection getAllFilterOptions() { return driver.FindElementsByCssSelector(".multiselect-container>li");}
     public Element backButton() {return driver.FindElementById("BackButton");}
     public Element GearButton() {return driver.FindElementByXPath("//*[@class='fa fa-lg fa-gear']");}
     public Element ErrorWarningMessagePopUp() {return driver.FindElementByXPath("//*[@class='fa fa-warning shake animated']");}
     public Element CopyOptionButton() {return driver.FindElementByCssSelector("#cardCanvas > ul > li > div.pName.font-xs > div > dl > dt:nth-child(3) > a");}
+    public Element getIngestedGridView() { return driver.FindElementById("GridView");}
+    public Element getIngestTileView() { return driver.FindElementById("TileView");}
+    public Element getIngestionGridPaginationTable() { return driver.FindElementById("IngestionGridViewtable_paginate");}
+    public ElementCollection getIngestTile() { return driver.FindElementsByXPath("//span[@class = 'pTime font-md']");}
+    public ElementCollection getIngestProgressBar() { return driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']");}
+    public Element getIngestSource() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestPublish() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestError() {return driver.FindElementByCssSelector("#cardCanvas > ul > li:nth-child(1) > div:nth-child(6) > div.sourceCt.col-md-4");}
+    public Element getIngestGridView() {return driver.FindElementById("GridView");}
+    public Element getIngestSortDropDown() {return driver.FindElementById("SortBy");}
+    public Element getIngestSortOption(String option) {return driver.FindElementByCssSelector(String.format("[id='SortBy'] option[value='%s']", option));}
+    public ElementCollection getIngestGridTableRows() {return driver.FindElementsByCssSelector("#IngestionGridViewtable >tbody>tr");}
+    public Element getIngestGridViewNextBtn() {return driver.FindElementById("IngestionGridViewtable_next");}
+    
+    public ElementCollection getIngestionStatus() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
+    public ElementCollection getIngestionModifiedDates() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li div.bottomStamps.row > div:nth-child(2) > div");}
+    public ElementCollection getIngestionModifiedUser() { return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(1) > span");}
+    public ElementCollection getIngestionProjectName() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.pName.font-xs");}
+    public Element getIngestRollbackButton() {return driver.FindElementByXPath("//*[contains(text(), 'Rollback')] ");}
+    public Element getIngestRollbackConfirmButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
+    public Element getIngestRollbackCancelButton() {return driver.FindElementByXPath("[class=\"MessageBoxButtonSection\"] [id=\"bot2-Msg1\"]");}
+    public ElementCollection getIngestionFilterStatus() {return driver.FindElementsByCssSelector("#cardCanvas > ul > li > div.bottomStamps.row > div:nth-child(2) > strong");}
     
     public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
     public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
@@ -309,6 +333,20 @@ public class IngestionPage {
     public WebElement getIngestionTile(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index);
+    	}
+    	return null;
+    }
+    
+    public WebElement getIngestionProgressBar(int index){
+    	if(index < driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().size()){
+    		return driver.FindElementsByXPath("//*[@class = 'ui-progressbar ui-widget ui-widget-content ui-corner-all']").FindWebElements().get(index);
+    	}
+    	return null;
+    }
+    
+    public WebElement getIngestionTileFilterStatus(int index){
+    	if(index < getIngestionFilterStatus().FindWebElements().size()){
+    		return getIngestionFilterStatus().FindWebElements().get(index);
     	}
     	return null;
     }
