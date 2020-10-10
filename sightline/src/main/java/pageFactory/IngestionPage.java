@@ -369,12 +369,15 @@ public class IngestionPage {
     	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
     	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
     	
+    	int columnCount = 0;
+    	
     	for(int i = 0; i < columns.size(); ++i) {
+    		columnCount = i+1;
     		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
     		System.out.println(currentColumn);
    			dataValues.clear();
    			for(WebElement row: rows) {
-    			dataValues.add(row.findElement(By.xpath("td[" + i+1 + "]")).getText());
+    			dataValues.add(row.findElement(By.xpath("td[" + columnCount + "]")).getText());
     		}
     		table.put(currentColumn , dataValues);
     	}
@@ -388,12 +391,15 @@ public class IngestionPage {
     	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
     	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
     	
+    	int columnCount = 0;
+    	
     	for(int i = 0; i < columns.size(); ++i) {
+    		columnCount = i+1;
     		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
     		if(targetColumns.contains(currentColumn)){
     			dataValues.clear();
        			for(WebElement row: rows) {
-        			dataValues.add(row.findElement(By.xpath("td[" + i+1 + "]")).getText());
+        			dataValues.add(row.findElement(By.xpath("td[" + columnCount + "]")).getText());
         		}
        			table.put(currentColumn , dataValues);
         	}
