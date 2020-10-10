@@ -4726,26 +4726,38 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			
-			targetColumns.add("FAMILYID");
-			targetColumns.add("DOCDATE");
-			targetColumns.add("GUID");
-			targetColumns.add("RECORDTYPE");
-			targetColumns.add("EMAILSUBJECT");
-			targetColumns.add("SOURCEDOCID");
-			dataMap.put("targetColumns", targetColumns);
+//			
+//			targetColumns.add("FAMILYID");
+//			targetColumns.add("DOCDATE");
+//			targetColumns.add("GUID");
+//			targetColumns.add("RECORDTYPE");
+//			targetColumns.add("EMAILSUBJECT");
+//			targetColumns.add("SOURCEDOCID");
+//			dataMap.put("targetColumns", targetColumns);
 
-			dataMap.put("source_system", "ICE"); 
-			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator); 
-			dataMap.put("source_folder", "SQA_Default_Automation"); 
-			dataMap.put("dat_load_file", "EmailData.dat"); 
-			//dataMap.put("native_checkbox", "true"); 
-			dataMap.put("text_file", "TextEmailData.lst");
-			//dataMap.put("dat_load_file", "EmailData.dat"); 
-			//dataMap.put("text_checkbox", "true"); 
-			dataMap.put("native_file", "NativeEmailData.LST"); 
-			dataMap.put("date_time", "MM/DD/YYYY"); 
-			dataMap.put("doc_key", "DocID"); 
+//			dataMap.put("source_system", "ICE"); 
+//			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator); 
+//			dataMap.put("source_folder", "SQA_Default_Automation"); 
+//			dataMap.put("dat_load_file", "EmailData.dat"); 
+//			//dataMap.put("native_checkbox", "true"); 
+//			dataMap.put("text_file", "TextEmailData.lst");
+//			//dataMap.put("dat_load_file", "EmailData.dat"); 
+//			//dataMap.put("text_checkbox", "true"); 
+//			dataMap.put("native_file", "NativeEmailData.LST"); 
+//			dataMap.put("date_time", "MM/DD/YYYY"); 
+//			dataMap.put("doc_key", "DocID"); 
+			
+
+			dataMap.put("pdf_checkbox", "true");
+			dataMap.put("text_file", "text.lst");
+			dataMap.put("dat_load_file", "AttachDocIDs.dat");
+			dataMap.put("text_checkbox", "true");
+			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator);
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "NUIX");
 
 			context.new_ingestion_created(true, dataMap);
 			context.map_configuration_fields(true, dataMap);
@@ -5423,7 +5435,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_filter_by_dropdown_Then_verify_filter_by_dropdown_has_default_option_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

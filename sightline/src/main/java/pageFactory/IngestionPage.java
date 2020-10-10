@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -363,39 +364,39 @@ public class IngestionPage {
     //A function that stores all DAT information on the preview run page and returns it in a HashMap
     //The column name will be the key(I.E "AllCustodians") -> The value will be a list of the corresponding values for each row
     public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(){
-    	
     	HashMap<String, ArrayList<String>> table = new HashMap<>();
-    	int count = 0;
-    	for(WebElement column: getIngestDATPreviewColumnHeader().FindWebElements()) {
-    		String currentColumn = (column.getText().split(" =>"))[0];
-    		System.out.println((column.getText().split(" =>"))[0]);
-   			ArrayList<String> temp = new ArrayList<>();
-   			for(WebElement rows: getIngestDATPreviewRows().FindWebElements()) {
-    			temp.add(rows.findElements(By.cssSelector("td")).get(count).getText());
+		ArrayList<String> dataValues = new ArrayList<>();	
+    	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
+    	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
+    	
+    	for(int i = 0; i < columns.size(); ++i) {
+    		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
+    		System.out.println(currentColumn);
+   			dataValues.clear();
+   			for(WebElement row: rows) {
+    			dataValues.add(row.findElement(By.xpath("td[" + i+1 + "]")).getText());
     		}
-    		table.put( (column.getText().split(" =>"))[0] , temp);
-   			count++;
-    		
+    		table.put(currentColumn , dataValues);
     	}
 		return table;
     }
 
     //Same as the above function, however this only returns columns that we are interested in
     public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(HashSet<String> targetColumns){
-    	
     	HashMap<String, ArrayList<String>> table = new HashMap<>();
-    	int count = 0;
-    	for(WebElement column: getIngestDATPreviewColumnHeader().FindWebElements()) {
-    		String currentColumn = (column.getText().split(" =>"))[0];
+		ArrayList<String> dataValues = new ArrayList<>();	
+    	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
+    	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
+    	
+    	for(int i = 0; i < columns.size(); ++i) {
+    		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
     		if(targetColumns.contains(currentColumn)){
-    			System.out.println((column.getText().split(" =>"))[0]);
-    			ArrayList<String> temp = new ArrayList<>();
-    			for(WebElement rows: getIngestDATPreviewRows().FindWebElements()) {
-    				temp.add(rows.findElements(By.cssSelector("td")).get(count).getText());
-    			}
-    			table.put( (column.getText().split(" =>"))[0] , temp);
-    			count++;
-    		}
+    			dataValues.clear();
+       			for(WebElement row: rows) {
+        			dataValues.add(row.findElement(By.xpath("td[" + i+1 + "]")).getText());
+        		}
+       			table.put(currentColumn , dataValues);
+        	}
     	}
 		return table;
     }

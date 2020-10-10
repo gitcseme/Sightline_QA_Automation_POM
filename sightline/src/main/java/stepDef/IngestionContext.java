@@ -597,12 +597,15 @@ public class IngestionContext extends CommonContext {
 	    	    ingest.getApproveMessageOKButton().Click(); 
 	    	    Thread.sleep(2000);
 	    	    
-	    	    HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation((HashSet<String>)dataMap.get("targetColumns"));
+	    	    //HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation((HashSet<String>)dataMap.get("targetColumns"));
+	    	    HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation();
+
 	    	    dataMap.put("ingestPreviewData", ingestPreviewData);
 
 				pass(dataMap, "Get Preview Run Button is Clickable");
 			}
 			catch (Exception e) {
+				e.printStackTrace();
 				fail(dataMap, "Get Preview Run Button could not be Clicked");
 			}
 
