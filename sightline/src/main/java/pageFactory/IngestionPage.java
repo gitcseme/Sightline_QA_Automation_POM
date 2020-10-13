@@ -1,6 +1,9 @@
 package pageFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -109,6 +112,7 @@ public class IngestionPage {
     public Element getbtnRunIngestion(){ return driver.FindElementById("btnRunIngestion"); }
     public Element getRefreshButton(){ return driver.FindElementById("refresh"); }
     public Element getApproveMessageOKButton(){ return driver.FindElementById("bot1-Msg1"); }
+    public ElementCollection getApproveMessageButton() { return driver.FindElementsById("bot1-Msg1");}
     public Element getWarningMessageOKButton(){ return driver.FindElementById("bot1-Msg2"); }
     public Element getRunAnalyticsRunButton(){ return driver.FindElementById("run"); }
     public Element getRunAnalyticsPublishButton(){ return driver.FindElementById("publish"); }
@@ -322,6 +326,12 @@ public class IngestionPage {
     public Element getIngestionExecutionDetailActionButton() {return driver.FindElementByCssSelector("[[class=\"btn btn-defualt dropdown-toggle\"]]");}
     public Element getIngestionDeleteConfirmationButton() {return driver.FindElementByCssSelector("[class=\"MessageBoxButtonSection\"] [id=\"bot1-Msg1\"]");}
     
+    public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
+    public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public Element getSaveButtonConfirmationYes() { return driver.FindElementById("bot1-Msg1");}
+    public ElementCollection getIngestDATPreviewColumnHeader() {return driver.FindElementsByCssSelector("#previewRecords thead th");}
+    public ElementCollection getIngestDATPreviewRows() {return driver.FindElementsByCssSelector("#previewRecords tbody tr ");}
+    public ElementCollection getIngestDATPreviewRowValues() {return driver.FindElementsByCssSelector("#previewRecords tbody tr td");}
 
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
@@ -356,6 +366,53 @@ public class IngestionPage {
         base = new BaseClass(driver);
         driver.waitForPageToBeReady();
     }
+    
+    //A function that stores all DAT information on the preview run page and returns it in a HashMap
+    //The column name will be the key(I.E "AllCustodians") -> The value will be a list of the corresponding values for each row
+    public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(){
+    	HashMap<String, ArrayList<String>> table = new HashMap<>();
+		ArrayList<String> dataValues = new ArrayList<>();	
+    	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
+    	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
+    	
+    	int columnCount = 0;
+    	
+    	for(int i = 0; i < columns.size(); ++i) {
+    		columnCount = i+1;
+    		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
+    		System.out.println(currentColumn);
+   			dataValues.clear();
+   			for(WebElement row: rows) {
+    			dataValues.add(row.findElement(By.xpath("td[" + columnCount + "]")).getText());
+    		}
+    		table.put(currentColumn , dataValues);
+    	}
+		return table;
+    }
+
+    //Same as the above function, however this only returns columns that we are interested in
+    public HashMap<String, ArrayList<String>> getIngestDATPreviewInformation(HashSet<String> targetColumns){
+    	HashMap<String, ArrayList<String>> table = new HashMap<>();
+		ArrayList<String> dataValues = new ArrayList<>();	
+    	List<WebElement> columns = getIngestDATPreviewColumnHeader().FindWebElements();
+    	List<WebElement> rows = getIngestDATPreviewRows().FindWebElements();
+    	
+    	int columnCount = 0;
+    	
+    	for(int i = 0; i < columns.size(); ++i) {
+    		columnCount = i+1;
+    		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
+    		if(targetColumns.contains(currentColumn)){
+    			dataValues.clear();
+       			for(WebElement row: rows) {
+        			dataValues.add(row.findElement(By.xpath("td[" + columnCount + "]")).getText());
+        		}
+       			table.put(currentColumn , dataValues);
+        	}
+    	}
+		return table;
+    }
+    
     
     public void requiredFieldsAreEntered(boolean scriptState, HashMap dataMap) throws InterruptedException 
     {

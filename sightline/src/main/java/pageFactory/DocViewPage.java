@@ -231,6 +231,9 @@ public class DocViewPage {
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
     public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
     public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
+    public ElementCollection getDocViewTableRows() {return driver.FindElementsByCssSelector("#SearchDataTable>tbody>tr");}
+    public Element getMetaDataTableRowByName(String name) { return driver.FindElementByXPath(String.format("//table[@id='MetaDataDT']//td[contains(text(), '%s')]", name));}
+    public Element getMetaDataTableRowValueByName(String name) { return driver.FindElementByXPath(String.format("//table[@id='MetaDataDT']//td[contains(text(), '%s')]/following-sibling::td", name));}
     
     
     
