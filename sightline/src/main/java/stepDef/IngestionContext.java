@@ -167,8 +167,9 @@ public class IngestionContext extends CommonContext {
 	public void on_saved_draft_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			on_ingestion_home_page(scriptState, dataMap);
-			new_ingestion_created(scriptState, dataMap);
+			on_ingestion_home_page(true, dataMap);
+			new_ingestion_created(true, dataMap);
+			map_configuration_fields(true, dataMap);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSaveDraftButton().Enabled()  ;}}), Input.wait30); 
 	    	ingest.getSaveDraftButton().Click();
@@ -190,7 +191,7 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionAction_Wizard().Displayed()  ;}}), Input.wait30); 
+					ingest.getFirstIngestionActionButton().Enabled() && ingest.getIngestionAction_Wizard().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Wizard().Click();
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1099,7 +1100,6 @@ public class IngestionContext extends CommonContext {
 
 			//* Run Indexing
 			//
-
 		}
 		else fail(dataMap, "Could Not Run Audio Indexing");
 
@@ -1186,7 +1186,6 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionTile().Visible()  ;}}), Input.wait30); 
 			ingest.getIngestionTile().Click();
-			System.out.println("Clicked");
 			
 			Thread.sleep(2000);
 
@@ -1197,10 +1196,10 @@ public class IngestionContext extends CommonContext {
 			//now have to wait until it pass or fail
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getCatelogingStatus().getText().equals("pass") ;}}), Input.wait30);
-			
-			throw new ImplementationException("click_ingrestion_title");
+			dataMap.put("ingestName", ingest.getIngestionTile().GetAttribute("title"));
+			throw new ImplementationException("click_ingestion_title");
 		} else {
-			throw new ImplementationException("NOT click_ingrestion_title");
+			throw new ImplementationException("NOT click_ingestion_title");
 
 		}
 	}
@@ -1254,7 +1253,7 @@ public class IngestionContext extends CommonContext {
 	}
 	
 	@And("^.*(\\[Not\\] )? click_filter$")
-	public void click_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void click_cataloged_filter(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			try{
 				//Open Filter menu
@@ -2182,19 +2181,22 @@ public class IngestionContext extends CommonContext {
 			//* validate progress status is updated (In Progress, Catalogued, Copied, Indexed)
 			//
 			
-			for(int i =4; i<=6;i++) {
-				click_filter_by_dropdown(true,dataMap,4);
+			try {
+				Boolean progressStatusUpdated =false;
+				String status =ingest.getIngestionTileFilterStatus(0).getText().substring(8);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
+		    		ingest.getIngestionTile().Displayed() ;}}), Input.wait30); 
 				Assert.assertTrue(ingest.getIngestionProgressBar(0).isDisplayed());
 				Assert.assertTrue(ingest.getIngestSource().Displayed());
 				Assert.assertTrue(ingest.getIngestPublish().Displayed());
 				Assert.assertTrue(ingest.getIngestError().Displayed());
-				
-				
+				if(status.equals("In Progess") || status.equals("Cataloged") || status.equals("Copied") || status.equals("Indexed")){
+					progressStatusUpdated = true ;
+				}
 			}
-			
-			
+			catch(Exception e){
+				e.printStackTrace();
+			}
 			pass(dataMap, "verify_components_are_displayed_correctly");
 		} else {
 			fail(dataMap, "NOT verify_components_are_displayed_correctly");
@@ -2211,16 +2213,18 @@ public class IngestionContext extends CommonContext {
 			//* Once the Saved Draft is opened in the wizard
 			//* Validate that the user can still ingest the saved draft opened
 			//
-			throw new ImplementationException("verify_user_can_ingest_a_saved_draft");
+			Assert.assertEquals("In Progress", ingest.getIngestionTileFilterStatus(0).getText().substring(8));
+			
+			pass(dataMap, "verify_user_can_ingest_a_saved_draft");
 		} else {
-			throw new ImplementationException("NOT verify_user_can_ingest_a_saved_draft");
+			fail(dataMap, "NOT verify_user_can_ingest_a_saved_draft");
 		}
 
 	}
 
 
 	@When("^.*(\\[Not\\] )? click_filter_by_dropdown$")
-	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap, int index) throws ImplementationException, Exception {
+	public void click_filter_by_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
@@ -2231,14 +2235,29 @@ public class IngestionContext extends CommonContext {
 				if(ingest.getSelectFilterByOption(i).Selected()) ingest.getSelectFilterByOption(i).Click();
 			}
 			//select the option
-			if(ingest.getSelectFilterByOption(index).Selected()) ingest.getSelectFilterByOption(index).Click();
+			if(dataMap.get("filter_option").equals("Draft"))
+				ingest.getSelectFilterByOption(1).Click();
+			if(dataMap.get("filter_option").equals("In Progress"))
+				ingest.getSelectFilterByOption(2).Click();
+			if(dataMap.get("filter_option").equals("Failed"))
+				ingest.getSelectFilterByOption(3).Click();
+			if(dataMap.get("filter_option").equals("Cataloged"))
+				ingest.getSelectFilterByOption(4).Click();
+			if(dataMap.get("filter_option").equals("Copied"))
+				ingest.getSelectFilterByOption(5).Click();	
+			if(dataMap.get("filter_option").equals("Indexed"))
+				ingest.getSelectFilterByOption(6).Click();
+			if(dataMap.get("filter_option").equals("Approved"))
+				ingest.getSelectFilterByOption(7).Click();
+			if(dataMap.get("filter_option").equals("Published"))
+				ingest.getSelectFilterByOption(8).Click();	
+			
 			ingest.getcardCanvas().Click();
 			ingest.getRefreshButton().Click();
-			
-			
-			throw new ImplementationException("click_filter_by_dropdown");
+				
+			pass(dataMap, "click_filter_by_dropdown");
 		} else {
-			throw new ImplementationException("NOT click_filter_by_dropdown");
+			fail(dataMap, "NOT click_filter_by_dropdown");
 		}
 
 	}
@@ -2258,7 +2277,26 @@ public class IngestionContext extends CommonContext {
 			//* Approved
 			//* Published
 			//
-			throw new ImplementationException("verify_filter_by_dropdown_displays_expected_options");
+			try {
+			//click all load more button
+			while(ingest.getclickMoreButton().Displayed()) {
+				scroll_click_load_more_button(true,dataMap);
+				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
+			}
+			driver.waitForPageToBeReady();
+
+			int size = ingest.getIngestionFilterStatus().FindWebElements().size();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				!ingest.getclickMoreButton().Displayed() && ingest.getIngestionTileFilterStatus(size).isDisplayed()  ;}}), Input.wait30); 
+			
+			for(int i=0; i <= size;i++) {
+				Assert.assertTrue(ingest.getIngestionTileFilterStatus(i).getText().substring(8).equals(dataMap.get("filter_option").toString()));
+			}
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap, "verify_filter_by_dropdown_displays_expected_options");
 		} else {
 			throw new ImplementationException("NOT verify_filter_by_dropdown_displays_expected_options");
 		}
@@ -2312,10 +2350,29 @@ public class IngestionContext extends CommonContext {
 			//
 			//
 			//* In Progress
-			//
-			throw new ImplementationException("verify_filter_by_dropdown_has_default_option_selected");
+			//			
+			try {
+			int count =0;
+			String actual ="";
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				ingest.getFilterByOption().Displayed()  ;}}), Input.wait30); 
+			ingest.getFilterByOption().Click();
+			
+			for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected()) { 
+					actual = ingest.getSelectFilterByOption(i).GetAttribute("value");
+					count++;
+				}
+			}
+			
+			Assert.assertEquals(1, count); //check if more then one is selected
+			Assert.assertEquals("INPROGRESS", actual); 
+			pass(dataMap, "verify_filter_by_dropdown_has_default_option_selected");}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		} else {
-			throw new ImplementationException("NOT verify_filter_by_dropdown_has_default_option_selected");
+			fail(dataMap, "NOT verify_filter_by_dropdown_has_default_option_selected");
 		}
 
 	}
@@ -2331,9 +2388,19 @@ public class IngestionContext extends CommonContext {
 			//* Click Rollback option
 			//* Click Yes to confirm rollback
 			//
-			throw new ImplementationException("click_on_rollback_option");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
+				ingest.getGearButton().click();
+				ingest.getIngestionRollbackButton().click();
+				ingest.getIngestionRollbackConfirmButton().click();
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT click_on_rollback_option");
+			}
+			pass(dataMap, "click_on_rollback_option");
 		} else {
-			throw new ImplementationException("NOT click_on_rollback_option");
+			fail(dataMap, "NOT click_on_rollback_option");
 		}
 
 	}
@@ -2343,16 +2410,19 @@ public class IngestionContext extends CommonContext {
 	public void verify_rolled_back_ingestion_can_be_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC830:To verify that ingestion which is Rolled back can be deleted once it is in Draft modeCovered:TC888 To verify that ingestion which is Rolled back can be deleted.
-			//* Once an Ingested item has been rolledback
-			//* Check the DB to make sure the value has changed to Draft Mode (Pending DB access) ???
-			//* Click on the Settings gear for the ingested grid item
-			//* Click on Delete
-			//* Validate the item is deleted
-			//
-			throw new ImplementationException("verify_rolled_back_ingestion_can_be_deleted");
+			try {
+				String ingestName = (String)dataMap.get("ingestName");				
+				if(!ingest.getIngestionGridDetailsButton(ingestName).Displayed()) {
+					pass(dataMap, "verify_rolled_back_ingestion_can_be_deleted");
+				} else {
+					fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
+				}				
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
+			}			
 		} else {
-			throw new ImplementationException("NOT verify_rolled_back_ingestion_can_be_deleted");
+			fail(dataMap, "NOT verify_rolled_back_ingestion_can_be_deleted");
 		}
 
 	}
@@ -2367,26 +2437,54 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Once an Ingestion is created and redirected to the Ingestion/Home page
 			//* Validate the following fields are displayed on the Grid Tile for the ingestion
-			//
-			//
-			//* Project 
-			//* Ingestion Name
-			//* Ingestion Type
-			//* % Completed
-			//* Start Date
-			//* End Date
-			//* Source Docs
-			//* Ingested Docs
-			//* Error
-			//* Last Modified By
-			//* Last Modified at
-			//* Ingestion Status
-			//
-			throw new ImplementationException("verify_ingestion_grid_view_displays_expected_fields");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_grid_view_displays_expected_fields");
-		}
+		
+			try {
+				click_grid_view(true,dataMap);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableProject().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionName().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionType().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableComplete().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableStart().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableEnd().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableSourceDocs().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableSourceIngestedDocs().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableErrors().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableLastModifiedBy().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableLastModifiedDate().Displayed() ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getIngestionGridTableIngestionStatus().Displayed() ;}}), Input.wait30);
+			
+			pass(dataMap,"The fields are displayed");
 
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"The fields are not displayed");
+			}
+		} else {
+			fail(dataMap,"The fields are not displayed");
+		}
 	}
 
 
@@ -2413,7 +2511,6 @@ public class IngestionContext extends CommonContext {
     				ingest.getIngestionTile().Displayed() && ingest.getIngestionTile(10).isDisplayed()  ;}}), Input.wait30); 
 			
 			Assert.assertEquals(10, ingest.getIngestTile().size());
-			
 			pass(dataMap,"verify_ingestion_home_page_displays_default_tile_count");
 		} else {
 			fail(dataMap, "NOT verify_ingestion_home_page_displays_default_tile_count");
@@ -2431,9 +2528,21 @@ public class IngestionContext extends CommonContext {
 			//* validate the ingestion tile is refreshed
 			//* validate the count on the page is also updated correctly
 			//
-			throw new ImplementationException("verify_ingestion_home_page_is_refreshed");
+			try {
+				while(ingest.getSavedIngestTile().Displayed()){
+					ingest.getRefreshButton().click();
+				}
+				driver.waitForPageToBeReady();
+	
+				int TileSize = ingest.getIngestTile().size();
+				Assert.assertEquals(0, TileSize);
+				
+				pass(dataMap,"verify_ingestion_home_page_is_refreshed");}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_home_page_is_refreshed");
+			fail(dataMap,"NOT verify_ingestion_home_page_is_refreshed");
 		}
 
 	}
@@ -2497,6 +2606,7 @@ public class IngestionContext extends CommonContext {
 			ArrayList<String> pageElements = new ArrayList<>();
 			
 			//Scrolls to the end of page
+
 			while(ingest.getclickMoreButton().Displayed()) {
 				scroll_click_load_more_button(true,dataMap);
 				driver.FindElementByTagName("body").SendKeys(Keys.DOWN.toString());
@@ -2518,7 +2628,11 @@ public class IngestionContext extends CommonContext {
 				for(WebElement x: ingest.getIngestionModifiedUser().FindWebElements()) {
 					pageElements.add(x.getText().substring(0, x.getText().toString().length()-4));
 				}
-		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
+				ingest.getGearButton().click();
+				ingest.getIngestionRollbackButton().click();
+				ingest.getIngestionRollbackConfirmButton().click();
 			}
 			else if(option.equals("Project Name")) {
 				for(WebElement x: ingest.getIngestionProjectName().FindWebElements()) {
@@ -2914,6 +3028,25 @@ public class IngestionContext extends CommonContext {
 			pass(dataMap,"verify_valid_email_metadata_option_is_available");
 		} else {
 			fail(dataMap,"verify_valid_email_metadata_option_is_available");
+		}
+	}
+
+	@When("^.*(\\\\[Not\\\\] )? delete_grid_ingestion$")
+	public void delete_grid_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			try {
+				String ingestName = (String)dataMap.get("ingestName");
+				ingest.getIngestionGridDetailsButton(ingestName).click();
+				ingest.getIngestionExecutionDetailActionButton().click();
+				ingest.getIngestionAction_Grid_Delete().click();
+				ingest.getIngestionDeleteConfirmationButton().click();								
+				pass(dataMap, "select_grid_ingestion_details_button");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT select_grid_ingestion_details_button");
+			}
+		} else {
+			fail(dataMap, "NOT select_grid_ingestion_details_button");
 		}
 	}
 	
