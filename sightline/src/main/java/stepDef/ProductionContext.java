@@ -8,6 +8,9 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
+import java.util.Random;
+
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.SystemUtils;
@@ -47,7 +50,7 @@ public class ProductionContext extends CommonContext {
 		String dateTime = new Long((new Date()).getTime()).toString();
 		String template = (String) dataMap.get("prod_template");
 		String productionName = "AutoProduction" + dateTime;
-
+		dataMap.put("production_name", productionName);
 		try {
 			if (scriptState) {
 				prod.addNewProduction(productionName, template);
@@ -901,7 +904,8 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkNext().Enabled() ;}}), Input.wait30);
 				prod.getComponentsMarkNext().Click();
-				
+			
+			
 			pass(dataMap,"Default Production Component are completed");	
 				
 			} catch(Exception e) {
@@ -996,17 +1000,15 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivDefaultAutomation().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getPrivDefaultAutomation().Click();
-					
-									
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivInsertQuery().Enabled() && prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
-
+					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-					
-
+										
 					pass(dataMap,"Priv guard documents are completed");
 					
 			}
@@ -1154,6 +1156,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumDocumentLevelRadioButton().Enabled()  ;}}), Input.wait30);
 				prod.getNumDocumentLevelRadioButton().Click();
+				dataMap.put("numbering_option", "Document");
 				pass(dataMap, "Radio Button Succesfully Clicked");
 			}
 			catch(Exception e) {fail(dataMap, "Did not Click Documents Radio Button");}
@@ -1234,7 +1237,79 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
+	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			try {
+				
+				//Find which buttons are default
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
+
+				//If Document is Default Checked
+				if(prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked")!=null && prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked").equals("true")) {
+						//Verify Bates Number starts at 1: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("1",prod.getNumSubBatesNum().GetAttribute("value").toString());
+				
+						//Verify Min Number starts at 5: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesMin().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("5",prod.getNumSubBatesMin().GetAttribute("value").toString());
+				}
+				else {
+					//Verify Page Radio Button is selected by default
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertTrue(prod.getNumPageLevelRadioButtonCheck().Selected());
+//					Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
+				
+				}
+
+				if(prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")!=null && (prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")).equals("true")) {
+					System.out.println("dont go in here");
+					//Verify All Custodians is default from dropdown.
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataCustodiansTab().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("AllCustodians",prod.getNumMetaDataCustodiansTab().selectFromDropdown().getFirstSelectedOption().getText());
+					
+					//Verify Both Prefix and Suffix are blank
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataPrefix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataPrefix().selectFromDropdown().getFirstSelectedOption().getText());
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataSuffix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataSuffix().selectFromDropdown().getFirstSelectedOption().getText());
+				}
+				else {
+					//Verify Format Section as "Specify Bates Numbering" as default value
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertEquals("true",prod.getNumBatesRadioButtonCheck().GetAttribute("checked"));
+
+					//Verify Link under Specify Bates Numbering Button
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumNextBatesLink().Displayed()  ;}}), Input.wait30);
+
+				}
+				//Verify in Sorting Section, "Sort by Metadata" is default checked
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumSortMetaRadioButtonCheck().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals("true",prod.getNumSortMetaRadioButtonCheck().GetAttribute("checked"));
+				pass(dataMap,"Passed Verification of Sorting and Nums Page");
+								
+				
+			}
+			catch(Exception e) { 
+				e.printStackTrace();
+				fail(dataMap,"Did not Pass Verification of Sorting and Nums Page");
+			}
+		}
+
+	}
 
 	@When("^.*(\\[Not\\] )? clicking_use_metadata_field_as_the_format_default_option$")
 	public void clicking_use_metadata_field_as_the_format_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -1242,35 +1317,11 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumUseMetaFieldButton().Enabled()  ;}}), Input.wait30);
-				prod.getNumUseMetaFieldButton().Click();
+					prod.getNumUseMetaFieldButtonCheck().Enabled()  ;}}), Input.wait30);
+				prod.getNumUseMetaFieldButtonCheck().Click();
 				pass(dataMap, "Succesfully clicked useMeta Field Button");
 			}
 			catch(Exception e) {fail(dataMap, "Could not click UseMeta Field Button");}
-		}
-
-	}
-
-
-	//Duplicate Function -> Already Done
-	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
-	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//TC 4922
-			//* In the Numbering, Level section, "Page" is selected by default.
-			//* In the Numbering, Format section, "Specify Bates Numbering" should be selected by default with the option to "Click here to view and select the next bates number(s)".
-			//* In the Sorting section, "Sort by Metadata" is chosen by default. 
-			//If Document is selected to be default instead of page:
-			//* Ignore bullet 1 above.
-			//* Verify under Document, "Beginning Sub-bates Number:" starts at 1 and "Min Number Length:" starts at 5.
-			//If Use Metadata field is selected to be default instead of Specify Bates Numbering:
-			//* Ignore bullet 2 at the top. 
-			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
-			//
-			throw new ImplementationException("verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
 		}
 
 	}
@@ -2164,12 +2215,37 @@ public class ProductionContext extends CommonContext {
 	
 	@Given("^.*(\\[Not\\] )? verify_the_next_bates_number_generation_is_stored_in_the_correct_fields$")
 	public void verify_the_next_bates_number_generation_is_stored_in_the_correct_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+			//Verify the field "Beginning Bates #" is populated with "beginning_bates"
+			//Verify the field "Prefix" is populated with "prefix'
+			//Verify the "Click here" link is not displayed when the component was marked Completed
+
+			try {		
+				String beginningBatesNumberInput = prod.getBeginningBates().GetAttribute("value");
+				String prefixInput = prod.gettxtBeginningBatesIDPrefix().GetAttribute("value");
+				String beginningBatesNumber = dataMap.get("beginning_bates_number").toString();
+
+				
+				if (dataMap.get("prefix") == null) {
+					Assert.assertEquals(prefixInput, "");
+				} else {
+					String prefix = dataMap.get("prefix").toString();
+					Assert.assertEquals(prefix, prefixInput);
+				};
+				
+				Assert.assertEquals(beginningBatesNumber, beginningBatesNumberInput);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getClickHereToViewNextBatesNumbers().Displayed()  ;}}), Input.wait30); 
+				Assert.assertFalse(prod.getClickHereToViewNextBatesNumbers().Displayed());
+				pass(dataMap, "Prefix value is stored correctly!");
+			} catch (Exception e) {
+				fail(dataMap, "Prefix value is not stored correctly!");
+			}
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+			fail(dataMap, "Could not verify fields");
 		}
 
 	}
@@ -2179,8 +2255,43 @@ public class ProductionContext extends CommonContext {
 	public void selecting_a_different_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark IncompleteClick on the Click Here linkSelect the first option in the bates number grid
-			throw new ImplementationException("selecting_a_different_generated_bates_number");
+			//Click Mark IncompleteClick on the Click Here link
+			//Select the first option in the bates number grid
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30); 
+			prod.getMarkIncompleteButton().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
+			
+			prod.openNextBatesNumbersDialog();
+
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFirstBatesNumberValue().Displayed()  ;}}), Input.wait30); 
+			String firstBatesNumber = prod.getFirstBatesNumberValue().getText();
+			prod.getFirstBatesNumberSelectButton().click();
+			
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+			String beginningBatesNumber = "";
+			String prefix;
+			
+			// Check if batesNumber has prefix 
+			if (Character.isLetter(firstBatesNumber.charAt(0))) {
+
+				beginningBatesNumber = firstBatesNumber.substring(1);
+				prefix = firstBatesNumber.substring(0, 1);
+			} else {
+				beginningBatesNumber = firstBatesNumber;
+				prefix = null;
+			}
+
+			dataMap.put("beginning_bates_number", beginningBatesNumber);
+			dataMap.put("prefix", prefix);
+			
 		} else {
 			throw new ImplementationException("NOT selecting_a_different_generated_bates_number");
 		}
@@ -2193,7 +2304,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("clicking_the_productions_mark_complete_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to click the Mark Complete button");
+			}
+
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
 		}
@@ -2215,20 +2335,142 @@ public class ProductionContext extends CommonContext {
 			//* 500 is the Beginning Bates
 			//* Click Select on the second bates number listed.
 			//
-			throw new ImplementationException("complete_specifying_the_next_bates_number");
+
+			try {
+
+				prod.openNextBatesNumbersDialog();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSecondBatesNumberValue().Displayed()  ;}}), Input.wait30); 
+				String batesNumber = prod.getSecondBatesNumberValue().getText();
+				dataMap.put("bates_number", batesNumber);
+				
+				String secondBatesNumber = prod.getSecondBatesNumberValue().getText();
+				String beginningBatesNumber = secondBatesNumber.substring(1);
+				String prefix = secondBatesNumber.substring(0, 1);
+
+				prod.getSecondBatesNumberSelectButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+				dataMap.put("beginning_bates_number", beginningBatesNumber);
+				dataMap.put("prefix", prefix);
+				
+				
+			} catch (Exception e) {
+				fail(dataMap,"Unable to complete specifying the next bates number");
+			}
 		} else {
 			throw new ImplementationException("NOT complete_specifying_the_next_bates_number");
 		}
 
 	}
 
+	@And("^.*(\\[Not\\] )? marking_complete_the_next_available_bates_number$")
+	public void marking_complete_the_next_available_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortNextButton().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortNextButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbDocumentSelection().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? mark_complete_default_priv_guard$")
+	public void mark_complete_default_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardMarkComplete().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
+					prod.getbtnProductionGuardMarkComplete().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+				prod.getbtnProductionGuardNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbProductionLocation().Displayed()  ;}}), Input.wait30); 
+				
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
 
 	@And("^.*(\\[Not\\] )? complete_default_production_location_component$")
 	public void complete_default_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.2. Type in a Production Directory:      2 a. The directory should be "Automation" + random 7 digit number + _ + dir     2 b. Ex: Automation5264345_dirMake sure to store the value for the Root Path and directory as it will be used later3. Click Mark Complete4. Click Next
-			throw new ImplementationException("complete_default_production_location_component");
+			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.
+			//2. Type in a Production Directory:      
+			//2 a. The directory should be "Automation" + random 7 digit number + _ + dir     
+			//2 b. Ex: Automation5264345_dir Make sure to store the value for the Root Path and directory as it will be used later
+			//3. Click Mark Complete
+			//4. Click Next
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+
+				prod.getlstProductionRootPaths().Click();
+
+				prod.getSecondRootPathOption().Click();
+				Random rnd = new Random();
+				int number = rnd.nextInt(9999999);
+				String selectedRootPath = prod.getSecondRootPathOption().getText();
+				String productionDirectory = "Automation" + number + "_dir";
+				dataMap.put("root_path", selectedRootPath);
+				dataMap.put("production_directory", productionDirectory);
+				prod.getProductionOutputLocation_ProductionDirectory().SendKeys(productionDirectory);
+		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationMarkComplete().Enabled() ;}}), Input.wait30);
+
+				prod.getbtnProductionLocationMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+				prod.getbtnProductionLocationNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbSummaryAndPreview().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to complete Production Location section");
+			}
+
+
+			
 		} else {
 			throw new ImplementationException("NOT complete_default_production_location_component");
 		}
@@ -2241,7 +2483,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
-			throw new ImplementationException("completed_summary_preview_component");
+			try {
+				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
+				prod.getbtnProductionSummaryMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
+				prod.getbtnProductionSummaryNext().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbGenerate().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "User is not on the Summery & Preview page");
+			}
 		} else {
 			throw new ImplementationException("NOT completed_summary_preview_component");
 		}
@@ -2251,10 +2505,26 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? starting_the_production_generation$")
 	public void starting_the_production_generation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
+		
 		if (scriptState) {
-			//Click the Generate button
-			throw new ImplementationException("starting_the_production_generation");
+			try {
+				
+				// Reset notification number back to 0
+				if (!prod.getBulHornNotificationNumber().getText().equals("0")) {
+					prod.getBulHornNotificationNumber().click();
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGenerate().Displayed()  ;}}), Input.wait30); 
+				prod.getbtnProductionGenerate().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerationStartedSuccessfullyText().Displayed()  ;}}), Input.wait30); 
+
+			} catch (Exception e) {
+				fail(dataMap, "Unable to start production generation");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT starting_the_production_generation");
 		}
@@ -2267,7 +2537,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("waiting_for_production_to_be_in_progress");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getInProgressStatus().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Production was not set to In Progress");
+			}
 		} else {
 			throw new ImplementationException("NOT waiting_for_production_to_be_in_progress");
 		}
@@ -2279,8 +2554,44 @@ public class ProductionContext extends CommonContext {
 	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_using_the_next_bates_generations_a_production_successfully");
+			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in 
+			//"custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.
+			//For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), 
+			//then a sample bates number generated would look like "B00001001T".
+
+			// when using refresh() function after starting a production generation, the page reloads back to 
+			// the Basic Info screen. As a workaround, instead of refreshing the page, the test will keep clicking
+			// the Productions navigation link until the bullhorn notification icon gets updated indicating the
+			// Production has been completed
+			int i =0;
+			while(!prod.getBulHornNotificationNumber().getText().equals("1") && i<50){
+				prod.getProductionsNavLink().click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getRedBullHorn().Displayed() ;}}), Input.wait30);
+			}
+
+			
+			driver.FindElementByXPath("//a[@title='"+ dataMap.get("production_name") +"']").click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getExportBatesButton().Enabled() ;}}), Input.wait30); 
+			
+			String batesRange = prod.getProd_BatesRange().getText();
+
+			String[] parts = batesRange.split("-");
+			String firstNumber = parts[0].trim();
+
+			String batesNumber = dataMap.get("bates_number").toString();
+
+			try {
+				Assert.assertEquals(firstNumber, batesNumber);
+				pass(dataMap, "Bates number equals starting Bates number");
+			} catch (Exception e) {
+				fail(dataMap, "Bates number does not equal starting Bates number");
+			}
+			
+
 		} else {
 			throw new ImplementationException("NOT verify_using_the_next_bates_generations_a_production_successfully");
 		}
@@ -2292,8 +2603,35 @@ public class ProductionContext extends CommonContext {
 	public void editing_the_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//1. Get the value stored for the beginning bates and add a random 6 digit number at the end of it. This will be your new beginning bates number.2. Get the Prefix and add the letter E to it. 3. Add the Suffix Q and store this value for later. We will verify the bates number is displayed with these options later.4. Click Mark Complete
-			throw new ImplementationException("editing_the_generated_bates_number");
+			//1. Get the value stored for the beginning bates and add a random 6 digit number at the end of it. This will be your new beginning bates number.
+			//2. Get the Prefix and add the letter E to it. 
+			//3. Add the Suffix Q and store this value for later. We will verify the bates number is displayed with these options later.
+			//4. Click Mark Complete
+			Random rnd = new Random();
+			int number = rnd.nextInt(999999);
+			String beginningBatesNumber = dataMap.get("beginning_bates_number").toString();
+			String prefix = dataMap.get("prefix").toString();
+			
+			String newBeginningBatesNumber = beginningBatesNumber + number;
+			String newPrefix = prefix + "E";
+			System.out.println("new number: " + newBeginningBatesNumber);
+			System.out.println("newPrefix: " + newPrefix);
+			String newBatesNumber = newPrefix + newBeginningBatesNumber + "Q";
+			dataMap.put("bates_number", newBatesNumber);
+			prod.getBeginningBates().Clear();
+			prod.gettxtBeginningBatesIDPrefix().Clear();
+			
+			
+			prod.getBeginningBates().SendKeys(newBeginningBatesNumber);
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(newPrefix);
+			prod.gettxtBeginningBatesIDSuffix().SendKeys("Q");
+			prod.getMarkCompleteButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			
+			
 		} else {
 			throw new ImplementationException("NOT editing_the_generated_bates_number");
 		}
@@ -2305,8 +2643,32 @@ public class ProductionContext extends CommonContext {
 	public void verify_editing_the_bates_number_after_generation_is_displaying_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC8353If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_editing_the_bates_number_after_generation_is_displaying_correctly");
+			int i =0;
+			while(!prod.getBulHornNotificationNumber().getText().equals("1") && i<50){
+				prod.getProductionsNavLink().click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getRedBullHorn().Displayed() ;}}), Input.wait30);
+			}
+			
+			driver.FindElementByXPath("//a[@title='"+ dataMap.get("production_name") +"']").click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getExportBatesButton().Enabled() ;}}), Input.wait30); 
+			
+			String batesRange = prod.getProd_BatesRange().getText();
+
+			String[] parts = batesRange.split("-");
+			String firstNumber = parts[0].trim();
+
+			String batesNumber = dataMap.get("bates_number").toString();
+
+			try {
+				Assert.assertEquals(firstNumber, batesNumber);
+				pass(dataMap, "Bates number equals starting Bates number");
+			} catch (Exception e) {
+				fail(dataMap, "Bates number does not equal starting Bates number");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_editing_the_bates_number_after_generation_is_displaying_correctly");
 		}
@@ -2319,7 +2681,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Under NUMBERING, click Document Erase the value in Beginning Sub-bates NumberErase the value in Min Number Length
-			throw new ImplementationException("the_numbering_is_set_to_document_with_no_sub_bates");
+			try {
+				clicking_document_as_the_numbering_default_option(scriptState, dataMap);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+				prod.getNumSubBatesNum().Clear();
+				prod.getNumSubBatesMin().Clear();
+			} catch (Exception e) {
+				fail(dataMap, "Unable to clear input fields");
+			}
 		} else {
 			throw new ImplementationException("NOT the_numbering_is_set_to_document_with_no_sub_bates");
 		}
@@ -2332,9 +2702,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5188Verify when marking the numbering and sorting complete, it successfully marks it completed with no error.
-			throw new ImplementationException("verify_document_level_numbering_can_be_empty_for_sub_bates");
+			
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
+
 		} else {
-			throw new ImplementationException("NOT verify_document_level_numbering_can_be_empty_for_sub_bates");
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "1");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "5");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
 		}
 
 	}
@@ -2345,7 +2727,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//The user should click Save from the Production page.
-			throw new ImplementationException("clicking_the_productions_save_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSaveButton().Enabled()  ;}}), Input.wait30);
+			prod.getSaveButton().Click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_save_button");
 		}
@@ -2358,7 +2742,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the link named "Click here" hunter the format section
-			throw new ImplementationException("clicking_the_numbering_format_click_here_link");
+			prod.openNextBatesNumbersDialog();
 		} else {
 			throw new ImplementationException("NOT clicking_the_numbering_format_click_here_link");
 		}
@@ -2376,7 +2760,17 @@ public class ProductionContext extends CommonContext {
 			//* Verify a grid should display with the title "NEXT BATES NUMBER" and "ACTION".
 			//* Verify at least one bates number is listed with the button "Select" next to it.
 			//
-			throw new ImplementationException("verify_the_next_bates_number_dialog_displays_correctly");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getBatesDialogTitle().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals(prod.getBatesDialogTitle().getText(), "Next Bates Numbers");
+				Assert.assertEquals(prod.getBatesDialogProductionName().getText(), dataMap.get("production_name"));
+				Assert.assertEquals(prod.getNextBatesNumberColumHeader().getText(), "NEXT BATES NUMBER");
+				Assert.assertEquals(prod.getActionColumHeader().getText(), "ACTION");
+				Assert.assertTrue(prod.getFirstBatesNumberSelectButton().Displayed());
+			} catch (Exception e) {
+				fail(dataMap, "Bates Number Dialog does not display the expected elements");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_next_bates_number_dialog_displays_correctly");
 		}
