@@ -484,6 +484,14 @@ public class ProductionPage {
     public Element getActionColumHeader() { return driver.FindElementById("hdrAction"); }
     public Element getSaveButton() { return driver.FindElementByXPath("//*[text()='Save']"); }
     
+    public Element getProductionTitleName() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/div[1]/a");}
+    public Element getProdductionNameOnQCPage() {return driver.FindElementByXPath("//*[@class='col-md-3']//div[@class='panel-title-container']/h2");}
+    public Element getGeneratedDocCountOnQCPage() {return driver.FindElementByXPath("//*[@class='drk-gray-widget']/span[1]");}
+    public Element getReviewProductionButton() {return driver.FindElementByXPath("//*[@class='btn btn-primary col-md-12']");}
+    public Element getAutomatedQCChecklistText(int index) {return driver.FindElementByXPath(String.format("//*[@id='taskbasic']/tbody/tr[%s]/td[1]", index));}
+    public ElementCollection getGeneratePageTitle() {return driver.FindElementsByXPath("//*[@id='frmProductionGenerate']/div/div[1]/div/h2");}
+    public Element getConfirmAndCommitProdLink() {return driver.FindElementByXPath("//*[@id='btnProductionConfirmation']/strong");}
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
