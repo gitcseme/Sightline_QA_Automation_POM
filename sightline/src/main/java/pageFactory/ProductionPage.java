@@ -342,6 +342,8 @@ public class ProductionPage {
     public String mp3Warning = "For MP3 Files component, you must enable LST load file option or you must specify MP3FilePath in " + 
                                "the DAT, in order to generate a load file for the generated MP3s files.";
     public Element getMP3WarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }
+    public Element getConfirmCompletePopup() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+
     
     
     //Added on 8/21

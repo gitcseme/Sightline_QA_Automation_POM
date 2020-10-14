@@ -2824,6 +2824,7 @@ public class ProductionContext extends CommonContext {
 			// EX: if dat = true, pdf = true. The DAT and PDF section should be filled in with the data we have determined should be added based on the information below.
 			//These parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if blank or doesn't exist, skip it.
 			//
+
 			//IF DAT IS TRUE:
 			//Click the DAT checkbox
 			//Click the DAT tab to open the DAT container
@@ -2915,10 +2916,21 @@ public class ProductionContext extends CommonContext {
 			//The other parameters can be worked on as we use them.
 			//
 			//
+			
+			builder.moveToElement(prod.getComponentsMarkComplete().getWebElement()).perform();
+			prod.getComponentsMarkComplete().Click();
+					
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
+			prod.getComponentsMarkNext().Click();
+
+			
 			//At the end of the block above, the last two steps should do the following:
 			//
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
 			//Click the next button
+			
 			
 		}
 		else fail(dataMap, "Failed Complex Production Component");
