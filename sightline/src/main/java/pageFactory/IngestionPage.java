@@ -318,10 +318,25 @@ public class IngestionPage {
     
     public Element getNavigateToSearchMenuButton() { return driver.FindElementById("3");}
     public Element getNavigateToSessionSearchPageMenuButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public Element getNavigateToIngestionMenuButton() { return driver.FindElementById("4");}
+    public Element getNavigateToUnpublishMenuButton() { return driver.FindElementByCssSelector("a[name='UnPublish']");}
+    public Element getNavigateToAnalyticsAndPublishButton() { return driver.FindElementByCssSelector("a[name='Analytics']");}
+    public Element getNavigateToIngestionHome() { return driver.FindElementByCssSelector("a[name='Ingestion']");}
+
+
+
+
     public Element getSaveButtonConfirmationYes() { return driver.FindElementById("bot1-Msg1");}
     public ElementCollection getIngestDATPreviewColumnHeader() {return driver.FindElementsByCssSelector("#previewRecords thead th");}
     public ElementCollection getIngestDATPreviewRows() {return driver.FindElementsByCssSelector("#previewRecords tbody tr ");}
     public ElementCollection getIngestDATPreviewRowValues() {return driver.FindElementsByCssSelector("#previewRecords tbody tr td");}
+    
+    public Element getUnpublishSearchByName(String savedSearch) {return driver.FindElementByCssSelector(String.format(".jstree-children li a[data-content = '%s']", savedSearch));}
+    public Element getIngestionIgnoreAllErrorsBtn() {return driver.FindElementById("btnignoreall");}
+    public Element getCatalogDoneBtn() {return driver.FindElementById("Catalogdone");}
+    public Element getUnpublishFirstRow() {return driver.FindElementById("-1g_anchor");}
+    
+    
     
     
     public String getIngestionTileName(int index){

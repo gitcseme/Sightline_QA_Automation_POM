@@ -4711,8 +4711,68 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
 	@Test(groups = {"Ingestion, Positive", "smoke"})
+	public void TestCase7203() throws Throwable{
+		
+		HashMap dataMap = new HashMap();
+		ExtentTest test = report.startTest("TC7203");
+
+		dataMap.put("ExtentTest",test);
+		try {
+			dataMap.put("pdf_checkbox", "true");
+			dataMap.put("text_file", "text.lst");
+			dataMap.put("dat_load_file", "AttachDocIDs.dat");
+			dataMap.put("text_checkbox", "true");
+			dataMap.put("pdf_file", "PDF.LST");
+			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation"+File.separator);
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "NUIX");
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			//Create an Ingestion when we need to, according to whatever specifications
+			/*
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			*/
+			//Maybe get the Ingestion Name here before we head to the Search page
+			
+			dataMap.put("ingestionName", "0C8A_SQA_Default_Automation_20201014000122603");
+			context.on_search_home_page(true, dataMap);
+			dataMap.put("ingestQuery", (String)dataMap.get("ingestionName"));
+			context.search_for_ingestion(true, dataMap);
+			context.unpublish_desired_saved_search(true, dataMap);
+			
+			
+			/*
+			context.on_ingestion_home_page(true, dataMap);
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			*/
+			//context.wait_for_inprogress_to_published(true, dataMap);
+			context.verify_search_result_for_overlaid_text(true,dataMap);
+
+		}
+		catch(ImplementationException e) {
+			e.printStackTrace();
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			e.printStackTrace();
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Ingestion, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_map_configuration_fields_and_click_preview_run_button_and_click_run_ingest_button_and_on_search_home_page_When_search_for_ingestion_Then_verify_email_metadata_is_populated_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
