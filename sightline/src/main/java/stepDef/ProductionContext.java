@@ -2843,6 +2843,7 @@ public class ProductionContext extends CommonContext {
 				prod.getDatField().SendKeys("Bates Number");
 			}
 
+
 			if(pdf!= null && pdf.equalsIgnoreCase("true")) {
 				builder.moveToElement(prod.getPDFChkBox().getWebElement()).perform();
 				prod.getPDFChkBox().click();
@@ -2871,6 +2872,7 @@ public class ProductionContext extends CommonContext {
 				prod.getTIFF_SelectRed_Radiobutton().click();
 				prod.getTIFFSelectRedactionsTagTree("Default Automation Redaction").click();
 			}
+			
 			
 			//IF NATIVE IS TRUE:
 			//Check off Native
@@ -2953,11 +2955,67 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #"2. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick Mark CompletedClick Next
+			Random rnd = new Random();
+			String prefix = (String) dataMap.get("prefix");
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+			String minimumNumber = Integer.toString(minLength);
+			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+			String suffix = (String) dataMap.get("suffix");
 			
+			if(beginningBates == 1) {
+				int low = 0;
+				int high = 10;
+				int randSingleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randSingleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
 			
-			throw new ImplementationException("custom_number_sorting_is_added");
+			else if(beginningBates == 2) {
+				int low = 10;
+				int high = 100;
+				int randDoubleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randDoubleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+			
+			else if(beginningBates == 3) {
+				int low = 100;
+				int high = 1000;
+				int randTripleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randTripleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+			
+			else {
+				int low = 1000;
+				int high = 10000;
+				int randQuadDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randQuadDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+			
+			prod.gettxtBeginningBatesIDPrefix().click();
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
+			
+			prod.gettxtBeginningBatesIDSuffix().click();
+			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
+			
+			prod.gettxtBeginningBatesIDMinNumLength().click();
+			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
+
+			prod.getMarkCompleteLink().click();
+			prod.getNextButton().click();
+			
 		} else {
-			throw new ImplementationException("NOT custom_number_sorting_is_added");
+			 fail(dataMap, "Custom number sorting is not added");
 		}
 
 	}
