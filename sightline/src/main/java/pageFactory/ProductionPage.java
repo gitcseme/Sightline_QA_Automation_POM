@@ -419,7 +419,6 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
-    
 
     public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
@@ -451,6 +450,39 @@ public class ProductionPage {
     public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
     public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
     public Element getProductionDeleteOkButton() {return driver.FindElementByCssSelector("[class=\"btn btn-default btn-sm botTempo\"]");}
+    
+    public Element getClickHereToViewNextBatesNumbers() {return driver.FindElementByCssSelector(".radio.col-md-12");}
+    public Element getMarkCompleteSuccessfulText() { return driver.FindElementByXPath("//*[text()='Mark Complete successful']"); }
+    public Element getClickHereLink() { return driver.FindElementByCssSelector("a[onclick='javascript:NextBatesNumber();']"); }
+    public Element getNextBatesNumbersDialog() { return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front"); }
+    public Element getFirstBatesNumberValue() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr/td"); }
+    public Element getSecondBatesNumberValue() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td"); }
+    public Element getFirstBatesNumberSelectButton() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[1]/td[2]/button"); }
+    public Element getSecondBatesNumberSelectButton() { return driver.FindElementByXPath("//table[@id='dtNextBatesLst']//tr[2]/td[2]/button"); }
+    public Element getNumAndSortMarkCompleteButton() { return driver.FindElementById("NumAndSortMarkInComplete"); }
+    public Element getNumAndSortNextButton() { return driver.FindElementById("NumAndSortNext"); }
+    public Element getCurrentCrumbDocumentSelection() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Document Selection']"); }
+    public Element getCurrentCrumbProductionLocation() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Production Location']"); }
+    public Element getCurrentCrumbSummaryAndPreview() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Summary & Preview']"); }
+    public Element getCurrentCrumbGenerate() { return driver.FindElementByXPath("//li[@class='current-crumb']/span[text()='Generate']"); }
+    public Element getSecondRootPathOption() { return driver.FindElementByXPath("//select[@id='lstProductionRootPaths']/option[2]"); }
+    public Element getGenerationStartedSuccessfullyText() { return driver.FindElementByXPath("//*[text()='Generation Started Successfully']"); }
+    public Element getInProgressStatus() { return driver.FindElementByXPath("//label[text()='IN PROGRESS']"); }
+    public ElementCollection getRegenerateButtonElCollection() { return driver.FindElementsById("btnProductionReGenerate"); }
+    public Element getExportBatesButton() { return driver.FindElementById("btnProductionGeneratedBatesRangeExport"); }
+    public Element getProductionLocationMarkIncompleteButton() { return driver.FindElementById("btnProductionLocationMarkInComplete"); }
+    public Element getBulHornNotificationNumber() { return driver.FindElementByXPath("//span[@id='activity']/b"); }
+    public Element getProductionsNavLink() { return driver.FindElementByName("Productions"); }
+    public Element getRedBullHorn() { return driver.FindElementByCssSelector(".badge.bg-color-red.bounceIn.animated"); }
+    public Element getMarkIncompleteButton() { return driver.FindElementByXPath("//a[text()='Mark Incomplete']"); }
+    public Element getMarkCompleteButton() { return driver.FindElementByXPath("//a[text()='Mark Complete']"); }
+    public ElementCollection getDisabledPrefixInputFieldElCollection() { return driver.FindElementsByXPath("//input[@id='txtBeginningBatesIDPrefix' and @disabled]"); }
+    public Element getDisabledPrefixInputField() { return driver.FindElementByXPath("//input[@id='txtBeginningBatesIDPrefix' and @disabled]"); }
+    public Element getBatesDialogTitle() { return driver.FindElementByXPath("//span[@id='ui-id-1']/div"); }
+    public Element getBatesDialogProductionName() { return driver.FindElementById("producitonName"); }
+    public Element getNextBatesNumberColumHeader() { return driver.FindElementById("hdrNextBatesNo"); }
+    public Element getActionColumHeader() { return driver.FindElementById("hdrAction"); }
+    public Element getSaveButton() { return driver.FindElementByXPath("//*[text()='Save']"); }
     
     
     //Click the desired production set option, in the dropdown menu by it's index
@@ -484,6 +516,7 @@ public class ProductionPage {
     		return driver.FindElementsById("batesCount").FindWebElements().get(index);}
     	else return null;
 
+
     }
 
 
@@ -495,6 +528,7 @@ public class ProductionPage {
     	}
     	return null;
     }
+
 
     public ProductionPage(Driver driver){
 
@@ -3178,9 +3212,14 @@ public class ProductionPage {
         getMP3AdvancedList().Click();
     }
     
-    
-  	    
-  	    
+    public void openNextBatesNumbersDialog() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getClickHereLink().Displayed()  ;}}), Input.wait30); 
+
+		getClickHereLink().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getNextBatesNumbersDialog().Displayed()  ;}}), Input.wait30); 
+    }
   	    
 }
     

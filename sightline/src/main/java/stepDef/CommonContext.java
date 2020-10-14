@@ -33,8 +33,8 @@ public class CommonContext {
 
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
-		driver.Manage().window().maximize();
-		//driver.Manage().window().fullscreen();
+		//driver.Manage().window().maximize();
+		driver.Manage().window().fullscreen();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         
@@ -109,10 +109,14 @@ public class CommonContext {
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
-		
 		prod = new ProductionPage(driver);
-		prod.changeProjectSelector().Click();
-	    prod.changeProjectSelectorField().Click();
+		
+		if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
+			prod.changeProjectSelector().Click();
+		    prod.changeProjectSelectorField().Click();
+		}
+
+	    driver.waitForPageToBeReady();
 
 		if (scriptState) {
 			

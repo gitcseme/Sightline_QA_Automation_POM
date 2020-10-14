@@ -8,6 +8,9 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
+import java.util.Random;
+
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.SystemUtils;
@@ -47,7 +50,7 @@ public class ProductionContext extends CommonContext {
 		String dateTime = new Long((new Date()).getTime()).toString();
 		String template = (String) dataMap.get("prod_template");
 		String productionName = "AutoProduction" + dateTime;
-
+		dataMap.put("production_name", productionName);
 		try {
 			if (scriptState) {
 				prod.addNewProduction(productionName, template);
@@ -901,7 +904,8 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkNext().Enabled() ;}}), Input.wait30);
 				prod.getComponentsMarkNext().Click();
-				
+			
+			
 			pass(dataMap,"Default Production Component are completed");	
 				
 			} catch(Exception e) {
@@ -996,17 +1000,15 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivDefaultAutomation().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getPrivDefaultAutomation().Click();
-					
-									
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivInsertQuery().Enabled() && prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
-
+					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 					prod.getPrivChkForMatching().Click();
-					
-
+										
 					pass(dataMap,"Priv guard documents are completed");
 					
 			}
@@ -1154,6 +1156,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumDocumentLevelRadioButton().Enabled()  ;}}), Input.wait30);
 				prod.getNumDocumentLevelRadioButton().Click();
+				dataMap.put("numbering_option", "Document");
 				pass(dataMap, "Radio Button Succesfully Clicked");
 			}
 			catch(Exception e) {fail(dataMap, "Did not Click Documents Radio Button");}
@@ -1234,7 +1237,79 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
+	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			try {
+				
+				//Find which buttons are default
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumDocumentLevelRadioButton().Displayed()  ;}}), Input.wait30);
+
+				//If Document is Default Checked
+				if(prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked")!=null && prod.getNumDocumentLevelRadioButtonCheck().GetAttribute("checked").equals("true")) {
+						//Verify Bates Number starts at 1: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("1",prod.getNumSubBatesNum().GetAttribute("value").toString());
+				
+						//Verify Min Number starts at 5: 
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getNumSubBatesMin().Displayed()  ;}}), Input.wait30);
+						Assert.assertEquals("5",prod.getNumSubBatesMin().GetAttribute("value").toString());
+				}
+				else {
+					//Verify Page Radio Button is selected by default
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumPageLevelRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertTrue(prod.getNumPageLevelRadioButtonCheck().Selected());
+//					Assert.assertTrue(prod.getNumPageLevelRadioButton().Selected());
+				
+				}
+
+				if(prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")!=null && (prod.getNumUseMetaFieldButtonCheck().GetAttribute("checked")).equals("true")) {
+					System.out.println("dont go in here");
+					//Verify All Custodians is default from dropdown.
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataCustodiansTab().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("AllCustodians",prod.getNumMetaDataCustodiansTab().selectFromDropdown().getFirstSelectedOption().getText());
+					
+					//Verify Both Prefix and Suffix are blank
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataPrefix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataPrefix().selectFromDropdown().getFirstSelectedOption().getText());
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumMetaDataSuffix().Enabled()  ;}}), Input.wait30);
+					Assert.assertEquals("", prod.getNumMetaDataSuffix().selectFromDropdown().getFirstSelectedOption().getText());
+				}
+				else {
+					//Verify Format Section as "Specify Bates Numbering" as default value
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumBatesRadioButton().Displayed()  ;}}), Input.wait30);
+					Assert.assertEquals("true",prod.getNumBatesRadioButtonCheck().GetAttribute("checked"));
+
+					//Verify Link under Specify Bates Numbering Button
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumNextBatesLink().Displayed()  ;}}), Input.wait30);
+
+				}
+				//Verify in Sorting Section, "Sort by Metadata" is default checked
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumSortMetaRadioButtonCheck().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals("true",prod.getNumSortMetaRadioButtonCheck().GetAttribute("checked"));
+				pass(dataMap,"Passed Verification of Sorting and Nums Page");
+								
+				
+			}
+			catch(Exception e) { 
+				e.printStackTrace();
+				fail(dataMap,"Did not Pass Verification of Sorting and Nums Page");
+			}
+		}
+
+	}
 
 	@When("^.*(\\[Not\\] )? clicking_use_metadata_field_as_the_format_default_option$")
 	public void clicking_use_metadata_field_as_the_format_default_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -1242,35 +1317,11 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNumUseMetaFieldButton().Enabled()  ;}}), Input.wait30);
-				prod.getNumUseMetaFieldButton().Click();
+					prod.getNumUseMetaFieldButtonCheck().Enabled()  ;}}), Input.wait30);
+				prod.getNumUseMetaFieldButtonCheck().Click();
 				pass(dataMap, "Succesfully clicked useMeta Field Button");
 			}
 			catch(Exception e) {fail(dataMap, "Could not click UseMeta Field Button");}
-		}
-
-	}
-
-
-	//Duplicate Function -> Already Done
-	@Then("^.*(\\[Not\\] )? verify_the_numbering_also_sorting_component_displays_the_correct_default_options$")
-	public void verify_the_numbering_also_sorting_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//TC 4922
-			//* In the Numbering, Level section, "Page" is selected by default.
-			//* In the Numbering, Format section, "Specify Bates Numbering" should be selected by default with the option to "Click here to view and select the next bates number(s)".
-			//* In the Sorting section, "Sort by Metadata" is chosen by default. 
-			//If Document is selected to be default instead of page:
-			//* Ignore bullet 1 above.
-			//* Verify under Document, "Beginning Sub-bates Number:" starts at 1 and "Min Number Length:" starts at 5.
-			//If Use Metadata field is selected to be default instead of Specify Bates Numbering:
-			//* Ignore bullet 2 at the top. 
-			//* Verify the field "Metadata" is populated with "AllCustodians" by default under "Use Metadata Field" with the Prefix and Suffix section left blank.
-			//
-			throw new ImplementationException("verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
-		} else {
-			throw new ImplementationException("NOT verify_the_numbering_also_sorting_component_displays_the_correct_default_options");
 		}
 
 	}
@@ -2164,12 +2215,37 @@ public class ProductionContext extends CommonContext {
 	
 	@Given("^.*(\\[Not\\] )? verify_the_next_bates_number_generation_is_stored_in_the_correct_fields$")
 	public void verify_the_next_bates_number_generation_is_stored_in_the_correct_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+			//Verify the field "Beginning Bates #" is populated with "beginning_bates"
+			//Verify the field "Prefix" is populated with "prefix'
+			//Verify the "Click here" link is not displayed when the component was marked Completed
+
+			try {		
+				String beginningBatesNumberInput = prod.getBeginningBates().GetAttribute("value");
+				String prefixInput = prod.gettxtBeginningBatesIDPrefix().GetAttribute("value");
+				String beginningBatesNumber = dataMap.get("beginning_bates_number").toString();
+
+				
+				if (dataMap.get("prefix") == null) {
+					Assert.assertEquals(prefixInput, "");
+				} else {
+					String prefix = dataMap.get("prefix").toString();
+					Assert.assertEquals(prefix, prefixInput);
+				};
+				
+				Assert.assertEquals(beginningBatesNumber, beginningBatesNumberInput);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getClickHereToViewNextBatesNumbers().Displayed()  ;}}), Input.wait30); 
+				Assert.assertFalse(prod.getClickHereToViewNextBatesNumbers().Displayed());
+				pass(dataMap, "Prefix value is stored correctly!");
+			} catch (Exception e) {
+				fail(dataMap, "Prefix value is not stored correctly!");
+			}
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_next_bates_number_generation_is_stored_in_the_correct_fields");
+			fail(dataMap, "Could not verify fields");
 		}
 
 	}
@@ -2179,8 +2255,43 @@ public class ProductionContext extends CommonContext {
 	public void selecting_a_different_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark IncompleteClick on the Click Here linkSelect the first option in the bates number grid
-			throw new ImplementationException("selecting_a_different_generated_bates_number");
+			//Click Mark IncompleteClick on the Click Here link
+			//Select the first option in the bates number grid
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30); 
+			prod.getMarkIncompleteButton().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
+			
+			prod.openNextBatesNumbersDialog();
+
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFirstBatesNumberValue().Displayed()  ;}}), Input.wait30); 
+			String firstBatesNumber = prod.getFirstBatesNumberValue().getText();
+			prod.getFirstBatesNumberSelectButton().click();
+			
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+			String beginningBatesNumber = "";
+			String prefix;
+			
+			// Check if batesNumber has prefix 
+			if (Character.isLetter(firstBatesNumber.charAt(0))) {
+
+				beginningBatesNumber = firstBatesNumber.substring(1);
+				prefix = firstBatesNumber.substring(0, 1);
+			} else {
+				beginningBatesNumber = firstBatesNumber;
+				prefix = null;
+			}
+
+			dataMap.put("beginning_bates_number", beginningBatesNumber);
+			dataMap.put("prefix", prefix);
+			
 		} else {
 			throw new ImplementationException("NOT selecting_a_different_generated_bates_number");
 		}
@@ -2193,7 +2304,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("clicking_the_productions_mark_complete_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to click the Mark Complete button");
+			}
+
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
 		}
@@ -2215,20 +2335,142 @@ public class ProductionContext extends CommonContext {
 			//* 500 is the Beginning Bates
 			//* Click Select on the second bates number listed.
 			//
-			throw new ImplementationException("complete_specifying_the_next_bates_number");
+
+			try {
+
+				prod.openNextBatesNumbersDialog();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSecondBatesNumberValue().Displayed()  ;}}), Input.wait30); 
+				String batesNumber = prod.getSecondBatesNumberValue().getText();
+				dataMap.put("bates_number", batesNumber);
+				
+				String secondBatesNumber = prod.getSecondBatesNumberValue().getText();
+				String beginningBatesNumber = secondBatesNumber.substring(1);
+				String prefix = secondBatesNumber.substring(0, 1);
+
+				prod.getSecondBatesNumberSelectButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+				dataMap.put("beginning_bates_number", beginningBatesNumber);
+				dataMap.put("prefix", prefix);
+				
+				
+			} catch (Exception e) {
+				fail(dataMap,"Unable to complete specifying the next bates number");
+			}
 		} else {
 			throw new ImplementationException("NOT complete_specifying_the_next_bates_number");
 		}
 
 	}
 
+	@And("^.*(\\[Not\\] )? marking_complete_the_next_available_bates_number$")
+	public void marking_complete_the_next_available_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortNextButton().Enabled()  ;}}), Input.wait30); 
+				prod.getNumAndSortNextButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbDocumentSelection().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
+	
+	@And("^.*(\\[Not\\] )? mark_complete_default_priv_guard$")
+	public void mark_complete_default_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardMarkComplete().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
+					prod.getbtnProductionGuardMarkComplete().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+				prod.getbtnProductionGuardNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbProductionLocation().Displayed()  ;}}), Input.wait30); 
+				
+			} catch (Exception e) {
+				
+			}
+		} else {
+			throw new ImplementationException("NOT complete_default_production_location_component");
+		}
+
+	}
 
 	@And("^.*(\\[Not\\] )? complete_default_production_location_component$")
 	public void complete_default_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.2. Type in a Production Directory:      2 a. The directory should be "Automation" + random 7 digit number + _ + dir     2 b. Ex: Automation5264345_dirMake sure to store the value for the Root Path and directory as it will be used later3. Click Mark Complete4. Click Next
-			throw new ImplementationException("complete_default_production_location_component");
+			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.
+			//2. Type in a Production Directory:      
+			//2 a. The directory should be "Automation" + random 7 digit number + _ + dir     
+			//2 b. Ex: Automation5264345_dir Make sure to store the value for the Root Path and directory as it will be used later
+			//3. Click Mark Complete
+			//4. Click Next
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+
+				prod.getlstProductionRootPaths().Click();
+
+				prod.getSecondRootPathOption().Click();
+				Random rnd = new Random();
+				int number = rnd.nextInt(9999999);
+				String selectedRootPath = prod.getSecondRootPathOption().getText();
+				String productionDirectory = "Automation" + number + "_dir";
+				dataMap.put("root_path", selectedRootPath);
+				dataMap.put("production_directory", productionDirectory);
+				prod.getProductionOutputLocation_ProductionDirectory().SendKeys(productionDirectory);
+		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationMarkComplete().Enabled() ;}}), Input.wait30);
+
+				prod.getbtnProductionLocationMarkComplete().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 	
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+				prod.getbtnProductionLocationNext().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbSummaryAndPreview().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Unable to complete Production Location section");
+			}
+
+
+			
 		} else {
 			throw new ImplementationException("NOT complete_default_production_location_component");
 		}
@@ -2241,7 +2483,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
-			throw new ImplementationException("completed_summary_preview_component");
+			try {
+				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
+				prod.getbtnProductionSummaryMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
+				prod.getbtnProductionSummaryNext().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCurrentCrumbGenerate().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "User is not on the Summery & Preview page");
+			}
 		} else {
 			throw new ImplementationException("NOT completed_summary_preview_component");
 		}
@@ -2251,10 +2505,26 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? starting_the_production_generation$")
 	public void starting_the_production_generation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		
+		
 		if (scriptState) {
-			//Click the Generate button
-			throw new ImplementationException("starting_the_production_generation");
+			try {
+				
+				// Reset notification number back to 0
+				if (!prod.getBulHornNotificationNumber().getText().equals("0")) {
+					prod.getBulHornNotificationNumber().click();
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getbtnProductionGenerate().Displayed()  ;}}), Input.wait30); 
+				prod.getbtnProductionGenerate().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGenerationStartedSuccessfullyText().Displayed()  ;}}), Input.wait30); 
+
+			} catch (Exception e) {
+				fail(dataMap, "Unable to start production generation");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT starting_the_production_generation");
 		}
@@ -2267,7 +2537,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("waiting_for_production_to_be_in_progress");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getInProgressStatus().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				fail(dataMap, "Production was not set to In Progress");
+			}
 		} else {
 			throw new ImplementationException("NOT waiting_for_production_to_be_in_progress");
 		}
@@ -2279,8 +2554,44 @@ public class ProductionContext extends CommonContext {
 	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_using_the_next_bates_generations_a_production_successfully");
+			//TC4775If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in 
+			//"custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.
+			//For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), 
+			//then a sample bates number generated would look like "B00001001T".
+
+			// when using refresh() function after starting a production generation, the page reloads back to 
+			// the Basic Info screen. As a workaround, instead of refreshing the page, the test will keep clicking
+			// the Productions navigation link until the bullhorn notification icon gets updated indicating the
+			// Production has been completed
+			int i =0;
+			while(!prod.getBulHornNotificationNumber().getText().equals("1") && i<50){
+				prod.getProductionsNavLink().click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getRedBullHorn().Displayed() ;}}), Input.wait30);
+			}
+
+			
+			driver.FindElementByXPath("//a[@title='"+ dataMap.get("production_name") +"']").click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getExportBatesButton().Enabled() ;}}), Input.wait30); 
+			
+			String batesRange = prod.getProd_BatesRange().getText();
+
+			String[] parts = batesRange.split("-");
+			String firstNumber = parts[0].trim();
+
+			String batesNumber = dataMap.get("bates_number").toString();
+
+			try {
+				Assert.assertEquals(firstNumber, batesNumber);
+				pass(dataMap, "Bates number equals starting Bates number");
+			} catch (Exception e) {
+				fail(dataMap, "Bates number does not equal starting Bates number");
+			}
+			
+
 		} else {
 			throw new ImplementationException("NOT verify_using_the_next_bates_generations_a_production_successfully");
 		}
@@ -2292,8 +2603,35 @@ public class ProductionContext extends CommonContext {
 	public void editing_the_generated_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//1. Get the value stored for the beginning bates and add a random 6 digit number at the end of it. This will be your new beginning bates number.2. Get the Prefix and add the letter E to it. 3. Add the Suffix Q and store this value for later. We will verify the bates number is displayed with these options later.4. Click Mark Complete
-			throw new ImplementationException("editing_the_generated_bates_number");
+			//1. Get the value stored for the beginning bates and add a random 6 digit number at the end of it. This will be your new beginning bates number.
+			//2. Get the Prefix and add the letter E to it. 
+			//3. Add the Suffix Q and store this value for later. We will verify the bates number is displayed with these options later.
+			//4. Click Mark Complete
+			Random rnd = new Random();
+			int number = rnd.nextInt(999999);
+			String beginningBatesNumber = dataMap.get("beginning_bates_number").toString();
+			String prefix = dataMap.get("prefix").toString();
+			
+			String newBeginningBatesNumber = beginningBatesNumber + number;
+			String newPrefix = prefix + "E";
+			System.out.println("new number: " + newBeginningBatesNumber);
+			System.out.println("newPrefix: " + newPrefix);
+			String newBatesNumber = newPrefix + newBeginningBatesNumber + "Q";
+			dataMap.put("bates_number", newBatesNumber);
+			prod.getBeginningBates().Clear();
+			prod.gettxtBeginningBatesIDPrefix().Clear();
+			
+			
+			prod.getBeginningBates().SendKeys(newBeginningBatesNumber);
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(newPrefix);
+			prod.gettxtBeginningBatesIDSuffix().SendKeys("Q");
+			prod.getMarkCompleteButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			
+			
 		} else {
 			throw new ImplementationException("NOT editing_the_generated_bates_number");
 		}
@@ -2305,8 +2643,32 @@ public class ProductionContext extends CommonContext {
 	public void verify_editing_the_bates_number_after_generation_is_displaying_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC8353If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_editing_the_bates_number_after_generation_is_displaying_correctly");
+			int i =0;
+			while(!prod.getBulHornNotificationNumber().getText().equals("1") && i<50){
+				prod.getProductionsNavLink().click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getRedBullHorn().Displayed() ;}}), Input.wait30);
+			}
+			
+			driver.FindElementByXPath("//a[@title='"+ dataMap.get("production_name") +"']").click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getExportBatesButton().Enabled() ;}}), Input.wait30); 
+			
+			String batesRange = prod.getProd_BatesRange().getText();
+
+			String[] parts = batesRange.split("-");
+			String firstNumber = parts[0].trim();
+
+			String batesNumber = dataMap.get("bates_number").toString();
+
+			try {
+				Assert.assertEquals(firstNumber, batesNumber);
+				pass(dataMap, "Bates number equals starting Bates number");
+			} catch (Exception e) {
+				fail(dataMap, "Bates number does not equal starting Bates number");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_editing_the_bates_number_after_generation_is_displaying_correctly");
 		}
@@ -2319,7 +2681,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Under NUMBERING, click Document Erase the value in Beginning Sub-bates NumberErase the value in Min Number Length
-			throw new ImplementationException("the_numbering_is_set_to_document_with_no_sub_bates");
+			try {
+				clicking_document_as_the_numbering_default_option(scriptState, dataMap);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumSubBatesNum().Displayed()  ;}}), Input.wait30);
+				prod.getNumSubBatesNum().Clear();
+				prod.getNumSubBatesMin().Clear();
+			} catch (Exception e) {
+				fail(dataMap, "Unable to clear input fields");
+			}
 		} else {
 			throw new ImplementationException("NOT the_numbering_is_set_to_document_with_no_sub_bates");
 		}
@@ -2332,9 +2702,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5188Verify when marking the numbering and sorting complete, it successfully marks it completed with no error.
-			throw new ImplementationException("verify_document_level_numbering_can_be_empty_for_sub_bates");
+			
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
+
 		} else {
-			throw new ImplementationException("NOT verify_document_level_numbering_can_be_empty_for_sub_bates");
+			try {
+				Assert.assertEquals(prod.getNumSubBatesNum().GetAttribute("value"), "1");
+				Assert.assertEquals(prod.getNumSubBatesMin().GetAttribute("value"), "5");
+			} catch (Exception e) {
+				fail(dataMap, "Fields are not empty!");
+			}
 		}
 
 	}
@@ -2345,7 +2727,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//The user should click Save from the Production page.
-			throw new ImplementationException("clicking_the_productions_save_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSaveButton().Enabled()  ;}}), Input.wait30);
+			prod.getSaveButton().Click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_save_button");
 		}
@@ -2358,7 +2742,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the link named "Click here" hunter the format section
-			throw new ImplementationException("clicking_the_numbering_format_click_here_link");
+			prod.openNextBatesNumbersDialog();
 		} else {
 			throw new ImplementationException("NOT clicking_the_numbering_format_click_here_link");
 		}
@@ -2376,7 +2760,17 @@ public class ProductionContext extends CommonContext {
 			//* Verify a grid should display with the title "NEXT BATES NUMBER" and "ACTION".
 			//* Verify at least one bates number is listed with the button "Select" next to it.
 			//
-			throw new ImplementationException("verify_the_next_bates_number_dialog_displays_correctly");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getBatesDialogTitle().Displayed()  ;}}), Input.wait30);
+				Assert.assertEquals(prod.getBatesDialogTitle().getText(), "Next Bates Numbers");
+				Assert.assertEquals(prod.getBatesDialogProductionName().getText(), dataMap.get("production_name"));
+				Assert.assertEquals(prod.getNextBatesNumberColumHeader().getText(), "NEXT BATES NUMBER");
+				Assert.assertEquals(prod.getActionColumHeader().getText(), "ACTION");
+				Assert.assertTrue(prod.getFirstBatesNumberSelectButton().Displayed());
+			} catch (Exception e) {
+				fail(dataMap, "Bates Number Dialog does not display the expected elements");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_next_bates_number_dialog_displays_correctly");
 		}
@@ -2413,6 +2807,779 @@ public class ProductionContext extends CommonContext {
 	}
 
 	
-	
-}//end
+	@And("^.*(\\[Not\\] )? complete_complex_production_component$")
+	public void complete_complex_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			//Production Components page is already displayed
+			// This method is a large method that will handle customization for the production components screen.
+			// Basically, if a field is being passed in, we want the production component to be filled in with default data.
+			// EX: if dat = true, pdf = true. The DAT and PDF section should be filled in with the data we have determined should be added based on the information below.
+			//These parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if blank or doesn't exist, skip it.
+			//
+			//IF DAT IS TRUE:
+			//Click the DAT checkbox
+			//Click the DAT tab to open the DAT container
+			//Add field classification: Bates
+			//Add source field: BatesNumber
+			//Enter DAT field: Bates Number
+			//
+			//IF NATIVE IS TRUE:
+			//Check off Native
+			//Click Native to expand it
+			//Click SELECT ALL
+			//Expand the "Advanced" option and enable "Generate Load File (LST)
+			//
+			//IF TIFF IS TRUE
+			//Check off TIFF
+			//Click TIFF to expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
+			//
+			//
+			//IF PDF IS TRUE
+			//Check off PDF
+			//Click PDFto expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
+			//
+			//IF MP3 IS TRUE
+			//Expand Advanced Production Components
+			//Click the MP3 Files Checkbox
+			//Enable Burn Redactions
+			//Click "Select Redactions"
+			//Click "Default Automation Redaction"
+			//Set the "Redaction Style" to "Beep"
+			//
+			//IF TEXT IS TRUE
+			//Checkoff the "Text" component checkbox
+			//
+			//The other parameters can be worked on as we use them.
+			//
+			//
+			//At the end of the block above, the last two steps should do the following:
+			//
+			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
+			//Click the next button
+			throw new ImplementationException("complete_complex_production_component");
+		} else {
+			throw new ImplementationException("NOT complete_complex_production_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_placeholders_on_tiff_pdf$")
+	public void remove_placeholders_on_tiff_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Back
+			//* Click Mark Incomplete
+			//* Expand TIFF
+			//* Uncheck "Enable for Priviledged Docs:"
+			//* Exapand PDF
+			//* Uncheck "Enable for Priviledged Docs:".
+			//* Click Mark Complete
+			//* Click Next
+			//
+			throw new ImplementationException("remove_placeholders_on_tiff_pdf");
+		} else {
+			throw new ImplementationException("NOT remove_placeholders_on_tiff_pdf");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? custom_number_sorting_is_added$")
+	public void custom_number_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #"2. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick Mark CompletedClick Next
+			throw new ImplementationException("custom_number_sorting_is_added");
+		} else {
+			throw new ImplementationException("NOT custom_number_sorting_is_added");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_section_with_priviledged_folder$")
+	public void complete_document_section_with_priviledged_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure "Select Folders:" radio button is selectedClick "Default Automation Priviledged" checkboxClick Mark CompletedClick Next
+			throw new ImplementationException("complete_document_section_with_priviledged_folder");
+		} else {
+			throw new ImplementationException("NOT complete_document_section_with_priviledged_folder");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completing_priv_guard_by_enabling_placeholders$")
+	public void completing_priv_guard_by_enabling_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//You should be on the Priv Guard section.
+			//* Click Mark Complete
+			//* Enable the button "Enable for Priviledged Docs"
+			//* Click Select Tags
+			//* Click Privileged
+			//* Click Save
+			//* Type in "Placeholder created on Priv Guard" (any randomized text is fine here too)
+			//* Click Mark Complete
+			//You should be on the Priv guard section.8. Click Back until you get back to the "Production Components" section again.
+			throw new ImplementationException("completing_priv_guard_by_enabling_placeholders");
+		} else {
+			throw new ImplementationException("NOT completing_priv_guard_by_enabling_placeholders");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_tiff_pdf_section_of_production_components$")
+	public void expanding_the_tiff_pdf_section_of_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("expanding_the_tiff_pdf_section_of_production_components");
+		} else {
+			throw new ImplementationException("NOT expanding_the_tiff_pdf_section_of_production_components");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_enabling_placeholders_on_priv_guard_saves_the_placeholders$")
+	public void verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
+		} else {
+			throw new ImplementationException("NOT verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_started$")
+	public void the_production_is_started(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Generate
+			throw new ImplementationException("the_production_is_started");
+		} else {
+			throw new ImplementationException("NOT the_production_is_started");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? refreshing_for_production_to_be_in_progress$")
+	public void refreshing_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//A loop should be created to verify if a Bates Range number is populated. This loop should check to see if there is a bates range number, if not wait 10 seconds and refresh the page. If a bates number is returned, exit the loop and the "AUTOMATED CHECK" grid should be populated with the information we need.Do this loop 10 times max, and it will fail if nothing is returned in that time
+			throw new ImplementationException("refreshing_for_production_to_be_in_progress");
+		} else {
+			throw new ImplementationException("NOT refreshing_for_production_to_be_in_progress");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly$")
+	public void verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6149Verify Priv Docs with No Placeholders should have the status "0 Docs"
+			throw new ImplementationException("verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_categorization_for_priv_guard$")
+	public void complete_default_categorization_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Run CategorizationIdentify by Production Guard Source should be selected by default.Click Go to Step 2: Select Corpus To Be Analyzed.Click Analyze Select Production SetsClick "+Production Set"Check of any default production set listedClick the "Select" buttonClick "Go to Step 3: Run Categorization"A pop up might appear saying "Wait for this task to complete".Click Yes
+			throw new ImplementationException("complete_default_categorization_for_priv_guard");
+		} else {
+			throw new ImplementationException("NOT complete_default_categorization_for_priv_guard");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number$")
+	public void verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4946 / 5005Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".
+			throw new ImplementationException("verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_view_results_in_doclist$")
+	public void clicking_view_results_in_doclist(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_view_results_in_doclist");
+		} else {
+			throw new ImplementationException("NOT clicking_view_results_in_doclist");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_result_set_documents_are_displayed_in_DocList$")
+	public void verify_the_result_set_documents_are_displayed_in_DocList(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924 part 2After View Results in DocList is clicked, the user should be taken to the DocList view.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_DocList");
+		} else {
+			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_DocList");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_view_results_in_docview$")
+	public void clicking_view_results_in_docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_view_results_in_docview");
+		} else {
+			throw new ImplementationException("NOT clicking_view_results_in_docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_result_set_documents_are_displayed_in_Docview$")
+	public void verify_the_result_set_documents_are_displayed_in_Docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924 part 3After View Results in DocView is clicked, the user should be taken to the DocView.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_Docview");
+		} else {
+			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_Docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_priv_guard_component_displays_the_correct_matched_documents_number$")
+	public void verify_the_priv_guard_component_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924/ 4925/ 3767Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".The matched documents should return 11. There are 5 redacted tags and 6 tagged equaling 11 matched documents.
+			throw new ImplementationException("verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_name$")
+	public void clicking_the_productions_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Using the production selected, click on the Name of the production to open it.
+			throw new ImplementationException("clicking_the_productions_name");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_name");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_productions_quality_control_section_display_correctly$")
+	public void verify_the_productions_quality_control_section_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4928:Verify the name of the production displays on the page.Verify a number is generated on "Documents Generated". The number should not be 0.Verify the button "Review Production" exist on the screen.Verify the link "Confirm Production & Commit" exist on the screen.Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+			throw new ImplementationException("verify_the_productions_quality_control_section_display_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_productions_quality_control_section_display_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_production_component_with_branding$")
+	public void complete_tiff_production_component_with_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionClick "+Specify Branding by Selecting Tags"Click Select TagsCheck off "Default Automation Tag"Click SelectEnter "Branding 1" in the first placeholder text for brandingEnter "Branding 2" in the second placeholder text for branding
+			throw new ImplementationException("complete_tiff_production_component_with_branding");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_production_component_with_branding");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_numbering_sorting$")
+	public void complete_default_numbering_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompletedClick Next
+			throw new ImplementationException("complete_default_numbering_sorting");
+		} else {
+			throw new ImplementationException("NOT complete_default_numbering_sorting");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_blank_priv_guard_check$")
+	public void complete_blank_priv_guard_check(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//You should be on the section "Priv Guard"Verify the button "+ Add Rule" existsClick Mark CompleteClick Next
+			throw new ImplementationException("complete_blank_priv_guard_check");
+		} else {
+			throw new ImplementationException("NOT complete_blank_priv_guard_check");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_number_of_mp3_files_are_shown_regardless_of_amount$")
+	public void verify_the_number_of_mp3_files_are_shown_regardless_of_amount(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6126Verify the Count of Number of MP3 Files is shown when the number is 0
+			throw new ImplementationException("verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
+		} else {
+			throw new ImplementationException("NOT verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_summary_preview_button$")
+	public void clicking_the_summary_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the Preview button
+			throw new ImplementationException("clicking_the_summary_preview_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_summary_preview_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_preview_file_should_display_the_branding_entered$")
+	public void verify_the_preview_file_should_display_the_branding_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5096 / 3760A PDF file should be downloaded and opening the file should show the branding entered
+			throw new ImplementationException("verify_the_preview_file_should_display_the_branding_entered");
+		} else {
+			throw new ImplementationException("NOT verify_the_preview_file_should_display_the_branding_entered");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_redaction_count_displays_correctly_on_the_summary_page$")
+	public void verify_the_redaction_count_displays_correctly_on_the_summary_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5008The summary page should be displayed.1. Verify "Redacted Documents:" is displaying the correct count of refacted documents based on the redacted tags used in complete_tiff_production_component.If using Default Automation Redaction, 5 redactions should be returned.
+			throw new ImplementationException("verify_the_redaction_count_displays_correctly_on_the_summary_page");
+		} else {
+			throw new ImplementationException("NOT verify_the_redaction_count_displays_correctly_on_the_summary_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_summary_page_displays_the_correct_information$")
+	public void verify_the_summary_page_displays_the_correct_information(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5883
+			//* Verify the top section of the Summary page is titled"Production Document Summary:"
+			//Below the title, verify the following information is below it:
+			//
+			//* Total Documents: 
+			//* Total Pages (Uses DocPages metadata field): 
+			//* Number Of Custodians:
+			//* Number of Natives: 
+			//* Number of MP3 Files:
+			//* Exception Documents: 
+			//* Documents with Missing Text Files: 
+			//* First and Last Doc IDs:
+			//
+			//2. Verify the second section of the Summary page is titled"Privileged Document Summary:"Below the title, verify the following information is below it:
+			//
+			//* Privileged Documents:
+			//* Documents Identified by Production Guard:
+			//* Redacted Documents:
+			//
+			//3.Verify the second section of the Summary page is titled"OCR/TIFF Documents:"Below the title, verify the following information is below it:
+			//
+			//* Documents to OCR:
+			//* Docs and 0 Pages Documents to TIFF: 
+			//* Docs and 0 Pages Documents Printed in Color:
+			//
+			throw new ImplementationException("verify_the_summary_page_displays_the_correct_information");
+		} else {
+			throw new ImplementationException("NOT verify_the_summary_page_displays_the_correct_information");
+		}
+
+	}
+	
+
+	@And("^.*(\\[Not\\] )? complete_the_default_dat_section$")
+	public void complete_the_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number
+			throw new ImplementationException("complete_the_default_dat_section");
+		} else {
+			throw new ImplementationException("NOT complete_the_default_dat_section");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags_and_no_file_types$")
+	public void complete_the_native_section_with_tags_and_no_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check NativeDo not select any file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
+			throw new ImplementationException("complete_the_native_section_with_tags_and_no_file_types");
+		} else {
+			throw new ImplementationException("NOT complete_the_native_section_with_tags_and_no_file_types");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly_without_file_types$")
+	public void verify_native_section_with_tags_is_saving_correctly_without_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5333
+			//* Expand the Native section
+			//* Verify the selected tags are displaying in alphabetical order.
+			//* Verify no file types are checked
+			//
+			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly_without_file_types");
+		} else {
+			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly_without_file_types");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_pdf_with_rotation$")
+	public void complete_tiff_pdf_with_rotation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check the "TIFF" checkbox
+			//* Expand the "TIFF" section
+			//* Verify the dropdown "Rotate Landscape pages to portrait layout:" is set to "No Rotation" by default.
+			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
+			//* Deselect "Enable for Privileged docs
+			//* Check the "PDF" checkbox
+			//* Expand the "PDF" section
+			//* Verify the dropdown "Rotate Landscape pages to portrait layout:" is set to "No Rotation" by default.
+			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
+			//* Deselect "Enable for Privileged docs
+			//
+			throw new ImplementationException("complete_tiff_pdf_with_rotation");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_pdf_with_rotation");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_marking_a_pdf_with_rotation_completed_returns_no_error$")
+	public void verify_marking_a_pdf_with_rotation_completed_returns_no_error(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6183/5350There should not be any error Message As such "Rotation sections in PDF and TIFF compo nents must have the same configuration". User should be abl e to Mark complete and move on to next section of Production.Best way to verify this is by verifying you are on the numbering section of productions.
+			throw new ImplementationException("verify_marking_a_pdf_with_rotation_completed_returns_no_error");
+		} else {
+			throw new ImplementationException("NOT verify_marking_a_pdf_with_rotation_completed_returns_no_error");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_with_empty_natively_produced_documents$")
+	public void complete_tiff_with_empty_natively_produced_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check "TIFF"
+			//* Expand "TIFF"
+			//* Disable "Enable for Privileged Docs"
+			//* Click "+Enable for Natively Producted Documents"
+			//* Click "Other as the file type
+			//* Type in a random placeholder text 
+			//* Click "+Enable for Natively Producted Documents" a second time
+			//* Leave the fields blank
+			//
+			throw new ImplementationException("complete_tiff_with_empty_natively_produced_documents");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_with_empty_natively_produced_documents");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank$")
+	public void verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5941 Verify a warning message is returned:The TIFF placeholder configuration information is incorrect.
+			throw new ImplementationException("verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+		} else {
+			throw new ImplementationException("NOT verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_a_second_dat_for_classification_production$")
+	public void add_a_second_dat_for_classification_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Add FieldSet Field Classification to the corresponding parameter valueSet Source Field to the corresponding parameter valueSet Dat Field to the corresponding  parameter value
+			throw new ImplementationException("add_a_second_dat_for_classification_production");
+		} else {
+			throw new ImplementationException("NOT add_a_second_dat_for_classification_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_adding_a_second_dat_data_mapping_is_retained$")
+	public void verify_adding_a_second_dat_data_mapping_is_retained(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8358Expand the DAT sectionVerify both row of DAT field mapping are retained with the data entered.
+			throw new ImplementationException("verify_adding_a_second_dat_data_mapping_is_retained");
+		} else {
+			throw new ImplementationException("NOT verify_adding_a_second_dat_data_mapping_is_retained");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_and_pdf_with_different_tags$")
+	public void complete_tiff_and_pdf_with_different_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check the "TIFF" checkbox
+			//* Open the "TIFF" section
+			//* Click on "+Enable for Natively Produced Documents:"
+			//* Click Select Tags
+			//* Click the first two tags under Default Tags
+			//* Click Select
+			//* Check the "PDF" checkbox
+			//* Open the "PDF" section
+			//* Click on "+Enable for Natively Produced Documents:"
+			//* Click Select Tags
+			//* Click the 3rd and 4th tags under Default Tags
+			//* Click Select
+			//
+			throw new ImplementationException("complete_tiff_and_pdf_with_different_tags");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_and_pdf_with_different_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching$")
+	public void verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5525 / 5519Verify the error message displays:PDF and TIFF PlaceHolder sections should have the same configuration.
+			throw new ImplementationException("verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+		} else {
+			throw new ImplementationException("NOT verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_mp3_advanced_section$")
+	public void expanding_the_mp3_advanced_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking "Advanced" in the MP3 Section
+			throw new ImplementationException("expanding_the_mp3_advanced_section");
+		} else {
+			throw new ImplementationException("NOT expanding_the_mp3_advanced_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_mp3_advanced_option_is_enabled_by_default$")
+	public void verify_the_mp3_advanced_option_is_enabled_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5793Verify in the MP3 Advanced section, Generate Load File (LST) is enabled by default.
+			throw new ImplementationException("verify_the_mp3_advanced_option_is_enabled_by_default");
+		} else {
+			throw new ImplementationException("NOT verify_the_mp3_advanced_option_is_enabled_by_default");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? refresh_back_to_production_home_page$")
+	public void refresh_back_to_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Navigate back to the Production Home Page URL
+			throw new ImplementationException("refresh_back_to_production_home_page");
+		} else {
+			throw new ImplementationException("NOT refresh_back_to_production_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? edit_the_production_component_with_a_tiff$")
+	public void edit_the_production_component_with_a_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark IncompleteCheck the TIFF CheckboxClick TIFF to expand the TIFF sectionClick Multi-PageClick Select TagsClick the Privileged TagClick SelectType a Placeholder text in "Enter placeholder text for the privileged docs". Click Mark Complete.
+			throw new ImplementationException("edit_the_production_component_with_a_tiff");
+		} else {
+			throw new ImplementationException("NOT edit_the_production_component_with_a_tiff");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? refreshing_the_current_page$")
+	public void refreshing_the_current_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("refreshing_the_current_page");
+		} else {
+			throw new ImplementationException("NOT refreshing_the_current_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_editing_an_existing_production_saves_the_new_changes$")
+	public void verify_editing_an_existing_production_saves_the_new_changes(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5198Verify all of the new changes in "edit_the_production_component_with_a_tiff" are saved.Verify the Multi-page radio button is selected, the tag is saved, and the placeholder text is saved.
+			throw new ImplementationException("verify_editing_an_existing_production_saves_the_new_changes");
+		} else {
+			throw new ImplementationException("NOT verify_editing_an_existing_production_saves_the_new_changes");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_tiff_section_select_place_holder_tag_dialog$")
+	public void on_the_tiff_section_select_place_holder_tag_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check the TIFF CheckboxClick TIFF to expand the TIFF sectionClick "Select Tags"
+			throw new ImplementationException("on_the_tiff_section_select_place_holder_tag_dialog");
+		} else {
+			throw new ImplementationException("NOT on_the_tiff_section_select_place_holder_tag_dialog");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_non_privledge_tags$")
+	public void clicking_non_privledge_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Try clicking the checkbox for "Default Automation Tag"Try clicking the checkbox for "All Tags"
+			throw new ImplementationException("clicking_non_privledge_tags");
+		} else {
+			throw new ImplementationException("NOT clicking_non_privledge_tags");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? verify_production_numbering_and_sorting_options_are_displayed$")
+	public void verify_production_numbering_and_sorting_options_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5087Verify the All Tags checkbox does not get checkedVerify the All Tags checkbox does not get checked
+			throw new ImplementationException("verify_production_numbering_and_sorting_options_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_numbering_and_sorting_options_are_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags$")
+	public void complete_the_native_section_with_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check NativeClick Select All on the file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
+			throw new ImplementationException("complete_the_native_section_with_tags");
+		} else {
+			throw new ImplementationException("NOT complete_the_native_section_with_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly$")
+	public void verify_native_section_with_tags_is_saving_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5332 /5334
+			//* Expand the Native section
+			//* Verify the selected tags are displaying in alphabetical order.
+			//
+			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly");
+		}
+
+	}
+}//EOF
