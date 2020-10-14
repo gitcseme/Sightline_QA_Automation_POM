@@ -4710,8 +4710,8 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
-	public void TestCase7203() throws Throwable{
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_on_search_home_page_and_search_for_ingestion_When_unpublish_desired_saved_search_Then_verify_search_result_for_overlaid_text() throws Throwable{
 		
 		HashMap dataMap = new HashMap();
 		ExtentTest test = report.startTest("TC7203");
@@ -6379,7 +6379,7 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6391,7 +6391,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("A", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "Mapped Data");
@@ -6461,7 +6461,7 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6559,7 +6559,7 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6571,7 +6571,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("A", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "Mapped Data");
@@ -6642,7 +6642,7 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6654,7 +6654,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("A", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "Mapped Data");
@@ -6689,7 +6689,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6701,7 +6701,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("ingestion_type", "Overlay Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("pdf_file", "PDF.LST");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -6744,7 +6744,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "1");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -6760,7 +6760,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("native_file", "PDF.LST");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");
@@ -6799,7 +6799,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "1");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -6843,7 +6843,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "2");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -6887,7 +6887,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "3");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "tiff.lst");
 			dataMap.put("mp3_file", "");
@@ -6931,7 +6931,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "4");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "text.lst");
@@ -6975,7 +6975,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "MP3.lst");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "5");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -7019,7 +7019,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "6");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -7059,7 +7059,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7072,7 +7072,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("ingestion_type", "Overlay Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("pdf_file", "PDF.LST");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7110,7 +7110,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("ingestion_type", "Overlay Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("pdf_file", "PDF.LST");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7156,7 +7156,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("audio_file", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("ingestionindex", "1");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("mp3_file", "");
@@ -7172,7 +7172,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("native_file", "Natives.lst");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");
@@ -7207,7 +7207,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7222,7 +7222,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("other_link_type", "");
 			dataMap.put("dat_load_file", "loadfile_copy.dat");
 			dataMap.put("ingestionindex", "7");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -7260,7 +7260,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7275,7 +7275,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("other_link_type", "");
 			dataMap.put("dat_load_file", "loadfile_copy.dat");
 			dataMap.put("ingestionindex", "8");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -7313,7 +7313,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7328,7 +7328,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("other_link_type", "");
 			dataMap.put("dat_load_file", "loadfile_copy.dat");
 			dataMap.put("ingestionindex", "9");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -7366,7 +7366,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7381,7 +7381,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("other_link_type", "");
 			dataMap.put("dat_load_file", "loadfile_copy.dat");
 			dataMap.put("ingestionindex", "10");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "tiff_copy.img");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -7419,7 +7419,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("ingestion_type", "Add Only");
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7434,7 +7434,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("other_link_type", "Translation");
 			dataMap.put("dat_load_file", "loadfile_copy.dat");
 			dataMap.put("ingestionindex", "11");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("tiff_file", "");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -7471,7 +7471,7 @@ public class IngestionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
@@ -7512,7 +7512,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("A", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
-			dataMap.put("source_location", "IngestionTestData\Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");

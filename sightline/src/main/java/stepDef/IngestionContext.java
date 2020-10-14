@@ -34,6 +34,7 @@ import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
@@ -3661,7 +3662,7 @@ public class IngestionContext extends CommonContext {
 	}
 
 
-	@("^.*(\\[Not\\] )? click_preview_and_run_button$")
+	@When("^.*(\\[Not\\] )? click_preview_and_run_button$")
 	public void click_preview_and_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
