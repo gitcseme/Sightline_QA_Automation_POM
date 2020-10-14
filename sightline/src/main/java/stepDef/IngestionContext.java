@@ -3624,4 +3624,52 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingested_docs_are_in_sequential_order$")
+	public void verify_ingested_docs_are_in_sequential_order(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6318:To verify DocID's of the ingested documents (AddOnly) Should be in the same sequential order as the order of records/documents in the DAT file.TC6319:To verify DocID's of the ingested documents Should be in the same sequential order as the order of records/documents in the DAT file.
+			//
+			//* Verify DOCID column displays files in a sequential order
+			//
+			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
+		} else {
+			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_preview_mapping_section_is_enabled$")
+	public void verify_preview_mapping_section_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2562 To verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.
+			//
+			//* All required source fields and file types are selected
+			//* Click on the Next button
+			//* Validate the preview mapping (configure field mapping) is enabled
+			//* Validate the preview and run button is enabled
+			//
+			throw new ImplementationException("verify_preview_mapping_section_is_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_preview_mapping_section_is_enabled");
+		}
+
+	}
+
+
+	@("^.*(\\[Not\\] )? click_preview_and_run_button$")
+	public void click_preview_and_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_preview_and_run_button");
+		} else {
+			throw new ImplementationException("NOT click_preview_and_run_button");
+		}
+
+	}
 } //end
