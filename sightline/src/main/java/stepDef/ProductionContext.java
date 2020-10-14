@@ -2811,7 +2811,66 @@ public class ProductionContext extends CommonContext {
 	public void complete_complex_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Production Components page is already displayedThese parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if false or does not exist, skip it.IF DATE IS TRUE:Click the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates NumberIF NATIVE IS TRUE:Check off NativeClick Native to expand itClick SELECT ALLIF TIFF IS TRUECheck off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionIF PDF IS TRUECheck off PDFClick PDFto expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionThe other parameters can be worked on as we use them.At the end of the block above, the last two steps should do the following:Click the complete buttonClick the next button
+			//Production Components page is already displayed
+			// This method is a large method that will handle customization for the production components screen.
+			// Basically, if a field is being passed in, we want the production component to be filled in with default data.
+			// EX: if dat = true, pdf = true. The DAT and PDF section should be filled in with the data we have determined should be added based on the information below.
+			//These parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if blank or doesn't exist, skip it.
+			//
+			//IF DAT IS TRUE:
+			//Click the DAT checkbox
+			//Click the DAT tab to open the DAT container
+			//Add field classification: Bates
+			//Add source field: BatesNumber
+			//Enter DAT field: Bates Number
+			//
+			//IF NATIVE IS TRUE:
+			//Check off Native
+			//Click Native to expand it
+			//Click SELECT ALL
+			//Expand the "Advanced" option and enable "Generate Load File (LST)
+			//
+			//IF TIFF IS TRUE
+			//Check off TIFF
+			//Click TIFF to expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
+			//
+			//
+			//IF PDF IS TRUE
+			//Check off PDF
+			//Click PDFto expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
+			//
+			//IF MP3 IS TRUE
+			//Expand Advanced Production Components
+			//Click the MP3 Files Checkbox
+			//Enable Burn Redactions
+			//Click "Select Redactions"
+			//Click "Default Automation Redaction"
+			//Set the "Redaction Style" to "Beep"
+			//
+			//IF TEXT IS TRUE
+			//Checkoff the "Text" component checkbox
+			//
+			//The other parameters can be worked on as we use them.
+			//
+			//
+			//At the end of the block above, the last two steps should do the following:
+			//
+			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
+			//Click the next button
 			throw new ImplementationException("complete_complex_production_component");
 		} else {
 			throw new ImplementationException("NOT complete_complex_production_component");
