@@ -484,6 +484,7 @@ public class ProductionPage {
     public Element getActionColumHeader() { return driver.FindElementById("hdrAction"); }
     public Element getSaveButton() { return driver.FindElementByXPath("//*[text()='Save']"); }
     
+
     public Element getProductionTitleName() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/div[1]/a");}
     public Element getProdductionNameOnQCPage() {return driver.FindElementByXPath("//*[@class='col-md-3']//div[@class='panel-title-container']/h2");}
     public Element getGeneratedDocCountOnQCPage() {return driver.FindElementByXPath("//*[@class='drk-gray-widget']/span[1]");}
@@ -491,7 +492,27 @@ public class ProductionPage {
     public Element getAutomatedQCChecklistText(int index) {return driver.FindElementByXPath(String.format("//*[@id='taskbasic']/tbody/tr[%s]/td[1]", index));}
     public ElementCollection getGeneratePageTitle() {return driver.FindElementsByXPath("//*[@id='frmProductionGenerate']/div/div[1]/div/h2");}
     public Element getConfirmAndCommitProdLink() {return driver.FindElementByXPath("//*[@id='btnProductionConfirmation']/strong");}
-    
+    public Element getSelectTagsModal() { return driver.FindElementByXPath("//div[@id='myModal']//div[@class='well no-padding prod ']"); }
+    public Element getTIFFPrivilegedTagCheckbox() { return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[@data-content='Privileged']"); }
+    public Element getTIFFSubmitSelectionButton() { return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitSelectionTIFF"); }
+    public Element getDefaultAutomationRedactionCheckbox() { return driver.FindElementByXPath("//div[@id='RedactionTagsTree']//a[@data-content='Default Automation Redaction']"); }
+    public Element getDefaultAutomationRedactionSelectionTagsCheckbox() { return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[@data-content='Default Automation Redaction']"); }
+    public Element getSelectTagsModalBody() { return driver.FindElementByXPath("//div[@id='myModal']//div[@class='widget-body']"); }
+    public Element getSelectedTagsLabel() { return driver.FindElementById("PrevTagsLabel"); }
+    public Element getPrivilegedDocsPlaceholderTextField() { return driver.FindElementByXPath("//textarea[@id='textPrivDocs']/preceding-sibling::div"); }
+    public Element getSpecifyBrandingBySelectingTagLink() { return driver.FindElementByXPath("//div[@id='divLeftHeaderBranding']//a[contains(text(), 'Specify Branding by Selecting Tags')]"); }
+    public Element getDefaultBrandingTextField1() { return driver.FindElementByXPath("//textarea[@name='TIFFComponentModelData.CommonTIFFSettings.BrandingSetting.LeftHeaderBranding.BrandingDataList[0].BrandingText']/preceding-sibling::div"); }
+    public Element getDefaultBrandingTextField2() { return driver.FindElementByXPath("//textarea[@name='TIFFComponentModelData.CommonTIFFSettings.BrandingSetting.LeftHeaderBranding.BrandingDataList[1].BrandingText']/preceding-sibling::div"); }
+    public Element getTIFFRedactionTreeFolderDiv() { return driver.FindElementById("RedactionTagsTree"); }
+    public Element getRedactionDefaultAutomationRedactionCheckbox() { return driver.FindElementByXPath("//div[@id='RedactionTagsTree']//li[@id='-1']//a[@data-content='Default Automation Redaction']"); }
+    public Element getBrandingSelectTagsButton() { return driver.FindElementById("STAG_1"); }
+    public Element getBrandingDefaultAutomationTagCheckbox() { return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[@data-content='Default Automation Tag']"); }
+    public Element getWarningMessagePopup() { return driver.FindElementById("MsgBoxBack"); }
+    public Element getRedactedDocumentsNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Redacted Documents')]/following-sibling::label"); }
+    public Element getSummaryAndPreviewHeading() { return driver.FindElementByXPath("//h2[contains(text(), 'Summary and Preview')]"); }
+    public Element getMP3FilesCountNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Number of MP3 Files')]/following-sibling::label"); }
+    public Element getTotalDocumentsNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Total Documents')]/following-sibling::label"); }
+
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

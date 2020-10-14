@@ -949,27 +949,34 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			
 			try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
-				prod.getFolderRadioButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFolderRadioButton().Displayed()  ;}}), Input.wait30);
+					prod.getFolderRadioButton().Click();
+					
+				//Collapse folders 
+	//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	//					prod.getDocumentCollapseBtn().Displayed()  ;}}), Input.wait30);
+	//				prod.getDocumentCollapseBtn().Click();
 				
-			//Collapse folders 
-//			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//					prod.getDocumentCollapseBtn().Displayed()  ;}}), Input.wait30);
-//				prod.getDocumentCollapseBtn().Click();
-			
-			//Select Default Automation Folder	
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
-				prod.getDefaultAutomationChkBox().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
-				prod.getDocumentMarkCompleteBtn().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
+				//Select Default Automation Folder	
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
+					prod.getDefaultAutomationChkBox().Click();
+				
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
+					prod.getDocumentMarkCompleteBtn().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
+				
+				// save document count for verification step
+				dataMap.put("total_documents_number", prod.getTotalDocProduction().getText());
+					
 				prod.getDocumentNextBtn().Click();
+					
+
 				
 				pass(dataMap,"Default document sections has been completed");
 			}catch(Exception e) {
@@ -1777,6 +1784,8 @@ public class ProductionContext extends CommonContext {
 					while(document == null) document = PDDocument.load(new File(home + "/Downloads/S00012332Q.pdf"));}
 				else if(SystemUtils.IS_OS_WINDOWS){
 					while(document == null) document = PDDocument.load(new File(home + "\\Download\\S00012332Q.pdf"));
+				} else if(SystemUtils.IS_OS_MAC) {
+					System.out.println("its a mac");
 				}
 
 				PDFTextStripper pdfTextStripper = new PDFTextStripper();
@@ -2292,6 +2301,8 @@ public class ProductionContext extends CommonContext {
 
 			dataMap.put("beginning_bates_number", beginningBatesNumber);
 			dataMap.put("prefix", prefix);
+			String prefixBatesNumber = prefix + beginningBatesNumber;
+			dataMap.put("bates_number", prefixBatesNumber);
 			
 		} else {
 			throw new ImplementationException("NOT selecting_a_different_generated_bates_number");
@@ -3216,8 +3227,105 @@ public class ProductionContext extends CommonContext {
 	public void complete_tiff_production_component_with_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Check off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionClick "+Specify Branding by Selecting Tags"Click Select TagsCheck off "Default Automation Tag"Click SelectEnter "Branding 1" in the first placeholder text for brandingEnter "Branding 2" in the second placeholder text for branding
-			throw new ImplementationException("complete_tiff_production_component_with_branding");
+			//Check off TIFF
+			//Click TIFF to expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
+			//Click "+Specify Branding by Selecting Tags
+			//"Click Select Tags
+			//Check off "Default Automation Tag"
+			//Click Select
+			//Enter "Branding 1" in the first placeholder text for branding
+			//Enter "Branding 2" in the second placeholder text for branding
+
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Displayed()  ;}}), Input.wait30);
+					prod.getTIFFChkBox().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+				prod.getTIFFTab().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPriveldge_SelectTagButton().Displayed()  ;}}), Input.wait30);
+				prod.getPriveldge_SelectTagButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectTagsModal().Displayed()  ;}}), Input.wait30);
+
+				prod.getSelectTagsModalBody().Click();
+				prod.getTIFFPrivilegedTagCheckbox().ScrollTo();
+				prod.getTIFFPrivilegedTagCheckbox().Click();
+				
+
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSubmitSelectionButton().Displayed()  ;}}), Input.wait30);
+				
+				prod.getTIFFSubmitSelectionButton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getSelectTagsModal().Displayed()  ;}}), Input.wait30);
+								
+				prod.getPrivilegedDocsPlaceholderTextField().ScrollTo();
+				prod.getPrivilegedDocsPlaceholderTextField().SendKeys("Automated Placeholder");
+				
+				prod.getTIFF_BurnRedtoggle().Click();
+				prod.getTIFF_SelectRed_Radiobutton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRedactionTreeFolderDiv().Displayed()  ;}}), Input.wait30);
+				
+
+				driver.scrollingToBottomofAPage();
+				prod.getTIFFRedactionTreeFolderDiv().Click();
+				prod.getTIFFRedactionTreeFolderDiv().Click();
+				prod.getRedactionDefaultAutomationRedactionCheckbox().Click();
+				
+				driver.scrollPageToTop();
+				prod.getSpecifyBrandingBySelectingTagLink().ScrollTo();
+				prod.getSpecifyBrandingBySelectingTagLink().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDefaultBrandingTextField2().Displayed()  ;}}), Input.wait30);
+				
+				
+				prod.getBrandingSelectTagsButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectTagsModal().Displayed()  ;}}), Input.wait30);
+				prod.getSelectTagsModalBody().Click();
+				prod.getSelectTagsModalBody().Click();
+				prod.getBrandingDefaultAutomationTagCheckbox().ScrollTo();
+				prod.getBrandingDefaultAutomationTagCheckbox().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSubmitSelectionButton().Displayed()  ;}}), Input.wait30);
+				prod.getTIFFSubmitSelectionButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getSelectTagsModalBody().Displayed()  ;}}), Input.wait30);
+				
+				String defaultBrandingText = "Branding 1";
+				dataMap.put("default_branding", defaultBrandingText);
+				
+				prod.getDefaultBrandingTextField1().ScrollTo();
+				prod.getDefaultBrandingTextField1().SendKeys(defaultBrandingText);
+				prod.getDefaultBrandingTextField2().ScrollTo();
+				prod.getDefaultBrandingTextField2().SendKeys("Branding 2");
+				
+				driver.scrollPageToTop();
+					
+			} catch (Exception e) {
+				System.out.println("Exception: " + e);
+			}
+			
+			
 		} else {
 			throw new ImplementationException("NOT complete_tiff_production_component_with_branding");
 		}
@@ -3230,7 +3338,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Mark CompletedClick Next
-			throw new ImplementationException("complete_default_numbering_sorting");
+			try {
+				prod.getMarkCompleteButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNextButton().Enabled()  ;}}), Input.wait30);
+				dataMap.put("bates_number", "0");
+				prod.getNextButton().click();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		} else {
 			throw new ImplementationException("NOT complete_default_numbering_sorting");
 		}
@@ -3242,8 +3358,26 @@ public class ProductionContext extends CommonContext {
 	public void complete_blank_priv_guard_check(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//You should be on the section "Priv Guard"Verify the button "+ Add Rule" existsClick Mark CompleteClick Next
-			throw new ImplementationException("complete_blank_priv_guard_check");
+			//You should be on the section "Priv Guard"
+			//Verify the button "+ Add Rule" exists
+			//Click Mark Complete
+			//Click Next
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivAddRuleBtn().Displayed()  ;}}), Input.wait30);
+				prod.getMarkCompleteButton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getOkButton().Displayed()  ;}}), Input.wait30);
+				prod.getOkButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNextButton().Enabled()  ;}}), Input.wait30);
+				prod.getNextButton().click();
+
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
 		} else {
 			throw new ImplementationException("NOT complete_blank_priv_guard_check");
 		}
@@ -3256,7 +3390,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6126Verify the Count of Number of MP3 Files is shown when the number is 0
-			throw new ImplementationException("verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSummaryAndPreviewHeading().Displayed()  ;}}), Input.wait30);
+				prod.getMP3FilesCountNumber().ScrollTo();
+				Assert.assertEquals(prod.getMP3FilesCountNumber().getText(), "0");
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "MP3 File count is not correct");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
 		}
@@ -3269,7 +3411,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the Preview button
-			throw new ImplementationException("clicking_the_summary_preview_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				//Move page back to incomplete, then click Preview Button
+				prod.getPreviewprod().click();
+				driver.waitForPageToBeReady();
+				pass(dataMap, "Clicked preview button");
+				
+			}
+			catch(Exception e) {
+				fail(dataMap, "Preview button was not clicked");
+				e.printStackTrace();}
 		} else {
 			throw new ImplementationException("NOT clicking_the_summary_preview_button");
 		}
@@ -3282,7 +3435,46 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5096 / 3760A PDF file should be downloaded and opening the file should show the branding entered
-			throw new ImplementationException("verify_the_preview_file_should_display_the_branding_entered");
+			try {
+				// TODO: add logic to get bates number if using existing production
+				String batesNumber = dataMap.get("bates_number").toString();
+				PDDocument document = null;
+				String home = System.getProperty("user.home");
+				String fileNamePath = "";
+				if(SystemUtils.IS_OS_LINUX){
+					fileNamePath = String.format("/Downloads/%s.pdf", batesNumber);
+					while(document == null) document = PDDocument.load(new File(home + fileNamePath));}
+				else if(SystemUtils.IS_OS_WINDOWS){
+					fileNamePath = String.format("\\Download\\%s.pdf", batesNumber);
+					while(document == null) document = PDDocument.load(new File(home + fileNamePath));
+				} else if(SystemUtils.IS_OS_MAC) {
+					fileNamePath = String.format("/Downloads/%s.pdf", batesNumber);
+					while(document == null) document = PDDocument.load(new File(home + fileNamePath));
+				}
+
+				PDFTextStripper pdfTextStripper = new PDFTextStripper();
+
+				String text = pdfTextStripper.getText(document);
+
+				String defaultBrandingText = dataMap.get("default_branding").toString();
+				
+				Pattern p = Pattern.compile(defaultBrandingText);
+				Matcher matcher = p.matcher(text);
+			
+				if (matcher.find()) {
+					pass(dataMap, "Branding is displayed in the preview of the pdf");
+				} else {
+					fail(dataMap, "Branding is not displayed in the preview of the pdf");
+				}
+				document.close();
+				
+				// delete file after verification
+				File file = new File(home + fileNamePath);
+				file.delete();
+			
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_preview_file_should_display_the_branding_entered");
 		}
@@ -3294,8 +3486,17 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_redaction_count_displays_correctly_on_the_summary_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC5008The summary page should be displayed.1. Verify "Redacted Documents:" is displaying the correct count of refacted documents based on the redacted tags used in complete_tiff_production_component.If using Default Automation Redaction, 5 redactions should be returned.
-			throw new ImplementationException("verify_the_redaction_count_displays_correctly_on_the_summary_page");
+			//TC5008The summary page should be displayed.
+			//1. Verify "Redacted Documents:" is displaying the correct count of refacted documents based on the redacted tags used in complete_tiff_production_component.If using Default Automation Redaction, 5 redactions should be returned.
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSummaryAndPreviewHeading().Displayed()  ;}}), Input.wait30);
+				prod.getRedactedDocumentsNumber().ScrollTo();
+				Assert.assertEquals(prod.getRedactedDocumentsNumber().getText(), "5");
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Redaction count is not correct");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_redaction_count_displays_correctly_on_the_summary_page");
 		}
@@ -3332,7 +3533,19 @@ public class ProductionContext extends CommonContext {
 			//* Docs and 0 Pages Documents to TIFF: 
 			//* Docs and 0 Pages Documents Printed in Color:
 			//
-			throw new ImplementationException("verify_the_summary_page_displays_the_correct_information");
+			
+			
+			try {
+				// TODO: Verify other values 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSummaryAndPreviewHeading().Displayed()  ;}}), Input.wait30);
+				String totalDocumentsNumberActual = prod.getTotalDocumentsNumber().getText();
+				String totalDocumnetsNumberExpected = dataMap.get("total_documents_number").toString();
+				Assert.assertEquals(totalDocumentsNumberActual, totalDocumnetsNumberExpected);
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Expected values not displatyed correctly on Summary page");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_summary_page_displays_the_correct_information");
 		}

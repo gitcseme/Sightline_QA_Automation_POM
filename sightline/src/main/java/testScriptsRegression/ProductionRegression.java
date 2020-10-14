@@ -4945,8 +4945,8 @@ public class ProductionRegression extends RegressionBase {
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("prod_template", "false");
 			context.begin_new_production_process(true, dataMap);
-			context.complete_default_production_component(true, dataMap);
 			context.complete_tiff_production_component_with_branding(true, dataMap);
+			context.complete_default_production_component(true, dataMap);
 			context.complete_default_numbering_sorting(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
 			context.complete_blank_priv_guard_check(true, dataMap);
@@ -4985,8 +4985,8 @@ public class ProductionRegression extends RegressionBase {
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("prod_template", "false");
 			context.begin_new_production_process(true, dataMap);
-			context.complete_default_production_component(true, dataMap);
 			context.complete_tiff_production_component_with_branding(true, dataMap);
+			context.complete_default_production_component(true, dataMap);
 			context.complete_default_numbering_sorting(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
 			context.complete_blank_priv_guard_check(true, dataMap);
@@ -5007,7 +5007,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_tiff_production_component_with_branding_and_complete_default_production_component_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_productions_save_button_Then_verify_the_redaction_count_displays_correctly_on_the_summary_page() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5047,7 +5047,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_tiff_production_component_with_branding_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_productions_save_button_Then_verify_the_summary_page_displays_the_correct_information() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5065,8 +5065,8 @@ public class ProductionRegression extends RegressionBase {
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("prod_template", "false");
 			context.begin_new_production_process(true, dataMap);
-			context.complete_default_production_component(true, dataMap);
 			context.complete_tiff_production_component_with_branding(true, dataMap);
+			context.complete_default_production_component(true, dataMap);
 			context.complete_default_numbering_sorting(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
 			context.complete_blank_priv_guard_check(true, dataMap);
