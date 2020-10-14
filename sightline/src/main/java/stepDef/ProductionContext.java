@@ -1517,6 +1517,7 @@ public class ProductionContext extends CommonContext {
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
+				prod.getFilterByButton().Click();
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -3109,7 +3110,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Using the production selected, click on the Name of the production to open it.
-			throw new ImplementationException("clicking_the_productions_name");
+			try{
+				driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionTitleName().Displayed()  ;}}), Input.wait30);
+			prod.getProductionTitleName().click();
+			}catch (Exception e){
+				fail(dataMap, "Unable to click the Production Title");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_name");
 		}
@@ -3120,10 +3129,83 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_productions_quality_control_section_display_correctly$")
 	public void verify_the_productions_quality_control_section_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//TC4928:Verify the name of the production displays on the page.Verify a number is generated on "Documents Generated". The number should not be 0.Verify the button "Review Production" exist on the screen.Verify the link "Confirm Production & Commit" exist on the screen.Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
-			throw new ImplementationException("verify_the_productions_quality_control_section_display_correctly");
-		} else {
+		if (scriptState) {		
+			driver.waitForPageToBeReady();
+			if(prod.getGeneratePageTitle().FindWebElements().size()>0){
+				prod.navigateToNextSection();
+			//TC4928:Verify the name of the production displays on the page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProdductionNameOnQCPage().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getProdductionNameOnQCPage().Displayed());
+		    
+		  //Verify a number is generated on "Documents Generated". The number should not be 0.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getGeneratedDocCountOnQCPage().Displayed()  ;}}), Input.wait30);
+				Assert.assertNotEquals("0", prod.getGeneratedDocCountOnQCPage().getText());
+		    
+		  //Verify the button "Review Production" exist on the screen.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getReviewProductionButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getReviewProductionButton().Displayed());
+		    
+		  //Verify the link "Confirm Production & Commit" exist on the screen.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getConfirmAndCommitProdLink().Displayed());
+		    
+		  //Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+				String expectedProdFiles = prod.getAutomatedQCChecklistText(1).getText();
+				String expectedDocCount = prod.getAutomatedQCChecklistText(2).getText();
+				String expectedBatesNumber = prod.getAutomatedQCChecklistText(3).getText();
+				String expectedBlankPageRemoval = prod.getAutomatedQCChecklistText(4).getText();
+		    
+				Assert.assertEquals("Prod Files / Components", expectedProdFiles);
+				Assert.assertEquals("Document and Page Counts", expectedDocCount);
+				Assert.assertEquals("Bates Number Generation", expectedBatesNumber);
+				Assert.assertEquals("Blank Page Removal", expectedBlankPageRemoval);   
+		    
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+				prod.getQC_backbutton().waitAndClick(15);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30); 
+				prod.getMarkIncompleteButton().waitAndClick(15);
+			}
+			
+			else{
+				//TC4928:Verify the name of the production displays on the page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProdductionNameOnQCPage().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getProdductionNameOnQCPage().Displayed());
+			    
+			  //Verify a number is generated on "Documents Generated". The number should not be 0.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGeneratedDocCountOnQCPage().Displayed()  ;}}), Input.wait30);
+			    Assert.assertNotEquals("0", prod.getGeneratedDocCountOnQCPage().getText());
+			    
+			  //Verify the button "Review Production" exist on the screen.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getReviewProductionButton().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getReviewProductionButton().Displayed());
+			    
+			  //Verify the link "Confirm Production & Commit" exist on the screen.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getConfirmAndCommitProdLink().Displayed());
+			    
+			  //Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+			    String expectedProdFiles = prod.getAutomatedQCChecklistText(1).getText();
+			    String expectedDocCount = prod.getAutomatedQCChecklistText(2).getText();
+			    String expectedBatesNumber = prod.getAutomatedQCChecklistText(3).getText();
+			    String expectedBlankPageRemoval = prod.getAutomatedQCChecklistText(4).getText();
+			    
+			    Assert.assertEquals("Prod Files / Components", expectedProdFiles);
+			    Assert.assertEquals("Document and Page Counts", expectedDocCount);
+			    Assert.assertEquals("Bates Number Generation", expectedBatesNumber);
+			    Assert.assertEquals("Blank Page Removal", expectedBlankPageRemoval);  
+			}
+	    } 
+		else {
 			throw new ImplementationException("NOT verify_the_productions_quality_control_section_display_correctly");
 		}
 

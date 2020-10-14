@@ -4472,7 +4472,7 @@ public class ProductionRegression extends RegressionBase {
 
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_specifying_the_next_bates_number_When_clicking_the_productions_mark_complete_button_Then_verify_the_next_bates_number_generation_is_stored_in_the_correct_fields() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4892,12 +4892,12 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
-	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_COMPLETED_production_When_clicking_the_productions_name_Then_verify_the_productions_quality_control_section_display_correctly() throws Throwable
+	@Test(groups = {"Production, Positive", "smoke"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_INPROGRESS_production_When_clicking_the_productions_name_Then_verify_the_productions_quality_control_section_display_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
 
-		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and selecting_the_{COMPLETED}_production When clicking_the_productions_name Then verify_the_productions_quality_control_section_display_correctly");
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and selecting_the_{INPROGRESS}_production When clicking_the_productions_name Then verify_the_productions_quality_control_section_display_correctly");
 
 		dataMap.put("ExtentTest",test);
 
@@ -4908,7 +4908,8 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("status", "COMPLETED");
+			dataMap.put("status", "INPROGRESS");
+			dataMap.put("viewMode", "tile");
 			context.selecting_the_production(true, dataMap);
 			context.clicking_the_productions_name(true, dataMap);
 			context.verify_the_productions_quality_control_section_display_correctly(true, dataMap);
