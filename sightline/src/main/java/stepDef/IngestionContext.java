@@ -100,6 +100,9 @@ public class IngestionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
 			
+			//Put ingestion name into dataMap
+			dataMap.put("lastCreatedIngestionName", ingest.getIngestionTileName(0));
+			
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			ingest.getPreviewRun().Click();
@@ -1756,8 +1759,6 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5548:To Verify FileDescription in Tally and Search.
-			//* validate FileDescription is displayed on the metadata on the right side
-			//
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
@@ -1781,20 +1782,11 @@ public class IngestionContext extends CommonContext {
 	}
 
 
-	//NOT COMPLETE
 	@Then("^.*(\\[Not\\] )? verify_email_metadata_is_populated_correctly$")
 	public void verify_email_metadata_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//TC5267:To Verify email metadata field is populated correctly for ingested data
-			//
-			//* Select the following columns:
-			//
-			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and EmailRecipientDomainCoun
-			//
-			//* Validate the value displayed from the search
-			//* Values will match those of the Ingested Email Document
-			//
 
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -3031,6 +3023,152 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 
+	public void unpublish_desired_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			SearchContext sessionContext = new SearchContext();
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+
+    		Actions builder  = new Actions(driver.getWebDriver());
+    		//Move to cursor to results doc box to bring up Table data
+    		builder.moveToElement(sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0)).perform();
+			dataMap.put("originalIngestionResults", sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements().get(0).getText());
+
+    		//Ugly way to get a document from Results table
+    		String docToRemove = (sessionSearch.getSearchResultsTableRows().FindWebElements().get(0)).findElements(By.cssSelector("td")).get(0).getText();
+    			
+    		//Append the document to our existing Ingestion Search, to narrow down on just that one document
+    		sessionSearch.insertFullText("AND " + docToRemove);
+    		sessionContext.click_search(true, dataMap);
+    		while(i++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+    		sessionContext.save_search(true, dataMap);
+    			    	
+    		//Find appropriate + button
+    		for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    			if(x.isEnabled() && x.isDisplayed()) x.click();
+    		}
+    		//First We need to bulk Release with Default Security Group checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonRelease().click();		
+			sessionSearch.getFinalizeButton().click();
+	
+			//Now we need to Unrelease with Default Security Group Checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonUnrelease().click();
+				
+			//Navigate to unpublish page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToUnpublishMenuButton().click();
+			driver.waitForPageToBeReady();
+			
+			//Select our Saved Search, and unpublish it
+			builder.moveToElement(ingest.getUnpublishFirstRow().getWebElement()).perform();
+			ingest.getUnpublishFirstRow().click();
+			ingest.getUnpublishSearchByName((String)dataMap.get("CurrentSaveValue")).click();
+			ingest.getIngestionPageUnPublishBtn().click();
+			pass(dataMap, "Successfully unpublished the desired search");
+		}
+		else fail(dataMap, "Could not unpublish the desired search");
+	}
+
+	public void verify_search_result_for_overlaid_text(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i = 0, j =0;
+			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+			//Go to Publish Page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToAnalyticsAndPublishButton().click();
+			
+			//Run Analytics and Publish
+			ingest.getRunAnalyticsRunButton().click();
+			//Wait for publish button to be avaliable
+			while(!ingest.getRunAnalyticsPublishButton().Enabled() && i++<100) {
+				driver.getWebDriver().navigate().refresh();
+			}
+			ingest.getRunAnalyticsPublishButton().click();
+			
+			//Back to ingestion page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToIngestionHome().click();
+			
+			//Wait for our ingestion to be published before we head to back to search page
+			wait_for_inprogress_to_published(true, dataMap);
+			
+			//back to search page
+			ingest.getNavigateToSearchMenuButton().click();
+			ingest.getNavigateToSessionSearchPageMenuButton().click();
+			driver.waitForPageToBeReady();
+			sessionSearch.getNewSearch().click();
+			driver.waitForPageToBeReady();
+
+			//Search and wait for results
+			sessionSearch.insertFullText((String)dataMap.get("ingestionName"));
+			for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					x.click();
+				}
+			}
+			while(j++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+
+			String res = "";
+			//Get Search REsults and compare
+			for(WebElement x: sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements()) {
+				if(x.isDisplayed()) {
+					res = x.getText();
+					break;
+				}
+			}
+			System.out.println("Res = " + res);
+			System.out.println("OG = " + (String)dataMap.get("originalIngestionResults"));
+			Assert.assertEquals(res, (String)dataMap.get("originalIngestionResults"));
+			pass(dataMap, "verified search result for overlaid text");
+		}
+		else fail(dataMap, "Could not verify search result for overlaid text");
+	}
+
+	public void wait_for_inprogress_to_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			String targetIngestion = "";
+			
+			String ourIngestion = (String)dataMap.get("lastCreatedIngestionName");
+			//Wait until ourIngestion = First Ingestion on the published filter page
+			//This will tell us our Ingestion has been Successfully Published
+			while(i++<100 && !targetIngestion.equals(ourIngestion)) {
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				ingest.getFilterByButton().click();
+				ingest.getFilterByINPROGRESS().click();
+				ingest.getFilterByPUBLISHED().click();
+				ingest.getFilterByButton().click();
+				driver.waitForPageToBeReady();
+				targetIngestion = ingest.getIngestionTileName(0);
+			}
+			
+		}
+		else fail(dataMap, "could not wait for ingestion to publish");
+	}
+		
+	
 	@When("^.*(\\\\[Not\\\\] )? delete_grid_ingestion$")
 	public void delete_grid_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
@@ -3049,7 +3187,6 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap, "NOT select_grid_ingestion_details_button");
 		}
 	}
-	
 
 	@Then("^.*(\\[Not\\] )? verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay$")
 	public void verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
