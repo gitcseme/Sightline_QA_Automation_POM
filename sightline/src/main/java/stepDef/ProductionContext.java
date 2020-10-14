@@ -3170,8 +3170,6 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30); 
 				prod.getMarkIncompleteButton().waitAndClick(15);
-				Thread.sleep(10000);
-				System.out.println("Completed the scenario ");
 			}
 			
 			else{
