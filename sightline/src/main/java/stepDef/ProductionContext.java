@@ -2807,6 +2807,720 @@ public class ProductionContext extends CommonContext {
 	}
 
 	
-	
-}//end
+	@And("^.*(\\[Not\\] )? complete_complex_production_component$")
+	public void complete_complex_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		if (scriptState) {
+			//Production Components page is already displayedThese parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if false or does not exist, skip it.IF DATE IS TRUE:Click the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates NumberIF NATIVE IS TRUE:Check off NativeClick Native to expand itClick SELECT ALLIF TIFF IS TRUECheck off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionIF PDF IS TRUECheck off PDFClick PDFto expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionThe other parameters can be worked on as we use them.At the end of the block above, the last two steps should do the following:Click the complete buttonClick the next button
+			throw new ImplementationException("complete_complex_production_component");
+		} else {
+			throw new ImplementationException("NOT complete_complex_production_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_placeholders_on_tiff_pdf$")
+	public void remove_placeholders_on_tiff_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Back
+			//* Click Mark Incomplete
+			//* Expand TIFF
+			//* Uncheck "Enable for Priviledged Docs:"
+			//* Exapand PDF
+			//* Uncheck "Enable for Priviledged Docs:".
+			//* Click Mark Complete
+			//* Click Next
+			//
+			throw new ImplementationException("remove_placeholders_on_tiff_pdf");
+		} else {
+			throw new ImplementationException("NOT remove_placeholders_on_tiff_pdf");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? custom_number_sorting_is_added$")
+	public void custom_number_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #"2. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick Mark CompletedClick Next
+			throw new ImplementationException("custom_number_sorting_is_added");
+		} else {
+			throw new ImplementationException("NOT custom_number_sorting_is_added");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_section_with_priviledged_folder$")
+	public void complete_document_section_with_priviledged_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure "Select Folders:" radio button is selectedClick "Default Automation Priviledged" checkboxClick Mark CompletedClick Next
+			throw new ImplementationException("complete_document_section_with_priviledged_folder");
+		} else {
+			throw new ImplementationException("NOT complete_document_section_with_priviledged_folder");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completing_priv_guard_by_enabling_placeholders$")
+	public void completing_priv_guard_by_enabling_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//You should be on the Priv Guard section.
+			//* Click Mark Complete
+			//* Enable the button "Enable for Priviledged Docs"
+			//* Click Select Tags
+			//* Click Privileged
+			//* Click Save
+			//* Type in "Placeholder created on Priv Guard" (any randomized text is fine here too)
+			//* Click Mark Complete
+			//You should be on the Priv guard section.8. Click Back until you get back to the "Production Components" section again.
+			throw new ImplementationException("completing_priv_guard_by_enabling_placeholders");
+		} else {
+			throw new ImplementationException("NOT completing_priv_guard_by_enabling_placeholders");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_tiff_pdf_section_of_production_components$")
+	public void expanding_the_tiff_pdf_section_of_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("expanding_the_tiff_pdf_section_of_production_components");
+		} else {
+			throw new ImplementationException("NOT expanding_the_tiff_pdf_section_of_production_components");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_enabling_placeholders_on_priv_guard_saves_the_placeholders$")
+	public void verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
+		} else {
+			throw new ImplementationException("NOT verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_started$")
+	public void the_production_is_started(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Generate
+			throw new ImplementationException("the_production_is_started");
+		} else {
+			throw new ImplementationException("NOT the_production_is_started");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? refreshing_for_production_to_be_in_progress$")
+	public void refreshing_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//A loop should be created to verify if a Bates Range number is populated. This loop should check to see if there is a bates range number, if not wait 10 seconds and refresh the page. If a bates number is returned, exit the loop and the "AUTOMATED CHECK" grid should be populated with the information we need.Do this loop 10 times max, and it will fail if nothing is returned in that time
+			throw new ImplementationException("refreshing_for_production_to_be_in_progress");
+		} else {
+			throw new ImplementationException("NOT refreshing_for_production_to_be_in_progress");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly$")
+	public void verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6149Verify Priv Docs with No Placeholders should have the status "0 Docs"
+			throw new ImplementationException("verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_categorization_for_priv_guard$")
+	public void complete_default_categorization_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Run CategorizationIdentify by Production Guard Source should be selected by default.Click Go to Step 2: Select Corpus To Be Analyzed.Click Analyze Select Production SetsClick "+Production Set"Check of any default production set listedClick the "Select" buttonClick "Go to Step 3: Run Categorization"A pop up might appear saying "Wait for this task to complete".Click Yes
+			throw new ImplementationException("complete_default_categorization_for_priv_guard");
+		} else {
+			throw new ImplementationException("NOT complete_default_categorization_for_priv_guard");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number$")
+	public void verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4946 / 5005Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".
+			throw new ImplementationException("verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_priv_guard_categorization_displays_the_correct_matched_documents_number");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_view_results_in_doclist$")
+	public void clicking_view_results_in_doclist(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_view_results_in_doclist");
+		} else {
+			throw new ImplementationException("NOT clicking_view_results_in_doclist");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_result_set_documents_are_displayed_in_DocList$")
+	public void verify_the_result_set_documents_are_displayed_in_DocList(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924 part 2After View Results in DocList is clicked, the user should be taken to the DocList view.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_DocList");
+		} else {
+			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_DocList");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_view_results_in_docview$")
+	public void clicking_view_results_in_docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_view_results_in_docview");
+		} else {
+			throw new ImplementationException("NOT clicking_view_results_in_docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_result_set_documents_are_displayed_in_Docview$")
+	public void verify_the_result_set_documents_are_displayed_in_Docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924 part 3After View Results in DocView is clicked, the user should be taken to the DocView.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_Docview");
+		} else {
+			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_Docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_priv_guard_component_displays_the_correct_matched_documents_number$")
+	public void verify_the_priv_guard_component_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4924/ 4925/ 3767Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".The matched documents should return 11. There are 5 redacted tags and 6 tagged equaling 11 matched documents.
+			throw new ImplementationException("verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_name$")
+	public void clicking_the_productions_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Using the production selected, click on the Name of the production to open it.
+			throw new ImplementationException("clicking_the_productions_name");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_name");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_productions_quality_control_section_display_correctly$")
+	public void verify_the_productions_quality_control_section_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4928:Verify the name of the production displays on the page.Verify a number is generated on "Documents Generated". The number should not be 0.Verify the button "Review Production" exist on the screen.Verify the link "Confirm Production & Commit" exist on the screen.Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+			throw new ImplementationException("verify_the_productions_quality_control_section_display_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_productions_quality_control_section_display_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_production_component_with_branding$")
+	public void complete_tiff_production_component_with_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionClick "+Specify Branding by Selecting Tags"Click Select TagsCheck off "Default Automation Tag"Click SelectEnter "Branding 1" in the first placeholder text for brandingEnter "Branding 2" in the second placeholder text for branding
+			throw new ImplementationException("complete_tiff_production_component_with_branding");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_production_component_with_branding");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_default_numbering_sorting$")
+	public void complete_default_numbering_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompletedClick Next
+			throw new ImplementationException("complete_default_numbering_sorting");
+		} else {
+			throw new ImplementationException("NOT complete_default_numbering_sorting");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_blank_priv_guard_check$")
+	public void complete_blank_priv_guard_check(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//You should be on the section "Priv Guard"Verify the button "+ Add Rule" existsClick Mark CompleteClick Next
+			throw new ImplementationException("complete_blank_priv_guard_check");
+		} else {
+			throw new ImplementationException("NOT complete_blank_priv_guard_check");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_number_of_mp3_files_are_shown_regardless_of_amount$")
+	public void verify_the_number_of_mp3_files_are_shown_regardless_of_amount(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6126Verify the Count of Number of MP3 Files is shown when the number is 0
+			throw new ImplementationException("verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
+		} else {
+			throw new ImplementationException("NOT verify_the_number_of_mp3_files_are_shown_regardless_of_amount");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_summary_preview_button$")
+	public void clicking_the_summary_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the Preview button
+			throw new ImplementationException("clicking_the_summary_preview_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_summary_preview_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_preview_file_should_display_the_branding_entered$")
+	public void verify_the_preview_file_should_display_the_branding_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5096 / 3760A PDF file should be downloaded and opening the file should show the branding entered
+			throw new ImplementationException("verify_the_preview_file_should_display_the_branding_entered");
+		} else {
+			throw new ImplementationException("NOT verify_the_preview_file_should_display_the_branding_entered");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_redaction_count_displays_correctly_on_the_summary_page$")
+	public void verify_the_redaction_count_displays_correctly_on_the_summary_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5008The summary page should be displayed.1. Verify "Redacted Documents:" is displaying the correct count of refacted documents based on the redacted tags used in complete_tiff_production_component.If using Default Automation Redaction, 5 redactions should be returned.
+			throw new ImplementationException("verify_the_redaction_count_displays_correctly_on_the_summary_page");
+		} else {
+			throw new ImplementationException("NOT verify_the_redaction_count_displays_correctly_on_the_summary_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_summary_page_displays_the_correct_information$")
+	public void verify_the_summary_page_displays_the_correct_information(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5883
+			//* Verify the top section of the Summary page is titled"Production Document Summary:"
+			//Below the title, verify the following information is below it:
+			//
+			//* Total Documents: 
+			//* Total Pages (Uses DocPages metadata field): 
+			//* Number Of Custodians:
+			//* Number of Natives: 
+			//* Number of MP3 Files:
+			//* Exception Documents: 
+			//* Documents with Missing Text Files: 
+			//* First and Last Doc IDs:
+			//
+			//2. Verify the second section of the Summary page is titled"Privileged Document Summary:"Below the title, verify the following information is below it:
+			//
+			//* Privileged Documents:
+			//* Documents Identified by Production Guard:
+			//* Redacted Documents:
+			//
+			//3.Verify the second section of the Summary page is titled"OCR/TIFF Documents:"Below the title, verify the following information is below it:
+			//
+			//* Documents to OCR:
+			//* Docs and 0 Pages Documents to TIFF: 
+			//* Docs and 0 Pages Documents Printed in Color:
+			//
+			throw new ImplementationException("verify_the_summary_page_displays_the_correct_information");
+		} else {
+			throw new ImplementationException("NOT verify_the_summary_page_displays_the_correct_information");
+		}
+
+	}
+	
+
+	@And("^.*(\\[Not\\] )? complete_the_default_dat_section$")
+	public void complete_the_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number
+			throw new ImplementationException("complete_the_default_dat_section");
+		} else {
+			throw new ImplementationException("NOT complete_the_default_dat_section");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags_and_no_file_types$")
+	public void complete_the_native_section_with_tags_and_no_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check NativeDo not select any file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
+			throw new ImplementationException("complete_the_native_section_with_tags_and_no_file_types");
+		} else {
+			throw new ImplementationException("NOT complete_the_native_section_with_tags_and_no_file_types");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly_without_file_types$")
+	public void verify_native_section_with_tags_is_saving_correctly_without_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5333
+			//* Expand the Native section
+			//* Verify the selected tags are displaying in alphabetical order.
+			//* Verify no file types are checked
+			//
+			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly_without_file_types");
+		} else {
+			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly_without_file_types");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_pdf_with_rotation$")
+	public void complete_tiff_pdf_with_rotation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check the "TIFF" checkbox
+			//* Expand the "TIFF" section
+			//* Verify the dropdown "Rotate Landscape pages to portrait layout:" is set to "No Rotation" by default.
+			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
+			//* Deselect "Enable for Privileged docs
+			//* Check the "PDF" checkbox
+			//* Expand the "PDF" section
+			//* Verify the dropdown "Rotate Landscape pages to portrait layout:" is set to "No Rotation" by default.
+			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
+			//* Deselect "Enable for Privileged docs
+			//
+			throw new ImplementationException("complete_tiff_pdf_with_rotation");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_pdf_with_rotation");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_marking_a_pdf_with_rotation_completed_returns_no_error$")
+	public void verify_marking_a_pdf_with_rotation_completed_returns_no_error(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6183/5350There should not be any error Message As such "Rotation sections in PDF and TIFF compo nents must have the same configuration". User should be abl e to Mark complete and move on to next section of Production.Best way to verify this is by verifying you are on the numbering section of productions.
+			throw new ImplementationException("verify_marking_a_pdf_with_rotation_completed_returns_no_error");
+		} else {
+			throw new ImplementationException("NOT verify_marking_a_pdf_with_rotation_completed_returns_no_error");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_with_empty_natively_produced_documents$")
+	public void complete_tiff_with_empty_natively_produced_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check "TIFF"
+			//* Expand "TIFF"
+			//* Disable "Enable for Privileged Docs"
+			//* Click "+Enable for Natively Producted Documents"
+			//* Click "Other as the file type
+			//* Type in a random placeholder text 
+			//* Click "+Enable for Natively Producted Documents" a second time
+			//* Leave the fields blank
+			//
+			throw new ImplementationException("complete_tiff_with_empty_natively_produced_documents");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_with_empty_natively_produced_documents");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank$")
+	public void verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5941 Verify a warning message is returned:The TIFF placeholder configuration information is incorrect.
+			throw new ImplementationException("verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+		} else {
+			throw new ImplementationException("NOT verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_a_second_dat_for_classification_production$")
+	public void add_a_second_dat_for_classification_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Add FieldSet Field Classification to the corresponding parameter valueSet Source Field to the corresponding parameter valueSet Dat Field to the corresponding  parameter value
+			throw new ImplementationException("add_a_second_dat_for_classification_production");
+		} else {
+			throw new ImplementationException("NOT add_a_second_dat_for_classification_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_adding_a_second_dat_data_mapping_is_retained$")
+	public void verify_adding_a_second_dat_data_mapping_is_retained(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8358Expand the DAT sectionVerify both row of DAT field mapping are retained with the data entered.
+			throw new ImplementationException("verify_adding_a_second_dat_data_mapping_is_retained");
+		} else {
+			throw new ImplementationException("NOT verify_adding_a_second_dat_data_mapping_is_retained");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_and_pdf_with_different_tags$")
+	public void complete_tiff_and_pdf_with_different_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Check the "TIFF" checkbox
+			//* Open the "TIFF" section
+			//* Click on "+Enable for Natively Produced Documents:"
+			//* Click Select Tags
+			//* Click the first two tags under Default Tags
+			//* Click Select
+			//* Check the "PDF" checkbox
+			//* Open the "PDF" section
+			//* Click on "+Enable for Natively Produced Documents:"
+			//* Click Select Tags
+			//* Click the 3rd and 4th tags under Default Tags
+			//* Click Select
+			//
+			throw new ImplementationException("complete_tiff_and_pdf_with_different_tags");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_and_pdf_with_different_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching$")
+	public void verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5525 / 5519Verify the error message displays:PDF and TIFF PlaceHolder sections should have the same configuration.
+			throw new ImplementationException("verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+		} else {
+			throw new ImplementationException("NOT verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_mp3_advanced_section$")
+	public void expanding_the_mp3_advanced_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking "Advanced" in the MP3 Section
+			throw new ImplementationException("expanding_the_mp3_advanced_section");
+		} else {
+			throw new ImplementationException("NOT expanding_the_mp3_advanced_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_mp3_advanced_option_is_enabled_by_default$")
+	public void verify_the_mp3_advanced_option_is_enabled_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5793Verify in the MP3 Advanced section, Generate Load File (LST) is enabled by default.
+			throw new ImplementationException("verify_the_mp3_advanced_option_is_enabled_by_default");
+		} else {
+			throw new ImplementationException("NOT verify_the_mp3_advanced_option_is_enabled_by_default");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? refresh_back_to_production_home_page$")
+	public void refresh_back_to_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Navigate back to the Production Home Page URL
+			throw new ImplementationException("refresh_back_to_production_home_page");
+		} else {
+			throw new ImplementationException("NOT refresh_back_to_production_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? edit_the_production_component_with_a_tiff$")
+	public void edit_the_production_component_with_a_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark IncompleteCheck the TIFF CheckboxClick TIFF to expand the TIFF sectionClick Multi-PageClick Select TagsClick the Privileged TagClick SelectType a Placeholder text in "Enter placeholder text for the privileged docs". Click Mark Complete.
+			throw new ImplementationException("edit_the_production_component_with_a_tiff");
+		} else {
+			throw new ImplementationException("NOT edit_the_production_component_with_a_tiff");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? refreshing_the_current_page$")
+	public void refreshing_the_current_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("refreshing_the_current_page");
+		} else {
+			throw new ImplementationException("NOT refreshing_the_current_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_editing_an_existing_production_saves_the_new_changes$")
+	public void verify_editing_an_existing_production_saves_the_new_changes(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5198Verify all of the new changes in "edit_the_production_component_with_a_tiff" are saved.Verify the Multi-page radio button is selected, the tag is saved, and the placeholder text is saved.
+			throw new ImplementationException("verify_editing_an_existing_production_saves_the_new_changes");
+		} else {
+			throw new ImplementationException("NOT verify_editing_an_existing_production_saves_the_new_changes");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_tiff_section_select_place_holder_tag_dialog$")
+	public void on_the_tiff_section_select_place_holder_tag_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check the TIFF CheckboxClick TIFF to expand the TIFF sectionClick "Select Tags"
+			throw new ImplementationException("on_the_tiff_section_select_place_holder_tag_dialog");
+		} else {
+			throw new ImplementationException("NOT on_the_tiff_section_select_place_holder_tag_dialog");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_non_privledge_tags$")
+	public void clicking_non_privledge_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Try clicking the checkbox for "Default Automation Tag"Try clicking the checkbox for "All Tags"
+			throw new ImplementationException("clicking_non_privledge_tags");
+		} else {
+			throw new ImplementationException("NOT clicking_non_privledge_tags");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? verify_production_numbering_and_sorting_options_are_displayed$")
+	public void verify_production_numbering_and_sorting_options_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5087Verify the All Tags checkbox does not get checkedVerify the All Tags checkbox does not get checked
+			throw new ImplementationException("verify_production_numbering_and_sorting_options_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_numbering_and_sorting_options_are_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags$")
+	public void complete_the_native_section_with_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check NativeClick Select All on the file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
+			throw new ImplementationException("complete_the_native_section_with_tags");
+		} else {
+			throw new ImplementationException("NOT complete_the_native_section_with_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly$")
+	public void verify_native_section_with_tags_is_saving_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5332 /5334
+			//* Expand the Native section
+			//* Verify the selected tags are displaying in alphabetical order.
+			//
+			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly");
+		}
+
+	}
+}//EOF
