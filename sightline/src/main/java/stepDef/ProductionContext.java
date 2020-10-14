@@ -2811,6 +2811,13 @@ public class ProductionContext extends CommonContext {
 	public void complete_complex_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			String dat =  (String)dataMap.get("dat");
+			String pdf =  (String)dataMap.get("pdf");
+			String nat =  (String)dataMap.get("native");
+			String tiff = (String)dataMap.get("tiff");
+			String mp3 =  (String)dataMap.get("mp3");
+			String text = (String)dataMap.get("text");
+			Actions builder = new Actions(driver.getWebDriver());
 			//Production Components page is already displayed
 			// This method is a large method that will handle customization for the production components screen.
 			// Basically, if a field is being passed in, we want the production component to be filled in with default data.
@@ -2824,6 +2831,47 @@ public class ProductionContext extends CommonContext {
 			//Add source field: BatesNumber
 			//Enter DAT field: Bates Number
 			//
+
+			if(dat!=null && dat.equalsIgnoreCase("true")){
+				prod.getDATChkBox().click();
+				prod.getDATTab().click();
+				prod.getFieldClassification().click();
+				prod.getFieldClassification().SendKeys("Bates");
+				prod.getSourceField().click();
+				prod.getSourceField().SendKeys("BatesNumber");
+				prod.getDatField().click();
+				prod.getDatField().SendKeys("Bates Number");
+			}
+
+			if(pdf!= null && pdf.equalsIgnoreCase("true")) {
+				builder.moveToElement(prod.getPDFChkBox().getWebElement()).perform();
+				prod.getPDFChkBox().click();
+				prod.getPDFTab().click();
+				prod.getPriveldge_SelectPDFTagButton().click();
+				prod.getPriveldge_PDFTagTree("Privileged").click();
+				prod.getPriveldge_PDFTagTree_SelectButton().click();
+				prod.getPDFPlaceholderPrivDocsField().click();
+				prod.getPDFPlaceholderPrivDocsField().SendKeys("Automated Placeholder");
+				prod.getPDF_BurnRedtoggle().click();
+				prod.getPDF_SelectRed_Radiobutton().click();
+				prod.getPDFSelectRedactionsTagTree("Default Automation Redaction").click();;
+
+			}
+			
+			if(tiff!= null && tiff.equalsIgnoreCase("true")) {
+				builder.moveToElement(prod.getTIFFChkBox().getWebElement()).perform();
+				prod.getTIFFChkBox().click();
+				prod.getTIFFTab().click();
+				prod.getTIFFPlaceholderPrivilegedTagsButton().click();
+				prod.getPriveldge_TagTree("Privileged").click();
+				prod.getPriveldge_TagTree_SelectButton().click();
+				prod.getTIFFPlaceholderPrivilegedTextField().click();
+				prod.getTIFFPlaceholderPrivilegedTextField().SendKeys("Automated Placeholder");
+				prod.getTIFFBurnRedactionToggle().click();
+				prod.getTIFF_SelectRed_Radiobutton().click();
+				prod.getTIFFSelectRedactionsTagTree("Default Automation Redaction").click();
+			}
+			
 			//IF NATIVE IS TRUE:
 			//Check off Native
 			//Click Native to expand it
@@ -2871,10 +2919,9 @@ public class ProductionContext extends CommonContext {
 			//
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
 			//Click the next button
-			throw new ImplementationException("complete_complex_production_component");
-		} else {
-			throw new ImplementationException("NOT complete_complex_production_component");
+			
 		}
+		else fail(dataMap, "Failed Complex Production Component");
 
 	}
 
@@ -2906,6 +2953,8 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #"2. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick Mark CompletedClick Next
+			
+			
 			throw new ImplementationException("custom_number_sorting_is_added");
 		} else {
 			throw new ImplementationException("NOT custom_number_sorting_is_added");

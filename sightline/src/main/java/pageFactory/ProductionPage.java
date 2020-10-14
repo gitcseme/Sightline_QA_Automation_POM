@@ -166,6 +166,8 @@ public class ProductionPage {
     public Element getTIFF_Red_Placeholdertext(){ return driver.FindElementByXPath("//*[@id='divRedaction']//div[@class='redactor-editor']/p"); }   
     public Element getTIFF_SelectRed_Radiobutton(){ return driver.FindElementByXPath("//*[@id='chkTIFFSpecifytRedactions']/following-sibling::i"); }   
     public Element getPDF_SelectRed_Radiobutton(){ return driver.FindElementByXPath("//*[@id='chkPDFSPecifytRedactions']/following-sibling::i"); }   
+    public Element getPDFSelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='PDFRedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
+    public Element getTIFFSelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='TIFFRedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
         
     public Element getDoc_Count(){ return driver.FindElementByXPath("//*[@id='frmProductionConfirmation']//div[@class='drk-gray-widget']/span[1]"); }   
     public Element getProd_Uncommitbutton(){ return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]"); }   
@@ -328,6 +330,7 @@ public class ProductionPage {
     public Element getPDFPlaceholderTechIssueToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFExceptionDocs + input + i"); }
     public Element getPDFPlaceholderTechTagsButton() { return driver.FindElementByCssSelector("#PDFContainer #btnSelectPDFTechIssueTags"); }
     public Element getPDFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
+    public Element getPDFPlaceholderPrivDocsField() {return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the privileged docs']");}
     public Element getPDFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#PDFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
     public Element getPDFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#PDFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
     
