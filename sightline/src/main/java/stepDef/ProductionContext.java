@@ -3162,10 +3162,12 @@ public class ProductionContext extends CommonContext {
 	public void clicking_view_results_in_doclist(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_view_results_in_doclist");
+			driver.waitForPageToBeReady();
+			dataMap.put("totalMatchedDocuments", prod.getTotalMatchedDocuments().getText());
+			prod.getDocListButton().click();
+			pass(dataMap,"Clicking view results in doc list is successful");
 		} else {
-			throw new ImplementationException("NOT clicking_view_results_in_doclist");
+			fail(dataMap,"Clicking view results in doc list is not successful");
 		}
 
 	}
@@ -3175,10 +3177,17 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_result_set_documents_are_displayed_in_DocList(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4924 part 2After View Results in DocList is clicked, the user should be taken to the DocList view.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
-			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_DocList");
+			//TC4924 part 2
+			// After View Results in DocList is clicked, the user should be taken to the DocList view.
+			// 1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
+			int expectedDocuments = Integer.parseInt(dataMap.get("totalMatchedDocuments").toString());
+			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
+			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
+			pass(dataMap, "The number of documents listed matches the prior screen's count");
 		} else {
-			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_DocList");
+			fail(dataMap, "The number of documents listed does not match the prior screen's count");
 		}
 
 	}
@@ -3188,10 +3197,12 @@ public class ProductionContext extends CommonContext {
 	public void clicking_view_results_in_docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_view_results_in_docview");
+			driver.waitForPageToBeReady();
+			dataMap.put("totalMatchedDocuments", prod.getTotalMatchedDocuments().getText());
+			prod.getPrivDocViewBtn().click();
+			pass(dataMap,"Clicking view results in doc view is successful");
 		} else {
-			throw new ImplementationException("NOT clicking_view_results_in_docview");
+			fail(dataMap,"Clicking view results in doc view is not successful");
 		}
 
 	}
@@ -3201,10 +3212,17 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_result_set_documents_are_displayed_in_Docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4924 part 3After View Results in DocView is clicked, the user should be taken to the DocView.1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
-			throw new ImplementationException("verify_the_result_set_documents_are_displayed_in_Docview");
+			//TC4924 part 3
+			// After View Results in DocView is clicked, the user should be taken to the DocView.
+			// 1. Verify the correct number of documents listed match the prior screen's count of how many documents should be displayed.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getDocViewTableEntry().Enabled() && prod.getDocViewTableEntry().Displayed()  ;}}), Input.wait30);
+			int expectedDocuments = Integer.parseInt(dataMap.get("totalMatchedDocuments").toString());
+			int numberOfDocumentsInTable = prod.getDocViewTableEntry().getWebElement().findElements(By.tagName("tr")).size();
+			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
+			pass(dataMap, "The number of documents listed matches the prior screen's count");
 		} else {
-			throw new ImplementationException("NOT verify_the_result_set_documents_are_displayed_in_Docview");
+			fail(dataMap, "The number of documents listed does not match the prior screen's count");
 		}
 
 	}
