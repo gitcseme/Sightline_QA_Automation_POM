@@ -4710,8 +4710,8 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
-	public void TestCase7203() throws Throwable{
+	@Test(groups = {"Ingestion, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_on_search_home_page_and_search_for_ingestion_When_unpublish_desired_saved_search_Then_verify_search_result_for_overlaid_text() throws Throwable{
 		
 		HashMap dataMap = new HashMap();
 		ExtentTest test = report.startTest("TC7203");
