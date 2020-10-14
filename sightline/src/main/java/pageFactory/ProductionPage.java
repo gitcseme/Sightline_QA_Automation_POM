@@ -379,7 +379,9 @@ public class ProductionPage {
     public Element getDocumentNextBtn() { return driver.FindElementById("btnDocumentsSelectionNext");}
     public Element getPrivAddRuleBtn() { return driver.FindElementById("contentmetadata");}
     public Element getPrivRedactionsBtn() { return driver.FindElementById("redactionsHelper");}
+    public ElementCollection getPrivTagsBtn() {return driver.FindElementsById("tagsHelper");}
     public Element getPrivDefaultAutomation() { return driver.FindElementByXPath("//*[@id=\"7_anchor\"]/i[1]");}
+    public Element getPrivTagDefaultAutomation() {return driver.FindElementByXPath("(//*[@id = 'JSTree']//a[contains(text(), 'Default Automation Tag')]/i)[1]");}
     public Element getPrivInsertQuery() { return driver.FindElementById("insertQueryBtn");}
     public Element getPrivChkForMatching() { return driver.FindElementById("btnDocumentMatch");}
     public Element getTotalMatchedDocuments() {return driver.FindElementById("TotalDocumentsCount");}

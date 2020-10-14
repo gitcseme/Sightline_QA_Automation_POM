@@ -1005,11 +1005,19 @@ public class ProductionContext extends CommonContext {
 						prod.getPrivInsertQuery().Enabled() && prod.getPrivInsertQuery().Displayed()  ;}}), Input.wait30);
 					prod.getPrivInsertQuery().Click();
 					
+			    //Added code to add another rule
+				prod.getPrivAddRuleBtn().click();
+				prod.getPrivTagsBtn().FindWebElements().get(1).click();
+				prod.getPrivTagDefaultAutomation().click();
+				prod.getPrivInsertQuery().click();
+
+					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
-					prod.getPrivChkForMatching().Click();
+				prod.getPrivChkForMatching().Click();
 										
-					pass(dataMap,"Priv guard documents are completed");
+				driver.waitForPageToBeReady();
+				pass(dataMap,"Priv guard documents are completed");
 					
 			}
 			catch(Exception e){
@@ -2305,12 +2313,14 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
-				prod.getNumAndSortMarkComplete().Click();
+				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				Actions builder = new Actions(driver.getWebDriver());
+				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+				prod.getMarkCompleteButton().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
 			} catch (Exception e) {
+				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
 			}
 
@@ -3136,7 +3146,12 @@ public class ProductionContext extends CommonContext {
 	public void complete_default_categorization_for_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Run CategorizationIdentify by Production Guard Source should be selected by default.Click Go to Step 2: Select Corpus To Be Analyzed.Click Analyze Select Production SetsClick "+Production Set"Check of any default production set listedClick the "Select" buttonClick "Go to Step 3: Run Categorization"A pop up might appear saying "Wait for this task to complete".Click Yes
+			//Click Run CategorizationIdentify by Production Guard Source should be selected by default.
+			//Click Go to Step 2: Select Corpus To Be Analyzed.
+			//Click Analyze Select Production Sets
+			//Click "+Production Set"Check of any default production set listed
+			//Click the "Select" buttonClick
+			//"Go to Step 3: Run Categorization"A pop up might appear saying "Wait for this task to complete".Click Yes
 			throw new ImplementationException("complete_default_categorization_for_priv_guard");
 		} else {
 			throw new ImplementationException("NOT complete_default_categorization_for_priv_guard");
@@ -3233,10 +3248,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4924/ 4925/ 3767Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".The matched documents should return 11. There are 5 redacted tags and 6 tagged equaling 11 matched documents.
-			throw new ImplementationException("verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
-		} else {
-			throw new ImplementationException("NOT verify_the_priv_guard_component_displays_the_correct_matched_documents_number");
+			Assert.assertEquals("11", prod.getTotalMatchedDocuments().getText());
+			
 		}
+		else fail(dataMap, "Could not Verify the Priv Guard Matched Documents");
 
 	}
 
