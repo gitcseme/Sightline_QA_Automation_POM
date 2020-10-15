@@ -4614,7 +4614,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_verify_enabling_placeholders_on_priv_guard_saves_the_placeholders_and_complete_default_production_location_component_and_completed_summary_preview_component_and_the_production_is_started_When_refreshing_for_production_to_be_in_progress_Then_verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4641,11 +4641,14 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("min_length", "6");
 			dataMap.put("beginning_bates", "3");
 			dataMap.put("suffix", "Q");
+			dataMap.put("continue", "true");
 			context.custom_number_sorting_is_added(true, dataMap);
 			context.complete_document_section_with_priviledged_folder(true, dataMap);
 			context.completing_priv_guard_by_enabling_placeholders(true, dataMap);
 			context.expanding_the_tiff_pdf_section_of_production_components(true, dataMap);
 			context.verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(true, dataMap);
+
+			
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
 			context.the_production_is_started(true, dataMap);
@@ -4711,7 +4714,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_remove_placeholders_on_tiff_pdf_and_custom_number_sorting_is_added_and_complete_document_section_with_priviledged_folder_and_completing_priv_guard_by_enabling_placeholders_When_expanding_the_tiff_pdf_section_of_production_components_Then_verify_enabling_placeholders_on_priv_guard_saves_the_placeholders() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4745,10 +4748,12 @@ public class ProductionRegression extends RegressionBase {
 			context.verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(true, dataMap);
 		} catch (ImplementationException e) {
 			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
 			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -4897,7 +4902,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_INPROGRESS_production_When_clicking_the_productions_name_Then_verify_the_productions_quality_control_section_display_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

@@ -2829,21 +2829,13 @@ public class ProductionContext extends CommonContext {
 			String mp3 =  (String)dataMap.get("mp3");
 			String text = (String)dataMap.get("text");
 			Actions builder = new Actions(driver.getWebDriver());
-			//Production Components page is already displayed
-			// This method is a large method that will handle customization for the production components screen.
-			// Basically, if a field is being passed in, we want the production component to be filled in with default data.
-			// EX: if dat = true, pdf = true. The DAT and PDF section should be filled in with the data we have determined should be added based on the information below.
-			//These parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else if blank or doesn't exist, skip it.
-			//
-
+			
 			//IF DAT IS TRUE:
 			//Click the DAT checkbox
 			//Click the DAT tab to open the DAT container
 			//Add field classification: Bates
 			//Add source field: BatesNumber
 			//Enter DAT field: Bates Number
-			//
-
 			if(dat!=null && dat.equalsIgnoreCase("true")){
 				prod.getDATChkBox().click();
 				prod.getDATTab().click();
@@ -2855,7 +2847,16 @@ public class ProductionContext extends CommonContext {
 				prod.getDatField().SendKeys("Bates Number");
 			}
 
-
+			//IF PDF IS TRUE
+			//Check off PDF
+			//Click PDFto expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
 			if(pdf!= null && pdf.equalsIgnoreCase("true")) {
 				builder.moveToElement(prod.getPDFChkBox().getWebElement()).perform();
 				prod.getPDFChkBox().click();
@@ -2870,7 +2871,16 @@ public class ProductionContext extends CommonContext {
 				prod.getPDFSelectRedactionsTagTree("Default Automation Redaction").click();;
 
 			}
-			
+			//IF TIFF IS TRUE
+			//Check off TIFF
+			//Click TIFF to expand it
+			//Click Select Tags in the "Placeholders" section.
+			//Click the "Privileged" folder
+			//Click Select
+			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
+			//Toggle on "Burn Redactions"
+			//Select the option "Select Redactions"
+			//Check off Default Automation Redaction
 			if(tiff!= null && tiff.equalsIgnoreCase("true")) {
 				builder.moveToElement(prod.getTIFFChkBox().getWebElement()).perform();
 				prod.getTIFFChkBox().click();
@@ -2886,35 +2896,13 @@ public class ProductionContext extends CommonContext {
 			}
 			
 			
+			/*WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
 			//IF NATIVE IS TRUE:
 			//Check off Native
 			//Click Native to expand it
 			//Click SELECT ALL
 			//Expand the "Advanced" option and enable "Generate Load File (LST)
-			//
-			//IF TIFF IS TRUE
-			//Check off TIFF
-			//Click TIFF to expand it
-			//Click Select Tags in the "Placeholders" section.
-			//Click the "Privileged" folder
-			//Click Select
-			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
-			//Toggle on "Burn Redactions"
-			//Select the option "Select Redactions"
-			//Check off Default Automation Redaction
-			//
-			//
-			//IF PDF IS TRUE
-			//Check off PDF
-			//Click PDFto expand it
-			//Click Select Tags in the "Placeholders" section.
-			//Click the "Privileged" folder
-			//Click Select
-			//Type in "Automated Placeholder" in "Enter placeholder text for the privileged docs".
-			//Toggle on "Burn Redactions"
-			//Select the option "Select Redactions"
-			//Check off Default Automation Redaction
-			//
+
 			//IF MP3 IS TRUE
 			//Expand Advanced Production Components
 			//Click the MP3 Files Checkbox
@@ -2922,29 +2910,23 @@ public class ProductionContext extends CommonContext {
 			//Click "Select Redactions"
 			//Click "Default Automation Redaction"
 			//Set the "Redaction Style" to "Beep"
-			//
+
 			//IF TEXT IS TRUE
 			//Checkoff the "Text" component checkbox
-			//
 			//The other parameters can be worked on as we use them.
-			//
-			//
-			
+			 */
+
+
+			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
 			builder.moveToElement(prod.getComponentsMarkComplete().getWebElement()).perform();
 			prod.getComponentsMarkComplete().Click();
-					
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
-			prod.getComponentsMarkNext().Click();
 
-			
-			//At the end of the block above, the last two steps should do the following:
-			//
-			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
 			//Click the next button
-			
-			
+			prod.getComponentsMarkNext().Click();
+			pass(dataMap, "Complex Components were enabled");
 		}
 		else fail(dataMap, "Failed Complex Production Component");
 
@@ -2955,31 +2937,24 @@ public class ProductionContext extends CommonContext {
 	public void remove_placeholders_on_tiff_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Click Back
-			//* Click Mark Incomplete
-			//* Expand TIFF
-			//* Uncheck "Enable for Priviledged Docs:"
-			//* Exapand PDF
-			//* Uncheck "Enable for Priviledged Docs:".
-			//* Click Mark Complete
-			//* Click Next
-			//
 			Actions builder = new Actions(driver.getWebDriver());
 			prod.getBackLink().click();
 			prod.getMarkIncompleteButton().click();
+
+			//Open Tiff Tab and toggle off priv docs
 			prod.getTIFFTab().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getTIFFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
-
 			prod.getTIFFPlaceholderPriviledgedToggleActive().click();
 			
+			//Move to PDF tab and toggle off priv docs
 			builder.moveToElement(prod.getPDFTab().getWebElement()).perform();
 			prod.getPDFTab().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getPDFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
-
 			prod.getPDFPlaceholderPriviledgedToggleActive().click();
+
+			//Mark complete and go next
 			builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 			prod.getMarkCompleteButton().click();
 			prod.getNextButton().click();
@@ -3160,6 +3135,14 @@ public class ProductionContext extends CommonContext {
 
 			Assert.assertEquals(pdfHolderText, "Placeholder created on Priv Guard");
 			Assert.assertEquals(tiffHolderText, "Placeholder created on Priv Guard");
+
+			String continueScript = (String)dataMap.get("continue");
+			if(continueScript != null && continueScript.equalsIgnoreCase("true")) {
+				for(int i =0; i<4; i++) {
+					prod.getNextButton().click();
+					driver.waitForPageToBeReady();
+				}
+			}
 			pass(dataMap, "verified privguard saves placeholders");
 		}
 		else fail(dataMap, "Could not verify privguard saves placeholders");
@@ -3311,9 +3294,8 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_priv_guard_component_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4924/ 4925/ 3767Verify the Priv Guard matched document count returns the number of Redacted Documents our "Default Automation Redaction" tag has and the number of tagged documents with "Default Automation Tag".The matched documents should return 11. There are 5 redacted tags and 6 tagged equaling 11 matched documents.
+			//Simply make sure, we have 11 total documents 
 			Assert.assertEquals("11", prod.getTotalMatchedDocuments().getText());
-			
 		}
 		else fail(dataMap, "Could not Verify the Priv Guard Matched Documents");
 
