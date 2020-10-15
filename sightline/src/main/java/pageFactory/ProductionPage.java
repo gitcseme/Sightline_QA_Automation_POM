@@ -464,6 +464,8 @@ public class ProductionPage {
     public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
     public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
     public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
+    public Element getGenerateProductionName() {return driver.FindElementByCssSelector(".col-md-4.labelAlign");}    
+
     
     public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
     public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}

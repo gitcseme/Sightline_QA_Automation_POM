@@ -1,5 +1,7 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -3913,10 +3915,20 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//When used as a context, the parameters here are used to supply the values for "complete_complex_production"
-			throw new ImplementationException("verify_a_complex_production_is_able_to_be_generated");
-		} else {
-			throw new ImplementationException("NOT verify_a_complex_production_is_able_to_be_generated");
+
+			//Make sure Production Name is displaying the correct name
+			String prodName = prod.getGenerateProductionName().getText();
+			Assert.assertEquals(prodName, (String)dataMap.get("production_name"));
+			
+			//Wait a few seconds for Status text to change to "in progress"
+			int i =0;
+			while(!prod.getGeneratePostGenStatus().getText().equals("in progress") && i++<50)
+			Assert.assertEquals("in progress", prod.getGeneratePostGenStatus().getText());
+			//After a few seconds make sure the In Progress Button is Displayed
+			Assert.assertTrue(prod.getbtnProductionGenerate().Displayed());
+			pass(dataMap, "Complex Production was able to be generated");
 		}
+		else fail(dataMap, "Could not verify a complex production can be generated");
 
 	}
 
@@ -3926,10 +3938,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
-			throw new ImplementationException("waiting_for_production_to_be_complete");
-		} else {
-			throw new ImplementationException("NOT waiting_for_production_to_be_complete");
+			String status = prod.getGeneratePostGenStatus().getText();
+			//Loop to wait for Post Generation check complete
+			int i =0;
+			while(!status.equals("post generation check") && i++<20) status = prod.getGeneratePostGenStatus().getText();
+			Assert.assertEquals("post generation check", status);
+
+			//Make Complete and Next
+			prod.getMarkCompleteButton().click();
+			prod.getNextButton().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Passed, post generation check for production");
 		}
+		else fail(dataMap, "Production Failed, or Timed out");
 
 	}
 
@@ -3938,11 +3959,10 @@ public class ProductionContext extends CommonContext {
 	public void clicking_review_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_review_production");
-		} else {
-			throw new ImplementationException("NOT clicking_review_production");
+			prod.getReviewproductionButton().click();
+			pass(dataMap, "Clicked review production btn");
 		}
+		else fail(dataMap, "Error clicking review production btn");
 
 	}
 
@@ -3952,10 +3972,20 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4994Verify the directory in the UI matches the directory we set in "complete_default_production_location_component".Example text from the UI:The documents are produced at the following path : \\MTPVTSSLMQ01\Productions\H021301\Test01
-			throw new ImplementationException("verify_the_review_production_path_is_correct");
-		} else {
-			throw new ImplementationException("NOT verify_the_review_production_path_is_correct");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDestinationPathText().Displayed() ;}}), Input.wait30);
+
+			//Get Path we inputed in Previous Location Page
+			String originalPath = (String)dataMap.get("root_path") + (String)dataMap.get("production_directory");
+
+			//Get Path that is current Displayed
+			String finalPath = prod.getDestinationPathText().getText();
+
+			//Verify they are equal
+			Assert.assertEquals(originalPath,finalPath);
+			pass(dataMap, "Production Path was verified");
 		}
+		else fail(dataMap, "Production Path could not be verified");
 
 	}
 
@@ -4120,10 +4150,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
-			throw new ImplementationException("verify_the_user_is_able_to_click_on_confirm_production");
-		} else {
-			throw new ImplementationException("NOT verify_the_user_is_able_to_click_on_confirm_production");
+			Assert.assertTrue(prod.getConfirmAndCommitProdLink().Enabled() && prod.getConfirmAndCommitProdLink().Displayed());
+
+			System.out.println(prod.getConfirmCompletePopup().getText());
+			pass(dataMap, "Was able to verify the functionality of Confirm production and commit button");
 		}
+		else fail(dataMap, "Failed to properly click Confirm production button");
 
 	}
 
