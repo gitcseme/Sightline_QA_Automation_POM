@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 
 import automationLibrary.Driver;
+
+import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.WebDriver;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -33,8 +35,10 @@ public class CommonContext {
 
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
-		//driver.Manage().window().maximize();
-		driver.Manage().window().fullscreen();
+
+		if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+			driver.Manage().window().maximize();}
+		else driver.Manage().window().fullscreen();
 
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
         

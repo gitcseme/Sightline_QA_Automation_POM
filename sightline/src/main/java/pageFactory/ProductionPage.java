@@ -488,6 +488,7 @@ public class ProductionPage {
     public Element getInProgressStatus() { return driver.FindElementByXPath("//label[text()='IN PROGRESS']"); }
     public ElementCollection getRegenerateButtonElCollection() { return driver.FindElementsById("btnProductionReGenerate"); }
     public Element getExportBatesButton() { return driver.FindElementById("btnProductionGeneratedBatesRangeExport"); }
+    public ElementCollection getExportBatesButtonVerify() { return driver.FindElementsById("btnProductionGeneratedBatesRangeExport"); }
     public Element getProductionLocationMarkIncompleteButton() { return driver.FindElementById("btnProductionLocationMarkInComplete"); }
     public Element getBulHornNotificationNumber() { return driver.FindElementByXPath("//span[@id='activity']/b"); }
     public Element getProductionsNavLink() { return driver.FindElementByName("Productions"); }

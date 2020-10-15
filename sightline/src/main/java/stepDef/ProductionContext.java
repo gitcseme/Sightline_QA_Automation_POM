@@ -3130,8 +3130,6 @@ public class ProductionContext extends CommonContext {
 			String pdfHolderText = (String)dataMap.get("pdfPrivText");
 			//Grab Tiff Priv Holder Text
 			String tiffHolderText = (String)dataMap.get("tiffPrivText");
-			System.out.println(pdfHolderText);
-			System.out.println(tiffHolderText);
 
 			Assert.assertEquals(pdfHolderText, "Placeholder created on Priv Guard");
 			Assert.assertEquals(tiffHolderText, "Placeholder created on Priv Guard");
@@ -3156,6 +3154,7 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Click Generate
 			prod.getGenerateButton().click();
+			driver.waitForPageToBeReady();
 			
 		} else {
 			fail(dataMap, "Generate button is not clicked");
@@ -3168,20 +3167,23 @@ public class ProductionContext extends CommonContext {
 	public void refreshing_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//A loop should be created to verify if a Bates Range number is populated. This loop should check to see if there is a bates range number, if not wait 10 seconds and refresh the page. If a bates number is returned, exit the loop and the "AUTOMATED CHECK" grid should be populated with the information we need.Do this loop 10 times max, and it will fail if nothing is returned in that time
 			int i =0;
-			//Export Bates button enabled only when bates range number is populated
+			driver.waitForPageToBeReady();
+			//Loop to cycle back and forth between pages, until the export bates button is enabled
+			//Once that button is enabled we know a bates range number is populated
 			while(!prod.getExportBatesButton().Enabled() && i<10){
 				i++;
-				driver.getWebDriver().navigate().refresh();
+				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getExportBatesButton().Enabled() ;}}), Input.wait30);
-				if(!prod.getExportBatesButton().Enabled()) {
-					Thread.sleep(10000);
-				}
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
 			}
 			Assert.assertTrue(prod.getExportBatesButton().Enabled());
+			//One more back and forth to get the table status to update
+			prod.getBackButton().click();
+			driver.waitForPageToBeReady();
+			prod.getNextButton().click();
 			pass(dataMap, "Production was refreshed");
 		} else {
 			fail(dataMap, "Bates number not returned on time");
@@ -3194,7 +3196,9 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 6149Verify Priv Docs with No Placeholders should have the status "0 Docs"
+			driver.waitForPageToBeReady();
+			System.out.println(prod.getPrivDocsStatus().getText());
+			//Verify 0 priv doc's
 			Assert.assertEquals(prod.getPrivDocsStatus().getText(), "0 Docs");
 			pass(dataMap, "Privileged docs with no placeholders displays correct status");
 		} else {
