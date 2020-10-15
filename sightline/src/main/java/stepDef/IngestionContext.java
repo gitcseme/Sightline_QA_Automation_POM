@@ -2,6 +2,7 @@ package stepDef;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -905,7 +906,68 @@ public class IngestionContext extends CommonContext {
 			//* When choosing a DAT file to upload, the fields specified in the file are auto populated in the Source Field section
 			//* Number of headers specified should match the number of fields that were auto populated
 			//
-			throw new ImplementationException("verify_source_field_is_auto_populated");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getMappingDESTINATIONFIELD4().Visible()  ;}}), Input.wait30); 
+
+				WebElement sourceField1 = ingest.getMappingSOURCEFIELD1().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField2 = ingest.getMappingSOURCEFIELD2().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField3 = ingest.getMappingSOURCEFIELD3().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField4 = ingest.getMappingSOURCEFIELD4().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField5 = ingest.getMappingSOURCEFIELD5().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField6 = ingest.getMappingSOURCEFIELD6().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField7 = ingest.getMappingSOURCEFIELD7().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField8 = ingest.getMappingSOURCEFIELD8().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField9 = ingest.getMappingSOURCEFIELD9().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField10 = ingest.getMappingSOURCEFIELD10().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField11 = ingest.getMappingSOURCEFIELD11().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField12 = ingest.getMappingSOURCEFIELD12().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField13 = ingest.getMappingSOURCEFIELD13().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField14 = ingest.getMappingSOURCEFIELD14().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField15 = ingest.getMappingSOURCEFIELD15().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField16 = ingest.getMappingSOURCEFIELD16().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField17 = ingest.getMappingSOURCEFIELD17().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField18 = ingest.getMappingSOURCEFIELD18().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField19 = ingest.getMappingSOURCEFIELD19().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField20 = ingest.getMappingSOURCEFIELD20().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField21 = ingest.getMappingSOURCEFIELD21().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField22 = ingest.getMappingSOURCEFIELD22().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField23 = ingest.getMappingSOURCEFIELD23().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField24 = ingest.getMappingSOURCEFIELD24().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField25 = ingest.getMappingSOURCEFIELD25().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				
+				Assert.assertEquals("DOCID", sourceField1.getText());
+				Assert.assertEquals("SourceParentDocID", sourceField2.getText());
+				Assert.assertEquals("DataSource", sourceField3.getText());
+				Assert.assertEquals("CustodianName", sourceField4.getText());
+				Assert.assertEquals("ATTACH_DOCID", sourceField5.getText());
+				Assert.assertEquals("BEGINBATES", sourceField6.getText());
+				Assert.assertEquals("BEGINGROUP", sourceField7.getText());
+				Assert.assertEquals("Custodian", sourceField8.getText());
+				Assert.assertEquals("DocExtension", sourceField9.getText());
+				Assert.assertEquals("DOCID", sourceField10.getText());
+				Assert.assertEquals("DocPrimaryLanguage", sourceField11.getText());
+				Assert.assertEquals("EmailAuthorNameAndAddress", sourceField12.getText());
+				Assert.assertEquals("EmailBCCNamesAndAddresses", sourceField13.getText());
+				Assert.assertEquals("EmailCCNamesAndAddresses", sourceField14.getText());
+				Assert.assertEquals("EmailToNamesAndAddresses", sourceField15.getText());
+				Assert.assertEquals("ENDBATES", sourceField16.getText());
+				Assert.assertEquals("ENDGROUP", sourceField17.getText());
+				Assert.assertEquals("fkCustId", sourceField18.getText());
+				Assert.assertEquals("fkMediaId", sourceField19.getText());
+				Assert.assertEquals("ITEMPATH", sourceField20.getText());
+				Assert.assertEquals("M_Duration", sourceField21.getText());
+				Assert.assertEquals("nuixGuid", sourceField22.getText());
+				Assert.assertEquals("ocrAttempt", sourceField23.getText());
+				Assert.assertEquals("PAGECOUNT", sourceField24.getText());
+				Assert.assertEquals("PDFPATH", sourceField25.getText());
+				pass(dataMap, "Source fields are auto populated!");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Source fields are not auto populated!");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_source_field_is_auto_populated");
 		}
@@ -922,7 +984,26 @@ public class IngestionContext extends CommonContext {
 			//* After a file has been selected or uploaded for DAT file and Source Field is auto populated, the Destination Field is auto mapped
 			//* Number of headers populated on the source field section should match the number of fields mapped on Destination field section
 			//
-			throw new ImplementationException("verify_destination_field_is_auto_populated");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getMappingDESTINATIONFIELD4().Visible()  ;}}), Input.wait30); 
+
+				WebElement desField1 = ingest.getMappingDESTINATIONFIELD1().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField2 = ingest.getMappingDESTINATIONFIELD2().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField3 = ingest.getMappingDESTINATIONFIELD3().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField4 = ingest.getMappingDESTINATIONFIELD4().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+
+				Assert.assertEquals("SourceDocID", desField1.getText());
+				Assert.assertEquals("SourceParentDocID", desField2.getText());
+				Assert.assertEquals("DataSource", desField3.getText());
+				Assert.assertEquals("CustodianName", desField4.getText());
+				pass(dataMap, "Destination fields are auto populated");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Destination fields are not autopopulated");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_destination_field_is_auto_populated");
 		}
@@ -3654,7 +3735,15 @@ public class IngestionContext extends CommonContext {
 			//* Validate the preview mapping (configure field mapping) is enabled
 			//* Validate the preview and run button is enabled
 			//
-			throw new ImplementationException("verify_preview_mapping_section_is_enabled");
+			try {
+				Assert.assertTrue(ingest.getConfigureMappingDiv().GetAttribute("class").contains("active"));
+				Assert.assertTrue(ingest.getBackButton().Enabled());
+				Assert.assertTrue(ingest.getPreviewRun().Enabled());
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Configure Field Mapping is not enabled");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_preview_mapping_section_is_enabled");
 		}
