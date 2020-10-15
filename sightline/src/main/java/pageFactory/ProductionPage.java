@@ -107,6 +107,7 @@ public class ProductionPage {
     public Element getPDFTab(){ return driver.FindElementByXPath(".//*[@id='accordion']//a[@href='#PDFContainer']"); }
     public Element getKeepFamiliesTogether(){ return driver.FindElementByXPath(".//*[@id='divSortByMetadata_1']//input[@name='ProductionSortingSettings.SortByIsKeepFamiliesTogether']/following-sibling::i"); }
     public Element getSelectFolder(String foldername){ return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]"); }
+    public Element getSelectFolderCheckbox (String foldername) { return driver.FindElementByXPath("/*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]//i[1]"); }
   
     public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
     public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbTags']/following-sibling::i"); }
@@ -138,6 +139,12 @@ public class ProductionPage {
     public Element getPriveldge_PDFTagTree_SelectButton(){ return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionPDF']"); }
     public Element getPriveldge_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFPrevDocPlaceHolderText']/preceding-sibling::div"); }
     public Element getPriveldge_PDFTextArea(){ return driver.FindElementByXPath("//textarea[@class='PDFPrevDocPlaceHolderText']/preceding-sibling::div"); }
+    public Element getPrivilegedPlaceholderDocsToggle() { return driver.FindElementByCssSelector("#chkIsPrivilegedPlaceholderEnabled + input + i"); }
+    public Element getGuardSelectPrevTagsButton() { return driver.FindElementByCssSelector("#btnGuardSelectPrevTags"); }
+    public Element getGuardTreeTagCheckbox (String tag) {return driver.FindElementByCssSelector("#tagGuardTreeComponent ul.jstree-children [data-content=\'"+tag+"\'] i.jstree-checkbox"); }
+    public Element getTagGuardTreeSaveButton() {return driver.FindElementByCssSelector("#btnSave"); }
+    public Element getGuardTagTextArea() { return driver.FindElementByCssSelector("#txtGuardPrevTagPlaceHolder"); }
+    public Element getPrivMarkCompleteButton() {return driver.FindElementByCssSelector("#AlwayShowButton"); }
     
     //addition on 23/04
     public Element getProdExportSetRadioButton(){ return driver.FindElementByXPath(".//*[@id='productionSet']//input[@id='IsExportSet']/following-sibling::i"); }
@@ -302,6 +309,7 @@ public class ProductionPage {
     public Element getTIFFBrandingTagsLink() { return driver.FindElementByCssSelector("#TIFFContainer #divLeftHeaderBranding a.add-logic"); }
     public Element getTIFFBrandingTextField() { return driver.FindElementByCssSelector("#TIFFContainer #divLeftHeaderBranding .redactor-editor"); }
     public Element getTIFFPlaceholderPrivilegedToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkEnabledforPrivDocs + input + i"); }
+    public Element getTIFFPlaceholderPriviledgedToggleActive() { return driver.FindElementByCssSelector("#TIFFContainer #chkEnabledforPrivDocs.activeC + input + i"); }
     public Element getTIFFPlaceholderTechIssueToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkEnabledforExceptionDocs + input + i"); }
     public Element getTIFFPlaceholderPrivilegedTagsButton() { return driver.FindElementByCssSelector("#TIFFContainer #btnSelectPrevTags"); }
     public Element getTIFFPlaceholderPrivilegedTextField() { return driver.FindElementByCssSelector("#TIFFContainer div[placeholder='Enter placeholder text for the privileged docs']"); }
@@ -333,6 +341,7 @@ public class ProductionPage {
     public Element getPDFPlaceholderPrivDocsField() {return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the privileged docs']");}
     public Element getPDFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#PDFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
     public Element getPDFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#PDFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
+    public Element getPDFPlaceholderPriviledgedToggleActive() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFPrivDocs.activeC + input + i"); }
     
     // Production Components - MP3
     public Element getMP3ComponentAdvanced(){ return driver.FindElementByCssSelector("#MP3FilesContainer div.advanced-dd-toggle"); }

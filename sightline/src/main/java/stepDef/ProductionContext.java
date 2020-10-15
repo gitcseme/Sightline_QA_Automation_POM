@@ -2964,9 +2964,25 @@ public class ProductionContext extends CommonContext {
 			//* Click Mark Complete
 			//* Click Next
 			//
-			throw new ImplementationException("remove_placeholders_on_tiff_pdf");
+			prod.getBackLink().click();
+			prod.getMarkIncompleteButton().click();
+			prod.getTIFFTab().click();
+			
+			if (prod.getTIFFPlaceholderPriviledgedToggleActive().Displayed()) {
+				prod.getTIFFPlaceholderPriviledgedToggleActive().click();
+			}
+			
+			prod.getPDFTab().click();
+			
+			if (prod.getPDFPlaceholderPriviledgedToggleActive().Displayed()) {
+				prod.getPDFPlaceholderPriviledgedToggleActive().click();
+			}
+			
+			prod.getMarkCompleteButton().click();
+			prod.getNextButton().click();
+			pass(dataMap, "Removed placeholders on TIFF and PDF");
 		} else {
-			throw new ImplementationException("NOT remove_placeholders_on_tiff_pdf");
+			fail(dataMap, "NOT remove_placeholders_on_tiff_pdf");
 		}
 
 	}
@@ -3047,10 +3063,17 @@ public class ProductionContext extends CommonContext {
 	public void complete_document_section_with_priviledged_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Make sure "Select Folders:" radio button is selectedClick "Default Automation Priviledged" checkboxClick Mark CompletedClick Next
-			throw new ImplementationException("complete_document_section_with_priviledged_folder");
+			//Make sure "Select Folders:" radio button is selected
+			//Click "Default Automation Priviledged" checkbox
+			//Click Mark Completed
+			//Click Next
+			prod.getFolderRadioButton().click();
+			prod.getSelectFolderCheckbox("Default Automation Priviledged").click();
+			prod.getMarkCompleteButton().click();
+			prod.getNextButton().click();
+			pass(dataMap, "Completed document section with priviledged folder");
 		} else {
-			throw new ImplementationException("NOT complete_document_section_with_priviledged_folder");
+			fail(dataMap, "NOT complete_document_section_with_priviledged_folder");
 		}
 
 	}
@@ -3069,7 +3092,14 @@ public class ProductionContext extends CommonContext {
 			//* Type in "Placeholder created on Priv Guard" (any randomized text is fine here too)
 			//* Click Mark Complete
 			//You should be on the Priv guard section.8. Click Back until you get back to the "Production Components" section again.
-			throw new ImplementationException("completing_priv_guard_by_enabling_placeholders");
+			prod.getMarkCompleteButton().click();
+			prod.getPrivilegedPlaceholderDocsToggle().click();
+			prod.getGuardSelectPrevTagsButton().click();
+			prod.getGuardTreeTagCheckbox("Privileged").click();
+			prod.getTagGuardTreeSaveButton().click();
+			prod.getGuardTagTextArea().sendKeys("Placeholder created on Priv Guard");
+			prod.getPrivMarkCompleteButton().click();
+			
 		} else {
 			throw new ImplementationException("NOT completing_priv_guard_by_enabling_placeholders");
 		}
