@@ -1525,6 +1525,7 @@ public class ProductionContext extends CommonContext {
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
+				prod.getFilterByButton().Click();
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -2964,20 +2965,22 @@ public class ProductionContext extends CommonContext {
 			//* Click Mark Complete
 			//* Click Next
 			//
+			Actions builder = new Actions(driver.getWebDriver());
 			prod.getBackLink().click();
 			prod.getMarkIncompleteButton().click();
 			prod.getTIFFTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
+
+			prod.getTIFFPlaceholderPriviledgedToggleActive().click();
 			
-			if (prod.getTIFFPlaceholderPriviledgedToggleActive().Displayed()) {
-				prod.getTIFFPlaceholderPriviledgedToggleActive().click();
-			}
-			
+			builder.moveToElement(prod.getPDFTab().getWebElement()).perform();
 			prod.getPDFTab().click();
-			
-			if (prod.getPDFPlaceholderPriviledgedToggleActive().Displayed()) {
-				prod.getPDFPlaceholderPriviledgedToggleActive().click();
-			}
-			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getPDFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
+
+			prod.getPDFPlaceholderPriviledgedToggleActive().click();
+			builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 			prod.getMarkCompleteButton().click();
 			prod.getNextButton().click();
 			pass(dataMap, "Removed placeholders on TIFF and PDF");
@@ -3071,6 +3074,7 @@ public class ProductionContext extends CommonContext {
 			prod.getSelectFolderCheckbox("Default Automation Priviledged").click();
 			prod.getMarkCompleteButton().click();
 			prod.getNextButton().click();
+			driver.waitForPageToBeReady();
 			pass(dataMap, "Completed document section with priviledged folder");
 		} else {
 			fail(dataMap, "NOT complete_document_section_with_priviledged_folder");
@@ -3092,17 +3096,24 @@ public class ProductionContext extends CommonContext {
 			//* Type in "Placeholder created on Priv Guard" (any randomized text is fine here too)
 			//* Click Mark Complete
 			//You should be on the Priv guard section.8. Click Back until you get back to the "Production Components" section again.
+			driver.waitForPageToBeReady();
 			prod.getMarkCompleteButton().click();
 			prod.getPrivilegedPlaceholderDocsToggle().click();
 			prod.getGuardSelectPrevTagsButton().click();
 			prod.getGuardTreeTagCheckbox("Privileged").click();
 			prod.getTagGuardTreeSaveButton().click();
-			prod.getGuardTagTextArea().sendKeys("Placeholder created on Priv Guard");
+			prod.getGuardTagTextArea().click();
+			prod.getGuardTagTextArea().SendKeys("Placeholder created on Priv Guard");
 			prod.getPrivMarkCompleteButton().click();
+			for(int i =0; i<3; ++i) {
+				driver.waitForPageToBeReady();
+				prod.getBackLink().click();
+			}
+			pass(dataMap, "Enabled priv guard placeholders");
 			
-		} else {
-			throw new ImplementationException("NOT completing_priv_guard_by_enabling_placeholders");
-		}
+		} 
+		else fail(dataMap, "Failed to enable priv guard placeholders");
+		
 
 	}
 
@@ -3111,11 +3122,26 @@ public class ProductionContext extends CommonContext {
 	public void expanding_the_tiff_pdf_section_of_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("expanding_the_tiff_pdf_section_of_production_components");
-		} else {
-			throw new ImplementationException("NOT expanding_the_tiff_pdf_section_of_production_components");
+			
+			Actions builder = new Actions(driver.getWebDriver());
+
+			//Move to and Open Tiff Tab
+			//builder.moveToElement(prod.getTIFFTab().getWebElement()).perform();
+			prod.getTIFFTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFPlaceholderPrivilegedTextField().Displayed() ;}}), Input.wait30);
+			dataMap.put("tiffPrivText", prod.getTIFFPlaceholderPrivilegedTextField().getText());
+
+			//Move to and Open PDF Tab
+			//builder.moveToElement(prod.getPDFTab().getWebElement()).perform();
+			prod.getPDFTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getPDFPlaceholderPrivDocsField().Displayed() ;}}), Input.wait30);
+			dataMap.put("pdfPrivText", prod.getPDFPlaceholderPrivDocsField().getText());
+
+			pass(dataMap, "Opened the PDF and TIFF section");
 		}
+		else fail(dataMap, "Failed to expand tiff PDF section of production");
 
 	}
 
@@ -3124,11 +3150,19 @@ public class ProductionContext extends CommonContext {
 	public void verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
-		} else {
-			throw new ImplementationException("NOT verify_enabling_placeholders_on_priv_guard_saves_the_placeholders");
+		
+			//Grab PDF Priv Holder Text
+			String pdfHolderText = (String)dataMap.get("pdfPrivText");
+			//Grab Tiff Priv Holder Text
+			String tiffHolderText = (String)dataMap.get("tiffPrivText");
+			System.out.println(pdfHolderText);
+			System.out.println(tiffHolderText);
+
+			Assert.assertEquals(pdfHolderText, "Placeholder created on Priv Guard");
+			Assert.assertEquals(tiffHolderText, "Placeholder created on Priv Guard");
+			pass(dataMap, "verified privguard saves placeholders");
 		}
+		else fail(dataMap, "Could not verify privguard saves placeholders");
 
 	}
 
@@ -3291,7 +3325,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Using the production selected, click on the Name of the production to open it.
-			throw new ImplementationException("clicking_the_productions_name");
+			try{
+				driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionTitleName().Displayed()  ;}}), Input.wait30);
+			prod.getProductionTitleName().click();
+			}catch (Exception e){
+				fail(dataMap, "Unable to click the Production Title");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_name");
 		}
@@ -3302,10 +3344,83 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_productions_quality_control_section_display_correctly$")
 	public void verify_the_productions_quality_control_section_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//TC4928:Verify the name of the production displays on the page.Verify a number is generated on "Documents Generated". The number should not be 0.Verify the button "Review Production" exist on the screen.Verify the link "Confirm Production & Commit" exist on the screen.Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
-			throw new ImplementationException("verify_the_productions_quality_control_section_display_correctly");
-		} else {
+		if (scriptState) {		
+			driver.waitForPageToBeReady();
+			if(prod.getGeneratePageTitle().FindWebElements().size()>0){
+				prod.navigateToNextSection();
+			//TC4928:Verify the name of the production displays on the page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProdductionNameOnQCPage().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getProdductionNameOnQCPage().Displayed());
+		    
+		  //Verify a number is generated on "Documents Generated". The number should not be 0.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getGeneratedDocCountOnQCPage().Displayed()  ;}}), Input.wait30);
+				Assert.assertNotEquals("0", prod.getGeneratedDocCountOnQCPage().getText());
+		    
+		  //Verify the button "Review Production" exist on the screen.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getReviewProductionButton().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getReviewProductionButton().Displayed());
+		    
+		  //Verify the link "Confirm Production & Commit" exist on the screen.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getConfirmAndCommitProdLink().Displayed());
+		    
+		  //Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+				String expectedProdFiles = prod.getAutomatedQCChecklistText(1).getText();
+				String expectedDocCount = prod.getAutomatedQCChecklistText(2).getText();
+				String expectedBatesNumber = prod.getAutomatedQCChecklistText(3).getText();
+				String expectedBlankPageRemoval = prod.getAutomatedQCChecklistText(4).getText();
+		    
+				Assert.assertEquals("Prod Files / Components", expectedProdFiles);
+				Assert.assertEquals("Document and Page Counts", expectedDocCount);
+				Assert.assertEquals("Bates Number Generation", expectedBatesNumber);
+				Assert.assertEquals("Blank Page Removal", expectedBlankPageRemoval);   
+		    
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+				prod.getQC_backbutton().waitAndClick(15);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30); 
+				prod.getMarkIncompleteButton().waitAndClick(15);
+			}
+			
+			else{
+				//TC4928:Verify the name of the production displays on the page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProdductionNameOnQCPage().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getProdductionNameOnQCPage().Displayed());
+			    
+			  //Verify a number is generated on "Documents Generated". The number should not be 0.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getGeneratedDocCountOnQCPage().Displayed()  ;}}), Input.wait30);
+			    Assert.assertNotEquals("0", prod.getGeneratedDocCountOnQCPage().getText());
+			    
+			  //Verify the button "Review Production" exist on the screen.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getReviewProductionButton().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getReviewProductionButton().Displayed());
+			    
+			  //Verify the link "Confirm Production & Commit" exist on the screen.
+			    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30);
+			    Assert.assertTrue(prod.getConfirmAndCommitProdLink().Displayed());
+			    
+			  //Verify on the "AUTOMATED QC CHECK" grid, the grid displays "Prod Files / Compenents", "Document and Page Counts", "Bates Number Generation", and "Blank Page Removal".
+			    String expectedProdFiles = prod.getAutomatedQCChecklistText(1).getText();
+			    String expectedDocCount = prod.getAutomatedQCChecklistText(2).getText();
+			    String expectedBatesNumber = prod.getAutomatedQCChecklistText(3).getText();
+			    String expectedBlankPageRemoval = prod.getAutomatedQCChecklistText(4).getText();
+			    
+			    Assert.assertEquals("Prod Files / Components", expectedProdFiles);
+			    Assert.assertEquals("Document and Page Counts", expectedDocCount);
+			    Assert.assertEquals("Bates Number Generation", expectedBatesNumber);
+			    Assert.assertEquals("Blank Page Removal", expectedBlankPageRemoval);  
+			}
+	    } 
+		else {
 			throw new ImplementationException("NOT verify_the_productions_quality_control_section_display_correctly");
 		}
 
@@ -3761,6 +3876,412 @@ public class ProductionContext extends CommonContext {
 			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly");
 		} else {
 			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? custom_number_and_sorting_is_added$")
+	public void custom_number_and_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #". If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick the Mark complete button and verify the following message appears: "Mark Complete successful"Click Next
+			throw new ImplementationException("custom_number_and_sorting_is_added");
+		} else {
+			throw new ImplementationException("NOT custom_number_and_sorting_is_added");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_production_generate_button$")
+	public void clicking_the_production_generate_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the Generate Button.
+			throw new ImplementationException("clicking_the_production_generate_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_production_generate_button");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_a_complex_production_is_able_to_be_generated$")
+	public void verify_a_complex_production_is_able_to_be_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//When used as a context, the parameters here are used to supply the values for "complete_complex_production"
+			throw new ImplementationException("verify_a_complex_production_is_able_to_be_generated");
+		} else {
+			throw new ImplementationException("NOT verify_a_complex_production_is_able_to_be_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? waiting_for_production_to_be_complete$")
+	public void waiting_for_production_to_be_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
+			throw new ImplementationException("waiting_for_production_to_be_complete");
+		} else {
+			throw new ImplementationException("NOT waiting_for_production_to_be_complete");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_review_production$")
+	public void clicking_review_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_review_production");
+		} else {
+			throw new ImplementationException("NOT clicking_review_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_review_production_path_is_correct$")
+	public void verify_the_review_production_path_is_correct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4994Verify the directory in the UI matches the directory we set in "complete_default_production_location_component".Example text from the UI:The documents are produced at the following path : \\MTPVTSSLMQ01\Productions\H021301\Test01
+			throw new ImplementationException("verify_the_review_production_path_is_correct");
+		} else {
+			throw new ImplementationException("NOT verify_the_review_production_path_is_correct");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? navigated_back_onto_the_document_components_section$")
+	public void navigated_back_onto_the_document_components_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure the Bates number is stored. We will verify a new number is generated afterwards.Click the Back link until you get back to "Document Selection"
+			throw new ImplementationException("navigated_back_onto_the_document_components_section");
+		} else {
+			throw new ImplementationException("NOT navigated_back_onto_the_document_components_section");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? change_the_folder_selection_to_by_tags_complete_the_production$")
+	public void change_the_folder_selection_to_by_tags_complete_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark IncompleteClick "Select Tags:"Click Default Automation TagClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick the Generate Button
+			throw new ImplementationException("change_the_folder_selection_to_by_tags_complete_the_production");
+		} else {
+			throw new ImplementationException("NOT change_the_folder_selection_to_by_tags_complete_the_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overwriting_the_document_selection_generates_a_new_bate_number$")
+	public void verify_overwriting_the_document_selection_generates_a_new_bate_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4956Verify the new bate number displayed does not match the prior bates number
+			throw new ImplementationException("verify_overwriting_the_document_selection_generates_a_new_bate_number");
+		} else {
+			throw new ImplementationException("NOT verify_overwriting_the_document_selection_generates_a_new_bate_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_productions_can_be_generated$")
+	public void verify_native_productions_can_be_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5067/4897Verify the production is set to "INPROGRESS".
+			throw new ImplementationException("verify_native_productions_can_be_generated");
+		} else {
+			throw new ImplementationException("NOT verify_native_productions_can_be_generated");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? navigating_to_the_vm_production_location$")
+	public void navigating_to_the_vm_production_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Review Production
+			//* Copy the path of the VM
+			//* Connect to the Virtual Machine
+			//* Open file explorer
+			//* Type the following into the directory search bar: "\\MTPVTSSLMQ01" Computer
+			//* Navigate to the path copied
+			//* Double click the file to open the production
+			//
+			throw new ImplementationException("navigating_to_the_vm_production_location");
+		} else {
+			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_generated_files_display_id_as_the_bates_number$")
+	public void verify_the_generated_files_display_id_as_the_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4993Verify on the document generated, the key ID should be the bates number for the production.
+			throw new ImplementationException("verify_the_generated_files_display_id_as_the_bates_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_generated_files_display_id_as_the_bates_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_bates_generated_number_follows_the_custom_numbering$")
+	public void verify_the_bates_generated_number_follows_the_custom_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4960 / 8349If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
+			throw new ImplementationException("verify_the_bates_generated_number_follows_the_custom_numbering");
+		} else {
+			throw new ImplementationException("NOT verify_the_bates_generated_number_follows_the_custom_numbering");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_file_size_ingestion_was_completed$")
+	public void a_file_size_ingestion_was_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
+			throw new ImplementationException("a_file_size_ingestion_was_completed");
+		} else {
+			throw new ImplementationException("NOT a_file_size_ingestion_was_completed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_a_production_document_with_appropriate_file_size_returns_no_errors$")
+	public void verify_a_production_document_with_appropriate_file_size_returns_no_errors(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6185 1. Verify the error message does not appear: There Should not be any error message such as WidthAndHeightCannotBeNegative2. Verify the "Review Production" button is displayed after a successful generation.
+			throw new ImplementationException("verify_a_production_document_with_appropriate_file_size_returns_no_errors");
+		} else {
+			throw new ImplementationException("NOT verify_a_production_document_with_appropriate_file_size_returns_no_errors");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completed_summary_and_preview_component$")
+	public void completed_summary_and_preview_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
+			throw new ImplementationException("completed_summary_and_preview_component");
+		} else {
+			throw new ImplementationException("NOT completed_summary_and_preview_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_productions_are_set_to_draft_by_default$")
+	public void verify_productions_are_set_to_draft_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4909/5884For this test case, set only DAT to true in the context "complete_completex_production_component"
+			//* Verify on the Generate component, the field "Status:" should display "DRAFT".
+			//* Verify bates range should be blank
+			//* Verify the generate button is enabled.
+			//
+			throw new ImplementationException("verify_productions_are_set_to_draft_by_default");
+		} else {
+			throw new ImplementationException("NOT verify_productions_are_set_to_draft_by_default");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_able_to_click_on_confirm_production$")
+	public void verify_the_user_is_able_to_click_on_confirm_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
+			throw new ImplementationException("verify_the_user_is_able_to_click_on_confirm_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_able_to_click_on_confirm_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? connect_to_the_database$")
+	public void connect_to_the_database(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Connect to the database:Open sql server management studio. Connect to MTPVTDSLDB02 Enter Valid Credentials Click Connect Open a new query
+			throw new ImplementationException("connect_to_the_database");
+		} else {
+			throw new ImplementationException("NOT connect_to_the_database");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? executing_the_query$")
+	public void executing_the_query(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Execute the following query based on the params
+			throw new ImplementationException("executing_the_query");
+		} else {
+			throw new ImplementationException("NOT executing_the_query");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_in_the_database_the_background_process_for_pregen_is_active$")
+	public void verify_in_the_database_the_background_process_for_pregen_is_active(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4560 Verify the status of the results of the query say "Pre-generation in progress"
+			throw new ImplementationException("verify_in_the_database_the_background_process_for_pregen_is_active");
+		} else {
+			throw new ImplementationException("NOT verify_in_the_database_the_background_process_for_pregen_is_active");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_the_first_production$")
+	public void open_the_first_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the first production's name from the filtered results.
+			throw new ImplementationException("open_the_first_production");
+		} else {
+			throw new ImplementationException("NOT open_the_first_production");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_failed_generation_link$")
+	public void clicking_the_failed_generation_link(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the link for the failed generation
+			throw new ImplementationException("clicking_the_failed_generation_link");
+		} else {
+			throw new ImplementationException("NOT clicking_the_failed_generation_link");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_failed_productions_display_the_approriate_error_message$")
+	public void verify_failed_productions_display_the_approriate_error_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5001Verify clicking the link for the error message displays a dialog with text displaying why the production failed.Close the dialog afterwards.
+			throw new ImplementationException("verify_failed_productions_display_the_approriate_error_message");
+		} else {
+			throw new ImplementationException("NOT verify_failed_productions_display_the_approriate_error_message");
+		}
+
+	}
+	
+
+	@When("^.*(\\[Not\\] )? expanding_the_pdf_production_component$")
+	public void expanding_the_pdf_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("expanding_the_pdf_production_component");
+		} else {
+			throw new ImplementationException("NOT expanding_the_pdf_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_pdf_product_component_displays_the_correct_default_options$")
+	public void verify_the_pdf_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3764 / 6430 / 7247The verifcation here is the same for the TIFF version of this outcome which is already automated. Check to see if this can be reused since both TIFF and PDF have the same buttons and fields.
+			//* Verify the first section is Page Options
+			//* Verify in Page Options, the section "Single / Multiple:" has the options "Multi-page" and "Single Page" with Single Page selected as the default option with a radio button.
+			//* Verify in Page Options, the section "Format" has the options "Letter" and "A4" with Letter selected as the default option with a radio button.
+			//* Verify in Page Options, Blank Page Removal, Preserve Color, and Do not produce full content TIFFs or placeholder TIFFs for Natively Produced Docs: all have the option set to the red "x" by default. 
+			//* Verify in Page Options, the option "Rotate Landscape pages to portrait layout:" has the option "No Rotation" set to default.
+			//* Verify the "Branding" section contains the fields "Location", "Branding Text", "Speicify Default Branding", "Insert Metadata Field" link, and "+ Specify Branding by Selecting Tags:" link.
+			//* Verify in the Branding section for Location, there is a rectangle with the options, "LEFT", "CENTER", "RIGHT" at the top and bottom of the rectable with the words "--Page Body--" in the middle, and the top left "LEFT" option selected by default.
+			//* Verify in the Branding section, Specify Default Branding contains a section with the text "Enter default branding for the selection location on the page."
+			//* Verify in the "Placeholders" section, "Enable for Privileged Docs:" is checked green by default, there is a "Select tags" blue button to the right of Enable for Privileged Docs:, "Enable for Tech Tissue Docs:" is checked red by default, "+ Enable for Natively Produced Documents:" link with a question mark button next to it, and a rectangle with the watermark "Enter placeholder text for the privileged docs" with a link "Insert Metadata Field" under it. 
+			//* In the Redactions section, the option "Burn Redactions:" is checked red by default.
+			//* In the "Advanced" section, "Generate Load File (LST):" is checked green by default, "Load File Type:" is set to "Log" by default, and "Slip Sheets" is checked red by default.
+			//
+			throw new ImplementationException("verify_the_pdf_product_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_pdf_product_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_native_production_component$")
+	public void expanding_the_native_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//The user should be on the "Production Components" section of Productions.The user should click on "Native" to expand the Native section.The user should click on "Advanced" to expand the Native Advanced section.
+			throw new ImplementationException("expanding_the_native_production_component");
+		} else {
+			throw new ImplementationException("NOT expanding_the_native_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_native_product_component_displays_the_correct_default_options$")
+	public void verify_the_native_product_component_displays_the_correct_default_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4165 / 4167
+			//* Verify Generate Load File (LST) button is set to No by default. 
+			//* Verify the radio button in the section "Advanced Families of Redacted and Privileged Documents" is set to "Do not produce natives of the parents of privileged and redacted docs" by default.
+			//* Verify the section "Select File Types and/or Tags:", each of the file type options below are NOT checked by default. 
+			//* Verify the availability of the option for Force Protection on Excel files to not allow any modifi cations BUT allow to vi ew formulas and filter t he data. 
+			//Need to double check step 4, this seems like an option that is not available.
+			throw new ImplementationException("verify_the_native_product_component_displays_the_correct_default_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_native_product_component_displays_the_correct_default_options");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_numbering_sorting_fields_are_displayed$")
+	public void verify_production_numbering_sorting_fields_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4902Numbering and Sorting page is already displayedVerify level - page/document radio buttons are displayedVerify format - metadata radio button is displayedVerify format - Beginning Bates/Prefix/Suffix/Min Length input fields are displayedVerify sorting - sort by metadata radio button is displayedVerify sorting - sub-sort dropdown field is displayed
+			throw new ImplementationException("verify_production_numbering_sorting_fields_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_numbering_sorting_fields_are_displayed");
 		}
 
 	}

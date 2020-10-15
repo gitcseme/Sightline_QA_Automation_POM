@@ -107,7 +107,7 @@ public class ProductionPage {
     public Element getPDFTab(){ return driver.FindElementByXPath(".//*[@id='accordion']//a[@href='#PDFContainer']"); }
     public Element getKeepFamiliesTogether(){ return driver.FindElementByXPath(".//*[@id='divSortByMetadata_1']//input[@name='ProductionSortingSettings.SortByIsKeepFamiliesTogether']/following-sibling::i"); }
     public Element getSelectFolder(String foldername){ return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]"); }
-    public Element getSelectFolderCheckbox (String foldername) { return driver.FindElementByXPath("/*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]//i[1]"); }
+    public Element getSelectFolderCheckbox (String foldername) { return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]//i[1]"); }
   
     public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
     public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbTags']/following-sibling::i"); }
@@ -143,7 +143,8 @@ public class ProductionPage {
     public Element getGuardSelectPrevTagsButton() { return driver.FindElementByCssSelector("#btnGuardSelectPrevTags"); }
     public Element getGuardTreeTagCheckbox (String tag) {return driver.FindElementByCssSelector("#tagGuardTreeComponent ul.jstree-children [data-content=\'"+tag+"\'] i.jstree-checkbox"); }
     public Element getTagGuardTreeSaveButton() {return driver.FindElementByCssSelector("#btnSave"); }
-    public Element getGuardTagTextArea() { return driver.FindElementByCssSelector("#txtGuardPrevTagPlaceHolder"); }
+    //public Element getGuardTagTextArea() { return driver.FindElementByCssSelector("#txtGuardPrevTagPlaceHolder"); }
+    public Element getGuardTagTextArea() { return driver.FindElementByCssSelector(".redactor-editor p"); }
     public Element getPrivMarkCompleteButton() {return driver.FindElementByCssSelector("#AlwayShowButton"); }
     
     //addition on 23/04
@@ -502,6 +503,15 @@ public class ProductionPage {
     public Element getSaveButton() { return driver.FindElementByXPath("//*[text()='Save']"); }
 
     
+    public Element getProductionTitleName() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/div[1]/a");}
+    public Element getProdductionNameOnQCPage() {return driver.FindElementByXPath("//*[@class='col-md-3']//div[@class='panel-title-container']/h2");}
+    public Element getGeneratedDocCountOnQCPage() {return driver.FindElementByXPath("//*[@class='drk-gray-widget']/span[1]");}
+    public Element getReviewProductionButton() {return driver.FindElementByXPath("//*[@class='btn btn-primary col-md-12']");}
+    public Element getAutomatedQCChecklistText(int index) {return driver.FindElementByXPath(String.format("//*[@id='taskbasic']/tbody/tr[%s]/td[1]", index));}
+    public ElementCollection getGeneratePageTitle() {return driver.FindElementsByXPath("//*[@id='frmProductionGenerate']/div/div[1]/div/h2");}
+    public Element getConfirmAndCommitProdLink() {return driver.FindElementByXPath("//*[@id='btnProductionConfirmation']/strong");}
+    
+    
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
@@ -584,9 +594,11 @@ public class ProductionPage {
 		getBasicInfoCompleteButton().Click();
 
 		//Added to get rid of Toast message, which I think is effecting the rest of Script
+		/*
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
 		driver.FindElementById("botClose1").Click();
+		*/
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 

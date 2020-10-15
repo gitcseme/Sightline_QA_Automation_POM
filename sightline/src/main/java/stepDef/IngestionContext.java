@@ -34,6 +34,7 @@ import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
@@ -99,6 +100,9 @@ public class IngestionContext extends CommonContext {
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+			
+			//Put ingestion name into dataMap
+			dataMap.put("lastCreatedIngestionName", ingest.getIngestionTileName(0));
 			
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
@@ -185,7 +189,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	
 	@When("^.*(\\[Not\\] )? click_open_wizard_option$")
 	public void click_open_wizard_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -198,7 +202,6 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionAction_Delete().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Delete().Click();
 		}
-
 	}
 
 
@@ -223,7 +226,8 @@ public class IngestionContext extends CommonContext {
 			} else {
 				fail(dataMap,"Ingestion Execution Details Popup did NOT Display");
 				}
-		} else {
+		} 
+		else {
 			on_ingestion_home_page(scriptState, dataMap);
 		}
 
@@ -263,6 +267,7 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
 	
 	@Then("^.*(\\[Not\\] )? verify_expected_date_time_format_is_displayed$")
 	public void verify_expected_date_time_format_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -1756,8 +1761,6 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5548:To Verify FileDescription in Tally and Search.
-			//* validate FileDescription is displayed on the metadata on the right side
-			//
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
@@ -1781,20 +1784,11 @@ public class IngestionContext extends CommonContext {
 	}
 
 
-	//NOT COMPLETE
 	@Then("^.*(\\[Not\\] )? verify_email_metadata_is_populated_correctly$")
 	public void verify_email_metadata_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//TC5267:To Verify email metadata field is populated correctly for ingested data
-			//
-			//* Select the following columns:
-			//
-			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and EmailRecipientDomainCoun
-			//
-			//* Validate the value displayed from the search
-			//* Values will match those of the Ingested Email Document
-			//
 
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -3031,6 +3025,152 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 
+	public void unpublish_desired_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			SearchContext sessionContext = new SearchContext();
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+
+    		Actions builder  = new Actions(driver.getWebDriver());
+    		//Move to cursor to results doc box to bring up Table data
+    		builder.moveToElement(sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0)).perform();
+			dataMap.put("originalIngestionResults", sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements().get(0).getText());
+
+    		//Ugly way to get a document from Results table
+    		String docToRemove = (sessionSearch.getSearchResultsTableRows().FindWebElements().get(0)).findElements(By.cssSelector("td")).get(0).getText();
+    			
+    		//Append the document to our existing Ingestion Search, to narrow down on just that one document
+    		sessionSearch.insertFullText("AND " + docToRemove);
+    		sessionContext.click_search(true, dataMap);
+    		while(i++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+    		sessionContext.save_search(true, dataMap);
+    			    	
+    		//Find appropriate + button
+    		for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    			if(x.isEnabled() && x.isDisplayed()) x.click();
+    		}
+    		//First We need to bulk Release with Default Security Group checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonRelease().click();		
+			sessionSearch.getFinalizeButton().click();
+	
+			//Now we need to Unrelease with Default Security Group Checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonUnrelease().click();
+				
+			//Navigate to unpublish page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToUnpublishMenuButton().click();
+			driver.waitForPageToBeReady();
+			
+			//Select our Saved Search, and unpublish it
+			builder.moveToElement(ingest.getUnpublishFirstRow().getWebElement()).perform();
+			ingest.getUnpublishFirstRow().click();
+			ingest.getUnpublishSearchByName((String)dataMap.get("CurrentSaveValue")).click();
+			ingest.getIngestionPageUnPublishBtn().click();
+			pass(dataMap, "Successfully unpublished the desired search");
+		}
+		else fail(dataMap, "Could not unpublish the desired search");
+	}
+
+	public void verify_search_result_for_overlaid_text(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i = 0, j =0;
+			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+			//Go to Publish Page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToAnalyticsAndPublishButton().click();
+			
+			//Run Analytics and Publish
+			ingest.getRunAnalyticsRunButton().click();
+			//Wait for publish button to be avaliable
+			while(!ingest.getRunAnalyticsPublishButton().Enabled() && i++<100) {
+				driver.getWebDriver().navigate().refresh();
+			}
+			ingest.getRunAnalyticsPublishButton().click();
+			
+			//Back to ingestion page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToIngestionHome().click();
+			
+			//Wait for our ingestion to be published before we head to back to search page
+			wait_for_inprogress_to_published(true, dataMap);
+			
+			//back to search page
+			ingest.getNavigateToSearchMenuButton().click();
+			ingest.getNavigateToSessionSearchPageMenuButton().click();
+			driver.waitForPageToBeReady();
+			sessionSearch.getNewSearch().click();
+			driver.waitForPageToBeReady();
+
+			//Search and wait for results
+			sessionSearch.insertFullText((String)dataMap.get("ingestionName"));
+			for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					x.click();
+				}
+			}
+			while(j++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+
+			String res = "";
+			//Get Search REsults and compare
+			for(WebElement x: sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements()) {
+				if(x.isDisplayed()) {
+					res = x.getText();
+					break;
+				}
+			}
+			System.out.println("Res = " + res);
+			System.out.println("OG = " + (String)dataMap.get("originalIngestionResults"));
+			Assert.assertEquals(res, (String)dataMap.get("originalIngestionResults"));
+			pass(dataMap, "verified search result for overlaid text");
+		}
+		else fail(dataMap, "Could not verify search result for overlaid text");
+	}
+
+	public void wait_for_inprogress_to_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			String targetIngestion = "";
+			
+			String ourIngestion = (String)dataMap.get("lastCreatedIngestionName");
+			//Wait until ourIngestion = First Ingestion on the published filter page
+			//This will tell us our Ingestion has been Successfully Published
+			while(i++<100 && !targetIngestion.equals(ourIngestion)) {
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				ingest.getFilterByButton().click();
+				ingest.getFilterByINPROGRESS().click();
+				ingest.getFilterByPUBLISHED().click();
+				ingest.getFilterByButton().click();
+				driver.waitForPageToBeReady();
+				targetIngestion = ingest.getIngestionTileName(0);
+			}
+			
+		}
+		else fail(dataMap, "could not wait for ingestion to publish");
+	}
+		
+	
 	@When("^.*(\\\\[Not\\\\] )? delete_grid_ingestion$")
 	public void delete_grid_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
@@ -3049,6 +3189,489 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap, "NOT select_grid_ingestion_details_button");
 		}
 	}
-	
-} //end
 
+	@Then("^.*(\\[Not\\] )? verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay$")
+	public void verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9395:To verify that Overlay should work for 'SourceParentDocID' metadata
+			//* Validate that Overlay ingestion is successful 
+			//
+			throw new ImplementationException("verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_overlay_ingestion$")
+	public void complete_overlay_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This method will need to navigate through the entire process of creating an ingestion. 
+			//* Go To ingestion Home Page
+			//* Click Add a new Ingestion
+			//* Fill out required fields
+			//* Click Next button
+			//* Map configuration fields
+			//* Click Preview run button
+			//* Click Run Ingestion
+			//
+			throw new ImplementationException("complete_overlay_ingestion");
+		} else {
+			throw new ImplementationException("NOT complete_overlay_ingestion");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_source_system_ingestion_overlay_fails$")
+	public void verify_source_system_ingestion_overlay_fails(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10001:Verify error message that if Source Sytem of Ingestion Overlay is dffierent
+			//* Once the ingestion has been ran
+			//* Validate the ingestions fails with the following error:
+			//
+			//"Source System of the overlaid docs are not matching with the source system of originally ingested docs. In the overlay, please make sure to 
+			//use the same source system used when the docs were added "
+			throw new ImplementationException("verify_source_system_ingestion_overlay_fails");
+		} else {
+			throw new ImplementationException("NOT verify_source_system_ingestion_overlay_fails");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? ignore_errors_found$")
+	public void ignore_errors_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Find ingestion with errors
+			//* Open Ingestion
+			//* Click on the errors count
+			//* On the pop up, click Ignore all Errors
+			//* Click done
+			//* Click Play button for Catalog
+			//
+			throw new ImplementationException("ignore_errors_found");
+		} else {
+			throw new ImplementationException("NOT ignore_errors_found");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ignoring_errors_still_ingests_remaining_files$")
+	public void verify_ignoring_errors_still_ingests_remaining_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5300:To Verify In Ingestion, ignoring the error with one file Should not result in ignoring all the other files of the document
+			//
+			//* Validate ingestion is successful when ignoring the errors
+			//
+			throw new ImplementationException("verify_ignoring_errors_still_ingests_remaining_files");
+		} else {
+			throw new ImplementationException("NOT verify_ignoring_errors_still_ingests_remaining_files");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? search_for_existing_ingestion$")
+	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//we need to preset an ingestion so that we can use it for future automation. You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.Then this method will search for that existing ingestion
+			throw new ImplementationException("search_for_existing_ingestion");
+		} else {
+			throw new ImplementationException("NOT search_for_existing_ingestion");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_doc_list_view$")
+	public void on_doc_list_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to /Search/Searches
+			//* In the text box search for the Ingestion name
+			//* Enter the following query into the text box
+			//IngestionName: (ingestion name goes here)
+			//* click search button
+			//* Only documents ingested will be displayed
+			//* Select the documents and add them to righ side by click the plus symbol
+			//* Click the Action dropdown
+			//* Select View in Doc List
+			//If DocPrimaryLanguage is not displayed as a column:Click Select Column buttonAdd the specified column
+			throw new ImplementationException("on_doc_list_view");
+		} else {
+			throw new ImplementationException("NOT on_doc_list_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_list_displays_doc_primary_language_metadata_correctly$")
+	public void verify_doc_list_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9182:Verify value of "DocPrimaryLanguage" metadata field value should be populated correctly in Doclist and in Doc ViewTC7502:Validate new metadata field DocLanguages on DocListValidate files that contained a value in the DocPrimaryLanguage are displayed correctly in the Doc List view
+			throw new ImplementationException("verify_doc_list_displays_doc_primary_language_metadata_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_doc_list_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_tally_view$")
+	public void on_tally_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("on_tally_view");
+		} else {
+			throw new ImplementationException("NOT on_tally_view");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_tally_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7499:Validate new metadata field DocLanguages on Tally reportValidate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+			throw new ImplementationException("verify_tally_view_displays_doc_primary_language_metadata_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_tally_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_sub_tally_view$")
+	public void on_sub_tally_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Once Tally documents are displayedSelect all/some documents that are displayedClick on the action dropdownSelect Sub Tally
+			throw new ImplementationException("on_sub_tally_view");
+		} else {
+			throw new ImplementationException("NOT on_sub_tally_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_sub_tally_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_sub_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7500:Validate new metadata field DocLanguages on Sub-Tally reportValidate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+			throw new ImplementationException("verify_sub_tally_view_displays_doc_primary_language_metadata_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_sub_tally_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_doc_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9174:Verify value of metadata field "DocPrimaryLanguage" should be derived from CA for Add Only IngestionTC7501:Validate new metadata field DocLanguages on DocView
+			//* Once the documents have been searched and are being viewed in DocView
+			//* On the metadata tab located on the right hand side
+			//* Validate that only documents that have a Language have a value for DocPrimaryLanguage field
+			//
+			throw new ImplementationException("verify_doc_view_displays_doc_primary_language_metadata_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_doc_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_saved_draft_ingestion$")
+	public void open_saved_draft_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click on the settings gear for the ingestion
+			//* Click on open Wizard option
+			//* Ingestion is reopened
+			//
+			throw new ImplementationException("open_saved_draft_ingestion");
+		} else {
+			throw new ImplementationException("NOT open_saved_draft_ingestion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_re_running_ingestion_is_successful$")
+	public void verify_re_running_ingestion_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5299:To Verify Rerunning the ingestions Should be successful.Covered:
+			//* Validate ingestion is successful after re running a draft ingestion
+			//
+			throw new ImplementationException("verify_re_running_ingestion_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_re_running_ingestion_is_successful");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created3$")
+	public void new_ingestion_created3(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created3");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created3");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_ingestion_metadata_is_correct$")
+	public void verify_overlay_ingestion_metadata_is_correct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5896: To Verify Overlays Ingestion.
+			//
+			//* Validate metadata values are displayed in the doc view metadata table on the right
+			//
+			throw new ImplementationException("verify_overlay_ingestion_metadata_is_correct");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_ingestion_metadata_is_correct");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created_$")
+	public void new_ingestion_created_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created_");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created_");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_ingestion_overlay_is_ingested_successfully$")
+	public void verify_ingestion_overlay_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6111:To Verify Ingestion Overlay Without DAT for Native.TC6112:To Verify Ingestion Overlay Without DAT for PDFTC6113:To Verify Ingestion Overlay Without DAT for TIFF.TC6114:To Verify Ingestion Overlay Without DAT for MP3 Variant.TC6115:To Verify Ingestion Overlay Without DAT for TranscriptTC6116:To Verify Ingestion Overlay Without DAT for Translation.Many test cases are being tested under this outcome, but we only need to check that ingestion was successful when we run an Overlay type ingestion
+			throw new ImplementationException("verify_ingestion_overlay_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_overlay_is_ingested_successfully");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_with_different_files_is_ingested_successfully$")
+	public void verify_overlay_with_different_files_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4499:overlay of the different files, keeping the same Unique id, which are already ingested and available in Production DB.
+			throw new ImplementationException("verify_overlay_with_different_files_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_with_different_files_is_ingested_successfully");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("open_ingestion_details_page");
+		} else {
+			throw new ImplementationException("NOT open_ingestion_details_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
+	public void verify_source_system_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10002: Verify error message if the source system is matching and if the doc ID is not available in the databaseCovered:TC10003: Verify error message displays if adding same source Doc ID which is already exists in the DBValidate the error message displays the following:
+			//
+			//* "SourceDocID provided in the overlay for this doc is not available in the database."
+			//
+			//or
+			//
+			//* "SourceDocID already exists in the database. Cannot add again." when adding an existing doc.
+			//
+			throw new ImplementationException("verify_source_system_error_message_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_source_system_error_message_is_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created2$")
+	public void new_ingestion_created2(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created2");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created2");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? unrelease_ingested_documents$")
+	public void unrelease_ingested_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Once ingested files have bee searched
+			//* Add the documents to the right side
+			//* Click on the Action button
+			//* Click Unrelease
+			//* Complete the modal that pops up
+			//* Once modal is finished
+			//* Save the search
+			//
+			throw new ImplementationException("unrelease_ingested_documents");
+		} else {
+			throw new ImplementationException("NOT unrelease_ingested_documents");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unpublish_overlay_ingestion_is_successful$")
+	public void verify_unpublish_overlay_ingestion_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6130: To Verify unpublish for Overlay Ingestion
+			//
+			//* Validate unpublish is successful
+			//
+			throw new ImplementationException("verify_unpublish_overlay_ingestion_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_unpublish_overlay_ingestion_is_successful");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_with_same_files_is_ingested_successfully$")
+	public void verify_overlay_with_same_files_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4498:overlay of the same files, which are already ingested and available in Production DB.
+			//
+			//* Validate the ingestion is successful
+			//
+			throw new ImplementationException("verify_overlay_with_same_files_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_with_same_files_is_ingested_successfully");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? search_for_ingested_docs$")
+	public void search_for_ingested_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Search/Searches
+			//* In the text box enter the following query:
+			//For Test Case: 5930CustodianName:(Enter Column Value)For Test Cases: 5931, 5932, 5933, 5934IngestionName:(Enter Ingestion Name Here)
+			//* Click Search button
+			//
+			throw new ImplementationException("search_for_ingested_docs");
+		} else {
+			throw new ImplementationException("NOT search_for_ingested_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_previous_documents_are_updated_correctly$")
+	public void verify_previous_documents_are_updated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5930:To Verify Ingestion Overlays of DAT without unpublish.TC5931:To Verify Ingestion Overlays of PDF without unpublish.TC5932:To Verify Ingestion Overlays of Native without unpublish.TC5933:To Verify Ingestion Overlays of TIFF without unpublish.TC5934:To Verify Ingestion Overlays of Others without unpublish.Validate the document displays the correct values when using the overlay ingestion type
+			throw new ImplementationException("verify_previous_documents_are_updated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_previous_documents_are_updated_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingested_docs_are_in_sequential_order$")
+	public void verify_ingested_docs_are_in_sequential_order(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6318:To verify DocID's of the ingested documents (AddOnly) Should be in the same sequential order as the order of records/documents in the DAT file.TC6319:To verify DocID's of the ingested documents Should be in the same sequential order as the order of records/documents in the DAT file.
+			//
+			//* Verify DOCID column displays files in a sequential order
+			//
+			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
+		} else {
+			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_preview_mapping_section_is_enabled$")
+	public void verify_preview_mapping_section_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2562 To verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.
+			//
+			//* All required source fields and file types are selected
+			//* Click on the Next button
+			//* Validate the preview mapping (configure field mapping) is enabled
+			//* Validate the preview and run button is enabled
+			//
+			throw new ImplementationException("verify_preview_mapping_section_is_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_preview_mapping_section_is_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_preview_and_run_button$")
+	public void click_preview_and_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_preview_and_run_button");
+		} else {
+			throw new ImplementationException("NOT click_preview_and_run_button");
+		}
+
+	}
+} //end
