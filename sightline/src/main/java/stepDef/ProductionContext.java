@@ -3155,9 +3155,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Generate
-			throw new ImplementationException("the_production_is_started");
+			prod.getGenerateButton().click();
+			
 		} else {
-			throw new ImplementationException("NOT the_production_is_started");
+			fail(dataMap, "Generate button is not clicked");
 		}
 
 	}
@@ -3168,9 +3169,22 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//A loop should be created to verify if a Bates Range number is populated. This loop should check to see if there is a bates range number, if not wait 10 seconds and refresh the page. If a bates number is returned, exit the loop and the "AUTOMATED CHECK" grid should be populated with the information we need.Do this loop 10 times max, and it will fail if nothing is returned in that time
-			throw new ImplementationException("refreshing_for_production_to_be_in_progress");
+			int i =0;
+			//Export Bates button enabled only when bates range number is populated
+			while(!prod.getExportBatesButton().Enabled() && i<10){
+				i++;
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getExportBatesButton().Enabled() ;}}), Input.wait30);
+				if(!prod.getExportBatesButton().Enabled()) {
+					Thread.sleep(10000);
+				}
+			}
+			Assert.assertTrue(prod.getExportBatesButton().Enabled());
+			pass(dataMap, "Production was refreshed");
 		} else {
-			throw new ImplementationException("NOT refreshing_for_production_to_be_in_progress");
+			fail(dataMap, "Bates number not returned on time");
 		}
 
 	}
@@ -3181,9 +3195,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6149Verify Priv Docs with No Placeholders should have the status "0 Docs"
-			throw new ImplementationException("verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+			Assert.assertEquals(prod.getPrivDocsStatus().getText(), "0 Docs");
+			pass(dataMap, "Privileged docs with no placeholders displays correct status");
 		} else {
-			throw new ImplementationException("NOT verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly");
+			fail(dataMap, "Incorrect status displayed");
 		}
 
 	}
