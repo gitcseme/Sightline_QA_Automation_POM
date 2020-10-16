@@ -1522,10 +1522,12 @@ public class ProductionContext extends CommonContext {
 				//Deselect Filters we dont want
 				for(int i =1; i<=4; i++) {
 					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
+					Thread.sleep(1000);
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				prod.getFilterByButton().Click();
+				Thread.sleep(1000);
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -4172,7 +4174,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the first production's name from the filtered results.
-			throw new ImplementationException("open_the_first_production");
+			try{
+				driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionTitleName().Displayed()  ;}}), Input.wait30);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			Thread.sleep(1000);
+			prod.getProductionTitleName().click();
+			}catch (Exception e){
+				fail(dataMap, "Unable to click the Production Title");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT open_the_first_production");
 		}
@@ -4185,11 +4197,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the link for the failed generation
-			throw new ImplementationException("clicking_the_failed_generation_link");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPreGenerationCheckFailedLink().Displayed()  ;}}), Input.wait30);
+			prod.getPreGenerationCheckFailedLink().click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_failed_generation_link");
 		}
-
 	}
 
 
@@ -4198,7 +4212,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5001Verify clicking the link for the error message displays a dialog with text displaying why the production failed.Close the dialog afterwards.
-			throw new ImplementationException("verify_failed_productions_display_the_approriate_error_message");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getErrorDataTable().Displayed()  ;}}), Input.wait30);
+			System.out.println(prod.getErrorDataTable().getText());
+			Assert.assertTrue(prod.getErrorDataTable().Displayed());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getCloseModalButton().Displayed()  ;}}), Input.wait30);
+			prod.getCloseModalButton().click();
+			
 		} else {
 			throw new ImplementationException("NOT verify_failed_productions_display_the_approriate_error_message");
 		}
