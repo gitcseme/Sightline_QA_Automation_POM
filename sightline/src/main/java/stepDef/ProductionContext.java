@@ -3916,8 +3916,20 @@ public class ProductionContext extends CommonContext {
 			String minimumNumber = Integer.toString(minLength);
 			String beforeParseBates = (String) dataMap.get("beginning_bates");
 			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+
 			String suffix = (String) dataMap.get("suffix");
+			int low = (int)Math.pow(10, beginningBates-1);
+			int high = (int)Math.pow(10, beginningBates);
+			int randMultiDigit = rnd.nextInt(high-low) + low;
+			String randDigit = Integer.toString(randMultiDigit);
+			System.out.println(randMultiDigit);
+			prod.getBeginningBates().click();
+			prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+			prod.getBeginningBates().SendKeys(randDigit);
+			dataMap.put("beginning_bates", randDigit);
+
 			
+			/*
 			for (int x =1; x<=10; x++){
 				if(beginningBates == 1){
 					int low = 0;
@@ -3958,10 +3970,11 @@ public class ProductionContext extends CommonContext {
 					prod.getBeginningBates().click();
 					prod.getBeginningBates().SendKeys(randDigit);
 					dataMap.put("beginning_bates", "0"+randDigit);
-				}*/
+				}
 				else
 					break;
 			}
+			*/
 			
 			
 			prod.gettxtBeginningBatesIDPrefix().click();
@@ -4003,6 +4016,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_a_complex_production_is_able_to_be_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			//TC 4157/3733
 			//When used as a context, the parameters here are used to supply the values for "complete_complex_production"
 
 			//Make sure Production Name is displaying the correct name
@@ -4030,9 +4044,8 @@ public class ProductionContext extends CommonContext {
 			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
 			String status = prod.getGeneratePostGenStatus().getText();
 			//Loop to wait for Post Generation check complete
-			int i =0;
-			while(!status.equals("post generation check") && i++<20) {
-				System.out.println(i);
+			int i =0, j =0;
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<20) {
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
@@ -4041,7 +4054,7 @@ public class ProductionContext extends CommonContext {
 				status = prod.getGeneratePostGenStatus().getText();
 			}
 			System.out.println(status);
-			//Assert.assertEquals("post generation check", status);
+			Assert.assertEquals("Post generation check complete", status);
 
 			//Make Complete and Next
 			prod.getMarkCompleteButton().click();
@@ -4075,7 +4088,7 @@ public class ProductionContext extends CommonContext {
 				prod.getDestinationPathText().Displayed() ;}}), Input.wait30);
 
 			//Get Path we inputed in Previous Location Page
-			String originalPath = (String)dataMap.get("root_path") + (String)dataMap.get("production_directory");
+			String originalPath = (String)dataMap.get("root_path") + "\\" + (String)dataMap.get("production_directory");
 
 			//Get Path that is current Displayed
 			String finalPath = prod.getDestinationPathText().getText();
@@ -4248,12 +4261,30 @@ public class ProductionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_the_user_is_able_to_click_on_confirm_production$")
 	public void verify_the_user_is_able_to_click_on_confirm_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
 		if (scriptState) {
-			//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
+			int j =0;
+			//This loop finds any lingering pop up messages from "Mark Complete" buttons on previous pages, and closes them
+			//We need these pop ups closed, because we will quickly press "confirm prod and commit" and we need to get that unique pop up message
+			for(int i =1; i<100; i++) {
+				if(j ==1) break;
+				if(prod.getProductionConfirmPopupCloseBtn(i).FindWebElements().size()!=0) {
+					prod.getProductionConfirmPopupCloseBtn(i).FindWebElements().get(0).click();
+					j=1;
+				}
+			}
+			//Wait for lingering messages to fade
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmAndCommitProdLink().Enabled() && prod.getConfirmAndCommitProdLink().Displayed());
 
-			System.out.println(prod.getConfirmCompletePopup().getText());
+			//Click confirm link
+			prod.getConfirmAndCommitProdLink().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			//Get successful popup message
+			Assert.assertEquals("Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.", 
+					prod.getConfirmCompletePopup().getText());
 			pass(dataMap, "Was able to verify the functionality of Confirm production and commit button");
 		}
 		else fail(dataMap, "Failed to properly click Confirm production button");
