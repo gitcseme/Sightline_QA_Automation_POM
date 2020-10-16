@@ -2781,6 +2781,7 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
+			prod.goToProductionHomePage().ScrollTo();
 			prod.goToProductionHomePage().click();
 			driver.waitForPageToBeReady();
 			
