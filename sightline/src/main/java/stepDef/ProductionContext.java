@@ -4145,9 +4145,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5067/4897Verify the production is set to "INPROGRESS".
-			System.out.println(prod.getGenerateInProgressButton().getText());
-			
-			
+			Assert.assertEquals("in progress", prod.getGenerateInProgressButton().getText());
 			pass(dataMap, "passed the Native Production");
 		}
 		else fail(dataMap, "Failed the Native Production");

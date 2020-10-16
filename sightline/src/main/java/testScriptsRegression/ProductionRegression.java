@@ -5565,7 +5565,7 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
-			context.waiting_for_production_to_be_in_progress(true, dataMap);
+			//context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_native_productions_can_be_generated(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5676,7 +5676,7 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("archive_file", "false");
 			dataMap.put("tiff", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
-			context.waiting_for_production_to_be_in_progress(true, dataMap);
+			//context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_the_bates_generated_number_follows_the_custom_numbering(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
