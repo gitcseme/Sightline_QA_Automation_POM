@@ -249,6 +249,7 @@ public class IngestionPage {
     
     public Element getIngestionTileText() {return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div/label");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
+    public Element ingestionProjectSelector() {return driver.FindElementByXPath("//a[@title='Auto_Smoke2901']");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(2) > a:nth-child(1)");}
     
     

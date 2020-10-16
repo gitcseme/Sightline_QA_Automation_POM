@@ -4892,7 +4892,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_INPROGRESS_production_When_clicking_the_productions_name_Then_verify_the_productions_quality_control_section_display_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5929,7 +5929,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_FAILED_production_and_open_the_first_production_When_clicking_the_failed_generation_link_Then_verify_failed_productions_display_the_approriate_error_message() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

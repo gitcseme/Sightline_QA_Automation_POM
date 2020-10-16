@@ -5,7 +5,7 @@
     <test name="SiteLine"> 
  		<groups>	
 				<run>	
-   					 <include name="smoke" />	
+   					 <include name="Regression" />	
         		</run>	
        	</groups>	
     <classes>
