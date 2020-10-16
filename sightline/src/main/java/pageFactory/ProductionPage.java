@@ -282,6 +282,11 @@ public class ProductionPage {
             "export placeholders for these docs, configure placeholder in the TIFF or PDF section for the same " +
             "selected file types and/or tags.";
     public String blueColor = "#4570BF";
+
+    public Element getNativeAdvancedLSTToggle(){return driver.FindElementByCssSelector("#NativeContainer  div.advanced-content [name='ProduceLoadFile'] + i ");}
+    public Element getNativeAdvancedExcludeNativeOfParentRadio(){return driver.FindElementById("rdbExcludeNativesofparent");}
+    public ElementCollection getNativeSelectFileTypeOrTagsTableCheckboxes(){return driver.FindElementsByCssSelector("#tblNativeFileGroup .clsNativeFileLst");}
+
     
     // Production Components - TIFF
     public Element getTIFFAdvanced() { return driver.FindElementByCssSelector("#TIFFContainer  div.advanced-dd-toggle"); }
@@ -330,7 +335,41 @@ public class ProductionPage {
     public Element getPDFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
     public Element getPDFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#PDFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
     public Element getPDFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#PDFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
-    
+
+    public Element getPDFFirstPageElement() {return driver.FindElementByCssSelector("#c3 > div:nth-child(1) > div:nth-child(1) > strong:nth-child(1)");}
+    public Element getPDFMultiRadio() {return driver.FindElementByCssSelector("#PDFContainer #CommonPDFSettings_PageType[value='1']");}
+    public Element getPDFSingleRadio() {return driver.FindElementByCssSelector("#PDFContainer #CommonPDFSettings_PageType[value='0']");}
+    public Element getPDFLetterRadio() { return driver.FindElementByCssSelector("#PDFContainer #rbdPDFPageFormatLetter"); }
+    public Element getPDFA4Radio() { return driver.FindElementByCssSelector("#PDFContainer #rbdPDFPageFormatA4"); }
+    public Element getPDFBlankRemovalToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFBlankPageRemove + input + i"); }
+    public Element getPDFColorToggle() { return driver.FindElementByCssSelector("#PDFContainer [name='CommonPDFSettings.PreseveColor'] + i"); }
+    public Element getPDFSkipPDFGenerationToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkShouldSkipPDFGeneration + input + i"); }
+    public Element getPDFRotateDropdown() { return driver.FindElementByCssSelector("#PDFContainer #dldPDFPageRotatePreference"); }
+    public Element getPDFBrandingLocation() {return driver.FindElementById("divPDFBrandingLocation");}
+    public Element getPDFBrandingText() {return driver.FindElementByCssSelector("#divPDFLeftHeaderBranding > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
+    public Element getPDFSpecifyDefaultBranding() {return driver.FindElementByCssSelector("#divPDFLeftHeaderBranding > div:nth-child(1) > div:nth-child(1) > div");}
+    public Element getPDFMetadataField() {return driver.FindElementByCssSelector("[id='divPDFLeftHeaderBranding'] [id='LaunchPDFeditor_0']");}
+    public Element gePDFSpecificBrandingBySelectionTagsLink() {return driver.FindElementByCssSelector("#divPDFLeftHeaderBranding > div:nth-child(3) > div:nth-child(1) > label:nth-child(1)");}
+    public Element getPDFRightHeaderBranding(){ return driver.FindElementById("PDFRightHeaderBranding"); }
+    public Element getPDFLeftHeaderBranding(){ return driver.FindElementById("PDFLeftHeaderBranding"); }
+    public Element getPDFCenterFooterBranding(){ return driver.FindElementById("PDFCenterFooterBranding"); }
+    public Element getPDFLeftFooterBranding(){ return driver.FindElementById("PDFLeftFooterBranding"); }
+    public Element getPDFRightFooterBranding(){ return driver.FindElementById("PDFRightFooterBranding"); }
+    public Element getPDFRectangleMiddleText() {return driver.FindElementByCssSelector("div[id='divPDFBrandingLocation'] div[class='title1']");}
+    public Element getPDFDefaultBrandingRectangleText() {return driver.FindElementByCssSelector("#divPDFLeftHeaderBranding > div:nth-child(1) > div:nth-child(2) > fieldset:nth-child(2) > div:nth-child(1) > div:nth-child(1)");}
+    public Element getPDFEnableForPrivilegedDocs(){ return driver.FindElementByXPath("//input[@id='chkPDFPrivDocs']/following-sibling::i"); }
+    public Element getPDFEnableForPrivDocsToggle(){return driver.FindElementById("chkPDFPrivDocs");}
+    public Element getPDFPriveldgeSelectTagButton(){ return driver.FindElementById("btnSelectPDFPrevTags"); }
+    public Element getPDFEnableTechIssueDocsToggle(){ return driver.FindElementByXPath("//input[@id='chkPDFExceptionDocs']/following-sibling::i"); }
+    public Element getPDFEnableNativelyProducedDocs() { return driver.FindElementByCssSelector("#PDFContainer .pdf-img-logic .add-pdf-img-logic"); }
+    public Element getPDFEnableNativelyProducedDocsHelpTip() {return driver.FindElementByCssSelector("#PDFContainer a.helptip[data-original-title='Enable Placeholders by Selecting File Types']");}
+    public Element getPDFPlaceholderTextField() { return driver.FindElementByCssSelector(".pdf-img-logic > div:nth-child(3) > div:nth-child(2) > fieldset:nth-child(3) > div:nth-child(1) > div:nth-child(1)"); }
+    public Element getPDFPlaceholderMetadataLink() { return driver.FindElementByCssSelector(".pdf-img-logic > div:nth-child(3) > div:nth-child(2) > div:nth-child(4) > label:nth-child(1) > a:nth-child(1)"); }
+    public Element getPDFBurnRedactionToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFBurnRedactions + input + i"); }
+    public Element getPDFLSTLoadFileToggle() {return driver.FindElementById("chkPDFProduceLoadFile");}
+    public Element getPDFSlipSheetsToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkIsPDFSlipSheetEnabled + input + i"); }
+    public Element getPDFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
+
     // Production Components - MP3
     public Element getMP3ComponentAdvanced(){ return driver.FindElementByCssSelector("#MP3FilesContainer div.advanced-dd-toggle"); }
     public Element getMP3ComponentRedactionToggle(){ return driver.FindElementByCssSelector("[name='IsBurnRedactionSelected'] + i"); }
