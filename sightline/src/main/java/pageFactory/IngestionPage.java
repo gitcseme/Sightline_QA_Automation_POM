@@ -53,6 +53,7 @@ public class IngestionPage {
     public Element getOtherLoadFile(){ return driver.FindElementById("ddlLoadOtherfile"); }
     public Element getOtherFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathOther"); }
     public Element getAddButton(){ return driver.FindElementById("AddButton"); }
+    public Element getMappingSOURCEFIELD1(){ return driver.FindElementById("SF_1"); }
     public Element getMappingSOURCEFIELD2(){ return driver.FindElementById("SF_2"); }
     public Element getMappingSOURCEFIELD3(){ return driver.FindElementById("SF_3"); }
     public Element getMappingSOURCEFIELD4(){ return driver.FindElementById("SF_4"); }
@@ -63,8 +64,19 @@ public class IngestionPage {
     public Element getMappingSOURCEFIELD9(){ return driver.FindElementById("SF_9"); }
     public Element getMappingSOURCEFIELD10(){ return driver.FindElementById("SF_10"); }
     public Element getMappingSOURCEFIELD11(){ return driver.FindElementById("SF_11"); }
+    public Element getMappingSOURCEFIELD12(){ return driver.FindElementById("SF_12"); }
     public Element getMappingSOURCEFIELD13(){ return driver.FindElementById("SF_13"); }
     public Element getMappingSOURCEFIELD14(){ return driver.FindElementById("SF_14"); }
+    public Element getMappingSOURCEFIELD15(){ return driver.FindElementById("SF_15"); }
+    public Element getMappingSOURCEFIELD16(){ return driver.FindElementById("SF_16"); }
+    public Element getMappingSOURCEFIELD17(){ return driver.FindElementById("SF_17"); }
+    public Element getMappingSOURCEFIELD18(){ return driver.FindElementById("SF_18"); }
+    public Element getMappingSOURCEFIELD19(){ return driver.FindElementById("SF_19"); }
+    public Element getMappingSOURCEFIELD20(){ return driver.FindElementById("SF_20"); }
+    public Element getMappingSOURCEFIELD21(){ return driver.FindElementById("SF_21"); }
+    public Element getMappingSOURCEFIELD22(){ return driver.FindElementById("SF_22"); }
+    public Element getMappingSOURCEFIELD23(){ return driver.FindElementById("SF_23"); }
+    public Element getMappingSOURCEFIELD24(){ return driver.FindElementById("SF_24"); }
     public Element getMappingSOURCEFIELD25(){ return driver.FindElementById("SF_25"); }
     
     public Element getMappingFIELDCAT5(){ return driver.FindElementById("TY_5"); }
@@ -355,7 +367,7 @@ public class IngestionPage {
     public Element getIngestionIgnoreAllErrorsBtn() {return driver.FindElementById("btnignoreall");}
     public Element getCatalogDoneBtn() {return driver.FindElementById("Catalogdone");}
     public Element getUnpublishFirstRow() {return driver.FindElementById("-1g_anchor");}
-    
+    public Element getConfigureMappingDiv() { return driver.FindElementByXPath("//div[@id='divMain']/div[2]"); }
     
     
     
