@@ -2555,7 +2555,6 @@ public class ProductionContext extends CommonContext {
 	public void waiting_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getInProgressStatus().Displayed()  ;}}), Input.wait30); 
@@ -3926,7 +3925,7 @@ public class ProductionContext extends CommonContext {
 			prod.getBeginningBates().click();
 			prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 			prod.getBeginningBates().SendKeys(randDigit);
-			dataMap.put("beginning_bates", randDigit);
+			dataMap.put("randBates", randDigit);
 
 			
 			/*
@@ -4193,12 +4192,37 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_bates_generated_number_follows_the_custom_numbering$")
 	public void verify_the_bates_generated_number_follows_the_custom_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4960 / 8349If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
 		if (scriptState) {
-			//TC4960 / 8349If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_the_bates_generated_number_follows_the_custom_numbering");
-		} else {
-			throw new ImplementationException("NOT verify_the_bates_generated_number_follows_the_custom_numbering");
+			String status = prod.getGeneratePostGenStatus().getText();
+			String prefix = (String)dataMap.get("prefix");
+			String suffix = (String)dataMap.get("suffix");
+			String batesNum = (String)dataMap.get("randBates");
+			int randLength = Integer.parseInt((String)dataMap.get("beginning_bates"));
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+
+			//This loop was added to wait for the Bates range to appear
+			int i =0, j =0;
+			while(!status.equalsIgnoreCase("Pre generation check complete") && i++<20) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+
+			//Split Bates Range to get one of the Bates Numbers to verify its format format
+			String[] finalBatesRange = (prod.getProd_BatesRange().getText()).split(" - ");
+			char[] firstBatesNum = (finalBatesRange[0]).toCharArray(); 
+
+			//Verify Prefix and Suffix, and Correct BatesLength
+			Assert.assertEquals(firstBatesNum[0], prefix.charAt(0));
+			Assert.assertEquals(firstBatesNum[firstBatesNum.length-1], suffix.charAt(0));
+			Assert.assertEquals(firstBatesNum.length, minLength+2);
+			pass(dataMap ,"Bates Number Range follows correct format");
 		}
+		else fail(dataMap, "Bates Number Range does not follow correct format");
 
 	}
 
