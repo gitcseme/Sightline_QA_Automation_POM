@@ -1514,10 +1514,12 @@ public class ProductionContext extends CommonContext {
 				//Deselect Filters we dont want
 				for(int i =1; i<=4; i++) {
 					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
+					Thread.sleep(1000);
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				prod.getFilterByButton().Click();
+				Thread.sleep(1000);
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -3960,6 +3962,8 @@ public class ProductionContext extends CommonContext {
 				driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getProductionTitleName().Displayed()  ;}}), Input.wait30);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			Thread.sleep(1000);
 			prod.getProductionTitleName().click();
 			}catch (Exception e){
 				fail(dataMap, "Unable to click the Production Title");

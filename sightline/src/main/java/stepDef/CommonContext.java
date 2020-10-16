@@ -113,7 +113,7 @@ public class CommonContext {
 		
 		if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
 			prod.changeProjectSelector().Click();
-		    prod.changeProjectSelectorField().Click();
+		    prod.productionProjectSelector().Click();
 		}
 
 	    driver.waitForPageToBeReady();
@@ -137,8 +137,10 @@ public class CommonContext {
     	dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 
 	    ingest = new IngestionPage(driver);
-	    ingest.changeProjectSelector().Click();
-	    ingest.changeProjectSelectorField().Click();
+	    if (!ingest.changeProjectSelector().getText().equals("Auto_Smoke2901")) {
+	    	ingest.changeProjectSelector().Click();
+	    	ingest.ingestionProjectSelector().Click();
+		}
 
 	    if (scriptState) {
 	    	String url = (String) dataMap.get("URL");

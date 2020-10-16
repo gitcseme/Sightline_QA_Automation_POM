@@ -358,6 +358,8 @@ public class ProductionPage {
 
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
+    public Element productionProjectSelector() {return driver.FindElementByXPath("//a[@title='021320_EG']");}
+
     public Element getNewProject() { return driver.FindElementById("project-selector");}
 
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
