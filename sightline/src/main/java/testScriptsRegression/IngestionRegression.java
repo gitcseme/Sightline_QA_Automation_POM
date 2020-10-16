@@ -921,7 +921,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive", "smoke"})
+	@Test(groups = { "Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_and_required_fields_are_entered_When_click_next_button_Then_verify_mandatory_toast_message_is_displayed()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -7471,7 +7471,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "WIP"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_When_search_for_ingested_docs_Then_verify_ingested_docs_are_in_sequential_order() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7588,7 +7588,7 @@ public class IngestionRegression extends RegressionBase {
 			context.on_ingestion_home_page(true, dataMap);
 			context.search_for_existing_ingestion(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
-			context.click_copy_button(true, dataMap);
+			context.click_copy_option_published(true, dataMap);
 			context.verify_multi_value_ascii_is_set_by_default(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
