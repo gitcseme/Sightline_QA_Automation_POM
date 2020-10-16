@@ -155,6 +155,7 @@ public class ProductionPage {
     public Element getProdExport_Priorprodtoggle(){ return driver.FindElementByXPath("//*[@id='ProductionListDiv']/label[2]/i"); }
     public Element getProdExport_SelectProductionSet(){ return driver.FindElementById("ProductionSetLst"); }
     public Element getProd_BatesRange(){ return driver.FindElementById("lblGeneratedBatesRange"); }
+    public ElementCollection getProdBatesRange() {return driver.FindElementsById("lblGeneratedBatesRange");}
     public Element getPreviewprod(){ return driver.FindElementById("btnPreview"); }   
     public Element getNative_AdvToggle(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[@class='advanced-dd-toggle']"); }   
     public Element getProdStateFilter(){ return driver.FindElementById("productionStateFilter"); }   
@@ -515,6 +516,7 @@ public class ProductionPage {
     public ElementCollection getGeneratePageTitle() {return driver.FindElementsByXPath("//*[@id='frmProductionGenerate']/div/div[1]/div/h2");}
     public Element getConfirmAndCommitProdLink() {return driver.FindElementByXPath("//*[@id='btnProductionConfirmation']/strong");}
     public ElementCollection getProductionConfirmPopupCloseBtn(int i) {return driver.FindElementsById(String.format("botClose%s",i));}
+    public Element getProductionDocumentSelectTagByName(String name) {return driver.FindElementByCssSelector(String.format("#tagTree a[data-content='%s'] i.jstree-checkbox", name));}
     
     
     //Click the desired production set option, in the dropdown menu by it's index
@@ -552,7 +554,6 @@ public class ProductionPage {
     }
 
 
-
     //Quick Function to get rows of Grid View Production Table
     public WebElement getProductionListGridViewTableRows(int row) {
     	if(row< driver.FindElementsByCssSelector("#ProductionListGridViewTable >tbody>tr").FindWebElements().size()){
@@ -560,7 +561,14 @@ public class ProductionPage {
     	}
     	return null;
     }
-
+    
+    public void closeAllPopUps() {
+    	for(int i =0; i<100; i++) {
+    		if(getProductionConfirmPopupCloseBtn(i).FindWebElements().size()!=0) {
+    			getProductionConfirmPopupCloseBtn(i).FindWebElements().get(0).click();
+    		}
+    	}
+    }
 
     public ProductionPage(Driver driver){
 

@@ -5481,7 +5481,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_navigated_back_onto_the_document_components_section_and_change_the_folder_selection_to_by_tags_complete_the_production_When_waiting_for_production_to_be_in_progress_Then_verify_overwriting_the_document_selection_generates_a_new_bate_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5514,14 +5514,17 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
+			context.waiting_for_production_to_be_complete(true, dataMap);
 			context.navigated_back_onto_the_document_components_section(true, dataMap);
 			context.change_the_folder_selection_to_by_tags_complete_the_production(true, dataMap);
-			context.waiting_for_production_to_be_in_progress(true, dataMap);
+			//context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_overwriting_the_document_selection_generates_a_new_bate_number(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

@@ -3921,60 +3921,11 @@ public class ProductionContext extends CommonContext {
 			int high = (int)Math.pow(10, beginningBates);
 			int randMultiDigit = rnd.nextInt(high-low) + low;
 			String randDigit = Integer.toString(randMultiDigit);
-			System.out.println(randMultiDigit);
 			prod.getBeginningBates().click();
 			prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 			prod.getBeginningBates().SendKeys(randDigit);
 			dataMap.put("randBates", randDigit);
 
-			
-			/*
-			for (int x =1; x<=10; x++){
-				if(beginningBates == 1){
-					int low = 0;
-					int high = 10;
-					int randSingleDigit = rnd.nextInt(high-low) + low;
-					String randDigit = Integer.toString(randSingleDigit);
-					prod.getBeginningBates().click();
-					prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
-					prod.getBeginningBates().SendKeys(randDigit);
-					dataMap.put("beginning_bates", randDigit);
-				}
-				else if(beginningBates == x){
-					int low = (int)Math.pow(10, x-1);
-					int high = (int)Math.pow(10, x);
-					int randMultiDigit = rnd.nextInt(high-low) + low;
-					String randDigit = Integer.toString(randMultiDigit);
-					prod.getBeginningBates().click();
-					prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
-					prod.getBeginningBates().SendKeys(randDigit);
-					dataMap.put("beginning_bates", randDigit);
-				}
-				//Finish this with plus
-				/*else if(beginningBates == 1 && beforeParseBates.contains("+")) {
-					int low = 0;
-					int high = 10;
-					int randSingleDigit = rnd.nextInt(high-low) + low;
-					String randDigit = Integer.toString(randSingleDigit);
-					prod.getBeginningBates().click();
-					prod.getBeginningBates().SendKeys(randDigit);
-					dataMap.put("beginning_bates", "0"+randDigit);
-				}
-				
-				else if (beginningBates == x && beforeParseBates.contains("+")) {
-					int low = (int)Math.pow(10, x-1);
-					int high =(int)Math.pow(10, x);
-					int randMultiDigit = rnd.nextInt(high-low) + low;
-					String randDigit = Integer.toString(randMultiDigit);
-					prod.getBeginningBates().click();
-					prod.getBeginningBates().SendKeys(randDigit);
-					dataMap.put("beginning_bates", "0"+randDigit);
-				}
-				else
-					break;
-			}
-			*/
-			
 			
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
@@ -4052,7 +4003,6 @@ public class ProductionContext extends CommonContext {
 				driver.waitForPageToBeReady();
 				status = prod.getGeneratePostGenStatus().getText();
 			}
-			System.out.println(status);
 			Assert.assertEquals("Post generation check complete", status);
 
 			//Make Complete and Next
@@ -4104,12 +4054,25 @@ public class ProductionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? navigated_back_onto_the_document_components_section$")
 	public void navigated_back_onto_the_document_components_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//Make sure the Bates number is stored. We will verify a new number is generated afterwards.Click the Back link until you get back to "Document Selection"
 		if (scriptState) {
-			//Make sure the Bates number is stored. We will verify a new number is generated afterwards.Click the Back link until you get back to "Document Selection"
-			throw new ImplementationException("navigated_back_onto_the_document_components_section");
-		} else {
-			throw new ImplementationException("NOT navigated_back_onto_the_document_components_section");
+			//After Generation -> Head back to get bates Number
+			prod.getBackLink().click();;
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+
+			//Save our first bates range for later use
+			String firstBatesRange = prod.getProd_BatesRange().getText();
+			dataMap.put("firstBatesRange", firstBatesRange);
+			//Navigate back to document selection
+			for(int i =0; i<4; i++) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+			}
+			pass(dataMap, "stored the original bates number and navigated back to Document Selection");
 		}
+		else fail(dataMap, "Could not store original bates number and could not navigate back to Document Selection");
 
 	}
 
@@ -4117,12 +4080,39 @@ public class ProductionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? change_the_folder_selection_to_by_tags_complete_the_production$")
 	public void change_the_folder_selection_to_by_tags_complete_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//Click Mark IncompleteClick "Select Tags:"Click Default Automation TagClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick the Generate Button
 		if (scriptState) {
-			//Click Mark IncompleteClick "Select Tags:"Click Default Automation TagClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick the Generate Button
-			throw new ImplementationException("change_the_folder_selection_to_by_tags_complete_the_production");
-		} else {
-			throw new ImplementationException("NOT change_the_folder_selection_to_by_tags_complete_the_production");
+			driver.waitForPageToBeReady();
+
+			//Mark Incomplete and Select Default Automation Tag
+			Actions builder = new Actions(driver.getWebDriver());
+			prod.getMarkIncompleteButton().click();
+			prod.getTagsRadioButton().click();
+			builder.moveToElement(driver.FindElementById("tagTree").getWebElement()).perform();
+			prod.getProductionDocumentSelectTagByName("Default Automation Tag").click();
+			driver.waitForPageToBeReady();
+			
+			//Go back to generate page
+			prod.getMarkCompleteButton().click();
+			for(int i =0; i<4; i++) {
+				prod.getMarkCompleteButton().click();
+				if(i ==1 && prod.getOkButton().Displayed()){
+					prod.getOkButton().click();
+				}
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+			}
+			driver.waitForPageToBeReady();
+			
+			//When on Generation page, click generate and wait for Inprogress to begin
+			prod.getGenerateButton().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
+			pass(dataMap, "Succesfully selected a new tag, and navigated back to Generate page");
+			
 		}
+		else fail(dataMap, "failed to change the folder selection to by tags");
 
 	}
 
@@ -4130,12 +4120,27 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_overwriting_the_document_selection_generates_a_new_bate_number$")
 	public void verify_overwriting_the_document_selection_generates_a_new_bate_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC 4956Verify the new bate number displayed does not match the prior bates number
 		if (scriptState) {
-			//TC 4956Verify the new bate number displayed does not match the prior bates number
-			throw new ImplementationException("verify_overwriting_the_document_selection_generates_a_new_bate_number");
-		} else {
-			throw new ImplementationException("NOT verify_overwriting_the_document_selection_generates_a_new_bate_number");
+
+			int i =0;
+			String batesRangeExists = prod.getProd_BatesRange().getText();
+			
+			//Loop until bates range is displayed
+			while(batesRangeExists.equals("") && i++<20) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				batesRangeExists = prod.getProd_BatesRange().getText();
+			}
+			String secondBatesRange = prod.getProd_BatesRange().getText();
+			//Make sure we get a different bates range after, overwriting our doc selection
+			Assert.assertFalse( secondBatesRange.equals((String)dataMap.get("firstBatesRange")) );
+			pass(dataMap, "verified that overwriting the document generates a new bate numbers");
 		}
+		else fail(dataMap, "failed to verify that overwriting the document generates a new bate numbers");
 
 	}
 
@@ -4229,7 +4234,9 @@ public class ProductionContext extends CommonContext {
 	public void a_file_size_ingestion_was_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
+			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG
+			//first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. 
+			//We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
 			throw new ImplementationException("a_file_size_ingestion_was_completed");
 		} else {
 			throw new ImplementationException("NOT a_file_size_ingestion_was_completed");
