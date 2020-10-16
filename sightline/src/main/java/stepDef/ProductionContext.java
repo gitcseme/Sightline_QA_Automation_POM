@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Random;
+import java.lang.Math;
 
 
 import org.openqa.selenium.WebElement;
@@ -3040,6 +3041,7 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
 			
+			
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
 			
@@ -3908,10 +3910,76 @@ public class ProductionContext extends CommonContext {
 	public void custom_number_and_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #". If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick the Mark complete button and verify the following message appears: "Mark Complete successful"Click Next
-			throw new ImplementationException("custom_number_and_sorting_is_added");
-		} else {
-			throw new ImplementationException("NOT custom_number_and_sorting_is_added");
+			Random rnd = new Random();
+			String prefix = (String) dataMap.get("prefix");
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+			String minimumNumber = Integer.toString(minLength);
+			String beforeParseBates = (String) dataMap.get("beginning_bates");
+			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+			String suffix = (String) dataMap.get("suffix");
+			
+			for (int x =1; x<=10; x++){
+				if(beginningBates == 1){
+					int low = 0;
+					int high = 10;
+					int randSingleDigit = rnd.nextInt(high-low) + low;
+					String randDigit = Integer.toString(randSingleDigit);
+					prod.getBeginningBates().click();
+					prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+					prod.getBeginningBates().SendKeys(randDigit);
+					dataMap.put("beginning_bates", randDigit);
+				}
+				else if(beginningBates == x){
+					int low = (int)Math.pow(10, x-1);
+					int high = (int)Math.pow(10, x);
+					int randMultiDigit = rnd.nextInt(high-low) + low;
+					String randDigit = Integer.toString(randMultiDigit);
+					prod.getBeginningBates().click();
+					prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+					prod.getBeginningBates().SendKeys(randDigit);
+					dataMap.put("beginning_bates", randDigit);
+				}
+				//Finish this with plus
+				/*else if(beginningBates == 1 && beforeParseBates.contains("+")) {
+					int low = 0;
+					int high = 10;
+					int randSingleDigit = rnd.nextInt(high-low) + low;
+					String randDigit = Integer.toString(randSingleDigit);
+					prod.getBeginningBates().click();
+					prod.getBeginningBates().SendKeys(randDigit);
+					dataMap.put("beginning_bates", "0"+randDigit);
+				}
+				
+				else if (beginningBates == x && beforeParseBates.contains("+")) {
+					int low = (int)Math.pow(10, x-1);
+					int high =(int)Math.pow(10, x);
+					int randMultiDigit = rnd.nextInt(high-low) + low;
+					String randDigit = Integer.toString(randMultiDigit);
+					prod.getBeginningBates().click();
+					prod.getBeginningBates().SendKeys(randDigit);
+					dataMap.put("beginning_bates", "0"+randDigit);
+				}*/
+				else
+					break;
+			}
+			
+			
+			prod.gettxtBeginningBatesIDPrefix().click();
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
+			
+			prod.gettxtBeginningBatesIDSuffix().click();
+			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
+			
+			prod.gettxtBeginningBatesIDMinNumLength().click();
+			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
+
+			prod.getMarkCompleteLink().click();
+			Assert.assertTrue(prod.getMarkCompleteSuccessfulText().Displayed());
+			prod.getNextButton().click();
+			
+		} 
+		else {
+			 fail(dataMap, "Custom number and sorting is not added");
 		}
 
 	}
