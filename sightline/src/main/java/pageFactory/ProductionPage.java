@@ -374,6 +374,8 @@ public class ProductionPage {
 
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
+    public Element productionProjectSelector() {return driver.FindElementByXPath("//a[@title='021320_EG']");}
+
     public Element getNewProject() { return driver.FindElementById("project-selector");}
 
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
@@ -517,6 +519,10 @@ public class ProductionPage {
     public Element getConfirmAndCommitProdLink() {return driver.FindElementByXPath("//*[@id='btnProductionConfirmation']/strong");}
     public ElementCollection getProductionConfirmPopupCloseBtn(int i) {return driver.FindElementsById(String.format("botClose%s",i));}
     public Element getProductionDocumentSelectTagByName(String name) {return driver.FindElementByCssSelector(String.format("#tagTree a[data-content='%s'] i.jstree-checkbox", name));}
+    
+    public Element getPreGenerationCheckFailedLink() {return driver.FindElementById("ProductionErrorLaunchPopUp");}
+    public Element getErrorDataTable() {return driver.FindElementByXPath("//*[@id='GenerateErrorDataTable']/tbody/tr/td[2]"); }
+    public Element getCloseModalButton() {return driver.FindElementById("GenerateErrorDetailsPopUpClose");}
     
     
     //Click the desired production set option, in the dropdown menu by it's index

@@ -2436,6 +2436,13 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_system", "ICE");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
 			context.new_ingestion_created(true, dataMap);
 			context.verify_source_field_is_auto_populated(true, dataMap);
 		} catch (ImplementationException e) {
@@ -2465,6 +2472,13 @@ public class IngestionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_system", "ICE");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
 			context.new_ingestion_created(true, dataMap);
 			context.verify_destination_field_is_auto_populated(true, dataMap);
 		} catch (ImplementationException e) {
@@ -7496,7 +7510,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_preview_mapping_section_is_enabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
