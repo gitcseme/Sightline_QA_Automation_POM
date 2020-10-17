@@ -4614,7 +4614,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_enabling_placeholders_on_priv_guard_saves_the_placeholders_and_complete_default_production_location_component_and_completed_summary_preview_component_and_the_production_is_started_When_refreshing_for_production_to_be_in_progress_Then_verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4765,7 +4765,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_view_results_in_doclist_Then_verify_the_result_set_documents_are_displayed_in_DocList() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4811,7 +4811,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_view_results_in_docview_Then_verify_the_result_set_documents_are_displayed_in_Docview() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4857,7 +4857,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_the_productions_mark_complete_button_Then_verify_the_priv_guard_component_displays_the_correct_matched_documents_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
