@@ -3909,25 +3909,44 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? custom_number_and_sorting_is_added$")
 	public void custom_number_and_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #".  If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. 
 		if (scriptState) {
 			Random rnd = new Random();
 			String prefix = (String) dataMap.get("prefix");
 			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
 			String minimumNumber = Integer.toString(minLength);
-			String beforeParseBates = (String) dataMap.get("beginning_bates");
-			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
-
 			String suffix = (String) dataMap.get("suffix");
-			int low = (int)Math.pow(10, beginningBates-1);
-			int high = (int)Math.pow(10, beginningBates);
-			int randMultiDigit = rnd.nextInt(high-low) + low;
-			String randDigit = Integer.toString(randMultiDigit);
-			prod.getBeginningBates().click();
-			prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
-			prod.getBeginningBates().SendKeys(randDigit);
-			dataMap.put("randBates", randDigit);
-
+			String beforeParseBates = (String) dataMap.get("beginning_bates");
+				
+			if(!beforeParseBates.contains("+")) {
+				int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+				int low = (int)Math.pow(10, beginningBates-1);
+				int high = (int)Math.pow(10, beginningBates);
+				int randMultiDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randMultiDigit);
+				dataMap.put("beginning_bates", randDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+			
+			else if(beforeParseBates.contains("+")) {
+				String[] parts = beforeParseBates.split("\\+");
+				String beforePlus = parts[0];
+				String afterPlus = parts[1]; 
+				int parsedAfterPlus = Integer.parseInt((afterPlus));
+				int low = (int)Math.pow(10, parsedAfterPlus-1);
+				int high = (int)Math.pow(10, parsedAfterPlus);
+				int randMultiDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randMultiDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(beforePlus);
+				prod.getBeginningBates().SendKeys(randDigit);
+				String finalBatesNumber = prod.getBeginningBates().getText();
+				dataMap.put("beginning_bates", finalBatesNumber);
+				
+			}		
 			
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
@@ -4265,9 +4284,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
-			throw new ImplementationException("completed_summary_and_preview_component");
+			driver.waitForPageToBeReady();
+			Assert.assertEquals("Summary and Preview", prod.getProductionSectionPageTitle().getText());
+			prod.getbtnProductionSummaryMarkComplete().click();
+			prod.getbtnProductionSummaryNext().click();
+			pass(dataMap, "Summary and Preview page displayed");
 		} else {
-			throw new ImplementationException("NOT completed_summary_and_preview_component");
+			 fail(dataMap, "Not on Summary and Preview page");
 		}
 
 	}
@@ -4282,9 +4305,14 @@ public class ProductionContext extends CommonContext {
 			//* Verify bates range should be blank
 			//* Verify the generate button is enabled.
 			//
-			throw new ImplementationException("verify_productions_are_set_to_draft_by_default");
+			driver.waitForPageToBeReady();
+			Assert.assertEquals("DRAFT", prod.getGeneratePostGenStatus().getText());
+			Assert.assertEquals("", prod.getProd_BatesRange().getText());
+			Assert.assertTrue(prod.getGenerateButton().Enabled());
+			pass(dataMap, "Productions are set to DRAFT");
+			
 		} else {
-			throw new ImplementationException("NOT verify_productions_are_set_to_draft_by_default");
+			fail(dataMap, "Productions are not set to draft");
 		}
 
 	}

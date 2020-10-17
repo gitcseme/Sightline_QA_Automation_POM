@@ -5747,7 +5747,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_and_sorting_is_added_and_complete_default_document_selection_and_mark_complete_default_priv_guard_and_complete_default_production_location_component_When_completed_summary_and_preview_component_Then_verify_productions_are_set_to_draft_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5758,7 +5758,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
