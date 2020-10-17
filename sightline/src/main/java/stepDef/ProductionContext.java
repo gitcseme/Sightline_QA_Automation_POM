@@ -3266,6 +3266,9 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
 			int expectedDocuments = Integer.parseInt(dataMap.get("totalMatchedDocuments").toString());
+			prod.getDocListDropDownCount().click();
+			prod.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
 			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
 			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
 			pass(dataMap, "The number of documents listed matches the prior screen's count");
