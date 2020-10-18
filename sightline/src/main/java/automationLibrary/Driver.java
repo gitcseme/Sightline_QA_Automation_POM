@@ -503,4 +503,7 @@ public  class Driver  {
  		wait.until(ExpectedConditions.urlContains(url));
  	}
 	   
-	}
+ 	public void WaitUntilUrlContains(String url) {
+ 		wait.until(ExpectedConditions.urlContains(url));
+ 	}
+}
