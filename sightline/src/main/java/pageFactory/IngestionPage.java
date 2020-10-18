@@ -356,9 +356,6 @@ public class IngestionPage {
     public Element getNavigateToAnalyticsAndPublishButton() { return driver.FindElementByCssSelector("a[name='Analytics']");}
     public Element getNavigateToIngestionHome() { return driver.FindElementByCssSelector("a[name='Ingestion']");}
 
-
-
-
     public Element getSaveButtonConfirmationYes() { return driver.FindElementById("bot1-Msg1");}
     public ElementCollection getIngestDATPreviewColumnHeader() {return driver.FindElementsByCssSelector("#previewRecords thead th");}
     public ElementCollection getIngestDATPreviewRows() {return driver.FindElementsByCssSelector("#previewRecords tbody tr ");}
@@ -369,7 +366,28 @@ public class IngestionPage {
     public Element getCatalogDoneBtn() {return driver.FindElementById("Catalogdone");}
     public Element getUnpublishFirstRow() {return driver.FindElementById("-1g_anchor");}
     public Element getConfigureMappingDiv() { return driver.FindElementByXPath("//div[@id='divMain']/div[2]"); }
+    public Element getSourceDestMappingRowDeleteButton(String docKey) { return driver.FindElementByXPath("//table[@id='dt_basic']//option[text()='"+ docKey +"' and @selected='selected']/parent::select[not(@disabled)]/following-sibling::a/i[@class='fa fa-lg fa-close']"); }
     
+    public Element getSourceFolderLoadingText() { return driver.FindElementByXPath("//select[@id='ddlFolders']/option[contains(text(), 'Loading')]"); }
+    public Element getIngestionCardTitle(String ingestionName) { return driver.FindElementByXPath("//span[@title='"+ingestionName+"']"); }
+    public Element getIngestionPopup() { return driver.FindElementByCssSelector(".smart-form.client-form.ingestionPopup"); }
+    public Element getPctCompleteLabel() { return driver.FindElementByXPath("//label[text()='% Complete :']/following-sibling::div/label"); }
+    public Element getIngestionPopupCloseButton() { return driver.FindElementByCssSelector(".ui-dialog-titlebar-close"); }
+    public Element getIngestionPopupErrorsLink() { return driver.FindElementByXPath("//span[contains(text(), 'Errors')]/a"); }
+    public Element getIngestionPopupDetails() { return driver.FindElementById("IngestiondetailsPopUpdiv"); }
+    public ElementCollection getIngestionPopupDetailsCollection() { return driver.FindElementsById("IngestiondetailsPopUpdiv"); }
+    public ElementCollection getIngestionPopupDocIDErrorRows() { return driver.FindElementsByXPath("//table[@id='myDataTable']//tr/td[3]"); }
+    public Element getSpecificIngestionGearButton(String ingestionName) { return driver.FindElementByXPath("//span[@title='"+ingestionName+"']/parent::a/preceding-sibling::div"); }
+    public Element getGearDropdownMenu() { return driver.FindElementByCssSelector(".dropdown-menu"); }
+    public Element getGearDropdownMenuOption(String option) { return driver.FindElementByXPath("//a[text()='"+option+"']"); }
+    public Element getSuccessMessageBox() { return driver.FindElementByCssSelector(".bigBox.animated.fadeIn.fast"); }
+    public Element getActionDropdownButton() { return driver.FindElementByCssSelector(".btn.btn-defualt.dropdown-toggle"); }
+    public Element getActionDropdownMenu() { return driver.FindElementByXPath("//div[@class='btn-group select-actions open']//ul[@class='dropdown-menu']"); }
+    public Element getActionDropdownOption(String option) { return driver.FindElementByXPath("//div[@class='btn-group select-actions open']//a[text()='"+option+"']"); }
+    public Element getIngestionErrorBackButton() { return driver.FindElementByXPath("//button[text()='Back']"); }
+    public Element getIngestionErrorsTitle() { return driver.FindElementByXPath("//div[contains(text(), 'Ingestion Errors')]"); }
+    public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
+    public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     
     
     public String getIngestionTileName(int index){
@@ -422,7 +440,7 @@ public class IngestionPage {
     	for(int i = 0; i < columns.size(); ++i) {
     		columnCount = i+1;
     		String currentColumn = (columns.get(i).getText().split(" =>"))[0];
-    		System.out.println(currentColumn);
+//    		System.out.println(currentColumn);
    			dataValues.clear();
    			for(WebElement row: rows) {
     			dataValues.add(row.findElement(By.xpath("td[" + columnCount + "]")).getText());
@@ -460,77 +478,90 @@ public class IngestionPage {
     {
     	driver.waitForPageToBeReady();
     	if (scriptState) {
-	    	if(dataMap.containsKey("source_system")) {
-	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
-	    		getSpecifySourceSystem().SendKeys(dataMap.get("source_system").toString());
-    		}
-	    	if(dataMap.containsKey("source_location")) {
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getSpecifyLocation().Visible()  ;}}), Input.wait30); 
-	    		getSpecifyLocation().SendKeys(dataMap.get("source_location").toString());
-	    	}
-	    	
-	    	if(dataMap.containsKey("source_folder")) {	
-	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
+    		try {
+    	    	if(dataMap.containsKey("source_system")) {
+    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    			getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
+    	    		getSpecifySourceSystem().SendKeys(dataMap.get("source_system").toString());
+        		}
+    	    	if(dataMap.containsKey("source_location")) {
+    		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    			getSpecifyLocation().Visible()  ;}}), Input.wait30); 
+    	    		getSpecifyLocation().SendKeys(dataMap.get("source_location").toString());
+    	    		
+//    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    	    				!getSourceFolderLoadingText().Displayed()  ;}}), 10);
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("ingestion_type")) {	
+    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    				getSpecifySourceIngestionType().Displayed()  ;}}), Input.wait30);
+    	    		
+    	    		getSpecifySourceIngestionType().SendKeys(dataMap.get("ingestion_type").toString());    		
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("source_folder")) {	
+    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
 
-	    		
-	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
-	    		
-	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
-	    	}
-	    	
-	    	if(dataMap.containsKey("doc_key")) {	
-	    	    if(dataMap.containsKey("dat_load_file")) {
-	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
-	       
-	        		getDATLoadFile().SendKeys(dataMap.get("dat_load_file").toString());
-	        		
-	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_load_file")) ;}}), Input.wait30); 
-	   	    	    }
-	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				getDocumentKey().Visible()  ;}}), Input.wait30);
-	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
-	    	}
-    		
-	    	if(dataMap.containsKey("native_file") || dataMap.containsKey("native_path_file")) {
-	    		getNativeoptions(dataMap);
-	    	}
-	    	
-	    	if(dataMap.containsKey("text_file") || dataMap.containsKey("text_path_file")){
-	    		getTextoptions(dataMap);	
-	    	}
-	    	
-	    	if(dataMap.containsKey("PDF_file") || dataMap.containsKey("PDF_path_file")) {
-	    		getPDFoptions(dataMap);
-	    	}
-	    	
-	    	if(dataMap.containsKey("TIFF_file")) {
-	    		getTIFFoptions(dataMap);	
-	    	}
-	
-	    	if(dataMap.containsKey("mp3_file") || dataMap.containsKey("mp3_path_file")) {
-	
-	    		getMP3options(dataMap);	
-	    	}
-	    	
-	    	if(dataMap.containsKey("audio_file") || dataMap.containsKey("audio_path_file")) {
-	    		getTransciptoptions(dataMap);	
-	    	}
-	        
-	    	if(dataMap.containsKey("other_file") || dataMap.containsKey("other_path_file")) {
-	    		getTransciptoptions(dataMap);	
-	    	}
-	    	
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getDateFormat().Visible()  ;}}), Input.wait30); 
-    		getDateFormat().SendKeys(dataMap.get("date_time").toString());
-    		
-    		
+    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    				(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
+    	    		
+    	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
+    	    	}
+    	    	
+
+    	    	
+    	    	if(dataMap.containsKey("doc_key")) {	
+    	    	    if(dataMap.containsKey("dat_load_file")) {
+    	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    	    			getDATLoadFile().Visible()  ;}}), Input.wait30); 
+    	       
+    	        		getDATLoadFile().SendKeys(dataMap.get("dat_load_file").toString());
+    	        		
+    	        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	        				getDATLoadFile().selectFromDropdown().getFirstSelectedOption().getText().equals((String)dataMap.get("dat_load_file")) ;}}), Input.wait30); 
+    	   	    	    }
+    	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	    				getDocumentKey().Visible()  ;}}), Input.wait30);
+    	    		getDocumentKey().SendKeys(dataMap.get("doc_key").toString());
+    	    	}
+        		
+    	    	if(dataMap.containsKey("native_file") || dataMap.containsKey("native_path_file")) {
+    	    		getNativeoptions(dataMap);
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("text_file") || dataMap.containsKey("text_path_file")){
+    	    		getTextoptions(dataMap);	
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("PDF_file") || dataMap.containsKey("PDF_path_file")) {
+    	    		getPDFoptions(dataMap);
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("TIFF_file")) {
+    	    		getTIFFoptions(dataMap);	
+    	    	}
+    	
+    	    	if(dataMap.containsKey("mp3_file") || dataMap.containsKey("mp3_path_file")) {
+    	
+    	    		getMP3options(dataMap);	
+    	    	}
+    	    	
+    	    	if(dataMap.containsKey("audio_file") || dataMap.containsKey("audio_path_file")) {
+    	    		getTransciptoptions(dataMap);	
+    	    	}
+    	        
+    	    	if(dataMap.containsKey("other_file") || dataMap.containsKey("other_path_file")) {
+    	    		getTransciptoptions(dataMap);	
+    	    	}
+    	    	
+        		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        				getDateFormat().Visible()  ;}}), Input.wait30); 
+        		getDateFormat().SendKeys(dataMap.get("date_time").toString());
+    		} catch (Exception e) {
+    			System.out.println(e);
+    		}   		
 
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1183,8 +1214,7 @@ public class IngestionPage {
     
     	//***************************Verify in DocView Default tab should come as Native*********************
 		
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getIngestionName().Visible()  ;}}),Input.wait60); 
+
         getIngestionName().Click();
         
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1194,6 +1224,41 @@ public class IngestionPage {
 		System.out.println(IngestionName);
       }
     
+    public void selectActionFromIngestionDetailsPopup(String actionName) {
+    	getActionDropdownButton().waitAndClick(10);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getActionDropdownMenu().Visible()  ;}}),Input.wait30); 
+    	
+    	getActionDropdownOption(actionName).waitAndClick(10);
+		if (actionName.equalsIgnoreCase("Rollback")) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getApproveMessageContent().Displayed() ;}}), Input.wait30);
+			getSaveButtonConfirmationYes().Click();
+		}
+    }
+    
+    public void selectGearDropdownForSpecificIngestion(String ingestionName, String optionName) {
+    	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSpecificIngestionGearButton(ingestionName).Displayed() ;}}), Input.wait30);			
+		getSpecificIngestionGearButton(ingestionName).click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getGearDropdownMenu().Displayed() ;}}), Input.wait30);
+		
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getGearDropdownMenuOption(optionName).Enabled() ;}}), Input.wait30);
+			getGearDropdownMenuOption(optionName).click();
+			if (optionName.equalsIgnoreCase("Rollback")) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						getApproveMessageContent().Displayed() ;}}), Input.wait30);
+				getSaveButtonConfirmationYes().Click();
+			}
+		} catch (Exception e) {
+			
+		}
+
+    }
     
     public void IngestionCatlogtoPublish(String dataset) throws InterruptedException {
     	
