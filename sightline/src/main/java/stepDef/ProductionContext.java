@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Random;
 
-
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.SystemUtils;
@@ -3553,7 +3553,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Navigate back to the Production Home Page URL
-			throw new ImplementationException("refresh_back_to_production_home_page");
+			on_production_home_page(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT refresh_back_to_production_home_page");
 		}
@@ -4110,7 +4110,104 @@ public class ProductionContext extends CommonContext {
 			//* In Number and sorting, store all of the values for beginning bates #, prefix, suffix, and min number length for validation later.
 			//* Click Close
 			//
-			throw new ImplementationException("store_the_default_template_values");
+			
+			try {
+				String templateName = dataMap.get("prod_template").toString();
+				prod.getManageTemplatesTab().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTableGridDiv().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCustomTemplateViewButton(templateName).Displayed()  ;}}), Input.wait30);
+				prod.getCustomTemplateViewButton(templateName).click();
+				
+
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivledgedRules().Displayed()  ;}}), Input.wait30);
+				
+				// Save Privilege rules as a single string, with each rule separated by comma.
+				String privRule = "";
+				for(WebElement rule: prod.getPrivledgedRules().FindWebElements()) {
+					privRule = privRule.concat(rule.getText()+",");
+				}
+				// Remove extra comma at the end
+				String privRules = privRule.substring(0, privRule.length() - 1);
+				
+				prod.getTemplatePrivGuardNextButton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateProductionComponentsPanel().Displayed()  ;}}), Input.wait30);
+				
+				// Expand DAT toggle
+				prod.getTemplateProductionComponentToggle("DAT").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				
+				String templateFieldClassification = prod.getTemplateFieldClassificationValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String templateSourceField = prod.getTemplateSourceFieldValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String templateDatField = prod.getTemplateDatFieldValue().GetAttribute("value");
+				
+				// Collapse DAT 
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+
+				// Expand TIFF toggle
+				prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				String templateTIFFPageRotatePreference = prod.getTemplateTIFFPageRotatePreferenceSelectedValue().getText();
+				String templateTIFFPlacerholderText = prod.getTemplateTIFFPlaceholderText().getText();			
+	
+				// Collapse TIFF 
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				//Expand PDF toggle
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePDFPageRotatePreferenceSelectedValue().Displayed()  ;}}), Input.wait30);
+				
+				String templatePDFPageRotatePreference = prod.getTemplatePDFPageRotatePreferenceSelectedValue().getText();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePDFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				String templatePDFPlaceholderText = prod.getTemplatePDFPlaceholderText().getText();
+
+				// Goto Numbering and Sorting
+				prod.getComponentsMarkNext().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePrefixValue().Displayed()  ;}}), Input.wait30);
+				
+				String beginningBatesValue = prod.getTemplateBeginningBatesValue().GetAttribute("value");
+				String getTemplatePrefixValue = prod.getTemplatePrefixValue().GetAttribute("value");	
+				String getTemplateSuffixValue = prod.getTemplateSuffixValue().GetAttribute("value");
+				String getTemplateMinNumValue = prod.getTemplateMinNumValue().GetAttribute("value");
+
+				// Store values to dataMap
+				dataMap.put("templatePrivRules", privRules);
+				dataMap.put("templateFieldClassification", templateFieldClassification);
+				dataMap.put("templateSourceField", templateSourceField);
+				dataMap.put("templateDatField", templateDatField);
+				dataMap.put("templateTIFFPlacerholderText", templateTIFFPlacerholderText);
+				dataMap.put("templatePageRotatePreference", templateTIFFPageRotatePreference);
+				dataMap.put("templatePDFPlaceholderText", templatePDFPlaceholderText);
+				dataMap.put("templatePDFPageRotatePreference", templatePDFPageRotatePreference);
+				dataMap.put("beginningBatesValue", beginningBatesValue);
+				dataMap.put("getTemplatePrefixValue", getTemplatePrefixValue);
+				dataMap.put("getTemplateSuffixValue", getTemplateSuffixValue);
+				dataMap.put("getTemplateMinNumValue", getTemplateMinNumValue);
+				
+				// Close dialog
+				prod.getTemplateCloseButton().click();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "unable to store default template values");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT store_the_default_template_values");
 		}
@@ -4126,7 +4223,26 @@ public class ProductionContext extends CommonContext {
 			//* Expand PDF
 			//* Under the branding placeholder text field, type in "Automation branding on PDF"
 			//
-			throw new ImplementationException("adding_branding_to_pdf");
+			String brandingText = "Automation branding on PDF";
+			dataMap.put("pdfBrandingText", brandingText);
+			
+			try {
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
+
+				prod.getPDFPlaceholderTextField().Clear();
+				prod.getPDFPlaceholderTextField().SendKeys(brandingText);
+				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				prod.getTemplateProductionComponentToggle("PDF").click();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			
+		
+			
+			
 		} else {
 			throw new ImplementationException("NOT adding_branding_to_pdf");
 		}
@@ -4148,8 +4264,109 @@ public class ProductionContext extends CommonContext {
 			//* Verify in PDF, the rotation should be "Rotate 90 degrees counter clock-wise"
 			//* Verify in PDF, the burn redaction button is enabled green and the "Default Automation Redaction" tag is checked.
 			//* Verify in MP3, Burn redactions is enabled, Default Automation Redaction is checked, Redaction Style is set to Beep, and expanding the Advanced section has Generate Load File (LST) enabled.
-			//These values should be compared to what was stored in "store_the_default_template_values"Click Mark CompletedClick Next
-			throw new ImplementationException("the_default_template_for_production_components_is_displayed");
+			//These values should be compared to what was stored in "store_the_default_template_values"
+			//Click Mark CompletedClick Next
+			try {				
+				// Get values from dataMap
+				String templateFieldClassification = dataMap.get("templateFieldClassification").toString();
+				String templateSourceField = dataMap.get("templateSourceField").toString();
+				String templateDatField = dataMap.get("templateDatField").toString();
+				String templateTIFFPlacerholderText = dataMap.get("templateTIFFPlacerholderText").toString();
+				String templateTIFFPageRotatePreference = dataMap.get("templatePageRotatePreference").toString();
+				String templatePDFPlaceholderText = dataMap.get("templatePDFPlaceholderText").toString();
+				String templatePDFPageRotatePreference = dataMap.get("templatePDFPageRotatePreference").toString();
+
+				Boolean isDATSelected = prod.getProductionComponentDATCheckbox().Selected();
+				Boolean isTIFFSelected = prod.getProductionComponentTIFFCheckbox().Selected();
+				Boolean isPDFSelected = prod.getProductionComponentPDFCheckbox().Selected();
+				
+				// Verify expected checkboxes are selected
+				try {		
+					Assert.assertTrue(isDATSelected);
+					Assert.assertTrue(isTIFFSelected);
+					Assert.assertTrue(isPDFSelected);
+				} catch (Exception e) {
+					fail(dataMap, "Expected checkboxes are not selected");
+				}
+
+				// Expand DAT toggle
+				prod.getTemplateProductionComponentToggle("DAT").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				String fieldClassification = prod.getTemplateFieldClassificationValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String sourceField = prod.getTemplateSourceFieldValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String datField = prod.getTemplateDatFieldValue().GetAttribute("value");
+				
+				// Verify DAT
+				try {
+					Assert.assertEquals(fieldClassification, templateFieldClassification);
+					Assert.assertEquals(sourceField, templateSourceField);
+					Assert.assertEquals(templateDatField, datField);
+					pass(dataMap, "DAT values are correct");
+				} catch (Exception e) {
+					fail(dataMap, "DAT values are not correct");
+				}
+				
+				// Collapse DAT 
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+
+				// Expand TIFF toggle
+				prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				String TIFFPageRotatePreference = prod.getTemplateTIFFPageRotatePreferenceSelectedValue().getText();			
+				String TIFFPlacerholderText = prod.getTemplateTIFFPlaceholderText().getText();						
+				String burnRedactAttr = prod.getTIFFBurnRedactionInput().GetAttribute("class");
+
+				// Verify TIFF
+				try {
+					Assert.assertEquals(prod.getTIFFPlaceholderTag().getText(), "Privileged");
+					Assert.assertEquals(TIFFPageRotatePreference, templateTIFFPageRotatePreference);
+					Assert.assertEquals(templateTIFFPlacerholderText, TIFFPlacerholderText);
+					Assert.assertTrue(burnRedactAttr.contains("activeC"));
+				} catch (Exception e) {
+					fail(dataMap, "TIFF values are not correct");
+				}
+				
+				// Collapse TIFF 
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				//Expand PDF toggle
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+				String PDFPageRotatePreference = prod.getTemplatePDFPageRotatePreferenceSelectedValue().getText();
+				String PDFPlaceholderText = prod.getTemplatePDFPlaceholderText().getText();
+				String defaultAutomationRedactionInput = prod.getDefaultAutomationRedactionTag().GetAttribute("class");
+
+				// Verify PDF
+				try {
+					Assert.assertEquals(prod.getPDFPlaceholderTag().getText(), "Privileged");
+					Assert.assertEquals(templatePDFPageRotatePreference, PDFPageRotatePreference);
+					
+					// Skip verification of placeholder text if new text was entered in previous step
+					if (!dataMap.containsKey("pdfBrandingText")) {
+						Assert.assertEquals(PDFPlaceholderText, templatePDFPlaceholderText);
+					}
+					Assert.assertTrue(defaultAutomationRedactionInput.contains("clicked"));
+				} catch (Exception e) {
+					fail(dataMap, "PDF values are not correct");
+				}
+
+				prod.getComponentsMarkComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getComponentsMarkNext().Enabled()  ;}}), Input.wait30);
+				prod.getComponentsMarkNext().click();
+				driver.waitForPageToBeReady();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify production components");
+			}
 		} else {
 			throw new ImplementationException("NOT the_default_template_for_production_components_is_displayed");
 		}
@@ -4167,7 +4384,47 @@ public class ProductionContext extends CommonContext {
 			//* Verify under Suffix, it is "Q"
 			//* Verify under Min Number Length it is "8".
 			//These values should be compared to what was stored in "store_the_default_template_values"Click Mark CompleteClick Next
-			throw new ImplementationException("the_default_template_for_numbering_is_displayed");
+			
+			try {
+				
+				String getTemplatebeginningBatesValue = dataMap.get("beginningBatesValue").toString();
+				String getTemplatePrefixValue = dataMap.get("getTemplatePrefixValue").toString();
+				String getTemplateSuffixValue = dataMap.get("getTemplateSuffixValue").toString();
+				String getTemplateMinNumValue = dataMap.get("getTemplateMinNumValue").toString();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePrefixValue().Displayed()  ;}}), Input.wait30);
+				
+				String beginningBatesValue = prod.getTemplateBeginningBatesValue().GetAttribute("value");
+				String TemplatePrefixValue = prod.getTemplatePrefixValue().GetAttribute("value");
+				String TemplateSuffixValue = prod.getTemplateSuffixValue().GetAttribute("value");
+				String TemplateMinNumValue = prod.getTemplateMinNumValue().GetAttribute("value");
+
+				try {
+					Assert.assertEquals(beginningBatesValue, getTemplatebeginningBatesValue);
+					Assert.assertEquals(TemplatePrefixValue, getTemplatePrefixValue);
+					Assert.assertEquals(TemplateSuffixValue, getTemplateSuffixValue);
+					Assert.assertEquals(TemplateMinNumValue, getTemplateMinNumValue);
+					
+				} catch (Exception e) {
+					fail(dataMap, "Numbering and Sorting values are not correct");
+				}
+				
+				prod.getNumAndSortMarkComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortNext().Enabled()  ;}}), Input.wait30);
+				prod.getNumAndSortNext().click();
+				driver.waitForPageToBeReady();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			
+
+			
+
+			
+			
 		} else {
 			throw new ImplementationException("NOT the_default_template_for_numbering_is_displayed");
 		}
@@ -4238,6 +4495,8 @@ public class ProductionContext extends CommonContext {
 			//TC 5193
 			//* Verify the branding on the PDF preview does not overlap or appear over any writing on the actual content.
 			//
+			
+			
 			throw new ImplementationException("verify_the_preview_pdf_displays_the_pdf_branding");
 		} else {
 			throw new ImplementationException("NOT verify_the_preview_pdf_displays_the_pdf_branding");
@@ -4251,7 +4510,30 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5202/5800/5801/6182 / 9445 / 4639The final verification is to Verify the rules displayed match the rules stored in "store_the_default_template_values"
-			throw new ImplementationException("verify_creating_a_production_with_a_custom_template_store_the_correct_values");
+			try {
+				
+				String templatePrivRules = dataMap.get("templatePrivRules").toString();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivledgedRules().Displayed()  ;}}), Input.wait30);
+				
+				String privRule = "";
+				for(WebElement rule: prod.getPrivledgedRules().FindWebElements()) {
+					privRule = privRule.concat(rule.getText()+",");
+				}
+				// Remove extra comma at the end
+				String privRules = privRule.substring(0, privRule.length() - 1);
+
+				try {
+					Assert.assertEquals(templatePrivRules, privRules);
+				} catch (Exception e) {
+					fail(dataMap, "Priv rules are not correct");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify priv rules");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_creating_a_production_with_a_custom_template_store_the_correct_values");
 		}
