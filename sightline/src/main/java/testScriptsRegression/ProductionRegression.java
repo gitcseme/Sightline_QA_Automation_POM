@@ -6066,7 +6066,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 	
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "wip"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_adding_branding_to_pdf_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_branding_is_displayed_on_the_generated_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6111,7 +6111,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "wip"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_updating_redaction_style_adding_redaction_text_Whitewithblackfont_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_redaction_documents_are_redacted_with_the_proper_style() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6157,7 +6157,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "wip"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_updating_redaction_style_adding_redaction_text_Blackwithwhitefont_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_redaction_documents_are_redacted_with_the_proper_style() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6203,7 +6203,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_adding_branding_to_pdf_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_When_clicking_on_the_productions_preview_button_Then_verify_the_preview_pdf_displays_the_pdf_branding() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6217,17 +6217,17 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("uid", "qapau4@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
+			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
 			context.store_the_default_template_values(true, dataMap);
 			context.refresh_back_to_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.begin_new_production_process(true, dataMap);
 			context.adding_branding_to_pdf(true, dataMap);
 			context.the_default_template_for_production_components_is_displayed(true, dataMap);
 			context.the_default_template_for_numbering_is_displayed(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
-			context.complete_default_priv_guard_documents_are_matched(true, dataMap);
+			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.clicking_on_the_productions_preview_button(true, dataMap);
 			context.verify_the_preview_pdf_displays_the_pdf_branding(true, dataMap);
@@ -6245,7 +6245,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_When_clicking_the_productions_mark_complete_button_Then_verify_creating_a_production_with_a_custom_template_store_the_correct_values() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6260,15 +6260,14 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.on_production_home_page(true, dataMap);
 			context.store_the_default_template_values(true, dataMap);
 			context.refresh_back_to_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.begin_new_production_process(true, dataMap);
 			context.the_default_template_for_production_components_is_displayed(true, dataMap);
 			context.the_default_template_for_numbering_is_displayed(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
-			context.clicking_the_productions_mark_complete_button(true, dataMap);
 			context.verify_creating_a_production_with_a_custom_template_store_the_correct_values(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
