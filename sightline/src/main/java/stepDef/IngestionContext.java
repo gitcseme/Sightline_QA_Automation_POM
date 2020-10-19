@@ -3762,4 +3762,97 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? manually_execute_ingestion$")
+	public void manually_execute_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select all available Ingestion filters
+			//* Click on created 'In Progress' Ingestion
+			//* Click 'Cataloging' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Cataloging' step is complete
+			//* Click on recently Cataloged Ingestion
+			//* Click 'Copying' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Copying' step is complete
+			//* Click on recently Copied Ingestion
+			//* Click 'Indexing' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Indexing' step is complete
+			//
+			throw new ImplementationException("manually_execute_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_execute_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_approve_ingestion$")
+	public void manually_approve_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Filter for 'Indexed' Ingestions
+			//* Click on recently Indexed Ingestion
+			//* Select 'Approve' from top right dropdown menu on Ingestion Execution Details popup
+			//
+			throw new ImplementationException("manually_approve_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_approve_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? run_ingestion_analytics$")
+	public void run_ingestion_analytics(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("run_ingestion_analytics");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_analytics");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_add_only_ingestion_e2e$")
+	public void verify_add_only_ingestion_e2e(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8783
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as NIUX
+			//
+			//TC8806
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as TRUE
+			//
+			throw new ImplementationException("verify_add_only_ingestion_e2e");
+		} else {
+			throw new ImplementationException("NOT verify_add_only_ingestion_e2e");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_is_completed_by_the_time_specified$")
+	public void verify_analysis_is_completed_by_the_time_specified(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7605 Verify Incremental Analysis of Email Threading for Add only Ingestion with 25,000 records  should get completed by 70min on 500,000 docs project for which Analysis is already completed
+			//
+			//* validate the analysis is completed by the time specified
+			//
+			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
+		}
+
+	}
 } //end
