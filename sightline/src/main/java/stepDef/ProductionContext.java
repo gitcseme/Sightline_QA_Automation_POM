@@ -4529,10 +4529,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Search > Session Search in navigation bar
-			throw new ImplementationException("navigate_to_session_search_page");
-		} else {
-			throw new ImplementationException("NOT navigate_to_session_search_page");
+			prod.getProdSearchMenuButton();
+			prod.getProdSessionSearchButton();
+			pass(dataMap, "Navigated to session Search");
+
 		}
+		else fail(dataMap, "Could not get to the Session search page");
 
 	}
 

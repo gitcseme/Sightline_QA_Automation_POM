@@ -498,6 +498,9 @@ public class ProductionPage {
     public Element getErrorDataTable() {return driver.FindElementByXPath("//*[@id='GenerateErrorDataTable']/tbody/tr/td[2]"); }
     public Element getCloseModalButton() {return driver.FindElementById("GenerateErrorDetailsPopUpClose");}
     
+    public Element getProdSearchMenuButton() {return driver.FindElementById("3");}
+    public Element getProdSessionSearchButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
