@@ -896,6 +896,23 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@When("^.*(\\[Not\\] )? click_copy_option_published$")
+	public void click_copy_option_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+	if (scriptState) {
+		//
+		// * Click settings (gear icon) on ingested tile
+		// * Click on Copy
+		//
+		driver.waitForPageToBeReady();
+		ingest.getCopyOptionButtonPublished().Click();
+		pass(dataMap, "Clicked copy Public button");
+	} else {
+		fail(dataMap, "NOT click_copy_option");
+	}
+
+}
 
 	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
 	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -3361,15 +3378,39 @@ public class IngestionContext extends CommonContext {
 
 
 	@And("^.*(\\[Not\\] )? search_for_existing_ingestion$")
-	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap)
+			throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//we need to preset an ingestion so that we can use it for future automation. You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.Then this method will search for that existing ingestion
-			throw new ImplementationException("search_for_existing_ingestion");
-		} else {
-			throw new ImplementationException("NOT search_for_existing_ingestion");
-		}
+			// we need to preset an ingestion so that we can use it for future automation.
+			// You can hardcode the ingestion name or create a saved filter so that we can
+			// use the same ingestion for most of our tests.Then this method will search for
+			// that existing ingestion
+			try {
+				// Open Filter menu
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return ingest.getFilterByOption().Displayed();
+					}
+				}), Input.wait30);
+				ingest.getFilterByOption().Click();
 
+				// Deselect all non Catalog options
+				for (int i = 1; i <= 8; ++i) {
+					if (ingest.getSelectFilterByOption(i).Selected() && i != 8)
+						ingest.getSelectFilterByOption(i).Click();
+				}
+
+				// Make sure published is clicked
+				if (!ingest.getSelectFilterByOption(8).Selected())
+					ingest.getSelectFilterByOption(8).Click();
+				ingest.getcardCanvas().click();
+				pass(dataMap, "Filted Easily");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else
+			fail(dataMap, "could not filter");
 	}
 
 
@@ -3579,16 +3620,26 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
-	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
+		throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			throw new ImplementationException("open_ingestion_details_page");
-		} else {
-			throw new ImplementationException("NOT open_ingestion_details_page");
+	if (scriptState) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingest.getFirstGearBtn().Visible();
+			}
+		}), Input.wait30);
+		while(!ingest.getFirstGearBtn().Displayed()) {
+			ingest.getRefreshButton().click();
 		}
-
+		ingest.getFirstGearBtn().Click();
+	} else {
+		throw new ImplementationException("NOT open_ingestion_details_page");
 	}
+
+}
 
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
