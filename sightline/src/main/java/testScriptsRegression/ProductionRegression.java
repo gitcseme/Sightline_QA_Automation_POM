@@ -6203,7 +6203,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke", "wip"})
+	@Test(groups = {"Production", "Positive", "wip"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_adding_branding_to_pdf_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_When_clicking_on_the_productions_preview_button_Then_verify_the_preview_pdf_displays_the_pdf_branding() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6245,7 +6245,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke1"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_When_clicking_the_productions_mark_complete_button_Then_verify_creating_a_production_with_a_custom_template_store_the_correct_values() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
