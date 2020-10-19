@@ -3997,9 +3997,9 @@ public class ProductionContext extends CommonContext {
 			//Wait a few seconds for Status text to change to "in progress"
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
-
+			
 			//Make sure Status is In Progress, and InProgress Button is now Displayed
-			Assert.assertEquals("IN PROGRESS", prod.getGeneratePostGenStatus().getText());
+			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress") );
 			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed());
 			pass(dataMap, "Complex Production was able to be generated");
 		}
@@ -4114,7 +4114,7 @@ public class ProductionContext extends CommonContext {
 			driver.waitForPageToBeReady();
 			
 			//Go back to generate page
-			prod.getMarkCompleteButton().click();
+			//prod.getMarkCompleteButton().click();
 			for(int i =0; i<4; i++) {
 				prod.getMarkCompleteButton().click();
 				if(i ==1 && prod.getOkButton().Displayed()){

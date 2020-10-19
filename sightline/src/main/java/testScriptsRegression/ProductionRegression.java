@@ -5517,7 +5517,7 @@ public class ProductionRegression extends RegressionBase {
 			context.waiting_for_production_to_be_complete(true, dataMap);
 			context.navigated_back_onto_the_document_components_section(true, dataMap);
 			context.change_the_folder_selection_to_by_tags_complete_the_production(true, dataMap);
-			//context.waiting_for_production_to_be_in_progress(true, dataMap);
+			context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_overwriting_the_document_selection_generates_a_new_bate_number(true, dataMap);
 		} catch (ImplementationException e) {
 			e.printStackTrace();
@@ -5535,7 +5535,8 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	
+	@Test(groups = {"Production, Positive", "smoke" })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_native_productions_can_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5568,7 +5569,7 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
-			//context.waiting_for_production_to_be_in_progress(true, dataMap);
+			context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_native_productions_can_be_generated(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5679,7 +5680,7 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("archive_file", "false");
 			dataMap.put("tiff", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
-			//context.waiting_for_production_to_be_in_progress(true, dataMap);
+			context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_the_bates_generated_number_follows_the_custom_numbering(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -5747,7 +5748,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_and_sorting_is_added_and_complete_default_document_selection_and_mark_complete_default_priv_guard_and_complete_default_production_location_component_When_completed_summary_and_preview_component_Then_verify_productions_are_set_to_draft_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
