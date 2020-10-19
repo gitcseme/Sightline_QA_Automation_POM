@@ -6427,7 +6427,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive", "smoke1"})
 	public void test_Given_verify_tally_view_displays_doc_primary_language_metadata_correctly_When_on_sub_tally_view_Then_verify_sub_tally_view_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6462,7 +6462,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive", "smoke1"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_click_run_ingest_button_Then_verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6500,7 +6500,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_search_home_page_and_search_for_existing_ingestion_When_on_doc_list_view_Then_verify_doc_list_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6512,7 +6512,7 @@ public class IngestionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
-			context.on_search_home_page(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
 			context.search_for_existing_ingestion(true, dataMap);
 			context.on_doc_list_view(true, dataMap);
 			context.verify_doc_list_displays_doc_primary_language_metadata_correctly(true, dataMap);
@@ -6530,7 +6530,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "smoke"})
+	@Test(groups = {"Ingestion", "Positive", "smoke1"})
 	public void test_Given_verify_doc_list_displays_doc_primary_language_metadata_correctly_When_on_doc_view_Then_verify_doc_view_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6647,7 +6647,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive", "smoke1"})
 	public void test_Given_verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay_When_complete_overlay_ingestion_Then_verify_source_system_ingestion_overlay_fails() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

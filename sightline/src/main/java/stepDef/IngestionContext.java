@@ -3529,6 +3529,7 @@ public class IngestionContext extends CommonContext {
 			//* Click the Action dropdown
 			//* Select View in Doc List
 			//If DocPrimaryLanguage is not displayed as a column:Click Select Column buttonAdd the specified column
+			
 			sessionSearch.getDocsThatMetCriteriaAddBtn().Click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getResultTile().Visible()  ;}}), Input.wait30); 
@@ -3549,7 +3550,10 @@ public class IngestionContext extends CommonContext {
 			//TC9182:Verify value of "DocPrimaryLanguage" metadata field value should be populated correctly in Doclist and in Doc View
 			//TC7502:Validate new metadata field DocLanguages on DocListValidate files that contained a value in the DocPrimaryLanguage are displayed correctly in the Doc List view
 			try {
-
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocListTable().Visible()  ;}}), Input.wait30); 
+				
 				// "DocPrimaryLanguage" column needs to be added to the Doc List view
 				docListPage.addColumnToDocListView("DocPrimaryLanguage");
 				
