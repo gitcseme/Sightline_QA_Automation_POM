@@ -13,6 +13,7 @@ import java.util.Random;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -3271,7 +3272,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the Preview button
-			throw new ImplementationException("clicking_the_summary_preview_button");
+			clicking_the_productions_preview_button(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT clicking_the_summary_preview_button");
 		}
@@ -4113,7 +4114,9 @@ public class ProductionContext extends CommonContext {
 			
 			try {
 				String templateName = dataMap.get("prod_template").toString();
-				prod.getManageTemplatesTab().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getManageTemplatesTab().Displayed()  ;}}), Input.wait30);
+				prod.getManageTemplatesTab().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getTemplateTableGridDiv().Displayed()  ;}}), Input.wait30);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4231,10 +4234,14 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
 
-				prod.getPDFPlaceholderTextField().Clear();
-				prod.getPDFPlaceholderTextField().SendKeys(brandingText);
+				prod.getPDFBrandingPlaceholderTextField().Clear();
+				prod.getPDFBrandingPlaceholderTextField().SendKeys(brandingText);
+				
+				// Collapse PDF section
 				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
 				prod.getTemplateProductionComponentToggle("PDF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -4459,15 +4466,20 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(newBeginningBatesNum);
 				
 				
+				// update and store full bates number with prefix and sufix
+				int updatedBegBatesNum = Integer.parseInt(newBeginningBatesNum);
+				String batesWithTrailingZeros = String.format("%0"+getTemplateMinNumValue+"d", updatedBegBatesNum);
+				String fullBatesNumber = getTemplatePrefixValue + batesWithTrailingZeros + getTemplateSuffixValue;
+				
+				dataMap.put("updatedBeginningBates", newBeginningBatesNum);
+				dataMap.put("fullBatesNumber", fullBatesNumber);
+				
 				prod.getNumAndSortMarkComplete().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getNumAndSortNext().Enabled()  ;}}), Input.wait30);
 				prod.getNumAndSortNext().click();
 				driver.waitForPageToBeReady();
-				
-				// store bates number in dataMap
-				dataMap.put("updatedBeginningBates", newBeginningBatesNum);
-				
+
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -4526,7 +4538,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Preview Button and wait about 1-2 minutes.
-			throw new ImplementationException("clicking_on_the_productions_preview_button");
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				prod.getPreviewprod().click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+				
+			}
+		
 		} else {
 			throw new ImplementationException("NOT clicking_on_the_productions_preview_button");
 		}
@@ -4541,9 +4562,41 @@ public class ProductionContext extends CommonContext {
 			//TC 5193
 			//* Verify the branding on the PDF preview does not overlap or appear over any writing on the actual content.
 			//
-			
-			
-			throw new ImplementationException("verify_the_preview_pdf_displays_the_pdf_branding");
+			try {
+				// get fullBatesNumber from dataMap as this will be the pdf file name
+				String fullBatesNum = dataMap.get("fullBatesNumber").toString();
+				String fileName = fullBatesNum + ".pdf";
+				
+				PDDocument document = null;
+				String home = System.getProperty("user.home");
+				
+				if(SystemUtils.IS_OS_LINUX){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/"+fileName));}
+				else if(SystemUtils.IS_OS_WINDOWS){
+					while(document == null) document = PDDocument.load(new File(home + "\\Download\\"+fileName));
+				} else if(SystemUtils.IS_OS_MAC){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/"+fileName));}
+				
+				
+				// get branding text from dataMap that was entered in the PDF section of Production Components
+				String brandingText = dataMap.get("pdfBrandingText").toString();
+				
+				PDFTextStripper pdfTextStripper = new PDFTextStripper();
+				String PDFtext = pdfTextStripper.getText(document);
+
+				// Verify branding text exists in PDF
+				try {
+					Assert.assertTrue(PDFtext.contains(brandingText));
+					pass(dataMap, "Branding text on PDF is correct!");
+				} catch (Exception e) {
+					fail(dataMap,"Branding text on PDF is not correct!");
+				}			
+				document.close();
+				
+			} catch (Exception e) {
+				System.out.println(e + " Unable to verify pdf branding on pdf");
+				fail(dataMap,"Unable to verify pdf branding on pdf");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_preview_pdf_displays_the_pdf_branding");
 		}
