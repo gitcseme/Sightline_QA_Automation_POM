@@ -4276,19 +4276,51 @@ public class ProductionContext extends CommonContext {
 				String templatePDFPlaceholderText = dataMap.get("templatePDFPlaceholderText").toString();
 				String templatePDFPageRotatePreference = dataMap.get("templatePDFPageRotatePreference").toString();
 
+				// Expand Advanced Production Components
+				prod.getProductionComponentAdvanceToggle().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentMP3FilesCheckbox().Displayed()  ;}}), Input.wait30);
+				
+				
 				Boolean isDATSelected = prod.getProductionComponentDATCheckbox().Selected();
 				Boolean isTIFFSelected = prod.getProductionComponentTIFFCheckbox().Selected();
 				Boolean isPDFSelected = prod.getProductionComponentPDFCheckbox().Selected();
+				Boolean isMP3Selected = prod.getProductionComponentMP3FilesCheckbox().Selected();
+				
 				
 				// Verify expected checkboxes are selected
 				try {		
 					Assert.assertTrue(isDATSelected);
 					Assert.assertTrue(isTIFFSelected);
 					Assert.assertTrue(isPDFSelected);
+					Assert.assertTrue(isMP3Selected);
 				} catch (Exception e) {
-					fail(dataMap, "Expected checkboxes are not selected");
+					fail(dataMap, "Expected (DAT, TIFF, PDF, MP3) checkboxes are not selected");
 				}
 
+				// Expand MP3 toggle
+				prod.getTemplateProductionComponentToggle("MP3").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMP3RedactionStyleValue().Displayed()  ;}}), Input.wait30);
+				
+				String redactionStyleValue = prod.getMP3RedactionStyleValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String mp3BurnRedactions = prod.getMP3BurnRedactions().GetAttribute("class");
+				String mp3DefaultAutomationRedaction = prod.getDefaultAutomationRedactionTag().GetAttribute("class");
+				
+				
+				// Verify MP3
+				try {
+					Assert.assertEquals(redactionStyleValue, "Beep");
+					Assert.assertTrue(mp3BurnRedactions.contains("active"));
+					Assert.assertTrue(mp3DefaultAutomationRedaction.contains("clicked"));
+				} catch (Exception e) {
+					fail(dataMap, "Expected values in MP3 section are not correct");
+				}
+
+				// Collapse MP3
+				prod.getTemplateProductionComponentToggle("MP3").click();
+
+				
 				// Expand DAT toggle
 				prod.getTemplateProductionComponentToggle("DAT").waitAndClick(10);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4357,6 +4389,12 @@ public class ProductionContext extends CommonContext {
 					fail(dataMap, "PDF values are not correct");
 				}
 
+				// Collapse PDF 
+				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+				
 				prod.getComponentsMarkComplete().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getComponentsMarkNext().Enabled()  ;}}), Input.wait30);
@@ -4379,14 +4417,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			//* Verify under Format, "Beginning Bates #" is 3
+			//* Verify under Format, "Beginning Bates #" is 323 (or whatever is stored from the template)
 			//* Verify under Prefix, it is "S"
 			//* Verify under Suffix, it is "Q"
 			//* Verify under Min Number Length it is "8".
-			//These values should be compared to what was stored in "store_the_default_template_values"Click Mark CompleteClick Next
+			//These values should be compared to what was stored in "store_the_default_template_values"
+			// after validation, change beginning bates value to three random digits
+			//Click Mark Complete
+			//Click Next
 			
 			try {
-				
+				// Retrieve values from dataMap in store_the_default_template_values
 				String getTemplatebeginningBatesValue = dataMap.get("beginningBatesValue").toString();
 				String getTemplatePrefixValue = dataMap.get("getTemplatePrefixValue").toString();
 				String getTemplateSuffixValue = dataMap.get("getTemplateSuffixValue").toString();
@@ -4405,10 +4446,18 @@ public class ProductionContext extends CommonContext {
 					Assert.assertEquals(TemplatePrefixValue, getTemplatePrefixValue);
 					Assert.assertEquals(TemplateSuffixValue, getTemplateSuffixValue);
 					Assert.assertEquals(TemplateMinNumValue, getTemplateMinNumValue);
-					
+					pass(dataMap, "Numbering and Sorting values are correct");
 				} catch (Exception e) {
 					fail(dataMap, "Numbering and Sorting values are not correct");
 				}
+				
+				// Change beginning bates value after verification
+				Random random = new Random();
+				int i = random.nextInt(999);
+				String newBeginningBatesNum = String.valueOf(i);
+				prod.getBeginningBates().Clear();
+				prod.getBeginningBates().SendKeys(newBeginningBatesNum);
+				
 				
 				prod.getNumAndSortMarkComplete().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4416,15 +4465,12 @@ public class ProductionContext extends CommonContext {
 				prod.getNumAndSortNext().click();
 				driver.waitForPageToBeReady();
 				
+				// store bates number in dataMap
+				dataMap.put("updatedBeginningBates", newBeginningBatesNum);
+				
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-			
-
-			
-
-			
-			
 		} else {
 			throw new ImplementationException("NOT the_default_template_for_numbering_is_displayed");
 		}

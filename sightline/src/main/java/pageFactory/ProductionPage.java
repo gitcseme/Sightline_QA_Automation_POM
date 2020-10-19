@@ -535,9 +535,14 @@ public class ProductionPage {
     public Element getProductionComponentNativeCheckbox() { return driver.FindElementById("chkIsNativeSelected"); }
     public Element getProductionComponentTIFFCheckbox() { return driver.FindElementById("chkIsTIFFSelected"); }
     public Element getProductionComponentPDFCheckbox() { return driver.FindElementById("chkIsPDFSelected"); }
+    public Element getProductionComponentMP3FilesCheckbox() { return driver.FindElementById("chkIsMP3Selected"); }
     public Element getPDFPlaceholderTextField() { return driver.FindElementByXPath("//div[@id='PDFContainer']//div[@class='redactor-editor']"); }
+    public Element getProductionComponentAdvanceToggle() { return driver.FindElementByCssSelector(".advanced-production-toggle.col-md-12"); }
+    public Element getMP3RedactionsDefaultAutomation() { return driver.FindElementByXPath("//*[@id='MP3RedactiontreeFolder']//a[@id='7_anchor' and @data-content='Default Automation Redaction']"); }    
+    public Element getMP3RedactionStyleValue() { return driver.FindElementById("lstFillerAudio"); }
+    public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
-  
+    
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
