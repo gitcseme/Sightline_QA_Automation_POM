@@ -27,8 +27,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
-
+import pageFactory.DocListPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -4392,11 +4393,19 @@ public class ProductionContext extends CommonContext {
 	public void login_to_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
-			throw new ImplementationException("login_to_new_production");
-		} else {
-			throw new ImplementationException("NOT login_to_new_production");
+			//This is a collection of the following steps
+
+			//sightline_is_launched
+			login_as_pau(true, dataMap);
+
+			//login_as_pauon_production_home_page
+			on_production_home_page(true, dataMap);
+
+			//begin_new_production_process
+			begin_new_production_process(true, dataMap);
+			pass(dataMap, "Succesfully fnished the login - > to new production process");
 		}
+		else fail(dataMap, "Can not finish the login to production process");
 
 	}
 
@@ -4531,7 +4540,9 @@ public class ProductionContext extends CommonContext {
 			//Click Search > Session Search in navigation bar
 			prod.getProdSearchMenuButton();
 			prod.getProdSessionSearchButton();
-			pass(dataMap, "Navigated to session Search");
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			pass(dataMap, "Navigated to session Search, and searched for our production");
 
 		}
 		else fail(dataMap, "Could not get to the Session search page");
@@ -4586,10 +4597,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Switch to Advanced'Search by 'Work Product' > 'Productions' > 'Already Produced'
-			throw new ImplementationException("advanced_search_for_production");
-		} else {
-			throw new ImplementationException("NOT advanced_search_for_production");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String prodName = (String)dataMap.get("production_name");
+			
+			//Click Advanced Search
+			sessionSearch.getAdvancedSearchLink().click();
+			
+			//Click Work Product Button
+			sessionSearch.getWorkproductBtn().click();
+			
+			//Click Productions Button
+			sessionSearch.getProductionBtn().click();
+			
+			
 		}
+		else fail(dataMap, "Failed the advanced search");
 
 	}
 
@@ -4850,10 +4872,28 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
-			throw new ImplementationException("add_allproductionbatesranges_column_to_doc");
-		} else {
-			throw new ImplementationException("NOT add_allproductionbatesranges_column_to_doc");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			DocListPage docList = new DocListPage(driver);
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocList
+    			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getDocListAction().click();
+			
+			//Add Column -> AllProductionBatesRange
+			docList.getDocListSelectColumnButton().click();
+			docList.getDocListMetaDataColumnCheckBoxByName("AllProductionBatesRanges").click();
+			docList.getDocListAddToSelectedButton().click();
+			docList.getDocListSelectColumnOkButton().click();
+
+
+
+			pass(dataMap,  "Successfully added column AllProductionBatesRange");
 		}
+		else fail(dataMap,  "Could not add column AllProductionBatesRange");
 
 	}
 
