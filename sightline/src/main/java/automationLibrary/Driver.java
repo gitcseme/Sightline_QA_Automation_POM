@@ -496,5 +496,12 @@ public  class Driver  {
 			}
 	 		return errflpath;
  		}
+
+
+
+ 	public void WaitUntilUrlContains(String url) {
+ 		wait.until(ExpectedConditions.urlContains(url));
+ 	}
 	   
-	}
+
+}

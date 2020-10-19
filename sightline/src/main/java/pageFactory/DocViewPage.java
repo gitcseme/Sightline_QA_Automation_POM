@@ -237,6 +237,9 @@ public class DocViewPage {
     public Element getMetaDataTableRowValueByName(String name) { return driver.FindElementByXPath(String.format("//table[@id='MetaDataDT']//td[contains(text(), '%s')]/following-sibling::td", name));}
     public ElementCollection getDocListRows() {return driver.FindElementsByCssSelector("#dtDocList>tbody>tr");}
     
+    public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
+    public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
+    
     
     public DocViewPage(Driver driver){
 

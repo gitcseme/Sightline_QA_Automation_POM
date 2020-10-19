@@ -133,28 +133,34 @@ public class CommonContext {
     
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
     public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-    	dataMap = new HashMap();
-    	dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-
 	    ingest = new IngestionPage(driver);
 	    if (!ingest.changeProjectSelector().getText().equals("Auto_Smoke2901")) {
 	    	ingest.changeProjectSelector().Click();
 	    	ingest.ingestionProjectSelector().Click();
 		}
 
+    	dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+	    
 	    if (scriptState) {
 	    	String url = (String) dataMap.get("URL");
 	    		webDriver.get(url+"Ingestion/Home");
+	    		
 	    } else {
 	    		webDriver.get("http://www.google.com");
 	    }
+
 	    driver.waitForPageToBeReady();
+	    
+	    // save Ingestion count
+	    String totalIngestCountText = ingest.getTotalIngestCount().getText();
+	    dataMap.put("ingestion_count", totalIngestCountText);
+
 	} 
     
     
     @And("^.*(\\[Not\\] )? on_admin_home_page$")
 	public void on_admin_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		dataMap = new HashMap();
+
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		
 		if (scriptState) {
@@ -169,7 +175,7 @@ public class CommonContext {
     
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
 	public void on_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		dataMap = new HashMap();
+
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		
 		ingest = new IngestionPage(driver);
