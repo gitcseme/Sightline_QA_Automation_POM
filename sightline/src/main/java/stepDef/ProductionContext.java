@@ -4405,11 +4405,31 @@ public class ProductionContext extends CommonContext {
 	public void the_production_generation_is_started_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
-			throw new ImplementationException("the_production_generation_is_started_with_the_given_production_component");
-		} else {
-			throw new ImplementationException("NOT the_production_generation_is_started_with_the_given_production_component");
+			//This will generate the production with the given production component. This is collection of the following steps: 
+			
+			//marking_complete_the_next_available_bates_numbe
+			complete_default_numbering_and_sorting(scriptState, dataMap);
+
+			//complete_default_document_selection 
+			complete_default_document_selection(true, dataMap);
+
+			//mark_complete_default_priv_guard
+			mark_complete_default_priv_guard(true, dataMap);
+
+			//complete_default_production_location_component
+			complete_default_production_location_component(true, dataMap);
+
+			//completed_summary_preview_component
+			completed_summary_preview_component(true, dataMap);
+
+			//starting_the_production_generation
+			starting_the_production_generation(true, dataMap);
+
+			//waiting_for_production_to_be_complete
+			waiting_for_production_to_be_complete(true, dataMap);
+			pass(dataMap, "Successfully finished the production generation process");
 		}
+		else fail(dataMap , "Could not finish the production generation process");
 
 	}
 
