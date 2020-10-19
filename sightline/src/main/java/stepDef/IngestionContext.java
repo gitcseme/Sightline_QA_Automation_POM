@@ -896,6 +896,23 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@When("^.*(\\[Not\\] )? click_copy_option_published$")
+	public void click_copy_option_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+	if (scriptState) {
+		//
+		// * Click settings (gear icon) on ingested tile
+		// * Click on Copy
+		//
+		driver.waitForPageToBeReady();
+		ingest.getCopyOptionButtonPublished().Click();
+		pass(dataMap, "Clicked copy Public button");
+	} else {
+		fail(dataMap, "NOT click_copy_option");
+	}
+
+}
 
 	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
 	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -3361,15 +3378,39 @@ public class IngestionContext extends CommonContext {
 
 
 	@And("^.*(\\[Not\\] )? search_for_existing_ingestion$")
-	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap)
+			throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//we need to preset an ingestion so that we can use it for future automation. You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.Then this method will search for that existing ingestion
-			throw new ImplementationException("search_for_existing_ingestion");
-		} else {
-			throw new ImplementationException("NOT search_for_existing_ingestion");
-		}
+			// we need to preset an ingestion so that we can use it for future automation.
+			// You can hardcode the ingestion name or create a saved filter so that we can
+			// use the same ingestion for most of our tests.Then this method will search for
+			// that existing ingestion
+			try {
+				// Open Filter menu
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return ingest.getFilterByOption().Displayed();
+					}
+				}), Input.wait30);
+				ingest.getFilterByOption().Click();
 
+				// Deselect all non Catalog options
+				for (int i = 1; i <= 8; ++i) {
+					if (ingest.getSelectFilterByOption(i).Selected() && i != 8)
+						ingest.getSelectFilterByOption(i).Click();
+				}
+
+				// Make sure published is clicked
+				if (!ingest.getSelectFilterByOption(8).Selected())
+					ingest.getSelectFilterByOption(8).Click();
+				ingest.getcardCanvas().click();
+				pass(dataMap, "Filted Easily");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else
+			fail(dataMap, "could not filter");
 	}
 
 
@@ -3579,16 +3620,26 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
-	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
+		throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			throw new ImplementationException("open_ingestion_details_page");
-		} else {
-			throw new ImplementationException("NOT open_ingestion_details_page");
+	if (scriptState) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingest.getFirstGearBtn().Visible();
+			}
+		}), Input.wait30);
+		while(!ingest.getFirstGearBtn().Displayed()) {
+			ingest.getRefreshButton().click();
 		}
-
+		ingest.getFirstGearBtn().Click();
+	} else {
+		throw new ImplementationException("NOT open_ingestion_details_page");
 	}
+
+}
 
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
@@ -3759,6 +3810,99 @@ public class IngestionContext extends CommonContext {
 			throw new ImplementationException("click_preview_and_run_button");
 		} else {
 			throw new ImplementationException("NOT click_preview_and_run_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_execute_ingestion$")
+	public void manually_execute_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select all available Ingestion filters
+			//* Click on created 'In Progress' Ingestion
+			//* Click 'Cataloging' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Cataloging' step is complete
+			//* Click on recently Cataloged Ingestion
+			//* Click 'Copying' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Copying' step is complete
+			//* Click on recently Copied Ingestion
+			//* Click 'Indexing' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Indexing' step is complete
+			//
+			throw new ImplementationException("manually_execute_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_execute_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_approve_ingestion$")
+	public void manually_approve_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Filter for 'Indexed' Ingestions
+			//* Click on recently Indexed Ingestion
+			//* Select 'Approve' from top right dropdown menu on Ingestion Execution Details popup
+			//
+			throw new ImplementationException("manually_approve_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_approve_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? run_ingestion_analytics$")
+	public void run_ingestion_analytics(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("run_ingestion_analytics");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_analytics");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_add_only_ingestion_e2e$")
+	public void verify_add_only_ingestion_e2e(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8783
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as NIUX
+			//
+			//TC8806
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as TRUE
+			//
+			throw new ImplementationException("verify_add_only_ingestion_e2e");
+		} else {
+			throw new ImplementationException("NOT verify_add_only_ingestion_e2e");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_is_completed_by_the_time_specified$")
+	public void verify_analysis_is_completed_by_the_time_specified(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7605 Verify Incremental Analysis of Email Threading for Add only Ingestion with 25,000 records  should get completed by 70min on 500,000 docs project for which Analysis is already completed
+			//
+			//* validate the analysis is completed by the time specified
+			//
+			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
 		}
 
 	}
