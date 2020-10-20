@@ -15,6 +15,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import pageFactory.BatchPrintPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -29,6 +30,7 @@ public class CommonContext {
 
 	ProductionPage prod;
 	IngestionPage ingest;
+	BatchPrintPage batchPrint;
 
     @Given("^(\\[Not\\] )?sightline_is_launched$")
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) {
@@ -160,6 +162,20 @@ public class CommonContext {
 
 	} 
     
+	@And("^.*(\\[Not\\] )? on_batch_print_page$")
+	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Batch Print page (/BatchPrint)
+			//* Batch Print page is displayed
+			//
+			batchPrint = new BatchPrintPage(driver);
+		} else {
+			throw new ImplementationException("NOT on_batch_print_page");
+		}
+
+	}
     
     @And("^.*(\\[Not\\] )? on_admin_home_page$")
 	public void on_admin_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
