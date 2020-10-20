@@ -140,24 +140,28 @@ public class BatchPrintContext extends CommonContext {
 			try {
 				
 				if (dataMap.containsKey("select")) {
-					String parentOption = "Shared With Project Administrator";
-					String option = "1FILE";
+					String parentOption = "Shared with SG1";
+					String option = "CustodianName Erika Grajeda";
+
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
 					
-					batchPrint.getSelectSearchParentOption(parentOption).waitAndClick(10);
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
 					
 					// wait until options become visible
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getSelectSearchParentGroup(parentOption).Visible()  ;}}), Input.wait30);
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
 					
 					// select option
-					batchPrint.getSelectSearchOption(option).waitAndClick(10);
+					batchPrint.getCustodianNameCheckbox().click();
 					
 					// click Next button
 					batchPrint.getSourceSelectionNextButton().click();
 				}
 				
 			} catch (Exception e) {
-				
+				System.out.println(e);
 			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
@@ -181,7 +185,7 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getAnalysisnextbutton().click();
 				}
 			} catch (Exception e) {
-				
+				System.out.println(e);
 			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
@@ -207,7 +211,7 @@ public class BatchPrintContext extends CommonContext {
 					}
 				}
 			} catch (Exception e) {
-				
+				System.out.println(e);
 			}
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
@@ -226,6 +230,10 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
+					
 					// Disable slip sheets
 					batchPrint.getEnableSlipSheetsToggle().click();
 					
@@ -237,7 +245,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				batchPrint.getSlipSheetsNextButton().click();
 			} catch (Exception e) {
-				
+				System.out.println(e);
 			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
@@ -273,9 +281,16 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getInsertMetadataFieldOKButton().click();
 				}
 				
-				if (dataMap.containsKey("include_applied_redactions")) {
+				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("true")) {
 					
 				}
+				
+				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+					
+				}
+				
+				batchPrint.getBrandingAndRedactionNextButton().click();
+				
 			} catch (Exception e) {
 				
 			}
@@ -295,7 +310,19 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Export Format
 			//* Click Generate button
 			//
-			throw new ImplementationException("select_export_format");
+//			dataMap.put("pdf_creation", "1 PDF for all docs");
+//			dataMap.put("sort_by", "MasterDate");
+//			dataMap.put("export_by", "DocFileName");
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
+				batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+				batchPrint.getGenerateButton().click();
+			} catch (Exception e) {
+				
+			}
+			
 		} else {
 			throw new ImplementationException("NOT select_export_format");
 		}
@@ -316,7 +343,17 @@ public class BatchPrintContext extends CommonContext {
 			//* Click the dropdown action button
 			//* Click on View DocView
 			//
-			throw new ImplementationException("click_download_file_link");
+			try {
+				// Reset notification number back to 0. We will use the bull horn to check
+				// if file is ready to download
+				if (!prod.getBulHornNotificationNumber().getText().equals("0")) {
+					prod.getBulHornNotificationNumber().click();
+				}
+				
+				
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
 		}

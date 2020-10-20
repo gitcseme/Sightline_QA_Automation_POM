@@ -102,7 +102,7 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for all docs");
+			dataMap.put("pdf_creation", "One PDF for all documents");
 			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
