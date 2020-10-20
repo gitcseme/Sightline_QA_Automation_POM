@@ -4540,8 +4540,6 @@ public class ProductionContext extends CommonContext {
 			//Click Search > Session Search in navigation bar
 			prod.getProdSearchMenuButton();
 			prod.getProdSessionSearchButton();
-			
-			SessionSearch sessionSearch = new SessionSearch(driver);
 			pass(dataMap, "Navigated to session Search, and searched for our production");
 
 		}
@@ -4620,11 +4618,29 @@ public class ProductionContext extends CommonContext {
 	public void uncommit_last_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("uncommit_last_production");
-		} else {
-			throw new ImplementationException("NOT uncommit_last_production");
+			
+			//Use a past context: Selecting the production to help filter into our desired Production
+			dataMap.put("status", "COMPLETED");
+			dataMap.put("viewMode", "tile");
+			selecting_the_production(true, dataMap);
+
+			//Get our Target Production Tile and Click into it
+			WebElement targetProd =  prod.getProductionTileByName((String)dataMap.get("production_name"));
+			targetProd.click();
+			
+			//Uncommit and wait for popup
+			prod.getProd_Uncommitbutton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getMP3WarningBox().Displayed()  ;}}), Input.wait30); 
+
+			//Refresh page, and verify commit button is now present rather than uncommit
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(prod.getConfirmProductionCommit().Displayed());
+			pass(dataMap, "Production was uncommited successfully");
+
 		}
+		else fail(dataMap, "Production was not uncommited");
 
 	}
 
@@ -4874,6 +4890,10 @@ public class ProductionContext extends CommonContext {
 			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
 			SessionSearch sessionSearch = new SessionSearch(driver);
 			DocListPage docList = new DocListPage(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
 
 			//Find appropriate + button
     			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
@@ -4902,11 +4922,26 @@ public class ProductionContext extends CommonContext {
 	public void open_production_in_doc_list(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Use generated production name to open the PDF in Doc View
-			throw new ImplementationException("open_production_in_doc_list");
-		} else {
-			throw new ImplementationException("NOT open_production_in_doc_list");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			DocListPage docList = new DocListPage(driver);
+			int tarIndex = 0;
+			
+			//Open in Doclist
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getDocListAction().click();
+			
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("AllProductionBatesRanges")) tarIndex = i;
+			}
+			
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("batesRage", batesRange);
+			pass(dataMap, "Opened successfully in docList");
+			
 		}
+		else pass(dataMap, "Couldnt open in docList");
 
 	}
 
@@ -4915,11 +4950,15 @@ public class ProductionContext extends CommonContext {
 	public void verify_allproductionbatesranges_not_displayed_on_uncommitted_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC8210 Verify that 'AllProductionBatesRanges' should not show for uncommitted production
-			throw new ImplementationException("verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
-		} else {
-			throw new ImplementationException("NOT verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
+			//Make sure batesRange is empty string
+			String batesRange = (String)dataMap.get("batesRange");
+			Assert.assertTrue(batesRange.equals(""));
+			pass(dataMap, "AllProductionBatesRange is not showing");
+
 		}
+		else fail(dataMap, "AllProductionBatesRange is showing");
 
 	}
 

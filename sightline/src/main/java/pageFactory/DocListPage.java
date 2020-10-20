@@ -2,8 +2,10 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -78,7 +80,11 @@ public class DocListPage {
     public Element getDocListAddToSelectedButton() {return driver.FindElementById("addFormObjects");}
     public Element getDocListSelectColumnOkButton() {return driver.FindElementById("btnUpdateColumns");}
     
-  
+    
+    //Pass in a row and the Column index -> Return Value
+    public String getDocListColumnDataByIndex(WebElement row, int index) {
+    		return (row.findElements(By.tagName("td"))).get(index).getText();
+    }
     
     public DocListPage(Driver driver){
 
