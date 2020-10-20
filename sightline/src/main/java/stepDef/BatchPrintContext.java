@@ -180,7 +180,6 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("basis_for_printing").equals("Native")) {
-
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
@@ -236,6 +235,7 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
 					
+
 					// Disable slip sheets
 					batchPrint.getEnableSlipSheetsToggle().click();
 					
@@ -248,6 +248,7 @@ public class BatchPrintContext extends CommonContext {
 				batchPrint.getSlipSheetsNextButton().click();
 			} catch (Exception e) {
 				System.out.println(e);
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
@@ -293,6 +294,10 @@ public class BatchPrintContext extends CommonContext {
 				
 				batchPrint.getBrandingAndRedactionNextButton().click();
 				
+				if (dataMap.containsKey("include_applied_redactions")) {
+					
+				}
+
 			} catch (Exception e) {
 				
 			}

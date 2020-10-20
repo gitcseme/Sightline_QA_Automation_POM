@@ -98,12 +98,15 @@ public class BatchPrintPage {
     public Element getAnalysisNextButton() { return driver.FindElementById("analysis-next-button"); }
     public Element getPrintExcelFilesRadioButton() { return driver.FindElementById("printExcelFileRadiobutton"); } 
     public Element getExceptionFileTypesNextButton() { return driver.FindElementById("exception-file-types-next-button"); }
+
     public Element getEnableSlipSheetsToggle() { return driver.FindElementByXPath("//*[@id='includeSlipSheetCheckBox']/following-sibling::i"); }
+
     public Element getSlipSheetsDisabledPanel() { return driver.FindElementByXPath("//div[@id='slipSheetsSelectFieldsDiv' and @class='disablePanel']"); }
     public Element getSlipSheetsNextButton() { return driver.FindElementById("slip-sheets-next-button"); }
     public Element getBrandingHeaderLocation(String location) { return driver.FindElementByXPath("//div[@id='divbranding2']/div[@class='placeholder-header']//button[text()='"+location+"']"); }
     public Element getBandingLocationPopup() { return driver.FindElementByCssSelector(".smart-form.client-form"); }
     public Element getBrandingLocationTextField() { return driver.FindElementByCssSelector("div.redactor-editor"); }
+
     public Element getSharedWithSG1SearchParentGroup() { return driver.FindElementByXPath("//li[@id='2g']/i"); }
     public Element getCustodianNameCheckbox() { return driver.FindElementById("236_anchor"); }
     public Element getBrandingAndRedactionNextButton() {  return driver.FindElementById("branding-and-redaction-next-button"); } 
