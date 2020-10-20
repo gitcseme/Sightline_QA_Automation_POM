@@ -6526,7 +6526,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive" ,"WIP"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_committed_production_found() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6559,7 +6559,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_complete_default_document_selection_When_mark_complete_default_priv_guard_Then_verify_production_location_component() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6569,11 +6569,20 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-			context.login_to_new_production(true, dataMap);
+			
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/Production/Home");
+			context.on_production_home_page(true, dataMap);
+			//context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
-			dataMap.put("native", "false");
-			dataMap.put("pdf", "true");
-			dataMap.put("tiff", "false");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			dataMap.put("prod_template", "false");
+			context.begin_new_production_process(true, dataMap);
 			context.complete_complex_production_component(true, dataMap);
 			context.marking_complete_the_next_available_bates_number(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);

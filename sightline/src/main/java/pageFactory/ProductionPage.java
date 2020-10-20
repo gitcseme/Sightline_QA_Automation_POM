@@ -608,6 +608,9 @@ public class ProductionPage {
     public Element getMP3RedactionStyleValue() { return driver.FindElementById("lstFillerAudio"); }
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
+    public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
+    
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
