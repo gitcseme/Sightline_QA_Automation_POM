@@ -6378,7 +6378,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Ingestion, Positive", "smoke1", "wip"})
+	@Test(groups = {"Ingestion, Positive", "smoke", "wip"})
 	public void test_Given_verify_source_system_ingestion_overlay_fails_When_ignore_errors_found_Then_verify_ignoring_errors_still_ingests_remaining_files() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6563,7 +6563,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke1", "wip"})
+	@Test(groups = {"Ingestion, Positive", "smoke", "wip"})
 	public void test_Given_verify_source_system_ingestion_overlay_fails_and_click_on_rollback_option_and_open_saved_draft_ingestion_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_re_running_ingestion_is_successful() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
