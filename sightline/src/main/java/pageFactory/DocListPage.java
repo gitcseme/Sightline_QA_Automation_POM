@@ -27,7 +27,7 @@ public class DocListPage {
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
     public ElementCollection getDocListColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocList thead th");}
     public Element getDocListTable() { return driver.FindElementById("dtDocList"); }
-    public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
+    public ElementCollection getDocListRows(){ return driver.FindElementsByXPath("//*[@id='dtDocList']/tbody/tr"); }
     public Element getColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]/a"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
      //Filters

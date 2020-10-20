@@ -1528,12 +1528,10 @@ public class ProductionContext extends CommonContext {
 				//Deselect Filters we dont want
 				for(int i =1; i<=4; i++) {
 					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
-					Thread.sleep(1000);
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				prod.getFilterByButton().Click();
-				Thread.sleep(1000);
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -4021,7 +4019,7 @@ public class ProductionContext extends CommonContext {
 			String status = prod.getGeneratePostGenStatus().getText();
 			//Loop to wait for Post Generation check complete
 			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<20) {
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<30) {
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
@@ -5670,7 +5668,6 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should  show the produced TIFF/PDF for this uncommitted production
 			int images = (int)dataMap.get("totalImages");
-			System.out.println(images);
 			Assert.assertTrue(images!=0);
 			pass(dataMap, "Verified doc view images tab");
 		}
@@ -5738,7 +5735,6 @@ public class ProductionContext extends CommonContext {
 			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
 
 			int images = (int)dataMap.get("totalImages");
-			System.out.println(images);
 			//Make sure images are not showing 
 			assertEquals(0, images);
 			pass(dataMap, "verified that images tab was not displayed");
@@ -5760,6 +5756,7 @@ public class ProductionContext extends CommonContext {
 			sessionSearch.insertFullText(docId);
 			sessionSearch.getSearchButton().click();
 			
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
 
@@ -5769,17 +5766,16 @@ public class ProductionContext extends CommonContext {
     			}
     			//Go to DocList
     			sessionSearch.getBulkActionButton().click();
-			sessionSearch.getDocListAction().click();
-			
+    			sessionSearch.getDocListAction().click();
 			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+
 			//Add Column -> AllProductionBatesRange
 			docList.getDocListSelectColumnButton().click();
 			docList.getDocListMetaDataColumnCheckBoxByName("AllProductionBatesRanges").click();
 			docList.getDocListAddToSelectedButton().click();
 			docList.getDocListSelectColumnOkButton().click();
-
-
-
+			driver.waitForPageToBeReady();
 			pass(dataMap,  "Successfully added column AllProductionBatesRange");
 		}
 		else fail(dataMap,  "Could not add column AllProductionBatesRange");
@@ -5791,17 +5787,19 @@ public class ProductionContext extends CommonContext {
 	public void open_production_in_doc_list(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			SessionSearch search = new SessionSearch(driver);
 			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
 			int tarIndex = 0;
 			
 			//Find Index of our row 
 			int i = 0;
 			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
-				if(x.getText().equals("AllProductionBatesRanges")) tarIndex = i;
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
 			}
-			
 			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
-			dataMap.put("batesRage", batesRange);
+			dataMap.put("batesRange", batesRange);
 			pass(dataMap, "Opened successfully in docList");
 			
 		}
