@@ -5706,9 +5706,13 @@ public class ProductionContext extends CommonContext {
 			//
 			//* Verify MP3 Files component section matches the template
 			//
-			throw new ImplementationException("verify_template_mp3_component_details");
+			Assert.assertTrue(prod.getMP3ComponentRedactionToggle().Enabled());
+			Assert.assertTrue(prod.getMP3_SelectRed_RedactionByAnnotation().Selected());
+			Assert.assertTrue(prod.getMP3_SelectAdvToggle().Enabled());
+			Assert.assertTrue(prod.getMP3AdvancedList().Enabled());
+			pass(dataMap, "verify_template_mp3_component_details");
 		} else {
-			throw new ImplementationException("NOT verify_template_mp3_component_details");
+			fail(dataMap,"NOT verify_template_mp3_component_details");
 		}
 
 	}
