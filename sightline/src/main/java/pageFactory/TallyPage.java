@@ -13,7 +13,7 @@ public class TallyPage {
 
     Driver driver;
     BaseClass base;
-    final DocListPage dp;
+    DocListPage dp;
   
     public Element getAutoSelectedSearchSource(){ return driver.FindElementByXPath("//li[contains(text(),'Documents: Selected Documents from Search')]"); }
     public Element getTally_SelectSource(){ return driver.FindElementById("select-source"); }
@@ -71,14 +71,27 @@ public class TallyPage {
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
     
     public Element getQuickBatchAction(int i){ return driver.FindElementByXPath("(//a[contains(text(),'Quick Batch')])["+i+"]"); }
+    public Element getMetadataPopup() { return driver.FindElementById("metadataPopup"); }
+    public Element getMetadataButtonSelectedOption(String option) { return driver.FindElementByXPath("//button[@id='select-source1' and contains(text(), '"+option+"')]"); } 
+    public Element getSubMetadataButtonSelectedOption(String option) { return driver.FindElementByXPath("//button[@id='select-source21' and contains(text(), '"+option+"')]"); } 
+    public ElementCollection getMetadataViewText() { return driver.FindElementsByXPath("//*[name()='svg']//*[name()='text' and @dy='.35em']"); }
+    public Element getMetadataTallyResults() { return driver.FindElementByXPath("//*[name()='svg']"); }
+    public Element getMetadataSelected() { return driver.FindElementByXPath("//*[name()='svg']//*[name()='rect' and @class='selected']"); }
+    public Element getTallyActionDropdownMenu() { return driver.FindElementByCssSelector(".dropdown-menu.action-dd"); }
+    public Element getTallyActionOption(String option) { return driver.FindElementByXPath("//a[text()='"+option+"']"); }
+    public Element getSubTallyByOption(String option) { return driver.FindElementByXPath("//div[@id='accordion2']//strong[text()='"+option+"']"); }
+    public ElementCollection getSubTallyMetadataResults() { return driver.FindElementsByXPath("//div[@id='subTallyChart']//td[@class='text-left rowlead formatDate']"); }
+    public Element getSubTallyTable() { return driver.FindElementByCssSelector(".table.table-striped.dataGrid"); }
     
-   
+  
     public TallyPage(Driver driver){
 
-    	this.driver = driver;
-         dp = new DocListPage(driver);
-         this.driver.getWebDriver().get(Input.url+ "Report/Tally");
-         
+    	this.driver = driver;    	
+    	// Adding logic to check if user is already on Tally view. Without this, if TallyPage gets initialized when user is already on 
+    	// Tally view, then the existing data on the page gets wiped out
+         if (!driver.getUrl().contains("Report/Tally")) {
+        	 this.driver.getWebDriver().get(Input.url+ "Report/Tally");
+         }
         base = new BaseClass(driver);
    
     }
@@ -266,7 +279,7 @@ public class TallyPage {
 
 	}
     public void ValidateTallySubTally() throws InterruptedException {
-    	
+    	dp = new DocListPage(driver);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getTally_SelectSource().Visible()  ;}}), Input.wait30); 
 		getTally_SelectSource().Click();
@@ -452,6 +465,20 @@ public class TallyPage {
 		
 		    }
 
+ 	public void selectMetadataOption(String option) {
+ 		getTally_Metadataselect().click();
+ 		getTally_Metadataselect().SendKeys(option);
+ 	}
+ 	
+ 	public void selectSubMetadataOption(String option) {
+ 		getTally_submetadataselect().click();
+ 		getTally_submetadataselect().SendKeys(option);
+ 	}
 
-     
+    public void selectTallyAction(String option) {
+    	getTally_tallyactionbtn().click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getTallyActionDropdownMenu().Visible()  ;}}), Input.wait30);	
+    	getTallyActionOption(option).click();
+    }
 }

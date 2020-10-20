@@ -18,7 +18,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;  
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -26,11 +28,13 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
+import pageFactory.TallyPage;
 import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -58,6 +62,8 @@ public class IngestionContext extends CommonContext {
 	
 	SessionSearch sessionSearch;
 	DocViewPage docView;
+	DocListPage docListPage;
+	TallyPage tally;
 	JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
@@ -94,18 +100,22 @@ public class IngestionContext extends CommonContext {
 	public void click_run_ingest_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
-			ingest.getbtnRunIngestion().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-			
-			//Put ingestion name into dataMap
-			dataMap.put("lastCreatedIngestionName", ingest.getIngestionTileName(0));
-			
-			pass(dataMap,"Clicking Ingest Button was successful");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
+				ingest.getbtnRunIngestion().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+				
+				//Put ingestion name into dataMap
+				dataMap.put("lastCreatedIngestionName", ingest.getIngestionTileName(0));
+				
+				pass(dataMap,"Clicking Ingest Button was successful");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
 		} else {
 			ingest.getPreviewRun().Click();
 			fail(dataMap,"Clicking Ingest Button was unsuccessful");
@@ -190,7 +200,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	
 	@When("^.*(\\[Not\\] )? click_open_wizard_option$")
 	public void click_open_wizard_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -203,7 +213,6 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionAction_Delete().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Delete().Click();
 		}
-
 	}
 
 
@@ -228,7 +237,8 @@ public class IngestionContext extends CommonContext {
 			} else {
 				fail(dataMap,"Ingestion Execution Details Popup did NOT Display");
 				}
-		} else {
+		} 
+		else {
 			on_ingestion_home_page(scriptState, dataMap);
 		}
 
@@ -269,6 +279,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 	
+	
 	@Then("^.*(\\[Not\\] )? verify_expected_date_time_format_is_displayed$")
 	public void verify_expected_date_time_format_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
     	ExtentTest test = null;
@@ -295,9 +306,14 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
-
 			String totalIngestCountText = ingest.getTotalIngestCount().getText();
-			if (totalIngestCountText.equals(dataMap.get("actualCount"))) {
+			int count = Integer.parseInt(totalIngestCountText);
+			int beginningCount = Integer.parseInt(dataMap.get("ingestion_count").toString());
+
+			// update ingestion_count in dataMap
+			dataMap.replace("ingestion_count", count);
+			
+			if (count > beginningCount) {
 				pass(dataMap,"Ingestion Tile and Count Have Increased");
 			} else {
 				fail(dataMap,"Ingestion was NOT Processed Successfully");
@@ -493,16 +509,13 @@ public class IngestionContext extends CommonContext {
 						ingest.getIngestionAction_Delete().Visible()  ;}}), Input.wait30); 
 				ingest.getIngestionAction_Delete().Exists();
 				pass(dataMap, "Ingestion Action Delete Button is Avaliable");
-				}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
-				}
-			}
-			
-			
+					throw new Exception(e.getMessage());
+				} else {
+					pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
+					}
+			}	
 	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
@@ -594,6 +607,7 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			try {
 
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
 				ingest.getPreviewRun().Click();
@@ -605,7 +619,7 @@ public class IngestionContext extends CommonContext {
 	    	    
 	    	    //HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation((HashSet<String>)dataMap.get("targetColumns"));
 	    	    HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation();
-
+	    	    
 	    	    dataMap.put("ingestPreviewData", ingestPreviewData);
 
 				pass(dataMap, "Get Preview Run Button is Clickable");
@@ -896,6 +910,23 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@When("^.*(\\[Not\\] )? click_copy_option_published$")
+	public void click_copy_option_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+	if (scriptState) {
+		//
+		// * Click settings (gear icon) on ingested tile
+		// * Click on Copy
+		//
+		driver.waitForPageToBeReady();
+		ingest.getCopyOptionButtonPublished().Click();
+		pass(dataMap, "Clicked copy Public button");
+	} else {
+		fail(dataMap, "NOT click_copy_option");
+	}
+
+}
 
 	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
 	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -2463,11 +2494,30 @@ public class IngestionContext extends CommonContext {
 			//* Click Yes to confirm rollback
 			//
 			try {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
-				ingest.getGearButton().click();
-				ingest.getIngestionRollbackButton().click();
-				ingest.getIngestionRollbackConfirmButton().click();
+				String lastIngestionName = dataMap.get("lastCreatedIngestionName").toString();
+				if (ingest.getIngestionPopupDetailsCollection().size() > 0) {
+					
+					if (ingest.getIngestionErrorsHelpIconCollection().size() > 0) {
+						ingest.getIngestionErrorBackButton().click();
+					}
+					
+					System.out.println("here");
+					System.out.println("1");
+					ingest.selectActionFromIngestionDetailsPopup("Rollback");
+					System.out.println("2");
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSuccessMessageBox().Displayed() ;}}), Input.wait30);	
+					System.out.println("3");
+
+				} else {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    				ingest.getSpecificIngestionGearButton(lastIngestionName).Displayed() ;}}), Input.wait30);			
+					ingest.getSpecificIngestionGearButton(lastIngestionName).click();
+					ingest.getIngestionRollbackButton().click();
+					ingest.getIngestionRollbackConfirmButton().click();
+				}
+				
+				
 			} catch(Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "NOT click_on_rollback_option");
@@ -3026,7 +3076,27 @@ public class IngestionContext extends CommonContext {
 			//* Click on the "DocView" option
 			//* A Review Mode and list of Emails will be displayed
 			//
-			throw new ImplementationException("on_doc_view");
+			
+			String url = driver.getUrl();
+			
+			// If user is on DocList, select all Docs then click Action button, then Click Doc View
+			if (url.contains("/DocList")) {
+				docListPage.getSelectAllCheckbox().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getMessageBoxContainer().Visible()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getPopUpOkBtn().Visible()  ;}}), Input.wait30);
+				docListPage.getPopUpOkBtn().click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocList_actionButton().Visible()  ;}}), Input.wait30);
+
+				docListPage.selectAction("View in DocView");
+				
+				driver.waitForPageToBeReady();
+				
+			}
+			
 		} else {
 			throw new ImplementationException("NOT on_doc_view");
 		}
@@ -3277,7 +3347,7 @@ public class IngestionContext extends CommonContext {
 			//TC9395:To verify that Overlay should work for 'SourceParentDocID' metadata
 			//* Validate that Overlay ingestion is successful 
 			//
-			throw new ImplementationException("verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay");
+			verify_new_ingestion_tile_is_displayed(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay");
 		}
@@ -3298,7 +3368,9 @@ public class IngestionContext extends CommonContext {
 			//* Click Preview run button
 			//* Click Run Ingestion
 			//
-			throw new ImplementationException("complete_overlay_ingestion");
+			new_ingestion_created(true, dataMap);
+			click_preview_run_button(true, dataMap);
+			click_run_ingest_button(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT complete_overlay_ingestion");
 		}
@@ -3316,7 +3388,47 @@ public class IngestionContext extends CommonContext {
 			//
 			//"Source System of the overlaid docs are not matching with the source system of originally ingested docs. In the overlay, please make sure to 
 			//use the same source system used when the docs were added "
-			throw new ImplementationException("verify_source_system_ingestion_overlay_fails");
+			String lastIngestionName = dataMap.get("lastCreatedIngestionName").toString();
+						
+			System.out.println(lastIngestionName);
+			try {
+				ingest.getIngestionCardTitle(lastIngestionName).waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopup().Visible()  ;}}), Input.wait30);
+				
+				while (ingest.getPctCompleteLabel().getText().equalsIgnoreCase("In Progress")) {
+					// TODO: Add logic to take into account if status alawys stays In Progress
+					
+					ingest.getIngestionPopupCloseButton().click();
+					ingest.getIngestionCardTitle(lastIngestionName).waitAndClick(10);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getIngestionPopup().Visible()  ;}}), Input.wait30); 
+					if (!ingest.getPctCompleteLabel().getText().equalsIgnoreCase("In Progress")) {
+						break;
+					}
+				}
+
+				Assert.assertEquals("Failed", ingest.getPctCompleteLabel().getText());
+				
+				ingest.getIngestionPopupErrorsLink().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopupDetails().Visible()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopupDocIDErrorRows().Visible()  ;}}), Input.wait30); 
+				
+				String expectedError = "Source System of the overlaid docs are not matching with the source system of originally ingested docs. "
+						+ "In the overlay, please make sure to use the same source system used when the docs were added.";
+				for(WebElement row: ingest.getIngestionPopupDocIDErrorRows().FindWebElements()) {
+					Assert.assertEquals(expectedError, row.getText());		
+				}
+				pass(dataMap, "Expected error message appears if source system of Ingestion overlay is different");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify error message");
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT verify_source_system_ingestion_overlay_fails");
 		}
@@ -3329,14 +3441,21 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			//* Find ingestion with errors
-			//* Open Ingestion
-			//* Click on the errors count
+			//* This context assumes the user is on the Ingestions Errors popup dialog
 			//* On the pop up, click Ignore all Errors
 			//* Click done
 			//* Click Play button for Catalog
 			//
-			throw new ImplementationException("ignore_errors_found");
+			
+			try {
+				ingest.getIngestionIgnoreAllErrorsBtn().waitAndClick(10);
+				ingest.getApproveMessageOKButton().waitAndClick(10);
+				ingest.getCatalogDoneBtn().waitAndClick(10);
+				ingest.getRunCopying().waitAndClick(10);
+			} catch (Exception e) {
+				
+			}
+			
 		} else {
 			throw new ImplementationException("NOT ignore_errors_found");
 		}
@@ -3361,15 +3480,43 @@ public class IngestionContext extends CommonContext {
 
 
 	@And("^.*(\\[Not\\] )? search_for_existing_ingestion$")
-	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap)
+			throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//we need to preset an ingestion so that we can use it for future automation. You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.Then this method will search for that existing ingestion
-			throw new ImplementationException("search_for_existing_ingestion");
+
+			//we need to preset an ingestion so that we can use it for future automation. 
+			//You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.
+			//Then this method will search for that existing ingestion
+			
+			
+			//TODO: Search for existing ingestion in database
+			
+			// Use existing Ingestion: 0C8A_SQA_Default_Automation_20201014002433900
+			String existingIngestion = "0C8A_SQA_Default_Automation_20201014002433900";
+			
+			sessionSearch = new SessionSearch(driver);
+			
+			if (dataMap.containsKey("existing_ingestion_name") ) {
+				sessionSearch.basicContentSearch(dataMap.get("existing_ingestion_name").toString());
+				
+				//TODO: Include logic to save data and parameters in the dataMap associated to this Ingestion
+				
+			} else {
+				sessionSearch.basicContentSearch(existingIngestion);
+				dataMap.put("existing_ingestion_name", existingIngestion);
+			}
+			
+			// TODO: Add logic to retreive Doc Primary Languages for a given Ingestion from the database
+			if (dataMap.get("existing_ingestion_name").equals("0C8A_SQA_Default_Automation_20201014002433900")) {
+				// For this existing Ingestion (0C8A_SQA_Default_Automation_20201014002433900), store 
+				// the primary languages for the docs in the dataMap to be used in future contexts
+				dataMap.put("existingIngestionDocPrimaryLanguages", "English,Japanese,Spanish");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT search_for_existing_ingestion");
 		}
-
 	}
 
 
@@ -3378,30 +3525,60 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			//* Navigate to /Search/Searches
-			//* In the text box search for the Ingestion name
-			//* Enter the following query into the text box
-			//IngestionName: (ingestion name goes here)
-			//* click search button
 			//* Only documents ingested will be displayed
 			//* Select the documents and add them to righ side by click the plus symbol
 			//* Click the Action dropdown
 			//* Select View in Doc List
 			//If DocPrimaryLanguage is not displayed as a column:Click Select Column buttonAdd the specified column
-			throw new ImplementationException("on_doc_list_view");
+			
+			sessionSearch.getDocsThatMetCriteriaAddBtn().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getResultTile().Visible()  ;}}), Input.wait30); 
+			sessionSearch.ViewInDocList();
+			
+
 		} else {
 			throw new ImplementationException("NOT on_doc_list_view");
 		}
 
 	}
-
+	
 
 	@Then("^.*(\\[Not\\] )? verify_doc_list_displays_doc_primary_language_metadata_correctly$")
 	public void verify_doc_list_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		docListPage = new DocListPage(driver);
 		if (scriptState) {
-			//TC9182:Verify value of "DocPrimaryLanguage" metadata field value should be populated correctly in Doclist and in Doc ViewTC7502:Validate new metadata field DocLanguages on DocListValidate files that contained a value in the DocPrimaryLanguage are displayed correctly in the Doc List view
-			throw new ImplementationException("verify_doc_list_displays_doc_primary_language_metadata_correctly");
+			//TC9182:Verify value of "DocPrimaryLanguage" metadata field value should be populated correctly in Doclist and in Doc View
+			//TC7502:Validate new metadata field DocLanguages on DocListValidate files that contained a value in the DocPrimaryLanguage are displayed correctly in the Doc List view
+			try {
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocListTable().Visible()  ;}}), Input.wait30); 
+				
+				// "DocPrimaryLanguage" column needs to be added to the Doc List view
+				docListPage.addColumnToDocListView("DocPrimaryLanguage");
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocListTable().Visible()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocPrimaryLanguageHeading().Visible()  ;}}), Input.wait30); 
+				
+				// Verifying DocPrimaryLanguage values for existing Ingestion - 0C8A_SQA_Default_Automation_20201014002433900
+				// TODO: Add lopic to retreive Doc Primary Language from the database so values are not hardcoded
+				if (dataMap.containsKey("existing_ingestion_name")) {		
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							docListPage.getPrimaryLanguageValue("ID00002613").Visible()  ;}}), Input.wait30); 
+					
+					Assert.assertEquals("Japanese", docListPage.getPrimaryLanguageValue("ID00002613").getText());
+					Assert.assertEquals("Spanish", docListPage.getPrimaryLanguageValue("ID00002614").getText());
+					Assert.assertEquals("English", docListPage.getPrimaryLanguageValue("ID00002615").getText());
+					pass(dataMap, "Primary Language Metadata is displayed correctly!");
+				}
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
 		} else {
 			throw new ImplementationException("NOT verify_doc_list_displays_doc_primary_language_metadata_correctly");
 		}
@@ -3410,24 +3587,66 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? on_tally_view$")
-	public void on_tally_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void on_tally_view(boolean scriptState, HashMap<String, TallyPage> dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("on_tally_view");
+			String url = driver.getUrl();
+			try {
+				//TODO: Add logic to go to Tally view from other pages
+				if (url.contains("/DocList")) {
+					docListPage.getSelectAllCheckbox().click();
+			    	docListPage.getPopUpOkBtn().waitAndClick(10);
+			    	docListPage.selectAction("Tally");
+			    	driver.WaitUntilUrlContains("Report/Tally");
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}		 
 		} else {
 			throw new ImplementationException("NOT on_tally_view");
 		}
-
 	}
 
 
 	@Given("^.*(\\[Not\\] )? verify_tally_view_displays_doc_primary_language_metadata_correctly$")
 	public void verify_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		TallyPage tally = new TallyPage(driver);
 		if (scriptState) {
-			//TC7499:Validate new metadata field DocLanguages on Tally reportValidate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
-			throw new ImplementationException("verify_tally_view_displays_doc_primary_language_metadata_correctly");
+			//TC7499:Validate new metadata field DocLanguages on Tally report
+			//Validate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+
+			try {
+				tally.getTally_SelectaTallyFieldtoruntallyon().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataPopup().Visible()  ;}}), Input.wait30);
+				tally.selectMetadataOption("DocPrimaryLanguage");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataButtonSelectedOption("DocPrimaryLanguage").Visible()  ;}}), Input.wait30);
+				tally.getTally_btnTallyApply().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataTallyResults().Visible()  ;}}), Input.wait30);
+				
+				ArrayList<String> docPrimaryLanguages = new ArrayList<String>();
+				
+				for(WebElement row: tally.getMetadataViewText().FindWebElements()) {docPrimaryLanguages.add(row.getText());}
+				
+				// Remove empty strings from List
+				docPrimaryLanguages.removeAll(Arrays.asList("", null));
+
+				// Convert "existingIngestionDocPrimaryLanguages" into an ArrayList since the values are saved as a single string
+				ArrayList<String> expectedDocPrimaryLanguages = new ArrayList<String>(Arrays.asList(dataMap.get("existingIngestionDocPrimaryLanguages").toString().split(",")));
+								
+				try {
+					Assert.assertEquals(expectedDocPrimaryLanguages, docPrimaryLanguages);
+					pass(dataMap, "Tally View correctly displays DocPrimaryLanguage metadata correctly");
+				} catch (Exception e) {
+					fail(dataMap,"DocPrimaryLanguage values are not correct" + docPrimaryLanguages + " != " + expectedDocPrimaryLanguages);
+				}
+				
+			} catch (Exception e) {
+				fail(dataMap, "Unable to verify Doc Primary Language metadata on Tally View");
+				System.out.println(e);
+			}
 		} else {
 			throw new ImplementationException("NOT verify_tally_view_displays_doc_primary_language_metadata_correctly");
 		}
@@ -3437,10 +3656,19 @@ public class IngestionContext extends CommonContext {
 
 	@When("^.*(\\[Not\\] )? on_sub_tally_view$")
 	public void on_sub_tally_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		TallyPage tally = new TallyPage(driver);
 		if (scriptState) {
-			//Once Tally documents are displayedSelect all/some documents that are displayedClick on the action dropdownSelect Sub Tally
-			throw new ImplementationException("on_sub_tally_view");
+			//Once Tally documents are displayed
+			//Select all/some documents that are displayedC
+			//lick on the action dropdownSelect Sub Tally
+			tally.getTally_btnTallyAll().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getMetadataSelected().Visible()  ;}}), Input.wait30);
+			
+			tally.selectTallyAction("Sub Tally");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getTally_SourceSubTally().Enabled()  ;}}), Input.wait30);
+			
 		} else {
 			throw new ImplementationException("NOT on_sub_tally_view");
 		}
@@ -3450,10 +3678,43 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_sub_tally_view_displays_doc_primary_language_metadata_correctly$")
 	public void verify_sub_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		TallyPage tally = new TallyPage(driver);
 		if (scriptState) {
-			//TC7500:Validate new metadata field DocLanguages on Sub-Tally reportValidate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
-			throw new ImplementationException("verify_sub_tally_view_displays_doc_primary_language_metadata_correctly");
+			//TC7500:Validate new metadata field DocLanguages on Sub-Tally report
+			//Validate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+			
+			tally.getTally_SourceSubTally().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getMetadataPopup().Visible()  ;}}), 10);
+			tally.getSubTallyByOption("METADATA").click();
+			tally.selectSubMetadataOption("DocLanguages");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getSubMetadataButtonSelectedOption("DocPrimaryLanguage").Visible()  ;}}), 10);
+			tally.getTally_btnSubTallyApply().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getSubTallyMetadataResults().Visible()  ;}}), Input.wait30);
+			
+			
+			ArrayList<String> docLanguages = new ArrayList<String>();
+			// Remove empty strings from List
+			docLanguages.removeAll(Arrays.asList("", null));
+			for(WebElement row: tally.getSubTallyMetadataResults().FindWebElements()) {
+				docLanguages.add(row.getText());}
+			
+			// Remove empty strings from List
+			docLanguages.removeAll(Arrays.asList("", null));
+				
+			// Convert "existingIngestionDocPrimaryLanguages" into an ArrayList since the values are saved as a single string
+			ArrayList<String> expectedDocLanguages = new ArrayList<String>(Arrays.asList(dataMap.get("existingIngestionDocPrimaryLanguages").toString().split(",")));
+			
+
+			try {
+				Assert.assertEquals(expectedDocLanguages, docLanguages);
+				pass(dataMap, "Tally View correctly displays DocPrimaryLanguage metadata correctly");
+			} catch (Exception e) {
+				fail(dataMap,"DocLanguages values are not correct: " + docLanguages + " != " + expectedDocLanguages);
+			}
+					
 		} else {
 			throw new ImplementationException("NOT verify_sub_tally_view_displays_doc_primary_language_metadata_correctly");
 		}
@@ -3463,14 +3724,35 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_doc_view_displays_doc_primary_language_metadata_correctly$")
 	public void verify_doc_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		docView = new DocViewPage(driver);
 		if (scriptState) {
 			//TC9174:Verify value of metadata field "DocPrimaryLanguage" should be derived from CA for Add Only IngestionTC7501:Validate new metadata field DocLanguages on DocView
 			//* Once the documents have been searched and are being viewed in DocView
 			//* On the metadata tab located on the right hand side
 			//* Validate that only documents that have a Language have a value for DocPrimaryLanguage field
 			//
-			throw new ImplementationException("verify_doc_view_displays_doc_primary_language_metadata_correctly");
+			
+			// check if test case is verifying an existing ingestion
+			if (dataMap.containsKey("existing_ingestion_name")) {
+				try {
+					docView.getDocViewTableRow("ID00002613").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("Japanese", docView.getDocPrimaryLanguageValue().getText());
+					
+					docView.getDocViewTableRow("ID00002614").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("Spanish", docView.getDocPrimaryLanguageValue().getText());
+					
+					docView.getDocViewTableRow("ID00002615").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("English", docView.getDocPrimaryLanguageValue().getText());
+					
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_doc_view_displays_doc_primary_language_metadata_correctly");
 		}
@@ -3579,16 +3861,26 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
-	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
+		throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			throw new ImplementationException("open_ingestion_details_page");
-		} else {
-			throw new ImplementationException("NOT open_ingestion_details_page");
+	if (scriptState) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingest.getFirstGearBtn().Visible();
+			}
+		}), Input.wait30);
+		while(!ingest.getFirstGearBtn().Displayed()) {
+			ingest.getRefreshButton().click();
 		}
-
+		ingest.getFirstGearBtn().Click();
+	} else {
+		throw new ImplementationException("NOT open_ingestion_details_page");
 	}
+
+}
 
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
@@ -3759,6 +4051,99 @@ public class IngestionContext extends CommonContext {
 			throw new ImplementationException("click_preview_and_run_button");
 		} else {
 			throw new ImplementationException("NOT click_preview_and_run_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_execute_ingestion$")
+	public void manually_execute_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select all available Ingestion filters
+			//* Click on created 'In Progress' Ingestion
+			//* Click 'Cataloging' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Cataloging' step is complete
+			//* Click on recently Cataloged Ingestion
+			//* Click 'Copying' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Copying' step is complete
+			//* Click on recently Copied Ingestion
+			//* Click 'Indexing' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Indexing' step is complete
+			//
+			throw new ImplementationException("manually_execute_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_execute_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_approve_ingestion$")
+	public void manually_approve_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Filter for 'Indexed' Ingestions
+			//* Click on recently Indexed Ingestion
+			//* Select 'Approve' from top right dropdown menu on Ingestion Execution Details popup
+			//
+			throw new ImplementationException("manually_approve_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_approve_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? run_ingestion_analytics$")
+	public void run_ingestion_analytics(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("run_ingestion_analytics");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_analytics");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_add_only_ingestion_e2e$")
+	public void verify_add_only_ingestion_e2e(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8783
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as NIUX
+			//
+			//TC8806
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as TRUE
+			//
+			throw new ImplementationException("verify_add_only_ingestion_e2e");
+		} else {
+			throw new ImplementationException("NOT verify_add_only_ingestion_e2e");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_is_completed_by_the_time_specified$")
+	public void verify_analysis_is_completed_by_the_time_specified(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7605 Verify Incremental Analysis of Email Threading for Add only Ingestion with 25,000 records  should get completed by 70min on 500,000 docs project for which Analysis is already completed
+			//
+			//* validate the analysis is completed by the time specified
+			//
+			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
 		}
 
 	}

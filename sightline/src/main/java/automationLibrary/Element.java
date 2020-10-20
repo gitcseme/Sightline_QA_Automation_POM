@@ -230,6 +230,10 @@ private  Driver driver;
     	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by)).click();
      }
      
+     public void sendKeys(String text) {
+    	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by)).sendKeys(text);
+     }
+     
      public void waitAndClick(int waitTime) {
     	 boolean clicked = false;
 	  for(int i = 1; i<waitTime;i++){
