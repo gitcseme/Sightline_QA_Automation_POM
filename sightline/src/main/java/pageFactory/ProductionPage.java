@@ -512,6 +512,8 @@ public class ProductionPage {
     public Element getSummaryAndPreviewHeading() { return driver.FindElementByXPath("//h2[contains(text(), 'Summary and Preview')]"); }
     public Element getMP3FilesCountNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Number of MP3 Files')]/following-sibling::label"); }
     public Element getTotalDocumentsNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Total Documents')]/following-sibling::label"); }
+    
+    public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
 
     
     //Click the desired production set option, in the dropdown menu by it's index

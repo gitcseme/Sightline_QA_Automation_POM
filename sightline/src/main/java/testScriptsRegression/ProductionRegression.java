@@ -5080,6 +5080,7 @@ public class ProductionRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 

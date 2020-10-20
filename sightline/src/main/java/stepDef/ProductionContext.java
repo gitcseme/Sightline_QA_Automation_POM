@@ -3542,6 +3542,41 @@ public class ProductionContext extends CommonContext {
 				String totalDocumentsNumberActual = prod.getTotalDocumentsNumber().getText();
 				String totalDocumnetsNumberExpected = dataMap.get("total_documents_number").toString();
 				Assert.assertEquals(totalDocumentsNumberActual, totalDocumnetsNumberExpected);
+				// Production Doc Labels 
+				String totalPagesExpected = prod.getSummaryPageLabels(3).getText();
+				String numberOfCustodians = prod.getSummaryPageLabels(4).getText();
+				String numberOfNatives = prod.getSummaryPageLabels(5).getText();
+				String numberOfMP3Files = prod.getSummaryPageLabels(6).getText();
+				String exceptionDocument = prod.getSummaryPageLabels(7).getText();
+				String docWithMissingTextFiles = prod.getSummaryPageLabels(8).getText();
+				String firstAndLastDoc = prod.getSummaryPageLabels(9).getText();
+				
+				// Privileged Document Summary Labels				
+				String privilegedDoc = prod.getSummaryPageLabels(11).getText();
+				String docIdentifiedByProdGuard = prod.getSummaryPageLabels(12).getText();
+				String redactedDocuments = prod.getSummaryPageLabels(13).getText();
+				
+				// OCR/TIFF Documents Labels			
+				String documentsToOCR = prod.getSummaryPageLabels(15).getText();
+				String documentsToTIFF = prod.getSummaryPageLabels(16).getText();
+				String documentsPrintedInColor = prod.getSummaryPageLabels(17).getText();
+				
+				Assert.assertEquals("Total Pages (Uses DocPages metadata field):", totalPagesExpected);
+				Assert.assertEquals("Number Of Custodians:", numberOfCustodians);
+				Assert.assertEquals("Number of Natives:", numberOfNatives);
+				Assert.assertEquals("Number of MP3 Files:", numberOfMP3Files);
+				Assert.assertEquals("Exception Documents:", exceptionDocument);
+				Assert.assertEquals("Documents with Missing Text Files:", docWithMissingTextFiles);
+				Assert.assertEquals("First and Last Doc IDs:", firstAndLastDoc);
+				
+				Assert.assertEquals("Privileged Documents:", privilegedDoc);
+				Assert.assertEquals("Documents Identified by Production Guard:", docIdentifiedByProdGuard);
+				Assert.assertEquals("Redacted Documents:", redactedDocuments);
+				
+				Assert.assertEquals("Documents to OCR:", documentsToOCR);
+				Assert.assertEquals("Documents to TIFF:", documentsToTIFF);
+				Assert.assertEquals("Documents Printed in Color:", documentsPrintedInColor);
+				
 			} catch (Exception e) {
 				System.out.println(e);
 				fail(dataMap, "Expected values not displatyed correctly on Summary page");
