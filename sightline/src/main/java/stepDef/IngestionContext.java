@@ -4151,11 +4151,20 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingested_docs_are_in_sequential_order(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC6318:To verify DocID's of the ingested documents (AddOnly) Should be in the same sequential order as the order of records/documents in the DAT file.TC6319:To verify DocID's of the ingested documents Should be in the same sequential order as the order of records/documents in the DAT file.
-			//
-			//* Verify DOCID column displays files in a sequential order
-			//
-			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getMappingDOCID1().Displayed() ;}}), Input.wait30);
+			Assert.assertEquals(dataMap.get("docRow1"), ingest.getMappingDOCID1().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow2"), ingest.getMappingDOCID2().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow3"), ingest.getMappingDOCID3().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow4"), ingest.getMappingDOCID4().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow5"), ingest.getMappingDOCID5().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow6"), ingest.getMappingDOCID6().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow7"), ingest.getMappingDOCID7().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow8"), ingest.getMappingDOCID8().getText().toString());
+			
+			pass(dataMap, "Passed Sequenced");
 		} else {
 			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
 		}
