@@ -13,9 +13,10 @@ import java.util.List;
 import java.util.Random;
 import java.lang.Math;
 
-
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -3510,7 +3511,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the Preview button
-			throw new ImplementationException("clicking_the_summary_preview_button");
+			clicking_the_productions_preview_button(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT clicking_the_summary_preview_button");
 		}
@@ -3792,7 +3793,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Navigate back to the Production Home Page URL
-			throw new ImplementationException("refresh_back_to_production_home_page");
+			on_production_home_page(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT refresh_back_to_production_home_page");
 		}
@@ -4525,6 +4526,2037 @@ public class ProductionContext extends CommonContext {
 			throw new ImplementationException("verify_production_numbering_sorting_fields_are_displayed");
 		} else {
 			throw new ImplementationException("NOT verify_production_numbering_sorting_fields_are_displayed");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? store_the_default_template_values$")
+	public void store_the_default_template_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Manage Templates
+			//* On"DefaultAutomationTemplate" click View
+			//* In Priv Guard, store the rule for validation later
+			//* Click Next
+			//* Store the DAT values under "Specify DAT Field Mapping" for validation later.
+			//* Under TIFF, store the placeholder text
+			//* Under TIFF, store the Rotate Landscape pages to portrait layout:(Rotate 90 degrees etc..)
+			//* Under PDF, store the placeholder text
+			//* Under PDF, store the Rotate Landscape pages to portrait layout:
+			//* Click Next
+			//* In Number and sorting, store all of the values for beginning bates #, prefix, suffix, and min number length for validation later.
+			//* Click Close
+			//
+			
+			try {
+				String templateName = dataMap.get("prod_template").toString();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getManageTemplatesTab().Displayed()  ;}}), Input.wait30);
+				prod.getManageTemplatesTab().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTableGridDiv().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getCustomTemplateViewButton(templateName).Displayed()  ;}}), Input.wait30);
+				prod.getCustomTemplateViewButton(templateName).click();
+				
+
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivledgedRules().Displayed()  ;}}), Input.wait30);
+				
+				// Save Privilege rules as a single string, with each rule separated by comma.
+				String privRule = "";
+				for(WebElement rule: prod.getPrivledgedRules().FindWebElements()) {
+					privRule = privRule.concat(rule.getText()+",");
+				}
+				// Remove extra comma at the end
+				String privRules = privRule.substring(0, privRule.length() - 1);
+				
+				prod.getTemplatePrivGuardNextButton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateProductionComponentsPanel().Displayed()  ;}}), Input.wait30);
+				
+				// Expand DAT toggle
+				prod.getTemplateProductionComponentToggle("DAT").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				
+				String templateFieldClassification = prod.getTemplateFieldClassificationValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String templateSourceField = prod.getTemplateSourceFieldValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String templateDatField = prod.getTemplateDatFieldValue().GetAttribute("value");
+				
+				// Collapse DAT 
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+
+				// Expand TIFF toggle
+				prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				String templateTIFFPageRotatePreference = prod.getTemplateTIFFPageRotatePreferenceSelectedValue().getText();
+				String templateTIFFPlacerholderText = prod.getTemplateTIFFPlaceholderText().getText();			
+	
+				// Collapse TIFF 
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				//Expand PDF toggle
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePDFPageRotatePreferenceSelectedValue().Displayed()  ;}}), Input.wait30);
+				
+				String templatePDFPageRotatePreference = prod.getTemplatePDFPageRotatePreferenceSelectedValue().getText();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePDFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				String templatePDFPlaceholderText = prod.getTemplatePDFPlaceholderText().getText();
+
+				// Goto Numbering and Sorting
+				prod.getComponentsMarkNext().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePrefixValue().Displayed()  ;}}), Input.wait30);
+				
+				String beginningBatesValue = prod.getTemplateBeginningBatesValue().GetAttribute("value");
+				String getTemplatePrefixValue = prod.getTemplatePrefixValue().GetAttribute("value");	
+				String getTemplateSuffixValue = prod.getTemplateSuffixValue().GetAttribute("value");
+				String getTemplateMinNumValue = prod.getTemplateMinNumValue().GetAttribute("value");
+
+				// Store values to dataMap
+				dataMap.put("templatePrivRules", privRules);
+				dataMap.put("templateFieldClassification", templateFieldClassification);
+				dataMap.put("templateSourceField", templateSourceField);
+				dataMap.put("templateDatField", templateDatField);
+				dataMap.put("templateTIFFPlacerholderText", templateTIFFPlacerholderText);
+				dataMap.put("templatePageRotatePreference", templateTIFFPageRotatePreference);
+				dataMap.put("templatePDFPlaceholderText", templatePDFPlaceholderText);
+				dataMap.put("templatePDFPageRotatePreference", templatePDFPageRotatePreference);
+				dataMap.put("beginningBatesValue", beginningBatesValue);
+				dataMap.put("getTemplatePrefixValue", getTemplatePrefixValue);
+				dataMap.put("getTemplateSuffixValue", getTemplateSuffixValue);
+				dataMap.put("getTemplateMinNumValue", getTemplateMinNumValue);
+				
+				// Close dialog
+				prod.getTemplateCloseButton().click();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "unable to store default template values");
+			}
+			
+		} else {
+			throw new ImplementationException("NOT store_the_default_template_values");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? adding_branding_to_pdf$")
+	public void adding_branding_to_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Expand PDF
+			//* Under the branding placeholder text field, type in "Automation branding on PDF"
+			//
+			String brandingText = "Automation branding on PDF";
+			dataMap.put("pdfBrandingText", brandingText);
+			
+			try {
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
+
+				prod.getPDFBrandingPlaceholderTextField().Clear();
+				prod.getPDFBrandingPlaceholderTextField().SendKeys(brandingText);
+				
+				// Collapse PDF section
+				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				prod.getTemplateProductionComponentToggle("PDF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+			
+		
+			
+			
+		} else {
+			throw new ImplementationException("NOT adding_branding_to_pdf");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_default_template_for_production_components_is_displayed$")
+	public void the_default_template_for_production_components_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify DAT, TIFF, PDF, and MP3 checkboxes are checked
+			//* Verify in the DAT section, the mapping fields are "Bates", "BatesNumber", and the "DAT FIELD" has the value "def".
+			//* Verify in TIFF, the tag is "Priviledged" and the placeholder text displays "Default Template Tiff".
+			//* Verify in TIFF, the rotation should be "Rotate 90 degrees counter clock-wise"
+			//* Verify in Tiff, the burn redaction button is enabled green and the "Default Automation Redaction" tag is checked.
+			//* Verify in PDF, the tag is "Priviledged" and the placeholder text displays "Default Template PDF".
+			//* Verify in PDF, the rotation should be "Rotate 90 degrees counter clock-wise"
+			//* Verify in PDF, the burn redaction button is enabled green and the "Default Automation Redaction" tag is checked.
+			//* Verify in MP3, Burn redactions is enabled, Default Automation Redaction is checked, Redaction Style is set to Beep, and expanding the Advanced section has Generate Load File (LST) enabled.
+			//These values should be compared to what was stored in "store_the_default_template_values"
+			//Click Mark CompletedClick Next
+			try {				
+				// Get values from dataMap
+				String templateFieldClassification = dataMap.get("templateFieldClassification").toString();
+				String templateSourceField = dataMap.get("templateSourceField").toString();
+				String templateDatField = dataMap.get("templateDatField").toString();
+				String templateTIFFPlacerholderText = dataMap.get("templateTIFFPlacerholderText").toString();
+				String templateTIFFPageRotatePreference = dataMap.get("templatePageRotatePreference").toString();
+				String templatePDFPlaceholderText = dataMap.get("templatePDFPlaceholderText").toString();
+				String templatePDFPageRotatePreference = dataMap.get("templatePDFPageRotatePreference").toString();
+
+				// Expand Advanced Production Components
+				prod.getProductionComponentAdvanceToggle().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentMP3FilesCheckbox().Displayed()  ;}}), Input.wait30);
+				
+				
+				Boolean isDATSelected = prod.getProductionComponentDATCheckbox().Selected();
+				Boolean isTIFFSelected = prod.getProductionComponentTIFFCheckbox().Selected();
+				Boolean isPDFSelected = prod.getProductionComponentPDFCheckbox().Selected();
+				Boolean isMP3Selected = prod.getProductionComponentMP3FilesCheckbox().Selected();
+				
+				
+				// Verify expected checkboxes are selected
+				try {		
+					Assert.assertTrue(isDATSelected);
+					Assert.assertTrue(isTIFFSelected);
+					Assert.assertTrue(isPDFSelected);
+					Assert.assertTrue(isMP3Selected);
+				} catch (Exception e) {
+					fail(dataMap, "Expected (DAT, TIFF, PDF, MP3) checkboxes are not selected");
+				}
+
+				// Expand MP3 toggle
+				prod.getTemplateProductionComponentToggle("MP3").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMP3RedactionStyleValue().Displayed()  ;}}), Input.wait30);
+				
+				String redactionStyleValue = prod.getMP3RedactionStyleValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String mp3BurnRedactions = prod.getMP3BurnRedactions().GetAttribute("class");
+				String mp3DefaultAutomationRedaction = prod.getDefaultAutomationRedactionTag().GetAttribute("class");
+				
+				
+				// Verify MP3
+				try {
+					Assert.assertEquals(redactionStyleValue, "Beep");
+					Assert.assertTrue(mp3BurnRedactions.contains("active"));
+					Assert.assertTrue(mp3DefaultAutomationRedaction.contains("clicked"));
+				} catch (Exception e) {
+					fail(dataMap, "Expected values in MP3 section are not correct");
+				}
+
+				// Collapse MP3
+				prod.getTemplateProductionComponentToggle("MP3").click();
+
+				
+				// Expand DAT toggle
+				prod.getTemplateProductionComponentToggle("DAT").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				String fieldClassification = prod.getTemplateFieldClassificationValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String sourceField = prod.getTemplateSourceFieldValue().selectFromDropdown().getFirstSelectedOption().getText();
+				String datField = prod.getTemplateDatFieldValue().GetAttribute("value");
+				
+				// Verify DAT
+				try {
+					Assert.assertEquals(fieldClassification, templateFieldClassification);
+					Assert.assertEquals(sourceField, templateSourceField);
+					Assert.assertEquals(templateDatField, datField);
+					pass(dataMap, "DAT values are correct");
+				} catch (Exception e) {
+					fail(dataMap, "DAT values are not correct");
+				}
+				
+				// Collapse DAT 
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+
+				// Expand TIFF toggle
+				prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				String TIFFPageRotatePreference = prod.getTemplateTIFFPageRotatePreferenceSelectedValue().getText();			
+				String TIFFPlacerholderText = prod.getTemplateTIFFPlaceholderText().getText();						
+				String burnRedactAttr = prod.getTIFFBurnRedactionInput().GetAttribute("class");
+
+				// Verify TIFF
+				try {
+					Assert.assertEquals(prod.getTIFFPlaceholderTag().getText(), "Privileged");
+					Assert.assertEquals(TIFFPageRotatePreference, templateTIFFPageRotatePreference);
+					Assert.assertEquals(templateTIFFPlacerholderText, TIFFPlacerholderText);
+					Assert.assertTrue(burnRedactAttr.contains("activeC"));
+				} catch (Exception e) {
+					fail(dataMap, "TIFF values are not correct");
+				}
+				
+				// Collapse TIFF 
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				//Expand PDF toggle
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+				String PDFPageRotatePreference = prod.getTemplatePDFPageRotatePreferenceSelectedValue().getText();
+				String PDFPlaceholderText = prod.getTemplatePDFPlaceholderText().getText();
+				String defaultAutomationRedactionInput = prod.getDefaultAutomationRedactionTag().GetAttribute("class");
+
+				// Verify PDF
+				try {
+					Assert.assertEquals(prod.getPDFPlaceholderTag().getText(), "Privileged");
+					Assert.assertEquals(templatePDFPageRotatePreference, PDFPageRotatePreference);
+					
+					// Skip verification of placeholder text if new text was entered in previous step
+					if (!dataMap.containsKey("pdfBrandingText")) {
+						Assert.assertEquals(PDFPlaceholderText, templatePDFPlaceholderText);
+					}
+					Assert.assertTrue(defaultAutomationRedactionInput.contains("clicked"));
+				} catch (Exception e) {
+					fail(dataMap, "PDF values are not correct");
+				}
+
+				// Collapse PDF 
+				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+				
+				prod.getComponentsMarkComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getComponentsMarkNext().Enabled()  ;}}), Input.wait30);
+				prod.getComponentsMarkNext().click();
+				driver.waitForPageToBeReady();
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify production components");
+			}
+		} else {
+			throw new ImplementationException("NOT the_default_template_for_production_components_is_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_default_template_for_numbering_is_displayed$")
+	public void the_default_template_for_numbering_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Verify under Format, "Beginning Bates #" is 323 (or whatever is stored from the template)
+			//* Verify under Prefix, it is "S"
+			//* Verify under Suffix, it is "Q"
+			//* Verify under Min Number Length it is "8".
+			//These values should be compared to what was stored in "store_the_default_template_values"
+			// after validation, change beginning bates value to three random digits
+			//Click Mark Complete
+			//Click Next
+			
+			try {
+				// Retrieve values from dataMap in store_the_default_template_values
+				String getTemplatebeginningBatesValue = dataMap.get("beginningBatesValue").toString();
+				String getTemplatePrefixValue = dataMap.get("getTemplatePrefixValue").toString();
+				String getTemplateSuffixValue = dataMap.get("getTemplateSuffixValue").toString();
+				String getTemplateMinNumValue = dataMap.get("getTemplateMinNumValue").toString();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplatePrefixValue().Displayed()  ;}}), Input.wait30);
+				
+				String beginningBatesValue = prod.getTemplateBeginningBatesValue().GetAttribute("value");
+				String TemplatePrefixValue = prod.getTemplatePrefixValue().GetAttribute("value");
+				String TemplateSuffixValue = prod.getTemplateSuffixValue().GetAttribute("value");
+				String TemplateMinNumValue = prod.getTemplateMinNumValue().GetAttribute("value");
+
+				try {
+					Assert.assertEquals(beginningBatesValue, getTemplatebeginningBatesValue);
+					Assert.assertEquals(TemplatePrefixValue, getTemplatePrefixValue);
+					Assert.assertEquals(TemplateSuffixValue, getTemplateSuffixValue);
+					Assert.assertEquals(TemplateMinNumValue, getTemplateMinNumValue);
+					pass(dataMap, "Numbering and Sorting values are correct");
+				} catch (Exception e) {
+					fail(dataMap, "Numbering and Sorting values are not correct");
+				}
+				
+				// Change beginning bates value after verification
+				Random random = new Random();
+				int i = random.nextInt(999);
+				String newBeginningBatesNum = String.valueOf(i);
+				prod.getBeginningBates().Clear();
+				prod.getBeginningBates().SendKeys(newBeginningBatesNum);
+				
+				
+				// update and store full bates number with prefix and sufix
+				int updatedBegBatesNum = Integer.parseInt(newBeginningBatesNum);
+				String batesWithTrailingZeros = String.format("%0"+getTemplateMinNumValue+"d", updatedBegBatesNum);
+				String fullBatesNumber = getTemplatePrefixValue + batesWithTrailingZeros + getTemplateSuffixValue;
+				
+				dataMap.put("updatedBeginningBates", newBeginningBatesNum);
+				dataMap.put("fullBatesNumber", fullBatesNumber);
+				
+				prod.getNumAndSortMarkComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumAndSortNext().Enabled()  ;}}), Input.wait30);
+				prod.getNumAndSortNext().click();
+				driver.waitForPageToBeReady();
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} else {
+			throw new ImplementationException("NOT the_default_template_for_numbering_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_branding_is_displayed_on_the_generated_production$")
+	public void verify_the_branding_is_displayed_on_the_generated_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5089Verify the branding text with the black and white color style is displayed on the generated production
+			throw new ImplementationException("verify_the_branding_is_displayed_on_the_generated_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_branding_is_displayed_on_the_generated_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? updating_redaction_style_adding_redaction_text_$")
+	public void updating_redaction_style_adding_redaction_text_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the Tiff sectionChange the redaction style based on the parameterClick Specify Redaction Text by Selecting Redaction Tags:Change the text to "Automated Redaction"
+			throw new ImplementationException("updating_redaction_style_adding_redaction_text_");
+		} else {
+			throw new ImplementationException("NOT updating_redaction_style_adding_redaction_text_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_redaction_documents_are_redacted_with_the_proper_style$")
+	public void verify_the_redaction_documents_are_redacted_with_the_proper_style(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5344 / 5345 / 5346
+			//* Verify the production document has the redaction style applied based on the parameter passed into "Updating_refaction_style_add_redaction_text". It will have either white redaction with black redaction text or black redaction with white text.
+			//* Also, make sure a thin black border is provided around the white redaction
+			//* Verify the redacted text entered in "Updating_refaction_style_add_redaction_text" is added to the documentation
+			//
+			throw new ImplementationException("verify_the_redaction_documents_are_redacted_with_the_proper_style");
+		} else {
+			throw new ImplementationException("NOT verify_the_redaction_documents_are_redacted_with_the_proper_style");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_on_the_productions_preview_button$")
+	public void clicking_on_the_productions_preview_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Preview Button and wait about 1-2 minutes.
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPreviewprod().Displayed() ;}}), Input.wait30);
+				prod.getPreviewprod().click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
+				
+			}
+		
+		} else {
+			throw new ImplementationException("NOT clicking_on_the_productions_preview_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_preview_pdf_displays_the_pdf_branding$")
+	public void verify_the_preview_pdf_displays_the_pdf_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5193
+			//* Verify the branding on the PDF preview does not overlap or appear over any writing on the actual content.
+			//
+			try {
+				// get fullBatesNumber from dataMap as this will be the pdf file name
+				String fullBatesNum = dataMap.get("fullBatesNumber").toString();
+				String fileName = fullBatesNum + ".pdf";
+				
+				PDDocument document = null;
+				String home = System.getProperty("user.home");
+				
+				if(SystemUtils.IS_OS_LINUX){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/"+fileName));}
+				else if(SystemUtils.IS_OS_WINDOWS){
+					while(document == null) document = PDDocument.load(new File(home + "\\Download\\"+fileName));
+				} else if(SystemUtils.IS_OS_MAC){
+					while(document == null) document = PDDocument.load(new File(home + "/Downloads/"+fileName));}
+				
+				
+				// get branding text from dataMap that was entered in the PDF section of Production Components
+				String brandingText = dataMap.get("pdfBrandingText").toString();
+				
+				PDFTextStripper pdfTextStripper = new PDFTextStripper();
+				String PDFtext = pdfTextStripper.getText(document);
+
+				// Verify branding text exists in PDF
+				try {
+					Assert.assertTrue(PDFtext.contains(brandingText));
+					pass(dataMap, "Branding text on PDF is correct!");
+				} catch (Exception e) {
+					fail(dataMap,"Branding text on PDF is not correct!");
+				}			
+				document.close();
+				
+			} catch (Exception e) {
+				System.out.println(e + " Unable to verify pdf branding on pdf");
+				fail(dataMap,"Unable to verify pdf branding on pdf");
+			}
+		} else {
+			throw new ImplementationException("NOT verify_the_preview_pdf_displays_the_pdf_branding");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_creating_a_production_with_a_custom_template_store_the_correct_values$")
+	public void verify_creating_a_production_with_a_custom_template_store_the_correct_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5202/5800/5801/6182 / 9445 / 4639The final verification is to Verify the rules displayed match the rules stored in "store_the_default_template_values"
+			try {
+				
+				String templatePrivRules = dataMap.get("templatePrivRules").toString();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPrivledgedRules().Displayed()  ;}}), Input.wait30);
+				
+				String privRule = "";
+				for(WebElement rule: prod.getPrivledgedRules().FindWebElements()) {
+					privRule = privRule.concat(rule.getText()+",");
+				}
+				// Remove extra comma at the end
+				String privRules = privRule.substring(0, privRule.length() - 1);
+
+				try {
+					Assert.assertEquals(templatePrivRules, privRules);
+				} catch (Exception e) {
+					fail(dataMap, "Priv rules are not correct");
+				}
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify priv rules");
+			}
+		} else {
+			throw new ImplementationException("NOT verify_creating_a_production_with_a_custom_template_store_the_correct_values");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_burn_redaction_on_mp3$")
+	public void remove_burn_redaction_on_mp3(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand Advanced Production ComponentsExpand MP3 FilesDisable Burn Redactions
+			throw new ImplementationException("remove_burn_redaction_on_mp3");
+		} else {
+			throw new ImplementationException("NOT remove_burn_redaction_on_mp3");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? mark_the_component_section_complete$")
+	public void mark_the_component_section_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompleteClick Next
+			throw new ImplementationException("mark_the_component_section_complete");
+		} else {
+			throw new ImplementationException("NOT mark_the_component_section_complete");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_with_the_given_production_component$")
+	public void the_production_is_generated_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_is_generated_with_the_given_production_component");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_with_the_given_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_on_disabling_burn_redactions_on_mp3s_no_redaction_content_is_removed$")
+	public void verify_on_disabling_burn_redactions_on_mp3s_no_redaction_content_is_removed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5964Verify MP3 without redaction should be produced successfully without any redaction audioVerify MP3 with redactions should be produced without any redaction audios.
+			throw new ImplementationException("verify_on_disabling_burn_redactions_on_mp3s_no_redaction_content_is_removed");
+		} else {
+			throw new ImplementationException("NOT verify_on_disabling_burn_redactions_on_mp3s_no_redaction_content_is_removed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enabling_slip_sheets_on_tiff$")
+	public void enabling_slip_sheets_on_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the TIFF sectionEnable Slip SheetClick on the Tab based on the parameterCheck off the checkbox based on the parameter. If the parameter contains a period, that means you should split that value by the period and you would have multiple checkboxes to check.Ex: DocID.DocPages. This means we would check off both checkboxesCollapse the Tiff Section
+			throw new ImplementationException("enabling_slip_sheets_on_tiff");
+		} else {
+			throw new ImplementationException("NOT enabling_slip_sheets_on_tiff");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_date_format_on_dateonly_fields_should_not_include_time$")
+	public void verify_date_format_on_dateonly_fields_should_not_include_time(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5940Verify DateOnly fields in the producti on date only includes the date portion and it should not cont ain the time portion, irrespecti ve of the format selected.
+			throw new ImplementationException("verify_date_format_on_dateonly_fields_should_not_include_time");
+		} else {
+			throw new ImplementationException("NOT verify_date_format_on_dateonly_fields_should_not_include_time");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? adding_multiple_dat_field_mappings$")
+	public void adding_multiple_dat_field_mappings(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DATClick Add FieldThe parameter data will appear in the following format:Field Classification-Source Field-DAT Field.Each field on the table is going to be separated by hyphens and end with a period. This means you should first split these values by periods first to see how many sets of data you will have then split it by hyphens to see which individual values you need to fill out in the table.
+			throw new ImplementationException("adding_multiple_dat_field_mappings");
+		} else {
+			throw new ImplementationException("NOT adding_multiple_dat_field_mappings");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_ending_bates_generated_in_a_production_should_have_correct_values$")
+	public void verify_the_ending_bates_generated_in_a_production_should_have_correct_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6117Verify Ending Bates should displayed correct value in DAT
+			throw new ImplementationException("verify_the_ending_bates_generated_in_a_production_should_have_correct_values");
+		} else {
+			throw new ImplementationException("NOT verify_the_ending_bates_generated_in_a_production_should_have_correct_values");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates$")
+	public void verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5927Verify in the MP3 section, Burn redactions is enabledVerify that the redaction "Default Automation Redaction" is checked off by defaultVerify Generate Load File (LST) is enabled by default.
+			throw new ImplementationException("verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_mp3_files_in_the_generation_has_redacted_audio$")
+	public void verify_the_mp3_files_in_the_generation_has_redacted_audio(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5963Background info: the documents in the folder selected should have mp3 files with redactionsVerify MP3 with redaction should be generated successfully. All the redacted segments of the audi o SHOULD be replaced with th e redaction audio
+			throw new ImplementationException("verify_the_mp3_files_in_the_generation_has_redacted_audio");
+		} else {
+			throw new ImplementationException("NOT verify_the_mp3_files_in_the_generation_has_redacted_audio");
+		}
+
+	}
+
+	@Given("^.*(\\[Not\\] )? login_to_new_production$")
+	public void login_to_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
+			throw new ImplementationException("login_to_new_production");
+		} else {
+			throw new ImplementationException("NOT login_to_new_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_generation_is_started_with_the_given_production_component$")
+	public void the_production_generation_is_started_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_generation_is_started_with_the_given_production_component");
+		} else {
+			throw new ImplementationException("NOT the_production_generation_is_started_with_the_given_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_committed_production_found$")
+	public void verify_committed_production_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5207 Verify the Volume specified in the Production output step should be created where it is specified
+			//
+			//* The Volume specified in the Production output step should be created where it is specified but not in every folder
+			//* Volumn set in Production Location step
+			//
+			throw new ImplementationException("verify_committed_production_found");
+		} else {
+			throw new ImplementationException("NOT verify_committed_production_found");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_location_component$")
+	public void verify_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5882 Verify Production Location for Production Root path/Production Directory/Load File Path/Volume Included/Production Component foldersVerify the Specify Production Location components are present
+			//
+			//* Production Root Path
+			//* Production Directory
+			//* Load File Path
+			//* Volume Included
+			//
+			throw new ImplementationException("verify_production_location_component");
+		} else {
+			throw new ImplementationException("NOT verify_production_location_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_mp3_redactions$")
+	public void select_mp3_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check MP3 Files checkboxExpand MP3 Files sectionEnable Burn RedactionsSpecify Redactions: All redactions in annotation layer: Default Annotation LayerRedaction Style: BeepExpand MP3 Advanced sectionEnable Generate Load File (LST)
+			throw new ImplementationException("select_mp3_redactions");
+		} else {
+			throw new ImplementationException("NOT select_mp3_redactions");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_the_save_as_template_button_for_created_production$")
+	public void click_the_save_as_template_button_for_created_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Go to the productions home page.Click on the gear of the created productionSelect 'Save as Template'Give the template a name and save the template.
+			throw new ImplementationException("click_the_save_as_template_button_for_created_production");
+		} else {
+			throw new ImplementationException("NOT click_the_save_as_template_button_for_created_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? begin_new_production_process_with_new_template$")
+	public void begin_new_production_process_with_new_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Create new productionSelect new templateClick Complete buttonClick Next button
+			throw new ImplementationException("begin_new_production_process_with_new_template");
+		} else {
+			throw new ImplementationException("NOT begin_new_production_process_with_new_template");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_template_mp3_component_details$")
+	public void verify_template_mp3_component_details(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5927 Verify in Productions, production template should retain the redaction tags configured in the production
+			//
+			//* Verify MP3 Files component section matches the template
+			//
+			throw new ImplementationException("verify_template_mp3_component_details");
+		} else {
+			throw new ImplementationException("NOT verify_template_mp3_component_details");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? navigate_to_session_search_page$")
+	public void navigate_to_session_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Search > Session Search in navigation bar
+			throw new ImplementationException("navigate_to_session_search_page");
+		} else {
+			throw new ImplementationException("NOT navigate_to_session_search_page");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? open_production_in_docview$")
+	public void open_production_in_docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("open_production_in_docview");
+		} else {
+			throw new ImplementationException("NOT open_production_in_docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_produced_pdf_in_docview$")
+	public void verify_produced_pdf_in_docview(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5276 Verify Produced PDFs are being presented in the DocView for the documentTC6122 Verify Produced PDFs should be available for being presented in DocView for the document
+			//
+			//* Generate PDF image should load in Doc View
+			//
+			throw new ImplementationException("verify_produced_pdf_in_docview");
+		} else {
+			throw new ImplementationException("NOT verify_produced_pdf_in_docview");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_produced_pdf_in_docview_with_pdf_only_production$")
+	public void verify_produced_pdf_in_docview_with_pdf_only_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5276 Verify Produced PDFs are being presented in the DocView for the document
+			throw new ImplementationException("verify_produced_pdf_in_docview_with_pdf_only_production");
+		} else {
+			throw new ImplementationException("NOT verify_produced_pdf_in_docview_with_pdf_only_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? advanced_search_for_production$")
+	public void advanced_search_for_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Switch to Advanced'Search by 'Work Product' > 'Productions' > 'Already Produced'
+			throw new ImplementationException("advanced_search_for_production");
+		} else {
+			throw new ImplementationException("NOT advanced_search_for_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? uncommit_last_production$")
+	public void uncommit_last_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("uncommit_last_production");
+		} else {
+			throw new ImplementationException("NOT uncommit_last_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_uncommitted_production_not_found$")
+	public void verify_uncommitted_production_not_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8212 Verify that in Advanced Search, search against uncommit Production should not display any results
+			//
+			//* Uncommitted production not displayed in search results
+			//
+			throw new ImplementationException("verify_uncommitted_production_not_found");
+		} else {
+			throw new ImplementationException("NOT verify_uncommitted_production_not_found");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? doc_with_priv_tag_exists$")
+	public void doc_with_priv_tag_exists(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Document has Priv Tag classification
+			throw new ImplementationException("doc_with_priv_tag_exists");
+		} else {
+			throw new ImplementationException("NOT doc_with_priv_tag_exists");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_priv_tag_from_doc$")
+	public void remove_priv_tag_from_doc(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("remove_priv_tag_from_doc");
+		} else {
+			throw new ImplementationException("NOT remove_priv_tag_from_doc");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_removal_of_priv_tag_produced_for_native$")
+	public void verify_removal_of_priv_tag_produced_for_native(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5383 Verify Removal of Priv Tag from a Document should get Produced in Production for Native
+			//
+			//* Verify docs with removed Priv Tag are generated successfully in the Native folder
+			//
+			throw new ImplementationException("verify_removal_of_priv_tag_produced_for_native");
+		} else {
+			throw new ImplementationException("NOT verify_removal_of_priv_tag_produced_for_native");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? multimedia_doc_with_priv_tag_exists$")
+	public void multimedia_doc_with_priv_tag_exists(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Multimedia document with Priv Tag exists
+			//
+			//* Refer to Data Set: \\10.55.79.37\data\AK_Native_PDF_MP3_Transcript_ForProduction
+			//* Source Doc ID -> ICE000054-12-00000851 STC4_00001008 STC4_00001009 STC4_00001016
+			//
+			throw new ImplementationException("multimedia_doc_with_priv_tag_exists");
+		} else {
+			throw new ImplementationException("NOT multimedia_doc_with_priv_tag_exists");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_multimedia_file_group_production_generation_with_priv_tag$")
+	public void verify_multimedia_file_group_production_generation_with_priv_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5843 Verify for Multimedia file group Production Generation with some doc having Priv Tag Classification
+			//
+			//* NATIVE/TIFF/DAT should generate succssfully
+			//* Natives should not be copied for Priv files
+			//
+			throw new ImplementationException("verify_multimedia_file_group_production_generation_with_priv_tag");
+		} else {
+			throw new ImplementationException("NOT verify_multimedia_file_group_production_generation_with_priv_tag");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? doc_with_redaction_tag_exists$")
+	public void doc_with_redaction_tag_exists(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Document has a Redaction Tag and no Priv Tag
+			throw new ImplementationException("doc_with_redaction_tag_exists");
+		} else {
+			throw new ImplementationException("NOT doc_with_redaction_tag_exists");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? remove_redaction_from_doc$")
+	public void remove_redaction_from_doc(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Open redacted doc in Doc ViewRemove redaction
+			throw new ImplementationException("remove_redaction_from_doc");
+		} else {
+			throw new ImplementationException("NOT remove_redaction_from_doc");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_removal_of_redaction_tag_produced_for_native$")
+	public void verify_removal_of_redaction_tag_produced_for_native(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5382 Verify Removal of Redaction Tag from a documents Should get produced in Production for Native
+			//
+			//* Verify docs with removed redactions are generated successfully in the Native folder
+			//
+			//
+			throw new ImplementationException("verify_removal_of_redaction_tag_produced_for_native");
+		} else {
+			throw new ImplementationException("NOT verify_removal_of_redaction_tag_produced_for_native");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? open_doc_in_doc_view$")
+	public void open_doc_in_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("open_doc_in_doc_view");
+		} else {
+			throw new ImplementationException("NOT open_doc_in_doc_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_view_images_tab_displayed$")
+	public void verify_doc_view_images_tab_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
+			throw new ImplementationException("verify_doc_view_images_tab_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_doc_view_images_tab_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_uncommit_production_button$")
+	public void click_uncommit_production_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Uncommit Production' button on Quality Control & Confirmation tab
+			throw new ImplementationException("click_uncommit_production_button");
+		} else {
+			throw new ImplementationException("NOT click_uncommit_production_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? nav_back_to_generate_tab$")
+	public void nav_back_to_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("nav_back_to_generate_tab");
+		} else {
+			throw new ImplementationException("NOT nav_back_to_generate_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? regenerate_production$")
+	public void regenerate_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Regenerate' buttonwaiting_for_production_to_be_complete
+			throw new ImplementationException("regenerate_production");
+		} else {
+			throw new ImplementationException("NOT regenerate_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_uncommitted_production_regenerated$")
+	public void verify_uncommitted_production_regenerated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8220 Verify that after uncommit if user regenerate the production, it should generate successfully
+			throw new ImplementationException("verify_uncommitted_production_regenerated");
+		} else {
+			throw new ImplementationException("NOT verify_uncommitted_production_regenerated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_view_images_tab_not_displayed$")
+	public void verify_doc_view_images_tab_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
+			throw new ImplementationException("verify_doc_view_images_tab_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_doc_view_images_tab_not_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_allproductionbatesranges_column_to_doc$")
+	public void add_allproductionbatesranges_column_to_doc(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
+			throw new ImplementationException("add_allproductionbatesranges_column_to_doc");
+		} else {
+			throw new ImplementationException("NOT add_allproductionbatesranges_column_to_doc");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? open_production_in_doc_list$")
+	public void open_production_in_doc_list(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Use generated production name to open the PDF in Doc View
+			throw new ImplementationException("open_production_in_doc_list");
+		} else {
+			throw new ImplementationException("NOT open_production_in_doc_list");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_allproductionbatesranges_not_displayed_on_uncommitted_production$")
+	public void verify_allproductionbatesranges_not_displayed_on_uncommitted_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8210 Verify that 'AllProductionBatesRanges' should not show for uncommitted production
+			throw new ImplementationException("verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
+		} else {
+			throw new ImplementationException("NOT verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? click_generate_button$")
+	public void click_generate_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_generate_button");
+		} else {
+			throw new ImplementationException("NOT click_generate_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_state_of_generate_tab_after_generate_button_clicked$")
+	public void verify_state_of_generate_tab_after_generate_button_clicked(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7517 Verify that after clicking on Generate button from Production-Generate tab, the Generate button is disabledTC7521 Verify that after clicking on Generate button from Production-Generate tab, status should be changed to In ProgressTC7524 Verify that after clicking on Generate button from Production-Generate tab, user cannot click on the Generate button again
+			//
+			//* Generate button is disabled
+			//* Status is 'In Progress'
+			//* Generate button is not clickable
+			//
+			throw new ImplementationException("verify_state_of_generate_tab_after_generate_button_clicked");
+		} else {
+			throw new ImplementationException("NOT verify_state_of_generate_tab_after_generate_button_clicked");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? redacted_doc_folder_released_to_different_security_group$")
+	public void redacted_doc_folder_released_to_different_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Folder with some redacted documents in Default Security GroupRelease folder to another security group (ex. SG1)Do not map Annotation Layer/Redaction Tag to SG1
+			throw new ImplementationException("redacted_doc_folder_released_to_different_security_group");
+		} else {
+			throw new ImplementationException("NOT redacted_doc_folder_released_to_different_security_group");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_redaction_tag_from_doc_folder$")
+	public void select_redaction_tag_from_doc_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSelect the redaction tag from the released folder in the current security group
+			throw new ImplementationException("select_redaction_tag_from_doc_folder");
+		} else {
+			throw new ImplementationException("NOT select_redaction_tag_from_doc_folder");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_selection_for_folder_released_to_security_group$")
+	public void complete_document_selection_for_folder_released_to_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select folder released to the current security groupMark CompleteClick Next button
+			throw new ImplementationException("complete_document_selection_for_folder_released_to_security_group");
+		} else {
+			throw new ImplementationException("NOT complete_document_selection_for_folder_released_to_security_group");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_from_priv_guard$")
+	public void the_production_is_generated_from_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:mark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_is_generated_from_priv_guard");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_from_priv_guard");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_in_different_security_group$")
+	public void verify_production_generated_in_different_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5066 Verify Production Generation in Different Security Group
+			//
+			//* Verify production successfully generated
+			//
+			throw new ImplementationException("verify_production_generated_in_different_security_group");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_in_different_security_group");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_slipsheets_workproduct$")
+	public void select_tiff_slipsheets_workproduct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionExpand Advanced sectionEnable Slip SheetsClick 'WORKPRODUCT' field tabSelect 'Default Automation Folder' workproduct folderClick 'Add to Selected' button
+			throw new ImplementationException("select_tiff_slipsheets_workproduct");
+		} else {
+			throw new ImplementationException("NOT select_tiff_slipsheets_workproduct");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_with_slipsheets_workproduct$")
+	public void verify_production_generated_with_slipsheets_workproduct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5257 Verify in Productions, the workproduct fields for slip sheets
+			throw new ImplementationException("verify_production_generated_with_slipsheets_workproduct");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_with_slipsheets_workproduct");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_opt_log_file_generated$")
+	public void verify_opt_log_file_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5164 Verify the OPT/LOG file generated in a production have all required information
+			//
+			//* Format should be like: OR_00000001,OR0001,Z:\Images\OR0001\0001\OR_00000001.tif,Y,,, OR_00000002,OR0001,Z:\Images\OR0001\0001\OR_00000002.tif,Y,,, OR_00000003,OR0001,Z:\Images\OR0001\0001\OR_00000003.tif,,,,
+			//
+			throw new ImplementationException("verify_opt_log_file_generated");
+		} else {
+			throw new ImplementationException("NOT verify_opt_log_file_generated");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? text_files_ingested_with_redactions$")
+	public void text_files_ingested_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Text files ingested with redactions
+			throw new ImplementationException("text_files_ingested_with_redactions");
+		} else {
+			throw new ImplementationException("NOT text_files_ingested_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ocring_of_text_component_for_redacted_docs$")
+	public void verify_ocring_of_text_component_for_redacted_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5186 Verify OCRing of Text component of the production, only for Redacted Documents
+			throw new ImplementationException("verify_ocring_of_text_component_for_redacted_docs");
+		} else {
+			throw new ImplementationException("NOT verify_ocring_of_text_component_for_redacted_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_different_dat_date_format$")
+	public void select_different_dat_date_format(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DAT sectionSelect Date Format: MMDDYYYY
+			throw new ImplementationException("select_different_dat_date_format");
+		} else {
+			throw new ImplementationException("NOT select_different_dat_date_format");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generated_production_date_format$")
+	public void verify_generated_production_date_format(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5200 Verify the format of the date produced in the Production DAT should honor the date format configured in DAT section
+			//
+			//* Selected date format should be displayed in DAT file
+			//
+			throw new ImplementationException("verify_generated_production_date_format");
+		} else {
+			throw new ImplementationException("NOT verify_generated_production_date_format");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? native_docs_associated_to_tags$")
+	public void native_docs_associated_to_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//prerequisite step
+			throw new ImplementationException("native_docs_associated_to_tags");
+		} else {
+			throw new ImplementationException("NOT native_docs_associated_to_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_docs_associated_to_tags_are_copied$")
+	public void verify_native_docs_associated_to_tags_are_copied(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5335 Verify Natives of the docs of the selected file types or selected tags are produced unless they are to excluded to Redaction or Priv Tags
+			throw new ImplementationException("verify_native_docs_associated_to_tags_are_copied");
+		} else {
+			throw new ImplementationException("NOT verify_native_docs_associated_to_tags_are_copied");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? docs_associated_with_priv_tag$")
+	public void docs_associated_with_priv_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//A few documents are associated to Privilege Tag
+			throw new ImplementationException("docs_associated_with_priv_tag");
+		} else {
+			throw new ImplementationException("NOT docs_associated_with_priv_tag");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_dat_priv_tag$")
+	public void select_dat_priv_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DATClick 'PRIVILEGED' checkbox for BatesNumber field
+			throw new ImplementationException("select_dat_priv_tag");
+		} else {
+			throw new ImplementationException("NOT select_dat_priv_tag");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_dat_priv_flag_for_generated_production$")
+	public void verify_dat_priv_flag_for_generated_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5068 Verify PRIV flag configured in the DAT section of Production is to be honored for all docs in the generated production
+			//
+			//* Production generated
+			//* In DAT section, value should be blank if field is set as Priv
+			//
+			throw new ImplementationException("verify_dat_priv_flag_for_generated_production");
+		} else {
+			throw new ImplementationException("NOT verify_dat_priv_flag_for_generated_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_tiffpagecount_field$")
+	public void add_tiffpagecount_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DAT sectionClick 'Add Field' buttonSelect field mapping: Production > TIFFPageCount
+			throw new ImplementationException("add_tiffpagecount_field");
+		} else {
+			throw new ImplementationException("NOT add_tiffpagecount_field");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tiffpagecount_on_generated_production$")
+	public void verify_tiffpagecount_on_generated_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5938 Verify in Productions DAT, provide the TIFFPageCount for each document produced
+			//
+			//* DAT should contain the TIFFPageCount column with correct values
+			//
+			throw new ImplementationException("verify_tiffpagecount_on_generated_production");
+		} else {
+			throw new ImplementationException("NOT verify_tiffpagecount_on_generated_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_dat_filename_field$")
+	public void add_dat_filename_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DAT sectionClick 'Add Field' buttonSelect field: Doc Basis > DocFileName
+			throw new ImplementationException("add_dat_filename_field");
+		} else {
+			throw new ImplementationException("NOT add_dat_filename_field");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generated_production_dat_row_for_each_doc$")
+	public void verify_generated_production_dat_row_for_each_doc(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5204 Verify in Generated Production DAT will always have one row for each document
+			//
+			//* DAT will always have one row for each document
+			//
+			throw new ImplementationException("verify_generated_production_dat_row_for_each_doc");
+		} else {
+			throw new ImplementationException("NOT verify_generated_production_dat_row_for_each_doc");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_count_of_docs_produced_in_different_security_group$")
+	public void verify_count_of_docs_produced_in_different_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5167 Verify correct count of Native documents produce in (Production in Different Security Group)
+			//
+			//* Production generation should not consider the "Is Privilege" count as Privilege Tag is not released to security group
+			//
+			//
+			throw new ImplementationException("verify_count_of_docs_produced_in_different_security_group");
+		} else {
+			throw new ImplementationException("NOT verify_count_of_docs_produced_in_different_security_group");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? ingest_landscape_and_portrait_layout_docs$")
+	public void ingest_landscape_and_portrait_layout_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Prerequisite for TC5354
+			//
+			//* Ingest -> \\172.22.155.16\Storage\IngestionTestData\Automation\Zipp_DocView_20Family_20Threaded\DAT4_STC 1_newdtformatBlankNameAddress_Correct.dat
+			//* Source Doc It -> 51ID00000169
+			//
+			throw new ImplementationException("ingest_landscape_and_portrait_layout_docs");
+		} else {
+			throw new ImplementationException("NOT ingest_landscape_and_portrait_layout_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_rotate_90_clockwise$")
+	public void select_tiff_rotate_90_clockwise(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSelect Rotate Landscapepages to portrait layout: 'Rotate 90 degrees clock-wise'
+			throw new ImplementationException("select_tiff_rotate_90_clockwise");
+		} else {
+			throw new ImplementationException("NOT select_tiff_rotate_90_clockwise");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_landscape_and_portrait_documents_doc_selection$")
+	public void complete_landscape_and_portrait_documents_doc_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Ingest -> \\172.22.155.16\Storage\IngestionTestData\Automation\Zipp_DocView_20Family_20Threaded\DAT4_STC 1_newdtformatBlankNameAddress_Correct.dat
+			//* Source Doc It -> 51ID00000169
+			//
+			//Mark CompleteClick Next
+			throw new ImplementationException("complete_landscape_and_portrait_documents_doc_selection");
+		} else {
+			throw new ImplementationException("NOT complete_landscape_and_portrait_documents_doc_selection");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generated_production_docs_rotation_applied$")
+	public void verify_generated_production_docs_rotation_applied(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5354 Verify if a document has both landscape and portrait pages, the rotation selected is applied only to the pages that are in landscape layout
+			//
+			//* Rotation should be applied only to pages that are in landscape
+			//
+			throw new ImplementationException("verify_generated_production_docs_rotation_applied");
+		} else {
+			throw new ImplementationException("NOT verify_generated_production_docs_rotation_applied");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_branding_bates_number$")
+	public void select_tiff_branding_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionClick branding 'Insert Metadata Field' buttonSelect 'BatesNumber' metadata field
+			throw new ImplementationException("select_tiff_branding_bates_number");
+		} else {
+			throw new ImplementationException("NOT select_tiff_branding_bates_number");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? marking_complete_the_next_available_bates_number_with_document_level_numbering$")
+	public void marking_complete_the_next_available_bates_number_with_document_level_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click the document radio button on the Numbering section
+			//* Click the link named "Click here" under the format section
+			//* Store the third bates number listed as three values.
+			//* The first should be the letter the number starts with. That should be stored as the "Prefix".
+			//* The last letter is the suffix.
+			//* The last digits that are not 0 are the beginning bates number.
+			//* Example: A00523Q.
+			//* A is the Prefix
+			//* 523 is the Beginning Bates
+			//* Q is the suffix.
+			//* Click Select on the third bates number listed.
+			//* Click Mark Complete
+			//* Click Next
+			//
+			throw new ImplementationException("marking_complete_the_next_available_bates_number_with_document_level_numbering");
+		} else {
+			throw new ImplementationException("NOT marking_complete_the_next_available_bates_number_with_document_level_numbering");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_from_document_selection$")
+	public void the_production_is_generated_from_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("the_production_is_generated_from_document_selection");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_from_document_selection");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_bates_number_in_branding_displayed$")
+	public void verify_bates_number_in_branding_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5262 Verify Branding Bates number
+			throw new ImplementationException("verify_bates_number_in_branding_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_bates_number_in_branding_displayed");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? pdf_ppt_files_with_redactions_exist$")
+	public void pdf_ppt_files_with_redactions_exist(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On PDF apply 'Page Redaction' on 1st page with 'Redaction Tag 1' and apply another 'Page Redaction' on the 2nd page with 'Redaction Tag 2'On PPT apply Rectangle Redaction with 'Redaction Tag 1' and another with 'Redaction Tag 2'
+			throw new ImplementationException("pdf_ppt_files_with_redactions_exist");
+		} else {
+			throw new ImplementationException("NOT pdf_ppt_files_with_redactions_exist");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_redaction_tags_with_placeholders$")
+	public void select_redaction_tags_with_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand PDF sectionClick Placeholders 'Select Tags' buttonSelect 'Redaction Tag 1' and 'Redaction Tag 2'Enter placeholder text
+			throw new ImplementationException("select_redaction_tags_with_placeholders");
+		} else {
+			throw new ImplementationException("NOT select_redaction_tags_with_placeholders");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_redacted_pdf_ppt_document_selection$")
+	public void complete_redacted_pdf_ppt_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select redacted PDF and PPT filesClick Mark Complete buttonClick Next button
+			throw new ImplementationException("complete_redacted_pdf_ppt_document_selection");
+		} else {
+			throw new ImplementationException("NOT complete_redacted_pdf_ppt_document_selection");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_text_generated_is_in_sync_with_pdf_generated$")
+	public void verify_text_generated_is_in_sync_with_pdf_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5277 Verify the Content in Text Generated in Production is in Sync with PDF Generated
+			throw new ImplementationException("verify_text_generated_is_in_sync_with_pdf_generated");
+		} else {
+			throw new ImplementationException("NOT verify_text_generated_is_in_sync_with_pdf_generated");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? upload_ice_dataset_without_file_extension$")
+	public void upload_ice_dataset_without_file_extension(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Upload the ICE dataset from the following path:
+			//
+			//* \\172.22.155.16\Storage\IngestionTestData\Ops Testing01\Native\00
+			//* Doc File Extension is blank
+			//
+			throw new ImplementationException("upload_ice_dataset_without_file_extension");
+		} else {
+			throw new ImplementationException("NOT upload_ice_dataset_without_file_extension");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_file_name_is_corrected_file_extension$")
+	public void verify_native_file_name_is_corrected_file_extension(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9578 Verify that in Production, file extension corrected should be used in the file name as Native, when file extension as non-blank value and also sends file extension corrected as non-blank value
+			throw new ImplementationException("verify_native_file_name_is_corrected_file_extension");
+		} else {
+			throw new ImplementationException("NOT verify_native_file_name_is_corrected_file_extension");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_dat_file_generated_with_dat_components$")
+	public void verify_dat_file_generated_with_dat_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6120 Verify in Productions, the produced DAT should have DAT field name configured in DAT component
+			throw new ImplementationException("verify_dat_file_generated_with_dat_components");
+		} else {
+			throw new ImplementationException("NOT verify_dat_file_generated_with_dat_components");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_keep_docs_with_no_master_date_sorting$")
+	public void verify_keep_docs_with_no_master_date_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5179 Verify Keep Docs w/ No Master Date on Numbering and Sorting Page
+			//
+			//* Verify generated production matches 'Keep Docs w/ No Master Date' on Numbering & Sorting tab
+			//
+			throw new ImplementationException("verify_keep_docs_with_no_master_date_sorting");
+		} else {
+			throw new ImplementationException("NOT verify_keep_docs_with_no_master_date_sorting");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? in_project_with_ice_data$")
+	public void in_project_with_ice_data(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Project contains ICE data
+			throw new ImplementationException("in_project_with_ice_data");
+		} else {
+			throw new ImplementationException("NOT in_project_with_ice_data");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_with_ice_data$")
+	public void verify_production_generated_with_ice_data(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9130 Verify that production should generate successfully with ICE data
+			throw new ImplementationException("verify_production_generated_with_ice_data");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_with_ice_data");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_custodian_masterdate_sorting$")
+	public void select_custodian_masterdate_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select 'Sort by Metadata' radio button'AllCustodians' > 'Descending'Sub-sort By: 'MasterDate' > 'Descending'
+			throw new ImplementationException("select_custodian_masterdate_sorting");
+		} else {
+			throw new ImplementationException("NOT select_custodian_masterdate_sorting");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_sorting_by_metadata_first_second_sorting$")
+	public void verify_sorting_by_metadata_first_second_sorting(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5201 Verify Bates Number in generated production DAT and Load Files should be in Ascending Order
+			//
+			//* Verify generated production sorted by 2 options in Sort by Metadata field
+			//
+			throw new ImplementationException("verify_sorting_by_metadata_first_second_sorting");
+		} else {
+			throw new ImplementationException("NOT verify_sorting_by_metadata_first_second_sorting");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? redacted_image_doc_exists$")
+	public void redacted_image_doc_exists(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Image based document should be redacted
+			//
+			//* \\INBCTASLSTR01\Storage\IngestionTestData\Automation\39718
+			//
+			throw new ImplementationException("redacted_image_doc_exists");
+		} else {
+			throw new ImplementationException("NOT redacted_image_doc_exists");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? copy_paste_redacted_image$")
+	public void copy_paste_redacted_image(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("copy_paste_redacted_image");
+		} else {
+			throw new ImplementationException("NOT copy_paste_redacted_image");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redacted_image_copied_with_redactions$")
+	public void verify_redacted_image_copied_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10586 Verify that if produced document is copied to any other file then redacted image should not be displayed
+			throw new ImplementationException("verify_redacted_image_copied_with_redactions");
+		} else {
+			throw new ImplementationException("NOT verify_redacted_image_copied_with_redactions");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_failed_production$")
+	public void login_to_failed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pageClick on a Failed production
+			throw new ImplementationException("login_to_failed_production");
+		} else {
+			throw new ImplementationException("NOT login_to_failed_production");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_on_failed_production_error$")
+	public void click_on_failed_production_error(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_on_failed_production_error");
+		} else {
+			throw new ImplementationException("NOT click_on_failed_production_error");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generation_failed_information$")
+	public void verify_production_generation_failed_information(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5001 Verify the failed status (Production Generation Failed) should be clickable and should provide the detailed information on why the generate failed
+			//
+			//* Error should be displayed
+			//
+			throw new ImplementationException("verify_production_generation_failed_information");
+		} else {
+			throw new ImplementationException("NOT verify_production_generation_failed_information");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? mp3_files_with_redactions_exist$")
+	public void mp3_files_with_redactions_exist(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("mp3_files_with_redactions_exist");
+		} else {
+			throw new ImplementationException("NOT mp3_files_with_redactions_exist");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_mp3_document_selection$")
+	public void complete_mp3_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select folder containing MP3 filesClick Mark Complete buttonClick Next button
+			throw new ImplementationException("complete_mp3_document_selection");
+		} else {
+			throw new ImplementationException("NOT complete_mp3_document_selection");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generation_with_redacted_mp3_files$")
+	public void verify_production_generation_with_redacted_mp3_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6184 Verify Production Generation for MP3 files Audio (redaction Applied)
+			throw new ImplementationException("verify_production_generation_with_redacted_mp3_files");
+		} else {
+			throw new ImplementationException("NOT verify_production_generation_with_redacted_mp3_files");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? no_productions_exist_in_project$")
+	public void no_productions_exist_in_project(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("no_productions_exist_in_project");
+		} else {
+			throw new ImplementationException("NOT no_productions_exist_in_project");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_here_to_view_and_select_the_next_bates_number$")
+	public void click_here_to_view_and_select_the_next_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_here_to_view_and_select_the_next_bates_number");
+		} else {
+			throw new ImplementationException("NOT click_here_to_view_and_select_the_next_bates_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_empty_next_bates_number_popup_message$")
+	public void verify_empty_next_bates_number_popup_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8389 Verify that if there is not any committed production then message should be displayed on Next Bates Number pop up
+			//
+			//* Message should display "There are no previously committed productions to present the next available bates number"
+			//
+			throw new ImplementationException("verify_empty_next_bates_number_popup_message");
+		} else {
+			throw new ImplementationException("NOT verify_empty_next_bates_number_popup_message");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? docs_with_redactions_highlights_reviews$")
+	public void docs_with_redactions_highlights_reviews(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//A few docs have a few redactions, highlights, and reviwer remarks
+			throw new ImplementationException("docs_with_redactions_highlights_reviews");
+		} else {
+			throw new ImplementationException("NOT docs_with_redactions_highlights_reviews");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_annotation_layer_tiff_pdf$")
+	public void select_annotation_layer_tiff_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSelect Specify Redactions: All redactions in annotation layer: Default Annotation LayerExpand PDF sectionSelect Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			throw new ImplementationException("select_annotation_layer_tiff_pdf");
+		} else {
+			throw new ImplementationException("NOT select_annotation_layer_tiff_pdf");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_complex_production_component_without_changing_redactions$")
+	public void complete_complex_production_component_without_changing_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedThese parameters will be coming from using this method as an outcome to outcome or as a standalone. Basically, if any of the fields are true, do the steps needed to fulfill that component, else, skip it.IF DATE IS TRUE:Click the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates NumberIF NATIVE IS TRUE:Check off NativeClick Native to expand itClick SELECT ALLExpand the "Advanced" option and enable "Generate Load File (LST)IF TIFF IS TRUECheck off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".IF PDF IS TRUECheck off PDFClick PDFto expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".IF MP3 IS TRUEExpand Advanced Production ComponentsClick the MP3 Files CheckboxEnable Burn RedactionsClick "Select Redactions"Click "Default Automation Redaction"Set the "Redaction Style" to "Beep"IF text IS TRUECheckoff the "Text" component checkboxThe other parameters can be worked on as we use them.At the end of the block above, the last two steps should do the following:Click the Mark complete button and verify the following message appears: "Mark Complete successful"Click the next button
+			throw new ImplementationException("complete_complex_production_component_without_changing_redactions");
+		} else {
+			throw new ImplementationException("NOT complete_complex_production_component_without_changing_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_only_redactions_in_annotation_layer$")
+	public void verify_only_redactions_in_annotation_layer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6392 Verify that when user select annotation layer, it should burn all redactions only in the annotation layer
+			//
+			//* Generated document should be displayed only burned redactions and not Highlighting or Reviewer remarks.
+			//* Destination location should display only 'SeedFiles' folder
+			//* SELECT * FROM EQADoP4E65_P39.[dbo].ProductionDocumentFilePaths
+			//
+			throw new ImplementationException("verify_only_redactions_in_annotation_layer");
+		} else {
+			throw new ImplementationException("NOT verify_only_redactions_in_annotation_layer");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_annotation_layer_tiff$")
+	public void select_annotation_layer_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSelect Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			throw new ImplementationException("select_annotation_layer_tiff");
+		} else {
+			throw new ImplementationException("NOT select_annotation_layer_tiff");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_with_redaction_text_annotation_layer$")
+	public void verify_production_generated_with_redaction_text_annotation_layer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11373 Verify that Production should generated with redaction text if user selects the annotation layer
+			throw new ImplementationException("verify_production_generated_with_redaction_text_annotation_layer");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_with_redaction_text_annotation_layer");
 		}
 
 	}
