@@ -176,6 +176,8 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("basis_for_printing").equals("Native")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
 				}
 			} catch (Exception e) {
@@ -200,6 +202,9 @@ public class BatchPrintContext extends CommonContext {
 				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getPrintExcelFilesRadioButton().Visible()  ;}}), Input.wait30);
+					if (batchPrint.getPrintExcelFilesRadioButton().Selected()) {
+						batchPrint.getExceptionFileTypesNextButton().click();
+					}
 				}
 			} catch (Exception e) {
 				
@@ -219,7 +224,21 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Slip Sheets
 			//* Click Next button
 			//
-			throw new ImplementationException("select_slip_sheets");
+			try {
+				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
+					// Disable slip sheets
+					batchPrint.getEnableSlipSheetsToggle().click();
+					
+					// wait until slip sheet pabnel is disabled
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSlipSheetsDisabledPanel().Visible()  ;}}), Input.wait30);
+					
+				}
+				
+				batchPrint.getSlipSheetsNextButton().click();
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
 		}
@@ -235,7 +254,32 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Branding and Redactions
 			//* Click Next button
 			//
-			throw new ImplementationException("select_branding_redactions");
+			try {
+				String brandLocationText = "Test automation brand location";
+				
+				if (dataMap.containsKey("branding_location")) {
+					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
+					batchPrint.getBrandingHeaderLocation(brandingLocation).click();
+					
+					// wait for branding location popup
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+					// wait for branding location text field
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBrandingLocationTextField().Visible()  ;}}), Input.wait30);
+					// enter branding text
+					batchPrint.getBrandingLocationTextField().sendKeys(brandLocationText);
+					// click OK button
+					batchPrint.getInsertMetadataFieldOKButton().click();
+				}
+				
+				if (dataMap.containsKey("include_applied_redactions")) {
+					
+				}
+			} catch (Exception e) {
+				
+			}
+
 		} else {
 			throw new ImplementationException("NOT select_branding_redactions");
 		}
