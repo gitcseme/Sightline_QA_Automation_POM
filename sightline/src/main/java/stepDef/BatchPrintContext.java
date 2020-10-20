@@ -140,8 +140,6 @@ public class BatchPrintContext extends CommonContext {
 			try {
 				
 				if (dataMap.containsKey("select")) {
-					String parentOption = "Shared with SG1";
-					String option = "CustodianName Erika Grajeda";
 
 					// wait until parent groups become visible
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -155,6 +153,7 @@ public class BatchPrintContext extends CommonContext {
 					
 					// select option
 					batchPrint.getCustodianNameCheckbox().click();
+
 					
 					// click Next button
 					batchPrint.getSourceSelectionNextButton().click();
@@ -162,6 +161,7 @@ public class BatchPrintContext extends CommonContext {
 				
 			} catch (Exception e) {
 				System.out.println(e);
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
@@ -180,6 +180,7 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("basis_for_printing").equals("Native")) {
+
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
@@ -212,7 +213,8 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				System.out.println(e);
-			}
+				}
+
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
 		}

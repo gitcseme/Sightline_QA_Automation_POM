@@ -109,7 +109,7 @@ public class BatchPrintPage {
     public Element getBrandingAndRedactionNextButton() {  return driver.FindElementById("branding-and-redaction-next-button"); } 
     public Element getPDFCreationForAllDocs() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); }
     public Element getBullHornNotificationNumber() { return driver.FindElementByXPath("//span[@id='activity']/b"); }
-    
+
     
     public BatchPrintPage(Driver driver){
 
