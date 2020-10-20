@@ -99,8 +99,8 @@ public class BatchPrintPage {
     public Element getPrintExcelFilesRadioButton() { return driver.FindElementById("printExcelFileRadiobutton"); } 
     public Element getExceptionFileTypesNextButton() { return driver.FindElementById("exception-file-types-next-button"); }
 
-    public Element getEnableSlipSheetsToggle() { return driver.FindElementByXPath("//*[@id='includeSlipSheetCheckBox']/following-sibling::i"); }
 
+    public Element getEnableSlipSheetsToggle() { return driver.FindElementByXPath("//*[@id='includeSlipSheetCheckBox']/following-sibling::i"); }
     public Element getSlipSheetsDisabledPanel() { return driver.FindElementByXPath("//div[@id='slipSheetsSelectFieldsDiv' and @class='disablePanel']"); }
     public Element getSlipSheetsNextButton() { return driver.FindElementById("slip-sheets-next-button"); }
     public Element getBrandingHeaderLocation(String location) { return driver.FindElementByXPath("//div[@id='divbranding2']/div[@class='placeholder-header']//button[text()='"+location+"']"); }

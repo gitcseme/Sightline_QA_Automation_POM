@@ -141,6 +141,10 @@ public class BatchPrintContext extends CommonContext {
 				
 				if (dataMap.containsKey("select")) {
 
+					String parentOption = "Shared with SG1";
+					String option = "CustodianName Erika Grajeda";
+
+
 					// wait until parent groups become visible
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
@@ -212,7 +216,8 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				System.out.println(e);
-				}
+
+			}
 
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
@@ -234,7 +239,6 @@ public class BatchPrintContext extends CommonContext {
 					
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
-					
 
 					// Disable slip sheets
 					batchPrint.getEnableSlipSheetsToggle().click();
@@ -289,14 +293,12 @@ public class BatchPrintContext extends CommonContext {
 				}
 				
 				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+
 					
 				}
 				
 				batchPrint.getBrandingAndRedactionNextButton().click();
 				
-				if (dataMap.containsKey("include_applied_redactions")) {
-					
-				}
 
 			} catch (Exception e) {
 				
