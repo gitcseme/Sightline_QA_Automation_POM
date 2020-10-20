@@ -6355,7 +6355,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			context.remove_burn_redaction_on_mp3(true, dataMap);
 			context.mark_the_component_section_complete(true, dataMap);
@@ -6368,7 +6368,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6392,7 +6393,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("sheet_value", "DocID.MasterDateDateOnly");
 			dataMap.put("sheet_tab", "METADATA");
@@ -6431,7 +6432,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("dat_mapping_values", "Bates-BatesNumber-BatesNum.Bates-BeginingAttachBate-BeginningAttach.Bates-EndingBates-EndingBatesNum.Doc Basic-MasterDate-MasterDateField");
 			context.adding_multiple_dat_field_mappings(true, dataMap);
@@ -6445,7 +6446,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6469,7 +6471,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			context.expanding_the_mp3_advanced_section(true, dataMap);
 			context.verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates(true, dataMap);
@@ -6479,7 +6481,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
