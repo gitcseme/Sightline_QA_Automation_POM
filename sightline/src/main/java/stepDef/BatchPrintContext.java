@@ -120,9 +120,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4396 Verify user can see the saved searches on Source Selection tab of Batch Print
-			throw new ImplementationException("verify_saved_searches_on_source_selection_tab");
+			batchPrint.getMySavedSearchArrow().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					batchPrint.getSelectSavedSearchRows().Displayed()  ;}}), Input.wait30);
+
+			pass(dataMap, "Saved search are displayed on the Source Selection tab of Batch Print");
 		} else {
-			throw new ImplementationException("NOT verify_saved_searches_on_source_selection_tab");
+			fail(dataMap, "Saved search are not displayed on the Source Selection tab of Batch Print");
 		}
 
 	}

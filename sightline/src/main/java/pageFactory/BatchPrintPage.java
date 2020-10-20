@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+
+import automationLibrary.ElementCollection;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
@@ -36,7 +38,7 @@ public class BatchPrintPage {
     public Element getMySavedSearchArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[1]"); }
     public Element getAllTagsArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[2]"); }
     public Element getAllFoldersArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[3]"); }
-  
+    public ElementCollection getSelectSavedSearchRows() {return driver.FindElementsByXPath("@data-content='My Saved Search']/following-sibling::ul/li");}
     public Element getSelectSavedSearch(String searchname){ return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li[1]//a[contains(text(),'"+searchname+"')]"); }
     public Element getSelectTag(String tagName){ return driver.FindElementByXPath("//a[starts-with(text(),'"+tagName+"')]"); }
     public Element getSelectFolder(String folderName){ return driver.FindElementByXPath("//a[starts-with(text(),'"+folderName+"')]"); }
