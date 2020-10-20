@@ -3198,15 +3198,16 @@ public class ProductionContext extends CommonContext {
 			driver.waitForPageToBeReady();
 			//Loop to cycle back and forth between pages, until the export bates button is enabled
 			//Once that button is enabled we know a bates range number is populated
-			while(!prod.getExportBatesButton().Enabled() && i<10){
+			String bateString  = prod.getProd_BatesRange().getText();
+			while(bateString.equals("") && i<10){
 				i++;
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
 				prod.getNextButton().click();
 				driver.waitForPageToBeReady();
+				bateString = prod.getProd_BatesRange().getText();
 			}
-			Assert.assertTrue(prod.getExportBatesButton().Enabled());
 			//One more back and forth to get the table status to update
 			prod.getBackButton().click();
 			driver.waitForPageToBeReady();
@@ -3224,7 +3225,6 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			driver.waitForPageToBeReady();
-			System.out.println(prod.getPrivDocsStatus().getText());
 			//Verify 0 priv doc's
 			Assert.assertEquals(prod.getPrivDocsStatus().getText(), "0 Docs");
 			pass(dataMap, "Privileged docs with no placeholders displays correct status");
@@ -3291,6 +3291,9 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
 			int expectedDocuments = Integer.parseInt(dataMap.get("totalMatchedDocuments").toString());
+			prod.getDocListDropDownCount().click();
+			prod.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
 			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
 			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
 			pass(dataMap, "The number of documents listed matches the prior screen's count");
