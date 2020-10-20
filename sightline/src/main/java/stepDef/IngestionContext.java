@@ -200,7 +200,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	
 	@When("^.*(\\[Not\\] )? click_open_wizard_option$")
 	public void click_open_wizard_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -213,7 +213,6 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionAction_Delete().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Delete().Click();
 		}
-
 	}
 
 
@@ -238,7 +237,8 @@ public class IngestionContext extends CommonContext {
 			} else {
 				fail(dataMap,"Ingestion Execution Details Popup did NOT Display");
 				}
-		} else {
+		} 
+		else {
 			on_ingestion_home_page(scriptState, dataMap);
 		}
 
@@ -278,6 +278,7 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
 	
 	@Then("^.*(\\[Not\\] )? verify_expected_date_time_format_is_displayed$")
 	public void verify_expected_date_time_format_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
