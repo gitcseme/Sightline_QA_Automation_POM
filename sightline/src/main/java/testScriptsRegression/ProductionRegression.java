@@ -5481,7 +5481,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_navigated_back_onto_the_document_components_section_and_change_the_folder_selection_to_by_tags_complete_the_production_When_waiting_for_production_to_be_in_progress_Then_verify_overwriting_the_document_selection_generates_a_new_bate_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5536,7 +5536,7 @@ public class ProductionRegression extends RegressionBase {
 
 
 	
-	@Test(groups = {"Production, Positive", "smoke" })
+	@Test(groups = {"Production, Positive", "Regression" })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_native_productions_can_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5641,7 +5641,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_the_bates_generated_number_follows_the_custom_numbering() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5877,7 +5877,7 @@ public class ProductionRegression extends RegressionBase {
 
 	}
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_complete_Then_verify_the_user_is_able_to_click_on_confirm_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

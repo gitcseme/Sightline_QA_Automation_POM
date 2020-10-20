@@ -75,13 +75,10 @@ public class CommonContext {
 	public void login_as_pau(boolean scriptState, HashMap dataMap) {
 		lp = new LoginPage(driver);
 		if (scriptState) {
-			lp.loginToSightLine("automate.sqa1@sqapowered.com", "Q@test_10", true, dataMap);
-			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
+			lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
 		} else {
-//			String uid = (String) dataMap.get("uid");
-//			String pwd = (String) dataMap.get("pwd");
-			String uid = "automate.sqa1@sqapowered.com";
-			String pwd = "Q@test_10";
+			String uid = (String) dataMap.get("uid");
+			String pwd = (String) dataMap.get("pwd");
 			
 			if (uid != null && uid.length() > 0) {
 				lp.loginToSightLine(uid, pwd, false, dataMap);
