@@ -89,7 +89,14 @@ public class BatchPrintPage {
     public Element getErrorInfoLink(){ return driver.FindElementById("idBtachPrintError"); }
     public Element getCloseButton(){ return driver.FindElementById("Close"); }
     
-    
+    public Element getSelectSearchParentOption(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+parent+"']/preceding-sibling::i"); }
+    public Element getSelectSearchParentGroup(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='\"+parent+\"']/following-sibling::ul"); }
+    public Element getSelectSearchOption(String option) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+option+"']"); }
+    public Element getSourceSelectionNextButton() { return driver.FindElementById("source-selection-next-button"); }
+    public Element getNativeRadioButton() { return driver.FindElementById("nativesRadioButton"); }
+    public Element getBasisForPrintingNextButton() { return driver.FindElementById("basis-for-printing-next-button"); }
+    public Element getAnalysisNextButton() { return driver.FindElementById("analysis-next-button"); }
+    public Element getPrintExcelFilesRadioButton() { return driver.FindElementById("printExcelFileRadiobutton"); } 
     
     
     public BatchPrintPage(Driver driver){
