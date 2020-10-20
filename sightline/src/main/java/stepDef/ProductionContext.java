@@ -32,6 +32,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
@@ -2510,9 +2511,7 @@ public class ProductionContext extends CommonContext {
 				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
-				System.out.println(prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText());
 				String docID = (prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText()).split(" and")[0];
-				System.out.println(docID);
 				dataMap.put("docID", prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText());
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4030,7 +4029,6 @@ public class ProductionContext extends CommonContext {
 				driver.waitForPageToBeReady();
 				status = prod.getGeneratePostGenStatus().getText();
 			}
-			System.out.println(prod.getGeneratePostGenStatus().getText());
 			Assert.assertEquals("Post generation check complete", status);
 
 			//Make Complete and Next
@@ -5461,8 +5459,7 @@ public class ProductionContext extends CommonContext {
 			selecting_the_production(true, dataMap);
 
 			//Get our Target Production Tile and Click into it
-			WebElement targetProd = prod.getProductionTileByName("AutoProduction1603157595563");
-			//WebElement targetProd =  prod.getProductionTileByName((String)dataMap.get("production_name"));
+			WebElement targetProd =  prod.getProductionTileByName((String)dataMap.get("production_name"));
 			targetProd.click();
 			
 			//Uncommit and wait for popup
@@ -5633,11 +5630,36 @@ public class ProductionContext extends CommonContext {
 	public void open_doc_in_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("open_doc_in_doc_view");
-		} else {
-			throw new ImplementationException("NOT open_doc_in_doc_view");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocView
+    			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getDocViewAction().click();
+			
+			DocViewPage docView = new DocViewPage(driver);
+			driver.waitForPageToBeReady();
+			docView.getDocView_ImagesTab().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			int totalImages = docView.getDocViewTotalImages().FindWebElements().size(); 
+			dataMap.put("totalImages", totalImages);
+			pass(dataMap, "opened in doc_view");
 		}
+		else fail(dataMap, "Could not open in doc_view");
 
 	}
 
@@ -5646,11 +5668,13 @@ public class ProductionContext extends CommonContext {
 	public void verify_doc_view_images_tab_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_displayed");
+			//TC8211 Verify that DocView Images tab should  show the produced TIFF/PDF for this uncommitted production
+			int images = (int)dataMap.get("totalImages");
+			System.out.println(images);
+			Assert.assertTrue(images!=0);
+			pass(dataMap, "Verified doc view images tab");
 		}
+		else fail(dataMap, "Could not verify doc view images tab");
 
 	}
 
@@ -5712,10 +5736,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_not_displayed");
+
+			int images = (int)dataMap.get("totalImages");
+			System.out.println(images);
+			//Make sure images are not showing 
+			assertEquals(0, images);
+			pass(dataMap, "verified that images tab was not displayed");
 		}
+		else fail(dataMap, "could not verify that images tab was not displayed");
 
 	}
 

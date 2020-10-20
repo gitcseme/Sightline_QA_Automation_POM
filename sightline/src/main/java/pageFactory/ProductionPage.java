@@ -571,6 +571,7 @@ public class ProductionPage {
     
     public Element getProdSearchMenuButton() {return driver.FindElementById("3");}
     public Element getProdSessionSearchButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
     
     
     //Click the desired production set option, in the dropdown menu by it's index

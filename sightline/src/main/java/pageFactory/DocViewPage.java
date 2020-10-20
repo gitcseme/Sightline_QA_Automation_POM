@@ -239,6 +239,8 @@ public class DocViewPage {
     
     public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
+    public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
+    public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
     
     
     public DocViewPage(Driver driver){
