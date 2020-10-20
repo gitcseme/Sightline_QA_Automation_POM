@@ -73,7 +73,7 @@ public class BatchPrintRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_less_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_single_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -84,6 +84,8 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			dataMap.put("select", "search");
