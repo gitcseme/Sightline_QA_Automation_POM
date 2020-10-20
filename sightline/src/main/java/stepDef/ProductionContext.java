@@ -1,5 +1,7 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Random;
+import java.lang.Math;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -1542,8 +1545,7 @@ public class ProductionContext extends CommonContext {
 
 				//Just Need to Select Row, if we are in Grid mode, Tile Mode has no Select
 				else if(viewMode != null && viewMode.equals("grid")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return prod.getProductionListGridViewTable().Displayed()  ;}}), Input.wait30);
 
 					//Wait for table to update, and click first element 
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1562,8 +1564,9 @@ public class ProductionContext extends CommonContext {
 				
 			}
 			catch(Exception e) {
+				e.printStackTrace();
 				fail(dataMap, "Could not Select Prodution");
-				e.printStackTrace();}
+			}
 			
 		}
 		else fail(dataMap,"Could Not Select Production");
@@ -2412,9 +2415,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
+				/*
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionGuardMarkComplete().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getbtnProductionGuardMarkComplete().Click();
+				*/
+				prod.getMarkCompleteButton().click();
+				if(prod.getOkButton().Displayed()) prod.getOkButton().click();
 					
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
@@ -2426,11 +2433,12 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getCurrentCrumbProductionLocation().Displayed()  ;}}), Input.wait30); 
 				
+				pass(dataMap, "marked priv guard default complete");
 			} catch (Exception e) {
 				
 			}
 		} else {
-			throw new ImplementationException("NOT complete_default_production_location_component");
+			fail(dataMap, "failed to mark priv guard default complete");
 		}
 
 	}
@@ -2550,7 +2558,6 @@ public class ProductionContext extends CommonContext {
 	public void waiting_for_production_to_be_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getInProgressStatus().Displayed()  ;}}), Input.wait30); 
@@ -2794,6 +2801,7 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
+			prod.goToProductionHomePage().ScrollTo();
 			prod.goToProductionHomePage().click();
 			driver.waitForPageToBeReady();
 			
@@ -2810,13 +2818,19 @@ public class ProductionContext extends CommonContext {
 	//Not working
 	@Then("^.*(\\[Not\\] )? deleteAll$")
 	public void deleteAll(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		while(true) {
+		int i =0;
+		while(i==0) {
 			selecting_the_production(true,dataMap);
+			try {
+			Thread.sleep(200);
+			}
+			catch(Exception e) {}
 			prod.getprod_ActionButton().click();
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
-
-
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
 		}
 	}
 
@@ -2897,15 +2911,24 @@ public class ProductionContext extends CommonContext {
 				prod.getTIFF_SelectRed_Radiobutton().click();
 				prod.getTIFFSelectRedactionsTagTree("Default Automation Redaction").click();
 			}
-			
-			
-			/*WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
+
 			//IF NATIVE IS TRUE:
 			//Check off Native
 			//Click Native to expand it
 			//Click SELECT ALL
 			//Expand the "Advanced" option and enable "Generate Load File (LST)
-
+			if(nat!= null && nat.equalsIgnoreCase("true")){
+				builder.moveToElement(prod.getNativeChkBox().getWebElement()).perform();
+				prod.getNativeChkBox().click();
+				prod.getNativeTab().click();
+				prod.getNative_SelectAllCheck().click();
+				prod.getNativeAdvanced().click();
+				prod.getNative_GenerateLoadFileLST().click();
+			}
+			
+			
+			/*WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
+			
 			//IF MP3 IS TRUE
 			//Expand Advanced Production Components
 			//Click the MP3 Files Checkbox
@@ -2928,7 +2951,7 @@ public class ProductionContext extends CommonContext {
 			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
 
 			//Click the next button
-			prod.getComponentsMarkNext().Click();
+			prod.getNextButton().click();
 			pass(dataMap, "Complex Components were enabled");
 		}
 		else fail(dataMap, "Failed Complex Production Component");
@@ -3020,6 +3043,7 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
+			
 			
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
@@ -3890,12 +3914,61 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? custom_number_and_sorting_is_added$")
 	public void custom_number_and_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #".  If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. 
 		if (scriptState) {
-			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #". If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick the Mark complete button and verify the following message appears: "Mark Complete successful"Click Next
-			throw new ImplementationException("custom_number_and_sorting_is_added");
-		} else {
-			throw new ImplementationException("NOT custom_number_and_sorting_is_added");
+			Random rnd = new Random();
+			String prefix = (String) dataMap.get("prefix");
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+			String minimumNumber = Integer.toString(minLength);
+			String suffix = (String) dataMap.get("suffix");
+			String beforeParseBates = (String) dataMap.get("beginning_bates");
+				
+			if(!beforeParseBates.contains("+")) {
+				int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+				int low = (int)Math.pow(10, beginningBates-1);
+				int high = (int)Math.pow(10, beginningBates);
+				int randMultiDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randMultiDigit);
+				dataMap.put("beginning_bates", randDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+			
+			else if(beforeParseBates.contains("+")) {
+				String[] parts = beforeParseBates.split("\\+");
+				String beforePlus = parts[0];
+				String afterPlus = parts[1]; 
+				int parsedAfterPlus = Integer.parseInt((afterPlus));
+				int low = (int)Math.pow(10, parsedAfterPlus-1);
+				int high = (int)Math.pow(10, parsedAfterPlus);
+				int randMultiDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randMultiDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(beforePlus);
+				prod.getBeginningBates().SendKeys(randDigit);
+				String finalBatesNumber = prod.getBeginningBates().getText();
+				dataMap.put("beginning_bates", finalBatesNumber);
+				
+			}		
+			
+			prod.gettxtBeginningBatesIDPrefix().click();
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
+			
+			prod.gettxtBeginningBatesIDSuffix().click();
+			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
+			
+			prod.gettxtBeginningBatesIDMinNumLength().click();
+			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
+
+			prod.getMarkCompleteLink().click();
+			Assert.assertTrue(prod.getMarkCompleteSuccessfulText().Displayed());
+			prod.getNextButton().click();
+			
+		} 
+		else {
+			 fail(dataMap, "Custom number and sorting is not added");
 		}
 
 	}
@@ -3906,10 +3979,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the Generate Button.
-			throw new ImplementationException("clicking_the_production_generate_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_production_generate_button");
+			prod.getGenerateButton().click();
+			driver.waitForPageToBeReady();
+
 		}
+		else fail(dataMap, "Couldnt click generate button");
 
 	}
 
@@ -3918,11 +3992,23 @@ public class ProductionContext extends CommonContext {
 	public void verify_a_complex_production_is_able_to_be_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			//TC 4157/3733
 			//When used as a context, the parameters here are used to supply the values for "complete_complex_production"
-			throw new ImplementationException("verify_a_complex_production_is_able_to_be_generated");
-		} else {
-			throw new ImplementationException("NOT verify_a_complex_production_is_able_to_be_generated");
+
+			//Make sure Production Name is displaying the correct name
+			String prodName = prod.getGenerateProductionName().getText();
+			Assert.assertEquals(prodName, (String)dataMap.get("production_name"));
+			
+			//Wait a few seconds for Status text to change to "in progress"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
+			
+			//Make sure Status is In Progress, and InProgress Button is now Displayed
+			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress") );
+			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed());
+			pass(dataMap, "Complex Production was able to be generated");
 		}
+		else fail(dataMap, "Could not verify a complex production can be generated");
 
 	}
 
@@ -3932,10 +4018,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
-			throw new ImplementationException("waiting_for_production_to_be_complete");
-		} else {
-			throw new ImplementationException("NOT waiting_for_production_to_be_complete");
+			String status = prod.getGeneratePostGenStatus().getText();
+			//Loop to wait for Post Generation check complete
+			int i =0, j =0;
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<20) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+			Assert.assertEquals("Post generation check complete", status);
+
+			//Make Complete and Next
+			prod.getMarkCompleteButton().click();
+			prod.getNextButton().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Passed, post generation check for production");
 		}
+		else fail(dataMap, "Production Failed, or Timed out");
 
 	}
 
@@ -3944,11 +4046,10 @@ public class ProductionContext extends CommonContext {
 	public void clicking_review_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_review_production");
-		} else {
-			throw new ImplementationException("NOT clicking_review_production");
+			prod.getReviewproductionButton().click();
+			pass(dataMap, "Clicked review production btn");
 		}
+		else fail(dataMap, "Error clicking review production btn");
 
 	}
 
@@ -3956,12 +4057,22 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_review_production_path_is_correct$")
 	public void verify_the_review_production_path_is_correct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
+		if (scriptState){
 			//TC4994Verify the directory in the UI matches the directory we set in "complete_default_production_location_component".Example text from the UI:The documents are produced at the following path : \\MTPVTSSLMQ01\Productions\H021301\Test01
-			throw new ImplementationException("verify_the_review_production_path_is_correct");
-		} else {
-			throw new ImplementationException("NOT verify_the_review_production_path_is_correct");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDestinationPathText().Displayed() ;}}), Input.wait30);
+
+			//Get Path we inputed in Previous Location Page
+			String originalPath = (String)dataMap.get("root_path") + "\\" + (String)dataMap.get("production_directory");
+
+			//Get Path that is current Displayed
+			String finalPath = prod.getDestinationPathText().getText();
+
+			//Verify they are equal
+			Assert.assertEquals(originalPath,finalPath);
+			pass(dataMap, "Production Path was verified");
 		}
+		else fail(dataMap, "Production Path could not be verified");
 
 	}
 
@@ -3969,12 +4080,25 @@ public class ProductionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? navigated_back_onto_the_document_components_section$")
 	public void navigated_back_onto_the_document_components_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//Make sure the Bates number is stored. We will verify a new number is generated afterwards.Click the Back link until you get back to "Document Selection"
 		if (scriptState) {
-			//Make sure the Bates number is stored. We will verify a new number is generated afterwards.Click the Back link until you get back to "Document Selection"
-			throw new ImplementationException("navigated_back_onto_the_document_components_section");
-		} else {
-			throw new ImplementationException("NOT navigated_back_onto_the_document_components_section");
+			//After Generation -> Head back to get bates Number
+			prod.getBackLink().click();;
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+
+			//Save our first bates range for later use
+			String firstBatesRange = prod.getProd_BatesRange().getText();
+			dataMap.put("firstBatesRange", firstBatesRange);
+			//Navigate back to document selection
+			for(int i =0; i<4; i++) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+			}
+			pass(dataMap, "stored the original bates number and navigated back to Document Selection");
 		}
+		else fail(dataMap, "Could not store original bates number and could not navigate back to Document Selection");
 
 	}
 
@@ -3982,12 +4106,39 @@ public class ProductionContext extends CommonContext {
 	@And("^.*(\\[Not\\] )? change_the_folder_selection_to_by_tags_complete_the_production$")
 	public void change_the_folder_selection_to_by_tags_complete_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//Click Mark IncompleteClick "Select Tags:"Click Default Automation TagClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick the Generate Button
 		if (scriptState) {
-			//Click Mark IncompleteClick "Select Tags:"Click Default Automation TagClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick Mark CompleteClick NextClick the Generate Button
-			throw new ImplementationException("change_the_folder_selection_to_by_tags_complete_the_production");
-		} else {
-			throw new ImplementationException("NOT change_the_folder_selection_to_by_tags_complete_the_production");
+			driver.waitForPageToBeReady();
+
+			//Mark Incomplete and Select Default Automation Tag
+			Actions builder = new Actions(driver.getWebDriver());
+			prod.getMarkIncompleteButton().click();
+			prod.getTagsRadioButton().click();
+			builder.moveToElement(driver.FindElementById("tagTree").getWebElement()).perform();
+			prod.getProductionDocumentSelectTagByName("Default Automation Tag").click();
+			driver.waitForPageToBeReady();
+			
+			//Go back to generate page
+			//prod.getMarkCompleteButton().click();
+			for(int i =0; i<4; i++) {
+				prod.getMarkCompleteButton().click();
+				if(i ==1 && prod.getOkButton().Displayed()){
+					prod.getOkButton().click();
+				}
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+			}
+			driver.waitForPageToBeReady();
+			
+			//When on Generation page, click generate and wait for Inprogress to begin
+			prod.getGenerateButton().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
+			pass(dataMap, "Succesfully selected a new tag, and navigated back to Generate page");
+			
 		}
+		else fail(dataMap, "failed to change the folder selection to by tags");
 
 	}
 
@@ -3995,12 +4146,27 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_overwriting_the_document_selection_generates_a_new_bate_number$")
 	public void verify_overwriting_the_document_selection_generates_a_new_bate_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC 4956Verify the new bate number displayed does not match the prior bates number
 		if (scriptState) {
-			//TC 4956Verify the new bate number displayed does not match the prior bates number
-			throw new ImplementationException("verify_overwriting_the_document_selection_generates_a_new_bate_number");
-		} else {
-			throw new ImplementationException("NOT verify_overwriting_the_document_selection_generates_a_new_bate_number");
+
+			int i =0;
+			String batesRangeExists = prod.getProd_BatesRange().getText();
+			
+			//Loop until bates range is displayed
+			while(batesRangeExists.equals("") && i++<20) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				batesRangeExists = prod.getProd_BatesRange().getText();
+			}
+			String secondBatesRange = prod.getProd_BatesRange().getText();
+			//Make sure we get a different bates range after, overwriting our doc selection
+			Assert.assertFalse( secondBatesRange.equals((String)dataMap.get("firstBatesRange")) );
+			pass(dataMap, "verified that overwriting the document generates a new bate numbers");
 		}
+		else fail(dataMap, "failed to verify that overwriting the document generates a new bate numbers");
 
 	}
 
@@ -4010,10 +4176,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5067/4897Verify the production is set to "INPROGRESS".
-			throw new ImplementationException("verify_native_productions_can_be_generated");
-		} else {
-			throw new ImplementationException("NOT verify_native_productions_can_be_generated");
+			Assert.assertEquals("in progress", prod.getGenerateInProgressButton().getText());
+			pass(dataMap, "passed the Native Production");
 		}
+		else fail(dataMap, "Failed the Native Production");
 
 	}
 
@@ -4055,12 +4221,37 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_the_bates_generated_number_follows_the_custom_numbering$")
 	public void verify_the_bates_generated_number_follows_the_custom_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4960 / 8349If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
 		if (scriptState) {
-			//TC4960 / 8349If the bates range does generate, below is an explanation of what the number should look like based on the custom numbering we provided in "custom_number_and_sorting_is_added". We need to verify all of the data in the parameter we used is in the bates number itself in the correct order.For example, if you specify 1001 as the Beginning Bates #, "B" for Prefix, "T" for Suffix, and "8" for Minimum Number Length (used for number padding), then a sample bates number generated would look like "B00001001T".
-			throw new ImplementationException("verify_the_bates_generated_number_follows_the_custom_numbering");
-		} else {
-			throw new ImplementationException("NOT verify_the_bates_generated_number_follows_the_custom_numbering");
+			String status = prod.getGeneratePostGenStatus().getText();
+			String prefix = (String)dataMap.get("prefix");
+			String suffix = (String)dataMap.get("suffix");
+			String batesNum = (String)dataMap.get("randBates");
+			int randLength = Integer.parseInt((String)dataMap.get("beginning_bates"));
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+
+			//This loop was added to wait for the Bates range to appear
+			int i =0, j =0;
+			while(!status.equalsIgnoreCase("Pre generation check complete") && i++<20) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+
+			//Split Bates Range to get one of the Bates Numbers to verify its format format
+			String[] finalBatesRange = (prod.getProd_BatesRange().getText()).split(" - ");
+			char[] firstBatesNum = (finalBatesRange[0]).toCharArray(); 
+
+			//Verify Prefix and Suffix, and Correct BatesLength
+			Assert.assertEquals(firstBatesNum[0], prefix.charAt(0));
+			Assert.assertEquals(firstBatesNum[firstBatesNum.length-1], suffix.charAt(0));
+			Assert.assertEquals(firstBatesNum.length, minLength+2);
+			pass(dataMap ,"Bates Number Range follows correct format");
 		}
+		else fail(dataMap, "Bates Number Range does not follow correct format");
 
 	}
 
@@ -4069,7 +4260,9 @@ public class ProductionContext extends CommonContext {
 	public void a_file_size_ingestion_was_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
+			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG
+			//first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. 
+			//We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
 			throw new ImplementationException("a_file_size_ingestion_was_completed");
 		} else {
 			throw new ImplementationException("NOT a_file_size_ingestion_was_completed");
@@ -4096,9 +4289,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Verify you are on the Summary and Preview page.Click Mark CompleteClick Next
-			throw new ImplementationException("completed_summary_and_preview_component");
+			driver.waitForPageToBeReady();
+			Assert.assertEquals("Summary and Preview", prod.getProductionSectionPageTitle().getText());
+			prod.getbtnProductionSummaryMarkComplete().click();
+			prod.getbtnProductionSummaryNext().click();
+			pass(dataMap, "Summary and Preview page displayed");
 		} else {
-			throw new ImplementationException("NOT completed_summary_and_preview_component");
+			 fail(dataMap, "Not on Summary and Preview page");
 		}
 
 	}
@@ -4113,9 +4310,14 @@ public class ProductionContext extends CommonContext {
 			//* Verify bates range should be blank
 			//* Verify the generate button is enabled.
 			//
-			throw new ImplementationException("verify_productions_are_set_to_draft_by_default");
+			driver.waitForPageToBeReady();
+			Assert.assertEquals("DRAFT", prod.getGeneratePostGenStatus().getText());
+			Assert.assertEquals("", prod.getProd_BatesRange().getText());
+			Assert.assertTrue(prod.getGenerateButton().Enabled());
+			pass(dataMap, "Productions are set to DRAFT");
+			
 		} else {
-			throw new ImplementationException("NOT verify_productions_are_set_to_draft_by_default");
+			fail(dataMap, "Productions are not set to draft");
 		}
 
 	}
@@ -4123,13 +4325,33 @@ public class ProductionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_the_user_is_able_to_click_on_confirm_production$")
 	public void verify_the_user_is_able_to_click_on_confirm_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+		//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
 		if (scriptState) {
-			//TC 4554Verify the link 'Confirm Production & Commit' exists.Click on 'Confirm Production & Commit'Verify no errors are returned and it is successful.
-			throw new ImplementationException("verify_the_user_is_able_to_click_on_confirm_production");
-		} else {
-			throw new ImplementationException("NOT verify_the_user_is_able_to_click_on_confirm_production");
+			int j =0;
+			//This loop finds any lingering pop up messages from "Mark Complete" buttons on previous pages, and closes them
+			//We need these pop ups closed, because we will quickly press "confirm prod and commit" and we need to get that unique pop up message
+			for(int i =1; i<100; i++) {
+				if(j ==1) break;
+				if(prod.getProductionConfirmPopupCloseBtn(i).FindWebElements().size()!=0) {
+					prod.getProductionConfirmPopupCloseBtn(i).FindWebElements().get(0).click();
+					j=1;
+				}
+			}
+			//Wait for lingering messages to fade
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			Assert.assertTrue(prod.getConfirmAndCommitProdLink().Enabled() && prod.getConfirmAndCommitProdLink().Displayed());
+
+			//Click confirm link
+			prod.getConfirmAndCommitProdLink().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			//Get successful popup message
+			Assert.assertEquals("Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.", 
+					prod.getConfirmCompletePopup().getText());
+			pass(dataMap, "Was able to verify the functionality of Confirm production and commit button");
 		}
+		else fail(dataMap, "Failed to properly click Confirm production button");
 
 	}
 
@@ -4235,10 +4457,11 @@ public class ProductionContext extends CommonContext {
 	public void expanding_the_pdf_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("expanding_the_pdf_production_component");
+			prod.getPDFTab().click();
+			prod.getPDFAdvanced().click();
+			pass(dataMap, "Expanded the pdf production component");
 		} else {
-			throw new ImplementationException("NOT expanding_the_pdf_production_component");
+			fail(dataMap, "Can not expand the pdf production component");
 		}
 
 	}
@@ -4249,21 +4472,270 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 3764 / 6430 / 7247The verifcation here is the same for the TIFF version of this outcome which is already automated. Check to see if this can be reused since both TIFF and PDF have the same buttons and fields.
+
 			//* Verify the first section is Page Options
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFFirstPageElement().Enabled();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Page Options:", prod.getPDFFirstPageElement().getText());
+
 			//* Verify in Page Options, the section "Single / Multiple:" has the options "Multi-page" and "Single Page" with Single Page selected as the default option with a radio button.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFMultiRadio().Enabled();
+				}
+			}), Input.wait30);
+			Assert.assertNull(prod.getPDFMultiRadio().GetAttribute("checked"));
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFSingleRadio().Enabled();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("true", prod.getPDFSingleRadio().GetAttribute("checked"));
+
 			//* Verify in Page Options, the section "Format" has the options "Letter" and "A4" with Letter selected as the default option with a radio button.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFA4Radio().Enabled();
+				}
+			}), Input.wait30);
+			Assert.assertNull(prod.getPDFA4Radio().GetAttribute("checked"));
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFLetterRadio().Enabled();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("true", prod.getPDFLetterRadio().GetAttribute("checked"));
+
 			//* Verify in Page Options, Blank Page Removal, Preserve Color, and Do not produce full content TIFFs or placeholder TIFFs for Natively Produced Docs: all have the option set to the red "x" by default. 
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFColorToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFColorToggle().Selected());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFBlankRemovalToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFBlankRemovalToggle().Selected());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFSkipPDFGenerationToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFSkipPDFGenerationToggle().Selected());
+
 			//* Verify in Page Options, the option "Rotate Landscape pages to portrait layout:" has the option "No Rotation" set to default.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFRotateDropdown().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("No Rotation", prod.getPDFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText());
+
 			//* Verify the "Branding" section contains the fields "Location", "Branding Text", "Speicify Default Branding", "Insert Metadata Field" link, and "+ Specify Branding by Selecting Tags:" link.
-			//* Verify in the Branding section for Location, there is a rectangle with the options, "LEFT", "CENTER", "RIGHT" at the top and bottom of the rectable with the words "--Page Body--" in the middle, and the top left "LEFT" option selected by default.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFBrandingLocation().Displayed();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFBrandingText().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Branding Text:", prod.getPDFBrandingText().getWebElement().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFSpecifyDefaultBranding().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Specify Default Branding", prod.getPDFSpecifyDefaultBranding().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFMetadataField().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Insert Metadata Field", prod.getPDFMetadataField().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.gePDFSpecificBrandingBySelectionTagsLink().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Specify Branding by Selecting Tags:", prod.gePDFSpecificBrandingBySelectionTagsLink().getText());
+
+			//* Verify in the Branding section for Location, there is a rectangle with the options, "LEFT", "CENTER", "RIGHT" at the top and bottom of the rectable with the words "--Page Body--" in the middle
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDF_CenterHeaderBranding().Displayed();
+				}
+			}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFCenterFooterBranding().Displayed();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFLeftHeaderBranding().Displayed();
+				}
+			}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFLeftFooterBranding().Displayed();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFRightHeaderBranding().Displayed();
+				}
+			}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFRightFooterBranding().Displayed();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFRectangleMiddleText().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("--Page Body--", prod.getPDFRectangleMiddleText().getText());
+
+			//* Verify top left "LEFT" option selected by default
+			Assert.assertTrue(prod.getPDFLeftHeaderBranding().getWebElement().getAttribute("class").contains("btn-primary"));
+
 			//* Verify in the Branding section, Specify Default Branding contains a section with the text "Enter default branding for the selection location on the page."
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFDefaultBrandingRectangleText().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Enter default branding for the selected location on the page.", prod.getPDFDefaultBrandingRectangleText().GetAttribute("placeholder").toString());
+
 			//* Verify in the "Placeholders" section, "Enable for Privileged Docs:" is checked green by default, there is a "Select tags" blue button to the right of Enable for Privileged Docs:, "Enable for Tech Tissue Docs:" is checked red by default, "+ Enable for Natively Produced Documents:" link with a question mark button next to it, and a rectangle with the watermark "Enter placeholder text for the privileged docs" with a link "Insert Metadata Field" under it. 
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFEnableForPrivilegedDocs().Displayed();
+				}
+			}), Input.wait30);
+			if (prod.getPDFEnableForPrivDocsToggle().GetAttribute("checked") != null)
+				Assert.assertEquals("true", prod.getPDFEnableForPrivDocsToggle().GetAttribute("checked").toString());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFPriveldgeSelectTagButton().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Select Tags", prod.getPDFPriveldgeSelectTagButton().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFEnableTechIssueDocsToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFEnableTechIssueDocsToggle().Selected());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFEnableNativelyProducedDocs().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Enable for Natively Produced Documents:", prod.getPDFEnableNativelyProducedDocs().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFEnableNativelyProducedDocsHelpTip().Displayed();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFPlaceholderTextField().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Enter placeholder text for the privileged docs", prod.getPDFPlaceholderTextField().GetAttribute("Placeholder"));
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFPlaceholderMetadataLink().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Insert Metadata Field", prod.getPDFPlaceholderMetadataLink().getText());
+
 			//* In the Redactions section, the option "Burn Redactions:" is checked red by default.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFBurnRedactionToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFBurnRedactionToggle().Selected());
+
 			//* In the "Advanced" section, "Generate Load File (LST):" is checked green by default, "Load File Type:" is set to "Log" by default, and "Slip Sheets" is checked red by default.
-			//
-			throw new ImplementationException("verify_the_pdf_product_component_displays_the_correct_default_options");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFLSTLoadFileToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertTrue(prod.getPDFLSTLoadFileToggle().Selected());
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getPDFSlipSheetsToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertFalse(prod.getPDFSlipSheetsToggle().Selected());
+
+			pass(dataMap,"The pdf product component displays the correct default options");
 		} else {
-			throw new ImplementationException("NOT verify_the_pdf_product_component_displays_the_correct_default_options");
+			fail(dataMap,"The pdf product component displays the correct default options");
 		}
 
 	}
@@ -4274,9 +4746,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//The user should be on the "Production Components" section of Productions.The user should click on "Native" to expand the Native section.The user should click on "Advanced" to expand the Native Advanced section.
-			throw new ImplementationException("expanding_the_native_production_component");
+			prod.getNativeTab().click();
+			prod.getNativeAdvanced().click();
+			pass(dataMap, "Expanded the native production component");
 		} else {
-			throw new ImplementationException("NOT expanding_the_native_production_component");
+			fail(dataMap, "Can not expand the native production component");
 		}
 
 	}
@@ -4288,13 +4762,24 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 4165 / 4167
 			//* Verify Generate Load File (LST) button is set to No by default. 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNativeAdvancedLST().Enabled()  ;}}), Input.wait30);
+			Assert.assertFalse(prod.getNativeAdvancedLSTToggle().Selected());
+
 			//* Verify the radio button in the section "Advanced Families of Redacted and Privileged Documents" is set to "Do not produce natives of the parents of privileged and redacted docs" by default.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNativeAdvancedExcludeNativeOfParentRadio().Enabled()  ;}}), Input.wait30);
+			Assert.assertTrue(prod.getNativeAdvancedExcludeNativeOfParentRadio().Selected());
+
 			//* Verify the section "Select File Types and/or Tags:", each of the file type options below are NOT checked by default. 
+			for (WebElement checkbox : prod.getNativeSelectFileTypeOrTagsTableCheckboxes().FindWebElements()) {
+				Assert.assertFalse(checkbox.isSelected());
+			}
 			//* Verify the availability of the option for Force Protection on Excel files to not allow any modifi cations BUT allow to vi ew formulas and filter t he data. 
 			//Need to double check step 4, this seems like an option that is not available.
-			throw new ImplementationException("verify_the_native_product_component_displays_the_correct_default_options");
+			pass(dataMap,"The native product component displays the correct default options");
 		} else {
-			throw new ImplementationException("NOT verify_the_native_product_component_displays_the_correct_default_options");
+			fail(dataMap,"The native product component does not display the correct default options");
 		}
 
 	}
@@ -4304,10 +4789,34 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_numbering_sorting_fields_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4902Numbering and Sorting page is already displayedVerify level - page/document radio buttons are displayedVerify format - metadata radio button is displayedVerify format - Beginning Bates/Prefix/Suffix/Min Length input fields are displayedVerify sorting - sort by metadata radio button is displayedVerify sorting - sub-sort dropdown field is displayed
-			throw new ImplementationException("verify_production_numbering_sorting_fields_are_displayed");
+			//TC4902Numbering and Sorting page is already displayed
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							//Verify level - page/document radio buttons are displayed
+							prod.getNumPageLevelRadioButton().Displayed() &&
+							prod.getNumDocumentLevelRadioButton().Displayed() &&
+
+							//Verify format - metadata radio button is displayed
+							prod.getNumUseMetaFieldButton().Displayed() &&
+
+							//Verify format - Beginning Bates/Prefix/Suffix/Min Length input fields are displayed
+							prod.getBeginningBates().Displayed() &&
+							prod.gettxtBeginningBatesIDPrefix().Displayed() &&
+							prod.gettxtBeginningBatesIDSuffix().Displayed() &&
+							prod.gettxtBeginningBatesIDMinNumLength().Displayed() &&
+
+							//Verify sorting - sort by metadata radio button is displayed
+							prod.getNumSortMetaRadioButton().Displayed() &&
+
+							//Verify sorting - sub-sort dropdown field is displayed
+							prod.getlstSubSortingMetaData().Displayed();
+				}
+			}), Input.wait30);
+			pass(dataMap,"Production numbering sorting fields are displayed");
 		} else {
-			throw new ImplementationException("NOT verify_production_numbering_sorting_fields_are_displayed");
+			fail(dataMap,"Production numbering sorting fields are not displayed");
 		}
 
 	}

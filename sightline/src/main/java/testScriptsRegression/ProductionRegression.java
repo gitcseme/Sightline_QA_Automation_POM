@@ -4614,7 +4614,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production, Positive", "smoke"})
+	@Test(groups = {"Production, Positive"})
 	public void test_Given_verify_enabling_placeholders_on_priv_guard_saves_the_placeholders_and_complete_default_production_location_component_and_completed_summary_preview_component_and_the_production_is_started_When_refreshing_for_production_to_be_in_progress_Then_verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5425,7 +5425,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_waiting_for_production_to_be_complete_When_clicking_review_production_Then_verify_the_review_production_path_is_correct() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5481,7 +5481,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_navigated_back_onto_the_document_components_section_and_change_the_folder_selection_to_by_tags_complete_the_production_When_waiting_for_production_to_be_in_progress_Then_verify_overwriting_the_document_selection_generates_a_new_bate_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5514,14 +5514,17 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
+			context.waiting_for_production_to_be_complete(true, dataMap);
 			context.navigated_back_onto_the_document_components_section(true, dataMap);
 			context.change_the_folder_selection_to_by_tags_complete_the_production(true, dataMap);
 			context.waiting_for_production_to_be_in_progress(true, dataMap);
 			context.verify_overwriting_the_document_selection_generates_a_new_bate_number(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -5532,7 +5535,8 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	
+	@Test(groups = {"Production, Positive", "Regression" })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_native_productions_can_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5637,7 +5641,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_the_bates_generated_number_follows_the_custom_numbering() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5755,7 +5759,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
@@ -5788,7 +5792,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_and_sorting_is_added_and_complete_default_document_selection_and_mark_complete_default_priv_guard_and_complete_default_production_location_component_and_completed_summary_preview_component_When_clicking_the_production_generate_button_Then_verify_a_complex_production_is_able_to_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5820,9 +5824,13 @@ public class ProductionRegression extends RegressionBase {
 			context.clicking_the_production_generate_button(true, dataMap);
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -5832,8 +5840,44 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
+	//Run This at your own risk, It delete's all drafts 1 by 1
+	//Try to use this only when there has been a build up of production drafts
 	@Test(groups = {"Production, Positive"})
+	public void deleteALLDrafts() throws Throwable{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Delete draft productions");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+			context.on_production_home_page(true, dataMap);
+			dataMap.put("prod_template", "false");
+			dataMap.put("status", "DRAFT");
+			//dataMap.put("viewMode", "tile");
+			context.deleteAll(true, dataMap);
+		} catch (ImplementationException e) {
+			e.printStackTrace();
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			e.printStackTrace();
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+
+	}
+
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_complete_Then_verify_the_user_is_able_to_click_on_confirm_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5875,9 +5919,11 @@ public class ProductionRegression extends RegressionBase {
 			context.waiting_for_production_to_be_complete(true, dataMap);
 			context.verify_the_user_is_able_to_click_on_confirm_production(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -5974,7 +6020,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive","Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_pdf_production_component_Then_verify_the_pdf_product_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6000,7 +6046,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6008,7 +6055,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive","Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_native_production_component_Then_verify_the_native_product_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6034,7 +6081,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6042,7 +6090,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_complete_default_production_component_Then_verify_production_numbering_sorting_fields_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6068,7 +6116,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 

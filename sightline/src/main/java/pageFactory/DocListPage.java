@@ -4,6 +4,8 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -19,6 +21,7 @@ public class DocListPage {
     BaseClass base;
   
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
+    public Element getDocListTable() { return driver.FindElementById("dtDocList"); }
     public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
     public Element getColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]/a"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
@@ -69,8 +72,23 @@ public class DocListPage {
     
     public Element getDocList_QuickBatch(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
     public Element getDocList_Preview_CloseButton(){ return driver.FindElementByXPath("//span[@id='ui-id-1']/following-sibling::button"); }
+
+    public Element getSelectColumnButton() { return driver.FindElementById("btnSelectColumn"); }
+    public Element getSelectColumnPopup() { return driver.FindElementById("SelectColumnPopup"); }
+    public Element getAvailableColumnNameCheckbox(String columnName) { return driver.FindElementByXPath("//div[@id='hb2']//strong[text()='"+columnName+"']"); }
+    public Element getMetadataTabPanel() { return driver.FindElementById("tab1"); }
+    public Element getAddToSelectedButton() { return driver.FindElementById("addFormObjects"); }
+    public Element getSelectedColumnTile(String columnName) { return driver.FindElementByXPath("//h4[@class='panel-title']//span[text()='"+columnName+"']"); }
+    public Element getSelectColumnPopupCloseButton() { return driver.FindElementByXPath("//span[@id='ui-id-2']/following-sibling::button"); }
+    public Element getSelectColumnPopupOkButton() { return driver.FindElementById("btnUpdateColumns"); }
+    public Element getDocPrimaryLanguageHeading() { return driver.FindElementByXPath("//th[text()='DocPrimaryLanguage']"); }
+    public Element getSelectAllCheckbox() { return driver.FindElementByXPath("//div[@id='dtDocList_wrapper']//th[@rowspan='1']//i"); }
+    public Element getMessageBoxContainer() { return driver.FindElementById("Msg1"); }
+
+    public Element getPrimaryLanguageValue(String docID) { return driver.FindElementByXPath("//td[text()='"+docID+"']/following-sibling::td[5]"); }
+    public Element getDropdownMenu() { return driver.FindElementByCssSelector(".dropdown-menu.action-dd"); }
+    public Element getActionName(String actionName) { return driver.FindElementByXPath("//a[text()='"+actionName+"']"); } 
     
-  
     
     public DocListPage(Driver driver){
 
@@ -305,5 +323,57 @@ public class DocListPage {
     	     
     	     System.out.println("performing quick batch");
     	  }
+      
+      public void addColumnToDocListView(String columnName) throws InterruptedException {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getSelectColumnButton().Visible()  ;}}), Input.wait30);
+			getSelectColumnButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getSelectColumnPopup().Visible()  ;}}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getMetadataTabPanel().Visible()  ;}}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getAvailableColumnNameCheckbox(columnName).Enabled()  ;}}), Input.wait30);
+
+			
+			getAvailableColumnNameCheckbox(columnName).ScrollTo();
+
+			getAvailableColumnNameCheckbox(columnName).click();
+			getAddToSelectedButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getSelectedColumnTile(columnName).Visible()  ;}}), Input.wait30);
+			getSelectColumnPopupOkButton().click();
+  	  
+      }
+      
+      public DocViewPage selectViewInDocView() {
+    	  getDocList_actionButton().click();
+    	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDropdownMenu().Visible()  ;}}), Input.wait30);
+    	  getActionName("View in DocView").click();
+		return new DocViewPage(driver);
+    	  
+      }
+      
+      public TallyPage selectTallyView() {
+    	  getSelectAllCheckbox().click();
+    	  getPopUpOkBtn().waitAndClick(10);
+    	  getDocList_actionButton().waitAndClick(10);
+    	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDropdownMenu().Visible()  ;}}), Input.wait30);
+    	  getActionName("Tally").click();
+    	  
+    	  return new TallyPage(driver);
+      }
+      
+      public void selectAction(String actionName) throws InterruptedException {
+    	  getDocList_actionButton().click();
+    	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDropdownMenu().Visible()  ;}}), Input.wait30);
+    	  getActionName(actionName).click();
+      }
       
 }
