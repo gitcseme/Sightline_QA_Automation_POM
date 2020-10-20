@@ -243,6 +243,10 @@ public class DocViewPage {
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
     
     
+    //default constructor
+    public DocViewPage(Driver driver, int i) {
+    		this.driver = driver;
+    }
     public DocViewPage(Driver driver){
 
         this.driver = driver;
