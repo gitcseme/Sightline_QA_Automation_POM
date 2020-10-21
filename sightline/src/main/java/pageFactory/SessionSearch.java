@@ -88,6 +88,7 @@ public class SessionSearch {
     public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
+    public Element getBulkRelease_ButtonUnrelease() {return driver.FindElementById("btnUnrelease");}
     
     //Metadata
     public Element getBasicSearch_MetadataBtn(){ return driver.FindElementById("metadataHelper"); }
@@ -244,16 +245,21 @@ public class SessionSearch {
     public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
     public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
     public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
+    public ElementCollection getAllSearchTableResults() {return driver.FindElementsById("taskbasic");}
+
     public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
     public Element getOperatorDropDown() {return driver.FindElementByXPath("//button[@class = 'btn btn-default dropdown-toggle insertOpHelper']");}
     public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
     public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
     public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
     public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
+    public Element getDocsThatMetCriteriaAddBtn() { return driver.FindElementByXPath("//a[@id='001']//i[@class='fa fa-plus-circle ui-addTile addTile']"); }
+    public Element getResultTile() { return driver.FindElementByXPath("//div[@id='resultsCart']//li[contains(@id, 'results')]"); }
 
     public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
     
     public ElementCollection getSearchResultDocsMetCriteriaPlusButton() { return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title='Docs That Met Your Criteria'] i.fa-plus-circle");}
+    public ElementCollection getSearchResultDocsmetCriteriaCount() {return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title='Docs That Met Your Criteria'] count");}
     public ElementCollection getSearchDocumentMatchNumber() { return driver.FindElementsByCssSelector("#gallery li count");}
     public ElementCollection getSearchResultsTableRows() {return driver.FindElementsByCssSelector("#taskbasic>tbody>tr");}
     

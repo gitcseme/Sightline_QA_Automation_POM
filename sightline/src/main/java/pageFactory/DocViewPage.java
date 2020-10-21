@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -234,7 +235,10 @@ public class DocViewPage {
     public ElementCollection getDocViewTableRows() {return driver.FindElementsByCssSelector("#SearchDataTable>tbody>tr");}
     public Element getMetaDataTableRowByName(String name) { return driver.FindElementByXPath(String.format("//table[@id='MetaDataDT']//td[contains(text(), '%s')]", name));}
     public Element getMetaDataTableRowValueByName(String name) { return driver.FindElementByXPath(String.format("//table[@id='MetaDataDT']//td[contains(text(), '%s')]/following-sibling::td", name));}
+    public ElementCollection getDocListRows() {return driver.FindElementsByCssSelector("#dtDocList>tbody>tr");}
     
+    public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
+    public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
     
     
     public DocViewPage(Driver driver){

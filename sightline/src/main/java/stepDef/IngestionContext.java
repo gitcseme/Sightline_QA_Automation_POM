@@ -2,6 +2,7 @@ package stepDef;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;  
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -25,15 +28,18 @@ import com.relevantcodes.extentreports.LogStatus;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.SessionSearch;
+import pageFactory.TallyPage;
 import testScriptsSmoke.Input;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import junit.framework.Assert;
 
 @SuppressWarnings({"deprecation", "rawtypes" })
@@ -56,6 +62,8 @@ public class IngestionContext extends CommonContext {
 	
 	SessionSearch sessionSearch;
 	DocViewPage docView;
+	DocListPage docListPage;
+	TallyPage tally;
 	JavascriptExecutor js = (JavascriptExecutor)driver; 
     
     
@@ -92,15 +100,22 @@ public class IngestionContext extends CommonContext {
 	public void click_run_ingest_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
-			ingest.getbtnRunIngestion().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
-			
-			pass(dataMap,"Clicking Ingest Button was successful");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getbtnRunIngestion().Visible()  ;}}), Input.wait30);
+				ingest.getbtnRunIngestion().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getIngestionTile().Displayed()  ;}}), Input.wait30); 
+				
+				//Put ingestion name into dataMap
+				dataMap.put("lastCreatedIngestionName", ingest.getIngestionTileName(0));
+				
+				pass(dataMap,"Clicking Ingest Button was successful");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
 		} else {
 			ingest.getPreviewRun().Click();
 			fail(dataMap,"Clicking Ingest Button was unsuccessful");
@@ -185,7 +200,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	
 	@When("^.*(\\[Not\\] )? click_open_wizard_option$")
 	public void click_open_wizard_option(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -198,7 +213,6 @@ public class IngestionContext extends CommonContext {
 	    			ingest.getIngestionAction_Delete().Displayed()  ;}}), Input.wait30); 
 	    	ingest.getIngestionAction_Delete().Click();
 		}
-
 	}
 
 
@@ -223,7 +237,8 @@ public class IngestionContext extends CommonContext {
 			} else {
 				fail(dataMap,"Ingestion Execution Details Popup did NOT Display");
 				}
-		} else {
+		} 
+		else {
 			on_ingestion_home_page(scriptState, dataMap);
 		}
 
@@ -264,6 +279,7 @@ public class IngestionContext extends CommonContext {
 
 	}
 	
+	
 	@Then("^.*(\\[Not\\] )? verify_expected_date_time_format_is_displayed$")
 	public void verify_expected_date_time_format_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
     	ExtentTest test = null;
@@ -290,9 +306,14 @@ public class IngestionContext extends CommonContext {
 		try {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getTotalIngestCount().Visible()  ;}}), Input.wait30); 
-
 			String totalIngestCountText = ingest.getTotalIngestCount().getText();
-			if (totalIngestCountText.equals(dataMap.get("actualCount"))) {
+			int count = Integer.parseInt(totalIngestCountText);
+			int beginningCount = Integer.parseInt(dataMap.get("ingestion_count").toString());
+
+			// update ingestion_count in dataMap
+			dataMap.replace("ingestion_count", count);
+			
+			if (count > beginningCount) {
 				pass(dataMap,"Ingestion Tile and Count Have Increased");
 			} else {
 				fail(dataMap,"Ingestion was NOT Processed Successfully");
@@ -488,16 +509,13 @@ public class IngestionContext extends CommonContext {
 						ingest.getIngestionAction_Delete().Visible()  ;}}), Input.wait30); 
 				ingest.getIngestionAction_Delete().Exists();
 				pass(dataMap, "Ingestion Action Delete Button is Avaliable");
-				}
-			catch (Exception e) {
+			} catch (Exception e) {
 				if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
-				}
-			}
-			
-			
+					throw new Exception(e.getMessage());
+				} else {
+					pass(dataMap,"Ingestion Action Delete Button Is not Avaliable");
+					}
+			}	
 	}
 
 	@Then("^.*(\\[Not\\] )? verify_mandatory_toast_message_is_displayed$")
@@ -589,6 +607,7 @@ public class IngestionContext extends CommonContext {
 		if (scriptState) {
 			try {
 
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getPreviewRun().Visible()  ;}}), Input.wait30); 
 				ingest.getPreviewRun().Click();
@@ -600,7 +619,7 @@ public class IngestionContext extends CommonContext {
 	    	    
 	    	    //HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation((HashSet<String>)dataMap.get("targetColumns"));
 	    	    HashMap<String, ArrayList<String>> ingestPreviewData = ingest.getIngestDATPreviewInformation();
-
+	    	    
 	    	    dataMap.put("ingestPreviewData", ingestPreviewData);
 
 				pass(dataMap, "Get Preview Run Button is Clickable");
@@ -891,6 +910,23 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+	
+	@When("^.*(\\[Not\\] )? click_copy_option_published$")
+	public void click_copy_option_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+	if (scriptState) {
+		//
+		// * Click settings (gear icon) on ingested tile
+		// * Click on Copy
+		//
+		driver.waitForPageToBeReady();
+		ingest.getCopyOptionButtonPublished().Click();
+		pass(dataMap, "Clicked copy Public button");
+	} else {
+		fail(dataMap, "NOT click_copy_option");
+	}
+
+}
 
 	@Then("^.*(\\[Not\\] )? verify_source_field_is_auto_populated$")
 	public void verify_source_field_is_auto_populated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -901,7 +937,68 @@ public class IngestionContext extends CommonContext {
 			//* When choosing a DAT file to upload, the fields specified in the file are auto populated in the Source Field section
 			//* Number of headers specified should match the number of fields that were auto populated
 			//
-			throw new ImplementationException("verify_source_field_is_auto_populated");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getMappingDESTINATIONFIELD4().Visible()  ;}}), Input.wait30); 
+
+				WebElement sourceField1 = ingest.getMappingSOURCEFIELD1().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField2 = ingest.getMappingSOURCEFIELD2().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField3 = ingest.getMappingSOURCEFIELD3().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField4 = ingest.getMappingSOURCEFIELD4().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField5 = ingest.getMappingSOURCEFIELD5().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField6 = ingest.getMappingSOURCEFIELD6().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField7 = ingest.getMappingSOURCEFIELD7().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField8 = ingest.getMappingSOURCEFIELD8().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField9 = ingest.getMappingSOURCEFIELD9().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField10 = ingest.getMappingSOURCEFIELD10().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField11 = ingest.getMappingSOURCEFIELD11().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField12 = ingest.getMappingSOURCEFIELD12().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField13 = ingest.getMappingSOURCEFIELD13().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField14 = ingest.getMappingSOURCEFIELD14().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField15 = ingest.getMappingSOURCEFIELD15().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField16 = ingest.getMappingSOURCEFIELD16().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField17 = ingest.getMappingSOURCEFIELD17().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField18 = ingest.getMappingSOURCEFIELD18().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField19 = ingest.getMappingSOURCEFIELD19().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField20 = ingest.getMappingSOURCEFIELD20().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField21 = ingest.getMappingSOURCEFIELD21().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField22 = ingest.getMappingSOURCEFIELD22().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField23 = ingest.getMappingSOURCEFIELD23().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField24 = ingest.getMappingSOURCEFIELD24().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement sourceField25 = ingest.getMappingSOURCEFIELD25().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				
+				Assert.assertEquals("DOCID", sourceField1.getText());
+				Assert.assertEquals("SourceParentDocID", sourceField2.getText());
+				Assert.assertEquals("DataSource", sourceField3.getText());
+				Assert.assertEquals("CustodianName", sourceField4.getText());
+				Assert.assertEquals("ATTACH_DOCID", sourceField5.getText());
+				Assert.assertEquals("BEGINBATES", sourceField6.getText());
+				Assert.assertEquals("BEGINGROUP", sourceField7.getText());
+				Assert.assertEquals("Custodian", sourceField8.getText());
+				Assert.assertEquals("DocExtension", sourceField9.getText());
+				Assert.assertEquals("DOCID", sourceField10.getText());
+				Assert.assertEquals("DocPrimaryLanguage", sourceField11.getText());
+				Assert.assertEquals("EmailAuthorNameAndAddress", sourceField12.getText());
+				Assert.assertEquals("EmailBCCNamesAndAddresses", sourceField13.getText());
+				Assert.assertEquals("EmailCCNamesAndAddresses", sourceField14.getText());
+				Assert.assertEquals("EmailToNamesAndAddresses", sourceField15.getText());
+				Assert.assertEquals("ENDBATES", sourceField16.getText());
+				Assert.assertEquals("ENDGROUP", sourceField17.getText());
+				Assert.assertEquals("fkCustId", sourceField18.getText());
+				Assert.assertEquals("fkMediaId", sourceField19.getText());
+				Assert.assertEquals("ITEMPATH", sourceField20.getText());
+				Assert.assertEquals("M_Duration", sourceField21.getText());
+				Assert.assertEquals("nuixGuid", sourceField22.getText());
+				Assert.assertEquals("ocrAttempt", sourceField23.getText());
+				Assert.assertEquals("PAGECOUNT", sourceField24.getText());
+				Assert.assertEquals("PDFPATH", sourceField25.getText());
+				pass(dataMap, "Source fields are auto populated!");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Source fields are not auto populated!");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_source_field_is_auto_populated");
 		}
@@ -918,7 +1015,26 @@ public class IngestionContext extends CommonContext {
 			//* After a file has been selected or uploaded for DAT file and Source Field is auto populated, the Destination Field is auto mapped
 			//* Number of headers populated on the source field section should match the number of fields mapped on Destination field section
 			//
-			throw new ImplementationException("verify_destination_field_is_auto_populated");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			ingest.getMappingDESTINATIONFIELD4().Visible()  ;}}), Input.wait30); 
+
+				WebElement desField1 = ingest.getMappingDESTINATIONFIELD1().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField2 = ingest.getMappingDESTINATIONFIELD2().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField3 = ingest.getMappingDESTINATIONFIELD3().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+				WebElement desField4 = ingest.getMappingDESTINATIONFIELD4().getWebElement().findElement(By.xpath("./option[@selected='selected']"));
+
+				Assert.assertEquals("SourceDocID", desField1.getText());
+				Assert.assertEquals("SourceParentDocID", desField2.getText());
+				Assert.assertEquals("DataSource", desField3.getText());
+				Assert.assertEquals("CustodianName", desField4.getText());
+				pass(dataMap, "Destination fields are auto populated");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Destination fields are not autopopulated");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_destination_field_is_auto_populated");
 		}
@@ -1756,8 +1872,6 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5548:To Verify FileDescription in Tally and Search.
-			//* validate FileDescription is displayed on the metadata on the right side
-			//
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
@@ -1781,20 +1895,11 @@ public class IngestionContext extends CommonContext {
 	}
 
 
-	//NOT COMPLETE
 	@Then("^.*(\\[Not\\] )? verify_email_metadata_is_populated_correctly$")
 	public void verify_email_metadata_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
 			//TC5267:To Verify email metadata field is populated correctly for ingested data
-			//
-			//* Select the following columns:
-			//
-			//* 'EmailAllDomainCount ','EmailAllDomain',EmailAuthorDomain ,EmailRecipientNames , EmailToAddresse,EmailToName and EmailRecipientDomainCoun
-			//
-			//* Validate the value displayed from the search
-			//* Values will match those of the Ingested Email Document
-			//
 
 			docView = new DocViewPage(driver);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2389,11 +2494,30 @@ public class IngestionContext extends CommonContext {
 			//* Click Yes to confirm rollback
 			//
 			try {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    				ingest.getGearButton().Displayed() ;}}), Input.wait30);			
-				ingest.getGearButton().click();
-				ingest.getIngestionRollbackButton().click();
-				ingest.getIngestionRollbackConfirmButton().click();
+				String lastIngestionName = dataMap.get("lastCreatedIngestionName").toString();
+				if (ingest.getIngestionPopupDetailsCollection().size() > 0) {
+					
+					if (ingest.getIngestionErrorsHelpIconCollection().size() > 0) {
+						ingest.getIngestionErrorBackButton().click();
+					}
+					
+					System.out.println("here");
+					System.out.println("1");
+					ingest.selectActionFromIngestionDetailsPopup("Rollback");
+					System.out.println("2");
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getSuccessMessageBox().Displayed() ;}}), Input.wait30);	
+					System.out.println("3");
+
+				} else {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    				ingest.getSpecificIngestionGearButton(lastIngestionName).Displayed() ;}}), Input.wait30);			
+					ingest.getSpecificIngestionGearButton(lastIngestionName).click();
+					ingest.getIngestionRollbackButton().click();
+					ingest.getIngestionRollbackConfirmButton().click();
+				}
+				
+				
 			} catch(Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "NOT click_on_rollback_option");
@@ -2952,7 +3076,27 @@ public class IngestionContext extends CommonContext {
 			//* Click on the "DocView" option
 			//* A Review Mode and list of Emails will be displayed
 			//
-			throw new ImplementationException("on_doc_view");
+			
+			String url = driver.getUrl();
+			
+			// If user is on DocList, select all Docs then click Action button, then Click Doc View
+			if (url.contains("/DocList")) {
+				docListPage.getSelectAllCheckbox().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getMessageBoxContainer().Visible()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getPopUpOkBtn().Visible()  ;}}), Input.wait30);
+				docListPage.getPopUpOkBtn().click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocList_actionButton().Visible()  ;}}), Input.wait30);
+
+				docListPage.selectAction("View in DocView");
+				
+				driver.waitForPageToBeReady();
+				
+			}
+			
 		} else {
 			throw new ImplementationException("NOT on_doc_view");
 		}
@@ -3031,6 +3175,152 @@ public class IngestionContext extends CommonContext {
 		}
 	}
 
+	public void unpublish_desired_saved_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			SearchContext sessionContext = new SearchContext();
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+
+    		Actions builder  = new Actions(driver.getWebDriver());
+    		//Move to cursor to results doc box to bring up Table data
+    		builder.moveToElement(sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements().get(0)).perform();
+			dataMap.put("originalIngestionResults", sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements().get(0).getText());
+
+    		//Ugly way to get a document from Results table
+    		String docToRemove = (sessionSearch.getSearchResultsTableRows().FindWebElements().get(0)).findElements(By.cssSelector("td")).get(0).getText();
+    			
+    		//Append the document to our existing Ingestion Search, to narrow down on just that one document
+    		sessionSearch.insertFullText("AND " + docToRemove);
+    		sessionContext.click_search(true, dataMap);
+    		while(i++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+    		sessionContext.save_search(true, dataMap);
+    			    	
+    		//Find appropriate + button
+    		for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    			if(x.isEnabled() && x.isDisplayed()) x.click();
+    		}
+    		//First We need to bulk Release with Default Security Group checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonRelease().click();		
+			sessionSearch.getFinalizeButton().click();
+	
+			//Now we need to Unrelease with Default Security Group Checked
+			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getBulkReleaseAction().click();
+			sessionSearch.getBulkRelDefaultSecurityGroup_CheckBox("Default Security Group").click();
+			sessionSearch.getBulkRelease_ButtonUnrelease().click();
+				
+			//Navigate to unpublish page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToUnpublishMenuButton().click();
+			driver.waitForPageToBeReady();
+			
+			//Select our Saved Search, and unpublish it
+			builder.moveToElement(ingest.getUnpublishFirstRow().getWebElement()).perform();
+			ingest.getUnpublishFirstRow().click();
+			ingest.getUnpublishSearchByName((String)dataMap.get("CurrentSaveValue")).click();
+			ingest.getIngestionPageUnPublishBtn().click();
+			pass(dataMap, "Successfully unpublished the desired search");
+		}
+		else fail(dataMap, "Could not unpublish the desired search");
+	}
+
+	public void verify_search_result_for_overlaid_text(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i = 0, j =0;
+			SearchContext sessionContext = new SearchContext();
+			SessionSearch sessionSearch = new SessionSearch((String)dataMap.get("URL"),driver);
+			sessionContext.sessionSearch = sessionSearch;
+			sessionContext.driver = driver;
+			
+			//Go to Publish Page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToAnalyticsAndPublishButton().click();
+			
+			//Run Analytics and Publish
+			ingest.getRunAnalyticsRunButton().click();
+			//Wait for publish button to be avaliable
+			while(!ingest.getRunAnalyticsPublishButton().Enabled() && i++<100) {
+				driver.getWebDriver().navigate().refresh();
+			}
+			ingest.getRunAnalyticsPublishButton().click();
+			
+			//Back to ingestion page
+			ingest.getNavigateToIngestionMenuButton().click();
+			ingest.getNavigateToIngestionHome().click();
+			
+			//Wait for our ingestion to be published before we head to back to search page
+			wait_for_inprogress_to_published(true, dataMap);
+			
+			//back to search page
+			ingest.getNavigateToSearchMenuButton().click();
+			ingest.getNavigateToSessionSearchPageMenuButton().click();
+			driver.waitForPageToBeReady();
+			sessionSearch.getNewSearch().click();
+			driver.waitForPageToBeReady();
+
+			//Search and wait for results
+			sessionSearch.insertFullText((String)dataMap.get("ingestionName"));
+			for(WebElement x: sessionSearch.getSearchButtons().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					x.click();
+				}
+			}
+			while(j++<100){
+    			for(WebElement x: sessionSearch.getAllSearchTableResults().FindWebElements()) {
+    				if(x.isDisplayed() && x.isEnabled()) break;
+    			}
+    		}
+
+			String res = "";
+			//Get Search REsults and compare
+			for(WebElement x: sessionSearch.getSearchResultDocsmetCriteriaCount().FindWebElements()) {
+				if(x.isDisplayed()) {
+					res = x.getText();
+					break;
+				}
+			}
+			System.out.println("Res = " + res);
+			System.out.println("OG = " + (String)dataMap.get("originalIngestionResults"));
+			Assert.assertEquals(res, (String)dataMap.get("originalIngestionResults"));
+			pass(dataMap, "verified search result for overlaid text");
+		}
+		else fail(dataMap, "Could not verify search result for overlaid text");
+	}
+
+	public void wait_for_inprogress_to_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			int i =0;
+			String targetIngestion = "";
+			
+			String ourIngestion = (String)dataMap.get("lastCreatedIngestionName");
+			//Wait until ourIngestion = First Ingestion on the published filter page
+			//This will tell us our Ingestion has been Successfully Published
+			while(i++<100 && !targetIngestion.equals(ourIngestion)) {
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				ingest.getFilterByButton().click();
+				ingest.getFilterByINPROGRESS().click();
+				ingest.getFilterByPUBLISHED().click();
+				ingest.getFilterByButton().click();
+				driver.waitForPageToBeReady();
+				targetIngestion = ingest.getIngestionTileName(0);
+			}
+			
+		}
+		else fail(dataMap, "could not wait for ingestion to publish");
+	}
+		
+	
 	@When("^.*(\\\\[Not\\\\] )? delete_grid_ingestion$")
 	public void delete_grid_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
@@ -3049,6 +3339,812 @@ public class IngestionContext extends CommonContext {
 			fail(dataMap, "NOT select_grid_ingestion_details_button");
 		}
 	}
-	
-} //end
 
+	@Then("^.*(\\[Not\\] )? verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay$")
+	public void verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9395:To verify that Overlay should work for 'SourceParentDocID' metadata
+			//* Validate that Overlay ingestion is successful 
+			//
+			verify_new_ingestion_tile_is_displayed(true, dataMap);
+		} else {
+			throw new ImplementationException("NOT verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_overlay_ingestion$")
+	public void complete_overlay_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This method will need to navigate through the entire process of creating an ingestion. 
+			//* Go To ingestion Home Page
+			//* Click Add a new Ingestion
+			//* Fill out required fields
+			//* Click Next button
+			//* Map configuration fields
+			//* Click Preview run button
+			//* Click Run Ingestion
+			//
+			new_ingestion_created(true, dataMap);
+			click_preview_run_button(true, dataMap);
+			click_run_ingest_button(true, dataMap);
+		} else {
+			throw new ImplementationException("NOT complete_overlay_ingestion");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_source_system_ingestion_overlay_fails$")
+	public void verify_source_system_ingestion_overlay_fails(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10001:Verify error message that if Source Sytem of Ingestion Overlay is dffierent
+			//* Once the ingestion has been ran
+			//* Validate the ingestions fails with the following error:
+			//
+			//"Source System of the overlaid docs are not matching with the source system of originally ingested docs. In the overlay, please make sure to 
+			//use the same source system used when the docs were added "
+			String lastIngestionName = dataMap.get("lastCreatedIngestionName").toString();
+						
+			System.out.println(lastIngestionName);
+			try {
+				ingest.getIngestionCardTitle(lastIngestionName).waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopup().Visible()  ;}}), Input.wait30);
+				
+				while (ingest.getPctCompleteLabel().getText().equalsIgnoreCase("In Progress")) {
+					// TODO: Add logic to take into account if status alawys stays In Progress
+					
+					ingest.getIngestionPopupCloseButton().click();
+					ingest.getIngestionCardTitle(lastIngestionName).waitAndClick(10);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							ingest.getIngestionPopup().Visible()  ;}}), Input.wait30); 
+					if (!ingest.getPctCompleteLabel().getText().equalsIgnoreCase("In Progress")) {
+						break;
+					}
+				}
+
+				Assert.assertEquals("Failed", ingest.getPctCompleteLabel().getText());
+				
+				ingest.getIngestionPopupErrorsLink().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopupDetails().Visible()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionPopupDocIDErrorRows().Visible()  ;}}), Input.wait30); 
+				
+				String expectedError = "Source System of the overlaid docs are not matching with the source system of originally ingested docs. "
+						+ "In the overlay, please make sure to use the same source system used when the docs were added.";
+				for(WebElement row: ingest.getIngestionPopupDocIDErrorRows().FindWebElements()) {
+					Assert.assertEquals(expectedError, row.getText());		
+				}
+				pass(dataMap, "Expected error message appears if source system of Ingestion overlay is different");
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Unable to verify error message");
+			}
+
+			
+		} else {
+			throw new ImplementationException("NOT verify_source_system_ingestion_overlay_fails");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? ignore_errors_found$")
+	public void ignore_errors_found(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* This context assumes the user is on the Ingestions Errors popup dialog
+			//* On the pop up, click Ignore all Errors
+			//* Click done
+			//* Click Play button for Catalog
+			//
+			
+			try {
+				ingest.getIngestionIgnoreAllErrorsBtn().waitAndClick(10);
+				ingest.getApproveMessageOKButton().waitAndClick(10);
+				ingest.getCatalogDoneBtn().waitAndClick(10);
+				ingest.getRunCopying().waitAndClick(10);
+			} catch (Exception e) {
+				
+			}
+			
+		} else {
+			throw new ImplementationException("NOT ignore_errors_found");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ignoring_errors_still_ingests_remaining_files$")
+	public void verify_ignoring_errors_still_ingests_remaining_files(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5300:To Verify In Ingestion, ignoring the error with one file Should not result in ignoring all the other files of the document
+			//
+			//* Validate ingestion is successful when ignoring the errors
+			//
+			throw new ImplementationException("verify_ignoring_errors_still_ingests_remaining_files");
+		} else {
+			throw new ImplementationException("NOT verify_ignoring_errors_still_ingests_remaining_files");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? search_for_existing_ingestion$")
+	public void search_for_existing_ingestion(boolean scriptState, HashMap dataMap)
+			throws ImplementationException, Exception {
+
+		if (scriptState) {
+
+			//we need to preset an ingestion so that we can use it for future automation. 
+			//You can hardcode the ingestion name or create a saved filter so that we can use the same ingestion for most of our tests.
+			//Then this method will search for that existing ingestion
+			
+			
+			//TODO: Search for existing ingestion in database
+			
+			// Use existing Ingestion: 0C8A_SQA_Default_Automation_20201014002433900
+			String existingIngestion = "0C8A_SQA_Default_Automation_20201014002433900";
+			
+			sessionSearch = new SessionSearch(driver);
+			
+			if (dataMap.containsKey("existing_ingestion_name") ) {
+				sessionSearch.basicContentSearch(dataMap.get("existing_ingestion_name").toString());
+				
+				//TODO: Include logic to save data and parameters in the dataMap associated to this Ingestion
+				
+			} else {
+				sessionSearch.basicContentSearch(existingIngestion);
+				dataMap.put("existing_ingestion_name", existingIngestion);
+			}
+			
+			// TODO: Add logic to retreive Doc Primary Languages for a given Ingestion from the database
+			if (dataMap.get("existing_ingestion_name").equals("0C8A_SQA_Default_Automation_20201014002433900")) {
+				// For this existing Ingestion (0C8A_SQA_Default_Automation_20201014002433900), store 
+				// the primary languages for the docs in the dataMap to be used in future contexts
+				dataMap.put("existingIngestionDocPrimaryLanguages", "English,Japanese,Spanish");
+			}
+			
+		} else {
+			throw new ImplementationException("NOT search_for_existing_ingestion");
+		}
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_doc_list_view$")
+	public void on_doc_list_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Only documents ingested will be displayed
+			//* Select the documents and add them to righ side by click the plus symbol
+			//* Click the Action dropdown
+			//* Select View in Doc List
+			//If DocPrimaryLanguage is not displayed as a column:Click Select Column buttonAdd the specified column
+			
+			sessionSearch.getDocsThatMetCriteriaAddBtn().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getResultTile().Visible()  ;}}), Input.wait30); 
+			sessionSearch.ViewInDocList();
+			
+
+		} else {
+			throw new ImplementationException("NOT on_doc_list_view");
+		}
+
+	}
+	
+
+	@Then("^.*(\\[Not\\] )? verify_doc_list_displays_doc_primary_language_metadata_correctly$")
+	public void verify_doc_list_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		docListPage = new DocListPage(driver);
+		if (scriptState) {
+			//TC9182:Verify value of "DocPrimaryLanguage" metadata field value should be populated correctly in Doclist and in Doc View
+			//TC7502:Validate new metadata field DocLanguages on DocListValidate files that contained a value in the DocPrimaryLanguage are displayed correctly in the Doc List view
+			try {
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocListTable().Visible()  ;}}), Input.wait30); 
+				
+				// "DocPrimaryLanguage" column needs to be added to the Doc List view
+				docListPage.addColumnToDocListView("DocPrimaryLanguage");
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocListTable().Visible()  ;}}), Input.wait30); 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docListPage.getDocPrimaryLanguageHeading().Visible()  ;}}), Input.wait30); 
+				
+				// Verifying DocPrimaryLanguage values for existing Ingestion - 0C8A_SQA_Default_Automation_20201014002433900
+				// TODO: Add lopic to retreive Doc Primary Language from the database so values are not hardcoded
+				if (dataMap.containsKey("existing_ingestion_name")) {		
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							docListPage.getPrimaryLanguageValue("ID00002613").Visible()  ;}}), Input.wait30); 
+					
+					Assert.assertEquals("Japanese", docListPage.getPrimaryLanguageValue("ID00002613").getText());
+					Assert.assertEquals("Spanish", docListPage.getPrimaryLanguageValue("ID00002614").getText());
+					Assert.assertEquals("English", docListPage.getPrimaryLanguageValue("ID00002615").getText());
+					pass(dataMap, "Primary Language Metadata is displayed correctly!");
+				}
+
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		} else {
+			throw new ImplementationException("NOT verify_doc_list_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_tally_view$")
+	public void on_tally_view(boolean scriptState, HashMap<String, TallyPage> dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			String url = driver.getUrl();
+			try {
+				//TODO: Add logic to go to Tally view from other pages
+				if (url.contains("/DocList")) {
+					docListPage.getSelectAllCheckbox().click();
+			    	docListPage.getPopUpOkBtn().waitAndClick(10);
+			    	docListPage.selectAction("Tally");
+			    	driver.WaitUntilUrlContains("Report/Tally");
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			}		 
+		} else {
+			throw new ImplementationException("NOT on_tally_view");
+		}
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_tally_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		TallyPage tally = new TallyPage(driver);
+		if (scriptState) {
+			//TC7499:Validate new metadata field DocLanguages on Tally report
+			//Validate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+
+			try {
+				tally.getTally_SelectaTallyFieldtoruntallyon().waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataPopup().Visible()  ;}}), Input.wait30);
+				tally.selectMetadataOption("DocPrimaryLanguage");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataButtonSelectedOption("DocPrimaryLanguage").Visible()  ;}}), Input.wait30);
+				tally.getTally_btnTallyApply().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						tally.getMetadataTallyResults().Visible()  ;}}), Input.wait30);
+				
+				ArrayList<String> docPrimaryLanguages = new ArrayList<String>();
+				
+				for(WebElement row: tally.getMetadataViewText().FindWebElements()) {docPrimaryLanguages.add(row.getText());}
+				
+				// Remove empty strings from List
+				docPrimaryLanguages.removeAll(Arrays.asList("", null));
+
+				// Convert "existingIngestionDocPrimaryLanguages" into an ArrayList since the values are saved as a single string
+				ArrayList<String> expectedDocPrimaryLanguages = new ArrayList<String>(Arrays.asList(dataMap.get("existingIngestionDocPrimaryLanguages").toString().split(",")));
+								
+				try {
+					Assert.assertEquals(expectedDocPrimaryLanguages, docPrimaryLanguages);
+					pass(dataMap, "Tally View correctly displays DocPrimaryLanguage metadata correctly");
+				} catch (Exception e) {
+					fail(dataMap,"DocPrimaryLanguage values are not correct" + docPrimaryLanguages + " != " + expectedDocPrimaryLanguages);
+				}
+				
+			} catch (Exception e) {
+				fail(dataMap, "Unable to verify Doc Primary Language metadata on Tally View");
+				System.out.println(e);
+			}
+		} else {
+			throw new ImplementationException("NOT verify_tally_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_sub_tally_view$")
+	public void on_sub_tally_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		TallyPage tally = new TallyPage(driver);
+		if (scriptState) {
+			//Once Tally documents are displayed
+			//Select all/some documents that are displayedC
+			//lick on the action dropdownSelect Sub Tally
+			tally.getTally_btnTallyAll().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getMetadataSelected().Visible()  ;}}), Input.wait30);
+			
+			tally.selectTallyAction("Sub Tally");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getTally_SourceSubTally().Enabled()  ;}}), Input.wait30);
+			
+		} else {
+			throw new ImplementationException("NOT on_sub_tally_view");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_sub_tally_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_sub_tally_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		TallyPage tally = new TallyPage(driver);
+		if (scriptState) {
+			//TC7500:Validate new metadata field DocLanguages on Sub-Tally report
+			//Validate metadata options are displayed in the Tally View after clicking the "En: Select a Tally Field to run tally on;" button
+			
+			tally.getTally_SourceSubTally().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getMetadataPopup().Visible()  ;}}), 10);
+			tally.getSubTallyByOption("METADATA").click();
+			tally.selectSubMetadataOption("DocLanguages");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getSubMetadataButtonSelectedOption("DocPrimaryLanguage").Visible()  ;}}), 10);
+			tally.getTally_btnSubTallyApply().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					tally.getSubTallyMetadataResults().Visible()  ;}}), Input.wait30);
+			
+			
+			ArrayList<String> docLanguages = new ArrayList<String>();
+			// Remove empty strings from List
+			docLanguages.removeAll(Arrays.asList("", null));
+			for(WebElement row: tally.getSubTallyMetadataResults().FindWebElements()) {
+				docLanguages.add(row.getText());}
+			
+			// Remove empty strings from List
+			docLanguages.removeAll(Arrays.asList("", null));
+				
+			// Convert "existingIngestionDocPrimaryLanguages" into an ArrayList since the values are saved as a single string
+			ArrayList<String> expectedDocLanguages = new ArrayList<String>(Arrays.asList(dataMap.get("existingIngestionDocPrimaryLanguages").toString().split(",")));
+			
+
+			try {
+				Assert.assertEquals(expectedDocLanguages, docLanguages);
+				pass(dataMap, "Tally View correctly displays DocPrimaryLanguage metadata correctly");
+			} catch (Exception e) {
+				fail(dataMap,"DocLanguages values are not correct: " + docLanguages + " != " + expectedDocLanguages);
+			}
+					
+		} else {
+			throw new ImplementationException("NOT verify_sub_tally_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_view_displays_doc_primary_language_metadata_correctly$")
+	public void verify_doc_view_displays_doc_primary_language_metadata_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		docView = new DocViewPage(driver);
+		if (scriptState) {
+			//TC9174:Verify value of metadata field "DocPrimaryLanguage" should be derived from CA for Add Only IngestionTC7501:Validate new metadata field DocLanguages on DocView
+			//* Once the documents have been searched and are being viewed in DocView
+			//* On the metadata tab located on the right hand side
+			//* Validate that only documents that have a Language have a value for DocPrimaryLanguage field
+			//
+			
+			// check if test case is verifying an existing ingestion
+			if (dataMap.containsKey("existing_ingestion_name")) {
+				try {
+					docView.getDocViewTableRow("ID00002613").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("Japanese", docView.getDocPrimaryLanguageValue().getText());
+					
+					docView.getDocViewTableRow("ID00002614").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("Spanish", docView.getDocPrimaryLanguageValue().getText());
+					
+					docView.getDocViewTableRow("ID00002615").click();
+					driver.waitForPageToBeReady();
+					Assert.assertEquals("English", docView.getDocPrimaryLanguageValue().getText());
+					
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+
+			}
+			
+		} else {
+			throw new ImplementationException("NOT verify_doc_view_displays_doc_primary_language_metadata_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_saved_draft_ingestion$")
+	public void open_saved_draft_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click on the settings gear for the ingestion
+			//* Click on open Wizard option
+			//* Ingestion is reopened
+			//
+			throw new ImplementationException("open_saved_draft_ingestion");
+		} else {
+			throw new ImplementationException("NOT open_saved_draft_ingestion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_re_running_ingestion_is_successful$")
+	public void verify_re_running_ingestion_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5299:To Verify Rerunning the ingestions Should be successful.Covered:
+			//* Validate ingestion is successful after re running a draft ingestion
+			//
+			throw new ImplementationException("verify_re_running_ingestion_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_re_running_ingestion_is_successful");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created3$")
+	public void new_ingestion_created3(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created3");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created3");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_ingestion_metadata_is_correct$")
+	public void verify_overlay_ingestion_metadata_is_correct(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5896: To Verify Overlays Ingestion.
+			//
+			//* Validate metadata values are displayed in the doc view metadata table on the right
+			//
+			throw new ImplementationException("verify_overlay_ingestion_metadata_is_correct");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_ingestion_metadata_is_correct");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created_$")
+	public void new_ingestion_created_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created_");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created_");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_ingestion_overlay_is_ingested_successfully$")
+	public void verify_ingestion_overlay_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6111:To Verify Ingestion Overlay Without DAT for Native.TC6112:To Verify Ingestion Overlay Without DAT for PDFTC6113:To Verify Ingestion Overlay Without DAT for TIFF.TC6114:To Verify Ingestion Overlay Without DAT for MP3 Variant.TC6115:To Verify Ingestion Overlay Without DAT for TranscriptTC6116:To Verify Ingestion Overlay Without DAT for Translation.Many test cases are being tested under this outcome, but we only need to check that ingestion was successful when we run an Overlay type ingestion
+			throw new ImplementationException("verify_ingestion_overlay_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_overlay_is_ingested_successfully");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_with_different_files_is_ingested_successfully$")
+	public void verify_overlay_with_different_files_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4499:overlay of the different files, keeping the same Unique id, which are already ingested and available in Production DB.
+			throw new ImplementationException("verify_overlay_with_different_files_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_with_different_files_is_ingested_successfully");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
+		throws ImplementationException, Exception {
+
+	if (scriptState) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ingest.getFirstGearBtn().Visible();
+			}
+		}), Input.wait30);
+		while(!ingest.getFirstGearBtn().Displayed()) {
+			ingest.getRefreshButton().click();
+		}
+		ingest.getFirstGearBtn().Click();
+	} else {
+		throw new ImplementationException("NOT open_ingestion_details_page");
+	}
+
+}
+
+
+	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
+	public void verify_source_system_error_message_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10002: Verify error message if the source system is matching and if the doc ID is not available in the databaseCovered:TC10003: Verify error message displays if adding same source Doc ID which is already exists in the DBValidate the error message displays the following:
+			//
+			//* "SourceDocID provided in the overlay for this doc is not available in the database."
+			//
+			//or
+			//
+			//* "SourceDocID already exists in the database. Cannot add again." when adding an existing doc.
+			//
+			throw new ImplementationException("verify_source_system_error_message_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_source_system_error_message_is_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? new_ingestion_created2$")
+	public void new_ingestion_created2(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("new_ingestion_created2");
+		} else {
+			throw new ImplementationException("NOT new_ingestion_created2");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? unrelease_ingested_documents$")
+	public void unrelease_ingested_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Once ingested files have bee searched
+			//* Add the documents to the right side
+			//* Click on the Action button
+			//* Click Unrelease
+			//* Complete the modal that pops up
+			//* Once modal is finished
+			//* Save the search
+			//
+			throw new ImplementationException("unrelease_ingested_documents");
+		} else {
+			throw new ImplementationException("NOT unrelease_ingested_documents");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unpublish_overlay_ingestion_is_successful$")
+	public void verify_unpublish_overlay_ingestion_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6130: To Verify unpublish for Overlay Ingestion
+			//
+			//* Validate unpublish is successful
+			//
+			throw new ImplementationException("verify_unpublish_overlay_ingestion_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_unpublish_overlay_ingestion_is_successful");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_with_same_files_is_ingested_successfully$")
+	public void verify_overlay_with_same_files_is_ingested_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4498:overlay of the same files, which are already ingested and available in Production DB.
+			//
+			//* Validate the ingestion is successful
+			//
+			throw new ImplementationException("verify_overlay_with_same_files_is_ingested_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_with_same_files_is_ingested_successfully");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? search_for_ingested_docs$")
+	public void search_for_ingested_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Navigate to Search/Searches
+			//* In the text box enter the following query:
+			//For Test Case: 5930CustodianName:(Enter Column Value)For Test Cases: 5931, 5932, 5933, 5934IngestionName:(Enter Ingestion Name Here)
+			//* Click Search button
+			//
+			throw new ImplementationException("search_for_ingested_docs");
+		} else {
+			throw new ImplementationException("NOT search_for_ingested_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_previous_documents_are_updated_correctly$")
+	public void verify_previous_documents_are_updated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5930:To Verify Ingestion Overlays of DAT without unpublish.TC5931:To Verify Ingestion Overlays of PDF without unpublish.TC5932:To Verify Ingestion Overlays of Native without unpublish.TC5933:To Verify Ingestion Overlays of TIFF without unpublish.TC5934:To Verify Ingestion Overlays of Others without unpublish.Validate the document displays the correct values when using the overlay ingestion type
+			throw new ImplementationException("verify_previous_documents_are_updated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_previous_documents_are_updated_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingested_docs_are_in_sequential_order$")
+	public void verify_ingested_docs_are_in_sequential_order(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6318:To verify DocID's of the ingested documents (AddOnly) Should be in the same sequential order as the order of records/documents in the DAT file.TC6319:To verify DocID's of the ingested documents Should be in the same sequential order as the order of records/documents in the DAT file.
+			//
+			//* Verify DOCID column displays files in a sequential order
+			//
+			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
+		} else {
+			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_preview_mapping_section_is_enabled$")
+	public void verify_preview_mapping_section_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2562 To verify that once Configure Mapping is done Admin is able to go on Preview Mapping section.
+			//
+			//* All required source fields and file types are selected
+			//* Click on the Next button
+			//* Validate the preview mapping (configure field mapping) is enabled
+			//* Validate the preview and run button is enabled
+			//
+			try {
+				Assert.assertTrue(ingest.getConfigureMappingDiv().GetAttribute("class").contains("active"));
+				Assert.assertTrue(ingest.getBackButton().Enabled());
+				Assert.assertTrue(ingest.getPreviewRun().Enabled());
+				
+			} catch (Exception e) {
+				System.out.println(e);
+				fail(dataMap, "Configure Field Mapping is not enabled");
+			}
+		} else {
+			throw new ImplementationException("NOT verify_preview_mapping_section_is_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_preview_and_run_button$")
+	public void click_preview_and_run_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_preview_and_run_button");
+		} else {
+			throw new ImplementationException("NOT click_preview_and_run_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_execute_ingestion$")
+	public void manually_execute_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select all available Ingestion filters
+			//* Click on created 'In Progress' Ingestion
+			//* Click 'Cataloging' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Cataloging' step is complete
+			//* Click on recently Cataloged Ingestion
+			//* Click 'Copying' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Copying' step is complete
+			//* Click on recently Copied Ingestion
+			//* Click 'Indexing' play button
+			//* Click 'Close' button
+			//* Refresh the Ingestions until 'Indexing' step is complete
+			//
+			throw new ImplementationException("manually_execute_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_execute_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? manually_approve_ingestion$")
+	public void manually_approve_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Filter for 'Indexed' Ingestions
+			//* Click on recently Indexed Ingestion
+			//* Select 'Approve' from top right dropdown menu on Ingestion Execution Details popup
+			//
+			throw new ImplementationException("manually_approve_ingestion");
+		} else {
+			throw new ImplementationException("NOT manually_approve_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? run_ingestion_analytics$")
+	public void run_ingestion_analytics(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("run_ingestion_analytics");
+		} else {
+			throw new ImplementationException("NOT run_ingestion_analytics");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_add_only_ingestion_e2e$")
+	public void verify_add_only_ingestion_e2e(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8783
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as NIUX
+			//
+			//TC8806
+			//
+			//* To Verify Ingestion Add Only end to End Flow with Source System as TRUE
+			//
+			throw new ImplementationException("verify_add_only_ingestion_e2e");
+		} else {
+			throw new ImplementationException("NOT verify_add_only_ingestion_e2e");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_is_completed_by_the_time_specified$")
+	public void verify_analysis_is_completed_by_the_time_specified(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7605 Verify Incremental Analysis of Email Threading for Add only Ingestion with 25,000 records  should get completed by 70min on 500,000 docs project for which Analysis is already completed
+			//
+			//* validate the analysis is completed by the time specified
+			//
+			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
+		}
+
+	}
+} //end
