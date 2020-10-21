@@ -27,7 +27,7 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_previous_search_query_selection() throws Throwable
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_edit_previous_search_query() throws Throwable
 	*/
-	@Test(groups = {"Search", "Positive", "smoke1"})  // need to figure how to scroll save button on query save
+	@Test(groups = {"Search", "Positive"})  // need to figure how to scroll save button on query save
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_saved_search_SEARCH5() throws Throwable
 	{
 		//HashMap dataMap = new HashMap();
@@ -78,7 +78,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive", "smoke1"})
+	@Test(groups = {"Search", "Positive"})
 	public void test_Given_verify_searched_save_and_modify_search_criteria_When_Then_verify_user_modified_session_query_not_changed_saved_query() throws Throwable
 	{
 		//HashMap dataMap = new HashMap();
