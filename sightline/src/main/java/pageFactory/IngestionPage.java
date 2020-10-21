@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,6 +54,7 @@ public class IngestionPage {
     public Element getOtherLoadFile(){ return driver.FindElementById("ddlLoadOtherfile"); }
     public Element getOtherFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathOther"); }
     public Element getAddButton(){ return driver.FindElementById("AddButton"); }
+    public Element getMappingSourceFieldByRow(int i) {return driver.FindElementById(String.format("SF_%s", i));}
     public Element getMappingSOURCEFIELD1(){ return driver.FindElementById("SF_1"); }
     public Element getMappingSOURCEFIELD2(){ return driver.FindElementById("SF_2"); }
     public Element getMappingSOURCEFIELD3(){ return driver.FindElementById("SF_3"); }
@@ -98,6 +100,9 @@ public class IngestionPage {
     public Element getMappingFIELDCAT50(){ return driver.FindElementById("TY_50"); }
     public Element getMappingFIELDCAT51(){ return driver.FindElementById("TY_51"); }
    
+    public Element getMappingDestinationFieldByRow(int i) {return driver.FindElementById(String.format("DF_%s",i));}
+    public Element getAsterickFields(int i) {return driver.FindElementById(String.format("MN_%s", i));}
+
     public Element getMappingDESTINATIONFIELD1(){ return driver.FindElementById("DF_1"); }
     public Element getMappingDESTINATIONFIELD2(){ return driver.FindElementById("DF_2"); }
     public Element getMappingDESTINATIONFIELD3(){ return driver.FindElementById("DF_3"); }
@@ -509,7 +514,7 @@ public class IngestionPage {
         				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
 
     	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    	    				(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
+    	    				!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
     	    		
     	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
     	    	}

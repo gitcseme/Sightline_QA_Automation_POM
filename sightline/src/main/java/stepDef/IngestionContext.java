@@ -1,6 +1,7 @@
 package stepDef;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -2935,7 +2936,8 @@ public class IngestionContext extends CommonContext {
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getBackButton().Visible()  ;}}), Input.wait30);
-			ingest.getBackButton().Click();
+			ingest.getBackButton().click();
+			Thread.sleep(5000);
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			fail(dataMap,"Clicking Ingest Button was NOT successful");
@@ -4310,7 +4312,6 @@ public class IngestionContext extends CommonContext {
 			//TC2124:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC2125:2125:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC3016:To Verify mandatory fields displays with asterisk *
 			//
 			//* Validate that the rows in the configure mapping of the ingestion are populated correctly based on the ingestion DAT file used.
-			//* All metadata (columns) in the DAT file should be displayed
 			//* Validate asterisk are displayed for required fields:
 			//
 			//
@@ -4318,11 +4319,24 @@ public class IngestionContext extends CommonContext {
 			//* ParentSourceDocID
 			//* DataSource
 			//* CustodianName
-			//
-			throw new ImplementationException("verify_configure_mapping_is_populated_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_configure_mapping_is_populated_correctly");
+
+			//* All metadata (columns) in the DAT file should be displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getMappingSourceFieldByRow(1).Displayed()  ;}}), Input.wait30);
+			for(int i =1; i<=25; i++) {
+				//Assert dropdowns are displayed, and their default values are not null
+				Assert.assertTrue(ingest.getMappingSourceFieldByRow(i).Displayed());
+				Assert.assertFalse(ingest.getMappingSourceFieldByRow(i).selectFromDropdown().getFirstSelectedOption().getText().equals(""));
+			}
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(1).selectFromDropdown().getFirstSelectedOption().getText(), "SourceDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(2).selectFromDropdown().getFirstSelectedOption().getText(), "SourceParentDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(3).selectFromDropdown().getFirstSelectedOption().getText(), "DataSource");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(4).selectFromDropdown().getFirstSelectedOption().getText(), "CustodianName");
+			for(int i =1; i<=4; i++)Assert.assertTrue(ingest.getAsterickFields(i).getText().equals("*"));
+			System.out.println("done");
+			pass(dataMap, "configure mapping created successfully");
 		}
+		else fail(dataMap, "configure mapping not created successfully");
 
 	}
 
@@ -4331,15 +4345,15 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC2392:To Verify Ingestion Status in Ingestion Detail PageTC3015:Verify page title displayCovered:TC3017:To verify default value display into combo box
+			//TC2392:To Verify Ingestion Status in Ingestion Detail 
+			//:PageTC3015 verify page title displayCovered:
+			//TC3017:To verify default value display into combo box
 			//
 			//* Validate Ingestion Home Page Title displays: "Ingestions"
 			//* Validate the Failed status is displayed for the ingestion details page
 			//
-			throw new ImplementationException("verify_ingestion_status_detail_page");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_status_detail_page");
 		}
+		else fail(dataMap, "Failed to verify ingestion status");
 
 	}
 
