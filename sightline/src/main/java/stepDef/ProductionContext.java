@@ -2334,10 +2334,10 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
-				prod.getMarkCompleteButton().click();
+				prod.getMarkCompleteButton().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
 			} catch (Exception e) {
@@ -2346,7 +2346,14 @@ public class ProductionContext extends CommonContext {
 			}
 
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
+			try {
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+				Actions builder = new Actions(driver.getWebDriver());
+				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+				prod.getMarkCompleteButton().Click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -4247,6 +4254,7 @@ public class ProductionContext extends CommonContext {
 				prod.getPDF_ConfidentialTag().click();
 				prod.getPDF_ForeignLanguageTag().click();
 				prod.getPDF_TagSelectButton().click();
+				driver.waitForPageToBeReady();
 				pass(dataMap, "complete_tiff_and_pdf_with_different_tags");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -4261,11 +4269,6 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			// The TIFF placeholder configuration information is incorrect.
 			try {
-				driver.waitForPageToBeReady();
-				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-				prod.getComponentsMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getPDF_NoMatchingTagsWarning().Displayed();}}), Input.wait30);
 				assert prod.getPDF_NoMatchingTagsWarning().getText().equals("The TIFF placeholder configuration information is incorrect.");

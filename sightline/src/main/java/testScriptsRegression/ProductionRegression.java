@@ -5264,7 +5264,7 @@ public class ProductionRegression extends RegressionBase {
 			context.begin_new_production_process(true, dataMap);
 			context.complete_the_default_dat_section(true, dataMap);
 			context.complete_tiff_and_pdf_with_different_tags(true, dataMap);
-			context.clicking_the_productions_mark_complete_button(true, dataMap);
+			context.clicking_the_productions_mark_complete_button(false, dataMap);
 			context.verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
