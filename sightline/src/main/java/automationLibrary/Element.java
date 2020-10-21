@@ -680,7 +680,12 @@ private  Driver driver;
      }
      
      public boolean selectFromDropdownLoaded() {
-    	 return true;
+    	 AssertExists(); //this updates element !
+    	 Select select = new Select(element);
+    	 
+    	 boolean loaded = (select.getOptions().size() > 0);
+    	 
+    	 return loaded;
      }
      /* static ExpectedCondition<?> visibilityOfElementLocated = null;
      	public static Element waitUntilVisibility(By by, int time) throws InterruptedException {
