@@ -170,8 +170,7 @@ public class BatchPrintContext extends CommonContext {
 				}
 				
 			} catch (Exception e) {
-				System.out.println(e);
-
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
@@ -195,7 +194,7 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getAnalysisnextbutton().click();
 				}
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
@@ -221,8 +220,7 @@ public class BatchPrintContext extends CommonContext {
 					}
 				}
 			} catch (Exception e) {
-				System.out.println(e);
-
+				e.printStackTrace();
 			}
 
 		} else {
@@ -257,8 +255,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				batchPrint.getSlipSheetsNextButton().click();
 			} catch (Exception e) {
-				System.out.println(e);
-
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
@@ -277,6 +274,7 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				String brandLocationText = "Test automation brand location";
+				dataMap.put("brangLocationText", brandLocationText);
 				
 				if (dataMap.containsKey("branding_location")) {
 					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
@@ -307,7 +305,7 @@ public class BatchPrintContext extends CommonContext {
 				
 
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 
 		} else {
@@ -378,14 +376,17 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							batchPrint.getBackgroundTaskFirstRowStatus().Displayed() ;}}), Input.wait30);
 				}
-				System.out.println("Completed!");
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
-				batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
-				driver.waitForPageToBeReady();
-				
+				if (i != 1000) {
+					System.out.println("Completed!");
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
+					batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
+					driver.waitForPageToBeReady();
+				} else {
+					fail(dataMap, "Refreshed page 1000 times and is still in progress!");
+				}
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
@@ -407,20 +408,20 @@ public class BatchPrintContext extends CommonContext {
 				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
 					downloadPath = home + "/Downloads/";}
 				else downloadPath = home + "\\Download\\";
-				// Adding to sleep to wait for file to download
+				
+				// Adding to sleep to wait for file to finish downloading
 				Thread.sleep(10000);
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
-				System.out.println("dirContents: " + dirContents);
+				
 				for (int i = 0; i < dirContents.length; i++) {
-					System.out.println("files: " + dirContents[i].getName());
+					
 					if (dirContents[i].getName().contains("BatchPrint_")) {
-						System.out.println("1 - " + dirContents[i].getName());
+						System.out.println("Found file " + dirContents[i].getName() + "...");
 						@SuppressWarnings("resource")
 						ZipFile zipFile = new ZipFile(dirContents[i]);
-						System.out.println("2 - " + zipFile);
+						
 						int numOfEntries = zipFile.size();
-						System.out.println("NumOfEntries: " + numOfEntries);
 						
 						// Verify there is only one entry in the zip file
 						Assert.assertEquals(numOfEntries, 1);
@@ -444,9 +445,6 @@ public class BatchPrintContext extends CommonContext {
 				fail(dataMap, "Single pdf not generated!");
 				e.printStackTrace();
 			}
-
-			
-
 		} else {
 			throw new ImplementationException("NOT verify_single_pdf_generated");
 		}
@@ -511,16 +509,15 @@ public class BatchPrintContext extends CommonContext {
 				Thread.sleep(10000);
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
-				System.out.println("dirContents: " + dirContents);
+				
 				for (int i = 0; i < dirContents.length; i++) {
-					System.out.println("files: " + dirContents[i].getName());
+	
 					if (dirContents[i].getName().contains("BatchPrint_")) {
-						System.out.println("1 - " + dirContents[i].getName());
+						System.out.println("Found file " + dirContents[i].getName() + "...");
 						@SuppressWarnings("resource")
 						ZipFile zipFile = new ZipFile(dirContents[i]);
-						System.out.println("2 - " + zipFile);
+
 						int numOfEntries = zipFile.size();
-						System.out.println("NumOfEntries: " + numOfEntries);
 						
 						// Verify there are multiple entries in the zip file
 						Assert.assertTrue(numOfEntries > 1);
@@ -528,9 +525,7 @@ public class BatchPrintContext extends CommonContext {
 						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
 							ZipEntry entry = (ZipEntry) e.nextElement();
 							
-							System.out.println("fileNames: " + entry.getName());
-							
-							// Verify the file is a pdf
+							// Verify the files are pdf
 							Assert.assertTrue(entry.getName().contains("pdf"));
 						}
 						
@@ -539,8 +534,6 @@ public class BatchPrintContext extends CommonContext {
 						dirContents[i].delete();
 						break;
 					}
-					
-
 				}
 			} catch (Exception e) {
 				fail(dataMap, "Multiple pdfs not generated!");
