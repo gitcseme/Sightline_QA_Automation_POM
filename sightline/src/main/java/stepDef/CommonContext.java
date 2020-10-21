@@ -18,6 +18,7 @@ import cucumber.api.java.en.And;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.BaseClass;
 import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 
@@ -29,6 +30,7 @@ public class CommonContext {
 
 	ProductionPage prod;
 	IngestionPage ingest;
+	BaseClass base;
 
     @Given("^(\\[Not\\] )?sightline_is_launched$")
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) {
@@ -103,6 +105,58 @@ public class CommonContext {
 				lp.loginToSightLine(uid, pwd, false, dataMap);
 			}
 		}
+	}
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+    	lp = new LoginPage(driver);
+    	base = new BaseClass(driver);
+
+    	login_as_pau(scriptState, dataMap);
+
+		if (scriptState) {
+			//
+			//* Enter Username and password for Review Manager user
+			//* User is logged in
+			//* Sightline Home page is displayed
+			//
+			try {
+				String project = dataMap.get("project").toString();
+				String role = dataMap.get("impersonate").toString();
+				String securityGroup = dataMap.get("security_group").toString();
+				String domain = dataMap.get("domain").toString();
+
+				base.getSignoutMenu().click();
+				base.getChangeRole().click();
+
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return
+								base.getSelectRole().Visible();
+					}
+				}), Input.wait30);
+				base.getSelectRole().selectFromDropdown().selectByVisibleText(role);
+				Thread.sleep(3000);
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return
+								base.getAvlDomain().Visible();
+					}
+				}), Input.wait30);
+				base.getAvlDomain().selectFromDropdown().selectByVisibleText(domain);
+				Thread.sleep(3000);
+				base.getAvlProject().selectFromDropdown().selectByVisibleText(project);
+				Thread.sleep(3000);
+				base.getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(securityGroup);
+				base.getSaveChangeRole().click();
+			}catch (Exception e){
+				System.out.println(e);
+			}
+			pass(dataMap,"Login as rmu");
+		} else {
+			fail(dataMap,"Not able to login as rmu");
+		}
+
 	}
  
     @When("^.*(\\[Not\\] )? on_production_home_page$")
