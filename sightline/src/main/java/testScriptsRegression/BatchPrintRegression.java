@@ -46,7 +46,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_When_on_batch_print_page_Then_verify_saved_searches_on_source_selection_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
