@@ -7485,7 +7485,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "smoke"})
+	@Test(groups = {"Ingestion, Positive", "WIP"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_When_search_for_ingested_docs_Then_verify_ingested_docs_are_in_sequential_order() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7504,20 +7504,11 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");
-			dataMap.put("actionNavigateDoc", "docView");
-			dataMap.put("docRow1","ID00002550");
-			dataMap.put("docRow2","ID00002551");
-			dataMap.put("docRow3","ID00002552");
-			dataMap.put("docRow4","ID00002553");
-			dataMap.put("docRow5","ID00002554");
-			dataMap.put("docRow6","ID00002555");
-			dataMap.put("docRow7","ID00002556");
-			dataMap.put("docRow8","ID00002557");
-//			context.new_ingestion_created(true, dataMap);
-//			context.click_preview_run_button(true, dataMap);
-//			context.click_run_ingest_button(true, dataMap);
-//			context.publish_ingested_files(true, dataMap);
-			context.search_for_ingestion(true, dataMap);
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.publish_ingested_files(true, dataMap);
+			context.search_for_ingested_docs(true, dataMap);
 			context.verify_ingested_docs_are_in_sequential_order(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
