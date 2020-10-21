@@ -5,7 +5,7 @@
     <test name="SiteLine"> 
  		<groups>	
 				<run>	
-   					 <include name="WP" />	
+   					 <include name="kim" />	
         		</run>	
        	</groups>	
     <classes>
