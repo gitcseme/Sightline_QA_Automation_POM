@@ -1,5 +1,6 @@
 package stepDef;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Callable;
@@ -159,14 +160,27 @@ public class CommonContext {
 
 	}
  
+	@And("^.*(\\[Not\\] )? select_project$")
+	public void select_project(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				lp.getSelectProjectDD().Enabled()  ;}}), Input.wait30); 
+		
+		String project = (String) dataMap.get("project");
+		lp.getSelectProjectDD().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				lp.getSelectProject(project).Visible()  ;}}), Input.wait30); 
+		lp.getSelectProject(project).Click();
+    	driver.waitForPageToBeReady();
+	}
+	
     @When("^.*(\\[Not\\] )? on_production_home_page$")
 	public void on_production_home_page(boolean scriptState, HashMap dataMap)  throws ImplementationException, Exception {
-
+    	prod = new ProductionPage(driver);
+    	
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
 
-		prod = new ProductionPage(driver);
 		
 		if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
 			prod.changeProjectSelector().Click();
@@ -278,5 +292,14 @@ public class CommonContext {
     		test.log((result ? LogStatus.PASS : LogStatus.FAIL), message);
     	}
     	assert result;
+    }
+    
+    public void logTestResult(HashMap dataMap, String tid, String result, String description) {
+		ArrayList testCaseResultList = (ArrayList) dataMap.get("TestCaseResults");
+		HashMap testCaseResult = new HashMap();
+		testCaseResult.put("tid", tid);
+		testCaseResult.put("result", result);
+		testCaseResult.put("description", description);
+		testCaseResultList.add(testCaseResult);
     }
 }

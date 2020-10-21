@@ -3861,8 +3861,7 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
-	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
-		throws ImplementationException, Exception {
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	if (scriptState) {
 		driver.waitForPageToBeReady();
@@ -4144,6 +4143,245 @@ public class IngestionContext extends CommonContext {
 			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
 		} else {
 			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_error_count$")
+	public void click_error_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//For a new ingestion that was just created, a refresh migh be necessary to see if it failed. 
+			//
+			//* On Ingestion Home page
+			//* Filter by Failed state
+			//* *Refresh on the page might be necessary*
+			//* Open Ingestion that was created
+			//* On Ingestion Details Page
+			//* Click on the Error count for the step that it failed on
+			//
+			throw new ImplementationException("click_error_count");
+		} else {
+			throw new ImplementationException("NOT click_error_count");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_displays_error_for_unmatched_dates$")
+	public void verify_ingestion_displays_error_for_unmatched_dates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10138:Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY')
+			//
+			//* Validate the ingestion fails when dates on the Ingestion and Dat file are not the same
+			//* Validate error displayed in the ingestion details page shows the following:
+			//
+			//"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format"
+			throw new ImplementationException("verify_ingestion_displays_error_for_unmatched_dates");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_displays_error_for_unmatched_dates");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_is_successful_for_matched_dates$")
+	public void verify_ingestion_is_successful_for_matched_dates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10124:Verify when user selects date & time format 'MM/DD/YYYY' for ingestion which is same as in the DAT file
+			//
+			//* Validate the ingestion is successfully processed to the catalog state without any errors
+			//* More specifically, no errors are displayed regarding the Dates being mismatched between the DAT file and the Ingestion value selected in he Wizard
+			//
+			throw new ImplementationException("verify_ingestion_is_successful_for_matched_dates");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_is_successful_for_matched_dates");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_help_icon$")
+	public void click_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_help_icon");
+		} else {
+			throw new ImplementationException("NOT click_help_icon");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tool_tips_are_displayed$")
+	public void verify_tool_tips_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC3019:Verify Tool tip displayTC10113:Verify that tooltip should be displayed for 'Date & Time Format' field
+			//
+			//* Throughtout the Ingestions application there are many tool tips. We need to validate each one dispalys a message after we click the tool tip icon
+			//* The following pages are the tool tip locations
+			//
+			//
+			//* Ingestions Home Page Header Title
+			//* Ingestions Detail Page Header Title
+			//* Ingestion Wizard: Header Page Title
+			//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
+			//* Ingestion Wizard: Configure Field Mapping header
+			//* Ingestion Wizard: Date & Time Format 
+			//
+			throw new ImplementationException("verify_tool_tips_are_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_tool_tips_are_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_basic_displays_expected_options$")
+	public void verify_doc_basic_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11884:Derived FieldsValidate the following fields are displayed in t he dropdown:
+			//
+			//* SourceSystemID
+			//* HeadOfHouseholdDocumentID
+			//* NearNativeReady
+			//* DeDupeCode
+			//* AudioTrimmedDurationInt
+			//* AudioOriginalDurationInt
+			//* CreatedByIngestionGUID
+			//* AudioPlayerReady
+			//* AttachDocIDs
+			//* DocumentFileHASH
+			//* DateSavedTimeOnly
+			//* DateSavedDateOnly
+			//* DateEditedTimeOnly
+			//* DateEditedDateOnly
+			//* DocDateTimeOnly
+			//* DatePrintedTimeOnly
+			//* DocumentFileHASHID
+			//* ChatDurationNumeric
+			//* AppointmentEndTimeOnly
+			//* AppointmentEndDateOnly
+			//* AppointmentStartTimeOnly
+			//* AppointmentStartDateOnly
+			//* DateReceivedTimeOnly
+			//* DateReceivedDateOnly
+			//* DocDateDateOnly
+			//* DatePrintedDateOnly
+			//* DateAccessedTimeOnly
+			//* DateAccessedDateOnly
+			//* DateModifiedTimeOnly
+			//* DateModifiedDateOnly
+			//* DateCreatedTimeOnly
+			//* DateCreatedDateOnly
+			//* EmailStandardizedTimeZone
+			//* EmailTimeSentWithTimeZone
+			//* HeadOfHouseholdDocID
+			//* EmailAllDomains
+			//* EmailRecipientNames
+			//* EmailRecipientAddresses
+			//* EmailCCNames
+			//* EmailCCAddresses
+			//* EmailBCCNames
+			//* EmailBCCAddresses
+			//* EmailToNames
+			//* EmailToAddresses
+			//* EmailAuthorAddress
+			//* EmailAuthorName
+			//
+			throw new ImplementationException("verify_doc_basic_displays_expected_options");
+		} else {
+			throw new ImplementationException("NOT verify_doc_basic_displays_expected_options");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_populated_correctly$")
+	public void verify_configure_mapping_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2124:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC2125:2125:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC3016:To Verify mandatory fields displays with asterisk *
+			//
+			//* Validate that the rows in the configure mapping of the ingestion are populated correctly based on the ingestion DAT file used.
+			//* All metadata (columns) in the DAT file should be displayed
+			//* Validate asterisk are displayed for required fields:
+			//
+			//
+			//* SourceDocID
+			//* ParentSourceDocID
+			//* DataSource
+			//* CustodianName
+			//
+			throw new ImplementationException("verify_configure_mapping_is_populated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_configure_mapping_is_populated_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_status_detail_page$")
+	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2392:To Verify Ingestion Status in Ingestion Detail PageTC3015:Verify page title displayCovered:TC3017:To verify default value display into combo box
+			//
+			//* Validate Ingestion Home Page Title displays: "Ingestions"
+			//* Validate the Failed status is displayed for the ingestion details page
+			//
+			throw new ImplementationException("verify_ingestion_status_detail_page");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_status_detail_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_disabled$")
+	public void verify_configure_mapping_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
+			//
+			//* Validate Configure mapping is still disabled if no required parameters are entered in the previous section.
+			//* Validate 2 Sections are displayed: "Selection & Ingestion Type" and "Configure Field mapping" 
+			//
+			throw new ImplementationException("verify_configure_mapping_is_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_configure_mapping_is_disabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_date_time_drodpdown$")
+	public void click_date_time_drodpdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_date_time_drodpdown");
+		} else {
+			throw new ImplementationException("NOT click_date_time_drodpdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_date_time_displays_correctly$")
+	public void verify_date_time_displays_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10112:TODO for all date formats: Verify that in the ingestion wizard page, "date & time format" field should present the dropdown with the different supported formatsTC10114:Verify the default value for the 'Date & Time Format' fieldValidate date & time format section is displayed correctly with different options in the dropdown. We are checking if there are options presentValidate default option selected is "Select a format"
+			throw new ImplementationException("verify_date_time_displays_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_date_time_displays_correctly");
 		}
 
 	}
