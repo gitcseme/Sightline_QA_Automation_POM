@@ -2,6 +2,7 @@ package stepDef;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -75,20 +76,18 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getNativeRadioButton().Visible()  ;}}), Input.wait30);
+						   batchPrint.getBasisForPrintingHeader().Visible()  ;}}), Input.wait30);
 				if (dataMap.containsKey("basis_for_printing")) {
 					if (dataMap.get("basis_for_printing").equals("Native")) {
-						if (batchPrint.getNativeRadioButton().Selected()) {
-							batchPrint.getBasisForPrintingNextButton().click();
-						} else {
-							batchPrint.getNativeRadioButton().click();
-							batchPrint.getBasisForPrintingNextButton().click();
-						}
+						
+						// Click next button since native is selected by default
+						batchPrint.getBasisForPrintingNextButton().click();
 					}
+					
 				}
 				
 			} catch (Exception e) {
-				
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT select_basis_for_printing");
@@ -214,13 +213,20 @@ public class BatchPrintContext extends CommonContext {
 			try {
 				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getPrintExcelFilesRadioButton().Visible()  ;}}), Input.wait30);
-					if (batchPrint.getPrintExcelFilesRadioButton().Selected()) {
-						batchPrint.getExceptionFileTypesNextButton().click();
+							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
+					
+					// Check if "Other Exception File Types" field is shown
+					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
+						// if shown, enter placeholder text field
+						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
+						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
 					}
+					batchPrint.getExceptionFileTypesNextButton().click();
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 
 		} else {
@@ -296,9 +302,10 @@ public class BatchPrintContext extends CommonContext {
 					
 				}
 				
+
 				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
 
-					
+
 				}
 				
 				batchPrint.getBrandingAndRedactionNextButton().click();
@@ -333,7 +340,11 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getOnePDFForAllDocsRadioButton().Click();
 				}
 				
-				batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+				if (dataMap.containsKey("sort_by")) {
+					//TODO: Remove sendKeys and use a select function
+					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+				}
+				
 				batchPrint.getGenerateButton().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -410,7 +421,7 @@ public class BatchPrintContext extends CommonContext {
 				else downloadPath = home + "\\Download\\";
 				
 				// Adding to sleep to wait for file to finish downloading
-				Thread.sleep(10000);
+				Thread.sleep(30000);
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
 				
@@ -462,25 +473,28 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Next button
 			//
 			try {
+				// wait for radio button to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderRadioButtonIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getSelectFolderRadioButtonIcon().click();
 				
-				if (dataMap.containsKey("select")) {
-					
-					// wait until parent groups become visible
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
-					
-					batchPrint.getSharedWithSG1SearchParentGroup().click();
-					
-					// wait until options become visible
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
-					
-					// select option
-					batchPrint.getCustodianNameCheckbox().click();
-					
-					// click Next button
-					batchPrint.getSourceSelectionNextButton().click();
-				}
+				// wait for Parent Folder to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderDisplaySet().Visible()  ;}}), Input.wait30);
+				
+				// click to expand parent folder
+				batchPrint.getExpandFolderIcon().click();
+				
+				// wait for option to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.get250DocsFolderOption().Visible()  ;}}), Input.wait30);
+				
+				// click option
+				batchPrint.get250DocsFolderOption().click();
+				
+				// click Next button
+				batchPrint.getSourceSelectionNextButton().click();
+				
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -506,7 +520,7 @@ public class BatchPrintContext extends CommonContext {
 				else downloadPath = home + "\\Download\\";
 				
 				// Adding to sleep to wait for file to download
-				Thread.sleep(10000);
+				Thread.sleep(30000);
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
 				
@@ -551,7 +565,59 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_separate_pdf_generated_for_every_document");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(45000);
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+	
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+
+						int numOfEntries = zipFile.size();
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						List<String> listOfFiles = new ArrayList<String>();
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							listOfFiles.add(entry.getName());
+						}
+
+						// Verify 1.docx and 1.pdf exist in list of files
+						Pattern p = Pattern.compile("1.docx|1.pdf");
+						boolean found = false;
+						for (String f : listOfFiles) {
+							if (p.matcher(f).find()) {
+								found = true;
+								break;
+							}
+						}
+	
+						Assert.assertTrue(found);
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_separate_pdf_generated_for_every_document");
 		}

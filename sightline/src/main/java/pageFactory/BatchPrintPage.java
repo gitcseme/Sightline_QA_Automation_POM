@@ -18,6 +18,7 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.openqa.selenium.interactions.Actions;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -117,7 +118,18 @@ public class BatchPrintPage {
     public Element getBackgroundTaskFirstRowDownloadLink() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[9]/a"); }
     public Element getOnePDFForAllDocsRadioButton() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); } 
     public Element getGenerateSuccessMessage() { return driver.FindElementById("bigBox4"); }
-
+    public Element getSelectFolderRadioButton() { return driver.FindElementById(""); }
+    public Element getSelectFolderRadioButtonIcon() { return driver.FindElementByXPath("//input[@id='selectFolderRadioButton']/following-sibling::i"); }
+    public Element getSelectFolderDisplaySet() { return driver.FindElementByXPath("//div[@id='folderSet' and @style='display: block;']"); }
+    public Element get250DocsFolderOption() { return driver.FindElementById("1033_anchor"); }  
+    public Element getLess250DocsFolderOption() { return driver.FindElementById("1034_anchor"); }
+    public Element getExpandFolderIcon() { return driver.FindElementByXPath("//*[@id='folderSet']//li[@role='treeitem']/i"); } 
+    public ElementCollection getOtherExceptionFileTypesDiv() { return driver.FindElementsById("OtherExceptionFileTypesPlaceHolderHtml"); }
+    public Element getPlaceholderTextInputField() { return driver.FindElementByXPath("//*[@id='excelFilePlaceHolderHtml']//div[@class='redactor-editor']"); }
+    public Element getSkipExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//*[@id='excelFilePlaceHolderHtml']//div[@class='redactor-editor']"); }
+    public Element getPrintExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//ul[@id='redactor-toolbar-1']/following-sibling::div"); }
+    public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
+    public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
     
     public BatchPrintPage(Driver driver){
 
