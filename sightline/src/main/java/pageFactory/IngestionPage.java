@@ -396,6 +396,8 @@ public class IngestionPage {
     public Element getIngestionErrorsTitle() { return driver.FindElementByXPath("//div[contains(text(), 'Ingestion Errors')]"); }
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
+    public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
+    public Element getIngestHelpPopUp() {return driver.FindElementByCssSelector(".popover-title");}
     
 
     

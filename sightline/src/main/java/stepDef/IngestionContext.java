@@ -4211,10 +4211,18 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_help_icon");
-		} else {
-			throw new ImplementationException("NOT click_help_icon");
+			for(WebElement x: ingest.getIngestHomeHelpButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getIngestHelpPopUp().Displayed()  ;}}), Input.wait30);
+
+			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
+			Assert.assertEquals(ingest.getIngestHelpPopUp().getText(), "Help Ingestion");
+			System.out.println("done");
+			pass(dataMap, "clicked the help icon");
 		}
+		else fail(dataMap, "Failed to click help icon");
 
 	}
 
@@ -4236,10 +4244,8 @@ public class IngestionContext extends CommonContext {
 			//* Ingestion Wizard: Configure Field Mapping header
 			//* Ingestion Wizard: Date & Time Format 
 			//
-			throw new ImplementationException("verify_tool_tips_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_tool_tips_are_displayed");
 		}
+		else fail(dataMap, "Verified tool_tips are displayed");
 
 	}
 
@@ -4361,16 +4367,42 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_disabled$")
 	public void verify_configure_mapping_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
 		if (scriptState) {
-			//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
-			//
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+
+
 			//* Validate Configure mapping is still disabled if no required parameters are entered in the previous section.
+	    		Assert.assertTrue(ingest.getBackButton().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getPreviewRun().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getAddButton().GetAttribute("disabled").equals("true"));
+
 			//* Validate 2 Sections are displayed: "Selection & Ingestion Type" and "Configure Field mapping" 
-			//
-			throw new ImplementationException("verify_configure_mapping_is_disabled");
-		} else {
-			throw new ImplementationException("NOT verify_configure_mapping_is_disabled");
+
+	    		//Confirm Configure Mapping are displayed
+	    		Assert.assertTrue(ingest.getAddButton().Displayed());
+	    		Assert.assertTrue(ingest.getPreviewRun().Displayed());
+	    		Assert.assertTrue(ingest.getBackButton().Displayed());
+	    		
+	    		//Confirm Selection and Ingestion Type are displayed
+	    		Assert.assertTrue(ingest.getNextButton().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceSystem().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifyLocation().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceIngestionType().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceFolder().Displayed());
+	    		Assert.assertTrue(ingest.getNativeCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getDATcheckbox().Displayed());
+	    		Assert.assertTrue(ingest.getTextCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getTIFFCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getPDFCheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getMP3CheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getAudioTranscriptCheckBoxstionButton().Displayed());
+
+			pass(dataMap, "configure mapping is disabled");
 		}
+		else fail(dataMap, "configure mapping is not disabled");
 
 	}
 
