@@ -22,8 +22,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;  
+import org.openqa.selenium.JavascriptExecutor;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Set;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -4412,10 +4413,20 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_date_time_drodpdown");
-		} else {
-			throw new ImplementationException("NOT click_date_time_drodpdown");
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+	    		HashSet<String> dateFormats = new HashSet<String>();
+	    		
+	    		ingest.getDateFormat().click();
+	    		String [] formats = ingest.getDateFormat().getText().split("\\r?\\n");
+	    		for(int i =0; i<formats.length; i++) {
+	    			dateFormats.add(formats[i]);
+	    		}
+	    		dataMap.put("dateFormatSet", dateFormats);
+	    		pass(dataMap, "Succesfully clicked date_time dropdown");
 		}
+		else fail(dataMap, "failed to click date_time dropdown");
 
 	}
 
@@ -4423,12 +4434,21 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_date_time_displays_correctly$")
 	public void verify_date_time_displays_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
 			//TC10112:TODO for all date formats: Verify that in the ingestion wizard page, "date & time format" field should present the dropdown with the different supported formatsTC10114:Verify the default value for the 'Date & Time Format' fieldValidate date & time format section is displayed correctly with different options in the dropdown. We are checking if there are options presentValidate default option selected is "Select a format"
-			throw new ImplementationException("verify_date_time_displays_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_date_time_displays_correctly");
+		if (scriptState) {
+			//This is a list of all the Date Formats that need to be verified
+			String[] dateFormats = new String[]{"YYYY/MM/DD HH:MM:SS", "MM/DD/YYYY", "DD/MM/YYYY","MMDDYYYY","DDMMYYYY",
+			"YYYY/MM/DD","YYYY/DD/MM","MM/DD/YYYY HH:MI","DD/MM/YYYY HH:MI","MM/DD/YYYY HH:MI:SS","DD/MM/YYYY HH:MI:SS"};
+
+			//This is the Set of Formats we got from the page
+			HashSet<String> dateSet = (HashSet<String>)dataMap.get("dateFormatSet");
+
+			//Run through the Formats that need to be verified and make sure that they are in the Set
+			for(int i =0; i<dateFormats.length; i++) Assert.assertTrue(dateSet.contains(dateFormats[i]));
+
+			pass(dataMap, "verified that date time displays correctly");
 		}
+		else fail(dataMap, "Could not verify date time displays correctly");
 
 	}
 } //end
