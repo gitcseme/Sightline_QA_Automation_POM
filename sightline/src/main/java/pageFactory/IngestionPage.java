@@ -372,6 +372,15 @@ public class IngestionPage {
 	public Element getFirstGearBtn() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/a/i ");}
     public Element getCopyOptionButtonPublished() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/dl/dt[3]");}
     
+    public Element getMappingDOCID1() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[1]/td[2]");}
+    public Element getMappingDOCID2() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[2]/td[2]");}
+    public Element getMappingDOCID3() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[3]/td[2]");}
+    public Element getMappingDOCID4() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[4]/td[2]");}
+    public Element getMappingDOCID5() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[5]/td[2]");}
+    public Element getMappingDOCID6() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[6]/td[2]");}
+    public Element getMappingDOCID7() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[7]/td[2]");}
+    public Element getMappingDOCID8() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr[8]/td[2]");}
+
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
