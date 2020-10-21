@@ -7091,4 +7091,288 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+	@When("^.*(\\[Not\\] )? select_docs_without_family_docs$")
+	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			throw new ImplementationException("select_docs_without_family_docs");
+		} else {
+			throw new ImplementationException("NOT select_docs_without_family_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doclist_without_family_docs$")
+	public void verify_doclist_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7858 Production Document Selection to DocListTC7860 Production Document Selection to DocList without Child Documents
+			//
+			//* User should redirect to DocList with selected documents
+			//* User should be able to see all documents without family documents
+			//
+			throw new ImplementationException("verify_doclist_without_family_docs");
+		} else {
+			throw new ImplementationException("NOT verify_doclist_without_family_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_doclist_from_the_document_section$")
+	public void on_the_doclist_from_the_document_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click back to get back to the document sectionClick on the document count (Should be 20)Verify once you are on the doclist, that the bottom displays: Showing 1 to 10 of 20 entries
+			throw new ImplementationException("on_the_doclist_from_the_document_section");
+		} else {
+			throw new ImplementationException("NOT on_the_doclist_from_the_document_section");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_back_to_source_button$")
+	public void clicking_the_back_to_source_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the top left of DocList, click the Back to Source button
+			throw new ImplementationException("clicking_the_back_to_source_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_back_to_source_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_doclist_navigation_returns_the_user_to_the_production$")
+	public void verify_the_doclist_navigation_returns_the_user_to_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8343Verify the user is navigated back to the Production Location section of the production. 
+			throw new ImplementationException("verify_the_doclist_navigation_returns_the_user_to_the_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_doclist_navigation_returns_the_user_to_the_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_tag_selection_with_family$")
+	public void complete_document_tag_selection_with_family(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
+			throw new ImplementationException("complete_document_tag_selection_with_family");
+		} else {
+			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_docs_with_family_docs$")
+	public void select_docs_with_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select doc source with family
+			//
+			//* DocID: ID00000861
+			//
+			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			throw new ImplementationException("select_docs_with_family_docs");
+		} else {
+			throw new ImplementationException("NOT select_docs_with_family_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doclist_with_family_docs$")
+	public void verify_doclist_with_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7859 Production Document Selection to DocList with Child Documents
+			//
+			//* User should redirect to DocList with selected documents
+			//* User should be able to see all documents with family documents (parent and child docs)
+			//
+			throw new ImplementationException("verify_doclist_with_family_docs");
+		} else {
+			throw new ImplementationException("NOT verify_doclist_with_family_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completing_the_priv_guard_section_and_navigating_back$")
+	public void completing_the_priv_guard_section_and_navigating_back(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompletedClick NextClick Back
+			throw new ImplementationException("completing_the_priv_guard_section_and_navigating_back");
+		} else {
+			throw new ImplementationException("NOT completing_the_priv_guard_section_and_navigating_back");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_mark_incomplete_button$")
+	public void clicking_the_productions_mark_incomplete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Mark Incomplete
+			throw new ImplementationException("clicking_the_productions_mark_incomplete_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_mark_incomplete_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_remove_option_on_the_rule_is_displayed$")
+	public void verify_the_remove_option_on_the_rule_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4466Verify the button "Remove" is displayed once the Mark incomplete button is clicked on.
+			throw new ImplementationException("verify_the_remove_option_on_the_rule_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_the_remove_option_on_the_rule_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_options_in_the_numbering_compoent_display_correctly$")
+	public void verify_the_sorting_options_in_the_numbering_compoent_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4930Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
+			throw new ImplementationException("verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_next_bates_number_dialog$")
+	public void on_the_next_bates_number_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Click here link
+			throw new ImplementationException("on_the_next_bates_number_dialog");
+		} else {
+			throw new ImplementationException("NOT on_the_next_bates_number_dialog");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_x_button_on_the_next_bates_dialog$")
+	public void clicking_the_x_button_on_the_next_bates_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the X to close the dialog
+			throw new ImplementationException("clicking_the_x_button_on_the_next_bates_dialog");
+		} else {
+			throw new ImplementationException("NOT clicking_the_x_button_on_the_next_bates_dialog");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields$")
+	public void verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8364Verify clicking X closes the dialog.Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
+			throw new ImplementationException("verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+		} else {
+			throw new ImplementationException("NOT verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically$")
+	public void verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8156Verify the dropdown in SORTING is sorted AlphabeticallyVerify the dropdown under Sub-sort By is sorted Alphabetically
+			throw new ImplementationException("verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_use_metadata_field_radio_button$")
+	public void clicking_the_use_metadata_field_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_the_use_metadata_field_radio_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_use_metadata_field_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected$")
+	public void verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8346Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
+			throw new ImplementationException("verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+		} else {
+			throw new ImplementationException("NOT verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_production_location_component$")
+	public void on_the_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompleteClick Next
+			throw new ImplementationException("on_the_production_location_component");
+		} else {
+			throw new ImplementationException("NOT on_the_production_location_component");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
+	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the <Back button
+			throw new ImplementationException("clicking_on_the_back_button");
+		} else {
+			throw new ImplementationException("NOT clicking_on_the_back_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
+	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4467Verify the user is navigated back to the Priv Guard Component
+			throw new ImplementationException("verify_the_user_is_navigated_back_to_the_priv_guard");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_navigated_back_to_the_priv_guard");
+		}
+
+	}
 }//EOF
