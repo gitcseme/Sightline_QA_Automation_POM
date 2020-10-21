@@ -239,7 +239,13 @@ public class DocViewPage {
     
     public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
+    public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
     
+    
+    //Constructor to just use the object instead of navigating to a new page
+    public DocViewPage(Driver driver, int i) {
+    		this.driver = driver;
+    }
     
     public DocViewPage(Driver driver){
 

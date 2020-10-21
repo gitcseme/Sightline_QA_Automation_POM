@@ -43,6 +43,7 @@ public class DocViewContext extends CommonContext {
 	public void on_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	DocViewPage docView;
 
 	@And("^.*(\\[Not\\] )? on_saved_search_page$")
 	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -86,10 +87,11 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click grey Redact tool button
 			//
-			throw new ImplementationException("click_grey_redact_tool");
-		} else {
-			throw new ImplementationException("NOT click_grey_redact_tool");
+			docView = new DocViewPage(driver,0);
+			docView.getGreyRedactButton().click();
+			pass(dataMap, "Clicked grey redact button");
 		}
+		else fail(dataMap, "Clicked the grey redact tool");
 
 	}
 
@@ -126,14 +128,14 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click 'Saved with SG1' search group
-			SavedSearch savedSearch = new SavedSearch(driver);
-			savedSearch.getSavedSearchByGroupName("Saved with SG1");
-
+			SavedSearch savedSearch = new SavedSearch(driver,0);
+			savedSearch.getSavedSearchGroupName("SG1").click();
+			driver.waitForPageToBeReady();
 			//* Click radio button for first saved search
-			savedSearch.getSavedSearchTableRadioButtons().getElementByIndex(0).click();
+			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
 			savedSearch.getToDocView().click();
-
+			driver.waitForPageToBeReady();
 			pass(dataMap, "Open saved search doc view");
 		} else {
 			fail(dataMap,"Cannot open save search doc view");
@@ -146,13 +148,9 @@ public class DocViewContext extends CommonContext {
 	public void click_rectangle_redaction_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Click Rectangle Redact button
-			//
-			throw new ImplementationException("click_rectangle_redaction_button");
-		} else {
-			throw new ImplementationException("NOT click_rectangle_redaction_button");
+			
 		}
+		else fail(dataMap, "failed to click button");
 
 	}
 
@@ -164,10 +162,8 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Open developer tools by pressing F12
 			//
-			throw new ImplementationException("open_dev_tools_f12");
-		} else {
-			throw new ImplementationException("NOT open_dev_tools_f12");
 		}
+		else fail(dataMap, "Failed to open developer tools");
 
 	}
 
@@ -180,10 +176,8 @@ public class DocViewContext extends CommonContext {
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 			//
-			throw new ImplementationException("add_redaction_to_page_without_saving");
-		} else {
-			throw new ImplementationException("NOT add_redaction_to_page_without_saving");
 		}
+		else fail(dataMap, "Failed to add redaction to page without saving");
 
 	}
 
