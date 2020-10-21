@@ -8173,7 +8173,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production, Positive", "kim"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_and_sorting_is_added_and_complete_default_document_selection_and_mark_complete_default_priv_guard_and_on_the_production_location_component_When_clicking_on_the_back_button_Then_verify_the_user_is_navigated_back_to_the_priv_guard() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

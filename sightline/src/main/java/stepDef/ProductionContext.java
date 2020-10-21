@@ -7342,7 +7342,7 @@ public class ProductionContext extends CommonContext {
 	public void on_the_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark CompleteClick Next
+			//Click Mark CompleteClick Next //
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
 
@@ -7367,6 +7367,7 @@ public class ProductionContext extends CommonContext {
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30);
+			
 			pass(dataMap,"on_the_production_location_component");
 		} else {
 			fail(dataMap,"NOT on_the_production_location_component");
@@ -7379,8 +7380,9 @@ public class ProductionContext extends CommonContext {
 	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click the <Back button
+			//Click the <Back button //
 			prod.getBackToPrivbutton().click();
+			
 			pass(dataMap,"clicking_on_the_back_button");
 		} else {
 			fail(dataMap, "NOT clicking_on_the_back_button");
@@ -7394,8 +7396,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4467Verify the user is navigated back to the Priv Guard Component
+			//
 			Thread.sleep(1000);
-			Assert.assertEquals(prod.getPrivTitle().getText().toString(), "Privileged Doc Check");
+			Assert.assertEquals(prod.getPrivTitle().getText().toString(), "Privileged Doc Check"); 
 			pass(dataMap,"verify_the_user_is_navigated_back_to_the_priv_guard");
 		} else {
 			fail(dataMap, "NOT verify_the_user_is_navigated_back_to_the_priv_guard");
