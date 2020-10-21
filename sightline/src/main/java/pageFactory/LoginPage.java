@@ -46,7 +46,10 @@ public class LoginPage {
     public Element getSelectLanguage(){ return driver.FindElementById("select-1"); }
     public Element getEditprofilesave(){ return driver.FindElementById("btnSaveEditProfile"); }
 
-	static ExtentReports report;
+    public Element getSelectProjectDD() { return driver.FindElementById("project-selector"); }
+    public Element getSelectProject(String project) {return driver.FindElementByXPath(String.format("//a[contains(text(),'%s')]",project)); }
+    
+    static ExtentReports report;
 	static ExtentTest test;
    
     public LoginPage(Driver driver){
