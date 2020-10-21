@@ -77,6 +77,7 @@ public class DocViewPage {
     public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
     public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
     public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
+    public Element getDocViewSaveRedactionButton() { return driver.FindElementById("btnSave");}
     
    //remaks objects
     public Element getAdvancedSearchAudioRemarkIcon(){ return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]"); }
@@ -226,7 +227,7 @@ public class DocViewPage {
     public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
-    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
+    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level0").getWebElement(); }
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
@@ -242,6 +243,7 @@ public class DocViewPage {
     public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
     public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
     public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
+    public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
     
     
     //Constructor to just use the object instead of navigating to a new page
@@ -1742,11 +1744,6 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		    getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
 		    getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
 		 
-	    	Thread.sleep(2000); 
-		   	getDocView_SaveReduction1(cordinate).waitAndClick(15);
-	    	Thread.sleep(2000);    	
-	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
-	    	Thread.sleep(2000);
      
 	 }
 	 

@@ -1,5 +1,6 @@
 package stepDef;
 
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -193,6 +194,15 @@ public class DocViewContext extends CommonContext {
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 			//
+			System.out.println("waiting");
+			WebElement el = docView.getRectangleButton().FindWebElements().get(0);
+			int x = el.getLocation().getX();
+			int y = el.getLocation().getY();
+			System.out.println(x);
+			System.out.println(y);
+			Actions builder = new Actions(driver.getWebDriver());
+
+			docView.redactbyrectangle(0,0,0,"SGSame1");
 		}
 		else fail(dataMap, "Failed to add redaction to page without saving");
 
@@ -479,15 +489,18 @@ public class DocViewContext extends CommonContext {
 	public void rectangle_redaction_applied(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
+			docView.redactbyrectangle(0, 0, 0, "SGSame1");
+
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
-			//
-			throw new ImplementationException("rectangle_redaction_applied");
-		} else {
-			throw new ImplementationException("NOT rectangle_redaction_applied");
+			docView.getDocViewSaveRedactionButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			 
+			pass(dataMap, "Redaction rectangle was applied");
 		}
+		else fail(dataMap, "Redaction rectangle could not be applied");
 
 	}
 
@@ -729,10 +742,21 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC3226 Verify RMU/Reviewer can redact by selecting rectangle location in document in context of an assignment
-			throw new ImplementationException("verify_rectangle_redaction");
-		} else {
-			throw new ImplementationException("NOT verify_rectangle_redaction");
+			
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Redactrec_textarea().isDisplayed() ;}}), Input.wait30); 
+			Thread.sleep(5000);
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(docView.getDocView_Redactrec_textarea(), 0, 0).click().build().perform();
+			Thread.sleep(5000);
+			
+			pass(dataMap, "verified rectangle redaction");
+
 		}
+		else fail(dataMap, "could not verify rectangle_redaction");
+
 
 	}
 
