@@ -2,6 +2,7 @@ package stepDef;
 
 import java.io.File;
 import java.io.FileInputStream;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -88,6 +89,7 @@ public class BatchPrintContext extends CommonContext {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_basis_for_printing");
@@ -146,10 +148,6 @@ public class BatchPrintContext extends CommonContext {
 				
 				if (dataMap.containsKey("select")) {
 
-					String parentOption = "Shared with SG1";
-					String option = "CustodianName Erika Grajeda";
-
-
 					// wait until parent groups become visible
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
@@ -163,7 +161,6 @@ public class BatchPrintContext extends CommonContext {
 					// select option
 					batchPrint.getCustodianNameCheckbox().click();
 
-					
 					// click Next button
 					batchPrint.getSourceSelectionNextButton().click();
 				}
@@ -223,6 +220,7 @@ public class BatchPrintContext extends CommonContext {
 					}
 					batchPrint.getExceptionFileTypesNextButton().click();
 					
+
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -281,6 +279,7 @@ public class BatchPrintContext extends CommonContext {
 			try {
 				String brandLocationText = "Test automation brand location";
 				dataMap.put("brangLocationText", brandLocationText);
+
 				
 				if (dataMap.containsKey("branding_location")) {
 					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
@@ -304,7 +303,7 @@ public class BatchPrintContext extends CommonContext {
 				
 
 				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
-
+					
 
 				}
 				
@@ -331,20 +330,26 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Generate button
 			//
 
+
+
+
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
-				
+
+
 				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
 
 					batchPrint.getOnePDFForAllDocsRadioButton().Click();
 				}
 				
+
 				if (dataMap.containsKey("sort_by")) {
 					//TODO: Remove sendKeys and use a select function
 					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
 				}
 				
+
 				batchPrint.getGenerateButton().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -376,6 +381,7 @@ public class BatchPrintContext extends CommonContext {
 			//* Click on View DocView
 			//
 			try {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getBackgroundTaskFirstRowStatus().Visible()  ;}}), Input.wait30);
 				
@@ -398,7 +404,9 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+
+			} 
+
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
 		}
@@ -422,6 +430,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				// Adding to sleep to wait for file to finish downloading
 				Thread.sleep(30000);
+
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
 				
@@ -495,6 +504,25 @@ public class BatchPrintContext extends CommonContext {
 				// click Next button
 				batchPrint.getSourceSelectionNextButton().click();
 				
+				if (dataMap.containsKey("select")) {
+					
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+					
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -521,6 +549,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				// Adding to sleep to wait for file to download
 				Thread.sleep(30000);
+
 				File dir = new File(downloadPath);
 				File[] dirContents = dir.listFiles();
 				

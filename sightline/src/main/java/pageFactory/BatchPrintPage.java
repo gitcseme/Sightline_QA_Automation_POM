@@ -100,7 +100,6 @@ public class BatchPrintPage {
     public Element getPrintExcelFilesRadioButton() { return driver.FindElementById("printExcelFileRadiobutton"); } 
     public Element getExceptionFileTypesNextButton() { return driver.FindElementById("exception-file-types-next-button"); }
 
-
     public Element getEnableSlipSheetsToggle() { return driver.FindElementByXPath("//*[@id='includeSlipSheetCheckBox']/following-sibling::i"); }
     public Element getSlipSheetsDisabledPanel() { return driver.FindElementByXPath("//div[@id='slipSheetsSelectFieldsDiv' and @class='disablePanel']"); }
     public Element getSlipSheetsNextButton() { return driver.FindElementById("slip-sheets-next-button"); }
@@ -118,6 +117,7 @@ public class BatchPrintPage {
     public Element getBackgroundTaskFirstRowDownloadLink() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[9]/a"); }
     public Element getOnePDFForAllDocsRadioButton() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); } 
     public Element getGenerateSuccessMessage() { return driver.FindElementById("bigBox4"); }
+
     public Element getSelectFolderRadioButton() { return driver.FindElementById(""); }
     public Element getSelectFolderRadioButtonIcon() { return driver.FindElementByXPath("//input[@id='selectFolderRadioButton']/following-sibling::i"); }
     public Element getSelectFolderDisplaySet() { return driver.FindElementByXPath("//div[@id='folderSet' and @style='display: block;']"); }
@@ -130,6 +130,7 @@ public class BatchPrintPage {
     public Element getPrintExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//ul[@id='redactor-toolbar-1']/following-sibling::div"); }
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
+
     
     public BatchPrintPage(Driver driver){
 
