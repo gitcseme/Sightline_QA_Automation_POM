@@ -168,6 +168,7 @@ public class BatchPrintContext extends CommonContext {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
@@ -192,6 +193,7 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
@@ -218,6 +220,7 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
@@ -252,6 +255,7 @@ public class BatchPrintContext extends CommonContext {
 				batchPrint.getSlipSheetsNextButton().click();
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
@@ -271,6 +275,7 @@ public class BatchPrintContext extends CommonContext {
 			try {
 				String brandLocationText = "Test automation brand location";
 				dataMap.put("brangLocationText", brandLocationText);
+
 				
 				if (dataMap.containsKey("branding_location")) {
 					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
@@ -299,7 +304,9 @@ public class BatchPrintContext extends CommonContext {
 				batchPrint.getBrandingAndRedactionNextButton().click();
 				
 			} catch (Exception e) {
+
 				e.printStackTrace();
+
 			}
 
 		} else {
@@ -318,10 +325,12 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Generate button
 			//
 
+
+
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
-				
+
 				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
 
 					batchPrint.getOnePDFForAllDocsRadioButton().Click();
@@ -336,6 +345,7 @@ public class BatchPrintContext extends CommonContext {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
+
 			}
 			
 		} else {
@@ -359,6 +369,7 @@ public class BatchPrintContext extends CommonContext {
 			//* Click on View DocView
 			//
 			try {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getBackgroundTaskFirstRowStatus().Visible()  ;}}), Input.wait30);
 				
@@ -381,7 +392,7 @@ public class BatchPrintContext extends CommonContext {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			} 
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
 		}
