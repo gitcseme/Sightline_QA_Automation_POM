@@ -39,7 +39,9 @@ public class SavedSearch {
     public Element getSaveSchedulerBtn(){ return driver.FindElementById("btnScheduleSubmit"); }
     public Element getSavedSearchNewGroupExpand(){ return driver.FindElementByXPath(".//*[@id='-1']/i"); }
     public Element getSavedSearchGroupName(){ return driver.FindElementByXPath(".//*[@id='jsTreeSavedSearch']//a[contains(.,'New node')]"); }
+    public Element getSavedSearchByGroupName(String groupName){ return driver.FindElementByXPath(String.format(".//*[@id='jsTreeSavedSearch']//li/a[@data-content='%s']", groupName));}
     public Element getShareSerachBtn(){ return driver.FindElementById("rbnShare"); }
+    public ElementCollection getSavedSearchTableRadioButtons(){ return driver.FindElementsByCssSelector("#SavedSearchGrid>tbody>tr>td>label>i"); }
     
     //public Element getSearchUserToShare(){ return driver.FindElementByXPath("//input[@id= 'kwd_search']"); }
     //public ElementCollection getUserPopUptoShare(){ return driver.FindElementsByXPath("(//div[@class='user-list-content clear'])[1]"); }
