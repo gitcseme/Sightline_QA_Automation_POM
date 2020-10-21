@@ -4161,6 +4161,13 @@ public class IngestionContext extends CommonContext {
 			//* On Ingestion Details Page
 			//* Click on the Error count for the step that it failed on
 			//
+			
+			//click failed filter 
+			dataMap.put("filter_option", "Failed");
+			click_filter_by_dropdown(true, dataMap);
+			
+			
+			
 			throw new ImplementationException("click_error_count");
 		} else {
 			throw new ImplementationException("NOT click_error_count");

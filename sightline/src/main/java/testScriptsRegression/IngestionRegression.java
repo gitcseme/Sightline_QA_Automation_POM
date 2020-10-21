@@ -8175,7 +8175,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "kim"})
+	@Test(groups = {"Ingestion", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_22_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8195,7 +8195,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "YYYY/MM/DD HHMMSS");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "ICE");
-			context.new_ingestion_created_(true, dataMap);
+			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.click_error_count(true, dataMap);
