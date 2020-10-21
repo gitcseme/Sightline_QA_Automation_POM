@@ -174,7 +174,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "wip"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_greater_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_and_select_export_format_When_click_download_file_link_Then_verify_separate_pdf_generated_for_every_document() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
