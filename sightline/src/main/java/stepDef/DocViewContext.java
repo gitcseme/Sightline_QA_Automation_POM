@@ -1,5 +1,7 @@
 package stepDef;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,7 +90,14 @@ public class DocViewContext extends CommonContext {
 			//* Click grey Redact tool button
 			//
 			docView = new DocViewPage(driver,0);
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getGreyRedactButton().Displayed()  ;}}), Input.wait30); 
+
+			builder.moveToElement(docView.getGreyRedactButton().getWebElement()).perform();;
+			Thread.sleep(2000);
 			docView.getGreyRedactButton().click();
+			driver.waitForPageToBeReady();
 			pass(dataMap, "Clicked grey redact button");
 		}
 		else fail(dataMap, "Clicked the grey redact tool");
@@ -148,6 +157,11 @@ public class DocViewContext extends CommonContext {
 	public void click_rectangle_redaction_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			//Find rectangle button and click it
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			pass(dataMap, "Clicked Rectangle Button");
 			
 		}
 		else fail(dataMap, "failed to click button");
@@ -162,6 +176,9 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Open developer tools by pressing F12
 			//
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_F12);
+			robot.keyRelease(KeyEvent.VK_F12);
 		}
 		else fail(dataMap, "Failed to open developer tools");
 

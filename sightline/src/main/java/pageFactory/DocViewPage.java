@@ -240,6 +240,8 @@ public class DocViewPage {
     public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
     public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
+    public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
+    public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
     
     
     //Constructor to just use the object instead of navigating to a new page
