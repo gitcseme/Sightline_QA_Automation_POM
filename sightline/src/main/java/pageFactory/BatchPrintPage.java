@@ -113,6 +113,11 @@ public class BatchPrintPage {
     public Element getPDFCreationForAllDocs() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); }
     public Element getBullHornNotificationNumber() { return driver.FindElementByXPath("//span[@id='activity']/b"); }
 
+    public Element getBackgroundTaskFirstRowStatus() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[8]"); }
+    public Element getBackgroundTaskFirstRowDownloadLink() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[9]/a"); }
+    public Element getOnePDFForAllDocsRadioButton() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); } 
+    public Element getGenerateSuccessMessage() { return driver.FindElementById("bigBox4"); }
+
     
     public BatchPrintPage(Driver driver){
 

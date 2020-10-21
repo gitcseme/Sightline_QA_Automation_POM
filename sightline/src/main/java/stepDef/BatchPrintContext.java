@@ -1,15 +1,20 @@
 package stepDef;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.List;
 import java.util.Random;
-
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -69,7 +74,8 @@ public class BatchPrintContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getNativeRadioButton().Visible()  ;}}), Input.wait30);
 				if (dataMap.containsKey("basis_for_printing")) {
 					if (dataMap.get("basis_for_printing").equals("Native")) {
 						if (batchPrint.getNativeRadioButton().Selected()) {
@@ -319,17 +325,25 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Export Format
 			//* Click Generate button
 			//
-//			dataMap.put("pdf_creation", "1 PDF for all docs");
-//			dataMap.put("sort_by", "MasterDate");
-//			dataMap.put("export_by", "DocFileName");
 
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
+				
+				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
+
+					batchPrint.getOnePDFForAllDocsRadioButton().Click();
+				}
+				
 				batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
 				batchPrint.getGenerateButton().click();
-			} catch (Exception e) {
 				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getGenerateSuccessMessage().Visible()  ;}}), Input.wait30);
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			
 		} else {
@@ -353,12 +367,22 @@ public class BatchPrintContext extends CommonContext {
 			//* Click on View DocView
 			//
 			try {
-				// Reset notification number back to 0. We will use the bull horn to check
-				// if file is ready to download
-				if (!prod.getBulHornNotificationNumber().getText().equals("0")) {
-					prod.getBulHornNotificationNumber().click();
-				}
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBackgroundTaskFirstRowStatus().Visible()  ;}}), Input.wait30);
 				
+				int i = 0;
+				while(!batchPrint.getBackgroundTaskFirstRowStatus().getText().equalsIgnoreCase("COMPLETED") && i<1000) {
+					i++;
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowStatus().Displayed() ;}}), Input.wait30);
+				}
+				System.out.println("Completed!");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
+				batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
+				driver.waitForPageToBeReady();
 				
 			} catch (Exception e) {
 				
@@ -375,7 +399,54 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extension
-			throw new ImplementationException("verify_single_pdf_generated");
+			
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				// Adding to sleep to wait for file to download
+				Thread.sleep(10000);
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				System.out.println("dirContents: " + dirContents);
+				for (int i = 0; i < dirContents.length; i++) {
+					System.out.println("files: " + dirContents[i].getName());
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("1 - " + dirContents[i].getName());
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						System.out.println("2 - " + zipFile);
+						int numOfEntries = zipFile.size();
+						System.out.println("NumOfEntries: " + numOfEntries);
+						
+						// Verify there is only one entry in the zip file
+						Assert.assertEquals(numOfEntries, 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							// Verify the file is a pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Single pdf not generated!");
+				e.printStackTrace();
+			}
+
+			
+
 		} else {
 			throw new ImplementationException("NOT verify_single_pdf_generated");
 		}
@@ -392,7 +463,30 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_greater_than_250");
+			try {
+				
+				if (dataMap.containsKey("select")) {
+					
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+					
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_greater_than_250");
 		}
@@ -405,7 +499,53 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extensionTC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_second_pdf_generated");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(10000);
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				System.out.println("dirContents: " + dirContents);
+				for (int i = 0; i < dirContents.length; i++) {
+					System.out.println("files: " + dirContents[i].getName());
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("1 - " + dirContents[i].getName());
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						System.out.println("2 - " + zipFile);
+						int numOfEntries = zipFile.size();
+						System.out.println("NumOfEntries: " + numOfEntries);
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							System.out.println("fileNames: " + entry.getName());
+							
+							// Verify the file is a pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+					
+
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_second_pdf_generated");
 		}

@@ -84,6 +84,7 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
@@ -122,7 +123,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_greater_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_and_select_export_format_When_click_download_file_link_Then_verify_second_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -133,6 +134,9 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			dataMap.put("select", "search");
@@ -149,12 +153,7 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for each doc");
-			dataMap.put("A", "");
-			dataMap.put("sort_by", "MasterDate");
-			dataMap.put("export_by", "DocFileName");
-			context.select_export_format(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for each doc");
+			dataMap.put("pdf_creation", "One PDF for each document");
 			dataMap.put("A", "");
 			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
