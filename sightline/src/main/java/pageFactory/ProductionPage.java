@@ -23,11 +23,7 @@ public class ProductionPage {
     
     public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
     public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
-    public Element getProductionNameLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[1]"); }
-    public Element getProductionNameWarning(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[2]/span/span"); }
     public Element getProductionDesc(){ return driver.FindElementById("ProductionDescription"); }
-    public Element getProductionDescLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[2]/label[1]"); }
-    public Element getProductionLoadTempLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[3]/label[1]"); }
     public Element getBasicInfoMarkComplete(){ return driver.FindElementById("BasicInfoMarkComplete"); }
     public Element getBasicInfoSave(){ return driver.FindElementById("BasicInfoSave"); }
     public Element getBasicInfoNext(){ return driver.FindElementById("BasicInfoNext"); }
@@ -637,9 +633,6 @@ public class ProductionPage {
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
-    public Element getGridActionDropDown() { return driver.FindElementByXPath("//*[@id=\"DropDownAction\"]/span"); }    
-    public Element getAddDocFromActionsDropDown() { return driver.FindElementById("AddDocuments"); }
-    public Element getRemoveDocFromActionsDropDown() { return driver.FindElementById("RemoveDocuments"); }
 
     
     //Click the desired production set option, in the dropdown menu by it's index
