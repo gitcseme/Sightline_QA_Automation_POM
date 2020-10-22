@@ -7863,6 +7863,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//if area = slipsheetdo not click anythingif area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
+			String component = (String)dataMap.get("component");
+			String area = (String)dataMap.get("area");
+			
+			if(component.equalsIgnoreCase("TIFF")){
+			if(area.equalsIgnoreCase("branding")) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+				prod.getTIFF_InsertMetadataFieldClick().click();
+			}
+			
+			
+			}
+			
 			throw new ImplementationException("clicking_the_insert_metadata_field_dropdown");
 		} else {
 			throw new ImplementationException("NOT clicking_the_insert_metadata_field_dropdown");

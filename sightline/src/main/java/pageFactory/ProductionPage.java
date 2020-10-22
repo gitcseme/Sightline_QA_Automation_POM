@@ -653,6 +653,7 @@ public class ProductionPage {
     public Element getTIFFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}
     public Element getTIFFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c7 > div.panel-body > div > div.tiff-conf > div.col-md-12.tiff-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
     public Element getSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#tiff-internal-tab-1 > li:nth-child(3) > a > span");}
+    public Element getBrandingMetaDataList() {return driver.FindElementByXPath("//*[@id=\"MetadataPopup\"]/fieldset/div/div/div");}
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
