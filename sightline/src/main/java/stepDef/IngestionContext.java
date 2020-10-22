@@ -1,6 +1,7 @@
 package stepDef;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -21,8 +22,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;  
+import org.openqa.selenium.JavascriptExecutor;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Set;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -168,9 +170,17 @@ public class IngestionContext extends CommonContext {
 	public void click_source_system_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
 	    	ingest.getSpecifySourceSystem().Click();
+	    	HashSet<String> sourceOptionSet = new HashSet<String>();
+	    	String [] sourceSystemOptions = ingest.getSpecifySourceSystem().getText().split("\\r?\\n");
+	    	for(int i =0; i<sourceSystemOptions.length; i++) {
+	    		System.out.println(sourceSystemOptions[i]);
+	    		sourceOptionSet.add(sourceSystemOptions[i]);
+	    	}
+	    	dataMap.put("sourceSystemSet", sourceOptionSet);
 		} else {
 			ingest.getNextButton().Click();
 		}
@@ -427,25 +437,21 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_displays_expected_options$")
 	public void verify_source_system_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if(scriptState) {
+			
+			//The options that we should see
+			String [] expectedSystemOptions = new String[] {"TRUE", "NUIX", "ICE", "Mapped Data"};
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+			//The options that we do see
+			HashSet<String> ourSystemOptions = (HashSet<String>)dataMap.get("sourceSystemSet");
 
-			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			if (specifySourceSystemText.contains("TRUE")
-							) {
-						pass(dataMap,"TRUE was found in the dropdown for Source System");
-					} else {
-						fail(dataMap,"TRUE was NOT found in the dropdown for Source System");
-					}
-		}catch (Exception e) {
-			if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"TRUE was NOT found in the dropdown for Source System");
-			}
+			//Verify that every option that should be there is there
+			for(int i = 0; i<expectedSystemOptions.length; i++) Assert.assertTrue(ourSystemOptions.contains(expectedSystemOptions[i]));
+			pass(dataMap, "Source System displays expected options");
+			
 		}
+		else fail(dataMap, "Source System does not display expected options");
 	}
 
 
@@ -2935,7 +2941,8 @@ public class IngestionContext extends CommonContext {
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getBackButton().Visible()  ;}}), Input.wait30);
-			ingest.getBackButton().Click();
+			ingest.getBackButton().click();
+			Thread.sleep(5000);
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			fail(dataMap,"Clicking Ingest Button was NOT successful");
@@ -4209,10 +4216,17 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_help_icon");
-		} else {
-			throw new ImplementationException("NOT click_help_icon");
+			for(WebElement x: ingest.getIngestHomeHelpButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getIngestHelpPopUp().Displayed()  ;}}), Input.wait30);
+
+			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
+			Assert.assertEquals(ingest.getIngestHelpPopUp().getText(), "Help Ingestion");
+			pass(dataMap, "clicked the help icon");
 		}
+		else fail(dataMap, "Failed to click help icon");
 
 	}
 
@@ -4229,15 +4243,27 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Ingestions Home Page Header Title
 			//* Ingestions Detail Page Header Title
+			
+				    		
+	    		ingest.getSelectFilterByOption(1).click();
+	    		ingest.getSelectFilterByOption(2).click();
+	    		ingest.getIngestionTile(0).click();
+	    		ingest.getIngestionDetailsHelpButton().click();
+
+	    		String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+	    		
+	    		ingest.getIngestWizardSystemAndIngestTypeHelpButton().click();
+	    		ingest.getIngestWizardConfigureMappingHelpButton().click();
+
 			//* Ingestion Wizard: Header Page Title
 			//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
 			//* Ingestion Wizard: Configure Field Mapping header
 			//* Ingestion Wizard: Date & Time Format 
 			//
-			throw new ImplementationException("verify_tool_tips_are_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_tool_tips_are_displayed");
 		}
+		else fail(dataMap, "Verified tool_tips are displayed");
 
 	}
 
@@ -4310,7 +4336,6 @@ public class IngestionContext extends CommonContext {
 			//TC2124:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC2125:2125:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC3016:To Verify mandatory fields displays with asterisk *
 			//
 			//* Validate that the rows in the configure mapping of the ingestion are populated correctly based on the ingestion DAT file used.
-			//* All metadata (columns) in the DAT file should be displayed
 			//* Validate asterisk are displayed for required fields:
 			//
 			//
@@ -4318,11 +4343,24 @@ public class IngestionContext extends CommonContext {
 			//* ParentSourceDocID
 			//* DataSource
 			//* CustodianName
-			//
-			throw new ImplementationException("verify_configure_mapping_is_populated_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_configure_mapping_is_populated_correctly");
+
+			//* All metadata (columns) in the DAT file should be displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getMappingSourceFieldByRow(1).Displayed()  ;}}), Input.wait30);
+			for(int i =1; i<=25; i++) {
+				//Assert dropdowns are displayed, and their default values are not null
+				Assert.assertTrue(ingest.getMappingSourceFieldByRow(i).Displayed());
+				Assert.assertFalse(ingest.getMappingSourceFieldByRow(i).selectFromDropdown().getFirstSelectedOption().getText().equals(""));
+			}
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(1).selectFromDropdown().getFirstSelectedOption().getText(), "SourceDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(2).selectFromDropdown().getFirstSelectedOption().getText(), "SourceParentDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(3).selectFromDropdown().getFirstSelectedOption().getText(), "DataSource");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(4).selectFromDropdown().getFirstSelectedOption().getText(), "CustodianName");
+			for(int i =1; i<=4; i++)Assert.assertTrue(ingest.getAsterickFields(i).getText().equals("*"));
+			System.out.println("done");
+			pass(dataMap, "configure mapping created successfully");
 		}
+		else fail(dataMap, "configure mapping not created successfully");
 
 	}
 
@@ -4331,15 +4369,16 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC2392:To Verify Ingestion Status in Ingestion Detail PageTC3015:Verify page title displayCovered:TC3017:To verify default value display into combo box
+			Thread.sleep(5000);
+			//TC2392:To Verify Ingestion Status in Ingestion Detail 
+			//:PageTC3015 verify page title displayCovered:
+			//TC3017:To verify default value display into combo box
 			//
 			//* Validate Ingestion Home Page Title displays: "Ingestions"
 			//* Validate the Failed status is displayed for the ingestion details page
 			//
-			throw new ImplementationException("verify_ingestion_status_detail_page");
-		} else {
-			throw new ImplementationException("NOT verify_ingestion_status_detail_page");
 		}
+		else fail(dataMap, "Failed to verify ingestion status");
 
 	}
 
@@ -4347,16 +4386,42 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_disabled$")
 	public void verify_configure_mapping_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
 		if (scriptState) {
-			//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
-			//
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+
+
 			//* Validate Configure mapping is still disabled if no required parameters are entered in the previous section.
+	    		Assert.assertTrue(ingest.getBackButton().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getPreviewRun().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getAddButton().GetAttribute("disabled").equals("true"));
+
 			//* Validate 2 Sections are displayed: "Selection & Ingestion Type" and "Configure Field mapping" 
-			//
-			throw new ImplementationException("verify_configure_mapping_is_disabled");
-		} else {
-			throw new ImplementationException("NOT verify_configure_mapping_is_disabled");
+
+	    		//Confirm Configure Mapping are displayed
+	    		Assert.assertTrue(ingest.getAddButton().Displayed());
+	    		Assert.assertTrue(ingest.getPreviewRun().Displayed());
+	    		Assert.assertTrue(ingest.getBackButton().Displayed());
+	    		
+	    		//Confirm Selection and Ingestion Type are displayed
+	    		Assert.assertTrue(ingest.getNextButton().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceSystem().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifyLocation().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceIngestionType().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceFolder().Displayed());
+	    		Assert.assertTrue(ingest.getNativeCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getDATcheckbox().Displayed());
+	    		Assert.assertTrue(ingest.getTextCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getTIFFCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getPDFCheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getMP3CheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getAudioTranscriptCheckBoxstionButton().Displayed());
+
+			pass(dataMap, "configure mapping is disabled");
 		}
+		else fail(dataMap, "configure mapping is not disabled");
 
 	}
 
@@ -4366,10 +4431,20 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_date_time_drodpdown");
-		} else {
-			throw new ImplementationException("NOT click_date_time_drodpdown");
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+	    		HashSet<String> dateFormats = new HashSet<String>();
+	    		
+	    		ingest.getDateFormat().click();
+	    		String [] formats = ingest.getDateFormat().getText().split("\\r?\\n");
+	    		for(int i =0; i<formats.length; i++) {
+	    			dateFormats.add(formats[i]);
+	    		}
+	    		dataMap.put("dateFormatSet", dateFormats);
+	    		pass(dataMap, "Succesfully clicked date_time dropdown");
 		}
+		else fail(dataMap, "failed to click date_time dropdown");
 
 	}
 
@@ -4377,12 +4452,21 @@ public class IngestionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_date_time_displays_correctly$")
 	public void verify_date_time_displays_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
 			//TC10112:TODO for all date formats: Verify that in the ingestion wizard page, "date & time format" field should present the dropdown with the different supported formatsTC10114:Verify the default value for the 'Date & Time Format' fieldValidate date & time format section is displayed correctly with different options in the dropdown. We are checking if there are options presentValidate default option selected is "Select a format"
-			throw new ImplementationException("verify_date_time_displays_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_date_time_displays_correctly");
+		if (scriptState) {
+			//This is a list of all the Date Formats that need to be verified
+			String[] dateFormats = new String[]{"YYYY/MM/DD HH:MM:SS", "MM/DD/YYYY", "DD/MM/YYYY","MMDDYYYY","DDMMYYYY",
+			"YYYY/MM/DD","YYYY/DD/MM","MM/DD/YYYY HH:MI","DD/MM/YYYY HH:MI","MM/DD/YYYY HH:MI:SS","DD/MM/YYYY HH:MI:SS"};
+
+			//This is the Set of Formats we got from the page
+			HashSet<String> dateSet = (HashSet<String>)dataMap.get("dateFormatSet");
+
+			//Run through the Formats that need to be verified and make sure that they are in the Set
+			for(int i =0; i<dateFormats.length; i++) Assert.assertTrue(dateSet.contains(dateFormats[i]));
+
+			pass(dataMap, "verified that date time displays correctly");
 		}
+		else fail(dataMap, "Could not verify date time displays correctly");
 
 	}
 } //end
