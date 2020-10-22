@@ -4176,8 +4176,6 @@ public class IngestionContext extends CommonContext {
 			
 			// Click on the Error count for the step that it failed on
 			if(ingest.getCatalogErrorElement().Displayed()) ingest.getCatalogErrorElement().click();
-			if(ingest.getCopiedErrorElement().Displayed()) ingest.getCatalogErrorElement().click();
-			if(ingest.getIndexedErrorElement().Displayed()) ingest.getCatalogErrorElement().click();
 
 	
 			pass(dataMap, "click_error_count");
@@ -4199,11 +4197,15 @@ public class IngestionContext extends CommonContext {
 			//
 			//"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. 
 			//Please provide the matching date format"
-			String erroString = "Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format";
-			int size = ingest.getErrorsTable().FindWebElements().size();
-			for(int i = 1; i <= size; i++) {
-				Assert.assertTrue(ingest.getErrorsTable().FindWebElements().get(i).getText().contains(erroString));
-			}
+			while(!ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").equals(dataMap.get("lastCreatedIngestionName"))) 
+				ingest.getRefreshButton().click();
+			
+			//open the Ingestion 
+			ingest.getIngestTile().FindWebElements().get(0).click();
+			System.out.println(ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").toString());
+			
+			// Click on the Error count for the step that it failed on
+			Assert.assertTrue(!ingest.getCatalogErrorElement().Displayed());
 			
 			pass(dataMap, "verify_ingestion_displays_error_for_unmatched_dates");
 		} else {
