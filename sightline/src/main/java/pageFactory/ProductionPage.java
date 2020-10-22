@@ -96,6 +96,7 @@ public class ProductionPage {
     public Element getNativeTab(){ return driver.FindElementByXPath("//a[@href='#NativeContainer']"); }
     public Element getNative_SelectAllCheck(){ return driver.FindElementByXPath(".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i"); }
     public Element getNative_GenerateLoadFileLST(){ return driver.FindElementByXPath(".//*[@id='NativeContainer']//input[@name='ProduceLoadFile']/following-sibling::i"); }
+    public Element getNativeSelectTagsButton() { return driver.FindElementById("btnSelectPrevTags"); }
     public Element getTIFFChkBox(){ return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i"); }
     public Element getTIFFTab(){ return driver.FindElementByXPath("//a[@href='#TIFFContainer']"); }
     public Element getTIFF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
@@ -411,7 +412,7 @@ public class ProductionPage {
     public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
     public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
     public Element getDatNewLine(String value) { return driver.FindElementByCssSelector(String.format("#lstNewLineSeparator%s",value)); }
-//    public Element getDAT_SourceField1(String value){ return driver.FindElementByCssSelector(String.format("#SF_0 %s",value)); }
+
 
 
     //9-21
