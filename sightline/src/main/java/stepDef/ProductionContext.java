@@ -3831,9 +3831,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number
-			throw new ImplementationException("complete_the_default_dat_section");
+			prod.getDATChkBox().click();
+			prod.getDATTab().click();
+			prod.getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
+			prod.getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
+			prod.getDAT_DATField1().click();
+			prod.getDAT_DATField1().SendKeys("Bates Number");
+			pass(dataMap, "Dat Section completed");
 		} else {
-			throw new ImplementationException("NOT complete_the_default_dat_section");
+			fail(dataMap, "Dat section not complete");
 		}
 
 	}
@@ -7722,10 +7728,12 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_new_line_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Clicking the New Line dropdown
-			throw new ImplementationException("clicking_the_new_line_dropdown");
+			prod.getDATTab().click();
+			prod.getDATNewLine().click();
+			Thread.sleep(3000);
+
 		} else {
-			throw new ImplementationException("NOT clicking_the_new_line_dropdown");
+			fail(dataMap,"New Line Dropdown not clicked");
 		}
 
 	}
@@ -7736,7 +7744,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC6327 Verify the dropdown has an option with the value -1039 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(255)".Verify the dropdown has an option with the value -875 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(90)".Verify the dropdown has an option with the text "ASCII(20)".Verify the dropdown has a total of 255 options to select. Should be ASCII 1-255. Don't need to verify each option is in the dropdown, but that the count of the dropdown is 255.
-			throw new ImplementationException("verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
+			ElementCollection totalNewLineOptions = driver.FindElementsByXPath("//*[@id='lstNewLineSeparator']/option");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatNewLine(" [value='-1039']").Visible()  ;}}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatNewLine(" [value='-875']").Visible()  ;}}), Input.wait30);
+			int numNewLineOptions = (int)totalNewLineOptions.size();
+			Assert.assertEquals(255, numNewLineOptions);
+			
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
 		}
@@ -7866,7 +7883,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Add FieldThe Field Classification should be the same used in the first dat fieldThe Source Field should be the same used in the first dat fieldThe DAT field should be the same used in the first dat field
-			throw new ImplementationException("complete_the_second_dat_section_with_duplicate_information");
+			//smoke
+			prod.getDAT_AddField().click();
+			
+			
 		} else {
 			throw new ImplementationException("NOT complete_the_second_dat_section_with_duplicate_information");
 		}

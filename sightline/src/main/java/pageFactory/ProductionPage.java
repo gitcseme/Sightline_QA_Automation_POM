@@ -410,7 +410,9 @@ public class ProductionPage {
     public Element getDATDateFormat() {return driver.FindElementById("lstDateFormat");}
     public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
     public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
-    
+    public Element getDatNewLine(String value) { return driver.FindElementByCssSelector(String.format("#lstNewLineSeparator%s",value)); }
+//    public Element getDAT_SourceField1(String value){ return driver.FindElementByCssSelector(String.format("#SF_0 %s",value)); }
+
 
     //9-21
 
