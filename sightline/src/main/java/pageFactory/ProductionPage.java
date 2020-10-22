@@ -655,6 +655,9 @@ public class ProductionPage {
     public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
     public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
+    public Element getGridActionDropDown() { return driver.FindElementByXPath("//*[@id=\"DropDownAction\"]/span"); }    
+    public Element getAddDocFromActionsDropDown() { return driver.FindElementById("AddDocuments"); }
+    public Element getRemoveDocFromActionsDropDown() { return driver.FindElementById("RemoveDocuments"); }
 
     public Element getProductionCompletebutton() { return driver.FindElementById("btnProductionLocationMarkComplete"); }
     public Element getProductionNextbutton() { return driver.FindElementById("btnProductionLocationNext"); }
