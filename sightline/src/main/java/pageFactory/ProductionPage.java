@@ -276,7 +276,13 @@ public class ProductionPage {
     public Element getExportSetDropdown() { return driver.FindElementByCssSelector("[value='2064']"); }
     public Element getAddNewProductionButton(){ return driver.FindElementByXPath("//a[text()='Add a New Production']"); }
     public Element getAddNewExportButton(){ return driver.FindElementByXPath("//a[text()='Add a New Export']"); }
-    
+    public Element getProductionHomePageTitle(){ return driver.FindElementByClassName("page-title");}
+    public Element getProductionHomePageCurrentlySelectedProductionSet(){return driver.FindElementByCssSelector("#ProductionSetInfo>span.font-lg");}
+    public ElementCollection getProductionSetsOptions(){return driver.FindElementsByCssSelector("#ProductionSets>option");}
+    public ElementCollection getProductionsLastModifiedUser(){ return driver.FindElementsByClassName("prod-lastMod");}
+    public ElementCollection getProductionLastModifiedData(){return driver.FindElementsByXPath("//span[@class='prod-lastMod']/..");}
+    public Element getProductionLastModifiedDataByName(String name){return driver.FindElementByXPath(String.format("//a[@class='prod-Title'][contains(.,'%s')]/../..//span[@class='prod-lastMod']/..", name));}
+
     // Basic Info
     public Element getBasicInfoTemplate(String value) { return driver.FindElementByCssSelector(String.format("#ddlTemplate [label='Custom Templates']%s",value)); }
     public Element getBasicInfoPriorProd(String value) { return driver.FindElementByCssSelector(String.format("#ProductionSetLst%s",value)); }
@@ -642,7 +648,7 @@ public class ProductionPage {
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
-
+    public Element getPopUpBoxText(){return driver.FindElementByCssSelector("#divbigBoxes p");}
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

@@ -9500,7 +9500,7 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "4470");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
@@ -9508,7 +9508,7 @@ public class ProductionRegression extends RegressionBase {
 			context.store_the_first_productions_name(true, dataMap);
 			context.on_the_basic_info_component_on_a_new_production(true, dataMap);
 			context.enter_the_name_of_the_existing_production(true, dataMap);
-			context.clicking_the_productions_mark_complete_button(true, dataMap);
+			//context.clicking_the_productions_mark_complete_button(true, dataMap);
 			context.verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -9679,7 +9679,7 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "4431");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_production_home_page(true, dataMap);
@@ -9900,7 +9900,7 @@ public class ProductionRegression extends RegressionBase {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "7739");
 			dataMap.put("Test Case", "7740");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
