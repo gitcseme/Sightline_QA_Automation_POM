@@ -252,7 +252,7 @@ public class ProductionPage {
     public Element getGenerateLoadFile(){ return driver.FindElementByXPath("//div[@class='panel-body']//div[@class='col-md-12']//div[@class='col-md-4']//i[@class='pull-right']"); }
     public Element getSlipSheets(){ return driver.FindElementByXPath("//div[@class='form-group col-md-12 wrapperNew no-padding']//i[@class='pull-left']"); }
     public Element getAvailableFields(int i){ return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style']//li["+i+"]//a"); }
-    public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//div[@class='col-md-8 tiff-logic insertPopup']//a[@class='LaunchPopup']"); }
+    public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id='selectedMetadataField']"); }
     
     //added by shilpi on 08/17
     public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }

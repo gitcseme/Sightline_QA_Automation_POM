@@ -7849,7 +7849,32 @@ public class ProductionContext extends CommonContext {
 						fail(dataMap, "Valid area was not selected");
 					}
 				}
+				
+				else if((component.equalsIgnoreCase("PDF"))) {
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFChkBox().Displayed()  ;}}), Input.wait30);
+					prod.getPDFChkBox().Click();
 			
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFTab().Displayed()  ;}}), Input.wait30);
+					prod.getPDFTab().Click();
+				}
+				
+				if(area.equalsIgnoreCase("branding")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+					prod.getTIFF_InsertMetadataFieldClick().click();
+				}
+				
+				else if(area.equalsIgnoreCase("placeholder")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTIFFPlaceholderTechMetadataLink().Visible()  ;}}), Input.wait30); 
+					prod.getTIFFPlaceholderTechMetadataLink().click();
+				}
+				
+			
+				
 			
 		} else {
 			throw new ImplementationException("NOT on_the_section_insert_metadata_field_dialog");
@@ -7872,6 +7897,7 @@ public class ProductionContext extends CommonContext {
 						prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
 				prod.getTIFF_InsertMetadataFieldClick().click();
 			}
+			
 			
 			
 			}
