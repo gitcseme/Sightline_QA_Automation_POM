@@ -4448,16 +4448,36 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_ingestion_status_detail_page$")
 	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			Thread.sleep(5000);
 			//TC2392:To Verify Ingestion Status in Ingestion Detail 
 			//:PageTC3015 verify page title displayCovered:
 			//TC3017:To verify default value display into combo box
-			//
+
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Home");
+	    		driver.waitForPageToBeReady();
+	    		
 			//* Validate Ingestion Home Page Title displays: "Ingestions"
+	    		Assert.assertEquals("Ingestions", ingest.getIngestionHomePageTitle().getText());
+
 			//* Validate the Failed status is displayed for the ingestion details page
-			//
+	    		
+	    		//Filter by Failed and click into first ingestion
+	    		ingest.getFilterByOption().click();
+	    		ingest.getSelectFilterByOption(2).click();
+	    		ingest.getSelectFilterByOption(3).click();
+	    		ingest.getFilterByOption().click();
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(ingest.getTotalIngestCount().getText().equals("0"))  ;}}), Input.wait30); 
+	    		ingest.getIngestionTile(0).click();
+
+	    		//Verify Failed status text
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getFailedStatusDetailText().Displayed()  ;}}), Input.wait30); 
+			System.out.println(ingest.getFailedStatusDetailText().getText());
+			Assert.assertEquals("Failed", ingest.getFailedStatusDetailText().getText());
+			pass(dataMap, "Ingestion Status detail verified");
+
 		}
 		else fail(dataMap, "Failed to verify ingestion status");
 
