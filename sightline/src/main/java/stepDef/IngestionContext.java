@@ -4402,10 +4402,20 @@ public class IngestionContext extends CommonContext {
 			//* EmailAuthorAddress
 			//* EmailAuthorName
 			//
-			throw new ImplementationException("verify_doc_basic_displays_expected_options");
-		} else {
-			throw new ImplementationException("NOT verify_doc_basic_displays_expected_options");
+			HashSet<String> expectedValues = new HashSet<>();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getMappingFIELDCAT5().Displayed()  ;}}), Input.wait30);
+			ingest.getMappingFIELDCAT5().click();
+			ingest.getMappingFIELDCAT5().SendKeys("DOCBASIC");
+			ingest.getMappingFIELDCAT5().click();
+			
+			ingest.getMappingDESTINATIONFIELD5().click();
+			String[] currentDropDownValues = ingest.getMappingDESTINATIONFIELD5().getText().split("\\r?\\n");
+			for(int i = ; i<currentDropDownValues.length; i++) Assert.assertTrue(expectedValues.contains(currentDropDownValues[i]));
+
 		}
+		else fail(dataMap, "failed to verify expected options");
 
 	}
 
