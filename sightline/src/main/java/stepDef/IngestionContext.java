@@ -170,9 +170,17 @@ public class IngestionContext extends CommonContext {
 	public void click_source_system_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
 	    	ingest.getSpecifySourceSystem().Click();
+	    	HashSet<String> sourceOptionSet = new HashSet<String>();
+	    	String [] sourceSystemOptions = ingest.getSpecifySourceSystem().getText().split("\\r?\\n");
+	    	for(int i =0; i<sourceSystemOptions.length; i++) {
+	    		System.out.println(sourceSystemOptions[i]);
+	    		sourceOptionSet.add(sourceSystemOptions[i]);
+	    	}
+	    	dataMap.put("sourceSystemSet", sourceOptionSet);
 		} else {
 			ingest.getNextButton().Click();
 		}
@@ -429,25 +437,21 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_displays_expected_options$")
 	public void verify_source_system_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if(scriptState) {
+			
+			//The options that we should see
+			String [] expectedSystemOptions = new String[] {"TRUE", "NUIX", "ICE", "Mapped Data"};
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+			//The options that we do see
+			HashSet<String> ourSystemOptions = (HashSet<String>)dataMap.get("sourceSystemSet");
 
-			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			if (specifySourceSystemText.contains("TRUE")
-							) {
-						pass(dataMap,"TRUE was found in the dropdown for Source System");
-					} else {
-						fail(dataMap,"TRUE was NOT found in the dropdown for Source System");
-					}
-		}catch (Exception e) {
-			if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"TRUE was NOT found in the dropdown for Source System");
-			}
+			//Verify that every option that should be there is there
+			for(int i = 0; i<expectedSystemOptions.length; i++) Assert.assertTrue(ourSystemOptions.contains(expectedSystemOptions[i]));
+			pass(dataMap, "Source System displays expected options");
+			
 		}
+		else fail(dataMap, "Source System does not display expected options");
 	}
 
 
