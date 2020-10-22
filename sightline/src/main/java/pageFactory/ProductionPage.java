@@ -634,8 +634,33 @@ public class ProductionPage {
     
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
 
+    public Element getDocumentTagSelectionWithFamily_radio() {return driver.FindElementByXPath("//*[@id='frmDocumentsSelection']/div/div[3]/div/div/div/div/div[2]/label/i");}
+    public Element getDefaultChildTag() {return driver.FindElementByXPath("//a[@data-content=\"Default Child Tag\"]");}
+    public Element getMarkCompleteSuccessfulToaster() {return driver.FindElementByXPath("//*[@id=\"bigBoxColor7\"]/p");}
+    public Element getTotalDocumentsCount() {return driver.FindElementByXPath("//*[@id=\"TotalDocumentsCount\"]");}
+    public Element getDocumentSelectionCompleteBtn() {return driver.FindElementByXPath("//*[@id=\"btnDocumentsSelectionMarkComplete\"]");}
+    public ElementCollection getFamilyDocsCount() {return driver.FindElementsById("#\\34");}
+    public Element getDocumentSelectionNextBtn() {return driver.FindElementById("btnDocumentsSelectionNext");}
+    public Element getAddRuleBtn() {return driver.FindElementById("contentmetadata");}
+    public Element getPrivDefaultChildBtn() {return driver.FindElementByXPath("//*[@id=\"28_anchor\"]/i[1]");}
+    public Element getPrivQueryBtn() {return driver.FindElementByXPath("//*[@id=\"insertQueryBtn\"]");}
+    public Element getCheckForMatchingDocBtn() {return driver.FindElementById("btnDocumentMatch");}
+    public Element getPrivDocListBtn() {return driver.FindElementById("btnGoToDocList");}
+    public Element getFirstDocId() {return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[2]/label/i");}
+    public Element getPrivDocIdYesBtn() {return driver.FindElementById("bot1-Msg1");}
+    public Element getProdGuardCompleteBtn() {return driver.FindElementById("btnProductionGuardMarkComplete");}
+    public Element getFamilyList() {return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[3]");}
+    public ElementCollection getChildList(int i) {return driver.FindElementsByXPath(String.format("//*[@id=\"childlist_861_dtDocList\"]/tbody/tr[%s]",i));}
+    public Element getSpecifyProdLocBackBtn() {return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a");}
+    public Element getPrivMarkIncompleteBtn() {return driver.FindElementById("btnProductionGuardMarkInComplete");}
+    public ElementCollection getPrivRemoveBtn() {return driver.FindElementsByXPath("//*[@id=\"Rule 1\"]");}
+    public Element getShowingValueEntries() {return driver.FindElementByXPath("//*[@id=\"dtDocList_info\"]");}
+    public Element getSelectFolders() {return driver.FindElementByXPath("//*[@id=\"rdbFolders\"]");}
+    public Element getFolderArrow() {return driver.FindElementByXPath("//*[@id=\"-1\"]/i");}
+    public Element getDefaultFolder() {return driver.FindElementByXPath("//*[@id=\"1031_anchor\"]/i[1]");}
+    public Element getZeroFamilyDocs() {return driver.FindElementByXPath("//*[@id=\"0\"]");}
     
-    //Click the desired production set option, in the dropdown menu by it's index
+   //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
     		driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().get(index).click();

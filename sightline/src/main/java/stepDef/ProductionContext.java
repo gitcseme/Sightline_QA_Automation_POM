@@ -31,7 +31,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
-
+import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import testScriptsSmoke.Input;
 
@@ -934,7 +934,7 @@ public class ProductionContext extends CommonContext {
 					prod.getNumAndSortNextBtn().Enabled()  ;}}), Input.wait30);
 
 				prod.getNumAndSortNextBtn().Click();
-							
+				
 				pass(dataMap,"Default numbering and sorting is complete");
 			}catch(Exception e) {
 				fail(dataMap,"Default numbering and sorting is not complete");
@@ -5742,7 +5742,84 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
-			throw new ImplementationException("login_to_new_production");
+			//launched
+			driver = new Driver();
+			webDriver = driver.getWebDriver();
+
+			if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+				driver.Manage().window().maximize();}
+			else driver.Manage().window().fullscreen();
+
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+	        
+			String url;
+			if (scriptState) {
+				url = (String) dataMap.get("URL");
+				webDriver.get(url);
+				driver.waitForPageToBeReady();
+				pass(dataMap,String.format("Opened page %s",url));
+			} else {
+				url = "http://www.sqasquared.com";
+				webDriver.get(url);
+				pass(dataMap,String.format("Opened random page %s",url));
+			}
+			
+			//login as pau
+			lp = new LoginPage(driver);
+			if (scriptState) {
+				lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
+			} else {
+				String uid = (String) dataMap.get("uid");
+				String pwd = (String) dataMap.get("pwd");
+				
+				if (uid != null && uid.length() > 0) {
+					lp.loginToSightLine(uid, pwd, false, dataMap);
+				}
+			}
+			
+			driver.waitForPageToBeReady();
+			//on production home page
+			prod = new ProductionPage(driver);
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+			//Used to create string to append to any folder/tag/etc names
+			dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
+
+			
+			if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
+				prod.changeProjectSelector().Click();
+			    prod.productionProjectSelector().Click();
+			}
+
+		    driver.waitForPageToBeReady();
+
+			if (scriptState) {
+				
+				webDriver.get(url+"/Production/Home");
+				
+			} else {
+				webDriver.get("http://www.google.com");
+			}
+
+			driver.waitForPageToBeReady();
+
+//			// begin new production process
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String template = (String) dataMap.get("prod_template");
+			String productionName = "AutoProduction" + dateTime;
+			dataMap.put("production_name", productionName);
+			try {
+				if (scriptState) {
+					prod.addNewProduction(productionName, template);
+					dataMap.put("productionName", productionName);
+				} else {
+					pass(dataMap,"Skipped adding new production");
+				} 
+			} catch (Exception e) {
+				pass(dataMap,"Exception: 'When' condition 'begin_new_production_process'. Continuing...");
+				// when conditions exceptions are ignored
+			}
+			
+			pass(dataMap,"Skipped adding new production");
 		} else {
 			throw new ImplementationException("NOT login_to_new_production");
 		}
@@ -7097,7 +7174,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_without_family_docs");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocumentTagSelectionWithFamily_radio().Visible()  ;}}), Input.wait30); 
+			
+			prod.getSelectFolders().click();
+			prod.getFolderArrow().click();
+			prod.getDefaultFolder().click();
+
+			prod.getbtnDocumentsSelectionMarkComplete().click();
+
+			driver.Navigate().refresh();
+			String totalDocValue = prod.getTotalDocumentsCount().getText().toString();
+			String familyDocVal = prod.getFamilyDocsCount().FindWebElements().get(4).getText();
+			String showEntry = "Showing 1 to " + totalDocValue + " of 5 entries";
+			
+			dataMap.put("totalDocCounts", totalDocValue);
+			dataMap.put("familyDocValue", familyDocVal);
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
 		}
@@ -7114,6 +7207,12 @@ public class ProductionContext extends CommonContext {
 			//* User should redirect to DocList with selected documents
 			//* User should be able to see all documents without family documents
 			//
+			driver.waitForPageToBeReady();
+			String familyDocValue = prod.getZeroFamilyDocs().getText().toString();
+			Assert.assertEquals("0",familyDocValue);
+			
+			pass(dataMap, "TC7858", "PASS IT!");
+			
 			throw new ImplementationException("verify_doclist_without_family_docs");
 		} else {
 			throw new ImplementationException("NOT verify_doclist_without_family_docs");
@@ -7166,7 +7265,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
-			throw new ImplementationException("complete_document_tag_selection_with_family");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDocumentTagSelectionWithFamily_radio().Visible()  ;}}), Input.wait30); 
+			
+			prod.getDocumentTagSelectionWithFamily_radio().click();
+			prod.getDefaultChildTag().click();
+		
+			prod.getbtnDocumentsSelectionMarkComplete().click();
+//			prod.getMarkCompleteSuccessfulToaster().Visible();
+
+			driver.Navigate().refresh();
+
+			String totalDocValue = prod.getTotalDocumentsCount().getText().toString();
+			String familyDocVal = prod.getFamilyDocsCount().FindWebElements().get(4).getText();
+			String showEntry = "Showing 1 to " + totalDocValue + " of 5 entries";
+			
+			dataMap.put("totalDocCounts", totalDocValue);
+			dataMap.put("familyDocValue", familyDocVal);
 		} else {
 			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
 		}
@@ -7179,11 +7294,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Select doc source with family
-			//
+			driver.waitForPageToBeReady();
+			prod.getTotalDocumentsCount().click();
 			//* DocID: ID00000861
-			//
+
 			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_with_family_docs");
+			prod.getProdGuardCompleteBtn().click();
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_with_family_docs");
 		}
@@ -7198,9 +7315,19 @@ public class ProductionContext extends CommonContext {
 			//TC7859 Production Document Selection to DocList with Child Documents
 			//
 			//* User should redirect to DocList with selected documents
+			
 			//* User should be able to see all documents with family documents (parent and child docs)
 			//
-			throw new ImplementationException("verify_doclist_with_family_docs");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getShowingValueEntries().Visible()  ;}}), Input.wait30);
+			
+			String totalEntries = dataMap.get("totalDocCounts").toString();
+			String showExactValue = "Showing 1 to " + totalEntries + " of " + totalEntries + " entries";
+			
+			Assert.assertEquals(dataMap.get("totalDocCounts"),showExactValue);
+			
+			pass(dataMap, "TC7859", "PASS IT!");
 		} else {
 			throw new ImplementationException("NOT verify_doclist_with_family_docs");
 		}
@@ -7213,7 +7340,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Mark CompletedClick NextClick Back
-			throw new ImplementationException("completing_the_priv_guard_section_and_navigating_back");
+			driver.waitForPageToBeReady();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProdGuardCompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getProdGuardCompleteBtn().click();
+			prod.getbtnProductionGuardNext().click();
+			prod.getSpecifyProdLocBackBtn().click();
 		} else {
 			throw new ImplementationException("NOT completing_the_priv_guard_section_and_navigating_back");
 		}
@@ -7226,6 +7360,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Mark Incomplete
+			driver.waitForPageToBeReady();
+			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivMarkIncompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivMarkIncompleteBtn().click();
 			throw new ImplementationException("clicking_the_productions_mark_incomplete_button");
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_incomplete_button");
@@ -7239,7 +7379,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 4466Verify the button "Remove" is displayed once the Mark incomplete button is clicked on.
-			throw new ImplementationException("verify_the_remove_option_on_the_rule_is_displayed");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivRemoveBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivRemoveBtn().FindWebElements().get(2).click();
+			
+			pass(dataMap, "TC4466", "PASS IT!");
 		} else {
 			throw new ImplementationException("NOT verify_the_remove_option_on_the_rule_is_displayed");
 		}
