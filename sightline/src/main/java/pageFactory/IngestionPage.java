@@ -376,6 +376,7 @@ public class IngestionPage {
 	public Element getFirstGearBtn() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/a/i ");}
     public Element getCopyOptionButtonPublished() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/dl/dt[3]");}
 
+    public Element getFailedStatusDetailText() {return driver.FindElementByXPath("//*[text() = 'Ingestion Type :']/../following-sibling::*/label/following-sibling::*");}
     public Element getSourceFolderLoadingText() { return driver.FindElementByXPath("//select[@id='ddlFolders']/option[contains(text(), 'Loading')]"); }
     public Element getIngestionCardTitle(String ingestionName) { return driver.FindElementByXPath("//span[@title='"+ingestionName+"']"); }
     public Element getIngestionPopup() { return driver.FindElementByCssSelector(".smart-form.client-form.ingestionPopup"); }
@@ -403,6 +404,7 @@ public class IngestionPage {
     public Element getIngestWizardConfigureMappingHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-7']/a");}
     public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
     public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
+    public Element getIngestionHomePageTitle() {return driver.FindElementByXPath("//h1[@class='page-title']");}
 
     
     public String getIngestionTileName(int index){
