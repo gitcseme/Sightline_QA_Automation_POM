@@ -2331,6 +2331,9 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
+//				if(prod.getToastXButton().Visible()) {
+//					prod.getToastXButton().click();
+//				}
 				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
@@ -7655,6 +7658,15 @@ public class ProductionContext extends CommonContext {
 			}
 			else if(nativeData == "tags") {
 				prod.getNativeSelectTagsButton().click();
+				prod.getDefaultAutomationChkBox().click();
+				prod.getSelectTagsSelectBtn().click();
+			}
+			
+			else if(nativeData == "files_and_tags") {
+				prod.getNative_SelectAllCheck().click();
+				prod.getNativeSelectTagsButton().click();
+				prod.getDefaultAutomationChkBox().click();
+				prod.getSelectTagsSelectBtn().click();
 			}
 				
 			
@@ -7673,9 +7685,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the Mark Complete ButtonClick the Mark Incomplete Button
-			throw new ImplementationException("clicking_the_productions_mark_complete_and_incomplete_button");
+			prod.getMarkCompleteButton().click();
+			prod.getMarkIncompleteLink().click();
+			
+			
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_mark_complete_and_incomplete_button");
+			fail(dataMap, "Did not click Mark Complete and Mark Incomplete button");
 		}
 
 	}
@@ -7686,9 +7701,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6820 / 6821 / 6822Expand the Native sectionVerify depending on the native data provided, the correct file types, tags, or both are displayed correctly in the native section.If file types, verify the select all checkbox is enabled as well as the second checkbox to make sure.If tags, make sure the tag is displayed next to the "Select Tags" button.If both, verify both items above.
-			throw new ImplementationException("verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+			String nativeData = (String)dataMap.get("native_data");
+			prod.getNativeTab().click();
+			if (nativeData == "file_types") {
+				Assert.assertTrue(prod.getNative_SelectAllCheck().Displayed() && prod.getNative_SelectAllCheck().Enabled());
+				Assert.assertTrue(prod.getNative_OtherCheck().Displayed() && prod.getNative_OtherCheck().Enabled());
+			}
+			else if(nativeData == "tags") {
+				Assert.assertTrue(prod.getNativeTag().getText().contains("Default Automation Tag"));
+			}
+			
+			else if(nativeData == "files_and_tags") {
+				Assert.assertTrue(prod.getNative_SelectAllCheck().Displayed() && prod.getNative_SelectAllCheck().Enabled());
+				Assert.assertTrue(prod.getNative_OtherCheck().Displayed() && prod.getNative_OtherCheck().Enabled());
+				Assert.assertTrue(prod.getNativeTag().getText().contains("Default Automation Tag"));
+			}
 		} else {
-			throw new ImplementationException("NOT verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+			fail (dataMap, "Verify Failed");
 		}
 
 	}
@@ -7712,8 +7741,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6415Verify the following error is returned: You must select at least a file group type or a tag in the Native components section
-			String errorMessage = prod.getMP3WarningBox().getText();
-			System.out.println(errorMessage);
+			System.out.println("before getting message");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeErrorBoxText().Visible()  ;}}), Input.wait30);
+			String errorMessage = prod.getNativeErrorBoxText().getText();
+			System.out.println("after getting message");
+			System.out.println("the error message is: "+errorMessage);
 			Assert.assertEquals("You must select at least a file group type or a tag in the Native components section", errorMessage);
 		} else {
 			fail(dataMap, "Error message not returned");

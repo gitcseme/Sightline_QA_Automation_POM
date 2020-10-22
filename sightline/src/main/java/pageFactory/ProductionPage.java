@@ -51,6 +51,7 @@ public class ProductionPage {
     public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
     public Element getManageTemplateTab() { return driver.FindElementById("ui-id-2"); }
     public Element getManageTemplateDiv() { return driver.FindElementById("tabs-b"); }
+    public Element getSelectTagsSelectBtn() { return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm submitNativeSelection']");}
  
     public Element getTileViewIcon() { return driver.FindElementById("TileView"); }
     public Element getTileProdCount() { return driver.FindElementById("hddtotalProductionCount"); }
@@ -73,6 +74,7 @@ public class ProductionPage {
     public Element getbtnDocumentsSelectionNext(){ return driver.FindElementById("btnDocumentsSelectionNext"); }
     public Element getbtnProductionGuardMarkComplete(){ return driver.FindElementById("btnProductionGuardMarkComplete"); }
     public Element getbtnProductionGuardNext(){ return driver.FindElementById("btnProductionGuardNext"); }
+    public Element getToastXButton() {return driver.FindElementByXPath("//i[@id='botClose7']");}
     public Element getOkButton(){ return driver.FindElementById("bot1-Msg1"); }
     public Element getlstProductionRootPaths(){ return driver.FindElementById("lstProductionRootPaths"); }
     public Element getProductionOutputLocation_ProductionDirectory(){ return driver.FindElementById("ProductionOutputLocation_ProductionDirectory"); }
@@ -95,8 +97,11 @@ public class ProductionPage {
     public Element getNativeChkBox(){ return driver.FindElementByXPath("//input[@name='IsNativeSelected']/following-sibling::i"); }
     public Element getNativeTab(){ return driver.FindElementByXPath("//a[@href='#NativeContainer']"); }
     public Element getNative_SelectAllCheck(){ return driver.FindElementByXPath(".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i"); }
+    public Element getNative_OtherCheck(){ return driver.FindElementByXPath("(.//*[@id='native-table']//input[@class='clsNativeFileLst']/following-sibling::i)[1]"); }
     public Element getNative_GenerateLoadFileLST(){ return driver.FindElementByXPath(".//*[@id='NativeContainer']//input[@name='ProduceLoadFile']/following-sibling::i"); }
-    public Element getNativeSelectTagsButton() { return driver.FindElementById("btnSelectPrevTags"); }
+    public Element getNativeErrorBoxText() {return driver.FindElementByXPath("//div[@id='divbigBoxes']//p");}
+    public Element getNativeTag() {return driver.FindElementByXPath("//span[@id='NativeTagsLabel' ]");}
+    public Element getNativeSelectTagsButton() { return driver.FindElementByXPath("//*[@id=\"btnSelectNativeTags\"]"); }
     public Element getTIFFChkBox(){ return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i"); }
     public Element getTIFFTab(){ return driver.FindElementByXPath("//a[@href='#TIFFContainer']"); }
     public Element getTIFF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
@@ -426,7 +431,7 @@ public class ProductionPage {
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
-    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id='1031_anchor']/i[1]");}
+    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("(//a[text()='Default Automation Tag'])[1]");}
     public Element getDefaultTagsChkBox() {return driver.FindElementByXPath("//*[@id='26_anchor']/i[1]");}
     public Element getDefaultSecurityGroupChkBox() {return driver.FindElementByXPath("//*[@id='1g_anchor']/i[1]");}
     
@@ -1497,7 +1502,7 @@ public class ProductionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-		//getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
 		
 		driver.scrollingToBottomofAPage();
 		
