@@ -7787,7 +7787,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_12_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7826,7 +7826,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_13_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7865,7 +7865,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_14_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7904,7 +7904,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_15_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7943,7 +7943,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_16_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7982,7 +7982,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_17_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8021,7 +8021,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_18_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8060,7 +8060,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_19_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8099,7 +8099,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_20_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8138,7 +8138,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_21_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8177,7 +8177,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_22_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8197,7 +8197,8 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "YYYY/MM/DD HHMMSS");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "ICE");
-			context.new_ingestion_created_(true, dataMap);
+			//dataMap.put("testCaseID", "TC10124, 10125, 10126, 10127, 10128, 10129, 10133, 10134, 10135, 10136, 10137");
+			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
 			context.click_error_count(true, dataMap);
@@ -8216,7 +8217,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_1_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8236,6 +8237,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "YYYY/MM/DD HHMMSS");
 			dataMap.put("doc_key", "SourceDocID");
 			dataMap.put("source_system", "ICE");
+			//dataMap.put("testCaseID", "TC10138, 10139, 10140, 10141, 10142, 10143, 10144, 10145, 10146, 10147, 10148");
 			context.new_ingestion_created_(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
@@ -8254,7 +8256,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_2_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8292,7 +8294,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_3_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8330,7 +8332,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_4_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8368,7 +8370,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_5_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8406,7 +8408,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_6_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8444,7 +8446,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_7_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8482,7 +8484,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_8_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8520,7 +8522,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_9_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8558,7 +8560,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_10_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8596,7 +8598,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_11_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
