@@ -4177,9 +4177,26 @@ public class IngestionContext extends CommonContext {
 			//* On Ingestion Details Page
 			//* Click on the Error count for the step that it failed on
 			//
-			throw new ImplementationException("click_error_count");
+			
+			//click failed filter 
+			dataMap.put("filter_option", "Failed");
+			click_filter_by_dropdown(true, dataMap);
+			
+			//Refesh the page until last ingest is displayed
+			while(!ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").equals(dataMap.get("lastCreatedIngestionName"))) 
+				ingest.getRefreshButton().click();
+			
+			//open the Ingestion 
+			ingest.getIngestTile().FindWebElements().get(0).click();
+			System.out.println(ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").toString());
+			
+			// Click on the Error count for the step that it failed on
+			if(ingest.getCatalogErrorElement().Displayed()) ingest.getCatalogErrorElement().click();
+
+	
+			pass(dataMap, "click_error_count");
 		} else {
-			throw new ImplementationException("NOT click_error_count");
+			fail(dataMap,"NOT click_error_count");
 		}
 
 	}
@@ -4194,10 +4211,21 @@ public class IngestionContext extends CommonContext {
 			//* Validate the ingestion fails when dates on the Ingestion and Dat file are not the same
 			//* Validate error displayed in the ingestion details page shows the following:
 			//
-			//"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format"
-			throw new ImplementationException("verify_ingestion_displays_error_for_unmatched_dates");
+			//"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. 
+			//Please provide the matching date format"
+			while(!ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").equals(dataMap.get("lastCreatedIngestionName"))) 
+				ingest.getRefreshButton().click();
+			
+			//open the Ingestion 
+			ingest.getIngestTile().FindWebElements().get(0).click();
+			System.out.println(ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").toString());
+			
+			// Click on the Error count for the step that it failed on
+			Assert.assertTrue(!ingest.getCatalogErrorElement().Displayed());
+			
+			pass(dataMap, "verify_ingestion_displays_error_for_unmatched_dates");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_displays_error_for_unmatched_dates");
+			fail(dataMap, "NOT verify_ingestion_displays_error_for_unmatched_dates");
 		}
 
 	}
@@ -4212,9 +4240,14 @@ public class IngestionContext extends CommonContext {
 			//* Validate the ingestion is successfully processed to the catalog state without any errors
 			//* More specifically, no errors are displayed regarding the Dates being mismatched between the DAT file and the Ingestion value selected in he Wizard
 			//
-			throw new ImplementationException("verify_ingestion_is_successful_for_matched_dates");
+			String erroString = "Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format";
+			int size = ingest.getErrorsTable().FindWebElements().size();
+			for(int i = 1; i <= size; i++) {
+				Assert.assertFalse(ingest.getErrorsTable().FindWebElements().get(i).getText().contains(erroString));
+			}
+			pass(dataMap, "verify_ingestion_is_successful_for_matched_dates");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_is_successful_for_matched_dates");
+			fail(dataMap, "NOT verify_ingestion_is_successful_for_matched_dates");
 		}
 
 	}

@@ -396,6 +396,8 @@ public class IngestionPage {
     public Element getIngestionErrorBackButton() { return driver.FindElementByXPath("//button[text()='Back']"); }
     public Element getIngestionErrorsTitle() { return driver.FindElementByXPath("//div[contains(text(), 'Ingestion Errors')]"); }
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
+    public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
+    public ElementCollection getErrorsTable() {return driver.FindElementsByXPath( "//*[@id=\"myDataTable\"]/tbody/tr");}
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
     public Element getIngestHelpPopUpTitle() {return driver.FindElementByCssSelector(".popover-title");}
@@ -1606,4 +1608,3 @@ public class IngestionPage {
     }
     
 } 
- 
