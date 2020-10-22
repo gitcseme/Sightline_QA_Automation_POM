@@ -635,7 +635,12 @@ public class ProductionPage {
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
-
+    public Element getTIFFBlankPageRemovalToggle() {  return driver.FindElementByXPath("//div[@id='TIFFContainer']//label[@class='toggle']//input[@id='chkTIFFBlankPageRemove']/following-sibling::i"); }
+    public Element getMessageContainerRemovalMessage() { return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p"); }    
+    public ElementCollection getSuccessMessageCloseButtonCol() { return driver.FindElementsById("botClose1"); }
+    public Element getSuccessMessageCloseButton() { return driver.FindElementById("botClose1"); }
+    public Element getPDFBlankPageRemoveToggle2() { return driver.FindElementByXPath("//div[@id='PDFContainer']//label[@class='toggle']//input[@id='chkPDFBlankPageRemove']/following-sibling::i"); } 
+    
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
@@ -732,6 +737,10 @@ public class ProductionPage {
 				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
 		driver.FindElementById("botClose1").Click();
 		*/
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSuccessMessageCloseButton().Visible()  ;}}), Input.wait30); 
+		getSuccessMessageCloseButton().click();
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 

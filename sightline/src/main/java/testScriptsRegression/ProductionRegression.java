@@ -8256,7 +8256,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_the_pdf_section_is_expanded_When_enabling_blank_page_removal_for_pdf_Then_verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9274,10 +9274,9 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_the_tiff_section_is_expanded_When_enabling_blank_page_removal_for_tiff_Then_verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and begin_new_production_process and the_tiff_section_is_expanded When enabling_blank_page_removal_for_tiff Then verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
 

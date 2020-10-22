@@ -7427,7 +7427,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//The PDF section is expanded
-			throw new ImplementationException("the_pdf_section_is_expanded");
+			//Expand the PDF Section
+		
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTemplateProductionComponentToggle("PDF").Visible()  ;}}), Input.wait30);
+			prod.getTemplateProductionComponentToggle("PDF").click();
+
 		} else {
 			throw new ImplementationException("NOT the_pdf_section_is_expanded");
 		}
@@ -7439,8 +7445,12 @@ public class ProductionContext extends CommonContext {
 	public void enabling_blank_page_removal_for_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("enabling_blank_page_removal_for_pdf");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFBlankPageRemoveToggle2().Visible()  ;}}), Input.wait30);
+			System.out.print("1");
+			prod.getPDFBlankPageRemoveToggle2().click();
+			System.out.print("2");
 		} else {
 			throw new ImplementationException("NOT enabling_blank_page_removal_for_pdf");
 		}
@@ -7453,7 +7463,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6972 part 2Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
-			throw new ImplementationException("verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMessageContainerRemovalMessage().Visible()  ;}}), Input.wait30);
+			
+			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
+			System.out.println("Actual: " + actualMessage);
+			if (expectedMessage.equals(actualMessage)) {
+				pass(dataMap, "Test pass - expected message is shown.");
+			} else {
+				fail(dataMap, "Test failed - \"" + expectedMessage + "\" was expected, instead got \"" + actualMessage + "\"");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
 		}
@@ -7765,8 +7786,13 @@ public class ProductionContext extends CommonContext {
 	public void the_tiff_section_is_expanded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			//Expand the Tiff Section
-			throw new ImplementationException("the_tiff_section_is_expanded");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTemplateProductionComponentToggle("TIFF").Visible()  ;}}), Input.wait30);
+			prod.getTemplateProductionComponentToggle("TIFF").click();
+
+			
 		} else {
 			throw new ImplementationException("NOT the_tiff_section_is_expanded");
 		}
@@ -7779,7 +7805,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Blank Page Removal to enable it on the TIff section
-			throw new ImplementationException("enabling_blank_page_removal_for_tiff");
+			prod.getTIFFBlankPageRemovalToggle().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getOkButton().Visible()  ;}}), Input.wait30);
 		} else {
 			throw new ImplementationException("NOT enabling_blank_page_removal_for_tiff");
 		}
@@ -7792,7 +7821,22 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6972Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
-			throw new ImplementationException("verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
+			//MsgTitle
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMessageContainerRemovalMessage().Visible()  ;}}), Input.wait30);
+			
+			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
+			
+			String message = "Test pass: ";
+			if (expectedMessage.equals(actualMessage)) {
+				pass(dataMap, "Test pass - expected message is shown.");
+			} else {
+				fail(dataMap, "Test failed - \"" + expectedMessage + "\" was expected, instead got \"" + actualMessage + "\"");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
 		}
