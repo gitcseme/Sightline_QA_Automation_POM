@@ -8722,7 +8722,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_on_the_tiff_section_branding_insert_metadata_field_dialog_When_clicking_the_insert_metadata_field_dropdown_Then_verify_the_metadata_field_dropdown_is_sorted_alphabetically() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

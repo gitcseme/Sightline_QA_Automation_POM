@@ -656,6 +656,15 @@ public class ProductionPage {
     public Element getTIFFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c7 > div.panel-body > div > div.tiff-conf > div.col-md-12.tiff-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
     public Element getSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#tiff-internal-tab-1 > li:nth-child(3) > a > span");}
     public Element getBrandingMetaDataList() {return driver.FindElementByXPath("//*[@id=\"MetadataPopup\"]/fieldset/div/div/div");}
+    public Element getPDF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[5]/div[2]/div/div/div[3]/div/div[1]/div/div[2]/div[2]/div[2]/label/a"); }
+    public Element getPDF_PlaceholderInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(3) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getPdf_NativeDoc(){ return driver.FindElementByXPath("//*[@class='add-pdf-img-logic']"); }
+    public Element getPDFNativePlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#divImagePDFPHImage_0 > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getPDFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divPDFRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getPDFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getPDFSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#pdf-internal-tab-1 > li:nth-child(3) > a > span");}
+    
+
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

@@ -7866,17 +7866,73 @@ public class ProductionContext extends CommonContext {
 				
 				if(area.equalsIgnoreCase("branding")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-					prod.getTIFF_InsertMetadataFieldClick().click();
+							prod.getPDF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+					prod.getPDF_InsertMetadataFieldClick().click();
 				}
 				
 				else if(area.equalsIgnoreCase("placeholder")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getTIFFPlaceholderTechMetadataLink().Visible()  ;}}), Input.wait30); 
-					prod.getTIFFPlaceholderTechMetadataLink().click();
+							prod.getPDF_PlaceholderInsertMetaData().Visible()  ;}}), Input.wait30); 
+					prod.getPDF_PlaceholderInsertMetaData().click();
 				}
 				
-			
+				else if(area.equalsIgnoreCase("filetypes")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getpdf_NativeDoc().Visible()  ;}}), Input.wait30); 
+					prod.getPdf_NativeDoc().click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getPDFNativePlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
+					prod.getPDFNativePlaceHolderInsertMetaData().click();
+				}
+				
+				else if(area.equalsIgnoreCase("redactions")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+					prod.getPDFBurnRedactionToggle().click();
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+					prod.getPDF_SpecifyRedactText().click();
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
+					prod.getPDFRedactionsInsertMetaData().click();
+				}
+				else if(area.equalsIgnoreCase("techissue")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+		            {return prod.getPDFPlaceholderTechIssueToggle().Visible() ;}}), Input.wait30);
+		            prod.getPDFPlaceholderTechIssueToggle().Click();
+		            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+		            {return prod.getPDFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
+		            prod.getPDFTechIssueInsertMetaData().Click();
+				}
+				else if(area.equalsIgnoreCase("slipsheets")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+					prod.getPDFAdvanced().click();
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+					prod.getPDFSlipSheetsToggle().click();
+				}
+				else if (area.equalsIgnoreCase("calculated"))
+				{
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+					prod.getPDFAdvanced().click();
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+					prod.getPDFSlipSheetsToggle().click();
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							  prod.getPDFSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
+					prod.getPDFSlipSheetCalculatedTab().click();
+				}
+				else 
+				{
+					fail(dataMap, "Valid area was not selected");
+				}
 				
 			
 		} else {
@@ -7893,14 +7949,15 @@ public class ProductionContext extends CommonContext {
 			//if area = slipsheetdo not click anythingif area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
 			String component = (String)dataMap.get("component");
 			String area = (String)dataMap.get("area");
-			
-			if(area.equalsIgnoreCase("branding")) { 
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
-					return prod.getTIFF_InsertMetadataFieldClick().Visible() ;}}), Input.wait30); 
-				prod.getTIFF_InsertMetadataFieldClick().click(); 
-				Thread.sleep(2000);
-				} 
-			
+		
+				if(area.equalsIgnoreCase("branding") || area.equalsIgnoreCase("placeholder") || area.equalsIgnoreCase("filetypes") || area.equalsIgnoreCase("redactions") || area.equalsIgnoreCase("techissue")) { 
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+						return prod.getTIFF_InsertMetadataFieldClick().Visible() ;}}), Input.wait30); 
+					prod.getTIFF_InsertMetadataFieldClick().click(); 
+					} 
+				else {
+					System.out.println("Waiting for page to load");
+				}			
 			pass(dataMap, "clicking_the_insert_metadata_field_dropdown");
 		} else {
 			fail(dataMap, "NOT clicking_the_insert_metadata_field_dropdown");
