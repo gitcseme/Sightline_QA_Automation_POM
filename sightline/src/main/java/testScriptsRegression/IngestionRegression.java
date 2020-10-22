@@ -2151,7 +2151,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	@Test(groups = {"Ingestion", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_multi_value_ascii_is_set_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6427,7 +6427,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	@Test(groups = {"Ingestion", "Positive", })
 	public void test_Given_verify_tally_view_displays_doc_primary_language_metadata_correctly_When_on_sub_tally_view_Then_verify_sub_tally_view_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6462,7 +6462,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "Regression"})
+	@Test(groups = {"Ingestion, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_click_run_ingest_button_Then_verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6500,7 +6500,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "Regression"})
+	@Test(groups = {"Ingestion, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_search_home_page_and_search_for_existing_ingestion_When_on_doc_list_view_Then_verify_doc_list_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6530,7 +6530,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	@Test(groups = {"Ingestion", "Positive", })
 	public void test_Given_verify_doc_list_displays_doc_primary_language_metadata_correctly_When_on_doc_view_Then_verify_doc_view_displays_doc_primary_language_metadata_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6647,7 +6647,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "Regression"})
+	@Test(groups = {"Ingestion, Positive", })
 	public void test_Given_verify_overlay_is_sucessfuly_for_source_parent_doc_id_overlay_When_complete_overlay_ingestion_Then_verify_source_system_ingestion_overlay_fails() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7579,7 +7579,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	@Test(groups = {"Ingestion", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_and_open_ingestion_details_page_When_click_copy_button_Then_verify_multi_value_ascii_is_set_by_default() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8671,6 +8671,9 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("helpType", "homePage");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8690,7 +8693,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8700,6 +8703,9 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("helpType", "wizard");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8713,9 +8719,11 @@ public class IngestionRegression extends RegressionBase {
 			context.click_help_icon(true, dataMap);
 			context.verify_tool_tips_are_displayed(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -8861,8 +8869,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive",})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_open_ingestion_details_page_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8872,6 +8879,8 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8881,6 +8890,7 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");
+			dataMap.put("helpType", "details");
 			context.new_ingestion_created(true, dataMap);
 			context.click_preview_run_button(true, dataMap);
 			context.click_run_ingest_button(true, dataMap);
@@ -8888,9 +8898,11 @@ public class IngestionRegression extends RegressionBase {
 			context.click_help_icon(true, dataMap);
 			context.verify_tool_tips_are_displayed(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
