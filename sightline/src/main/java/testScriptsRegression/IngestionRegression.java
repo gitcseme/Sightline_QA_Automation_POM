@@ -8747,11 +8747,11 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("pwd", "Q@test_10");
-			dataMap.put("uid", "qapau3@consilio.com");
 			dataMap.put("A", "");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
@@ -8823,11 +8823,11 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("uid", "qapau3@consilio.com");
-			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");

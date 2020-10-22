@@ -4403,6 +4403,46 @@ public class IngestionContext extends CommonContext {
 			//* EmailAuthorName
 			//
 			HashSet<String> expectedValues = new HashSet<>();
+			expectedValues.add("Select");
+			expectedValues.add("RequirePDFGeneration");
+			expectedValues.add("MasterDate");
+			expectedValues.add("LastSaveDate");
+			expectedValues.add("LastPrintedDate");
+			expectedValues.add("LastEditDate");
+			expectedValues.add("LastAccessDate");
+			expectedValues.add("CreateDate");
+			expectedValues.add("DocDate");
+			expectedValues.add("LastModifiedDate");
+			expectedValues.add("DocPages");
+			expectedValues.add("DocFileSize");
+			expectedValues.add("DocFileExtension");
+			expectedValues.add("SourceParentDocID");
+			expectedValues.add("SourceDocID");
+			expectedValues.add("DataSource");
+			expectedValues.add("CustodianName");
+			expectedValues.add("DocFileName");
+			expectedValues.add("RecordType");
+			expectedValues.add("EmailMessageType");
+			expectedValues.add("DocFileType");
+			expectedValues.add("DocumentSubject");
+			expectedValues.add("GUID");
+			expectedValues.add("DupeCustodians");
+			expectedValues.add("ReviewExportID");
+			expectedValues.add("ProcessingOCRComplete");
+			expectedValues.add("HiddenProperties");
+			expectedValues.add("FileDescription");
+			expectedValues.add("ExceptionResolution");
+			expectedValues.add("ExcelProtectedWorkbook");
+			expectedValues.add("ExcelProtectedSheets");
+			expectedValues.add("DocFileExtensionCorrected");
+			expectedValues.add("AllCustodians");
+			expectedValues.add("ExceptionStatus");
+			expectedValues.add("NUIXCaseID");
+			expectedValues.add("DocPrimaryLanguage");
+			expectedValues.add("RevisionNumber");
+			expectedValues.add("PhysicalMedia");
+			expectedValues.add("Container");
+			expectedValues.add("MD5HASH");
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				ingest.getMappingFIELDCAT5().Displayed()  ;}}), Input.wait30);
@@ -4412,7 +4452,7 @@ public class IngestionContext extends CommonContext {
 			
 			ingest.getMappingDESTINATIONFIELD5().click();
 			String[] currentDropDownValues = ingest.getMappingDESTINATIONFIELD5().getText().split("\\r?\\n");
-			for(int i = ; i<currentDropDownValues.length; i++) Assert.assertTrue(expectedValues.contains(currentDropDownValues[i]));
+			for(int i =0; i<currentDropDownValues.length; i++) Assert.assertTrue(expectedValues.contains(currentDropDownValues[i]));
 
 		}
 		else fail(dataMap, "failed to verify expected options");
