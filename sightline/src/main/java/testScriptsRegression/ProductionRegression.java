@@ -9451,7 +9451,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_clicking_add_new_production_Then_verify_the_basic_info_section_does_not_show_a_disclaimer() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9463,7 +9463,7 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "11023");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
@@ -9553,7 +9553,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_When_clicking_the_action_dropdown_Then_verify_the_add_doc_button_is_disabled_on_completed_productions() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9565,13 +9565,15 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "7777");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("mode", "grid");
 			context.the_production_grid_is_set_to_view(true, dataMap);
+			dataMap.put("status", "INPROGRESS");
+			context.selecting_the_production(true, dataMap);
 			context.clicking_the_action_dropdown(true, dataMap);
 			context.verify_the_add_doc_button_is_disabled_on_completed_productions(true, dataMap);
 		} catch (ImplementationException e) {
@@ -9579,6 +9581,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
+			e.printStackTrace();
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
 			context.close_browser(true, dataMap);
@@ -9626,7 +9629,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_and_selecting_the_COMPLETED_production_When_clicking_the_action_dropdown_Then_verify_the_remove_doc_button_is_disabled_on_completed_productions() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9638,14 +9641,15 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "7779");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("mode", "grid");
 			context.the_production_grid_is_set_to_view(true, dataMap);
-			dataMap.put("status", "COMPLETED");
+			//dataMap.put("status", "COMPLETED");
+			dataMap.put("status", "INPROGRESS");
 			context.selecting_the_production(true, dataMap);
 			context.clicking_the_action_dropdown(true, dataMap);
 			context.verify_the_remove_doc_button_is_disabled_on_completed_productions(true, dataMap);
@@ -9729,7 +9733,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_on_the_basic_info_component_on_a_new_production_and_a_valid_production_name_is_entered_and_a_valid_production_description_is_entered_When_clicking_the_productions_mark_complete_button_Then_verify_a_production_can_be_marked_completed_with_a_valid_name_description() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9741,23 +9745,23 @@ public class ProductionRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("Test Case", "2909");
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
 			context.on_the_basic_info_component_on_a_new_production(true, dataMap);
-			dataMap.put("name", "AutoProduction");
+			dataMap.put("name", "AutoProduction!");
 			context.a_valid_production_name_is_entered(true, dataMap);
 			dataMap.put("description", "!@123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891123456789112345678911234567891");
 			context.a_valid_production_description_is_entered(true, dataMap);
-			context.clicking_the_productions_mark_complete_button(true, dataMap);
 			context.verify_a_production_can_be_marked_completed_with_a_valid_name_description(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
+			e.printStackTrace();
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
 			context.close_browser(true, dataMap);
