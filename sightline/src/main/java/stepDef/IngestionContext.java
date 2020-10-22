@@ -4224,7 +4224,6 @@ public class IngestionContext extends CommonContext {
 
 			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
 			Assert.assertEquals(ingest.getIngestHelpPopUp().getText(), "Help Ingestion");
-			System.out.println("done");
 			pass(dataMap, "clicked the help icon");
 		}
 		else fail(dataMap, "Failed to click help icon");
@@ -4244,6 +4243,20 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Ingestions Home Page Header Title
 			//* Ingestions Detail Page Header Title
+			
+				    		
+	    		ingest.getSelectFilterByOption(1).click();
+	    		ingest.getSelectFilterByOption(2).click();
+	    		ingest.getIngestionTile(0).click();
+	    		ingest.getIngestionDetailsHelpButton().click();
+
+	    		String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+	    		
+	    		ingest.getIngestWizardSystemAndIngestTypeHelpButton().click();
+	    		ingest.getIngestWizardConfigureMappingHelpButton().click();
+
 			//* Ingestion Wizard: Header Page Title
 			//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
 			//* Ingestion Wizard: Configure Field Mapping header
@@ -4356,6 +4369,7 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			Thread.sleep(5000);
 			//TC2392:To Verify Ingestion Status in Ingestion Detail 
 			//:PageTC3015 verify page title displayCovered:
 			//TC3017:To verify default value display into combo box

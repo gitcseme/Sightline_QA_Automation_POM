@@ -398,7 +398,9 @@ public class IngestionPage {
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
     public Element getIngestHelpPopUp() {return driver.FindElementByCssSelector(".popover-title");}
-    
+    public Element getIngestWizardSystemAndIngestTypeHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-9']/a");}
+    public Element getIngestWizardConfigureMappingHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-7']/a");}
+    public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
 
     
     public String getIngestionTileName(int index){
