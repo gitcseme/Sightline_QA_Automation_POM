@@ -392,8 +392,11 @@ public class IngestionPage {
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     
+    public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
+    public Element getCopiedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Copyingblock\"]/div[1]/div/div[4]/span/a"); }
+    public Element getIndexedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Indexingblock\"]/div[1]/div/div[6]/span/a"); }
+    public ElementCollection getErrorsTable() {return driver.FindElementsByXPath( "//*[@id=\"myDataTable\"]/tbody/tr");}
 
-    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
