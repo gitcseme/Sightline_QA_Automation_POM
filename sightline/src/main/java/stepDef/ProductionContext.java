@@ -7251,10 +7251,38 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_options_in_the_numbering_compoent_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4930Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
-			throw new ImplementationException("verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			//TC 4930
+			// Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortMetaRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					 prod.getNumSortBySelectedTagsRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelRadioButton().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".
+			prod.getNumSortBySelectedTagsRadioButton().ScrollTo();
+			prod.getNumSortBySelectedTagsRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGrid().Visible()  ;}}),Input.wait30);
+
+			List<WebElement> headers = prod.getNumSortBySelectedGridHeaders().FindWebElements();
+			Assert.assertEquals(headers.get(0).getText(),"AVAILABLE TAGS");
+			Assert.assertEquals(headers.get(1).getText(),"SELECTED TAGS");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGridTags().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
+			prod.getNumCustomSortUploadExcelRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelSelectExcelButton().Visible()  ;}}),Input.wait30);
+
+			pass(dataMap,"The sorting options in the numbering component is display correctly");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			fail(dataMap,"The sorting options in the numbering component is not display correctly");
 		}
 
 	}
@@ -7265,9 +7293,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Click here link
-			throw new ImplementationException("on_the_next_bates_number_dialog");
+			prod.getNumNextBatesLink().click();
+			pass(dataMap, "On the next bates number dialog");
 		} else {
-			throw new ImplementationException("NOT on_the_next_bates_number_dialog");
+			fail(dataMap, "Not on the next bates number dialog");
 		}
 
 	}
@@ -7278,9 +7307,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the X to close the dialog
-			throw new ImplementationException("clicking_the_x_button_on_the_next_bates_dialog");
+			prod.getNumBatesDialogCloseButton().click();
+			pass(dataMap, "Clicked the x button on the next bates dialog");
 		} else {
-			throw new ImplementationException("NOT clicking_the_x_button_on_the_next_bates_dialog");
+			fail(dataMap, "Cannot click the x button on the next bates dialog");
 		}
 
 	}
@@ -7290,10 +7320,19 @@ public class ProductionContext extends CommonContext {
 	public void verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8364Verify clicking X closes the dialog.Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
-			throw new ImplementationException("verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			//TC 8364
+			//Verify clicking X closes the dialog.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					!prod.getNumNextBatesNumberDialog().Visible()  ;}}), Input.wait30);
+
+			//Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
+			Assert.assertEquals(prod.getBeginningBates().getWebElement().getAttribute("value"),"0");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDPrefix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDSuffix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDMinNumLength().getWebElement().getAttribute("value"),"0");
+			pass(dataMap,"Clicking X on the next bates number dialog does not populate any fields");
 		} else {
-			throw new ImplementationException("NOT verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			fail(dataMap,"Clicking X on the next bates number dialog populates fields");
 		}
 
 	}
@@ -7303,10 +7342,28 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8156Verify the dropdown in SORTING is sorted AlphabeticallyVerify the dropdown under Sub-sort By is sorted Alphabetically
-			throw new ImplementationException("verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			//TC 8156
+			//Verify the dropdown in SORTING is sorted Alphabetically
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortingMetadataDropdownList().Visible()  ;}}), Input.wait30);
+
+			String previousOption = "";
+
+			for (WebElement currentOption: prod.getNumSortingMetadataDropdownList().FindWebElements()) {
+				if (currentOption.getText().compareTo(previousOption) < 0)
+					fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText();
+			}
+			//Verify the dropdown under Sub-sort By is sorted Alphabetically
+			for (WebElement currentOption: prod.getNumSortingMetadataSubSortDropdownList().FindWebElements()) {
+				if (currentOption.getText().compareTo(previousOption) < 0)
+					fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText();
+			}
+			pass(dataMap, "The sorting metadata dropdowns are sorted alphabetically");
+
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
 		}
 
 	}
@@ -7316,10 +7373,16 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_use_metadata_field_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_the_use_metadata_field_radio_button");
+			//Bates fields have to be clear before clicking radio button
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getBeginningBates().Visible()  ;}}), Input.wait30);
+			prod.getBeginningBates().Clear();
+			prod.gettxtBeginningBatesIDMinNumLength().Clear();
+			prod.getSaveButton().click();
+			prod.getNumUseMetaFieldButton().click();
+			pass(dataMap, "Clicked the use metadata field radio button");
 		} else {
-			throw new ImplementationException("NOT clicking_the_use_metadata_field_radio_button");
+			fail(dataMap, "Cannot click the use metadata field radio button");
 		}
 
 	}
@@ -7329,10 +7392,12 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8346Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
-			throw new ImplementationException("verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			//TC 8346
+			// Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
+			Assert.assertFalse(prod.getNumNextBatesLink().Visible());
+			pass(dataMap, "The click here link is not available when the option use metadata field is selected");
 		} else {
-			throw new ImplementationException("NOT verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			fail(dataMap, "The click here link is still available");
 		}
 
 	}
