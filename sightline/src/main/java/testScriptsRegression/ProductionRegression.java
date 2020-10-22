@@ -4614,7 +4614,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_verify_enabling_placeholders_on_priv_guard_saves_the_placeholders_and_complete_default_production_location_component_and_completed_summary_preview_component_and_the_production_is_started_When_refreshing_for_production_to_be_in_progress_Then_verify_the_privileged_docs_with_placeholder_count_is_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4765,7 +4765,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_view_results_in_doclist_Then_verify_the_result_set_documents_are_displayed_in_DocList() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4811,7 +4811,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_view_results_in_docview_Then_verify_the_result_set_documents_are_displayed_in_Docview() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4857,7 +4857,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_sorting_is_added_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_When_clicking_the_productions_mark_complete_button_Then_verify_the_priv_guard_component_displays_the_correct_matched_documents_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4937,7 +4937,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_tiff_production_component_with_branding_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_productions_save_button_Then_verify_the_number_of_mp3_files_are_shown_regardless_of_amount() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4977,7 +4977,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_tiff_production_component_with_branding_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_summary_preview_button_Then_verify_the_preview_file_should_display_the_branding_entered() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5017,7 +5017,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_tiff_production_component_with_branding_and_complete_default_production_component_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_productions_save_button_Then_verify_the_redaction_count_displays_correctly_on_the_summary_page() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5057,7 +5057,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_tiff_production_component_with_branding_and_complete_default_numbering_sorting_and_complete_default_document_selection_and_complete_blank_priv_guard_check_and_complete_default_production_location_component_When_clicking_the_productions_save_button_Then_verify_the_summary_page_displays_the_correct_information() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5426,7 +5426,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_waiting_for_production_to_be_complete_When_clicking_review_production_Then_verify_the_review_production_path_is_correct() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5482,7 +5482,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_navigated_back_onto_the_document_components_section_and_change_the_folder_selection_to_by_tags_complete_the_production_When_waiting_for_production_to_be_in_progress_Then_verify_overwriting_the_document_selection_generates_a_new_bate_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5537,7 +5537,7 @@ public class ProductionRegression extends RegressionBase {
 
 
 	
-	@Test(groups = {"Production, Positive", "Regression" })
+	@Test(groups = {"Production, Positive",  })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_native_productions_can_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5642,7 +5642,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_in_progress_Then_verify_the_bates_generated_number_follows_the_custom_numbering() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5793,7 +5793,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_complex_production_component_and_custom_number_and_sorting_is_added_and_complete_default_document_selection_and_mark_complete_default_priv_guard_and_complete_default_production_location_component_and_completed_summary_preview_component_When_clicking_the_production_generate_button_Then_verify_a_complex_production_is_able_to_be_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5878,7 +5878,7 @@ public class ProductionRegression extends RegressionBase {
 
 	}
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_When_waiting_for_production_to_be_complete_Then_verify_the_user_is_able_to_click_on_confirm_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5986,7 +5986,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_selecting_the_FAILED_production_and_open_the_first_production_When_clicking_the_failed_generation_link_Then_verify_failed_productions_display_the_approriate_error_message() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6021,7 +6021,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive","Regression"})
+	@Test(groups = {"Production, Positive",})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_pdf_production_component_Then_verify_the_pdf_product_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6056,7 +6056,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive","Regression"})
+	@Test(groups = {"Production, Positive",})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_native_production_component_Then_verify_the_native_product_component_displays_the_correct_default_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6091,7 +6091,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "Regression"})
+	@Test(groups = {"Production, Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_complete_default_production_component_Then_verify_production_numbering_sorting_fields_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6263,7 +6263,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_adding_branding_to_pdf_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_When_clicking_on_the_productions_preview_button_Then_verify_the_preview_pdf_displays_the_pdf_branding() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6305,7 +6305,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "Regression"})
+	@Test(groups = {"Production", "Positive", })
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_When_clicking_the_productions_mark_complete_button_Then_verify_creating_a_production_with_a_custom_template_store_the_correct_values() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

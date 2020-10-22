@@ -402,9 +402,11 @@ public class IngestionPage {
     public Element getIndexedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Indexingblock\"]/div[1]/div/div[6]/span/a"); }
     public ElementCollection getErrorsTable() {return driver.FindElementsByXPath( "//*[@id=\"myDataTable\"]/tbody/tr");}
     public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
+    public Element getIngestHelpPopUpTitle() {return driver.FindElementByCssSelector(".popover-title");}
     public Element getIngestHelpPopUp() {return driver.FindElementByCssSelector(".popover-title");}
     public Element getIngestWizardSystemAndIngestTypeHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-9']/a");}
     public Element getIngestWizardConfigureMappingHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-7']/a");}
+    public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
     public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
 
     public String getIngestionTileName(int index){
@@ -1606,4 +1608,3 @@ public class IngestionPage {
     }
     
 } 
- 
