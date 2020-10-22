@@ -3,6 +3,9 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7779,8 +7782,8 @@ public class ProductionContext extends CommonContext {
 						prod.getTIFFTab().Click();
 					if(area.equalsIgnoreCase("branding")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-						prod.getTIFF_InsertMetadataFieldClick().click();
+								prod.getTIFF_OpenBrandingInsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+						prod.getTIFF_OpenBrandingInsertMetadataFieldClick().click();
 					}
 					
 					else if(area.equalsIgnoreCase("placeholder")) {
@@ -7891,20 +7894,16 @@ public class ProductionContext extends CommonContext {
 			String component = (String)dataMap.get("component");
 			String area = (String)dataMap.get("area");
 			
-			if(component.equalsIgnoreCase("TIFF")){
-			if(area.equalsIgnoreCase("branding")) {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-				prod.getTIFF_InsertMetadataFieldClick().click();
-			}
+			if(area.equalsIgnoreCase("branding")) { 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+					return prod.getTIFF_InsertMetadataFieldClick().Visible() ;}}), Input.wait30); 
+				prod.getTIFF_InsertMetadataFieldClick().click(); 
+				Thread.sleep(2000);
+				} 
 			
-			
-			
-			}
-			
-			throw new ImplementationException("clicking_the_insert_metadata_field_dropdown");
+			pass(dataMap, "clicking_the_insert_metadata_field_dropdown");
 		} else {
-			throw new ImplementationException("NOT clicking_the_insert_metadata_field_dropdown");
+			fail(dataMap, "NOT clicking_the_insert_metadata_field_dropdown");
 		}
 
 	}
@@ -7914,10 +7913,24 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_metadata_field_dropdown_is_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.Click Cancel.
-			throw new ImplementationException("verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.
+			//Click Cancel.
+			ArrayList<String> expectedAlphabetOrder = new ArrayList<String>();
+			
+
+			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+				expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText());
+			}
+			Collections.sort(expectedAlphabetOrder);
+			
+			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+				String actualOptionString =prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText();
+				Assert.assertEquals(actualOptionString, expectedAlphabetOrder.indexOf(i));
+			}
+			
+			pass(dataMap,"verify_the_metadata_field_dropdown_is_sorted_alphabetically");
 		} else {
-			throw new ImplementationException("NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+			fail(dataMap, "NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
 		}
 
 	}
