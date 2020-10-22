@@ -8219,7 +8219,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_completed_the_second_default_dat_section_and_completed_the_third_default_dat_section_When_clicking_the_productions_mark_complete_button_Then_verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9309,7 +9309,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "WIP"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_the_tiff_section_is_enabled_with_burn_redactions_enabled_When_erase_the_placeholder_mark_complete_Then_verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9320,7 +9320,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("uid", "automate.sqa2@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/Production/Home");
@@ -9345,7 +9345,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_email_classification_is_added_for_dats_When_clicking_the_dats_source_field_dropdown_Then_verify_the_email_field_classification_has_the_correct_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9380,7 +9380,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_complete_the_second_dat_section_with_duplicate_information_When_clicking_the_productions_mark_complete_button_Then_verify_an_error_is_returned_from_using_duplicate_dat_fields_values() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

@@ -633,7 +633,26 @@ public class ProductionPage {
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
     
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
-
+    
+    public Element getFieldClassificationDropdown(int index) {return driver.FindElementById(String.format("TY_%s", index));}
+    public Element getSourceFieldDropdown(int index) {return driver.FindElementById(String.format("SF_%s", index));}
+    public Element getDatFieldDropdown(int index) {return driver.FindElementById(String.format("DATFL_%s", index));}
+    
+    public Element MultipleDatForceOccuranceMsg() {return driver.FindElementByCssSelector("#Msg1 > div > span");}
+    public Element MultipleDatForceOccuranceSubMsg() {return driver.FindElementByCssSelector("#Msg1 > div > p");}
+    public Element getContinueButton() {return driver.FindElementByCssSelector("#bot1-Msg1");}
+    public Element getDuplicateDatWarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }
+    public String duplicateDatWarning = "Multiple source fields cannot be mapped to the same field in the DAT file.";
+    public String emptyDataMappingWarning = "Specified Redaction Text in TIFF Burned Redactions cannot be blank.";
+    public Element getEmailSourceFieldEmailOption(int index) {return driver.FindElementByCssSelector(String.format("#SF_0 > option:nth-child(%s)", index));}
+    public Element getSelectDefaultAutomationRedactionTag() {return driver.FindElementByXPath("//*[@id='tagTreeTIFFComponent']//a[contains(text(), 'Default Automation Redaction')]/i[1]");}
+    public Element getAbbreviatedText() {return driver.FindElementByXPath("//*[@id=\"divRedaction_0\"]/div[2]/label/input");}
+    public Element getMappingIncompleteErrorMessage() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+    public Element getPrivledgeTextEditor() {return driver.FindElementByXPath("//*[@id='divRedaction']//div[@class='redactor-editor']/p"); } 
+    public Element getTIFFPlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#LaunchMetaData0");}
+    public Element getTIFFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getTIFFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c7 > div.panel-body > div > div.tiff-conf > div.col-md-12.tiff-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}
+    public Element getSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#tiff-internal-tab-1 > li:nth-child(3) > a > span");}
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
