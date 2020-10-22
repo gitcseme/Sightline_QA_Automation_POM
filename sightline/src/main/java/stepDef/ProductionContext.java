@@ -7646,9 +7646,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Checkoff NativeExpand NativeIf Native Data is file_types:Check Select All for File TypesIf Native Data is tags:Click Select TagsClick Default Automation TagClick SelectIf Native Data is files_and_tags:Check Select All for File TypesClick Select TagsClick Default Automation TagClick Select
-			throw new ImplementationException("complete_native_section_with_");
+			
+			String nativeData = (String)dataMap.get("native_data");
+			prod.getNativeChkBox().click();
+			prod.getNativeTab().click();
+			if (nativeData == "file_types") {
+				prod.getNative_SelectAllCheck().click();
+			}
+			else if(nativeData == "tags") {
+				prod.getNativeSelectTagsButton().click();
+			}
+				
+			
+			
+			
+			
 		} else {
-			throw new ImplementationException("NOT complete_native_section_with_");
+			fail(dataMap, "Native Section not complete");
 		}
 
 	}
@@ -7684,10 +7698,10 @@ public class ProductionContext extends CommonContext {
 	public void the_native_checkbox_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Clicking the checkbox for the Native section
-			throw new ImplementationException("the_native_checkbox_is_enabled");
+			prod.getNativeChkBox().click();
+			pass(dataMap, "native checkbox is clicked");
 		} else {
-			throw new ImplementationException("NOT the_native_checkbox_is_enabled");
+			fail(dataMap, "native checkbox is not clicked");
 		}
 
 	}
@@ -7698,9 +7712,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6415Verify the following error is returned: You must select at least a file group type or a tag in the Native components section
-			throw new ImplementationException("verify_an_error_message_is_returned_on_empty_native_components");
+			String errorMessage = prod.getMP3WarningBox().getText();
+			System.out.println(errorMessage);
+			Assert.assertEquals("You must select at least a file group type or a tag in the Native components section", errorMessage);
 		} else {
-			throw new ImplementationException("NOT verify_an_error_message_is_returned_on_empty_native_components");
+			fail(dataMap, "Error message not returned");
 		}
 
 	}
