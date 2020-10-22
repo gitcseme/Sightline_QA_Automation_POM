@@ -7885,4 +7885,357 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_open_wizard_on_the_first_production$")
+	public void clicking_open_wizard_on_the_first_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the settings button on the productionClick Open in Wizard
+			throw new ImplementationException("clicking_open_wizard_on_the_first_production");
+		} else {
+			throw new ImplementationException("NOT clicking_open_wizard_on_the_first_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_able_to_open_a_production_via_the_wizard$")
+	public void verify_the_user_is_able_to_open_a_production_via_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3411Verify the user is not on the production's home page anymoreVerify the user is able to see the Production's sections: Basic Info, Production Components, Numbering & Sorting, Document Selection, Priv Guard, Production Location, Summary & Preview, Generate, and Quality Control & Confirmation
+			throw new ImplementationException("verify_the_user_is_able_to_open_a_production_via_the_wizard");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_able_to_open_a_production_via_the_wizard");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_add_new_production$")
+	public void clicking_add_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Add New Production
+			throw new ImplementationException("clicking_add_new_production");
+		} else {
+			throw new ImplementationException("NOT clicking_add_new_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_basic_info_section_does_not_show_a_disclaimer$")
+	public void verify_the_basic_info_section_does_not_show_a_disclaimer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11023
+			//* Verify on the Basic Info section, there are only the fields "Name", "Description" and "Load Template".
+			//* Verify there is no text saying "Disclaimer for Sightline goes here"
+			//
+			throw new ImplementationException("verify_the_basic_info_section_does_not_show_a_disclaimer");
+		} else {
+			throw new ImplementationException("NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? store_the_first_productions_name$")
+	public void store_the_first_productions_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Store the name of the first production that is displayed.This is going to be used later.
+			throw new ImplementationException("store_the_first_productions_name");
+		} else {
+			throw new ImplementationException("NOT store_the_first_productions_name");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_basic_info_component_on_a_new_production$")
+	public void on_the_basic_info_component_on_a_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Add New Production
+			throw new ImplementationException("on_the_basic_info_component_on_a_new_production");
+		} else {
+			throw new ImplementationException("NOT on_the_basic_info_component_on_a_new_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enter_the_name_of_the_existing_production$")
+	public void enter_the_name_of_the_existing_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Use the first production's name that was stored to type it into the new production's name field.
+			throw new ImplementationException("enter_the_name_of_the_existing_production");
+		} else {
+			throw new ImplementationException("NOT enter_the_name_of_the_existing_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions$")
+	public void verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4470Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
+			throw new ImplementationException("verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? setting_the_sort_dropdown_by_production_name$")
+	public void setting_the_sort_dropdown_by_production_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Sort By dropdown and select Production Name
+			throw new ImplementationException("setting_the_sort_dropdown_by_production_name");
+		} else {
+			throw new ImplementationException("NOT setting_the_sort_dropdown_by_production_name");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_of_the_productions_is_by_name$")
+	public void verify_the_sorting_of_the_productions_is_by_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3708Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
+			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_action_dropdown$")
+	public void clicking_the_action_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the "Action" dropdown
+			throw new ImplementationException("clicking_the_action_dropdown");
+		} else {
+			throw new ImplementationException("NOT clicking_the_action_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_add_doc_button_is_disabled_on_completed_productions$")
+	public void verify_the_add_doc_button_is_disabled_on_completed_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7777
+			//* Verify from the action dropdown, the option "Add Docs" is disabled
+			//
+			throw new ImplementationException("verify_the_add_doc_button_is_disabled_on_completed_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_valid_production_name_is_entered$")
+	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Type in the Name of the Production. Use the same stand name we are using now which is AutoProduction + randomized numbers.Make sure this will type in the invalid parameters also.
+			throw new ImplementationException("a_valid_production_name_is_entered");
+		} else {
+			throw new ImplementationException("NOT a_valid_production_name_is_entered");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_valid_production_description_is_entered$")
+	public void a_valid_production_description_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Type in any description
+			throw new ImplementationException("a_valid_production_description_is_entered");
+		} else {
+			throw new ImplementationException("NOT a_valid_production_description_is_entered");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_a_production_can_be_marked_completed_with_a_valid_name_description$")
+	public void verify_a_production_can_be_marked_completed_with_a_valid_name_description(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 2909 part 2Verify the message "Mark Complete successful" is displayed.Make sure to check the negative section/False States.
+			throw new ImplementationException("verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+		} else {
+			throw new ImplementationException("NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_remove_doc_button_is_disabled_on_completed_productions$")
+	public void verify_the_remove_doc_button_is_disabled_on_completed_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7779
+			//* Verify from the action dropdown, the option "Remove Docs" is disabled
+			//
+			throw new ImplementationException("verify_the_remove_doc_button_is_disabled_on_completed_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_home_page_is_displayed_correctly$")
+	public void verify_the_production_home_page_is_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4431 
+			//* Verify the title of the page displays as "Productions & Exports"
+			//* Verify there is a link for "Add a New Production"
+			//* Verify there is a dropdown for Production/Export Sets
+			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
+			//* Click the dropdown for Productions Set, and change it to another production set
+			//* Verify the Production set name under "PRODUCTIONS SET" is updated to the new production set's name.
+			//* Set the production set back to the original. 
+			//
+			throw new ImplementationException("verify_the_production_home_page_is_displayed_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_home_page_is_displayed_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_production_name_column$")
+	public void clicking_the_production_name_column(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
+			throw new ImplementationException("clicking_the_production_name_column");
+		} else {
+			throw new ImplementationException("NOT clicking_the_production_name_column");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_of_the_productions_is_by_name_in_grid_view$")
+	public void verify_the_sorting_of_the_productions_is_by_name_in_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
+			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? deleting_the_first_production_listed$")
+	public void deleting_the_first_production_listed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the settings button on the first productionClick DeleteClick Ok
+			throw new ImplementationException("deleting_the_first_production_listed");
+		} else {
+			throw new ImplementationException("NOT deleting_the_first_production_listed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_is_deleted_successfully$")
+	public void verify_the_production_is_deleted_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//tc 3402 / 4128Verify the production is deleted succesfully with the message: Production deleted successfully
+			throw new ImplementationException("verify_the_production_is_deleted_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_is_deleted_successfully");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? navigate_back_to_the_production_home_page$")
+	public void navigate_back_to_the_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Productions button on the left side of the screen
+			throw new ImplementationException("navigate_back_to_the_production_home_page");
+		} else {
+			throw new ImplementationException("NOT navigate_back_to_the_production_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? store_the_first_productions_info$")
+	public void store_the_first_productions_info(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Store the name of the first production that is displayed.Store the Last Modified user name of the first production that is displayed.Store the time stamp of the last modified date of the first production that is displayed.This is going to be used later.
+			throw new ImplementationException("store_the_first_productions_info");
+		} else {
+			throw new ImplementationException("NOT store_the_first_productions_info");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_the_production_created_edit_the_name_then_save_using_$")
+	public void open_the_production_created_edit_the_name_then_save_using_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the name of the production that was createdClick Back to go back to Basic InfoClick Mark IncompleteChange the name of the production to add 3 more random numbers at the end.Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
+			throw new ImplementationException("open_the_production_created_edit_the_name_then_save_using_");
+		} else {
+			throw new ImplementationException("NOT open_the_production_created_edit_the_name_then_save_using_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_date_created_field_is_reflecting_correctly$")
+	public void verify_the_date_created_field_is_reflecting_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7809Verify the start date reflects the timestamp of when the product was saved/marked completed the first time. This is reflected by the last modified date we captured in "store_the_first_productions_info". By doing this, we are checking that after an edit was made, the created date did not change.
+			throw new ImplementationException("verify_the_date_created_field_is_reflecting_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_date_created_field_is_reflecting_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_last_modified_date_on_productions_gets_updated$")
+	public void verify_the_last_modified_date_on_productions_gets_updated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7739 / 7740Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.Verify the new timestamp on the production matches the timestap we captured after clicking Save
+			throw new ImplementationException("verify_the_last_modified_date_on_productions_gets_updated");
+		} else {
+			throw new ImplementationException("NOT verify_the_last_modified_date_on_productions_gets_updated");
+		}
+
+	}
 }//EOF
