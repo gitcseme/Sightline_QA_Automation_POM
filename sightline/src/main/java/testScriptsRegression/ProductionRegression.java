@@ -6598,7 +6598,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "WIP"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_select_mp3_redactions_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_and_click_the_save_as_template_button_for_created_production_and_begin_new_production_process_with_new_template_When_begin_new_production_process_Then_verify_template_mp3_component_details() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6610,13 +6610,13 @@ public class ProductionRegression extends RegressionBase {
 		try { 
 			context.login_to_new_production(true, dataMap);
 			context.select_mp3_redactions(true, dataMap);
-//			dataMap.put("dat", "true");
-//			dataMap.put("native", "false");
-//			dataMap.put("pdf", "false");
-//			dataMap.put("mp3", "false");
-//			dataMap.put("tiff", "true");
-//			context.complete_complex_production_component(true, dataMap);
-//			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("mp3", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
 			context.click_the_save_as_template_button_for_created_production(true, dataMap);
 			context.begin_new_production_process_with_new_template(true, dataMap);
 			context.begin_new_production_process(true, dataMap);
