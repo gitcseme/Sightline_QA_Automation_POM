@@ -7091,4 +7091,1151 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+	@When("^.*(\\[Not\\] )? select_docs_without_family_docs$")
+	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			throw new ImplementationException("select_docs_without_family_docs");
+		} else {
+			throw new ImplementationException("NOT select_docs_without_family_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doclist_without_family_docs$")
+	public void verify_doclist_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7858 Production Document Selection to DocListTC7860 Production Document Selection to DocList without Child Documents
+			//
+			//* User should redirect to DocList with selected documents
+			//* User should be able to see all documents without family documents
+			//
+			throw new ImplementationException("verify_doclist_without_family_docs");
+		} else {
+			throw new ImplementationException("NOT verify_doclist_without_family_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_doclist_from_the_document_section$")
+	public void on_the_doclist_from_the_document_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click back to get back to the document sectionClick on the document count (Should be 20)Verify once you are on the doclist, that the bottom displays: Showing 1 to 10 of 20 entries
+			throw new ImplementationException("on_the_doclist_from_the_document_section");
+		} else {
+			throw new ImplementationException("NOT on_the_doclist_from_the_document_section");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_back_to_source_button$")
+	public void clicking_the_back_to_source_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the top left of DocList, click the Back to Source button
+			throw new ImplementationException("clicking_the_back_to_source_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_back_to_source_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_doclist_navigation_returns_the_user_to_the_production$")
+	public void verify_the_doclist_navigation_returns_the_user_to_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8343Verify the user is navigated back to the Production Location section of the production. 
+			throw new ImplementationException("verify_the_doclist_navigation_returns_the_user_to_the_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_doclist_navigation_returns_the_user_to_the_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_tag_selection_with_family$")
+	public void complete_document_tag_selection_with_family(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
+			throw new ImplementationException("complete_document_tag_selection_with_family");
+		} else {
+			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_docs_with_family_docs$")
+	public void select_docs_with_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select doc source with family
+			//
+			//* DocID: ID00000861
+			//
+			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			throw new ImplementationException("select_docs_with_family_docs");
+		} else {
+			throw new ImplementationException("NOT select_docs_with_family_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doclist_with_family_docs$")
+	public void verify_doclist_with_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7859 Production Document Selection to DocList with Child Documents
+			//
+			//* User should redirect to DocList with selected documents
+			//* User should be able to see all documents with family documents (parent and child docs)
+			//
+			throw new ImplementationException("verify_doclist_with_family_docs");
+		} else {
+			throw new ImplementationException("NOT verify_doclist_with_family_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completing_the_priv_guard_section_and_navigating_back$")
+	public void completing_the_priv_guard_section_and_navigating_back(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompletedClick NextClick Back
+			throw new ImplementationException("completing_the_priv_guard_section_and_navigating_back");
+		} else {
+			throw new ImplementationException("NOT completing_the_priv_guard_section_and_navigating_back");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_mark_incomplete_button$")
+	public void clicking_the_productions_mark_incomplete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Mark Incomplete
+			throw new ImplementationException("clicking_the_productions_mark_incomplete_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_mark_incomplete_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_remove_option_on_the_rule_is_displayed$")
+	public void verify_the_remove_option_on_the_rule_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4466Verify the button "Remove" is displayed once the Mark incomplete button is clicked on.
+			throw new ImplementationException("verify_the_remove_option_on_the_rule_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_the_remove_option_on_the_rule_is_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_options_in_the_numbering_compoent_display_correctly$")
+	public void verify_the_sorting_options_in_the_numbering_compoent_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4930Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
+			throw new ImplementationException("verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_next_bates_number_dialog$")
+	public void on_the_next_bates_number_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Click here link
+			throw new ImplementationException("on_the_next_bates_number_dialog");
+		} else {
+			throw new ImplementationException("NOT on_the_next_bates_number_dialog");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_x_button_on_the_next_bates_dialog$")
+	public void clicking_the_x_button_on_the_next_bates_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the X to close the dialog
+			throw new ImplementationException("clicking_the_x_button_on_the_next_bates_dialog");
+		} else {
+			throw new ImplementationException("NOT clicking_the_x_button_on_the_next_bates_dialog");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields$")
+	public void verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8364Verify clicking X closes the dialog.Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
+			throw new ImplementationException("verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+		} else {
+			throw new ImplementationException("NOT verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically$")
+	public void verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8156Verify the dropdown in SORTING is sorted AlphabeticallyVerify the dropdown under Sub-sort By is sorted Alphabetically
+			throw new ImplementationException("verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_use_metadata_field_radio_button$")
+	public void clicking_the_use_metadata_field_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("clicking_the_use_metadata_field_radio_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_use_metadata_field_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected$")
+	public void verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8346Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
+			throw new ImplementationException("verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+		} else {
+			throw new ImplementationException("NOT verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_production_location_component$")
+	public void on_the_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Mark CompleteClick Next
+			throw new ImplementationException("on_the_production_location_component");
+		} else {
+			throw new ImplementationException("NOT on_the_production_location_component");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
+	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the <Back button
+			throw new ImplementationException("clicking_on_the_back_button");
+		} else {
+			throw new ImplementationException("NOT clicking_on_the_back_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
+	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4467Verify the user is navigated back to the Priv Guard Component
+			throw new ImplementationException("verify_the_user_is_navigated_back_to_the_priv_guard");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_navigated_back_to_the_priv_guard");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completed_the_second_default_dat_section$")
+	public void completed_the_second_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick Add FieldAdd 2nd field classification: BatesAdd 2nd source field: BatesNumberEnter 2nd DAT field: Bates Number 2
+			throw new ImplementationException("completed_the_second_default_dat_section");
+		} else {
+			throw new ImplementationException("NOT completed_the_second_default_dat_section");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completed_the_third_default_dat_section$")
+	public void completed_the_third_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick Add FieldAdd 3rd field classification: BatesAdd 3rd source field: BatesNumberEnter 3rd DAT field: Bates Number 3
+			throw new ImplementationException("completed_the_third_default_dat_section");
+		} else {
+			throw new ImplementationException("NOT completed_the_third_default_dat_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class$")
+	public void verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7357Verify the following message appears:The same DAT source field has been found to occur more than once. DAT configuration includes mapping of a project field with multiple DAT fields. Do you want to continue with this configuration?Click Continue
+			throw new ImplementationException("verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_pdf_section_is_expanded$")
+	public void the_pdf_section_is_expanded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//The PDF section is expanded
+			throw new ImplementationException("the_pdf_section_is_expanded");
+		} else {
+			throw new ImplementationException("NOT the_pdf_section_is_expanded");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? enabling_blank_page_removal_for_pdf$")
+	public void enabling_blank_page_removal_for_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("enabling_blank_page_removal_for_pdf");
+		} else {
+			throw new ImplementationException("NOT enabling_blank_page_removal_for_pdf");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled$")
+	public void verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6972 part 2Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
+			throw new ImplementationException("verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_translations_components$")
+	public void expanding_the_translations_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expands the Translations componentExpands the Advanced section
+			throw new ImplementationException("expanding_the_translations_components");
+		} else {
+			throw new ImplementationException("NOT expanding_the_translations_components");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_generate_load_file_is_enabled_by_default_for_translation_components$")
+	public void verify_the_generate_load_file_is_enabled_by_default_for_translation_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6432
+			//* Verify the button "Generate Load File (LST) is enabled by default
+			//
+			throw new ImplementationException("verify_the_generate_load_file_is_enabled_by_default_for_translation_components");
+		} else {
+			throw new ImplementationException("NOT verify_the_generate_load_file_is_enabled_by_default_for_translation_components");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_the_mp3_components$")
+	public void expanding_the_mp3_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expands the MP3 componentExpands the Advanced section
+			throw new ImplementationException("expanding_the_mp3_components");
+		} else {
+			throw new ImplementationException("NOT expanding_the_mp3_components");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_generate_load_file_is_enabled_by_default_for_mp3_components$")
+	public void verify_the_generate_load_file_is_enabled_by_default_for_mp3_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6431
+			//* Verify the button "Generate Load File (LST) is enabled by default
+			//
+			throw new ImplementationException("verify_the_generate_load_file_is_enabled_by_default_for_mp3_components");
+		} else {
+			throw new ImplementationException("NOT verify_the_generate_load_file_is_enabled_by_default_for_mp3_components");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? completed_component_with_slip_sheet$")
+	public void completed_component_with_slip_sheet(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Use the parameter to dictate whether you will be doing this on the PDF or TIFF section. Both TIFF and PDF have the same fields in the ir respective section so the steps are the same between both. Below is an example of the parameter being TIFF. Check the TIFF checkboxExpand the TIFF sectionDisable Enable for Priviledged DocsExpand the Advanced SectionEnable Slip SheetsCheck off the first three checkboxes under METADATAClick Add to SelectedVerify the three options are added to the right side into Selected Fields
+			throw new ImplementationException("completed_component_with_slip_sheet");
+		} else {
+			throw new ImplementationException("NOT completed_component_with_slip_sheet");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_is_marked_complete_after_a_tiff_with_a_slip_sheet_is_added$")
+	public void verify_the_production_is_marked_complete_after_a_tiff_with_a_slip_sheet_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5174 / 5082Verify the production is successfully completed with the message Mark Complete Successful.Verify clicking next and clicking back, that the slip sheet is still saved and enabled.
+			throw new ImplementationException("verify_the_production_is_marked_complete_after_a_tiff_with_a_slip_sheet_is_added");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_is_marked_complete_after_a_tiff_with_a_slip_sheet_is_added");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? tiff_pdf_components_are_completed_without_a_dat_component$")
+	public void tiff_pdf_components_are_completed_without_a_dat_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check off TIFFClick TIFF to expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionCheck off PDFClick PDFto expand itClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Toggle on "Burn Redactions"Select the option "Select Redactions"Check off Default Automation RedactionClick the complete buttonVerify an error appears "For a production, the DAT check box selection is mandatory."
+			throw new ImplementationException("tiff_pdf_components_are_completed_without_a_dat_component");
+		} else {
+			throw new ImplementationException("NOT tiff_pdf_components_are_completed_without_a_dat_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_dat_section_$")
+	public void complete_the_dat_section_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: The value here should come from the parameterMake sure to cover the negative case with the leading space test
+			throw new ImplementationException("complete_the_dat_section_");
+		} else {
+			throw new ImplementationException("NOT complete_the_dat_section_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_is_marked_complete_after_a_dat_is_added$")
+	public void verify_the_production_is_marked_complete_after_a_dat_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4759 /4760 / 7321 / 7322 / 7323 /7343Verify the production is marked completed successfully.
+			throw new ImplementationException("verify_the_production_is_marked_complete_after_a_dat_is_added");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_is_marked_complete_after_a_dat_is_added");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expanding_clicking_the_field_classification_dropdown$")
+	public void expanding_clicking_the_field_classification_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the DAT sectionClick on the dropdown for Field Classification
+			throw new ImplementationException("expanding_clicking_the_field_classification_dropdown");
+		} else {
+			throw new ImplementationException("NOT expanding_clicking_the_field_classification_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_bates_field_classification_is_listed_in_alphabetical_order$")
+	public void verify_the_bates_field_classification_is_listed_in_alphabetical_order(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5173Verify the list of field classifications are listed in this exact order:
+			//* Select
+			//* Appointment
+			//* Bates
+			//* Custom
+			//* Doc Basic
+			//* Email
+			//* Family
+			//* File Path
+			//* Near Dupe
+			//* Production
+			//* TAGS
+			//
+			throw new ImplementationException("verify_the_bates_field_classification_is_listed_in_alphabetical_order");
+		} else {
+			throw new ImplementationException("NOT verify_the_bates_field_classification_is_listed_in_alphabetical_order");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_native_section_with_$")
+	public void complete_native_section_with_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Checkoff NativeExpand NativeIf Native Data is file_types:Check Select All for File TypesIf Native Data is tags:Click Select TagsClick Default Automation TagClick SelectIf Native Data is files_and_tags:Check Select All for File TypesClick Select TagsClick Default Automation TagClick Select
+			throw new ImplementationException("complete_native_section_with_");
+		} else {
+			throw new ImplementationException("NOT complete_native_section_with_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_productions_mark_complete_and_incomplete_button$")
+	public void clicking_the_productions_mark_complete_and_incomplete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Mark Complete ButtonClick the Mark Incomplete Button
+			throw new ImplementationException("clicking_the_productions_mark_complete_and_incomplete_button");
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_mark_complete_and_incomplete_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted$")
+	public void verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6820 / 6821 / 6822Expand the Native sectionVerify depending on the native data provided, the correct file types, tags, or both are displayed correctly in the native section.If file types, verify the select all checkbox is enabled as well as the second checkbox to make sure.If tags, make sure the tag is displayed next to the "Select Tags" button.If both, verify both items above.
+			throw new ImplementationException("verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+		} else {
+			throw new ImplementationException("NOT verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_native_checkbox_is_enabled$")
+	public void the_native_checkbox_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the checkbox for the Native section
+			throw new ImplementationException("the_native_checkbox_is_enabled");
+		} else {
+			throw new ImplementationException("NOT the_native_checkbox_is_enabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_an_error_message_is_returned_on_empty_native_components$")
+	public void verify_an_error_message_is_returned_on_empty_native_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6415Verify the following error is returned: You must select at least a file group type or a tag in the Native components section
+			throw new ImplementationException("verify_an_error_message_is_returned_on_empty_native_components");
+		} else {
+			throw new ImplementationException("NOT verify_an_error_message_is_returned_on_empty_native_components");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_section_insert_metadata_field_dialog$")
+	public void on_the_section_insert_metadata_field_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the TIFF or PDF section depending on the component variable.If area = brandingIn the branding section, click Insert Metadata Field. If area = placeholderIn the placeholder section, click Insert Metadata Field. If area = filetypesIn the placeholder section, Click Enable for Natively Producted Documentsclick Insert Metadata Field. If area = redactionsIn the Redactions section, enable Burn RedactionsClick Specify Redaction Text by Selecting Redaction TagsClick Insert Metadata Field.If area = techissueIn the placeholder section, click Enable for Tech Issue DocsClick Insert Metadata Field.If area = slipsheetsExpand the Advanced sectionEnable Slip SheetsIf area = calculatedExpand the Advanced sectionEnable Slip SheetsClick on the CALCULATED Tab
+			throw new ImplementationException("on_the_section_insert_metadata_field_dialog");
+		} else {
+			throw new ImplementationException("NOT on_the_section_insert_metadata_field_dialog");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_insert_metadata_field_dropdown$")
+	public void clicking_the_insert_metadata_field_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//if area = slipsheetdo not click anythingif area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
+			throw new ImplementationException("clicking_the_insert_metadata_field_dropdown");
+		} else {
+			throw new ImplementationException("NOT clicking_the_insert_metadata_field_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_metadata_field_dropdown_is_sorted_alphabetically$")
+	public void verify_the_metadata_field_dropdown_is_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.Click Cancel.
+			throw new ImplementationException("verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+		} else {
+			throw new ImplementationException("NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_new_line_dropdown$")
+	public void clicking_the_new_line_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the New Line dropdown
+			throw new ImplementationException("clicking_the_new_line_dropdown");
+		} else {
+			throw new ImplementationException("NOT clicking_the_new_line_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown$")
+	public void verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6327 Verify the dropdown has an option with the value -1039 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(255)".Verify the dropdown has an option with the value -875 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(90)".Verify the dropdown has an option with the text "ASCII(20)".Verify the dropdown has a total of 255 options to select. Should be ASCII 1-255. Don't need to verify each option is in the dropdown, but that the count of the dropdown is 255.
+			throw new ImplementationException("verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
+		} else {
+			throw new ImplementationException("NOT verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_tiff_section_is_expanded$")
+	public void the_tiff_section_is_expanded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the Tiff Section
+			throw new ImplementationException("the_tiff_section_is_expanded");
+		} else {
+			throw new ImplementationException("NOT the_tiff_section_is_expanded");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? enabling_blank_page_removal_for_tiff$")
+	public void enabling_blank_page_removal_for_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Blank Page Removal to enable it on the TIff section
+			throw new ImplementationException("enabling_blank_page_removal_for_tiff");
+		} else {
+			throw new ImplementationException("NOT enabling_blank_page_removal_for_tiff");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled$")
+	public void verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6972Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
+			throw new ImplementationException("verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_tiff_section_is_enabled_with_burn_redactions_enabled$")
+	public void the_tiff_section_is_enabled_with_burn_redactions_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check the TIFF checkboxExpand the Tiff SectionDisable Enable for Privileged DocsEnable the button Burn RedactionsClick Specify Redaction Text by Selecting Redaction TagsVerify the field "Abbreviated Text:" displays "RED" by default and the placeholder text displays "REDACTED". Click Select Refaction Tag(s)Check Default Automation RedactionClick Select
+			throw new ImplementationException("the_tiff_section_is_enabled_with_burn_redactions_enabled");
+		} else {
+			throw new ImplementationException("NOT the_tiff_section_is_enabled_with_burn_redactions_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? erase_the_placeholder_mark_complete$")
+	public void erase_the_placeholder_mark_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Delete the text for placeholder in redactions. The text shold be "REDACTED" by default, erase this value.Click Mark Complete.
+			throw new ImplementationException("erase_the_placeholder_mark_complete");
+		} else {
+			throw new ImplementationException("NOT erase_the_placeholder_mark_complete");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed$")
+	public void verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11369, 11366Verify an error message is displayed: Specified Redaction Text in TIFF Burned Redactions cannot be blank.
+			throw new ImplementationException("verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed");
+		} else {
+			throw new ImplementationException("NOT verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? email_classification_is_added_for_dats$")
+	public void email_classification_is_added_for_dats(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check off DAT sectionExpand DAT sectionIn FIELDCLASSIFICATION set it to Email
+			throw new ImplementationException("email_classification_is_added_for_dats");
+		} else {
+			throw new ImplementationException("NOT email_classification_is_added_for_dats");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_dats_source_field_dropdown$")
+	public void clicking_the_dats_source_field_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the dropdown for DAT's SOURCE FIELD
+			throw new ImplementationException("clicking_the_dats_source_field_dropdown");
+		} else {
+			throw new ImplementationException("NOT clicking_the_dats_source_field_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_email_field_classification_has_the_correct_options$")
+	public void verify_the_email_field_classification_has_the_correct_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7975 Verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category.
+			throw new ImplementationException("verify_the_email_field_classification_has_the_correct_options");
+		} else {
+			throw new ImplementationException("NOT verify_the_email_field_classification_has_the_correct_options");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_the_second_dat_section_with_duplicate_information$")
+	public void complete_the_second_dat_section_with_duplicate_information(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Add FieldThe Field Classification should be the same used in the first dat fieldThe Source Field should be the same used in the first dat fieldThe DAT field should be the same used in the first dat field
+			throw new ImplementationException("complete_the_second_dat_section_with_duplicate_information");
+		} else {
+			throw new ImplementationException("NOT complete_the_second_dat_section_with_duplicate_information");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_an_error_is_returned_from_using_duplicate_dat_fields_values$")
+	public void verify_an_error_is_returned_from_using_duplicate_dat_fields_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7361Click Continue on the warning message.Verify the following warning appears after clicking Continue: "Multiple source fields cannot be mapped to the same field in the DAT file."
+			throw new ImplementationException("verify_an_error_is_returned_from_using_duplicate_dat_fields_values");
+		} else {
+			throw new ImplementationException("NOT verify_an_error_is_returned_from_using_duplicate_dat_fields_values");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_open_wizard_on_the_first_production$")
+	public void clicking_open_wizard_on_the_first_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the settings button on the productionClick Open in Wizard
+			throw new ImplementationException("clicking_open_wizard_on_the_first_production");
+		} else {
+			throw new ImplementationException("NOT clicking_open_wizard_on_the_first_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_able_to_open_a_production_via_the_wizard$")
+	public void verify_the_user_is_able_to_open_a_production_via_the_wizard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3411Verify the user is not on the production's home page anymoreVerify the user is able to see the Production's sections: Basic Info, Production Components, Numbering & Sorting, Document Selection, Priv Guard, Production Location, Summary & Preview, Generate, and Quality Control & Confirmation
+			throw new ImplementationException("verify_the_user_is_able_to_open_a_production_via_the_wizard");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_able_to_open_a_production_via_the_wizard");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_add_new_production$")
+	public void clicking_add_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Add New Production
+			throw new ImplementationException("clicking_add_new_production");
+		} else {
+			throw new ImplementationException("NOT clicking_add_new_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_basic_info_section_does_not_show_a_disclaimer$")
+	public void verify_the_basic_info_section_does_not_show_a_disclaimer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11023
+			//* Verify on the Basic Info section, there are only the fields "Name", "Description" and "Load Template".
+			//* Verify there is no text saying "Disclaimer for Sightline goes here"
+			//
+			throw new ImplementationException("verify_the_basic_info_section_does_not_show_a_disclaimer");
+		} else {
+			throw new ImplementationException("NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? store_the_first_productions_name$")
+	public void store_the_first_productions_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Store the name of the first production that is displayed.This is going to be used later.
+			throw new ImplementationException("store_the_first_productions_name");
+		} else {
+			throw new ImplementationException("NOT store_the_first_productions_name");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_the_basic_info_component_on_a_new_production$")
+	public void on_the_basic_info_component_on_a_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking Add New Production
+			throw new ImplementationException("on_the_basic_info_component_on_a_new_production");
+		} else {
+			throw new ImplementationException("NOT on_the_basic_info_component_on_a_new_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enter_the_name_of_the_existing_production$")
+	public void enter_the_name_of_the_existing_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Use the first production's name that was stored to type it into the new production's name field.
+			throw new ImplementationException("enter_the_name_of_the_existing_production");
+		} else {
+			throw new ImplementationException("NOT enter_the_name_of_the_existing_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions$")
+	public void verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4470Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
+			throw new ImplementationException("verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? setting_the_sort_dropdown_by_production_name$")
+	public void setting_the_sort_dropdown_by_production_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Sort By dropdown and select Production Name
+			throw new ImplementationException("setting_the_sort_dropdown_by_production_name");
+		} else {
+			throw new ImplementationException("NOT setting_the_sort_dropdown_by_production_name");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_of_the_productions_is_by_name$")
+	public void verify_the_sorting_of_the_productions_is_by_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3708Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
+			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_action_dropdown$")
+	public void clicking_the_action_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the "Action" dropdown
+			throw new ImplementationException("clicking_the_action_dropdown");
+		} else {
+			throw new ImplementationException("NOT clicking_the_action_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_add_doc_button_is_disabled_on_completed_productions$")
+	public void verify_the_add_doc_button_is_disabled_on_completed_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7777
+			//* Verify from the action dropdown, the option "Add Docs" is disabled
+			//
+			throw new ImplementationException("verify_the_add_doc_button_is_disabled_on_completed_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_valid_production_name_is_entered$")
+	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Type in the Name of the Production. Use the same stand name we are using now which is AutoProduction + randomized numbers.Make sure this will type in the invalid parameters also.
+			throw new ImplementationException("a_valid_production_name_is_entered");
+		} else {
+			throw new ImplementationException("NOT a_valid_production_name_is_entered");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_valid_production_description_is_entered$")
+	public void a_valid_production_description_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Type in any description
+			throw new ImplementationException("a_valid_production_description_is_entered");
+		} else {
+			throw new ImplementationException("NOT a_valid_production_description_is_entered");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_a_production_can_be_marked_completed_with_a_valid_name_description$")
+	public void verify_a_production_can_be_marked_completed_with_a_valid_name_description(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 2909 part 2Verify the message "Mark Complete successful" is displayed.Make sure to check the negative section/False States.
+			throw new ImplementationException("verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+		} else {
+			throw new ImplementationException("NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_remove_doc_button_is_disabled_on_completed_productions$")
+	public void verify_the_remove_doc_button_is_disabled_on_completed_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7779
+			//* Verify from the action dropdown, the option "Remove Docs" is disabled
+			//
+			throw new ImplementationException("verify_the_remove_doc_button_is_disabled_on_completed_productions");
+		} else {
+			throw new ImplementationException("NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_home_page_is_displayed_correctly$")
+	public void verify_the_production_home_page_is_displayed_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4431 
+			//* Verify the title of the page displays as "Productions & Exports"
+			//* Verify there is a link for "Add a New Production"
+			//* Verify there is a dropdown for Production/Export Sets
+			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
+			//* Click the dropdown for Productions Set, and change it to another production set
+			//* Verify the Production set name under "PRODUCTIONS SET" is updated to the new production set's name.
+			//* Set the production set back to the original. 
+			//
+			throw new ImplementationException("verify_the_production_home_page_is_displayed_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_home_page_is_displayed_correctly");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? clicking_the_production_name_column$")
+	public void clicking_the_production_name_column(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
+			throw new ImplementationException("clicking_the_production_name_column");
+		} else {
+			throw new ImplementationException("NOT clicking_the_production_name_column");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_sorting_of_the_productions_is_by_name_in_grid_view$")
+	public void verify_the_sorting_of_the_productions_is_by_name_in_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
+			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+		} else {
+			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? deleting_the_first_production_listed$")
+	public void deleting_the_first_production_listed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Clicking the settings button on the first productionClick DeleteClick Ok
+			throw new ImplementationException("deleting_the_first_production_listed");
+		} else {
+			throw new ImplementationException("NOT deleting_the_first_production_listed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_is_deleted_successfully$")
+	public void verify_the_production_is_deleted_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//tc 3402 / 4128Verify the production is deleted succesfully with the message: Production deleted successfully
+			throw new ImplementationException("verify_the_production_is_deleted_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_is_deleted_successfully");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? navigate_back_to_the_production_home_page$")
+	public void navigate_back_to_the_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Productions button on the left side of the screen
+			throw new ImplementationException("navigate_back_to_the_production_home_page");
+		} else {
+			throw new ImplementationException("NOT navigate_back_to_the_production_home_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? store_the_first_productions_info$")
+	public void store_the_first_productions_info(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Store the name of the first production that is displayed.Store the Last Modified user name of the first production that is displayed.Store the time stamp of the last modified date of the first production that is displayed.This is going to be used later.
+			throw new ImplementationException("store_the_first_productions_info");
+		} else {
+			throw new ImplementationException("NOT store_the_first_productions_info");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_the_production_created_edit_the_name_then_save_using_$")
+	public void open_the_production_created_edit_the_name_then_save_using_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the name of the production that was createdClick Back to go back to Basic InfoClick Mark IncompleteChange the name of the production to add 3 more random numbers at the end.Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
+			throw new ImplementationException("open_the_production_created_edit_the_name_then_save_using_");
+		} else {
+			throw new ImplementationException("NOT open_the_production_created_edit_the_name_then_save_using_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_date_created_field_is_reflecting_correctly$")
+	public void verify_the_date_created_field_is_reflecting_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7809Verify the start date reflects the timestamp of when the product was saved/marked completed the first time. This is reflected by the last modified date we captured in "store_the_first_productions_info". By doing this, we are checking that after an edit was made, the created date did not change.
+			throw new ImplementationException("verify_the_date_created_field_is_reflecting_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_the_date_created_field_is_reflecting_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_last_modified_date_on_productions_gets_updated$")
+	public void verify_the_last_modified_date_on_productions_gets_updated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7739 / 7740Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.Verify the new timestamp on the production matches the timestap we captured after clicking Save
+			throw new ImplementationException("verify_the_last_modified_date_on_productions_gets_updated");
+		} else {
+			throw new ImplementationException("NOT verify_the_last_modified_date_on_productions_gets_updated");
+		}
+
+	}
 }//EOF
