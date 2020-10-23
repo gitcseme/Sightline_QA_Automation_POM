@@ -682,6 +682,15 @@ private  Driver driver;
     	 AssertExists(); //this updates element !
     	 return new Select(element);
      }
+     
+     public boolean selectFromDropdownLoaded() {
+    	 AssertExists(); //this updates element !
+    	 Select select = new Select(element);
+    	 
+    	 boolean loaded = (select.getOptions().size() > 0);
+    	 
+    	 return loaded;
+     }
      /* static ExpectedCondition<?> visibilityOfElementLocated = null;
      	public static Element waitUntilVisibility(By by, int time) throws InterruptedException {
 			driver.Manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS); // nullify implicitlyWait()
