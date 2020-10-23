@@ -2749,4 +2749,507 @@ public class BatchPrintRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_When_select_export_format_Then_verify_notification_displayed_when_background_process_initialized() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions When select_export_format Then verify_notification_displayed_when_background_process_initialized");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for each document");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("A", "");
+			dataMap.put("export_by", "DocFileName");
+			context.select_export_format(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4561|4562");
+			context.verify_notification_displayed_when_background_process_initialized(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_When_click_source_selection_back_button_Then_verify_directed_to_source_selection_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection When click_source_selection_back_button Then verify_directed_to_source_selection_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			context.click_source_selection_back_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4387");
+			context.verify_directed_to_source_selection_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_When_select_basis_for_printing_Then_verify_prior_productions_radio_button() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection When select_basis_for_printing Then verify_prior_productions_radio_button");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			dataMap.put("A", "");
+			dataMap.put("prior_production1", "SQA Automation Template");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4450");
+			context.verify_prior_productions_radio_button(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_select_skip_excel_files_radio_button_Then_verify_skip_excel_files_on_exception_file_types_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis When select_skip_excel_files_radio_button Then verify_skip_excel_files_on_exception_file_types_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			context.select_skip_excel_files_radio_button(true, dataMap);
+			context.verify_skip_excel_files_on_exception_file_types_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_other_exception_file_types_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis When click_other_exception_file_types_help_button Then verify_help_displayed_on_exception_file_types_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			context.click_other_exception_file_types_help_button(true, dataMap);
+			context.verify_help_displayed_on_exception_file_types_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_excel_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis When click_excel_files_help_button Then verify_help_displayed_on_exception_file_types_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			context.click_excel_files_help_button(true, dataMap);
+			context.verify_help_displayed_on_exception_file_types_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_media_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis When click_media_files_help_button Then verify_help_displayed_on_exception_file_types_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			context.click_media_files_help_button(true, dataMap);
+			context.verify_help_displayed_on_exception_file_types_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_select_exception_file_types_Then_verify_rmu_fields_in_slip_sheets() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_rmu and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis When select_exception_file_types Then verify_rmu_fields_in_slip_sheets");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_rmu(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4545");
+			context.verify_rmu_fields_in_slip_sheets(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_When_slip_sheets_disabled_Then_verify_slip_sheets_disabled() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types When slip_sheets_disabled Then verify_slip_sheets_disabled");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			context.slip_sheets_disabled(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4530");
+			context.verify_slip_sheets_disabled(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_When_slip_sheets_enabled_Then_verify_slip_sheets_enabled() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types When slip_sheets_enabled Then verify_slip_sheets_enabled");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			context.slip_sheets_enabled(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4530");
+			context.verify_slip_sheets_enabled(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_When_click_select_search_radio_button_Then_verify_my_shared_removed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print When click_select_search_radio_button Then verify_my_shared_removed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.click_select_search_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4398");
+			context.verify_my_shared_removed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_toggle_branding_redactions_trueopaqueAll_When_diff_branding_redaction_configs_set_Then_verify_include_applied_redactions_on_branding_redactions_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets and toggle_branding_redactions_{true}{opaque}{All} When diff_branding_redaction_configs_set Then verify_include_applied_redactions_on_branding_redactions_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "All");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.toggle_branding_redactions_(true, dataMap);
+			context.diff_branding_redaction_configs_set(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4514");
+			context.verify_include_applied_redactions_on_branding_redactions_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_toggle_branding_redactions_falseopaqueAll_When_diff_branding_redaction_configs_set_Then_verify_include_applied_redactions_on_branding_redactions_tab() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets and toggle_branding_redactions_{false}{opaque}{All} When diff_branding_redaction_configs_set Then verify_include_applied_redactions_on_branding_redactions_tab");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "All");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.toggle_branding_redactions_(true, dataMap);
+			context.diff_branding_redaction_configs_set(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4514");
+			context.verify_include_applied_redactions_on_branding_redactions_tab(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_click_TopCenter_branding_location_When_click_insert_metadata_field_button_on_branding_redactions_Then_verify_metadata_displayed_on_branding_redactions() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets and click_{TopCenter}_branding_location When click_insert_metadata_field_button_on_branding_redactions Then verify_metadata_displayed_on_branding_redactions");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("B", "Natives");
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "Top Center");
+			context.click_branding_location(true, dataMap);
+			context.click_insert_metadata_field_button_on_branding_redactions(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4403");
+			context.verify_metadata_displayed_on_branding_redactions(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//eof
