@@ -57,6 +57,7 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("Test Case", "4396");
 			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
