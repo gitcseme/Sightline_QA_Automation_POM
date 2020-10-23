@@ -2521,7 +2521,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
 				String docID = (prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText()).split(" and")[0];
-				dataMap.put("docID", prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText());
+				dataMap.put("docID", docID);
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
