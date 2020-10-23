@@ -2948,7 +2948,20 @@ public class ProductionContext extends CommonContext {
 			//Click "Select Redactions"
 			//Click "Default Automation Redaction"
 			//Set the "Redaction Style" to "Beep"
-
+			*/
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			if(mp3!= null && mp3.equalsIgnoreCase("true")){
+				builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
+				prod.getMP3_ToggElement().click();
+				builder.moveToElement(prod.getMP3ChkBox().getWebElement()).perform();
+				prod.getMP3ChkBox().click();
+				prod.getMP3Tab().click();
+				prod.getMP3ComponentRedactionToggle().click();
+				prod.getMP3_SelectRed_Radiobutton().click();
+				prod.getMP3SelectRedactionsTagTree("Default Redaction Tag").click();
+			}
+			
+			 /*
 			//IF TEXT IS TRUE
 			//Checkoff the "Text" component checkbox
 			//The other parameters can be worked on as we use them.
@@ -5842,10 +5855,19 @@ public class ProductionContext extends CommonContext {
 	public void login_to_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
-			throw new ImplementationException("login_to_new_production");
+			//This is a collection of the following steps: sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
+			sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			login_as_pau(true, dataMap);
+			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/Production/Home");
+			on_production_home_page(true, dataMap);
+			dataMap.put("prod_template", "false");
+			begin_new_production_process(true, dataMap);
+			
+			pass(dataMap,"login_to_new_production");
 		} else {
-			throw new ImplementationException("NOT login_to_new_production");
+			fail(dataMap,"NOT login_to_new_production");
 		}
 
 	}
@@ -5904,10 +5926,39 @@ public class ProductionContext extends CommonContext {
 	public void select_mp3_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Check MP3 Files checkboxExpand MP3 Files sectionEnable Burn RedactionsSpecify Redactions: All redactions in annotation layer: Default Annotation LayerRedaction Style: BeepExpand MP3 Advanced sectionEnable Generate Load File (LST)
-			throw new ImplementationException("select_mp3_redactions");
+			//Check MP3 Files checkbox
+			//Expand MP3 Files section
+			//Enable Burn Redactions
+			//Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			//Redaction Style: Beep
+			//Expand MP3 Advanced section Enable Generate Load File (LST)
+			Actions builder = new Actions(driver.getWebDriver());
+			String mp3 =  (String)dataMap.get("mp3");
+			
+			//Check MP3 Files checkbox and Expand MP3 Files section
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
+			prod.getMP3_ToggElement().click();
+			builder.moveToElement(prod.getMP3ChkBox().getWebElement()).perform();
+			prod.getMP3ChkBox().click();
+			prod.getMP3Tab().click();
+			
+			//Enable Burn Redactions && Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			prod.getMP3ComponentRedactionToggle().click();
+			prod.getMP3_SelectRed_RedactionByAnnotation().click();
+			
+			//Redaction Style: Beep
+			prod.getMP3_RedactionStyle().click();
+			prod.getMP3_RedactionStyle_Beet().click();
+			
+			//Expand MP3 Advanced section Enable Generate Load File (LST)
+			prod.getMP3_SelectAdvToggle().click();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			if(!prod.getMP3AdvancedList().Enabled()) prod.getMP3AdvancedList().click();
+			
+			pass(dataMap,"select_mp3_redactions");
 		} else {
-			throw new ImplementationException("NOT select_mp3_redactions");
+			fail(dataMap,"NOT select_mp3_redactions");
 		}
 
 	}
@@ -5917,10 +5968,39 @@ public class ProductionContext extends CommonContext {
 	public void click_the_save_as_template_button_for_created_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Go to the productions home page.Click on the gear of the created productionSelect 'Save as Template'Give the template a name and save the template.
-			throw new ImplementationException("click_the_save_as_template_button_for_created_production");
+			//Go to the productions home page.
+			//Click on the gear of the created production
+			//Select 'Save as Template' 
+			//Give the template a name and save the template.
+			on_production_home_page(true,dataMap);
+			//Select compelete
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
+			prod.getFilterByButton().Click();
+				//Deselect Filters we dont want
+			for(int i =1; i<=4; i++) {
+				if(prod.getFilter(i).Selected() && i!= 4) prod.getFilter(i).Click();		
+				Thread.sleep(1000);
+			}
+			//Select Complete filter, if it isn't already
+			if(!prod.getFilter(2).Selected()) prod.getFilter(4).Click();
+			prod.getFilterByButton().Click();
+			Thread.sleep(1000);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			
+			prod.getprod_ActionButton().click();
+			prod.getSaveTemplate().click();			
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String TempName = "AutoProduction" + dateTime + "Temp";
+			prod.getTemplateName().sendKeys(TempName);
+			dataMap.put("prod_template", TempName);
+			
+			prod.getTemplateName().sendKeys("AutomationTemp");
+			prod.getTemplateNameSaveButton().click();
+			
+			pass(dataMap,"click_the_save_as_template_button_for_created_production");
 		} else {
-			throw new ImplementationException("NOT click_the_save_as_template_button_for_created_production");
+			fail(dataMap, "NOT click_the_save_as_template_button_for_created_production");
 		}
 
 	}
@@ -5930,10 +6010,18 @@ public class ProductionContext extends CommonContext {
 	public void begin_new_production_process_with_new_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Create new productionSelect new templateClick Complete buttonClick Next button
-			throw new ImplementationException("begin_new_production_process_with_new_template");
+			//Create new production
+			//Select new template
+			//Click Complete button
+			//Click Next button
+			
+			String tempnameString = dataMap.get("Temp_production_name").toString();
+			prod.getprod_LoadTemplate().click();
+			prod.getprod_LoadTemplateOptions().FindWebElements().contains(tempnameString); 
+			
+			pass(dataMap,"begin_new_production_process_with_new_template");
 		} else {
-			throw new ImplementationException("NOT begin_new_production_process_with_new_template");
+			fail(dataMap,"NOT begin_new_production_process_with_new_template");
 		}
 
 	}
@@ -5947,9 +6035,13 @@ public class ProductionContext extends CommonContext {
 			//
 			//* Verify MP3 Files component section matches the template
 			//
-			throw new ImplementationException("verify_template_mp3_component_details");
+			Assert.assertTrue(prod.getMP3ComponentRedactionToggle().Enabled());
+			Assert.assertTrue(prod.getMP3_SelectRed_RedactionByAnnotation().Selected());
+			Assert.assertTrue(prod.getMP3_SelectAdvToggle().Enabled());
+			Assert.assertTrue(prod.getMP3AdvancedList().Enabled());
+			pass(dataMap, "verify_template_mp3_component_details");
 		} else {
-			throw new ImplementationException("NOT verify_template_mp3_component_details");
+			fail(dataMap,"NOT verify_template_mp3_component_details");
 		}
 
 	}
