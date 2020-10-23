@@ -6142,10 +6142,29 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("open_production_in_docview");
-		} else {
-			throw new ImplementationException("NOT open_production_in_docview");
+			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocView
+    			sessionSearch.getBulkActionButton().click();
+    			sessionSearch.getDocViewAction().click();
+    			DocViewPage docView = new DocViewPage(driver);
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Docview was opened");
 		}
+		else fail(dataMap, "docView was not opened");
 
 	}
 
@@ -6155,13 +6174,27 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5276 Verify Produced PDFs are being presented in the DocView for the documentTC6122 Verify Produced PDFs should be available for being presented in DocView for the document
-			//
-			//* Generate PDF image should load in Doc View
-			//
-			throw new ImplementationException("verify_produced_pdf_in_docview");
-		} else {
-			throw new ImplementationException("NOT verify_produced_pdf_in_docview");
+
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);
+			pass(dataMap, "PDF only has been verified");
 		}
+		else fail(dataMap, "Failed PDF only verification");
 
 	}
 
@@ -6171,10 +6204,27 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5276 Verify Produced PDFs are being presented in the DocView for the document
-			throw new ImplementationException("verify_produced_pdf_in_docview_with_pdf_only_production");
-		} else {
-			throw new ImplementationException("NOT verify_produced_pdf_in_docview_with_pdf_only_production");
+			DocViewPage docView = new DocViewPage(driver, 0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);
+			pass(dataMap, "PDF only has been verified");
 		}
+		else fail(dataMap, "Could not verify PDF only");
+
 
 	}
 
@@ -6195,8 +6245,6 @@ public class ProductionContext extends CommonContext {
 			
 			//Click Productions Button
 			sessionSearch.getProductionBtn().click();
-			
-			
 		}
 		else fail(dataMap, "Failed the advanced search");
 

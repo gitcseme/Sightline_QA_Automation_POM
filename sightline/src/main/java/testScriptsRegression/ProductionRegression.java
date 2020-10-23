@@ -6645,7 +6645,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_production_in_docview_Then_verify_produced_pdf_in_docview() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6656,6 +6656,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.login_to_new_production(true, dataMap);
+			dataMap.put("Test Case", "5276|6122");
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			dataMap.put("pdf", "true");
@@ -6665,9 +6666,11 @@ public class ProductionRegression extends RegressionBase {
 			context.open_production_in_docview(true, dataMap);
 			context.verify_produced_pdf_in_docview(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -6678,7 +6681,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_production_in_docview_Then_verify_produced_pdf_in_docview_with_pdf_only_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6689,6 +6692,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.login_to_new_production(true, dataMap);
+			dataMap.put("Test Case", "5276");
 			dataMap.put("dat", "true");
 			dataMap.put("pdf", "true");
 			context.complete_complex_production_component(true, dataMap);
