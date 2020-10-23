@@ -692,11 +692,15 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click redacted rectangle
 			//* Click 'Delete Selected' trashcan button
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			docView.getDocView_Annotate_DeleteIcon().click();
+			Thread.sleep(150000);
+			pass(dataMap, "deleted redaction");
 			//
-			throw new ImplementationException("rectangle_redaction_deleted");
-		} else {
-			throw new ImplementationException("NOT rectangle_redaction_deleted");
 		}
+		else fail(dataMap, "Could not delete redaction");
 
 	}
 
