@@ -2969,6 +2969,11 @@ public class ProductionContext extends CommonContext {
 
 
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
 			builder.moveToElement(prod.getComponentsMarkComplete().getWebElement()).perform();
 			prod.getComponentsMarkComplete().Click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -5907,14 +5912,26 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC5882 Verify Production Location for Production Root path/Production Directory/Load File Path/Volume Included/Production Component foldersVerify the Specify Production Location components are present
+			//TC5882 Verify Production Location for Production Root path/Production Directory/Load File Path/Volume Included/Production Component folders
+			//Verify the Specify Production Location components are present
 			//
 			//* Production Root Path
 			//* Production Directory
 			//* Load File Path
 			//* Volume Included
 			//
-			throw new ImplementationException("verify_production_location_component");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+			
+			String productionRootPath = prod.getProductionLocComponent(1).getText();
+			String productionDirectory = prod.getProductionLocComponent(2).getText();
+			String loadFilePath = prod.getProductionLocComponent(3).getText();
+			String volumeIncluded = prod.getProductionLocComponent(4).getText();
+			
+			Assert.assertEquals("Production Root Path:", productionRootPath);
+			Assert.assertEquals("Production Directory:", productionDirectory);
+			Assert.assertEquals("Load File Path:",loadFilePath);
+			Assert.assertEquals("Volume Included:", volumeIncluded);
 		} else {
 			throw new ImplementationException("NOT verify_production_location_component");
 		}
