@@ -247,6 +247,7 @@ public class DocViewPage {
     public DocViewPage(Driver driver, int i) {
     		this.driver = driver;
     }
+
     public DocViewPage(Driver driver){
 
         this.driver = driver;

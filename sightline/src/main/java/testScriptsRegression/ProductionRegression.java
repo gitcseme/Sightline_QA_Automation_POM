@@ -6359,7 +6359,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			context.remove_burn_redaction_on_mp3(true, dataMap);
 			context.mark_the_component_section_complete(true, dataMap);
@@ -6372,7 +6372,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6396,7 +6397,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("sheet_value", "DocID.MasterDateDateOnly");
 			dataMap.put("sheet_tab", "METADATA");
@@ -6435,7 +6436,7 @@ public class ProductionRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
 			context.on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			dataMap.put("prod_template", "3");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("dat_mapping_values", "Bates-BatesNumber-BatesNum.Bates-BeginingAttachBate-BeginningAttach.Bates-EndingBates-EndingBatesNum.Doc Basic-MasterDate-MasterDateField");
 			context.adding_multiple_dat_field_mappings(true, dataMap);
@@ -6449,7 +6450,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6457,7 +6459,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expanding_the_mp3_advanced_section_Then_verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6468,7 +6470,8 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("Test Case", "5927");
+			dataMap.put("uid", "automate.sqa3@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
@@ -6483,7 +6486,8 @@ public class ProductionRegression extends RegressionBase {
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
-		} finally { 
+		} finally {
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -6527,7 +6531,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive" ,"WIP"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_committed_production_found() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6560,7 +6564,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_complete_default_document_selection_When_mark_complete_default_priv_guard_Then_verify_production_location_component() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6570,11 +6574,20 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-			context.login_to_new_production(true, dataMap);
+			dataMap.put("Test Case", "5882");
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "automate.sqa3@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/Production/Home");
+			context.on_production_home_page(true, dataMap);
+			//context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
-			dataMap.put("native", "false");
-			dataMap.put("pdf", "true");
-			dataMap.put("tiff", "false");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			dataMap.put("prod_template", "false");
+			context.begin_new_production_process(true, dataMap);
 			context.complete_complex_production_component(true, dataMap);
 			context.marking_complete_the_next_available_bates_number(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
@@ -6594,7 +6607,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_select_mp3_redactions_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_and_click_the_save_as_template_button_for_created_production_and_begin_new_production_process_with_new_template_When_begin_new_production_process_Then_verify_template_mp3_component_details() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6603,7 +6616,7 @@ public class ProductionRegression extends RegressionBase {
 
 		dataMap.put("ExtentTest",test);
 
-		try {
+		try { 
 			context.login_to_new_production(true, dataMap);
 			context.select_mp3_redactions(true, dataMap);
 			dataMap.put("dat", "true");
@@ -6622,6 +6635,7 @@ public class ProductionRegression extends RegressionBase {
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
 			test.log(LogStatus.FATAL, e.getMessage());
+			e.printStackTrace();
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
 			context.close_browser(true, dataMap);
@@ -6631,7 +6645,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 	
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_production_in_docview_Then_verify_produced_pdf_in_docview() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6642,6 +6656,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.login_to_new_production(true, dataMap);
+			dataMap.put("Test Case", "5276|6122");
 			dataMap.put("dat", "true");
 			dataMap.put("native", "true");
 			dataMap.put("pdf", "true");
@@ -6666,7 +6681,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Pending"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_production_in_docview_Then_verify_produced_pdf_in_docview_with_pdf_only_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6677,6 +6692,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.login_to_new_production(true, dataMap);
+			dataMap.put("Test Case", "5276");
 			dataMap.put("dat", "true");
 			dataMap.put("pdf", "true");
 			context.complete_complex_production_component(true, dataMap);
@@ -6890,7 +6906,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_doc_in_doc_view_Then_verify_doc_view_images_tab_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6900,6 +6916,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8211");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -6911,9 +6928,11 @@ public class ProductionRegression extends RegressionBase {
 			context.open_doc_in_doc_view(true, dataMap);
 			context.verify_doc_view_images_tab_displayed(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -6960,7 +6979,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive" ,"Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_on_production_home_page_and_uncommit_last_production_and_navigate_to_session_search_page_When_open_doc_in_doc_view_Then_verify_doc_view_images_tab_not_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6970,6 +6989,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8211");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -6996,7 +7016,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_and_add_allproductionbatesranges_column_to_doc_and_on_production_home_page_and_uncommit_last_production_and_navigate_to_session_search_page_When_open_production_in_doc_list_Then_verify_allproductionbatesranges_not_displayed_on_uncommitted_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7006,6 +7026,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8210");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -7021,9 +7042,11 @@ public class ProductionRegression extends RegressionBase {
 			context.open_production_in_doc_list(true, dataMap);
 			context.verify_allproductionbatesranges_not_displayed_on_uncommitted_production(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
