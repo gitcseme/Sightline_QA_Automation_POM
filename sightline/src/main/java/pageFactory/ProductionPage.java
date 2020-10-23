@@ -703,7 +703,7 @@ public class ProductionPage {
 			
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
-		getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+		getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 

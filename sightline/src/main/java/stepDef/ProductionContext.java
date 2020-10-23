@@ -2521,7 +2521,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
 				String docID = (prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText()).split(" and")[0];
-				dataMap.put("docID", prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText());
+				dataMap.put("docID", docID);
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
@@ -5745,7 +5745,7 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//This is a collection of the following steps
 
-			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("uid", "qapau5@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			//sightline_is_launched
 			sightline_is_launched(true, dataMap);
@@ -5798,6 +5798,31 @@ public class ProductionContext extends CommonContext {
 
 			//waiting_for_production_to_be_complete
 			waiting_for_production_to_be_complete(true, dataMap);
+			
+			//Commit the production 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30); 
+			prod.getConfirmAndCommitProdLink().click();
+			
+			//Get bates for other contexts
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+			dataMap.put("prodBatesRange", prod.getProd_BatesRange().getText());
+			
+			//Loop to confirm production commit
+			String status = prod.getGeneratePostGenStatus().getText();
+			int i =0;
+			while(!status.equalsIgnoreCase("COMPLETED") && i++<10) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+
 			pass(dataMap, "Successfully finished the production generation process");
 		}
 		else fail(dataMap , "Could not finish the production generation process");
@@ -5985,6 +6010,10 @@ public class ProductionContext extends CommonContext {
 			//Use a past context: Selecting the production to help filter into our desired Production
 			dataMap.put("status", "COMPLETED");
 			dataMap.put("viewMode", "tile");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+
 			selecting_the_production(true, dataMap);
 
 			//Get our Target Production Tile and Click into it
@@ -6176,16 +6205,7 @@ public class ProductionContext extends CommonContext {
     			//Go to DocView
     			sessionSearch.getBulkActionButton().click();
 			sessionSearch.getDocViewAction().click();
-			
-			DocViewPage docView = new DocViewPage(driver);
 			driver.waitForPageToBeReady();
-			docView.getDocView_ImagesTab().click();
-
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
-
-			int totalImages = docView.getDocViewTotalImages().FindWebElements().size(); 
-			dataMap.put("totalImages", totalImages);
 			pass(dataMap, "opened in doc_view");
 		}
 		else fail(dataMap, "Could not open in doc_view");
@@ -6198,9 +6218,24 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should  show the produced TIFF/PDF for this uncommitted production
-			int images = (int)dataMap.get("totalImages");
-			Assert.assertTrue(images!=0);
-			pass(dataMap, "Verified doc view images tab");
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);		
+			pass(dataMap, "Found our TIFF/PDF from image tab");
 		}
 		else fail(dataMap, "Could not verify doc view images tab");
 
@@ -6264,11 +6299,24 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
 
-			int images = (int)dataMap.get("totalImages");
-			//Make sure images are not showing 
-			assertEquals(0, images);
-			pass(dataMap, "verified that images tab was not displayed");
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we didnt find it
+			Assert.assertFalse(foundPDF);		
+			pass(dataMap, "TIFF/PDF from image tab not found");
 		}
 		else fail(dataMap, "could not verify that images tab was not displayed");
 
@@ -6307,6 +6355,17 @@ public class ProductionContext extends CommonContext {
 			docList.getDocListAddToSelectedButton().click();
 			docList.getDocListSelectColumnOkButton().click();
 			driver.waitForPageToBeReady();
+			int tarIndex = 0;
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
+			}
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("bates1", batesRange);
+			System.out.println(batesRange);
+
 			pass(dataMap,  "Successfully added column AllProductionBatesRange");
 		}
 		else fail(dataMap,  "Could not add column AllProductionBatesRange");
@@ -6329,6 +6388,7 @@ public class ProductionContext extends CommonContext {
 				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
 				i++;
 			}
+			//Grab our document's allBatesrange and save in map for verification later
 			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
 			dataMap.put("batesRange", batesRange);
 			pass(dataMap, "Opened successfully in docList");
@@ -6347,8 +6407,10 @@ public class ProductionContext extends CommonContext {
 			//TC8210 Verify that 'AllProductionBatesRanges' should not show for uncommitted production
 			//Make sure batesRange is empty string
 			String batesRange = (String)dataMap.get("batesRange");
-			Assert.assertTrue(batesRange.equals(""));
-			pass(dataMap, "AllProductionBatesRange is not showing");
+			String prodBatesRange =  (String)dataMap.get("prodBatesRange");
+			//Make sure AllBatesRange does not have the batesRange we uncommited
+			Assert.assertFalse(batesRange.contains(prodBatesRange));
+			pass(dataMap, "AllProductionBatesRange is not showing uncommited bates");
 
 		}
 		else fail(dataMap, "AllProductionBatesRange is showing");
