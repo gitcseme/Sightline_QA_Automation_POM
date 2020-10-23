@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -53,6 +54,7 @@ public class IngestionPage {
     public Element getOtherLoadFile(){ return driver.FindElementById("ddlLoadOtherfile"); }
     public Element getOtherFilePathFieldinDAT(){ return driver.FindElementById("ddlFilesPathOther"); }
     public Element getAddButton(){ return driver.FindElementById("AddButton"); }
+    public Element getMappingSourceFieldByRow(int i) {return driver.FindElementById(String.format("SF_%s", i));}
     public Element getMappingSOURCEFIELD1(){ return driver.FindElementById("SF_1"); }
     public Element getMappingSOURCEFIELD2(){ return driver.FindElementById("SF_2"); }
     public Element getMappingSOURCEFIELD3(){ return driver.FindElementById("SF_3"); }
@@ -98,6 +100,9 @@ public class IngestionPage {
     public Element getMappingFIELDCAT50(){ return driver.FindElementById("TY_50"); }
     public Element getMappingFIELDCAT51(){ return driver.FindElementById("TY_51"); }
    
+    public Element getMappingDestinationFieldByRow(int i) {return driver.FindElementById(String.format("DF_%s",i));}
+    public Element getAsterickFields(int i) {return driver.FindElementById(String.format("MN_%s", i));}
+
     public Element getMappingDESTINATIONFIELD1(){ return driver.FindElementById("DF_1"); }
     public Element getMappingDESTINATIONFIELD2(){ return driver.FindElementById("DF_2"); }
     public Element getMappingDESTINATIONFIELD3(){ return driver.FindElementById("DF_3"); }
@@ -370,7 +375,8 @@ public class IngestionPage {
     
 	public Element getFirstGearBtn() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/a/i ");}
     public Element getCopyOptionButtonPublished() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/dl/dt[3]");}
-
+    
+    public Element getFailedStatusDetailText() {return driver.FindElementByXPath("//*[text() = 'Ingestion Type :']/../following-sibling::*/label/following-sibling::*");}
     public Element getSourceFolderLoadingText() { return driver.FindElementByXPath("//select[@id='ddlFolders']/option[contains(text(), 'Loading')]"); }
     public Element getIngestionCardTitle(String ingestionName) { return driver.FindElementByXPath("//span[@title='"+ingestionName+"']"); }
     public Element getIngestionPopup() { return driver.FindElementByCssSelector(".smart-form.client-form.ingestionPopup"); }
@@ -392,8 +398,19 @@ public class IngestionPage {
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     
+    public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
+    public Element getCopiedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Copyingblock\"]/div[1]/div/div[4]/span/a"); }
+    public Element getIndexedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Indexingblock\"]/div[1]/div/div[6]/span/a"); }
+    public ElementCollection getErrorsTable() {return driver.FindElementsByXPath( "//*[@id=\"myDataTable\"]/tbody/tr");}
+    public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
+    public Element getIngestHelpPopUpTitle() {return driver.FindElementByCssSelector(".popover-title");}
+    public Element getIngestHelpPopUp() {return driver.FindElementByCssSelector(".popover-title");}
+    public Element getIngestWizardSystemAndIngestTypeHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-9']/a");}
+    public Element getIngestWizardConfigureMappingHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-7']/a");}
+    public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
+    public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
+    public Element getIngestionHomePageTitle() {return driver.FindElementByXPath("//h1[@class='page-title']");}
 
-    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
@@ -509,7 +526,7 @@ public class IngestionPage {
         				getSpecifySourceFolder().Displayed()  ;}}), Input.wait30);
 
     	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    	    				(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
+    	    				!(getSpecifyLocation().selectFromDropdown().getFirstSelectedOption().getText().equals("Select")) ;}}), Input.wait30); 
     	    		
     	    		getSpecifySourceFolder().SendKeys(dataMap.get("source_folder").toString());    		
     	    	}
@@ -1593,4 +1610,3 @@ public class IngestionPage {
     }
     
 } 
- 
