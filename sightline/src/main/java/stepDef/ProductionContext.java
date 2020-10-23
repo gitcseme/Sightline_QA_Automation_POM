@@ -8270,12 +8270,9 @@ public class ProductionContext extends CommonContext {
 			//* Set the production set back to the original. 
 			prod.clickProductionSetByIndex(0);
 
-			//
 			pass(dataMap, "The production home page is displayed correctly");
-//			logTestResult(dataMap,dataMap.get("Test Case").toString(),"pass", "The production home page is displayed correctly");
 		} else {
 			fail(dataMap, "The production home page is not displayed correctly");
-//			logTestResult(dataMap,dataMap.get("Test Case").toString(),"fail", "The production home page is not displayed correctly");
 		}
 
 	}
@@ -8366,7 +8363,7 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
-			prod.getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
 
 			driver.waitForPageToBeReady();
 
@@ -8410,15 +8407,17 @@ public class ProductionContext extends CommonContext {
 			prod.getProductionName().sendKeys(String.valueOf(randomNumbers));
 
 			//Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
-			long sevenHours = 3600*1000*7; //in milli-seconds
+			long sevenHours = 3600*1000*7; //in milli-seconds.  The server time is ahead 7 hours.
+			int offset = 5000; //for some reason the timestamp of when you click "save" or "mark complete" is behind by 5 sec. I use this value to account for that.
+
 			if(dataMap.get("save_option").toString().equals("save")){
 				prod.getSaveButton().click();
-				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours));
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
 				dataMap.put("newTimeStamp", newTimeStamp);
 				pass(dataMap, "Opened the production created and edited the name then saved");
 			} else if(dataMap.get("save_option").toString().equals("markcomplete")){
 				prod.getMarkCompleteLink().click();
-				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours));
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
 				dataMap.put("newTimeStamp", newTimeStamp);
 				pass(dataMap, "Opened the production created and edited the name then marked complete");
 			}
@@ -8449,7 +8448,7 @@ public class ProductionContext extends CommonContext {
 			//TC 7739 / 7740
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
-			prod.getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
 
 			driver.waitForPageToBeReady();
 
