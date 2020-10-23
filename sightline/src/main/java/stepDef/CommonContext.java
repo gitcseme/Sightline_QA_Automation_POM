@@ -239,6 +239,17 @@ public class CommonContext {
 			//* Batch Print page is displayed
 			//
 			batchPrint = new BatchPrintPage(driver);
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+		    
+		    if (scriptState) {
+		    	String url = (String) dataMap.get("URL");
+		    		webDriver.get(url+"/BatchPrint/");
+		    		
+		    } else {
+		    		webDriver.get("http://www.google.com");
+		    }
+
+		    driver.waitForPageToBeReady();
 		} else {
 			throw new ImplementationException("NOT on_batch_print_page");
 		}

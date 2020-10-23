@@ -234,8 +234,8 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
+//					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
 					
 					// Check if "Other Exception File Types" field is shown
 					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
@@ -863,9 +863,19 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_tag");
+			batchPrint.getTagsRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					batchPrint.getSelectAllTagsExpandFolder().Enabled()  ;}}), Input.wait30);
+			batchPrint.getSelectAllTagsExpandFolder().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getDefaulTags().Visible()  ;}}), Input.wait30);
+			batchPrint.getDefaulTags().click();
+			
+			batchPrint.getNextbtn().Click();
+			pass(dataMap, "select_tag");
 		} else {
-			throw new ImplementationException("NOT select_tag");
+			fail(dataMap, "NOT select_tag");
 		}
 
 	}
@@ -1172,6 +1182,8 @@ public class BatchPrintContext extends CommonContext {
 			//* Verify Slip Sheet fields and Export Format for selected tag
 			//
 			//
+			
+			driver.waitForPageToBeReady();
 			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_tag");
 		} else {
 			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_tag");

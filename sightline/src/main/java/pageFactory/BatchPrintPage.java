@@ -138,6 +138,7 @@ public class BatchPrintPage {
     public Element getSearchSelectFile(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]//li[1]/a"); }
     public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectTagRadioButton']/following-sibling::i"); }
     public Element getSelectAllTagsExpandFolder(){ return driver.FindElementByXPath("//*[@id=\"tagTree\"]/ul/li/i"); }
+    public Element getDefaulTags() { return driver.FindElementByXPath("//*[@class='jstree-children']/li[4]/a[1]/i[1]"); }
     public Element get0Docs() { return driver.FindElementByXPath("//*[@class='jstree-children']/li[1]/a[1]/i[1]"); }
     public Element get0DocsAnalysisTitleText() { return driver.FindElementByXPath("//*[@id=\"view-content\"]/div[3]/div/div/div/div/h4"); }
     public Element get0DocsAnalysisText() { return driver.FindElementByXPath("//*[@id=\"view-content\"]/div[3]/div/div/div/div/div"); }
