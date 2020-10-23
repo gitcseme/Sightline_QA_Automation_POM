@@ -147,8 +147,9 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click 'Saved with SG1' search group
+			String securityGroup = (String)dataMap.get("security_group");
 			SavedSearch savedSearch = new SavedSearch(driver,0);
-			savedSearch.getSavedSearchGroupName("SG1").click();
+			savedSearch.getSavedSearchGroupName(securityGroup).click();
 			driver.waitForPageToBeReady();
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
@@ -554,7 +555,10 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			docView.redactbyrectangle(100, 10, 0, "SGSame1");
+			 Actions actions = new Actions(driver.getWebDriver());  
+             WebElement text = docView.getDocView_Redactrec_textarea();
+             actions.moveToElement(text, 100,10).clickAndHold().moveByOffset(100, 10).release().perform();
+			pass(dataMap, "placed redaction");
 		}
 		else fail(dataMap, "couldn't place redaction");
 
@@ -568,15 +572,10 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//Grab our default tag and compare with expected value. 
-			//Default tag will be different based on the security group specified. In this case SG1 security group produces the default tag of "SGSame1"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
 			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
-			String securityGroup = (String)dataMap.get("security_group");
-			if(securityGroup.equalsIgnoreCase("SG1")){
-				Assert.assertEquals(defaultTag, "SGSame1");
-			}
-			else if(securityGroup.equalsIgnoreCase("Default Security Group")){
-				Assert.assertEquals(defaultTag, "Default Redaction Tag");
-			}
+			Assert.assertEquals(defaultTag, "Default Redaction Tag");
 			pass(dataMap, "The default tag was selected");
 		}
 		else fail(dataMap, "Verify default redaction tag not selected");
@@ -773,10 +772,9 @@ public class DocViewContext extends CommonContext {
 			//
 			//* 'Default Redaction Tag' does not exist
 			//
-			throw new ImplementationException("default_redaction_tag_does_not_exist");
-		} else {
-			throw new ImplementationException("NOT default_redaction_tag_does_not_exist");
+			pass(dataMap, "This is a script where a default redaction does not exist");
 		}
+		else fail(dataMap, "default redaction must exist");
 
 	}
 
@@ -789,10 +787,13 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Verify another tag aside from 'Default Redaction Tag' is selected
 			//
-			throw new ImplementationException("verify_alternate_redaction_tag_selected");
-		} else {
-			throw new ImplementationException("NOT verify_alternate_redaction_tag_selected");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
+			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+			Assert.assertFalse(defaultTag.equals("Default Redaction Tag"));
+			pass(dataMap, "verified alternate redaction tag");
 		}
+		else fail(dataMap, "could not verify alternate redaction tag");
 
 	}
 
