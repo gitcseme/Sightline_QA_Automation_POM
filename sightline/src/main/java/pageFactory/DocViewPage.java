@@ -228,6 +228,7 @@ public class DocViewPage {
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
     public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level0").getWebElement(); }
+    public ElementCollection getExistingRectangleRedactions() {return driver.FindElementsByCssSelector(".igViewerGraphics g rect[style = 'opacity: 0.5;']");}
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
@@ -244,6 +245,7 @@ public class DocViewPage {
     public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
     public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
     public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+    public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
     
     
     //Constructor to just use the object instead of navigating to a new page

@@ -19,6 +19,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.hssf.record.formula.functions.Count;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -94,11 +95,16 @@ public class DocViewContext extends CommonContext {
 			Actions builder = new Actions(driver.getWebDriver());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getGreyRedactButton().Displayed()  ;}}), Input.wait30); 
-
+			
+			//Move to grey button and click
 			builder.moveToElement(docView.getGreyRedactButton().getWebElement()).perform();;
 			Thread.sleep(2000);
 			docView.getGreyRedactButton().click();
+
 			driver.waitForPageToBeReady();
+			int originalRedactionCount = docView.getExistingRectangleRedactions().FindWebElements().size();
+			dataMap.put("originalRedactionCount", originalRedactionCount);
+
 			pass(dataMap, "Clicked grey redact button");
 		}
 		else fail(dataMap, "Clicked the grey redact tool");
@@ -491,7 +497,9 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
-			docView.redactbyrectangle(0, 0, 0, "SGSame1");
+
+			//Using consilio's method, these parameters seem to work well
+			docView.redactbyrectangle(100, 10, 0, "SGSame1");
 
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
 			docView.getDocViewSaveRedactionButton().click();
@@ -746,14 +754,13 @@ public class DocViewContext extends CommonContext {
 			driver.getWebDriver().navigate().refresh();
 			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getDocView_Redactrec_textarea().isDisplayed() ;}}), Input.wait30); 
-			Thread.sleep(5000);
-			Actions builder = new Actions(driver.getWebDriver());
-			builder.moveToElement(docView.getDocView_Redactrec_textarea(), 0, 0).click().build().perform();
-			Thread.sleep(5000);
-			
-			pass(dataMap, "verified rectangle redaction");
+				docView.getExistingRectangleRedactions().size()!=0 ;}}), Input.wait30); 
 
+			//Just make sure that the original Redcation count we recorded before we added the redaction, is 1 less than the new count after we added a redaction
+			int originalRedactionCount = (int)dataMap.get("originalRedactionCount");
+			int currentRedactionCount = docView.getExistingRectangleRedactions().FindWebElements().size();
+			Assert.assertEquals(currentRedactionCount,originalRedactionCount+1);
+			pass(dataMap, "verified rectangle redaction");
 		}
 		else fail(dataMap, "could not verify rectangle_redaction");
 
