@@ -646,7 +646,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = { "Ingestion", "Positive"   })
+	@Test(groups = { "Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_add_a_new_ingestion_btn_is_clicked_When_click_source_system_dropdown_Then_verify_source_system_displays_expected_options()
 			throws Throwable {
 		HashMap dataMap = new HashMap();
@@ -658,6 +658,8 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
@@ -6160,7 +6162,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_new_ingestion_created_and_login_as_pau_and_on_ingestion_home_page_When_click_back_button_Then_verify_back_button_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7771,6 +7773,1200 @@ public class IngestionRegression extends RegressionBase {
 			context.click_run_ingest_button(true, dataMap);
 			context.run_ingestion_analytics(true, dataMap);
 			context.verify_analysis_is_completed_by_the_time_specified(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_12_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{12} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYMMDD HHMISS.dat");
+			dataMap.put("ingestionindex", "12");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_13_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{13} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY_Slash.dat");
+			dataMap.put("ingestionindex", "13");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_14_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{14} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY_Slash.dat");
+			dataMap.put("ingestionindex", "14");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MMDDYYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_15_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{15} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY.dat");
+			dataMap.put("ingestionindex", "15");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DDMMYYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_16_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{16} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY.dat");
+			dataMap.put("ingestionindex", "16");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/MM/DD");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_17_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{17} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYMMDD_Slash.dat");
+			dataMap.put("ingestionindex", "17");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/DD/MM");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_18_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{18} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYDDMM_Slash.dat");
+			dataMap.put("ingestionindex", "18");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY HHMI");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_19_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{19} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY HHMI.dat");
+			dataMap.put("ingestionindex", "19");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY HHMI");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_20_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{20} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY HHMI.dat");
+			dataMap.put("ingestionindex", "20");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY HHMISS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_21_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{21} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY HHMISS.dat");
+			dataMap.put("ingestionindex", "21");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY HHMISS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_22_and_click_preview_run_button_and_click_run_ingest_button_When_click_error_count_Then_verify_ingestion_displays_error_for_unmatched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{22} and click_preview_run_button and click_run_ingest_button When click_error_count Then verify_ingestion_displays_error_for_unmatched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY HHMISS.dat");
+			dataMap.put("ingestionindex", "22");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/MM/DD HHMMSS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			//dataMap.put("testCaseID", "TC10124, 10125, 10126, 10127, 10128, 10129, 10133, 10134, 10135, 10136, 10137");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.click_error_count(true, dataMap);
+			context.verify_ingestion_displays_error_for_unmatched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_1_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{1} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYMMDD HHMISS.dat");
+			dataMap.put("ingestionindex", "1");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/MM/DD HHMMSS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			//dataMap.put("testCaseID", "TC10138, 10139, 10140, 10141, 10142, 10143, 10144, 10145, 10146, 10147, 10148");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_2_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{2} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY_Slash.dat");
+			dataMap.put("ingestionindex", "2");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_3_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{3} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY_Slash.dat");
+			dataMap.put("ingestionindex", "3");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_4_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{4} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY.dat");
+			dataMap.put("ingestionindex", "4");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MMDDYYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_5_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{5} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY.dat");
+			dataMap.put("ingestionindex", "5");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DDMMYYYY");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_6_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{6} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYMMDD_Slash.dat");
+			dataMap.put("ingestionindex", "6");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/MM/DD");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_7_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{7} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_YYYYDDMM_Slash.dat");
+			dataMap.put("ingestionindex", "7");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "YYYY/DD/MM");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_8_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{8} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY HHMI.dat");
+			dataMap.put("ingestionindex", "8");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY HHMI");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_9_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{9} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY HHMI.dat");
+			dataMap.put("ingestionindex", "9");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY HHMI");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_10_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{10} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_MMDDYYYY HHMISS.dat");
+			dataMap.put("ingestionindex", "10");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYYY HHMISS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_11_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_is_successful_for_matched_dates() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created_{11} and click_preview_run_button When click_run_ingest_button Then verify_ingestion_is_successful_for_matched_dates");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "DAT_DDMMYYYY HHMISS.dat");
+			dataMap.put("ingestionindex", "11");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "DD/MM/YYYY HHMISS");
+			dataMap.put("doc_key", "SourceDocID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created_(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.verify_ingestion_is_successful_for_matched_dates(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_add_a_new_ingestion_btn_is_clicked_Then_verify_source_system_displays_expected_options() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When add_a_new_ingestion_btn_is_clicked Then verify_source_system_displays_expected_options");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.verify_source_system_displays_expected_options(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When click_help_icon Then verify_tool_tips_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.click_help_icon(true, dataMap);
+			context.verify_tool_tips_are_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created When click_help_icon Then verify_tool_tips_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_help_icon(true, dataMap);
+			context.verify_tool_tips_are_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_doc_basic_displays_expected_options() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When new_ingestion_created Then verify_doc_basic_displays_expected_options");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.verify_doc_basic_displays_expected_options(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_configure_mapping_is_populated_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When new_ingestion_created Then verify_configure_mapping_is_populated_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.verify_configure_mapping_is_populated_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_ingestion_status_detail_page() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When new_ingestion_created Then verify_ingestion_status_detail_page");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "failed_loadfile.dat");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.verify_ingestion_status_detail_page(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_next_button_Then_verify_configure_mapping_is_disabled() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When click_next_button Then verify_configure_mapping_is_disabled");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.add_a_new_ingestion_btn_is_clicked(true, dataMap);
+			context.click_next_button(true, dataMap);
+			context.verify_configure_mapping_is_disabled(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_open_ingestion_details_page_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and new_ingestion_created and click_preview_run_button and click_run_ingest_button and open_ingestion_details_page When click_help_icon Then verify_tool_tips_are_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_help_icon(true, dataMap);
+			context.verify_tool_tips_are_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	public void test_Given_verify_configure_mapping_is_populated_correctly_When_click_back_button_Then_verify_back_button_works_as_expected() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given verify_configure_mapping_is_populated_correctly When click_back_button Then verify_back_button_works_as_expected");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("dat_load_file", "loadfile.dat");
+			dataMap.put("source_folder", "SQA_Default_Automation");
+			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
+			dataMap.put("date_time", "MM/DD/YYY");
+			dataMap.put("doc_key", "DOCID");
+			dataMap.put("source_system", "ICE");
+			context.new_ingestion_created(true, dataMap);
+			context.verify_configure_mapping_is_populated_correctly(true, dataMap);
+			context.click_back_button(true, dataMap);
+			context.verify_back_button_works_as_expected(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_date_time_drodpdown_Then_verify_date_time_displays_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page When click_date_time_drodpdown Then verify_date_time_displays_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			context.click_date_time_drodpdown(true, dataMap);
+			context.verify_date_time_displays_correctly(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
