@@ -1,5 +1,6 @@
 package stepDef;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
@@ -588,10 +589,15 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4828 Verify that when redaction control in red "on" state, if the icon is clicked again by the user, it must revert to an "off" state
-			throw new ImplementationException("verify_redaction_control_in_off_state");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_control_in_off_state");
+			String color = "";
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					color = x.getCssValue("color");
+				}
+			}
+			Assert.assertEquals(color, "rgba(118, 115, 115, 1)");
 		}
+		else fail(dataMap, "Color was not in off state");
 
 	}
 
