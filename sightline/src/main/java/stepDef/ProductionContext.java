@@ -32,8 +32,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
-
+import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -1534,12 +1536,10 @@ public class ProductionContext extends CommonContext {
 				//Deselect Filters we dont want
 				for(int i =1; i<=4; i++) {
 					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
-					Thread.sleep(1000);
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				prod.getFilterByButton().Click();
-				Thread.sleep(1000);
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -2521,6 +2521,8 @@ public class ProductionContext extends CommonContext {
 				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
+				String docID = (prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText()).split(" and")[0];
+				dataMap.put("docID", docID);
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
@@ -4283,7 +4285,7 @@ public class ProductionContext extends CommonContext {
 			String status = prod.getGeneratePostGenStatus().getText();
 			//Loop to wait for Post Generation check complete
 			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<20) {
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<30) {
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
@@ -5860,20 +5862,23 @@ public class ProductionContext extends CommonContext {
 	public void login_to_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps: sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
-			sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			//This is a collection of the following steps
+
+			dataMap.put("uid", "automate.sqa3@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
-			login_as_pau(true, dataMap);
-			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/Production/Home");
-			on_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "false");
-			begin_new_production_process(true, dataMap);
+			//sightline_is_launched
+			sightline_is_launched(true, dataMap);
 			
-			pass(dataMap,"login_to_new_production");
-		} else {
-			fail(dataMap,"NOT login_to_new_production");
+			login_as_pau(true, dataMap);
+
+			//login_as_pauon_production_home_page
+			on_production_home_page(true, dataMap);
+
+			//begin_new_production_process
+			begin_new_production_process(true, dataMap);
+			pass(dataMap, "Succesfully fnished the login - > to new production process");
 		}
+		else fail(dataMap, "Can not finish the login to production process");
 
 	}
 
@@ -5882,11 +5887,64 @@ public class ProductionContext extends CommonContext {
 	public void the_production_generation_is_started_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
-			throw new ImplementationException("the_production_generation_is_started_with_the_given_production_component");
-		} else {
-			throw new ImplementationException("NOT the_production_generation_is_started_with_the_given_production_component");
+			//This will generate the production with the given production component. This is collection of the following steps: 
+
+			
+			//data for our custom 
+			dataMap.put("prefix", "G");
+			dataMap.put("min_length", "8");
+			dataMap.put("beginning_bates", "6");
+			dataMap.put("suffix", "Z");
+			
+			//Need Custom Bates Number or generartion will fail due to duplicate
+			custom_number_and_sorting_is_added(true, dataMap);
+			//complete_default_numbering_and_sorting(scriptState, dataMap);
+
+			//complete_default_document_selection 
+			complete_default_document_selection(true, dataMap);
+
+			//mark_complete_default_priv_guard
+			mark_complete_default_priv_guard(true, dataMap);
+
+			//complete_default_production_location_component
+			complete_default_production_location_component(true, dataMap);
+
+			//completed_summary_preview_component
+			completed_summary_preview_component(true, dataMap);
+
+			//starting_the_production_generation
+			starting_the_production_generation(true, dataMap);
+
+			//waiting_for_production_to_be_complete
+			waiting_for_production_to_be_complete(true, dataMap);
+			
+			//Commit the production 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30); 
+			prod.getConfirmAndCommitProdLink().click();
+			
+			//Get bates for other contexts
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+			dataMap.put("prodBatesRange", prod.getProd_BatesRange().getText());
+			
+			//Loop to confirm production commit
+			String status = prod.getGeneratePostGenStatus().getText();
+			int i =0;
+			while(!status.equalsIgnoreCase("COMPLETED") && i++<10) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+
+			pass(dataMap, "Successfully finished the production generation process");
 		}
+		else fail(dataMap , "Could not finish the production generation process");
 
 	}
 
@@ -6068,10 +6126,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Search > Session Search in navigation bar
-			throw new ImplementationException("navigate_to_session_search_page");
-		} else {
-			throw new ImplementationException("NOT navigate_to_session_search_page");
+			prod.getProdSearchMenuButton();
+			prod.getProdSessionSearchButton();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Navigated to session Search, and searched for our production");
+
 		}
+		else fail(dataMap, "Could not get to the Session search page");
 
 	}
 
@@ -6123,10 +6184,21 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Switch to Advanced'Search by 'Work Product' > 'Productions' > 'Already Produced'
-			throw new ImplementationException("advanced_search_for_production");
-		} else {
-			throw new ImplementationException("NOT advanced_search_for_production");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String prodName = (String)dataMap.get("production_name");
+			
+			//Click Advanced Search
+			sessionSearch.getAdvancedSearchLink().click();
+			
+			//Click Work Product Button
+			sessionSearch.getWorkproductBtn().click();
+			
+			//Click Productions Button
+			sessionSearch.getProductionBtn().click();
+			
+			
 		}
+		else fail(dataMap, "Failed the advanced search");
 
 	}
 
@@ -6135,11 +6207,33 @@ public class ProductionContext extends CommonContext {
 	public void uncommit_last_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("uncommit_last_production");
-		} else {
-			throw new ImplementationException("NOT uncommit_last_production");
+			
+			//Use a past context: Selecting the production to help filter into our desired Production
+			dataMap.put("status", "COMPLETED");
+			dataMap.put("viewMode", "tile");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+
+			selecting_the_production(true, dataMap);
+
+			//Get our Target Production Tile and Click into it
+			WebElement targetProd =  prod.getProductionTileByName((String)dataMap.get("production_name"));
+			targetProd.click();
+			
+			//Uncommit and wait for popup
+			prod.getProd_Uncommitbutton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getMP3WarningBox().Displayed()  ;}}), Input.wait30); 
+
+			//Refresh page, and verify commit button is now present rather than uncommit
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(prod.getConfirmProductionCommit().Displayed());
+			pass(dataMap, "Production was uncommited successfully");
+
 		}
+		else fail(dataMap, "Production was not uncommited");
 
 	}
 
@@ -6295,11 +6389,27 @@ public class ProductionContext extends CommonContext {
 	public void open_doc_in_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("open_doc_in_doc_view");
-		} else {
-			throw new ImplementationException("NOT open_doc_in_doc_view");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocView
+    			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getDocViewAction().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "opened in doc_view");
 		}
+		else fail(dataMap, "Could not open in doc_view");
 
 	}
 
@@ -6308,11 +6418,27 @@ public class ProductionContext extends CommonContext {
 	public void verify_doc_view_images_tab_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_displayed");
+			//TC8211 Verify that DocView Images tab should  show the produced TIFF/PDF for this uncommitted production
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);		
+			pass(dataMap, "Found our TIFF/PDF from image tab");
 		}
+		else fail(dataMap, "Could not verify doc view images tab");
 
 	}
 
@@ -6374,10 +6500,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_not_displayed");
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we didnt find it
+			Assert.assertFalse(foundPDF);		
+			pass(dataMap, "TIFF/PDF from image tab not found");
 		}
+		else fail(dataMap, "could not verify that images tab was not displayed");
 
 	}
 
@@ -6387,10 +6529,47 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
-			throw new ImplementationException("add_allproductionbatesranges_column_to_doc");
-		} else {
-			throw new ImplementationException("NOT add_allproductionbatesranges_column_to_doc");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocList
+    			sessionSearch.getBulkActionButton().click();
+    			sessionSearch.getDocListAction().click();
+			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+
+			//Add Column -> AllProductionBatesRange
+			docList.getDocListSelectColumnButton().click();
+			docList.getDocListMetaDataColumnCheckBoxByName("AllProductionBatesRanges").click();
+			docList.getDocListAddToSelectedButton().click();
+			docList.getDocListSelectColumnOkButton().click();
+			driver.waitForPageToBeReady();
+			int tarIndex = 0;
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
+			}
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("bates1", batesRange);
+			System.out.println(batesRange);
+
+			pass(dataMap,  "Successfully added column AllProductionBatesRange");
 		}
+		else fail(dataMap,  "Could not add column AllProductionBatesRange");
 
 	}
 
@@ -6399,11 +6578,24 @@ public class ProductionContext extends CommonContext {
 	public void open_production_in_doc_list(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Use generated production name to open the PDF in Doc View
-			throw new ImplementationException("open_production_in_doc_list");
-		} else {
-			throw new ImplementationException("NOT open_production_in_doc_list");
+			SessionSearch search = new SessionSearch(driver);
+			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+			int tarIndex = 0;
+			
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
+			}
+			//Grab our document's allBatesrange and save in map for verification later
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("batesRange", batesRange);
+			pass(dataMap, "Opened successfully in docList");
+			
 		}
+		else pass(dataMap, "Couldnt open in docList");
 
 	}
 
@@ -6412,11 +6604,17 @@ public class ProductionContext extends CommonContext {
 	public void verify_allproductionbatesranges_not_displayed_on_uncommitted_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC8210 Verify that 'AllProductionBatesRanges' should not show for uncommitted production
-			throw new ImplementationException("verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
-		} else {
-			throw new ImplementationException("NOT verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
+			//Make sure batesRange is empty string
+			String batesRange = (String)dataMap.get("batesRange");
+			String prodBatesRange =  (String)dataMap.get("prodBatesRange");
+			//Make sure AllBatesRange does not have the batesRange we uncommited
+			Assert.assertFalse(batesRange.contains(prodBatesRange));
+			pass(dataMap, "AllProductionBatesRange is not showing uncommited bates");
+
 		}
+		else fail(dataMap, "AllProductionBatesRange is showing");
 
 	}
 

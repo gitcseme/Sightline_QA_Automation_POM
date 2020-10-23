@@ -6902,7 +6902,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_When_open_doc_in_doc_view_Then_verify_doc_view_images_tab_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6912,6 +6912,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8211");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -6923,9 +6924,11 @@ public class ProductionRegression extends RegressionBase {
 			context.open_doc_in_doc_view(true, dataMap);
 			context.verify_doc_view_images_tab_displayed(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -6972,7 +6975,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive" ,"Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_on_production_home_page_and_uncommit_last_production_and_navigate_to_session_search_page_When_open_doc_in_doc_view_Then_verify_doc_view_images_tab_not_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6982,6 +6985,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8211");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -7008,7 +7012,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_and_navigate_to_session_search_page_and_add_allproductionbatesranges_column_to_doc_and_on_production_home_page_and_uncommit_last_production_and_navigate_to_session_search_page_When_open_production_in_doc_list_Then_verify_allproductionbatesranges_not_displayed_on_uncommitted_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7018,6 +7022,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "8210");
 			context.login_to_new_production(true, dataMap);
 			dataMap.put("dat", "true");
 			dataMap.put("native", "false");
@@ -7033,9 +7038,11 @@ public class ProductionRegression extends RegressionBase {
 			context.open_production_in_doc_list(true, dataMap);
 			context.verify_allproductionbatesranges_not_displayed_on_uncommitted_production(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

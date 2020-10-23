@@ -646,6 +646,9 @@ public class ProductionPage {
     public Element getMP3RedactionsDefaultAutomation() { return driver.FindElementByXPath("//*[@id='MP3RedactiontreeFolder']//a[@id='7_anchor' and @data-content='Default Automation Redaction']"); }    
     public Element getMP3RedactionStyleValue() { return driver.FindElementById("lstFillerAudio"); }
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
+    public Element getProdSearchMenuButton() {return driver.FindElementById("3");}
+    public Element getProdSessionSearchButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
     public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
 
