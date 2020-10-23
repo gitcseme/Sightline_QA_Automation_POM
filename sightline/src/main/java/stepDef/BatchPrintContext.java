@@ -1,15 +1,22 @@
 package stepDef;
 
 import java.io.File;
+import java.io.FileInputStream;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.List;
 import java.util.Random;
-
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -44,20 +51,7 @@ public class BatchPrintContext extends CommonContext {
 	 */
 
 
-	@And("^.*(\\[Not\\] )? on_batch_print_page$")
-	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			//* User navigates to Batch Print page (/BatchPrint)
-			//* Batch Print page is displayed
-			//
-			throw new ImplementationException("on_batch_print_page");
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
-
-	}
 
 
 	@And("^.*(\\[Not\\] )? select_source_selection$")
@@ -81,7 +75,21 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_basis_for_printing");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBasisForPrintingHeader().Visible()  ;}}), Input.wait30);
+				if (dataMap.containsKey("basis_for_printing")) {
+					if (dataMap.get("basis_for_printing").equals("Native")) {
+						
+						// Click next button since native is selected by default
+						batchPrint.getBasisForPrintingNextButton().click();
+					}
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_basis_for_printing");
 		}
@@ -118,9 +126,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4396 Verify user can see the saved searches on Source Selection tab of Batch Print
-			throw new ImplementationException("verify_saved_searches_on_source_selection_tab");
+			batchPrint.getMySavedSearchArrow().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					batchPrint.getSelectSavedSearchRows().Displayed()  ;}}), Input.wait30);
+
+			pass(dataMap, "Saved search are displayed on the Source Selection tab of Batch Print");
 		} else {
-			throw new ImplementationException("NOT verify_saved_searches_on_source_selection_tab");
+			fail(dataMap, "Saved search are not displayed on the Source Selection tab of Batch Print");
 		}
 
 	}
@@ -135,7 +147,30 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_less_than_250");
+			try {
+				
+				if (dataMap.containsKey("select")) {
+
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
 		}
@@ -151,7 +186,16 @@ public class BatchPrintContext extends CommonContext {
 			//* Selet analysis
 			//* Click Next button
 			//
-			throw new ImplementationException("select_analysis");
+			try {
+				if (dataMap.get("basis_for_printing").equals("Native")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
+					batchPrint.getAnalysisnextbutton().click();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+					batchPrint.getAnalysisnextbutton().click();
+			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
 		}
@@ -167,7 +211,23 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Exception File Types
 			//* Click Next button
 			//
-			throw new ImplementationException("select_exception_file_types");
+			try {
+				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
+					
+					// Check if "Other Exception File Types" field is shown
+					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
+						// if shown, enter placeholder text field
+						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
+						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
+					}
+					batchPrint.getExceptionFileTypesNextButton().click();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
 		}
@@ -183,7 +243,25 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Slip Sheets
 			//* Click Next button
 			//
-			throw new ImplementationException("select_slip_sheets");
+			try {
+				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
+
+					// Disable slip sheets
+					batchPrint.getEnableSlipSheetsToggle().click();
+					
+					// wait until slip sheet pabnel is disabled
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSlipSheetsDisabledPanel().Visible()  ;}}), Input.wait30);
+					
+				}
+				
+				batchPrint.getSlipSheetsNextButton().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
 		}
@@ -199,7 +277,44 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Branding and Redactions
 			//* Click Next button
 			//
-			throw new ImplementationException("select_branding_redactions");
+			try {
+				String brandLocationText = "Test automation brand location";
+				dataMap.put("brangLocationText", brandLocationText);
+
+				
+				if (dataMap.containsKey("branding_location")) {
+					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
+					batchPrint.getBrandingHeaderLocation(brandingLocation).click();
+					
+					// wait for branding location popup
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+					// wait for branding location text field
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBrandingLocationTextField().Visible()  ;}}), Input.wait30);
+					// enter branding text
+					batchPrint.getBrandingLocationTextField().sendKeys(brandLocationText);
+					// click OK button
+					batchPrint.getInsertMetadataFieldOKButton().click();
+				}
+				
+				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("true")) {
+					
+				}
+				
+
+				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+					
+
+				}
+				
+				batchPrint.getBrandingAndRedactionNextButton().click();
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT select_branding_redactions");
 		}
@@ -215,7 +330,37 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Export Format
 			//* Click Generate button
 			//
-			throw new ImplementationException("select_export_format");
+
+
+
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
+
+
+				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
+
+					batchPrint.getOnePDFForAllDocsRadioButton().Click();
+				}
+				
+
+				if (dataMap.containsKey("sort_by")) {
+					//TODO: Remove sendKeys and use a select function
+					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+				}
+				
+
+				batchPrint.getGenerateButton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getGenerateSuccessMessage().Visible()  ;}}), Input.wait30);
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			throw new ImplementationException("NOT select_export_format");
 		}
@@ -236,7 +381,33 @@ public class BatchPrintContext extends CommonContext {
 			//* Click the dropdown action button
 			//* Click on View DocView
 			//
-			throw new ImplementationException("click_download_file_link");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBackgroundTaskFirstRowStatus().Visible()  ;}}), Input.wait30);
+				
+				int i = 0;
+				while(!batchPrint.getBackgroundTaskFirstRowStatus().getText().equalsIgnoreCase("COMPLETED") && i<1000) {
+					i++;
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowStatus().Displayed() ;}}), Input.wait30);
+				}
+				if (i != 1000) {
+					System.out.println("Completed!");
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
+					batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
+					driver.waitForPageToBeReady();
+				} else {
+					fail(dataMap, "Refreshed page 1000 times and is still in progress!");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} 
+
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
 		}
@@ -249,7 +420,52 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extension
-			throw new ImplementationException("verify_single_pdf_generated");
+			
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to finish downloading
+				Thread.sleep(30000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+					
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						
+						int numOfEntries = zipFile.size();
+						
+						// Verify there is only one entry in the zip file
+						Assert.assertEquals(numOfEntries, 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							// Verify the file is a pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Single pdf not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_single_pdf_generated");
 		}
@@ -266,7 +482,52 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_greater_than_250");
+			try {
+				// wait for radio button to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderRadioButtonIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getSelectFolderRadioButtonIcon().click();
+				
+				// wait for Parent Folder to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderDisplaySet().Visible()  ;}}), Input.wait30);
+				
+				// click to expand parent folder
+				batchPrint.getExpandFolderIcon().click();
+				
+				// wait for option to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.get250DocsFolderOption().Visible()  ;}}), Input.wait30);
+				
+				// click option
+				batchPrint.get250DocsFolderOption().click();
+				
+				// click Next button
+				batchPrint.getSourceSelectionNextButton().click();
+				
+				if (dataMap.containsKey("select")) {
+					
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+					
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_greater_than_250");
 		}
@@ -279,7 +540,49 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extensionTC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_second_pdf_generated");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(30000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+	
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+
+						int numOfEntries = zipFile.size();
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							// Verify the files are pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_second_pdf_generated");
 		}
@@ -292,7 +595,59 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_separate_pdf_generated_for_every_document");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(45000);
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+	
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+
+						int numOfEntries = zipFile.size();
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						List<String> listOfFiles = new ArrayList<String>();
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							listOfFiles.add(entry.getName());
+						}
+
+						// Verify 1.docx and 1.pdf exist in list of files
+						Pattern p = Pattern.compile("1.docx|1.pdf");
+						boolean found = false;
+						for (String f : listOfFiles) {
+							if (p.matcher(f).find()) {
+								found = true;
+								break;
+							}
+						}
+	
+						Assert.assertTrue(found);
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_separate_pdf_generated_for_every_document");
 		}
@@ -605,6 +960,658 @@ public class BatchPrintContext extends CommonContext {
 			throw new ImplementationException("verify_source_selection_help_question_mark");
 		} else {
 			throw new ImplementationException("NOT verify_source_selection_help_question_mark");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? select_tag_with_0_docs$")
+	public void select_tag_with_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Select Tag radio buttonSelect a tag with 0 Documents associated to it
+			//
+			//* All Tags > 0Docs
+			//
+			//Click Next button
+			throw new ImplementationException("select_tag_with_0_docs");
+		} else {
+			throw new ImplementationException("NOT select_tag_with_0_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_0_docs$")
+	public void verify_analysis_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9707 Verify when user selects a tag/folder with zero count for batch print
+			//
+			//* Verify message "Analysis of your request   Your request to print: 0 documents"
+			//
+			throw new ImplementationException("verify_analysis_0_docs");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_0_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_folder_with_0_docs$")
+	public void select_folder_with_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Select Folder radio buttonSelect a tag with 0 Documents associated to it
+			//
+			//* All Folders > 0Docs
+			//
+			//Click Next button
+			throw new ImplementationException("select_folder_with_0_docs");
+		} else {
+			throw new ImplementationException("NOT select_folder_with_0_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_basis_for_printing_$")
+	public void select_basis_for_printing_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Basis for Printing
+			//* Click on the Next button
+			//
+			throw new ImplementationException("select_basis_for_printing_");
+		} else {
+			throw new ImplementationException("NOT select_basis_for_printing_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_export_format_$")
+	public void select_export_format_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Export Format
+			//* Click Generate button
+			//Ignore the index parameter, it isnt going to be used.
+			throw new ImplementationException("select_export_format_");
+		} else {
+			throw new ImplementationException("NOT select_export_format_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_file_sorted_correctly$")
+	public void verify_pdf_file_sorted_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8103 Validate Batch Print Sorting docs by MasterDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8105 Validate Batch Print Sorting docs by CreatedDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8107 Validate Batch Print Sorting docs by SendDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8166 Validate Batch Print Sorting docs by LastSaveDate (Native) with one PDF for each doc in descending order
+			//TC8167 Validate Batch Print Sorting docs by LastSaveDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8169 Validate Batch Print Sorting docs by LastModifiedDate [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8170 Validate Batch Print Sorting docs by LastEditDate (Native) with one PDF for each doc in descending order
+			//TC8171 Validate Batch Print Sorting docs by LastEditDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8174 Validate Batch Print Sorting docs by DocDate (Native) with one PDF for each doc in descending order
+			//TC8175 Validate Batch Print Sorting docs by DocDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8177 Validate Batch Print Sorting docs by CustodianName [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8178 Validate Batch Print Sorting docs by DocFileName (Native) with one PDF for all docs in ascending order
+			//TC8179 Validate Batch Print Sorting docs by DocFileName [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8181 Validate Batch Print Sorting docs by DocID [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//
+			//* Verify PDF exported according to Basis for Printing, and Export Format options
+			//
+			//
+			throw new ImplementationException("verify_pdf_file_sorted_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_file_sorted_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_pdf_generated$")
+	public void verify_production_pdf_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4563 Verify PDF file should be generated for the selected production set
+			throw new ImplementationException("verify_production_pdf_generated");
+		} else {
+			throw new ImplementationException("NOT verify_production_pdf_generated");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? select_source_selection_with_redactions$")
+	public void select_source_selection_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select a source for Select SearchDefault search: Shared with SG1 > CustodianName Erika GrajedaClick Next button
+			throw new ImplementationException("select_source_selection_with_redactions");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_generated_with_redactions$")
+	public void verify_pdf_generated_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4651 Verify PDF file should be generated with redaction on for the documents from selected produciton set with DocID as export file nameTC4658 Verify PDF file should be generated with branding for the documents from selected production set with Begin Bates as export file name
+			//TC4659 Verify PDF file should be generated with redaction on for the documents from selected produciton set with File Name as export file name
+			//
+			//* PDFs with redactions are generated based on Export Format
+			//
+			//
+			throw new ImplementationException("verify_pdf_generated_with_redactions");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_generated_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_from_selected_production_slipsheet_field$")
+	public void verify_pdf_from_selected_production_slipsheet_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4648 Verify PDF file should be generated with the production slipsheet fields for the produciton set with DocID as export file name
+			//TC4650 Verify PDF file should be generated with the new slipsheet fields for the produciton set with DocID as export file name
+			//TC4653 Verify PDF file should be generated with the production slipsheet fields for the produciton set with Doc File Name as export file name
+			//TC4654 Verify PDF file should be generated with the production slipsheet fields for the produciton set with Bates Number as export file name
+			//TC4655 Verify PDF file should be generated with the new slipsheet fields for the produciton set with File Name as export file name
+			//TC4656 Verify PDF file should be generated with the new slipsheet fields for the produciton set with Begin Bates as export file name
+			//
+			//* PDF generated based on Slip Sheets and Export Format
+			//
+			//
+			throw new ImplementationException("verify_pdf_from_selected_production_slipsheet_field");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_from_selected_production_slipsheet_field");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_slipsheet_fields_for_selected_tag$")
+	public void verify_selected_slipsheet_fields_for_selected_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9710 Verify PDF file should be generated with the selected slipsheet fields for the selected tag and with DocID as export file name
+			//TC9711 Verify PDF file should be generated with the selected slipsheet fields for the selected tag and with DocFileName as export file name
+			//
+			//* Verify Slip Sheet fields and Export Format for selected tag
+			//
+			//
+			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_tag");
+		} else {
+			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_tag");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_branding_redactions_for_selected_folder$")
+	public void verify_selected_branding_redactions_for_selected_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9716 Verify PDF file should be generated with the selected branding & redactions for the selected folder and with DocID as export file nameTC9717 Verify PDF file should be generated with the selected branding & redactions for the selected folder and with DocFileName as export file name
+			//
+			//* Verify Branding and Redactions and Export Format for selected folder
+			//
+			throw new ImplementationException("verify_selected_branding_redactions_for_selected_folder");
+		} else {
+			throw new ImplementationException("NOT verify_selected_branding_redactions_for_selected_folder");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_branding_redactions_for_selected_tag$")
+	public void verify_selected_branding_redactions_for_selected_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9714 Verify PDF file should be generated with the selected branding & redactions for the selected tag and with DocID as export file nameTC9715 Verify PDF file should be generated with the selected branding & redactions for the selected tag and with DocFileName as export file name
+			//
+			//* Verify Branding and Redactions and Export Format for selected tag
+			//
+			throw new ImplementationException("verify_selected_branding_redactions_for_selected_tag");
+		} else {
+			throw new ImplementationException("NOT verify_selected_branding_redactions_for_selected_tag");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_slipsheet_fields_for_selected_folder$")
+	public void verify_selected_slipsheet_fields_for_selected_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9712 Verify PDF file should be generated with the selected slipsheet fields for the selected folder and with DocID as export file name
+			//TC9713 Verify PDF file should be generated with the selected slipsheet fields for the selected folder and with DocFileName as export file name
+			//
+			//* Verify Slip Sheet fields and Export Format for selected folder
+			//
+			//
+			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_folder");
+		} else {
+			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_folder");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print$")
+	public void login_to_new_batch_print(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_notification_displayed_when_background_process_initialized$")
+	public void verify_notification_displayed_when_background_process_initialized(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
+			//
+			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
+			//* New BATCHPRINT row with your INPROGRESS task is created
+			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
+			//
+			throw new ImplementationException("verify_notification_displayed_when_background_process_initialized");
+		} else {
+			throw new ImplementationException("NOT verify_notification_displayed_when_background_process_initialized");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_source_selection_back_button$")
+	public void click_source_selection_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Back' button
+			throw new ImplementationException("click_source_selection_back_button");
+		} else {
+			throw new ImplementationException("NOT click_source_selection_back_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_directed_to_source_selection_tab$")
+	public void verify_directed_to_source_selection_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4387 Verify that on clickon Back button, it will redirect to Source Selection
+			//
+			//* Directed to Source Selection tab
+			//
+			throw new ImplementationException("verify_directed_to_source_selection_tab");
+		} else {
+			throw new ImplementationException("NOT verify_directed_to_source_selection_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_batch_print_page$")
+	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Batch Print page (/BatchPrint)
+			//* Batch Print page is displayed
+			//
+			throw new ImplementationException("on_batch_print_page");
+		} else {
+			throw new ImplementationException("NOT on_batch_print_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_prior_productions_radio_button$")
+	public void verify_prior_productions_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4450 Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)' radio button is selected from 'Basis for Printing'Basis for Printing tab matches the following format:"You requested to print: 25 documentsOf those,There isno issues with 0 documents.However,There are 25 documents that need your decision below. Of those 25 documents:
+			//
+			//* 25 are not in any of your specified productions
+			//* 0 are in more than one production
+			//
+			//"Documents grid should have the following columns:
+			//
+			//* Doc ID
+			//* Skip Printing
+			//* Production columns as per selected production
+			//* Not in any production
+			//
+			//Make sure that checkbox should be displayed for the document as per the production.Make sure the pagination should be displayed for the grid.Folder tree structure should be displayed with toggling ON.If toggling is OFF then tree folder structure shouldnot be displayed.
+			throw new ImplementationException("verify_prior_productions_radio_button");
+		} else {
+			throw new ImplementationException("NOT verify_prior_productions_radio_button");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_skip_excel_files_radio_button$")
+	public void select_skip_excel_files_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Skip Excel Files' radio button
+			throw new ImplementationException("select_skip_excel_files_radio_button");
+		} else {
+			throw new ImplementationException("NOT select_skip_excel_files_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_skip_excel_files_on_exception_file_types_tab$")
+	public void verify_skip_excel_files_on_exception_file_types_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4457 Verify the details if user select option as 'Skip Excel Files' on Exception File Types
+			//
+			//* 'Include Placeholders' tab displayed
+			//* Inert Metadata field is displayed
+			//
+			throw new ImplementationException("verify_skip_excel_files_on_exception_file_types_tab");
+		} else {
+			throw new ImplementationException("NOT verify_skip_excel_files_on_exception_file_types_tab");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_other_exception_file_types_help_button$")
+	public void click_other_exception_file_types_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Other Exception File Types' help ? button
+			throw new ImplementationException("click_other_exception_file_types_help_button");
+		} else {
+			throw new ImplementationException("NOT click_other_exception_file_types_help_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_help_displayed_on_exception_file_types_tab$")
+	public void verify_help_displayed_on_exception_file_types_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4400 Verify that Help is displayed on exception file types
+			//
+			//* Help displayed
+			//
+			throw new ImplementationException("verify_help_displayed_on_exception_file_types_tab");
+		} else {
+			throw new ImplementationException("NOT verify_help_displayed_on_exception_file_types_tab");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_excel_files_help_button$")
+	public void click_excel_files_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Excel Files' help ? button
+			throw new ImplementationException("click_excel_files_help_button");
+		} else {
+			throw new ImplementationException("NOT click_excel_files_help_button");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_media_files_help_button$")
+	public void click_media_files_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Media Files' help ? button
+			throw new ImplementationException("click_media_files_help_button");
+		} else {
+			throw new ImplementationException("NOT click_media_files_help_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Enter Username and password for Review Manager user
+			//* User is logged in
+			//* Sightline Home page is displayed
+			//
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_rmu_fields_in_slip_sheets$")
+	public void verify_rmu_fields_in_slip_sheets(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4545 Verify that RMU can view the fields in 'Slip Sheets' if it is associated to the security groupThese Slip Sheets Metadata fields are not listed for RMU:
+			//
+			//* AnalyticsExceptions
+			//* Audio_AgentID
+			//* Audio_AgentName
+			//* Audio_Appearance
+			//
+			//The only Slip Sheets Workproduct Tags fields listed for RMU:
+			//
+			//* All Tag > TagFor SG1
+			//
+			//The only Slip Sheets Workproduct Redaction Tags fields listed for RMU:
+			//
+			//* All Redaction Tags > SGSame1
+			//* All Redaction Tags > SGSame2
+			//
+			throw new ImplementationException("verify_rmu_fields_in_slip_sheets");
+		} else {
+			throw new ImplementationException("NOT verify_rmu_fields_in_slip_sheets");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? slip_sheets_disabled$")
+	public void slip_sheets_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//'Enable Slip Sheets' toggle is disabled
+			throw new ImplementationException("slip_sheets_disabled");
+		} else {
+			throw new ImplementationException("NOT slip_sheets_disabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_slip_sheets_disabled$")
+	public void verify_slip_sheets_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4530 Verify that 'Enabled Slip Sheets' is OFF/ON then panel should be disabled
+			//
+			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' disabled
+			//* 'Select Fields for Slip Sheets' disabled
+			//
+			throw new ImplementationException("verify_slip_sheets_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_slip_sheets_disabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? slip_sheets_enabled$")
+	public void slip_sheets_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//'Enabled Slip Sheets' toggle is ON
+			throw new ImplementationException("slip_sheets_enabled");
+		} else {
+			throw new ImplementationException("NOT slip_sheets_enabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_slip_sheets_enabled$")
+	public void verify_slip_sheets_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4530 Verify that 'Enable Slip Sheets' is OFF/ON then panel should be disabled
+			//
+			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' enabled
+			//* 'Select Fields for Slip Sheets' enabled
+			//
+			throw new ImplementationException("verify_slip_sheets_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_slip_sheets_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_search_radio_button$")
+	public void click_select_search_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Select Search' radio button on Source Selection tab
+			throw new ImplementationException("click_select_search_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_search_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_my_shared_removed$")
+	public void verify_my_shared_removed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4398 Verify that 'My Shared' it should be removed from Batch Print
+			//
+			//* 'My Shared' is not a 'Select Search' option
+			//
+			throw new ImplementationException("verify_my_shared_removed");
+		} else {
+			throw new ImplementationException("NOT verify_my_shared_removed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? toggle_branding_redactions_$")
+	public void toggle_branding_redactions_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Branding and Redactions
+			//If branding_location is 'All' then add branding to Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right options
+			throw new ImplementationException("toggle_branding_redactions_");
+		} else {
+			throw new ImplementationException("NOT toggle_branding_redactions_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? diff_branding_redaction_configs_set$")
+	public void diff_branding_redaction_configs_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Do nothing
+			throw new ImplementationException("diff_branding_redaction_configs_set");
+		} else {
+			throw new ImplementationException("NOT diff_branding_redaction_configs_set");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_include_applied_redactions_on_branding_redactions_tab$")
+	public void verify_include_applied_redactions_on_branding_redactions_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4514 Verify user can on/off the 'Include Applied Redactions' from Branding and Redactions tab
+			//
+			//* Verify user can toggle 'Include Applied Redactions' ON/OFF
+			//* Regardless of 'Include Applied Redactions' status user can place Branding on the Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right
+			//
+			throw new ImplementationException("verify_include_applied_redactions_on_branding_redactions_tab");
+		} else {
+			throw new ImplementationException("NOT verify_include_applied_redactions_on_branding_redactions_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_branding_location$")
+	public void click_branding_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click branding position determined by 'branding_location'
+			throw new ImplementationException("click_branding_location");
+		} else {
+			throw new ImplementationException("NOT click_branding_location");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_insert_metadata_field_button_on_branding_redactions$")
+	public void click_insert_metadata_field_button_on_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_insert_metadata_field_button_on_branding_redactions");
+		} else {
+			throw new ImplementationException("NOT click_insert_metadata_field_button_on_branding_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_metadata_displayed_on_branding_redactions$")
+	public void verify_metadata_displayed_on_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4403 Verify that Meta Data should be displayed if clicks on Insert Meta Data Link
+			//
+			//* Insert Metadata Field pops up
+			//* Dropdown of metadata fields is displayed
+			//
+			throw new ImplementationException("verify_metadata_displayed_on_branding_redactions");
+		} else {
+			throw new ImplementationException("NOT verify_metadata_displayed_on_branding_redactions");
 		}
 
 	}
