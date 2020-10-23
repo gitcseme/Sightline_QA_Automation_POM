@@ -282,6 +282,7 @@ public class ProductionPage {
     public ElementCollection getProductionsLastModifiedUser(){ return driver.FindElementsByClassName("prod-lastMod");}
     public ElementCollection getProductionLastModifiedData(){return driver.FindElementsByXPath("//span[@class='prod-lastMod']/..");}
     public Element getProductionLastModifiedDataByName(String name){return driver.FindElementByXPath(String.format("//a[@class='prod-Title'][contains(.,'%s')]/../..//span[@class='prod-lastMod']/..", name));}
+    public ElementCollection getProductionTileNames(){ return driver.FindElementsByClassName("prod-Title");}
 
     // Basic Info
     public Element getBasicInfoTemplate(String value) { return driver.FindElementByCssSelector(String.format("#ddlTemplate [label='Custom Templates']%s",value)); }
@@ -503,6 +504,7 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
 
+    public Element getProductionGridViewProductionNameColumnHeader() {return driver.FindElementByCssSelector("th[aria-label='Production Name: activate to sort column ascending']");}
     public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
     public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}

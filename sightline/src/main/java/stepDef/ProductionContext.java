@@ -24,7 +24,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import automationLibrary.Driver;
@@ -8120,9 +8119,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the Sort By dropdown and select Production Name
-			throw new ImplementationException("setting_the_sort_dropdown_by_production_name");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getSortByButton().Visible()  ;}}), Input.wait30);
+			prod.getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
+
+			pass(dataMap, "Setting the sort dropdown by production name");
 		} else {
-			throw new ImplementationException("NOT setting_the_sort_dropdown_by_production_name");
+			fail(dataMap, "Not setting the sort dropdown by production name");
 		}
 
 	}
@@ -8132,10 +8135,21 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_of_the_productions_is_by_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 3708Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name");
+			//TC 3708
+			//Verify the first 15 productions on the list of productions are sorted in alphabetical order.
+			driver.scrollingToBottomofAPage();
+			List<WebElement> productionTiles = prod.getProductionTileNames().FindWebElements();
+			int iterations = productionTiles.size() > 15 ? 15 : productionTiles.size();
+			String previousProductionName = "";
+			for(int i = 0 ; i < iterations ; i++) {
+				String currentProductionName = productionTiles.get(i).getText();
+				if (currentProductionName.compareTo(previousProductionName) < 0)
+					fail(dataMap,"The sorting of the productions is not by name");
+				previousProductionName = currentProductionName;
+			}
+			pass(dataMap, "The sorting of the productions is by name");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name");
+			fail(dataMap,"The sorting of the productions is not by name");
 		}
 
 	}
@@ -8240,8 +8254,7 @@ public class ProductionContext extends CommonContext {
 					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
 
 			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
-			Select productionSets = new Select(prod.getProdExport_ProductionSets().getWebElement());
-			String selectedProductionSetName = productionSets.getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			String selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
 			String productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
 			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
 
@@ -8250,8 +8263,7 @@ public class ProductionContext extends CommonContext {
 			driver.waitForPageToBeReady();
 
 			//* Verify the Production set name under "PRODUCTIONS SET" is updated to the new production set's name.
-			productionSets = new Select(prod.getProdExport_ProductionSets().getWebElement());
-			selectedProductionSetName = productionSets.getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
 			productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
 			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
 
@@ -8274,9 +8286,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
-			throw new ImplementationException("clicking_the_production_name_column");
+			prod.getProductionGridViewProductionNameColumnHeader().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProductionGridViewProductionNameColumnHeader().getWebElement().getAttribute("class").equals("sorting_asc");}}), Input.wait30);
+			pass(dataMap, "clicking the production name column");
 		} else {
-			throw new ImplementationException("NOT clicking_the_production_name_column");
+			fail(dataMap, "Not clicking the production name column");
 		}
 
 	}
@@ -8287,9 +8302,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			List<WebElement> productionItems = prod.getProductionItemsGrid().FindWebElements();
+			//remove first item (column headers)
+			productionItems.remove(0);
+			String previousProductionName = "";
+			for(WebElement currentProduction : productionItems) {
+				if (currentProduction.getText().compareTo(previousProductionName) < 0)
+					fail(dataMap, "The sorting of the productions is not by name in grid view");
+				previousProductionName = currentProduction.getText();
+			}
+			pass(dataMap, "The sorting of the productions is by name in grid view");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			fail(dataMap, "The sorting of the productions is not by name in grid view");
 		}
 
 	}
@@ -8389,12 +8413,12 @@ public class ProductionContext extends CommonContext {
 			long sevenHours = 3600*1000*7; //in milli-seconds
 			if(dataMap.get("save_option").toString().equals("save")){
 				prod.getSaveButton().click();
-				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date(new Date().getTime() + sevenHours));
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours));
 				dataMap.put("newTimeStamp", newTimeStamp);
 				pass(dataMap, "Opened the production created and edited the name then saved");
 			} else if(dataMap.get("save_option").toString().equals("markcomplete")){
 				prod.getMarkCompleteLink().click();
-				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(new Date(new Date().getTime() + sevenHours));
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours));
 				dataMap.put("newTimeStamp", newTimeStamp);
 				pass(dataMap, "Opened the production created and edited the name then marked complete");
 			}
@@ -8435,7 +8459,7 @@ public class ProductionContext extends CommonContext {
 			//Verify the new timestamp on the production matches the timestap we captured after clicking Save
 			String lastModifiedData = prod.getProductionLastModifiedDataByName(dataMap.get("firstProductionName").toString()).getText();
 			String[] splitData = lastModifiedData.split("\n");
-			String lastModifiedDate = splitData[splitData.length];
+			String lastModifiedDate = splitData[splitData.length-1];
 
 			Assert.assertEquals(lastModifiedDate, dataMap.get("newTimeStamp"));
 
