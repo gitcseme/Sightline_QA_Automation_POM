@@ -554,10 +554,9 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("place_redaction");
-		} else {
-			throw new ImplementationException("NOT place_redaction");
+			docView.redactbyrectangle(100, 10, 0, "SGSame1");
 		}
+		else fail(dataMap, "couldn't place redaction");
 
 	}
 
@@ -565,15 +564,22 @@ public class DocViewContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_default_redaction_tag_selected$")
 	public void verify_default_redaction_tag_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC11377 Verify that when applies 'Rectangle' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11378 Verify that when applies 'This Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11379 Verify that when applies 'All Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11380 Verify that when applies 'Page Range' redaction for the first time then application should automatically select the 'Default Redaction Tag'
 		if (scriptState) {
-			//TC11377 Verify that when applies 'Rectangle' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11378 Verify that when applies 'This Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11379 Verify that when applies 'All Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11380 Verify that when applies 'Page Range' redaction for the first time then application should automatically select the 'Default Redaction Tag'
 			//
-			//* Verify 'Default Redaction Tag' is selected
-			//
-			throw new ImplementationException("verify_default_redaction_tag_selected");
-		} else {
-			throw new ImplementationException("NOT verify_default_redaction_tag_selected");
+			//Grab our default tag and compare with expected value. 
+			//Default tag will be different based on the security group specified. In this case SG1 security group produces the default tag of "SGSame1"
+			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+			String securityGroup = (String)dataMap.get("security_group");
+			if(securityGroup.equalsIgnoreCase("SG1")){
+				Assert.assertEquals(defaultTag, "SGSame1");
+			}
+			else if(securityGroup.equalsIgnoreCase("Default Security Group")){
+				Assert.assertEquals(defaultTag, "Default Redaction Tag");
+			}
+			pass(dataMap, "The default tag was selected");
 		}
+		else fail(dataMap, "Verify default redaction tag not selected");
 
 	}
 
@@ -672,10 +678,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click This Page redaction button
 			//
-			throw new ImplementationException("click_this_page_redaction_button");
-		} else {
-			throw new ImplementationException("NOT click_this_page_redaction_button");
+			for(WebElement x: docView.getThisPageButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			pass(dataMap, "Clicked the this page redaction button");
 		}
+		else fail(dataMap, "Failed to click this page redactin button");
 
 	}
 

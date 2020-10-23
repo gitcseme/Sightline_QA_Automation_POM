@@ -956,7 +956,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_this_page_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -966,6 +966,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -976,7 +978,6 @@ public class DocViewRegression extends RegressionBase {
 			context.open_saved_search_doc_view(true, dataMap);
 			context.click_grey_redact_tool(true, dataMap);
 			context.click_this_page_redaction_button(true, dataMap);
-			context.place_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -1030,7 +1031,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1040,6 +1041,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
