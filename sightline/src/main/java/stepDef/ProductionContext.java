@@ -5772,10 +5772,10 @@ public class ProductionContext extends CommonContext {
 
 			
 			//data for our custom 
-			dataMap.put("prefix", "A");
-			dataMap.put("min_length", "6");
-			dataMap.put("beginning_bates", "3");
-			dataMap.put("suffix", "X");
+			dataMap.put("prefix", "G");
+			dataMap.put("min_length", "8");
+			dataMap.put("beginning_bates", "6");
+			dataMap.put("suffix", "Z");
 			
 			//Need Custom Bates Number or generartion will fail due to duplicate
 			custom_number_and_sorting_is_added(true, dataMap);
