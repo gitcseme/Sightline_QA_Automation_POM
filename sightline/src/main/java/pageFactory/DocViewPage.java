@@ -244,9 +244,11 @@ public class DocViewPage {
     public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
     public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
     public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
+    public ElementCollection getThisPageButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-file-text-o']");}
     public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
     public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
     public Element getCloseButton() { return driver.FindElementById("botClose1");}
+    public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
     
     
     //Constructor to just use the object instead of navigating to a new page

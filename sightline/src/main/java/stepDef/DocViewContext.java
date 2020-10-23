@@ -614,10 +614,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click another document in the mini doc list window
 			//
-			throw new ImplementationException("nav_to_other_doc");
-		} else {
-			throw new ImplementationException("NOT nav_to_other_doc");
+			docView.getDocViewTableRows().FindWebElements().get(1).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewNumOfPages().FindWebElements().size()!=0  ;}}), Input.wait30); 
 		}
+		else fail(dataMap, "Couldnt select another document");
 
 	}
 
@@ -687,11 +689,16 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click the first document in the mini doc list window
-			//
-			throw new ImplementationException("nav_back_to_first_doc");
-		} else {
-			throw new ImplementationException("NOT nav_back_to_first_doc");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+			docView.getDocViewTableRows().FindWebElements().get(0).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewNumOfPages().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			pass(dataMap, "navigated back to original document");
+
 		}
+		else fail(dataMap, "couldnt navigate back to original document");
 
 	}
 
@@ -795,10 +802,23 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4983 Verify when Redactions menu is selected from doc view and navigates to another document from mini doc list child window then previously selected panels/menus should remain
-			throw new ImplementationException("verify_redactions_menu_remains_open");
-		} else {
-			throw new ImplementationException("NOT verify_redactions_menu_remains_open");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+			Boolean rectangleBtn = false;
+			Boolean thisPageBtn = false;
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) rectangleBtn = true;
+			}
+			for(WebElement x: docView.getThisPageButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) thisPageBtn = true;
+			}
+			Assert.assertTrue(thisPageBtn);
+			Assert.assertTrue(rectangleBtn);
+			pass(dataMap, "redactions menu remained open");
+
 		}
+		else fail(dataMap, "redactions menu did not remain open");
 
 	}
 
