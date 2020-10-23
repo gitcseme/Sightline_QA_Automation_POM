@@ -2331,15 +2331,15 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-//				if(prod.getToastXButton().Visible()) {
-//					prod.getToastXButton().click();
-//				}
+
 				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 				prod.getMarkCompleteButton().click();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+//				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+				String errorMessage = prod.getNativeErrorBoxText().getText();
+				dataMap.put("the_error", errorMessage);
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
@@ -7741,12 +7741,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6415Verify the following error is returned: You must select at least a file group type or a tag in the Native components section
-			System.out.println("before getting message");
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNativeErrorBoxText().Visible()  ;}}), Input.wait30);
-			String errorMessage = prod.getNativeErrorBoxText().getText();
-			System.out.println("after getting message");
-			System.out.println("the error message is: "+errorMessage);
+			/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeErrorBoxText().Visible()  ;}}), Input.wait30);*/
+			String errorMessage = dataMap.get("the_error").toString();
 			Assert.assertEquals("You must select at least a file group type or a tag in the Native components section", errorMessage);
 		} else {
 			fail(dataMap, "Error message not returned");
