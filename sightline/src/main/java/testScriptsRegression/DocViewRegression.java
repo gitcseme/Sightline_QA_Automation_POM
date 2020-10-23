@@ -500,7 +500,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive", "WP"})
+	@Test(groups = {"DocView, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_redaction_transparent() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -510,6 +510,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");

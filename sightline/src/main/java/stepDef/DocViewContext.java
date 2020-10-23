@@ -517,12 +517,17 @@ public class DocViewContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_redaction_transparent$")
 	public void verify_redaction_transparent(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC11665 Verify that rectangle redaction should be transparent all the time and content should be visible
 		if (scriptState) {
-			//TC11665 Verify that rectangle redaction should be transparent all the time and content should be visible
-			throw new ImplementationException("verify_redaction_transparent");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_transparent");
+			double opacity = 0.0;
+			//Verify all Redactions have an opacity (transparency) of less than 1
+			for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+				opacity = Double.parseDouble(x.getCssValue("opacity"));
+				Assert.assertTrue(opacity<1.0);
+			}
+			pass(dataMap, "Redactions have remainded transparent");
 		}
+		else fail(dataMap, "redactions were not transparent");
 
 	}
 
