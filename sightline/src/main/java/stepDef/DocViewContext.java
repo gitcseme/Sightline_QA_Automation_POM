@@ -640,6 +640,10 @@ public class DocViewContext extends CommonContext {
 
 			//Save amount of redactions before we attempt to delete
 			int existingRedactions = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(existingRedactions==0) {
+				fail(dataMap, "No redactions to test");
+				return;
+			}
 			dataMap.put("firstRedactionCount", existingRedactions);
 			Actions builder = new Actions(driver.getWebDriver());
 			//Get the last redaction added(last index in our list of redactions)
@@ -730,14 +734,20 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(size == 0) {
+				fail(dataMap, "no redactions to delete");
+				return;
+			}
 			Actions builder = new Actions(driver.getWebDriver());
 			//Get the last redaction added(last index in our list of redactions)
 			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
 			//get rid of prior save popup
-			if(docView.getCloseButton().Enabled()) {
-				docView.getCloseButton().click();
+			if(docView.getCloseButton().FindWebElements().size()!=0) {
+				docView.getCloseButton().FindWebElements().get(0).click();
 			}
 			//delete redaction
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Annotate_DeleteIcon().Displayed()  ;}}), Input.wait30); 
 			docView.getDocView_Annotate_DeleteIcon().click();
 			driver.waitForPageToBeReady();
 			pass(dataMap, "deleted redaction");

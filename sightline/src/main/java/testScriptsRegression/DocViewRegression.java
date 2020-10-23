@@ -525,12 +525,16 @@ public class DocViewRegression extends RegressionBase {
 			context.rectangle_redaction_applied(true, dataMap);
 			context.verify_redaction_transparent(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -636,12 +640,16 @@ public class DocViewRegression extends RegressionBase {
 			context.click_rectangle_redaction_button(true, dataMap);
 			context.verify_redaction_control_in_off_state(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -856,6 +864,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -869,12 +879,16 @@ public class DocViewRegression extends RegressionBase {
 			context.rectangle_redaction_applied(true, dataMap);
 			context.verify_rectangle_redaction(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -953,6 +967,7 @@ public class DocViewRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 
@@ -990,6 +1005,7 @@ public class DocViewRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 
@@ -1068,6 +1084,7 @@ public class DocViewRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 

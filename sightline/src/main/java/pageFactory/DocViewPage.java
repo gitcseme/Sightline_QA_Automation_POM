@@ -247,7 +247,7 @@ public class DocViewPage {
     public ElementCollection getThisPageButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-file-text-o']");}
     public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
     public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
-    public Element getCloseButton() { return driver.FindElementById("botClose1");}
+    public ElementCollection getCloseButton() { return driver.FindElementsById("botClose1");}
     public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
     
     
