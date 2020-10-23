@@ -7767,9 +7767,6 @@ public class ProductionContext extends CommonContext {
 			
 				String component = (String)dataMap.get("component");
 				String area = (String)dataMap.get("area");
-				//String pdf =  (String)dataMap.get("pdf");
-				//String tiff = (String)dataMap.get("tiff");
-				//Actions builder = new Actions(driver.getWebDriver());
 				
 				if(component.equalsIgnoreCase("TIFF")){
 
@@ -7862,7 +7859,7 @@ public class ProductionContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getPDFTab().Displayed()  ;}}), Input.wait30);
 					prod.getPDFTab().Click();
-				}
+				
 				
 				if(area.equalsIgnoreCase("branding")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -7929,6 +7926,7 @@ public class ProductionContext extends CommonContext {
 							  prod.getPDFSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
 					prod.getPDFSlipSheetCalculatedTab().click();
 				}
+		}
 				else 
 				{
 					fail(dataMap, "Valid area was not selected");
@@ -7973,18 +7971,23 @@ public class ProductionContext extends CommonContext {
 			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.
 			//Click Cancel.
 			ArrayList<String> expectedAlphabetOrder = new ArrayList<String>();
-			
-
 			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
-				expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText());
+				expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+				
 			}
+						
 			Collections.sort(expectedAlphabetOrder);
 			
+			ArrayList<String> actualOptionString = new ArrayList<String>();
 			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
-				String actualOptionString =prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText();
-				Assert.assertEquals(actualOptionString, expectedAlphabetOrder.indexOf(i));
+				actualOptionString.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
 			}
+			Assert.assertEquals(actualOptionString, expectedAlphabetOrder);
 			
+			prod.getTIFF_InsertMetadataFieldClick().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+				return prod.getMetaDataInsertButton().Visible() ;}}), Input.wait30); 
+			prod.getMetaDataInsertButton().click();
 			pass(dataMap,"verify_the_metadata_field_dropdown_is_sorted_alphabetically");
 		} else {
 			fail(dataMap, "NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");

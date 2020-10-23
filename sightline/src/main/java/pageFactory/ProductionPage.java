@@ -255,6 +255,7 @@ public class ProductionPage {
     public Element getTIFF_OpenBrandingInsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id=\"divLeftHeaderBranding\"]/div[2]/div[2]/label/a"); }
     public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id='selectedMetadataField']"); }
     public ElementCollection getTIFF_BrandingInsertMetadataFieldOptions(){ return driver.FindElementsByXPath("//*[@id='selectedMetadataField']/option"); }
+    public Element getMetaDataInsertButton() {return driver.FindElementByCssSelector("#MetadataPopup > footer > input");}
 
     //added by shilpi on 08/17
     public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
