@@ -62,9 +62,15 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection");
+			
+			batchPrint.getSearchRadioButton().click();
+			batchPrint.getSearchSG1ExpandFolderIcon().click();
+			batchPrint.getSearchSelectFile().click();
+			
+			batchPrint.getNextbtn().click();
+			pass(dataMap,"select_source_selection");
 		} else {
-			throw new ImplementationException("NOT select_source_selection");
+			fail(dataMap, "NOT select_source_selection");
 		}
 
 	}
@@ -76,15 +82,21 @@ public class BatchPrintContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getBasisForPrintingHeader().Visible()  ;}}), Input.wait30);
 				if (dataMap.containsKey("basis_for_printing")) {
 					if (dataMap.get("basis_for_printing").equals("Native")) {
-						
 						// Click next button since native is selected by default
 						batchPrint.getBasisForPrintingNextButton().click();
 					}
-					
+				}
+				if (dataMap.containsKey("basis_for_production")) {
+					if (dataMap.get("basis_for_production").equals("Prior Production")) {
+						batchPrint.getPriorProduction().click();
+						batchPrint.getPriorDefaultProductionOption().click();
+						batchPrint.getBasisForPrintingNextButton().click();
+					}
 				}
 				
 			} catch (Exception e) {
@@ -192,6 +204,15 @@ public class BatchPrintContext extends CommonContext {
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
 				}
+				if (dataMap.containsKey("basis_for_production")) {
+					if (dataMap.get("basis_for_production").equals("Prior Production")) {
+						driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+						batchPrint.getAnalysisFolderDocExpand().click();
+						batchPrint.getAnalysisDefaultProductionOption().click();
+						batchPrint.getAnalysisnextbutton().click();
+					}
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 					batchPrint.getAnalysisnextbutton().click();
