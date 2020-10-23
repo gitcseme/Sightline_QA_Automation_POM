@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.apache.xalan.templates.ElemAttributeSet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -3871,6 +3872,7 @@ public class IngestionContext extends CommonContext {
 	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	if (scriptState) {
+		/*
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3885,6 +3887,13 @@ public class IngestionContext extends CommonContext {
 	} else {
 		throw new ImplementationException("NOT open_ingestion_details_page");
 	}
+	*/
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			ingest.getIngestionTile(0).isDisplayed()  ;}}), Input.wait30); 
+		ingest.getIngestionTile(0).click();
+		pass(dataMap, "Ingestion details page was open");
+	}
+	else fail(dataMap, "Ingestion details page could not be open");
 
 }
 
@@ -4249,14 +4258,43 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			for(WebElement x: ingest.getIngestHomeHelpButton().FindWebElements()) {
-				if(x.isDisplayed() && x.isEnabled()) x.click();
+			String helpType = (String)dataMap.get("helpType");
+			String[] helpTitleNames = new String[3];
+			Boolean[] helpPopUps = new Boolean[3];
+			if(helpType.equals("homePage")){
+				for(WebElement x: ingest.getIngestHomeHelpButton().FindWebElements()) {
+					if(x.isDisplayed() && x.isEnabled()) x.click();
+				}
 			}
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				ingest.getIngestHelpPopUp().Displayed()  ;}}), Input.wait30);
+			else if(helpType.equals("details")) {
+				ingest.getIngestionDetailsHelpButton().click();
+			}
+			//On Wizard Page, click all help icons on that page, and store their titles, and if the popup displayed or not for verification later
+			else if(helpType.equals("wizard")) {
+				
+				ingest.getIngestWizardSystemAndIngestTypeHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[0] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[0] = ingest.getIngestHelpPopUp().Displayed();
 
-			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
-			Assert.assertEquals(ingest.getIngestHelpPopUp().getText(), "Help Ingestion");
+				ingest.getIngestWizardConfigureMappingHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[1] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[1] = ingest.getIngestHelpPopUp().Displayed();
+				
+				ingest.getIngestWizardHomeHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[2] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[2] = ingest.getIngestHelpPopUp().Displayed();
+				
+				dataMap.put("trueValues", helpPopUps);
+				dataMap.put("titleNames", helpTitleNames);
+			}
+			else fail(dataMap, "Valid help menu not given");
+
 			pass(dataMap, "clicked the help icon");
 		}
 		else fail(dataMap, "Failed to click help icon");
@@ -4272,29 +4310,39 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Throughtout the Ingestions application there are many tool tips. We need to validate each one dispalys a message after we click the tool tip icon
 			//* The following pages are the tool tip locations
-			//
-			//
-			//* Ingestions Home Page Header Title
-			//* Ingestions Detail Page Header Title
-			
-				    		
-	    		ingest.getSelectFilterByOption(1).click();
-	    		ingest.getSelectFilterByOption(2).click();
-	    		ingest.getIngestionTile(0).click();
-	    		ingest.getIngestionDetailsHelpButton().click();
-
-	    		String url = (String) dataMap.get("URL");
-	    		webDriver.get(url+"Ingestion/Wizard");
-	    		driver.waitForPageToBeReady();
-	    		
-	    		ingest.getIngestWizardSystemAndIngestTypeHelpButton().click();
-	    		ingest.getIngestWizardConfigureMappingHelpButton().click();
-
-			//* Ingestion Wizard: Header Page Title
-			//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
-			//* Ingestion Wizard: Configure Field Mapping header
 			//* Ingestion Wizard: Date & Time Format 
 			//
+			
+			String helpType = (String)dataMap.get("helpType");
+			String titleText = ingest.getIngestHelpPopUpTitle().getText();
+
+			//Verify Popup
+			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
+
+			//* Ingestions Home Page Header Title
+			if(helpType.equals("homePage")){
+				Assert.assertEquals(titleText, "Help Ingestion");
+			}
+			//* Ingestions Detail Page Header Title
+			else if(helpType.equals("details")) {
+				Assert.assertEquals(titleText, "Help Ingestion Details");
+			}
+			//If we are on the wizard page verify previous help icons, that we clicked and stored
+			else if(helpType.equals("wizard")) {
+				Boolean[] truePopups = (Boolean[])dataMap.get("trueValues");
+				String[] titles = (String[])dataMap.get("titleNames");
+				
+				for(int i =0; i<3; i++) Assert.assertTrue(truePopups[i]);
+
+				//* Ingestion Wizard: Header Page Title
+				Assert.assertEquals(titles[0], "Source Selection & Ingestion Type");
+				//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
+				Assert.assertEquals(titles[1], "Configure Mapping");
+				//* Ingestion Wizard: Configure Field Mapping header
+				Assert.assertEquals(titles[2], "Ingestion Wizard");
+			}
+			else fail(dataMap, "Valid help menu not given");
+
 		}
 		else fail(dataMap, "Verified tool_tips are displayed");
 
@@ -4354,10 +4402,60 @@ public class IngestionContext extends CommonContext {
 			//* EmailAuthorAddress
 			//* EmailAuthorName
 			//
-			throw new ImplementationException("verify_doc_basic_displays_expected_options");
-		} else {
-			throw new ImplementationException("NOT verify_doc_basic_displays_expected_options");
+			HashSet<String> expectedValues = new HashSet<>();
+			expectedValues.add("Select");
+			expectedValues.add("RequirePDFGeneration");
+			expectedValues.add("MasterDate");
+			expectedValues.add("LastSaveDate");
+			expectedValues.add("LastPrintedDate");
+			expectedValues.add("LastEditDate");
+			expectedValues.add("LastAccessDate");
+			expectedValues.add("CreateDate");
+			expectedValues.add("DocDate");
+			expectedValues.add("LastModifiedDate");
+			expectedValues.add("DocPages");
+			expectedValues.add("DocFileSize");
+			expectedValues.add("DocFileExtension");
+			expectedValues.add("SourceParentDocID");
+			expectedValues.add("SourceDocID");
+			expectedValues.add("DataSource");
+			expectedValues.add("CustodianName");
+			expectedValues.add("DocFileName");
+			expectedValues.add("RecordType");
+			expectedValues.add("EmailMessageType");
+			expectedValues.add("DocFileType");
+			expectedValues.add("DocumentSubject");
+			expectedValues.add("GUID");
+			expectedValues.add("DupeCustodians");
+			expectedValues.add("ReviewExportID");
+			expectedValues.add("ProcessingOCRComplete");
+			expectedValues.add("HiddenProperties");
+			expectedValues.add("FileDescription");
+			expectedValues.add("ExceptionResolution");
+			expectedValues.add("ExcelProtectedWorkbook");
+			expectedValues.add("ExcelProtectedSheets");
+			expectedValues.add("DocFileExtensionCorrected");
+			expectedValues.add("AllCustodians");
+			expectedValues.add("ExceptionStatus");
+			expectedValues.add("NUIXCaseID");
+			expectedValues.add("DocPrimaryLanguage");
+			expectedValues.add("RevisionNumber");
+			expectedValues.add("PhysicalMedia");
+			expectedValues.add("Container");
+			expectedValues.add("MD5HASH");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getMappingFIELDCAT5().Displayed()  ;}}), Input.wait30);
+			ingest.getMappingFIELDCAT5().click();
+			ingest.getMappingFIELDCAT5().SendKeys("DOCBASIC");
+			ingest.getMappingFIELDCAT5().click();
+			
+			ingest.getMappingDESTINATIONFIELD5().click();
+			String[] currentDropDownValues = ingest.getMappingDESTINATIONFIELD5().getText().split("\\r?\\n");
+			for(int i =0; i<currentDropDownValues.length; i++) Assert.assertTrue(expectedValues.contains(currentDropDownValues[i]));
+
 		}
+		else fail(dataMap, "failed to verify expected options");
 
 	}
 
@@ -4400,16 +4498,36 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_ingestion_status_detail_page$")
 	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			Thread.sleep(5000);
 			//TC2392:To Verify Ingestion Status in Ingestion Detail 
 			//:PageTC3015 verify page title displayCovered:
 			//TC3017:To verify default value display into combo box
-			//
+
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Home");
+	    		driver.waitForPageToBeReady();
+	    		
 			//* Validate Ingestion Home Page Title displays: "Ingestions"
+	    		Assert.assertEquals("Ingestions", ingest.getIngestionHomePageTitle().getText());
+
 			//* Validate the Failed status is displayed for the ingestion details page
-			//
+	    		
+	    		//Filter by Failed and click into first ingestion
+	    		ingest.getFilterByOption().click();
+	    		ingest.getSelectFilterByOption(2).click();
+	    		ingest.getSelectFilterByOption(3).click();
+	    		ingest.getFilterByOption().click();
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(ingest.getTotalIngestCount().getText().equals("0"))  ;}}), Input.wait30); 
+	    		ingest.getIngestionTile(0).click();
+
+	    		//Verify Failed status text
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getFailedStatusDetailText().Displayed()  ;}}), Input.wait30); 
+			System.out.println(ingest.getFailedStatusDetailText().getText());
+			Assert.assertEquals("Failed", ingest.getFailedStatusDetailText().getText());
+			pass(dataMap, "Ingestion Status detail verified");
+
 		}
 		else fail(dataMap, "Failed to verify ingestion status");
 
