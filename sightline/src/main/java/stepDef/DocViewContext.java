@@ -25,6 +25,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.beust.jcommander.JCommander.Builder;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -628,11 +630,19 @@ public class DocViewContext extends CommonContext {
 	public void delete_redaction_with_keyboard_delete_key(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("delete_redaction_with_keyboard_delete_key");
-		} else {
-			throw new ImplementationException("NOT delete_redaction_with_keyboard_delete_key");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			//Save amount of redactions before we attempt to delete
+			int existingRedactions = docView.getExistingRectangleRedactions().FindWebElements().size();
+			dataMap.put("firstRedactionCount", existingRedactions);
+			Actions builder = new Actions(driver.getWebDriver());
+			//Get the last redaction added(last index in our list of redactions)
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(existingRedactions-1)).click().build().perform();
+			builder.sendKeys(Keys.DELETE);
+			pass(dataMap, "Attempted to delete redaction with keyboard");
 		}
+		else fail(dataMap, "failed to attempt to delete redaction with keyboard");
 
 	}
 
@@ -642,10 +652,15 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC9552 Verify that when 'Rectangle' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard actionTC9553 Verify that when 'This Page' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action
-			throw new ImplementationException("verify_redaction_not_deleted_with_keyboard");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_not_deleted_with_keyboard");
+
+			int firstRedactionCount = (int)dataMap.get("firstRedactionCount");
+			int currentRedactions = docView.getExistingRectangleRedactions().FindWebElements().size();
+			//Make sure the number of redactions we recorded before attempting to delete is equal to the number of redactions now (nothing got deleted)
+			Assert.assertEquals(firstRedactionCount, currentRedactions);
+
+			pass(dataMap, "Redaction was not deleted with keyboard");
 		}
+		else fail(dataMap, "Redaction was deleted with keyboard");
 
 	}
 
