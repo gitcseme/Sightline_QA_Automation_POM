@@ -648,4 +648,248 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+	@And("^.*(\\[Not\\] )? select_tag_with_0_docs$")
+	public void select_tag_with_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Select Tag radio buttonSelect a tag with 0 Documents associated to it
+			//
+			//* All Tags > 0Docs
+			//
+			//Click Next button
+			throw new ImplementationException("select_tag_with_0_docs");
+		} else {
+			throw new ImplementationException("NOT select_tag_with_0_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_analysis_0_docs$")
+	public void verify_analysis_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9707 Verify when user selects a tag/folder with zero count for batch print
+			//
+			//* Verify message "Analysis of your request   Your request to print: 0 documents"
+			//
+			throw new ImplementationException("verify_analysis_0_docs");
+		} else {
+			throw new ImplementationException("NOT verify_analysis_0_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_folder_with_0_docs$")
+	public void select_folder_with_0_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Select Folder radio buttonSelect a tag with 0 Documents associated to it
+			//
+			//* All Folders > 0Docs
+			//
+			//Click Next button
+			throw new ImplementationException("select_folder_with_0_docs");
+		} else {
+			throw new ImplementationException("NOT select_folder_with_0_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_basis_for_printing_$")
+	public void select_basis_for_printing_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Basis for Printing
+			//* Click on the Next button
+			//
+			throw new ImplementationException("select_basis_for_printing_");
+		} else {
+			throw new ImplementationException("NOT select_basis_for_printing_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_export_format_$")
+	public void select_export_format_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Export Format
+			//* Click Generate button
+			//Ignore the index parameter, it isnt going to be used.
+			throw new ImplementationException("select_export_format_");
+		} else {
+			throw new ImplementationException("NOT select_export_format_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_file_sorted_correctly$")
+	public void verify_pdf_file_sorted_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8103 Validate Batch Print Sorting docs by MasterDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8105 Validate Batch Print Sorting docs by CreatedDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8107 Validate Batch Print Sorting docs by SendDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8166 Validate Batch Print Sorting docs by LastSaveDate (Native) with one PDF for each doc in descending order
+			//TC8167 Validate Batch Print Sorting docs by LastSaveDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8169 Validate Batch Print Sorting docs by LastModifiedDate [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8170 Validate Batch Print Sorting docs by LastEditDate (Native) with one PDF for each doc in descending order
+			//TC8171 Validate Batch Print Sorting docs by LastEditDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8174 Validate Batch Print Sorting docs by DocDate (Native) with one PDF for each doc in descending order
+			//TC8175 Validate Batch Print Sorting docs by DocDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8177 Validate Batch Print Sorting docs by CustodianName [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//TC8178 Validate Batch Print Sorting docs by DocFileName (Native) with one PDF for all docs in ascending order
+			//TC8179 Validate Batch Print Sorting docs by DocFileName [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
+			//TC8181 Validate Batch Print Sorting docs by DocID [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+			//
+			//* Verify PDF exported according to Basis for Printing, and Export Format options
+			//
+			//
+			throw new ImplementationException("verify_pdf_file_sorted_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_file_sorted_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_pdf_generated$")
+	public void verify_production_pdf_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4563 Verify PDF file should be generated for the selected production set
+			throw new ImplementationException("verify_production_pdf_generated");
+		} else {
+			throw new ImplementationException("NOT verify_production_pdf_generated");
+		}
+
+	}
+
+	@And("^.*(\\[Not\\] )? select_source_selection_with_redactions$")
+	public void select_source_selection_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select a source for Select SearchDefault search: Shared with SG1 > CustodianName Erika GrajedaClick Next button
+			throw new ImplementationException("select_source_selection_with_redactions");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_generated_with_redactions$")
+	public void verify_pdf_generated_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4651 Verify PDF file should be generated with redaction on for the documents from selected produciton set with DocID as export file nameTC4658 Verify PDF file should be generated with branding for the documents from selected production set with Begin Bates as export file name
+			//TC4659 Verify PDF file should be generated with redaction on for the documents from selected produciton set with File Name as export file name
+			//
+			//* PDFs with redactions are generated based on Export Format
+			//
+			//
+			throw new ImplementationException("verify_pdf_generated_with_redactions");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_generated_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_from_selected_production_slipsheet_field$")
+	public void verify_pdf_from_selected_production_slipsheet_field(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4648 Verify PDF file should be generated with the production slipsheet fields for the produciton set with DocID as export file name
+			//TC4650 Verify PDF file should be generated with the new slipsheet fields for the produciton set with DocID as export file name
+			//TC4653 Verify PDF file should be generated with the production slipsheet fields for the produciton set with Doc File Name as export file name
+			//TC4654 Verify PDF file should be generated with the production slipsheet fields for the produciton set with Bates Number as export file name
+			//TC4655 Verify PDF file should be generated with the new slipsheet fields for the produciton set with File Name as export file name
+			//TC4656 Verify PDF file should be generated with the new slipsheet fields for the produciton set with Begin Bates as export file name
+			//
+			//* PDF generated based on Slip Sheets and Export Format
+			//
+			//
+			throw new ImplementationException("verify_pdf_from_selected_production_slipsheet_field");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_from_selected_production_slipsheet_field");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_slipsheet_fields_for_selected_tag$")
+	public void verify_selected_slipsheet_fields_for_selected_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9710 Verify PDF file should be generated with the selected slipsheet fields for the selected tag and with DocID as export file name
+			//TC9711 Verify PDF file should be generated with the selected slipsheet fields for the selected tag and with DocFileName as export file name
+			//
+			//* Verify Slip Sheet fields and Export Format for selected tag
+			//
+			//
+			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_tag");
+		} else {
+			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_tag");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_branding_redactions_for_selected_folder$")
+	public void verify_selected_branding_redactions_for_selected_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9716 Verify PDF file should be generated with the selected branding & redactions for the selected folder and with DocID as export file nameTC9717 Verify PDF file should be generated with the selected branding & redactions for the selected folder and with DocFileName as export file name
+			//
+			//* Verify Branding and Redactions and Export Format for selected folder
+			//
+			throw new ImplementationException("verify_selected_branding_redactions_for_selected_folder");
+		} else {
+			throw new ImplementationException("NOT verify_selected_branding_redactions_for_selected_folder");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_branding_redactions_for_selected_tag$")
+	public void verify_selected_branding_redactions_for_selected_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9714 Verify PDF file should be generated with the selected branding & redactions for the selected tag and with DocID as export file nameTC9715 Verify PDF file should be generated with the selected branding & redactions for the selected tag and with DocFileName as export file name
+			//
+			//* Verify Branding and Redactions and Export Format for selected tag
+			//
+			throw new ImplementationException("verify_selected_branding_redactions_for_selected_tag");
+		} else {
+			throw new ImplementationException("NOT verify_selected_branding_redactions_for_selected_tag");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_selected_slipsheet_fields_for_selected_folder$")
+	public void verify_selected_slipsheet_fields_for_selected_folder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9712 Verify PDF file should be generated with the selected slipsheet fields for the selected folder and with DocID as export file name
+			//TC9713 Verify PDF file should be generated with the selected slipsheet fields for the selected folder and with DocFileName as export file name
+			//
+			//* Verify Slip Sheet fields and Export Format for selected folder
+			//
+			//
+			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_folder");
+		} else {
+			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_folder");
+		}
+
+	}
 }//eof

@@ -990,4 +990,1762 @@ public class BatchPrintRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_with_0_docs_When_select_basis_for_printing_Then_verify_analysis_0_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_tag_with_0_docs When select_basis_for_printing Then verify_analysis_0_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_tag_with_0_docs(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			dataMap.put("A", "");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9707");
+			context.verify_analysis_0_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_folder_with_0_docs_When_select_basis_for_printing_Then_verify_analysis_0_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_folder_with_0_docs When select_basis_for_printing Then verify_analysis_0_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_folder_with_0_docs(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9707");
+			context.verify_analysis_0_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_2_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{Native} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{2} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "2");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "LastEditDate");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_3_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{Native} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{3} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "3");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "DocDate");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_4_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{Native} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{4} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "4");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "DocFileName");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_5_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{5} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "5");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "MasterDateTime");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_6_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{6} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "6");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "CreatedDateTime");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_7_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{7} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "7");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "SendDateTime");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_8_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{8} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "8");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "LastSaveDate");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_9_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{9} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "9");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "LastModifiedDate");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_10_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{10} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "10");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "LastEditDate");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_11_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{11} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "11");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "DocDate");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_12_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{12} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "12");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "CustodianName");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_13_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{13} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "13");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "DocFileName");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_PriorProduction_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_14_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{PriorProduction} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{14} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Prior Production");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "14");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("asc_desc", "asc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_1_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing_{Native} and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format_{1} When click_download_file_link Then verify_pdf_file_sorted_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_printing", "Native");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "1");
+			dataMap.put("pdf_creation", "One PDF for all documents");
+			dataMap.put("sort_by", "LastSaveDate");
+			dataMap.put("asc_desc", "desc");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "8103|8105|8107|8166|8167|8169|8170|8171|8174|8175|8177|8178|8179|8181");
+			context.verify_pdf_file_sorted_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_production_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets and select_branding_redactions and select_export_format When click_download_file_link Then verify_production_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "true");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4563");
+			context.verify_production_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_with_redactions_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_2_When_click_download_file_link_Then_verify_pdf_generated_with_redactions() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection_with_redactions and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{2} When click_download_file_link Then verify_pdf_generated_with_redactions");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_with_redactions(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4651|4658|4659");
+			context.verify_pdf_generated_with_redactions(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_with_redactions_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_3_When_click_download_file_link_Then_verify_pdf_generated_with_redactions() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection_with_redactions and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{3} When click_download_file_link Then verify_pdf_generated_with_redactions");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_with_redactions(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "3");
+			dataMap.put("export_file_name", "Begin Bates");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4651|4658|4659");
+			context.verify_pdf_generated_with_redactions(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_with_redactions_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_1_When_click_download_file_link_Then_verify_pdf_generated_with_redactions() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection_with_redactions and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{1} When click_download_file_link Then verify_pdf_generated_with_redactions");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_with_redactions(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4651|4658|4659");
+			context.verify_pdf_generated_with_redactions(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truetrue_and_select_branding_redactions_and_select_export_format_1_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{true} and select_branding_redactions and select_export_format_{1} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "");
+			dataMap.put("use_prior_production", "true");
+			dataMap.put("field_for_slip_sheets", "");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truetrue_and_select_branding_redactions_and_select_export_format_2_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{true} and select_branding_redactions and select_export_format_{2} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "");
+			dataMap.put("use_prior_production", "true");
+			dataMap.put("field_for_slip_sheets", "");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truetrue_and_select_branding_redactions_and_select_export_format_3_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{true} and select_branding_redactions and select_export_format_{3} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "");
+			dataMap.put("use_prior_production", "true");
+			dataMap.put("field_for_slip_sheets", "");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "3");
+			dataMap.put("export_file_name", "BatesNumber");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truetrue_and_select_branding_redactions_and_select_export_format_4_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{true} and select_branding_redactions and select_export_format_{4} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "");
+			dataMap.put("use_prior_production", "true");
+			dataMap.put("field_for_slip_sheets", "");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "4");
+			dataMap.put("export_file_name", "Begin Bates");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_1_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{1} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_2_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{2} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_3_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{3} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "3");
+			dataMap.put("export_file_name", "BatesNumber");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_4_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{4} When click_download_file_link Then verify_pdf_from_selected_production_slipsheet_field");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Prior Production");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("index", "4");
+			dataMap.put("export_file_name", "Begin Bates");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
+			context.verify_pdf_from_selected_production_slipsheet_field(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_tag() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_tag and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocID} When click_download_file_link Then verify_selected_slipsheet_fields_for_selected_tag");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_tag(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9710|9711");
+			context.verify_selected_slipsheet_fields_for_selected_tag(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocFileName_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_tag() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_tag and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocFileName} When click_download_file_link Then verify_selected_slipsheet_fields_for_selected_tag");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_tag(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9710|9711");
+			context.verify_selected_slipsheet_fields_for_selected_tag(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_folder_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_branding_redactions_for_selected_folder() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_folder and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocID} When click_download_file_link Then verify_selected_branding_redactions_for_selected_folder");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_folder(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9716|9717");
+			context.verify_selected_branding_redactions_for_selected_folder(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_folder_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocFileName_When_click_download_file_link_Then_verify_selected_branding_redactions_for_selected_folder() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_folder and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocFileName} When click_download_file_link Then verify_selected_branding_redactions_for_selected_folder");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_folder(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9716|9717");
+			context.verify_selected_branding_redactions_for_selected_folder(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_branding_redactions_for_selected_tag() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_tag and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocID} When click_download_file_link Then verify_selected_branding_redactions_for_selected_tag");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_tag(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9714|9715");
+			context.verify_selected_branding_redactions_for_selected_tag(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocFileName_When_click_download_file_link_Then_verify_selected_branding_redactions_for_selected_tag() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_tag and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocFileName} When click_download_file_link Then verify_selected_branding_redactions_for_selected_tag");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_tag(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9714|9715");
+			context.verify_selected_branding_redactions_for_selected_tag(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_folder_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_folder() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_folder and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocID} When click_download_file_link Then verify_selected_slipsheet_fields_for_selected_folder");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_folder(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "1");
+			dataMap.put("export_file_name", "DocID");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9712|9713");
+			context.verify_selected_slipsheet_fields_for_selected_folder(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_folder_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocFileName_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_folder() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_folder and select_basis_for_printing and select_analysis and select_exception_file_types and select_slip_sheets_{true}{false} and select_branding_redactions and select_export_format_{DocFileName} When click_download_file_link Then verify_selected_slipsheet_fields_for_selected_folder");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_folder(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("C", "2");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9712|9713");
+			context.verify_selected_slipsheet_fields_for_selected_folder(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//eof
