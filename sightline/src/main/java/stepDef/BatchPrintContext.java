@@ -1,15 +1,22 @@
 package stepDef;
 
 import java.io.File;
+import java.io.FileInputStream;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 import java.util.List;
 import java.util.Random;
-
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -44,20 +51,7 @@ public class BatchPrintContext extends CommonContext {
 	 */
 
 
-	@And("^.*(\\[Not\\] )? on_batch_print_page$")
-	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			//* User navigates to Batch Print page (/BatchPrint)
-			//* Batch Print page is displayed
-			//
-			throw new ImplementationException("on_batch_print_page");
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
-
-	}
 
 
 	@And("^.*(\\[Not\\] )? select_source_selection$")
@@ -81,7 +75,21 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_basis_for_printing");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBasisForPrintingHeader().Visible()  ;}}), Input.wait30);
+				if (dataMap.containsKey("basis_for_printing")) {
+					if (dataMap.get("basis_for_printing").equals("Native")) {
+						
+						// Click next button since native is selected by default
+						batchPrint.getBasisForPrintingNextButton().click();
+					}
+					
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_basis_for_printing");
 		}
@@ -118,9 +126,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4396 Verify user can see the saved searches on Source Selection tab of Batch Print
-			throw new ImplementationException("verify_saved_searches_on_source_selection_tab");
+			batchPrint.getMySavedSearchArrow().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					batchPrint.getSelectSavedSearchRows().Displayed()  ;}}), Input.wait30);
+
+			pass(dataMap, "Saved search are displayed on the Source Selection tab of Batch Print");
 		} else {
-			throw new ImplementationException("NOT verify_saved_searches_on_source_selection_tab");
+			fail(dataMap, "Saved search are not displayed on the Source Selection tab of Batch Print");
 		}
 
 	}
@@ -135,7 +147,30 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_less_than_250");
+			try {
+				
+				if (dataMap.containsKey("select")) {
+
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
 		}
@@ -151,7 +186,16 @@ public class BatchPrintContext extends CommonContext {
 			//* Selet analysis
 			//* Click Next button
 			//
-			throw new ImplementationException("select_analysis");
+			try {
+				if (dataMap.get("basis_for_printing").equals("Native")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
+					batchPrint.getAnalysisnextbutton().click();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+					batchPrint.getAnalysisnextbutton().click();
+			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
 		}
@@ -167,7 +211,23 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Exception File Types
 			//* Click Next button
 			//
-			throw new ImplementationException("select_exception_file_types");
+			try {
+				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
+					
+					// Check if "Other Exception File Types" field is shown
+					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
+						// if shown, enter placeholder text field
+						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
+						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
+					}
+					batchPrint.getExceptionFileTypesNextButton().click();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
 		}
@@ -183,7 +243,25 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Slip Sheets
 			//* Click Next button
 			//
-			throw new ImplementationException("select_slip_sheets");
+			try {
+				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
+					
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
+
+					// Disable slip sheets
+					batchPrint.getEnableSlipSheetsToggle().click();
+					
+					// wait until slip sheet pabnel is disabled
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSlipSheetsDisabledPanel().Visible()  ;}}), Input.wait30);
+					
+				}
+				
+				batchPrint.getSlipSheetsNextButton().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_slip_sheets");
 		}
@@ -199,7 +277,44 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Branding and Redactions
 			//* Click Next button
 			//
-			throw new ImplementationException("select_branding_redactions");
+			try {
+				String brandLocationText = "Test automation brand location";
+				dataMap.put("brangLocationText", brandLocationText);
+
+				
+				if (dataMap.containsKey("branding_location")) {
+					String brandingLocation = dataMap.get("branding_location").toString().toUpperCase();
+					batchPrint.getBrandingHeaderLocation(brandingLocation).click();
+					
+					// wait for branding location popup
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+					// wait for branding location text field
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBrandingLocationTextField().Visible()  ;}}), Input.wait30);
+					// enter branding text
+					batchPrint.getBrandingLocationTextField().sendKeys(brandLocationText);
+					// click OK button
+					batchPrint.getInsertMetadataFieldOKButton().click();
+				}
+				
+				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("true")) {
+					
+				}
+				
+
+				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+					
+
+				}
+				
+				batchPrint.getBrandingAndRedactionNextButton().click();
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT select_branding_redactions");
 		}
@@ -215,7 +330,37 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Export Format
 			//* Click Generate button
 			//
-			throw new ImplementationException("select_export_format");
+
+
+
+
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
+
+
+				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
+
+					batchPrint.getOnePDFForAllDocsRadioButton().Click();
+				}
+				
+
+				if (dataMap.containsKey("sort_by")) {
+					//TODO: Remove sendKeys and use a select function
+					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+				}
+				
+
+				batchPrint.getGenerateButton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getGenerateSuccessMessage().Visible()  ;}}), Input.wait30);
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			throw new ImplementationException("NOT select_export_format");
 		}
@@ -236,7 +381,33 @@ public class BatchPrintContext extends CommonContext {
 			//* Click the dropdown action button
 			//* Click on View DocView
 			//
-			throw new ImplementationException("click_download_file_link");
+			try {
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBackgroundTaskFirstRowStatus().Visible()  ;}}), Input.wait30);
+				
+				int i = 0;
+				while(!batchPrint.getBackgroundTaskFirstRowStatus().getText().equalsIgnoreCase("COMPLETED") && i<1000) {
+					i++;
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowStatus().Displayed() ;}}), Input.wait30);
+				}
+				if (i != 1000) {
+					System.out.println("Completed!");
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
+					batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
+					driver.waitForPageToBeReady();
+				} else {
+					fail(dataMap, "Refreshed page 1000 times and is still in progress!");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			} 
+
 		} else {
 			throw new ImplementationException("NOT click_download_file_link");
 		}
@@ -249,7 +420,52 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extension
-			throw new ImplementationException("verify_single_pdf_generated");
+			
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to finish downloading
+				Thread.sleep(30000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+					
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						
+						int numOfEntries = zipFile.size();
+						
+						// Verify there is only one entry in the zip file
+						Assert.assertEquals(numOfEntries, 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							// Verify the file is a pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Single pdf not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_single_pdf_generated");
 		}
@@ -266,7 +482,52 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_greater_than_250");
+			try {
+				// wait for radio button to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderRadioButtonIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getSelectFolderRadioButtonIcon().click();
+				
+				// wait for Parent Folder to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSelectFolderDisplaySet().Visible()  ;}}), Input.wait30);
+				
+				// click to expand parent folder
+				batchPrint.getExpandFolderIcon().click();
+				
+				// wait for option to be visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.get250DocsFolderOption().Visible()  ;}}), Input.wait30);
+				
+				// click option
+				batchPrint.get250DocsFolderOption().click();
+				
+				// click Next button
+				batchPrint.getSourceSelectionNextButton().click();
+				
+				if (dataMap.containsKey("select")) {
+					
+					// wait until parent groups become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+					
+					batchPrint.getSharedWithSG1SearchParentGroup().click();
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getCustodianNameCheckbox().click();
+					
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_greater_than_250");
 		}
@@ -279,7 +540,49 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11816 Validate Batch Print - Generating single PDF file for corpus containing multiple files with same name but have different file extensionTC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_second_pdf_generated");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(30000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+	
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+
+						int numOfEntries = zipFile.size();
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							
+							// Verify the files are pdf
+							Assert.assertTrue(entry.getName().contains("pdf"));
+						}
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_second_pdf_generated");
 		}
@@ -292,7 +595,59 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11817 Validate Batch Print - Generating individual PDF file for corpus containing multiple files (document with more than 250 page) with same name but have different file extensions
-			throw new ImplementationException("verify_separate_pdf_generated_for_every_document");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to download
+				Thread.sleep(45000);
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+	
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+
+						int numOfEntries = zipFile.size();
+						
+						// Verify there are multiple entries in the zip file
+						Assert.assertTrue(numOfEntries > 1);
+						
+						List<String> listOfFiles = new ArrayList<String>();
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							listOfFiles.add(entry.getName());
+						}
+
+						// Verify 1.docx and 1.pdf exist in list of files
+						Pattern p = Pattern.compile("1.docx|1.pdf");
+						boolean found = false;
+						for (String f : listOfFiles) {
+							if (p.matcher(f).find()) {
+								found = true;
+								break;
+							}
+						}
+	
+						Assert.assertTrue(found);
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				fail(dataMap, "Multiple pdfs not generated!");
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_separate_pdf_generated_for_every_document");
 		}

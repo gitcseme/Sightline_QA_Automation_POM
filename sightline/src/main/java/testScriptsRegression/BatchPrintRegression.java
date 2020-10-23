@@ -46,7 +46,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_When_on_batch_print_page_Then_verify_saved_searches_on_source_selection_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -57,6 +57,9 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("Test Case", "4396");
+			dataMap.put("uid", "qapau2@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			context.verify_saved_searches_on_source_selection_tab(true, dataMap);
@@ -73,7 +76,7 @@ public class BatchPrintRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_less_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_single_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -84,6 +87,10 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("Test Case", "11816");
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			dataMap.put("select", "search");
@@ -100,8 +107,7 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for all docs");
-			dataMap.put("sort_by", "MasterDate");
+			dataMap.put("pdf_creation", "One PDF for all documents");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
@@ -120,7 +126,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_greater_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_and_select_export_format_When_click_download_file_link_Then_verify_second_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -131,6 +137,10 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("Test Case", "11816|11817");
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			dataMap.put("select", "search");
@@ -147,14 +157,8 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for each doc");
+			dataMap.put("pdf_creation", "One PDF for each document");
 			dataMap.put("A", "");
-			dataMap.put("sort_by", "MasterDate");
-			dataMap.put("export_by", "DocFileName");
-			context.select_export_format(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for each doc");
-			dataMap.put("A", "");
-			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
@@ -173,7 +177,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_greater_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_and_select_export_format_When_click_download_file_link_Then_verify_separate_pdf_generated_for_every_document() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -184,9 +188,12 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("Test Case", "11817");
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
-			dataMap.put("select", "search");
+			dataMap.put("select", "folder");
 			context.select_source_selection_same_name_greater_than_250(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
 			context.select_basis_for_printing(true, dataMap);
@@ -202,12 +209,10 @@ public class BatchPrintRegression extends RegressionBase {
 			context.select_branding_redactions(true, dataMap);
 			dataMap.put("pdf_creation", "1 PDF for each doc");
 			dataMap.put("A", "");
-			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
-			dataMap.put("pdf_creation", "1 PDF for each doc");
+			dataMap.put("pdf_creation", "One PDF for each document");
 			dataMap.put("A", "");
-			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
@@ -226,7 +231,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_same_name_greater_than_250_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_second_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -236,6 +241,7 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "11816|11817");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
@@ -254,7 +260,6 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
 			dataMap.put("pdf_creation", "1 PDF for all docs");
-			dataMap.put("sort_by", "MasterDate");
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);

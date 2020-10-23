@@ -8665,7 +8665,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8675,6 +8675,9 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("helpType", "homePage");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8694,7 +8697,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8704,6 +8707,10 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("helpType", "wizard");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8730,7 +8737,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_doc_basic_displays_expected_options() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8740,6 +8747,8 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
@@ -8804,7 +8813,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_When_new_ingestion_created_Then_verify_ingestion_status_detail_page() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8814,10 +8823,12 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("dat_load_file", "failed_loadfile.dat");
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("source_location", "IngestionTestData" + File.separator + "Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
@@ -8871,7 +8882,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_open_ingestion_details_page_When_click_help_icon_Then_verify_tool_tips_are_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8881,6 +8892,10 @@ public class IngestionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+
+			dataMap.put("pwd", "Q@test_10");
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("helpType", "details");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
