@@ -44,20 +44,7 @@ public class BatchPrintContext extends CommonContext {
 	 */
 
 
-	@And("^.*(\\[Not\\] )? on_batch_print_page$")
-	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
-			//
-			//* User navigates to Batch Print page (/BatchPrint)
-			//* Batch Print page is displayed
-			//
-			throw new ImplementationException("on_batch_print_page");
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
-
-	}
 
 
 	@And("^.*(\\[Not\\] )? select_source_selection$")
@@ -81,7 +68,22 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_basis_for_printing");
+			try {
+				
+				if (dataMap.containsKey("basis_for_printing")) {
+					if (dataMap.get("basis_for_printing").equals("Native")) {
+						if (batchPrint.getNativeRadioButton().Selected()) {
+							batchPrint.getBasisForPrintingNextButton().click();
+						} else {
+							batchPrint.getNativeRadioButton().click();
+							batchPrint.getBasisForPrintingNextButton().click();
+						}
+					}
+				}
+				
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT select_basis_for_printing");
 		}
@@ -118,9 +120,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4396 Verify user can see the saved searches on Source Selection tab of Batch Print
-			throw new ImplementationException("verify_saved_searches_on_source_selection_tab");
+			batchPrint.getMySavedSearchArrow().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					batchPrint.getSelectSavedSearchRows().Displayed()  ;}}), Input.wait30);
+
+			pass(dataMap, "Saved search are displayed on the Source Selection tab of Batch Print");
 		} else {
-			throw new ImplementationException("NOT verify_saved_searches_on_source_selection_tab");
+			fail(dataMap, "Saved search are not displayed on the Source Selection tab of Batch Print");
 		}
 
 	}
@@ -135,7 +141,28 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search to find the precondition files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_same_name_less_than_250");
+			try {
+				
+				if (dataMap.containsKey("select")) {
+					String parentOption = "Shared With Project Administrator";
+					String option = "1FILE";
+					
+					batchPrint.getSelectSearchParentOption(parentOption).waitAndClick(10);
+					
+					// wait until options become visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSelectSearchParentGroup(parentOption).Visible()  ;}}), Input.wait30);
+					
+					// select option
+					batchPrint.getSelectSearchOption(option).waitAndClick(10);
+					
+					// click Next button
+					batchPrint.getSourceSelectionNextButton().click();
+				}
+				
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT select_source_selection_same_name_less_than_250");
 		}
@@ -151,7 +178,13 @@ public class BatchPrintContext extends CommonContext {
 			//* Selet analysis
 			//* Click Next button
 			//
-			throw new ImplementationException("select_analysis");
+			try {
+				if (dataMap.get("basis_for_printing").equals("Native")) {
+					batchPrint.getAnalysisnextbutton().click();
+				}
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT select_analysis");
 		}
@@ -167,7 +200,14 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Exception File Types
 			//* Click Next button
 			//
-			throw new ImplementationException("select_exception_file_types");
+			try {
+				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getPrintExcelFilesRadioButton().Visible()  ;}}), Input.wait30);
+				}
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT select_exception_file_types");
 		}
