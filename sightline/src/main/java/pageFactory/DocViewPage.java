@@ -246,6 +246,7 @@ public class DocViewPage {
     public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
     public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
     public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
+    public Element getCloseButton() { return driver.FindElementById("botClose1");}
     
     
     //Constructor to just use the object instead of navigating to a new page

@@ -689,16 +689,18 @@ public class DocViewContext extends CommonContext {
 	public void rectangle_redaction_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Click redacted rectangle
-			//* Click 'Delete Selected' trashcan button
 			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
 			Actions builder = new Actions(driver.getWebDriver());
+			//Get the last redaction added(last index in our list of redactions)
 			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			//get rid of prior save popup
+			if(docView.getCloseButton().Enabled()) {
+				docView.getCloseButton().click();
+			}
+			//delete redaction
 			docView.getDocView_Annotate_DeleteIcon().click();
-			Thread.sleep(150000);
+			driver.waitForPageToBeReady();
 			pass(dataMap, "deleted redaction");
-			//
 		}
 		else fail(dataMap, "Could not delete redaction");
 
@@ -709,11 +711,16 @@ public class DocViewContext extends CommonContext {
 	public void verify_rectangle_redaction_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC3495 Verify user can delete the redaction in a document
-			throw new ImplementationException("verify_rectangle_redaction_deleted");
-		} else {
-			throw new ImplementationException("NOT verify_rectangle_redaction_deleted");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+
+			Assert.assertEquals(docView.getConfirmPopUp().getText(), "Redaction Removed successfully.");
+			pass(dataMap, "Deleted Redaction successfully");
+
 		}
+		else fail(dataMap, "failed to delete redaction");
 
 	}
 
