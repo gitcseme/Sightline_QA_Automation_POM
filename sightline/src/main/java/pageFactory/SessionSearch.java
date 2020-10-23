@@ -19,12 +19,15 @@ public class SessionSearch {
   
     public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
+    public Element getEditSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]/li[2]",index)); }
+    public Element getSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]",index)); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
     public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
    
     //Hits
-    public Element getPureHitsCount(){ return driver.FindElementByXPath(".//*[@id='001']/span/count"); }
+    public String PureHitsCountLocator = ".//*[@id='001']/span/count";
+    public Element getPureHitsCount(){ return driver.FindElementByXPath(PureHitsCountLocator); }
     public Element getPureHitsCountwithOptions(){ return driver.FindElementByXPath(".//*[@id='001']/count"); } 
     public Element getPureHitsCount2ndSearch(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
     public Element getTDHitsCount(){ return driver.FindElementByXPath(".//*[@id='002']/span/count"); }
@@ -74,11 +77,14 @@ public class SessionSearch {
         
     //save search    
     public Element getSaveSearch_Button(){ return driver.FindElementById("btnSaveSearch"); }
+    public Element getSaveSearch_Button(int index){ return driver.FindElementByXPath(String.format("(//*[@id='btnSaveSearch'])[%s]",index)); }
+    public ElementCollection getAllSaveSearch_Button(){ return driver.FindElementsByXPath(String.format("(//*[@id='btnSaveSearch'])")); }
     public Element getAdvanceS_SaveSearch_Button(){ return driver.FindElementByXPath("//div[@class='searchInput smart-accordion-default']//div[@class='row']//*[@id='qSave']"); }
     
     public Element getSavedSearch_MySearchesTab(){ return driver.FindElementById("-1_anchor"); }
     public Element getSaveSearch_Name(){ return driver.FindElementById("txtSaveSearchName"); }
     public Element getSaveSearch_SaveButton(){ return driver.FindElementById("btnEdit"); }
+    public Element getSaveSearch_CancelButton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
     public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
@@ -86,19 +92,24 @@ public class SessionSearch {
     
     //Metadata
     public Element getBasicSearch_MetadataBtn(){ return driver.FindElementById("metadataHelper"); }
+    public Element getBasicSearch_MetadataBtn(int index){ return driver.FindElementByXPath(String.format("(//*[@id='metadataHelper'])[%s]",index)); }
+    public ElementCollection getAllBasicSearch_MetadataBtn(){ return driver.FindElementsByXPath("(//*[@id='metadataHelper'])"); }
     public Element getAdvanceSearch_MetadataBtn(){ return driver.FindElementByXPath("(//*[@id='metadataHelper'])[2]"); }
     public Element getSelectMetaData(){ return driver.FindElementById("metatagSelect"); }
     public Element getMetaOption(){ return driver.FindElementById("selectOp"); }
     public Element getMetaDataSearchText1(){ return driver.FindElementById("val1"); }
     public Element getMetaDataSearchText2(){ return driver.FindElementById("val2"); }
+    public Element getMetaDataEditSearchBtn(){ return driver.FindElementByXPath("//*[@id='val1']/../../../../div[2]/button"); }
     public Element getMetaDataInserQuery(){ return driver.FindElementById("insertQueryBtn"); }
    
     //Advance Search
     public Element getAdvancedSearchLink(){ return driver.FindElementByXPath("//*[@id='advancedswitch']"); }
-    public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath("//button[@id='contentmetadata']"); }
+    public String ContentAndMetaDatabtnXPath = "//button[@id='contentmetadata']";
+    public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath(ContentAndMetaDatabtnXPath); }
     public Element getWorkproductBtn(){ return driver.FindElementByXPath("//button[@id='workproduct']"); }
     public Element getSavedSearchBtn(){ return driver.FindElementById("savedSearchesHelper"); }
-    public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+savedSearchName+"')]"); }
+    //public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+savedSearchName+"')]"); }
+    public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath(String.format("//span[@data-savedname='%s']/..",savedSearchName)); }
     public ElementCollection getTree(){ return driver.FindElementsByXPath("//a[@class='jstree-anchor'][contains(text(),'')]"); }
     public ElementCollection getSecurityNamesTree(){ return driver.FindElementsByXPath("//*[@id='JSTree']/div/label"); }
     
@@ -135,9 +146,13 @@ public class SessionSearch {
     public Element getProductionBtn(){ return driver.FindElementById("productionsHelper"); }
     public Element getSecurityGrpBtn(){ return driver.FindElementById("SecurityGroupsHelper"); }
     public Element getOperatorDD(){ return driver.FindElementByXPath("(//*[@id='Tabs']//button[contains(text(),'Operator')])[2]"); }
+    public Element getOperatorDD(int index){ return driver.FindElementByXPath(String.format("(//*[@id='Tabs']//button[contains(text(),'Operator')])[%s]",index)); }
     public Element getOperatorAND(){ return driver.FindElementByXPath("(//*[@id='opAND'])[2]"); }
+    public Element getOperatorAND(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opAND'])[%s]",index)); }
     public Element getOperatorOR(){ return driver.FindElementByXPath("(//*[@id='opOR'])[2]"); }
+    public Element getOperatorOR(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opOR'])[%s]",index)); }
     public Element getOperatorNOT(){ return driver.FindElementByXPath("(//*[@id='opNOT'])[2]"); }
+    public Element getOperatorNOT(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opNOT'])[%s]",index)); }
     
     //Conceptual Search right, left and mid
     public Element getConceptualRight(){ return driver.FindElementByXPath("//span[@class='irs-line-right']"); }
@@ -215,7 +230,8 @@ public class SessionSearch {
     public Element getPageTitle() {return driver.FindElementByCssSelector("h1.page-title"); }
     public Element getHelpTip() {return driver.FindElementByCssSelector("a.helptip[data-original-title='Searching Help']"); }
     public Element getUniqueCount(){ return driver.FindElementByCssSelector("h1.page-title span label"); }
-    public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("//*[@id='xEdit']/li)[%s]",listItem+1)); }
+    public String SearchQueryTextXpath = "//*[@id='xEdit']/li";
+    public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
     public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
     public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
     
@@ -248,6 +264,11 @@ public class SessionSearch {
     public ElementCollection getSearchResultsTableRows() {return driver.FindElementsByCssSelector("#taskbasic>tbody>tr");}
     
 
+    // SavedSearchList
+    public Element getSavedSearchList() { return driver.FindElementById("sessionSearchList"); }
+    public Element getAutoSuggest() { return driver.FindElementByCssSelector("ul.ui-autocomplete li.ui-menu-item a"); }
+    public Element isSearchInProgress() { return driver.FindElementById("imgLoadPM"); }
+
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
     }
@@ -255,26 +276,15 @@ public class SessionSearch {
 
     	this.driver = driver;
         this.driver.getWebDriver().get(url+ "Search/Searches");
-        //base = new BaseClass(driver);
+        base = new BaseClass(driver);
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
     //Similar to the overloaded Function of the same name
     //This one does not rely on the appropriate ListItem Index, instead deleting the first avaliable item
-    public Element removeSearchQueryRemove() {
-    	Actions builder  = new Actions(driver.getWebDriver());
-    	for(WebElement x: getQueryTextBoxes().FindWebElements()) {
-    		if(x.isDisplayed() && !x.getText().equals("")) {
-    			builder.moveToElement(x).perform();
-    			return getRemoveSearchQuery();
-    		}
-    	}
-		return null;
-    }
-    
-    public Element removeSearchQueryRemove(int listItem){ 
-    	Element removeLineItem = getSearchQueryText(listItem); 
+    public Element removeSearchQueryRemove(){ 
+    	Element removeLineItem = getActiveElementByXPath(SearchQueryTextXpath); 
 		Actions builder=new Actions(driver.getWebDriver());
 		// Mouse hover to see X button
 		builder.moveToElement(removeLineItem.getWebElement()).perform();
@@ -363,9 +373,44 @@ public class SessionSearch {
 		
 		return null;
 	}
-    public void saveSearch(String searchName) {
+
+    public Element getActiveButtonById(String id) {
+    	return getActiveElementByXPath(String.format("//*[@id='%s']",id));
+    }
+    
+    public Element getActiveElementByXPath(String xPath) {
+    	Element activeBtn = null;
+    	ElementCollection coll = driver.FindElementsByXPath(String.format("(%s)",xPath));;
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element btn = driver.FindElementByXPath(String.format("(%s)[%s]",xPath,c));
+			if (btn.Visible()) {
+				activeBtn = btn;
+				break;
+			}
+    	}
+
+    	return activeBtn;
+    }
+    public Element getActiveSaveSearch_Button() {
+    	Element activeBtn = null;
+    	ElementCollection coll = getAllSaveSearch_Button();
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element btn = getSaveSearch_Button(c);
+			if (btn.Visible()) {
+				activeBtn = btn;
+				break;
+			}
+    	}
+
+    	return activeBtn;
+    }
+    
+    public void initiateSaveSearch(String searchName) {
     	try{
-    	getSaveSearch_Button().waitAndClick(5);
+    		getActiveSaveSearch_Button().waitAndClick(5);
+    		//getSaveSearch_Button().waitAndClick(5);
     	}catch (Exception e) {
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
@@ -380,10 +425,24 @@ public class SessionSearch {
     			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
     	getSavedSearch_MySearchesTab().Click();
     	getSaveSearch_Name().SendKeys(searchName);
+    	
+    }
+    public void cancelSaveSearch(String searchName) {
+    	initiateSaveSearch(searchName);
+    	getSaveSearch_CancelButton().Click();
+    	System.out.println("Cancelled search save with name - "+searchName);
+    }  
+    public void saveSearch(String searchName) {
+    	initiateSaveSearch(searchName);
     	getSaveSearch_SaveButton().Click();
-    	base.VerifySuccessMessage("Saved search saved successfully");
+    	VerifySuccessMessage("Saved search saved successfully");
     	System.out.println("Saved search with name - "+searchName);
 	}
+    public void VerifySuccessMessage(String msg) {
+		base.VerifySuccessMessage(msg);
+		base.CloseSuccessMsgpopup();
+    }
+
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
     	
@@ -574,17 +633,22 @@ public class SessionSearch {
     	
 
 	}
+    
+    public void enterBasicContentSearchString(String SearchString) {
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
+    	getEnterSearchString().SendKeys(SearchString) ;
+    }
+    
     //Function to perform content search for a given search string
     public int basicContentSearch(String SearchString){
 
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
-        //Enter seatch string
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
-    	getEnterSearchString().SendKeys(SearchString) ;
-
+        //Enter search string
+    	enterBasicContentSearchString(SearchString);
+    	
         //Click on Search button
     	getSearchButton().Click();
     	
@@ -636,23 +700,30 @@ public class SessionSearch {
    }
     
     public void selectMetaDataOption(String metaDataField) {
-
-		driver.waitForPageToBeReady();
-		//Get Dynamic MetaData Button List Size
-		int metaDataButtonSize = getMetaDataSearchButtons().FindWebElements().size();
+    	Element activeBtn = null;
+    	ElementCollection coll = getAllBasicSearch_MetadataBtn();
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element btn = getBasicSearch_MetadataBtn(c);
+			if (btn.Visible()) {
+				activeBtn = btn;
+				break;
+			}
+    	}
+		activeBtn.Click();
 		
-				
-		
-		//Choose Current MetaData Button (Last Index of List)
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).isEnabled()  ;}}), Input.wait30);	
-		getMetaDataSearchButtons().FindWebElements().get(metaDataButtonSize-1).click();
+				getSelectMetaData().Visible()  ;}}), Input.wait30); 
 		
-		
-
-		driver.waitForPageToBeReady();
+		//changed this approach from a sleep to waiting for value to appear in dropdown
+//	    try {
+//			Thread.sleep(4000);
+//		} catch (InterruptedException e) {
+//			
+//			e.printStackTrace();
+//		}
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectMetaData().Enabled() && getSelectMetaData().Displayed()  ;}}), Input.wait30); 
+				getSelectMetaData().selectFromDropdownLoaded() ;}}), Input.wait30); 
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
     	
     }
@@ -673,8 +744,13 @@ public class SessionSearch {
 			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
 			
 		}
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getMetaDataInserQuery().Enabled() && getMetaDataInserQuery().Displayed()  ;}}), Input.wait30); 
+
+//	    try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			
+//			e.printStackTrace();
+//		}
 		getMetaDataInserQuery().Click();    	
     }
     
@@ -945,7 +1021,7 @@ public class SessionSearch {
 		  //Click on Search button
     	driver.scrollPageToTop();
     	
-}
+    }
     
      //Function to fetch pure hit count 
      public String verifyPureHitsCount() {
@@ -1480,21 +1556,23 @@ public void selectSecurityGinWPS(String sgname) {
 
 public void selectOperator(String operator) {
 	driver.scrollPageToTop();
-	getOperatorDD().Click();
+	// not sure why this had a index of 2 ([2]) in the locator
+	// kept that the same for backwards compatability, but updated to select the 1st DD by passing index of 1
+	getOperatorDD(1).Click();
 	if(operator.equalsIgnoreCase("and")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait30); 
-		getOperatorAND().Click();	
+				getOperatorAND(1).Visible()  ;}}), Input.wait30); 
+		getOperatorAND(1).Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorOR().Visible()  ;}}), Input.wait30); 
-		getOperatorOR().waitAndClick(5);	
+				getOperatorOR(1).Visible()  ;}}), Input.wait30); 
+		getOperatorOR(1).waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorNOT().Visible()  ;}}), Input.wait30); 
-		getOperatorNOT().Click();	
+				getOperatorNOT(1).Visible()  ;}}), Input.wait30); 
+		getOperatorNOT(1).Click();	
 	}
 
 
@@ -1675,6 +1753,7 @@ public void saveSearchAdvanced(String searchName) {
 	   	getSaveSearch_Name().SendKeys(searchName);
 	   	getSaveSearch_SaveButton().Click();
 	   	base.VerifySuccessMessage("Saved search saved successfully");
+	   	base.CloseSuccessMsgpopup();
 	   	System.out.println("Saved search with name - "+searchName);
 		}
 
