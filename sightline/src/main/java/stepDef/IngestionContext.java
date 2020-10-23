@@ -4620,4 +4620,95 @@ public class IngestionContext extends CommonContext {
 		else fail(dataMap, "Could not verify date time displays correctly");
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? search_for_existing_ingestion_by_$")
+	public void search_for_existing_ingestion_by_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This method will require different conditions depending on the status we are passing. For this method can we also include a secondary condition where if we need to select Grid view or Tile View.In the failed status, locate an existing ingestion that contains more than 50 errors. This is needed to validate multiple test cases. Once we are in the Grid View, click the header column for Errors twice to sort by DESC order. This way we can get an ingestion with more than 50 errors
+			throw new ImplementationException("search_for_existing_ingestion_by_");
+		} else {
+			throw new ImplementationException("NOT search_for_existing_ingestion_by_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_action_dropdown$")
+	public void click_action_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_action_dropdown");
+		} else {
+			throw new ImplementationException("NOT click_action_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_approve_option_is_enabled_in_appropriate_situations$")
+	public void verify_approve_option_is_enabled_in_appropriate_situations(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1439:To verify that Approve option in Action dropdown should be enable/disable on appropriae situation.
+			//
+			//* For every status an ingestion is in (In Progress, Cataloged, Copied, Indexed) we need to check the APPROVE option in the ingestion details page
+			//* Validate the APPROVE option is disabled in all of those statuses.
+			//
+			throw new ImplementationException("verify_approve_option_is_enabled_in_appropriate_situations");
+		} else {
+			throw new ImplementationException("NOT verify_approve_option_is_enabled_in_appropriate_situations");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_error_modal_works_as_expected$")
+	public void verify_ingestion_error_modal_works_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1441:To Verify the sorting functionality if admin clicks on Column HeadingTC1443:To verify that pagination is provide to Error details popTC1444:To verify that Admin is able to browser all the Errors using navigation controlTC1445:To verify that on error details page "DataTable Records Display" is displayed correctlyTC1446:To verify that Ingestion name is displayed correctThe table we require for this test cases is located in the Ingestion Details pageYou have to Click the Error link to view the error details
+			//
+			//* Validate Column header can be sorted.
+			//* Make sure that clicking the header makes the items get sorted by DESC order or ASC order accordingly.
+			//* Validate the error modal also contains a pagination on the bottom right corner
+			//
+			//Click on the Previous, Next and specific page on the popup
+			//
+			//* Validate the buttons work as expected
+			//
+			//EX: If you are on a page other than the last, click the Next button make sure the page is one more than the previousEX: If you are on a page other than the first, click Previous button and the page should be one lessEX: If you click on a page number make sure that number is highlighted/selected in the pagination
+			//
+			//* Validate the following text displays the correct ammount of entries when clicking a different page:
+			//* EX: if you are on Page 2 verify that the following is displayed"Showing 11 to 20 of 52 entries"
+			//* Validate Ingestion Name is displayed correctly in the error modal
+			//
+			throw new ImplementationException("verify_ingestion_error_modal_works_as_expected");
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_error_modal_works_as_expected");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_error_popup_closes_as_expected$")
+	public void verify_error_popup_closes_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1442:To verify the functionality of Close and Back button on Error details pop upWe need to validate that the error modal can be closed multiple ways.The first one is clicking the back button in the modal.
+			//
+			//* Once the modal is closed we need to validate that we see the ingestion details page.
+			//
+			//Click the error count againThis time click on the Close button
+			//
+			//* Validate the ingestion details page and error modal disappears and Ingestion home page is displayed
+			//
+			throw new ImplementationException("verify_error_popup_closes_as_expected");
+		} else {
+			throw new ImplementationException("NOT verify_error_popup_closes_as_expected");
+		}
+
+	}
 } //end

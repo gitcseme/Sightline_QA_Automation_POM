@@ -1207,4 +1207,412 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print$")
+	public void login_to_new_batch_print(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_notification_displayed_when_background_process_initialized$")
+	public void verify_notification_displayed_when_background_process_initialized(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
+			//
+			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
+			//* New BATCHPRINT row with your INPROGRESS task is created
+			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
+			//
+			throw new ImplementationException("verify_notification_displayed_when_background_process_initialized");
+		} else {
+			throw new ImplementationException("NOT verify_notification_displayed_when_background_process_initialized");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_source_selection_back_button$")
+	public void click_source_selection_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Back' button
+			throw new ImplementationException("click_source_selection_back_button");
+		} else {
+			throw new ImplementationException("NOT click_source_selection_back_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_directed_to_source_selection_tab$")
+	public void verify_directed_to_source_selection_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4387 Verify that on clickon Back button, it will redirect to Source Selection
+			//
+			//* Directed to Source Selection tab
+			//
+			throw new ImplementationException("verify_directed_to_source_selection_tab");
+		} else {
+			throw new ImplementationException("NOT verify_directed_to_source_selection_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_batch_print_page$")
+	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Batch Print page (/BatchPrint)
+			//* Batch Print page is displayed
+			//
+			throw new ImplementationException("on_batch_print_page");
+		} else {
+			throw new ImplementationException("NOT on_batch_print_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_prior_productions_radio_button$")
+	public void verify_prior_productions_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4450 Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)' radio button is selected from 'Basis for Printing'Basis for Printing tab matches the following format:"You requested to print: 25 documentsOf those,There isno issues with 0 documents.However,There are 25 documents that need your decision below. Of those 25 documents:
+			//
+			//* 25 are not in any of your specified productions
+			//* 0 are in more than one production
+			//
+			//"Documents grid should have the following columns:
+			//
+			//* Doc ID
+			//* Skip Printing
+			//* Production columns as per selected production
+			//* Not in any production
+			//
+			//Make sure that checkbox should be displayed for the document as per the production.Make sure the pagination should be displayed for the grid.Folder tree structure should be displayed with toggling ON.If toggling is OFF then tree folder structure shouldnot be displayed.
+			throw new ImplementationException("verify_prior_productions_radio_button");
+		} else {
+			throw new ImplementationException("NOT verify_prior_productions_radio_button");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_skip_excel_files_radio_button$")
+	public void select_skip_excel_files_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Skip Excel Files' radio button
+			throw new ImplementationException("select_skip_excel_files_radio_button");
+		} else {
+			throw new ImplementationException("NOT select_skip_excel_files_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_skip_excel_files_on_exception_file_types_tab$")
+	public void verify_skip_excel_files_on_exception_file_types_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4457 Verify the details if user select option as 'Skip Excel Files' on Exception File Types
+			//
+			//* 'Include Placeholders' tab displayed
+			//* Inert Metadata field is displayed
+			//
+			throw new ImplementationException("verify_skip_excel_files_on_exception_file_types_tab");
+		} else {
+			throw new ImplementationException("NOT verify_skip_excel_files_on_exception_file_types_tab");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_other_exception_file_types_help_button$")
+	public void click_other_exception_file_types_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Other Exception File Types' help ? button
+			throw new ImplementationException("click_other_exception_file_types_help_button");
+		} else {
+			throw new ImplementationException("NOT click_other_exception_file_types_help_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_help_displayed_on_exception_file_types_tab$")
+	public void verify_help_displayed_on_exception_file_types_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4400 Verify that Help is displayed on exception file types
+			//
+			//* Help displayed
+			//
+			throw new ImplementationException("verify_help_displayed_on_exception_file_types_tab");
+		} else {
+			throw new ImplementationException("NOT verify_help_displayed_on_exception_file_types_tab");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_excel_files_help_button$")
+	public void click_excel_files_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Excel Files' help ? button
+			throw new ImplementationException("click_excel_files_help_button");
+		} else {
+			throw new ImplementationException("NOT click_excel_files_help_button");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_media_files_help_button$")
+	public void click_media_files_help_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Media Files' help ? button
+			throw new ImplementationException("click_media_files_help_button");
+		} else {
+			throw new ImplementationException("NOT click_media_files_help_button");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Enter Username and password for Review Manager user
+			//* User is logged in
+			//* Sightline Home page is displayed
+			//
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_rmu_fields_in_slip_sheets$")
+	public void verify_rmu_fields_in_slip_sheets(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4545 Verify that RMU can view the fields in 'Slip Sheets' if it is associated to the security groupThese Slip Sheets Metadata fields are not listed for RMU:
+			//
+			//* AnalyticsExceptions
+			//* Audio_AgentID
+			//* Audio_AgentName
+			//* Audio_Appearance
+			//
+			//The only Slip Sheets Workproduct Tags fields listed for RMU:
+			//
+			//* All Tag > TagFor SG1
+			//
+			//The only Slip Sheets Workproduct Redaction Tags fields listed for RMU:
+			//
+			//* All Redaction Tags > SGSame1
+			//* All Redaction Tags > SGSame2
+			//
+			throw new ImplementationException("verify_rmu_fields_in_slip_sheets");
+		} else {
+			throw new ImplementationException("NOT verify_rmu_fields_in_slip_sheets");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? slip_sheets_disabled$")
+	public void slip_sheets_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//'Enable Slip Sheets' toggle is disabled
+			throw new ImplementationException("slip_sheets_disabled");
+		} else {
+			throw new ImplementationException("NOT slip_sheets_disabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_slip_sheets_disabled$")
+	public void verify_slip_sheets_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4530 Verify that 'Enabled Slip Sheets' is OFF/ON then panel should be disabled
+			//
+			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' disabled
+			//* 'Select Fields for Slip Sheets' disabled
+			//
+			throw new ImplementationException("verify_slip_sheets_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_slip_sheets_disabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? slip_sheets_enabled$")
+	public void slip_sheets_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//'Enabled Slip Sheets' toggle is ON
+			throw new ImplementationException("slip_sheets_enabled");
+		} else {
+			throw new ImplementationException("NOT slip_sheets_enabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_slip_sheets_enabled$")
+	public void verify_slip_sheets_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4530 Verify that 'Enable Slip Sheets' is OFF/ON then panel should be disabled
+			//
+			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' enabled
+			//* 'Select Fields for Slip Sheets' enabled
+			//
+			throw new ImplementationException("verify_slip_sheets_enabled");
+		} else {
+			throw new ImplementationException("NOT verify_slip_sheets_enabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_search_radio_button$")
+	public void click_select_search_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Select Search' radio button on Source Selection tab
+			throw new ImplementationException("click_select_search_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_search_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_my_shared_removed$")
+	public void verify_my_shared_removed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4398 Verify that 'My Shared' it should be removed from Batch Print
+			//
+			//* 'My Shared' is not a 'Select Search' option
+			//
+			throw new ImplementationException("verify_my_shared_removed");
+		} else {
+			throw new ImplementationException("NOT verify_my_shared_removed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? toggle_branding_redactions_$")
+	public void toggle_branding_redactions_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Branding and Redactions
+			//If branding_location is 'All' then add branding to Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right options
+			throw new ImplementationException("toggle_branding_redactions_");
+		} else {
+			throw new ImplementationException("NOT toggle_branding_redactions_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? diff_branding_redaction_configs_set$")
+	public void diff_branding_redaction_configs_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Do nothing
+			throw new ImplementationException("diff_branding_redaction_configs_set");
+		} else {
+			throw new ImplementationException("NOT diff_branding_redaction_configs_set");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_include_applied_redactions_on_branding_redactions_tab$")
+	public void verify_include_applied_redactions_on_branding_redactions_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4514 Verify user can on/off the 'Include Applied Redactions' from Branding and Redactions tab
+			//
+			//* Verify user can toggle 'Include Applied Redactions' ON/OFF
+			//* Regardless of 'Include Applied Redactions' status user can place Branding on the Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right
+			//
+			throw new ImplementationException("verify_include_applied_redactions_on_branding_redactions_tab");
+		} else {
+			throw new ImplementationException("NOT verify_include_applied_redactions_on_branding_redactions_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_branding_location$")
+	public void click_branding_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click branding position determined by 'branding_location'
+			throw new ImplementationException("click_branding_location");
+		} else {
+			throw new ImplementationException("NOT click_branding_location");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_insert_metadata_field_button_on_branding_redactions$")
+	public void click_insert_metadata_field_button_on_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_insert_metadata_field_button_on_branding_redactions");
+		} else {
+			throw new ImplementationException("NOT click_insert_metadata_field_button_on_branding_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_metadata_displayed_on_branding_redactions$")
+	public void verify_metadata_displayed_on_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4403 Verify that Meta Data should be displayed if clicks on Insert Meta Data Link
+			//
+			//* Insert Metadata Field pops up
+			//* Dropdown of metadata fields is displayed
+			//
+			throw new ImplementationException("verify_metadata_displayed_on_branding_redactions");
+		} else {
+			throw new ImplementationException("NOT verify_metadata_displayed_on_branding_redactions");
+		}
+
+	}
 }//eof
