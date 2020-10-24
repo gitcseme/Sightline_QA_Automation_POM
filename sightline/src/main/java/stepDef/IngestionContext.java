@@ -26,6 +26,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.JavascriptExecutor;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Set;
+import com.google.common.collect.Ordering;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -3896,6 +3897,31 @@ public class IngestionContext extends CommonContext {
 	else fail(dataMap, "Ingestion details page could not be open");
 
 }
+	
+	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
+	public void open_ingestion_details_page_with_errors(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		// this method expects a specific number of errors for an Ingestion
+		if (scriptState) {
+			String errorCount = dataMap.get("errorCount").toString();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionWithErrors(errorCount).Displayed()  ;}}), Input.wait30); 
+				String ingestionName = ingest.getIngestionWithErrors(errorCount).GetAttribute("title");	
+				ingest.getIngestionWithErrors(errorCount).click();
+				
+				// add ingestionName to dataMap
+				dataMap.put("ingestionName", ingestionName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to find Ingestion with "+errorCount+" errors!");
+			}
+
+
+		}
+		else fail(dataMap, "Ingestion details page could not be open");
+
+}
 
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_error_message_is_displayed$")
@@ -4163,7 +4189,19 @@ public class IngestionContext extends CommonContext {
 
 	}
 
-
+	@When("^.*(\\[Not\\] )? click_ingestion_error_count$")
+	public void click_ingestion_error_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getDocErrorCountLink().Visible()  ;}}), Input.wait30); 
+			ingest.getDocErrorCountLink().click();
+		} else {
+			throw new ImplementationException("NOT click_ingestion_error_count");
+		}
+	}
+	
+	
 	@When("^.*(\\[Not\\] )? click_error_count$")
 	public void click_error_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -4627,7 +4665,7 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//This method will require different conditions depending on the status we are passing. For this method can we also include a secondary condition where if we need to select Grid view or Tile View.In the failed status, locate an existing ingestion that contains more than 50 errors. This is needed to validate multiple test cases. Once we are in the Grid View, click the header column for Errors twice to sort by DESC order. This way we can get an ingestion with more than 50 errors
-			throw new ImplementationException("search_for_existing_ingestion_by_");
+			click_filter_by_dropdown(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT search_for_existing_ingestion_by_");
 		}
@@ -4640,7 +4678,13 @@ public class IngestionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_action_dropdown");
+			try {
+				ingest.getActionDropdownButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getActionMenu().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_action_dropdown");
 		}
@@ -4657,7 +4701,19 @@ public class IngestionContext extends CommonContext {
 			//* For every status an ingestion is in (In Progress, Cataloged, Copied, Indexed) we need to check the APPROVE option in the ingestion details page
 			//* Validate the APPROVE option is disabled in all of those statuses.
 			//
-			throw new ImplementationException("verify_approve_option_is_enabled_in_appropriate_situations");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getApproveOption().Visible()  ;}}), Input.wait30);
+			
+			if (dataMap.get("filter_option").toString().matches("In Progress|Cataloged|Copied|Indexed")) {
+				if (!ingest.getApproveOption().GetAttribute("class").equalsIgnoreCase("disabled")) {
+					String msg = "Test passed! Approve option is not disaled!";
+					pass(dataMap, msg);
+				} else {
+					String msg = "Test failed! Approve option is disaled!";
+					fail(dataMap, msg);
+				}
+			}
 		} else {
 			throw new ImplementationException("NOT verify_approve_option_is_enabled_in_appropriate_situations");
 		}
@@ -4669,7 +4725,11 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_error_modal_works_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC1441:To Verify the sorting functionality if admin clicks on Column HeadingTC1443:To verify that pagination is provide to Error details popTC1444:To verify that Admin is able to browser all the Errors using navigation controlTC1445:To verify that on error details page "DataTable Records Display" is displayed correctlyTC1446:To verify that Ingestion name is displayed correctThe table we require for this test cases is located in the Ingestion Details pageYou have to Click the Error link to view the error details
+			//TC1441:To Verify the sorting functionality if admin clicks on Column Heading
+			//TC1443:To verify that pagination is provide to Error details pop
+			//TC1444:To verify that Admin is able to browser all the Errors using navigation control
+			//TC1445:To verify that on error details page "DataTable Records Display" is displayed correctly
+			//TC1446:To verify that Ingestion name is displayed correctThe table we require for this test cases is located in the Ingestion Details pageYou have to Click the Error link to view the error details
 			//
 			//* Validate Column header can be sorted.
 			//* Make sure that clicking the header makes the items get sorted by DESC order or ASC order accordingly.
@@ -4679,13 +4739,116 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate the buttons work as expected
 			//
-			//EX: If you are on a page other than the last, click the Next button make sure the page is one more than the previousEX: If you are on a page other than the first, click Previous button and the page should be one lessEX: If you click on a page number make sure that number is highlighted/selected in the pagination
+			//EX: If you are on a page other than the last, click the Next button make sure the page is one more than the previous
+			//EX: If you are on a page other than the first, click Previous button and the page should be one less
+			//EX: If you click on a page number make sure that number is highlighted/selected in the pagination
 			//
 			//* Validate the following text displays the correct ammount of entries when clicking a different page:
 			//* EX: if you are on Page 2 verify that the following is displayed"Showing 11 to 20 of 52 entries"
 			//* Validate Ingestion Name is displayed correctly in the error modal
 			//
-			throw new ImplementationException("verify_ingestion_error_modal_works_as_expected");
+			try {
+				// wait for error table
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				// Sort Row Number In Dat column by ascending order
+				ingest.getRowNumberDatHeader().Click();
+				
+				// wait until rows are sorted
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRowNumberDatHeaderASCSorted().Displayed()  ;}}), Input.wait30); 
+				
+				// save values
+				List<WebElement> rows = ingest.getRowNumberInDATRows().FindWebElements();
+				List<Integer> DATValuesASC = new ArrayList<>();
+				for(WebElement row : rows) {
+					DATValuesASC.add(Integer.parseInt(row.getText()));
+				}
+				boolean sortedAsc = Ordering.natural().isStrictlyOrdered(DATValuesASC);
+				
+				// Verify rows are sorted in ascending order
+				if (sortedAsc) {
+					pass(dataMap, "PASS! Clicking the header sorts rows in ascending order");
+				} else fail(dataMap, "FAIL! Clicking the header does not sort rows in ascending order");
+
+				// Sort Row Number in DAT column by descending order
+				ingest.getRowNumberDatHeader().Click();
+				
+				// wait until rows are sorted
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRowNumberDatHeaderDESCSorted().Displayed()  ;}}), Input.wait30); 
+				
+				// save values
+				List<WebElement> rowsDESC = ingest.getRowNumberInDATRows().FindWebElements();
+				List<String> DATValuesDESC = new ArrayList<>();
+				for(WebElement row : rowsDESC) {
+					DATValuesDESC.add(row.getText());
+				}
+				boolean sortedDesc = Ordering.natural().reverse().isOrdered(DATValuesDESC);
+				
+				// verify rows are sorted in descending order
+				if (sortedDesc) {
+					pass(dataMap, "PASS! Clicking the header sorts rows in ascending order");
+				} else fail(dataMap, "FAIL! Clicking the header does not sort rows in ascending order");
+				
+				// Verify pagination buttons are displayed
+				if (ingest.getPaginationButtons().Displayed()) {
+					pass(dataMap, "PASS! Pagination buttons are displayed");
+				} else fail(dataMap, "FAIL! Pagination buttons are not displayed");
+				
+				// Get active page number
+				int activePageNumber = Integer.parseInt(ingest.getActivePageNumber().getText());
+				int nextPageNumber = activePageNumber + 1;
+				
+				// click Next button
+				ingest.getPaginationNextButton().click();
+				driver.waitForPageToBeReady();
+			
+				String classAttr = ingest.getPageByNumber(nextPageNumber).GetAttribute("class");
+				if (classAttr.contains("active")) {
+					pass(dataMap, "Clicking next goes to next page!");
+				} else fail(dataMap, "Clicking Next button does not go to next page!");
+	
+				int newActivePageNumber = Integer.parseInt(ingest.getActivePageNumber().getText());
+				int prevPageNumber = newActivePageNumber - 1;		
+				
+				// Verify data table entries text
+				String dataTableEntriesText = ingest.getDataTableInfo().getText();
+				String expectedText = String.format("Showing 11 to 20 of %s entries", dataMap.get("errorCount"));
+				if (dataTableEntriesText.equals(expectedText)) {
+					pass(dataMap,"PASS! Expected entries text is shown");
+				} else fail(dataMap, "FAIL! Expected data entries text is not shown");
+
+				// click Previous button
+				ingest.getPaginationPreviousButton().click();
+				driver.waitForPageToBeReady();
+				
+				String classAttrNew = ingest.getPageByNumber(prevPageNumber).GetAttribute("class");
+				if (classAttrNew.contains("active")) {
+					pass(dataMap, "Clicking Previous goes to previous page!");
+				} else fail(dataMap, "Clicking Next button does not go to next page!");
+	
+				// go to page 3
+				ingest.getGotoPageByNumber(3).click();
+				driver.waitForPageToBeReady();
+				
+				// Verify page 3 is selected in pagination
+				String classAttr3 = ingest.getPageByNumber(3).GetAttribute("class");
+				if (classAttr3.contains("active")) {
+					pass(dataMap, "PASS! Clicking page 3 shows page 3 as selected");
+				} else fail(dataMap, "FAIL! Clicking page 3 does not show page 3 as selected");
+				
+				// Verify ingestion name shows at the top of dialog
+				String expectedIngestionName = dataMap.get("ingestionName").toString();
+				String actualIngestionName = ingest.getErrorDialogIngestionName().getText();
+				if (expectedIngestionName.equals(actualIngestionName)) {
+					pass(dataMap,"PASS! Ingestion name is shown on the dialog");
+				} else fail(dataMap,"FAIL! Ingestion name is not shown on the dialog");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_ingestion_error_modal_works_as_expected");
 		}
@@ -4705,7 +4868,38 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Validate the ingestion details page and error modal disappears and Ingestion home page is displayed
 			//
-			throw new ImplementationException("verify_error_popup_closes_as_expected");
+			try {
+				// wait for error table
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				// click back button
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getErrorDialogBackButton().Visible()  ;}}), Input.wait30); 
+				ingest.getErrorDialogBackButton().click();
+				
+				// Verify user is on Ingestion Details page
+				if (ingest.getIngestionPopupDetails().Displayed()) {
+					pass(dataMap, "PASS! Error popup closes as expected");
+				} else fail(dataMap, "FAIL! Clicking Back button does not return to Ingestion details popup as expected");
+				
+				// click error link again
+				click_ingestion_error_count(true, dataMap);
+				
+				// verify close button works as expected
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getErrorDialogCloseButton().Visible()  ;}}), Input.wait30); 
+				ingest.getErrorDialogCloseButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				if (ingest.getcardCanvas().Displayed()) {
+					pass(dataMap, "PASS! Error popup closes as expected");
+				} else fail(dataMap, "FAIL! Clicking close button on error popup does not return user to Ingestion home page");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_error_popup_closes_as_expected");
 		}

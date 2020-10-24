@@ -410,7 +410,27 @@ public class IngestionPage {
     public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
     public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
     public Element getIngestionHomePageTitle() {return driver.FindElementByXPath("//h1[@class='page-title']");}
-
+    public Element getActionMenu() { return driver.FindElementByCssSelector("div.widget-body ul"); } 
+    public Element getApproveOption() { return driver.FindElementByXPath("//a[text()='Approve']"); }
+    public Element getDocErrorCountLink() { return driver.FindElementByXPath("//label[contains(text(), 'Documents Cataloged')]/following-sibling::div[@class='col-md-7 form-group']//a"); }    
+    public Element getDocErrorTable() { return driver.FindElementById("myDataTable"); }
+    public Element getErrorDialogBackButton() { return driver.FindElementByXPath("//button[text()='Back']"); }
+    public Element getErrorDialogCloseButton() { return driver.FindElementByXPath("//button[text()='Close']"); }
+    public Element getPaginationButtons() { return driver.FindElementByCssSelector(".pagination.pagination-sm"); }
+    public Element getIngestionWithErrors(String errorCount) { return driver.FindElementByXPath("//span[text()='"+errorCount+"']/ancestor::li//span[@class='pTime font-md']"); }
+    public Element getRowNumberDatHeader() { return driver.FindElementById("hdrRowNo"); }
+    public Element getRowNumberDatHeaderASCSorted() { return driver.FindElementByXPath("//th[@id='hdrRowNo' and @class='sorting_asc']"); }
+    public Element getRowNumberDatHeaderDESCSorted() { return driver.FindElementByXPath("//th[@id='hdrRowNo' and @class='sorting_desc']"); }
+    public ElementCollection getRowNumberInDATRows() { return driver.FindElementsByXPath("//table[@id='myDataTable']//tr/td[2]"); }
+    public Element getPaginationNextButton() { return driver.FindElementByXPath("//*[@id='myDataTable_next']/a"); }
+    public Element getActivePageNumber() { return driver.FindElementByCssSelector("li.paginate_button.active > a"); }
+    public Element getPageByNumber(int i) { return driver.FindElementByXPath(String.format("//a[text()='%s']/parent::li", i)); }
+    public Element getGotoPageByNumber(int i) { return driver.FindElementByXPath(String.format("//li[contains(@class, 'paginate_button')]/a[text()='%s']", i)); }
+    public Element getPaginationPreviousButton() { return driver.FindElementByXPath("//*[@id='myDataTable_previous']/a"); }
+    public Element getDataTableInfo() { return driver.FindElementById("myDataTable_info"); }
+    public Element getErrorDialogIngestionName() { return driver.FindElementByCssSelector("div#ErrorListdiv div.colo-md-7 > strong"); }
+    
+    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
