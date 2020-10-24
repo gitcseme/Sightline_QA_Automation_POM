@@ -862,14 +862,40 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Prerequisite: Rectangle redaction exists on document
+			docView = new DocViewPage(driver, 0);
+			driver.waitForPageToBeReady();
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+
+			//get original dimension
+			String originalDimension = docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getCssValue("height");
+
+
 			//* Click existing rectangle redaction
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getBottomEditSideOfRedactionRectangle().Enabled() && docView.getBottomEditSideOfRedactionRectangle().Displayed()  ;}}), Input.wait30); 
 			//* Change redaction dimensions
+             builder.moveToElement(docView.getBottomEditSideOfRedactionRectangle().getWebElement()).clickAndHold().moveByOffset(-50, -50).release().perform();
+
+             //get new dimension
+             String afterEditDimension = docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getCssValue("height");
+             dataMap.put("originalDimension", originalDimension);
+             dataMap.put("afterEditDimension", afterEditDimension);
+
 			//* Change redaction tag
-			//
-			throw new ImplementationException("edit_redaction_");
-		} else {
-			throw new ImplementationException("NOT edit_redaction_");
+             String beforeTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+             docView.getDocView_Redactedit_selectlabel().click();
+             docView.getDocViewReactEditTagByName("SGSame2").click();
+             String afterTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+
+             dataMap.put("beforeTag", beforeTag);
+             dataMap.put("afterTag", afterTag);
+             pass(dataMap, "edited the redaction");
 		}
+		else fail(dataMap, "could not edit the redaction");
 
 	}
 
@@ -881,10 +907,13 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click 'Save' redaction button
 			//
-			throw new ImplementationException("save_redaction_edit");
-		} else {
-			throw new ImplementationException("NOT save_redaction_edit");
+			docView.getRedactionEditSaveBtn().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "saved the redaction");
 		}
+		else fail(dataMap, "could not save the redaction");
 
 	}
 
@@ -894,10 +923,17 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11427 Verify that user should be able to edit an applied redaction and change the redaction tag that was applied automatically
-			throw new ImplementationException("verify_redaction_edited");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_edited");
+			String firstDimension = (String)dataMap.get("originalDimension");
+			String secondDimension = (String)dataMap.get("afterEditDimension");
+			String firstTag = (String)dataMap.get("beforeTag");
+			String secondTag = (String)dataMap.get("afterTag");
+			//Make sure dimensions have changed
+			Assert.assertFalse(firstDimension.equals(secondDimension));
+			//Make sure tags have changed
+			Assert.assertFalse(firstTag.equals(secondTag));
+			pass(dataMap, "verified that the redaction was edited");
 		}
+		else fail(dataMap, "could not verify that the redaction was edited");
 
 	}
 }//eof

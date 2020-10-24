@@ -1091,7 +1091,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_trueSGSame1_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1101,6 +1101,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -1111,15 +1113,17 @@ public class DocViewRegression extends RegressionBase {
 			context.login_as_rmu(true, dataMap);
 			context.on_saved_search_page(true, dataMap);
 			context.open_saved_search_doc_view(true, dataMap);
-			dataMap.put("tag", "SGSame1");
+			dataMap.put("tag", "SGSame2");
 			dataMap.put("dimensions", "true");
 			context.edit_redaction_(true, dataMap);
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

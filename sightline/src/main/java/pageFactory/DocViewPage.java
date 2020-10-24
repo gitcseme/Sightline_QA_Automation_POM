@@ -231,6 +231,7 @@ public class DocViewPage {
     public ElementCollection getExistingRectangleRedactions() {return driver.FindElementsByCssSelector(".igViewerGraphics g rect[style = 'opacity: 0.5;']");}
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
+    public Element getDocViewReactEditTagByName(String name) {return driver.FindElementByCssSelector(String.format("#ddlRedactionTags option[title = '%s']", name));}
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
     public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
     public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
@@ -249,6 +250,8 @@ public class DocViewPage {
     public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
     public ElementCollection getCloseButton() { return driver.FindElementsById("botClose1");}
     public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
+    public Element getBottomEditSideOfRedactionRectangle() {return driver.FindElementByCssSelector(".pccMarkHandleBottomLeft");}
+    public Element getRedactionEditSaveBtn() {return driver.FindElementByXPath("//span[@class = 'fa fa-save']");}
     
     
     //Constructor to just use the object instead of navigating to a new page
