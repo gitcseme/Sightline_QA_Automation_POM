@@ -665,9 +665,6 @@ public class ProductionPage {
     public Element getBackToPrivbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a"); }
     public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
 
-    public Element getGridActionDropDown() { return driver.FindElementByXPath("//*[@id=\"DropDownAction\"]/span"); }    
-    public Element getAddDocFromActionsDropDown() { return driver.FindElementById("AddDocuments"); }
-    public Element getRemoveDocFromActionsDropDown() { return driver.FindElementById("RemoveDocuments"); }
 
 
     //Click the desired production set option, in the dropdown menu by it's index
