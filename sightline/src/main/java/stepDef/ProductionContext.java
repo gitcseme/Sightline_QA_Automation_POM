@@ -2076,15 +2076,18 @@ public class ProductionContext extends CommonContext {
 						prod.getTileViewIcon().Displayed() && prod.getTileViewIcon().Enabled()  ;}}), Input.wait30);
 				     	prod.getTileViewIcon().Click();
 				}
-				else fail(dataMap, "Valid view mode was not selected");
+				else {
+					fail(dataMap, "Valid view mode was not selected");
+				}
 				
 				pass(dataMap, "View Mode was Selected Successfully");
 				
 				
-			}
-			catch(Exception e) {e.printStackTrace();}
+			} catch(Exception e) {e.printStackTrace();}
 		}
-		else fail(dataMap, "Could not set production grid view");
+		else {
+			fail(dataMap, "Could not set production grid view");
+		}
 
 	}
 
@@ -7798,38 +7801,36 @@ public class ProductionContext extends CommonContext {
 	public void on_the_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark CompleteClick Next
-			throw new ImplementationException("on_the_production_location_component");
+			//Click Mark CompleteClick Next //
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+
+			prod.getlstProductionRootPaths().Click();
+
+			prod.getSecondRootPathOption().Click();
+			Random rnd = new Random();
+			int number = rnd.nextInt(9999999);
+			String selectedRootPath = prod.getSecondRootPathOption().getText();
+			String productionDirectory = "Automation" + number + "_dir";
+			dataMap.put("root_path", selectedRootPath);
+			dataMap.put("production_directory", productionDirectory);
+			prod.getProductionOutputLocation_ProductionDirectory().SendKeys(productionDirectory);
+	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionLocationMarkComplete().Enabled() ;}}), Input.wait30);
+
+			prod.getbtnProductionLocationMarkComplete().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30);
+			
+			pass(dataMap,"on_the_production_location_component");
 		} else {
-			throw new ImplementationException("NOT on_the_production_location_component");
-		}
-
-	}
-
-
-	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
-	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//Click the <Back button
-			throw new ImplementationException("clicking_on_the_back_button");
-		} else {
-			throw new ImplementationException("NOT clicking_on_the_back_button");
-		}
-
-	}
-
-
-	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
-	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//TC4467Verify the user is navigated back to the Priv Guard Component
-			throw new ImplementationException("verify_the_user_is_navigated_back_to_the_priv_guard");
-		} else {
-			throw new ImplementationException("NOT verify_the_user_is_navigated_back_to_the_priv_guard");
-		}
-
+			fail(dataMap,"NOT on_the_production_location_component");
+		} 
 	}
 
 
@@ -8265,6 +8266,18 @@ public class ProductionContext extends CommonContext {
 	}
 
 
+	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
+	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the <Back button //
+			prod.getBackToPrivbutton().click();
+			
+			pass(dataMap,"clicking_on_the_back_button");
+		} else {
+			fail(dataMap, "NOT clicking_on_the_back_button");}
+	}
+
 	@Then("^.*(\\[Not\\] )? verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed$")
 	public void verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -8277,6 +8290,20 @@ public class ProductionContext extends CommonContext {
 
 	}
 
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
+	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4467Verify the user is navigated back to the Priv Guard Component
+			//
+			Thread.sleep(1000);
+			Assert.assertEquals(prod.getPrivTitle().getText().toString(), "Privileged Doc Check"); 
+			pass(dataMap,"verify_the_user_is_navigated_back_to_the_priv_guard");
+		} else {
+			fail(dataMap, "NOT verify_the_user_is_navigated_back_to_the_priv_guard");
+		}
+	}
 
 	@And("^.*(\\[Not\\] )? email_classification_is_added_for_dats$")
 	public void email_classification_is_added_for_dats(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
