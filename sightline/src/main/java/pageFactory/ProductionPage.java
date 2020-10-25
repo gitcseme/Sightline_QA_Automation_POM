@@ -107,8 +107,8 @@ public class ProductionPage {
     public Element getPDF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divPDFCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
     public Element getTIFF_SelectTagSButton(){ return driver.FindElementByXPath("//*[@id='btnSelectPrevTags']"); }
     public Element getTIFF_AllTags(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[3]/div[2]/div/div[1]/div/div[5]/div/div/div/form/fieldset/div/div[1]/div/ul/li/a/i[1]"); }
-    public Element getTIFF_DefaultAutomationTag(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[3]/div[2]/div/div[1]/div/div[5]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[1]/a/i[1]"); }
-    public Element getTIFF_Privileged(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[3]/div[2]/div/div[1]/div/div[5]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[4]/ul/li[10]/a/i[1]"); }
+    public Element getTIFF_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Default Automation Tag']/parent::li"); }
+    public Element getTIFF_Privileged(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Privileged']/parent::li"); }
     public Element getTIFF_PrivileTagSelected(){ return driver.FindElementByXPath("//*[@id='PrevTagsLabel']"); }
     public Element getTIFF_PlaceholderText(){ return driver.FindElementByXPath(""); }
     public Element getNative_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Default Automation Tag']");}

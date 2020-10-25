@@ -4543,11 +4543,20 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Check the TIFF CheckboxClick TIFF to expand the TIFF sectionClick "Select Tags"
 			prod.getTIFFChkBox().click();
-			prod.getTIFFTab_Page().click();
-			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
-			Thread.sleep(3000);
-			if(!prod.getTIFF_EnableforPrivilegedDocs().Enabled()) prod.getTIFF_EnableforPrivilegedDocs().click();
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+			
+			
+			prod.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			if(!prod.getTIFF_EnableforPrivilegedDocs().Enabled()) {
+				prod.getTIFF_EnableforPrivilegedDocs().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagSButton().Displayed()  ;}}), Input.wait30);	
+			}
 			prod.getTIFF_SelectTagSButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFNativeDocumentTagsDialog().Displayed()  ;}}), Input.wait30);
 			pass(dataMap, "on_the_tiff_section_select_place_holder_tag_dialog");
 		} else {
 			fail(dataMap,"NOT on_the_tiff_section_select_place_holder_tag_dialog");
@@ -4558,8 +4567,6 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Try clicking the checkbox for "Default Automation Tag"
 			prod.getTIFF_DefaultAutomationTag().click();
-			//Try clicking the checkbox for "All Tags"
-			prod.getTIFF_AllTags().click();
 			
 			pass(dataMap,"clicking_non_privledge_tags");
 		} else {
@@ -4660,12 +4667,24 @@ public class ProductionContext extends CommonContext {
 	public void verify_privledged_tags_can_only_be_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			//verify_privledged_tags_can_only_be_selected 
-			Assert.assertTrue(prod.getTIFF_Privileged().Enabled());
+
+			try {
+				// If attribute "iscascadeenabled" is false, then tag cannot be selected. If true, then tag can be selected
+				String nonPrivTag = prod.getTIFF_DefaultAutomationTag().GetAttribute("iscascadeenabled");
+				String PrivTag = prod.getTIFF_Privileged().GetAttribute("iscascadeenabled");
+
+				if (nonPrivTag.equalsIgnoreCase("false")) {
+					pass(dataMap, "PASS! Non Priv tags cannot be selected");
+				} else fail(dataMap, "FAIL! Non Priv tags can be selected");
+				
+				if (PrivTag.equalsIgnoreCase("true")) {
+					pass(dataMap, "PASS! Priv tags can be selected");
+				} else fail(dataMap, "FAIL! Non Priv tags cannot be selected");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			
-			prod.getTIFF_Privileged().click();
-			prod.getSelectButton().click();
-			
-			pass(dataMap, "verify_privledged_tags_can_only_be_selected");
 		} else {
 			fail(dataMap, "verify_privledged_tags_can_only_be_selected ");
 		}
