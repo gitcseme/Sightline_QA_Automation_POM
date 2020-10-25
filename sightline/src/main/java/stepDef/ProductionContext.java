@@ -886,27 +886,34 @@ public class ProductionContext extends CommonContext {
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDATTab().Displayed()  ;}}), Input.wait30);
-				prod.getDATTab().Click();
+			prod.getDATTab().Click();
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
-				prod.getFieldClassification().Click();
-				prod.getFieldClassification().SendKeys("Bates");
+			prod.getFieldClassification().Click();
+			prod.getFieldClassification().SendKeys("Bates");
 				
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getSourceField().Displayed()  ;}}), Input.wait30);
-				prod.getSourceField().Click();
-				prod.getSourceField().SendKeys("BatesNumber");
+			prod.getSourceField().Click();
+			prod.getSourceField().SendKeys("BatesNumber");
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDatField().Displayed()  ;}}), Input.wait30);
-				prod.getDatField().Click();
-				prod.getDatField().SendKeys("Bates Number");
-				
+			prod.getDatField().Click();
+			prod.getDatField().SendKeys("Bates Number");
+			
+			
+			// Collapse DAT 
+			prod.getTemplateProductionComponentToggle("DAT").click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
-				prod.getComponentsMarkComplete().Click();
+			prod.getComponentsMarkComplete().ScrollTo();
+			prod.getComponentsMarkComplete().Click();
 					
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkNext().Enabled() ;}}), Input.wait30);
@@ -916,6 +923,7 @@ public class ProductionContext extends CommonContext {
 			pass(dataMap,"Default Production Component are completed");	
 				
 			} catch(Exception e) {
+				e.printStackTrace();
 				fail(dataMap,"Default Production Component is not completed");
 			}
 		}else {
@@ -1831,13 +1839,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
-				WebElement temp  = (WebElement)dataMap.get("targetProduction");
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					temp.isDisplayed()  ;}}), Input.wait30);
-				temp.click();
+				String productionName  = dataMap.get("productionName").toString();
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getProductionSectionPageTitle().Displayed()  ;}}), Input.wait30);
+					prod.getProductionTitleLink(productionName).Displayed()  ;}}), Input.wait30);
+				prod.getProductionTitleLink(productionName).click();
+				driver.waitForPageToBeReady();
 				
 				while(!prod.getProductionSectionPageTitle().getText().equals("Production Components")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2334,12 +2341,10 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+				driver.scrollPageToTop();
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 				prod.getMarkCompleteButton().Click();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
@@ -3918,6 +3923,11 @@ public class ProductionContext extends CommonContext {
 				prod.getDatField().Click();
 				prod.getDatField().SendKeys("Bates Number");
 				
+			// Collapse DAT 
+			prod.getTemplateProductionComponentToggle("DAT").click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				
 			pass(dataMap,"default DAT section is complete");
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -3939,22 +3949,29 @@ public class ProductionContext extends CommonContext {
 				prod.getNativeChkBox().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
+						prod.getNativeTab().Visible()  ;}}), Input.wait30); 
 				prod.getNativeTab().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getSelectNativeTagsButton().Enabled()  ;}}), Input.wait30); 
+						prod.getSelectNativeTagsButton().Visible()  ;}}), Input.wait30); 
 				prod.getSelectNativeTagsButton().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNative_DefaultAutomationTag().Enabled()  ;}}), Input.wait30); 
+						prod.getNative_DefaultAutomationTag().Visible()  ;}}), Input.wait30); 
 				prod.getNative_DefaultAutomationTag().Click();
 				prod.getNative_AttorneyCLientTag().Click();
 				prod.getNative_ConfedentialTag().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getSelectTagsButton().Enabled()  ;}}), Input.wait30); 
+						prod.getSelectTagsButton().Visible()  ;}}), Input.wait30); 
 				prod.getSelectTagsButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeContainer().Displayed()  ;}}), Input.wait30); 
+				
+				// Collapse Native tab
+				prod.getTemplateProductionComponentToggle("Native").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNativeContainer().Displayed()  ;}}), Input.wait30);
 				
 				pass(dataMap,"default Native section is complete");
 			}
@@ -3976,25 +3993,30 @@ public class ProductionContext extends CommonContext {
 			//* Verify the selected tags are displaying in alphabetical order.
 			//* Verify no file types are checked
 			//
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
-			Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
-			prod.getNativeTab().Click();
-			Thread.sleep(10000);
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeTab().Visible()  ;}}), Input.wait30); 
+				prod.getNativeTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectNativeTagsButton().Visible()  ;}}), Input.wait30); 
 				String nativeSelectedTags = prod.getNativeSelectedTagList().GetAttribute("textContent");
-				System.out.println(nativeSelectedTags);
 				List<String> tags = Arrays.asList(nativeSelectedTags.split(","));
 				List<String> newlist = tags;
 				Collections.sort(newlist);
 				Assert.assertEquals(newlist, tags);
-			if(!prod.getNative_SelectAllCheck().Selected()){
-				pass(dataMap,"No file types are checked");
+				if(!prod.getNative_SelectAllCheck().Selected()){
+					pass(dataMap,"No file types are checked");
+				}
+				else{
+					fail(dataMap,"File types are checked");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			else{
-				fail(dataMap,"File types are checked");
-			}
+
 		} else {
 			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly_without_file_types");
 		}
@@ -4016,48 +4038,101 @@ public class ProductionContext extends CommonContext {
 			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
 			//* Deselect "Enable for Privileged docs
 			//
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-			prod.getTIFFChkBox().Click();		
-			
-			driver.scrollingToBottomofAPage();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getTIFFTab().Enabled()  ;}}), Input.wait30); 
-			prod.getTIFFTab().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getTIFFRotateDropdown().Enabled()  ;}}), Input.wait30); 
-			prod.getTIFFRotateDropdown().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getCounterClockRotate().Enabled()  ;}}), Input.wait30); 
-			prod.getCounterClockRotate().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-			prod.getTIFF_EnableforPrivilegedDocs().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDFChkBox().Enabled() ;}}), Input.wait30); 
-			prod.getPDFChkBox().Click();		
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDFTab().Enabled()  ;}}), Input.wait30); 
-			prod.getPDFTab().Click();
-			
-			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDFRotateDropdown().Enabled()  ;}}), Input.wait30); 
-			prod.getPDFRotateDropdown().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDFCounterClockRotate().Enabled()  ;}}), Input.wait30); 
-			prod.getPDFCounterClockRotate().Click();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-			prod.getPDF_EnableforPrivilegedDocs().Click();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Visible() ;}}), Input.wait30); 
+				prod.getTIFFChkBox().Click();		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentTIFFCheckbox().Selected()  ;}}), Input.wait30); 
+				
+				driver.scrollingToBottomofAPage();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFTab().Visible()  ;}}), Input.wait30); 
+				prod.getTIFFTab().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().Visible()  ;}}), Input.wait30); 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("No Rotation")  ;}}), Input.wait30); 
+				
+				prod.getTIFFRotateDropdown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees counter clock-wise");
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("Rotate 90 degrees counter clock-wise")  ;}}), Input.wait30); 
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
+				// scroll to toggle. Webdriver sometimes does not actually click the toggle if the
+				// element is not in view
+				prod.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+				prod.getTIFF_EnableforPrivilegedDocs().Click();
+				
+				// Sometimes toggle is not clicked, so adding logic to check if it was clicked. If it wasn't clicked 
+				// the first time, then click again
+				while (prod.getTIFFPrivilegeDocsDisabledToggle().FindWebElements().size() == 0) {
+					System.out.println("TIFF Enabled Priv Docs toggle was not clicked. Clicking again...");
+					prod.getTIFF_EnableforPrivilegedDocs().Click();
+					driver.waitForPageToBeReady();
+				}
+
+				// Collapse TIFF tab
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				// Select PDF
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFChkBox().Visible() ;}}), Input.wait30); 
+				prod.getPDFChkBox().Click();		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentPDFCheckbox().Selected()  ;}}), Input.wait30); 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFTab().Visible()  ;}}), Input.wait30); 
+				prod.getPDFTab().Click();
+				
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().Visible()  ;}}), Input.wait30); 
+				//
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("No Rotation")  ;}}), Input.wait30); 
+				
+				prod.getPDFRotateDropdown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees counter clock-wise");
+		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("Rotate 90 degrees counter clock-wise")  ;}}), Input.wait30); 
+				
+				
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
+				prod.getPDF_EnableforPrivilegedDocs().ScrollTo();
+				prod.getPDF_EnableforPrivilegedDocs().Click();				
+				
+				// Sometimes toggle is not clicked, so adding logic to check if it was clicked. If it wasn't clicked 
+				// the first time, then click again
+				while (prod.getPDFPrivilegeDocsDisabledToggle().FindWebElements().size() == 0) {
+					System.out.println("PDF Enabled Priv Docs toggle was not clicked. Clicking again...");
+					prod.getTIFF_EnableforPrivilegedDocs().Click();
+					driver.waitForPageToBeReady();
+				}
+				
+				//Collapse PDF toggle
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplatePDFPageRotatePreferenceSelectedValue().Displayed()  ;}}), Input.wait30);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT complete_tiff_pdf_with_rotation");
 		}
@@ -4070,7 +4145,7 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getNumberingAndSortingTitle().Displayed()  ;}}), Input.wait30);
 			Assert.assertTrue(prod.getNumberingAndSortingTitle().Displayed());
-			
+			pass(dataMap, "PASS! User is on Numbering and Sorting page");
 		} else {
 			throw new ImplementationException("NOT verify_marking_a_pdf_with_rotation_completed_returns_no_error");
 		}
@@ -4099,7 +4174,11 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed();}}), Input.wait30);
 				prod.getTIFFComponentEnableNativelyProducedDocuments().click();
-				prod.getTIFFComponentNativelyProducedDocumentsType(0).click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFNativelyProductedDocumentSelect().Displayed();}}), Input.wait30);
+				prod.getTIFFNativelyProductedDocumentSelect().selectFromDropdown().selectByVisibleText("Other (i.e. Uncategorized, unknown, etc.)");
+	
 				prod.getTIFFComponenetNativelyProducedDocumentPlaceHolder().setText("Place holder text.");
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed();}}), Input.wait30);
@@ -4117,13 +4196,10 @@ public class ProductionContext extends CommonContext {
 	public void verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		if (scriptState) {
 			try {
-				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return
-						prod.getComponentsMarkComplete().Displayed();}}), Input.wait30);
-				prod.getComponentsMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning().Displayed();}}), Input.wait30);
 				assert prod.getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning().getText().equals("The TIFF placeholder configuration information is incorrect.");
+				pass(dataMap, "PASS! The expected error message is returned");
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -4139,7 +4215,9 @@ public class ProductionContext extends CommonContext {
 			//Click Add Field Set Field Classification to the corresponding parameter value
 			//Set Source Field to the corresponding parameter valueSet Dat Field to the corresponding  parameter value
 			try {
-				driver.waitForPageToBeReady();
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
 						prod.getDAT_AddField().Click();
@@ -4237,24 +4315,58 @@ public class ProductionContext extends CommonContext {
 			//* Click Select
 			//
 			try {
-				driver.waitForPageToBeReady();
-				// TIFF
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Visible()  ;}}), Input.wait30);
 				prod.getTIFFChkBox().click();
 				prod.getTIFFTab().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFComponentEnableNativelyProducedDocuments().Visible()  ;}}), Input.wait30);
+				prod.getTIFFComponentEnableNativelyProducedDocuments().ScrollTo();
 				prod.getTIFFComponentEnableNativelyProducedDocuments().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagsButton().Visible()  ;}}), Input.wait30);
 				prod.getTIFF_SelectTagsButton().click();
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+
 				prod.getTIFF_AttorneyClientTag().click();
 				prod.getTIFF_AttorneyWorkProductClientTag().click();
 				prod.getTIFF_TagSelectButton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTIFFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+				
+				// Collapse TIFF section
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
 				// PDF
 				prod.getPDFChkBox().click();
-				prod.getPDFTab().click();
+				prod.getTemplateProductionComponentToggle("PDF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFComponentNativelyProducedDocuments().Visible()  ;}}), Input.wait30);
+				
+				prod.getPDFComponentNativelyProducedDocuments().ScrollTo();
 				prod.getPDFComponentNativelyProducedDocuments().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_SelectTagsButton().Visible()  ;}}), Input.wait30);
 				prod.getPDF_SelectTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_ConfidentialTag().Visible()  ;}}), Input.wait30);
+				
 				prod.getPDF_ConfidentialTag().click();
 				prod.getPDF_ForeignLanguageTag().click();
 				prod.getPDF_TagSelectButton().click();
-				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getPDFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
 				pass(dataMap, "complete_tiff_and_pdf_with_different_tags");
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -4317,6 +4429,12 @@ public class ProductionContext extends CommonContext {
 			//Navigate back to the Production Home Page URL
 			on_production_home_page(true,dataMap);
 			
+			// switch to AutomationProductionSet
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+			driver.waitForPageToBeReady();
+			
 			pass(dataMap,"refresh_back_to_production_home_page");
 		} else {
 			fail(dataMap,"NOT refresh_back_to_production_home_page");
@@ -4334,8 +4452,10 @@ public class ProductionContext extends CommonContext {
 			//Click SelectType a Placeholder text in "Enter placeholder text for the privileged docs". 
 			//Click Mark Complete.
 			try {
-				prod.getBackBtn().click();
 				prod.getComponentsMarkInComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+
 				prod.getTIFFChkBox().click();
 				prod.getTIFFTab_Page().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4353,13 +4473,26 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
 				if(!prod.getTIFF_EnableforPrivilegedDocs().Enabled()) prod.getTIFF_EnableforPrivilegedDocs().click();
+				
 				prod.getTIFF_SelectTagSButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSelectTagsModal().Displayed()  ;}}), Input.wait30);
+				
 				prod.getTIFF_Privileged().click();
+				
+
+				
 				prod.getSelectButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagText().Displayed()  ;}}), Input.wait30);
+				
+				
 				prod.getTIFF_SelectTagText().SendKeys("placeholder");
 				driver.waitForPageToBeReady();
-				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+				driver.scrollPageToTop();
 				prod.getComponentsMarkComplete().click();
+				
+				
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -4448,16 +4581,14 @@ public class ProductionContext extends CommonContext {
 			//Check NativeClick Select All on the file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
 			try{
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeChkBox().Enabled()  ;}}), Input.wait30); 
+						prod.getNativeChkBox().Visible()  ;}}), Input.wait30); 
 				prod.getNativeChkBox().Click();
 				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
 				prod.getNativeTab().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-				Thread.sleep(10000);
+						prod.getNative_SelectAllCheck().Visible()  ;}}), Input.wait30); 
+
 				prod.getNative_SelectAllCheck().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -4465,14 +4596,23 @@ public class ProductionContext extends CommonContext {
 				prod.getSelectNativeTagsButton().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getNative_DefaultAutomationTag().Enabled()  ;}}), Input.wait30); 
+						prod.getNative_DefaultAutomationTag().Visible()  ;}}), Input.wait30); 
 				prod.getNative_DefaultAutomationTag().Click();
-				prod.getNative_AttorneyCLientTag().Click();
-				prod.getNative_ConfedentialTag().Click();
+				prod.getNativeAttorneyClientTag().Click();
+				prod.getNativeConfidentialClientTag().Click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getSelectTagsButton().Enabled()  ;}}), Input.wait30); 
 				prod.getSelectTagsButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeContainer().Displayed()  ;}}), Input.wait30); 
+
+				
+				// Collapse Native tab
+				prod.getTemplateProductionComponentToggle("Native").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNativeContainer().Displayed()  ;}}), Input.wait30);
 				
 				pass(dataMap,"default Native section is complete");
 			}
@@ -4491,19 +4631,25 @@ public class ProductionContext extends CommonContext {
 			//* Expand the Native section
 			//* Verify the selected tags are displaying in alphabetical order.
 			//
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
-			Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
-			prod.getNativeTab().Click();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
+				prod.getNativeTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeSelectedTagList().Visible()  ;}}), Input.wait30);
 				String nativeSelectedTags = prod.getNativeSelectedTagList().GetAttribute("textContent");
-				System.out.println(nativeSelectedTags);
 				
 				List<String> tags = Arrays.asList(nativeSelectedTags.split(","));
 				List<String> newlist = tags;
 				Collections.sort(newlist);
 				Assert.assertEquals(newlist, tags);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 			
 		} else {
 			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly");

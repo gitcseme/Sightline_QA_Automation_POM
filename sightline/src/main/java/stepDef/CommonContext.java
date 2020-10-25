@@ -121,14 +121,14 @@ public class CommonContext {
 
 	    driver.waitForPageToBeReady();
 
-		if (scriptState) {
-			
-	        String url = (String) dataMap.get("URL");
-			webDriver.get(url+"/Production/Home");
-			
-		} else {
-			webDriver.get("http://www.google.com");
-		}
+//		if (scriptState) {
+//			
+//	        String url = (String) dataMap.get("URL");
+//			webDriver.get(url+"/Production/Home");
+//			
+//		} else {
+//			webDriver.get("http://www.google.com");
+//		}
 
 		driver.waitForPageToBeReady();
 
