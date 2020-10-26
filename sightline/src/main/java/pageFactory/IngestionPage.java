@@ -285,6 +285,18 @@ public class IngestionPage {
     public Element ThrirdRow(){return driver.FindElementByCssSelector("#SF_3");}
     public Element ThrirdRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(4)");}
     
+    public Element FifthDesRowOptions() {return driver.FindElementByCssSelector("#DF_5 > option:nth-child(5)");}
+    
+    public Element SixthRow(){return driver.FindElementByCssSelector("#SF_6");}
+    public Element SixthRowOptions(){return driver.FindElementByCssSelector("#SF_6 > option:nth-child(6)");}
+    public Element SixthDesRowOptions() {return driver.FindElementByCssSelector("#DF_6 > option:nth-child(8)");}
+        
+    public Element SeventhRow(){return driver.FindElementByCssSelector("#SF_7");}
+    public Element SeventhRowOptions(){return driver.FindElementByCssSelector("#SF_7 > option:nth-child(3)");}
+    public Element SeventhDesRowOptions() {return driver.FindElementByCssSelector("#DF_7 > option:nth-child(9)");}
+    
+    public Element EigthDesRowOptions() {return driver.FindElementByCssSelector("#DF_8 > option:nth-child(10)");}
+    public Element NinthDesRowOptions() {return driver.FindElementByCssSelector("#DF_9 > option:nth-child(11)");}
     
     public Element FourthRow(){return driver.FindElementByCssSelector("#SF_4");}
     public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_4 > option:nth-child(4)");}
@@ -398,6 +410,39 @@ public class IngestionPage {
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
     
+    public Element getDocumentTileContainer(){ return driver.FindElementById("tileContainer"); }
+    public Element getDataSetCountText() { return driver.FindElementById("totaldatasetCount"); }
+    public Element getDatasetSearchInput(){ return driver.FindElementById("searchBox"); }
+    public Element getDatasetSearchResultDiv() { return driver.FindElementByXPath("//div[@id='tileContainer']/div[@style='display:none;padding-top:5px']");};
+    public Element getMagnifyingGlassIcon(){ return driver.FindElementById("btnSearchBox"); }
+    public Element getViewSetInActionDropdown(){ return driver.FindElementById("idAction"); }
+    public Element getViewSetInActionDropdownOpen() { return driver.FindElementByCssSelector(".btn-group.dd-menu.custom-action-btn.open"); };
+    public ElementCollection getDatasetViewOptions(){ return driver.FindElementsByXPath("//ul[@class='datasets-dropdown-menu dropdown-menu']//a"); } 
+    public Element getReviewModeTitle(){ return driver.FindElementByCssSelector("bold-gray-title"); }
+    public Element getEmailDataTable() { return driver.FindElementById("SearchDataTable"); }
+    public Element getEmailAuthorNameMetadataValue() { return driver.FindElementByXPath("//td[text()='EmailAuthorName']/following-sibling::td");}
+    public Element getEmailAuthorNameAndAddressMetadataValue() { return driver.FindElementByXPath("//td[text()='EmailAuthorNameAndAddress']/following-sibling::td");}
+    public Element getLoadingIconImg(){ return driver.FindElementById("imgLoadPM"); }
+    public Element getMetadataTable(){ return driver.FindElementById("MetaDataDT"); }
+    
+    public Element getFirstRowValues(int index) {return driver.FindElementByCssSelector(String.format("#dtDocList > tbody > tr:nth-child(1) > td:nth-child(%s)", index));}
+    
+    public Element getFirstPublishedTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/a/span");}
+    public Element AddMetCriteriaDoc() {return driver.FindElementByCssSelector("[id='gallery'] [data-original-title='Docs That Met Your Criteria']>i:nth-child(2)");}
+    public Element SelectDocList() {return driver.FindElementByCssSelector("#DoclistOpt > a");}
+    public Element SelectColumnBtn() {return driver.FindElementByXPath("//*[@id='btnSelectColumn']");}
+    public Element EmailAuthorNameAndAddressCheckbox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(48) > label > i");}
+    public Element EmailBccNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(51) > label > i");}
+    public Element EmailCCNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(54) > label > i");}
+    public Element EmailToNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(77) > label > i");}
+    public Element AddToSelectedBtn() {return driver.FindElementById("addFormObjects");}
+    public Element OkBtn() {return driver.FindElementByCssSelector("#btnUpdateColumns");}
+    public Element ConfirmUnmapBtn() {return driver.FindElementByCssSelector("#bot1-Msg1");}
+    public Element getRemoveColLink(int index) {return driver.FindElementByCssSelector(String.format("[data-id='%s'] [class='link remove-modal remove-item pull-right text-danger']", index));}
+    public Element getMetaDataElements(int index) {return driver.FindElementByCssSelector(String.format("#tab1 > div > ul > li:nth-child(%s) > label > i", index));}
+    public Element getIngestionStatusText(){return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[4]/div/label");}
+    
+    
     public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
     public Element getCopiedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Copyingblock\"]/div[1]/div/div[4]/span/a"); }
     public Element getIndexedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Indexingblock\"]/div[1]/div/div[6]/span/a"); }
@@ -410,7 +455,27 @@ public class IngestionPage {
     public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
     public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
     public Element getIngestionHomePageTitle() {return driver.FindElementByXPath("//h1[@class='page-title']");}
-
+    public Element getActionMenu() { return driver.FindElementByCssSelector("div.widget-body ul"); } 
+    public Element getApproveOption() { return driver.FindElementByXPath("//a[text()='Approve']"); }
+    public Element getDocErrorCountLink() { return driver.FindElementByXPath("//label[contains(text(), 'Documents Cataloged')]/following-sibling::div[@class='col-md-7 form-group']//a"); }    
+    public Element getDocErrorTable() { return driver.FindElementById("myDataTable"); }
+    public Element getErrorDialogBackButton() { return driver.FindElementByXPath("//button[text()='Back']"); }
+    public Element getErrorDialogCloseButton() { return driver.FindElementByXPath("//button[text()='Close']"); }
+    public Element getPaginationButtons() { return driver.FindElementByCssSelector(".pagination.pagination-sm"); }
+    public Element getIngestionWithErrors(String errorCount) { return driver.FindElementByXPath("//span[text()='"+errorCount+"']/ancestor::li//span[@class='pTime font-md']"); }
+    public Element getRowNumberDatHeader() { return driver.FindElementById("hdrRowNo"); }
+    public Element getRowNumberDatHeaderASCSorted() { return driver.FindElementByXPath("//th[@id='hdrRowNo' and @class='sorting_asc']"); }
+    public Element getRowNumberDatHeaderDESCSorted() { return driver.FindElementByXPath("//th[@id='hdrRowNo' and @class='sorting_desc']"); }
+    public ElementCollection getRowNumberInDATRows() { return driver.FindElementsByXPath("//table[@id='myDataTable']//tr/td[2]"); }
+    public Element getPaginationNextButton() { return driver.FindElementByXPath("//*[@id='myDataTable_next']/a"); }
+    public Element getActivePageNumber() { return driver.FindElementByCssSelector("li.paginate_button.active > a"); }
+    public Element getPageByNumber(int i) { return driver.FindElementByXPath(String.format("//a[text()='%s']/parent::li", i)); }
+    public Element getGotoPageByNumber(int i) { return driver.FindElementByXPath(String.format("//li[contains(@class, 'paginate_button')]/a[text()='%s']", i)); }
+    public Element getPaginationPreviousButton() { return driver.FindElementByXPath("//*[@id='myDataTable_previous']/a"); }
+    public Element getDataTableInfo() { return driver.FindElementById("myDataTable_info"); }
+    public Element getErrorDialogIngestionName() { return driver.FindElementByCssSelector("div#ErrorListdiv div.colo-md-7 > strong"); }
+    
+    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
