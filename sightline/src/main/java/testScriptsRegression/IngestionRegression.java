@@ -8996,7 +8996,6 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-
 	@Test(groups = {"Ingestion", "Positive", "jd"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Indexed_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
 	{
@@ -9031,7 +9030,6 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-
 
 
 	@Test(groups = {"Ingestion", "Positive", "jd"})
@@ -9069,7 +9067,6 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
-
 
 
 	@Test(groups = {"Ingestion", "Positive", "jd"})
