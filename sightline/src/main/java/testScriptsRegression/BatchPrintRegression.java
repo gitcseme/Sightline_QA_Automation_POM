@@ -3130,7 +3130,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "jd"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_toggle_branding_redactions_trueopaqueAll_When_diff_branding_redaction_configs_set_Then_verify_include_applied_redactions_on_branding_redactions_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3140,6 +3140,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio7@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");

@@ -132,7 +132,11 @@ public class BatchPrintPage {
     public Element getPrintExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//ul[@id='redactor-toolbar-1']/following-sibling::div"); }
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
-
+    public ElementCollection getIncludeOtherExceptionFileTypesCheckBox() { return driver.FindElementsById("includeOtherExceptionFileTypesCheckBox"); }
+    public ElementCollection getAllBrandingToggleButtons() { return driver.FindElementsByCssSelector(".btn.btn-default.btn-xs"); }
+    public Element getIncludeAppliedRedactionsToggle() { return driver.FindElementByXPath("//input[@id='includeAppliedRedactions']/following-sibling::i"); }
+    public Element getOpaqueTransparentDiv() { return driver.FindElementById("OpaqueTransparentDiv"); }
+    
     
     public BatchPrintPage(Driver driver){
 
