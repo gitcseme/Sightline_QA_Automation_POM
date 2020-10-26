@@ -285,6 +285,18 @@ public class IngestionPage {
     public Element ThrirdRow(){return driver.FindElementByCssSelector("#SF_3");}
     public Element ThrirdRowOptions(){return driver.FindElementByCssSelector("#SF_3 > option:nth-child(4)");}
     
+    public Element FifthDesRowOptions() {return driver.FindElementByCssSelector("#DF_5 > option:nth-child(5)");}
+    
+    public Element SixthRow(){return driver.FindElementByCssSelector("#SF_6");}
+    public Element SixthRowOptions(){return driver.FindElementByCssSelector("#SF_6 > option:nth-child(6)");}
+    public Element SixthDesRowOptions() {return driver.FindElementByCssSelector("#DF_6 > option:nth-child(8)");}
+        
+    public Element SeventhRow(){return driver.FindElementByCssSelector("#SF_7");}
+    public Element SeventhRowOptions(){return driver.FindElementByCssSelector("#SF_7 > option:nth-child(3)");}
+    public Element SeventhDesRowOptions() {return driver.FindElementByCssSelector("#DF_7 > option:nth-child(9)");}
+    
+    public Element EigthDesRowOptions() {return driver.FindElementByCssSelector("#DF_8 > option:nth-child(10)");}
+    public Element NinthDesRowOptions() {return driver.FindElementByCssSelector("#DF_9 > option:nth-child(11)");}
     
     public Element FourthRow(){return driver.FindElementByCssSelector("#SF_4");}
     public Element FourthRowOptions(){return driver.FindElementByCssSelector("#SF_4 > option:nth-child(4)");}
@@ -397,6 +409,39 @@ public class IngestionPage {
     public Element getIngestionErrorsTitle() { return driver.FindElementByXPath("//div[contains(text(), 'Ingestion Errors')]"); }
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
+    
+    public Element getDocumentTileContainer(){ return driver.FindElementById("tileContainer"); }
+    public Element getDataSetCountText() { return driver.FindElementById("totaldatasetCount"); }
+    public Element getDatasetSearchInput(){ return driver.FindElementById("searchBox"); }
+    public Element getDatasetSearchResultDiv() { return driver.FindElementByXPath("//div[@id='tileContainer']/div[@style='display:none;padding-top:5px']");};
+    public Element getMagnifyingGlassIcon(){ return driver.FindElementById("btnSearchBox"); }
+    public Element getViewSetInActionDropdown(){ return driver.FindElementById("idAction"); }
+    public Element getViewSetInActionDropdownOpen() { return driver.FindElementByCssSelector(".btn-group.dd-menu.custom-action-btn.open"); };
+    public ElementCollection getDatasetViewOptions(){ return driver.FindElementsByXPath("//ul[@class='datasets-dropdown-menu dropdown-menu']//a"); } 
+    public Element getReviewModeTitle(){ return driver.FindElementByCssSelector("bold-gray-title"); }
+    public Element getEmailDataTable() { return driver.FindElementById("SearchDataTable"); }
+    public Element getEmailAuthorNameMetadataValue() { return driver.FindElementByXPath("//td[text()='EmailAuthorName']/following-sibling::td");}
+    public Element getEmailAuthorNameAndAddressMetadataValue() { return driver.FindElementByXPath("//td[text()='EmailAuthorNameAndAddress']/following-sibling::td");}
+    public Element getLoadingIconImg(){ return driver.FindElementById("imgLoadPM"); }
+    public Element getMetadataTable(){ return driver.FindElementById("MetaDataDT"); }
+    
+    public Element getFirstRowValues(int index) {return driver.FindElementByCssSelector(String.format("#dtDocList > tbody > tr:nth-child(1) > td:nth-child(%s)", index));}
+    
+    public Element getFirstPublishedTitle() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/a/span");}
+    public Element AddMetCriteriaDoc() {return driver.FindElementByCssSelector("[id='gallery'] [data-original-title='Docs That Met Your Criteria']>i:nth-child(2)");}
+    public Element SelectDocList() {return driver.FindElementByCssSelector("#DoclistOpt > a");}
+    public Element SelectColumnBtn() {return driver.FindElementByXPath("//*[@id='btnSelectColumn']");}
+    public Element EmailAuthorNameAndAddressCheckbox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(48) > label > i");}
+    public Element EmailBccNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(51) > label > i");}
+    public Element EmailCCNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(54) > label > i");}
+    public Element EmailToNameAndAddressChechkox() {return driver.FindElementByCssSelector("#tab1 > div > ul > li:nth-child(77) > label > i");}
+    public Element AddToSelectedBtn() {return driver.FindElementById("addFormObjects");}
+    public Element OkBtn() {return driver.FindElementByCssSelector("#btnUpdateColumns");}
+    public Element ConfirmUnmapBtn() {return driver.FindElementByCssSelector("#bot1-Msg1");}
+    public Element getRemoveColLink(int index) {return driver.FindElementByCssSelector(String.format("[data-id='%s'] [class='link remove-modal remove-item pull-right text-danger']", index));}
+    public Element getMetaDataElements(int index) {return driver.FindElementByCssSelector(String.format("#tab1 > div > ul > li:nth-child(%s) > label > i", index));}
+    public Element getIngestionStatusText(){return driver.FindElementByXPath("//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[4]/div/label");}
+    
     
     public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
     public Element getCopiedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Copyingblock\"]/div[1]/div/div[4]/span/a"); }
