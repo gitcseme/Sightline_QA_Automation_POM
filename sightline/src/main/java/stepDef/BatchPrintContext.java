@@ -1446,28 +1446,12 @@ public class BatchPrintContext extends CommonContext {
 	}
 
 
-	@And("^.*(\\[Not\\] )? login_as_rmu$")
-	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* Enter Username and password for Review Manager user
-			//* User is logged in
-			//* Sightline Home page is displayed
-			//
-			throw new ImplementationException("login_as_rmu");
-		} else {
-			throw new ImplementationException("NOT login_as_rmu");
-		}
-
-	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_rmu_fields_in_slip_sheets$")
 	public void verify_rmu_fields_in_slip_sheets(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4545 Verify that RMU can view the fields in 'Slip Sheets' if it is associated to the security groupThese Slip Sheets Metadata fields are not listed for RMU:
+			//TC4545 Verify that RMU can view the fields in 'Slip Sheets' if it is associated to the security group
+			//These Slip Sheets Metadata fields are not listed for RMU:
 			//
 			//* AnalyticsExceptions
 			//* Audio_AgentID
@@ -1483,7 +1467,49 @@ public class BatchPrintContext extends CommonContext {
 			//* All Redaction Tags > SGSame1
 			//* All Redaction Tags > SGSame2
 			//
-			throw new ImplementationException("verify_rmu_fields_in_slip_sheets");
+			try {
+				// Expected values
+				List<String> expectedAllTags = new ArrayList<String>();
+				expectedAllTags.add("TagFor SG1");
+				
+				List<String> expectedRedactionTags = new ArrayList<String>();
+				expectedRedactionTags.add("SGSame1");
+				expectedRedactionTags.add("SGSame2");
+				
+				List<String> allTags = new ArrayList<String>();
+				List<String> allRedactionTags = new ArrayList<String>();
+				
+				batchPrint.getSlipSheetsWorkProductTab().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSlipSheetsAllTagsToggle().Visible()  ;}}), Input.wait30);
+				batchPrint.getSlipSheetsAllTagsToggle().click();
+				for (WebElement el : batchPrint.getSlipSheetsAllTagsOptions().FindWebElements()) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   el.isDisplayed()  ;}}), Input.wait30);
+					allTags.add(el.getText());
+				}
+				
+				driver.scrollingToBottomofAPage();
+				batchPrint.getSlipSheetsAllRedactionTagsToggle().click();
+
+				for (WebElement el : batchPrint.getSlipSheetsAllRedactionTagsOptions().FindWebElements()) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   el.isDisplayed()  ;}}), Input.wait30);
+					allRedactionTags.add(el.getText());
+				}
+				
+				if (expectedAllTags.equals(allTags)) {
+					pass(dataMap, "PASS! All data tag options appear as expected for RMU user");
+				} else fail(dataMap, "FAIL! All data tag options do not appear as expected for RMU user");
+				
+				
+				if (expectedRedactionTags.equals(allRedactionTags)) {
+					pass(dataMap, "PASS! All redaction data tag options appear as expected for RMU user");
+				} else fail(dataMap, "FAIL! All redaction data tag options do not appear as expected for RMU user");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_rmu_fields_in_slip_sheets");
 		}
@@ -1496,7 +1522,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//'Enable Slip Sheets' toggle is disabled
-			throw new ImplementationException("slip_sheets_disabled");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getEnableSlipSheets().Visible()  ;}}), Input.wait30);
+			
+			if (batchPrint.getEnableSlipSheets().GetAttribute("class").contains("activeEnable")) {
+				batchPrint.getEnableSlipSheetsToggle().click();
+			}
 		} else {
 			throw new ImplementationException("NOT slip_sheets_disabled");
 		}
@@ -1513,7 +1545,22 @@ public class BatchPrintContext extends CommonContext {
 			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' disabled
 			//* 'Select Fields for Slip Sheets' disabled
 			//
-			throw new ImplementationException("verify_slip_sheets_disabled");
+			try {
+
+				if (!dataMap.get("basis_for_printing").toString().equalsIgnoreCase("Native")) {
+					//TODO: Add logic for verifying the "Use prior production slip sheets" dropdown
+					// if basis for printing is set to Prior Productions
+					
+				}
+				
+				if (batchPrint.getSlipSheetsSelectFields().GetAttribute("class").equalsIgnoreCase("disablePanel")) {
+					pass(dataMap, "PASS! Slip sheet select fields is not enabled");
+				} else fail(dataMap, "FAIL! Slip sheet select fields is enabled");
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_slip_sheets_disabled");
 		}
@@ -1526,7 +1573,17 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//'Enabled Slip Sheets' toggle is ON
-			throw new ImplementationException("slip_sheets_enabled");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getEnableSlipSheets().Visible()  ;}}), Input.wait30);
+				
+				// if disabled, click toggle to set to on
+				if (!batchPrint.getEnableSlipSheets().GetAttribute("class").contains("activeEnable")) {
+					batchPrint.getEnableSlipSheetsToggle().click();
+				}
+			} catch (Exception e) {
+				
+			}
 		} else {
 			throw new ImplementationException("NOT slip_sheets_enabled");
 		}
@@ -1543,7 +1600,26 @@ public class BatchPrintContext extends CommonContext {
 			//* 'Do you want to use slip sheets of prior productions or create new slip sheets?' enabled
 			//* 'Select Fields for Slip Sheets' enabled
 			//
-			throw new ImplementationException("verify_slip_sheets_enabled");
+			
+			try {
+
+				if (!dataMap.get("basis_for_printing").toString().equalsIgnoreCase("Native")) {
+					//TODO: Add logic for verifying the "Use prior production slip sheets" dropdown
+					// if basis for printing is set to Prior Productions
+					
+				}
+				
+				if (!batchPrint.getSlipSheetsSelectFields().GetAttribute("class").equalsIgnoreCase("disablePanel")) {
+					pass(dataMap, "PASS! Slip sheet select fields is enabled");
+				} else fail(dataMap, "FAIL! Slip sheet select fields is not enabled");
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
+			
 		} else {
 			throw new ImplementationException("NOT verify_slip_sheets_enabled");
 		}

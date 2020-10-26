@@ -2997,7 +2997,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_select_exception_file_types_Then_verify_rmu_fields_in_slip_sheets() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3008,6 +3008,8 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG1");
@@ -3037,7 +3039,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_When_slip_sheets_disabled_Then_verify_slip_sheets_disabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3047,6 +3049,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -3073,7 +3077,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "jd"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_When_slip_sheets_enabled_Then_verify_slip_sheets_enabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3083,6 +3087,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
