@@ -4156,9 +4156,9 @@ public class IngestionContext extends CommonContext {
 			//* Verify DOCID column displays files in a sequential order
 			//
 			driver.waitForPageToBeReady();
-
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getMappingDOCID1().Displayed() ;}}), Input.wait30);
+			
 			Assert.assertEquals(dataMap.get("docRow1"), ingest.getMappingDOCID1().getText().toString());
 			Assert.assertEquals(dataMap.get("docRow2"), ingest.getMappingDOCID2().getText().toString());
 			Assert.assertEquals(dataMap.get("docRow3"), ingest.getMappingDOCID3().getText().toString());
@@ -4169,10 +4169,7 @@ public class IngestionContext extends CommonContext {
 			Assert.assertEquals(dataMap.get("docRow8"), ingest.getMappingDOCID8().getText().toString());
 			
 			pass(dataMap, "Passed Sequenced");
-			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
-		} else {
-			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
-		}
+		} else fail(dataMap, "Documents sequence is not in sequential order");
 
 	}
 

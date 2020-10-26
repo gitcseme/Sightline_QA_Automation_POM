@@ -7485,7 +7485,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "WIP"})
+	@Test(groups = {"Ingestion, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_When_search_for_ingested_docs_Then_verify_ingested_docs_are_in_sequential_order() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7496,6 +7496,8 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
@@ -7518,6 +7520,7 @@ public class IngestionRegression extends RegressionBase {
 //			context.click_run_ingest_button(true, dataMap);
 //			context.publish_ingested_files(true, dataMap);
 			context.search_for_ingestion(true, dataMap);
+			dataMap.put("TestCase", "6318");
 			context.verify_ingested_docs_are_in_sequential_order(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
