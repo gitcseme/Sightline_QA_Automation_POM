@@ -375,7 +375,8 @@ public class IngestionPage {
     
 	public Element getFirstGearBtn() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/a/i ");}
     public Element getCopyOptionButtonPublished() {return driver.FindElementByXPath("//*[@id=\"cardCanvas\"]/ul/li[1]/div[1]/div/dl/dt[3]");}
-
+    
+    public Element getFailedStatusDetailText() {return driver.FindElementByXPath("//*[text() = 'Ingestion Type :']/../following-sibling::*/label/following-sibling::*");}
     public Element getSourceFolderLoadingText() { return driver.FindElementByXPath("//select[@id='ddlFolders']/option[contains(text(), 'Loading')]"); }
     public Element getIngestionCardTitle(String ingestionName) { return driver.FindElementByXPath("//span[@title='"+ingestionName+"']"); }
     public Element getIngestionPopup() { return driver.FindElementByCssSelector(".smart-form.client-form.ingestionPopup"); }
@@ -396,13 +397,20 @@ public class IngestionPage {
     public Element getIngestionErrorsTitle() { return driver.FindElementByXPath("//div[contains(text(), 'Ingestion Errors')]"); }
     public Element getIngestionErrorsHelpIcon() { return driver.FindElementById("IngestionErrorsHelp"); }
     public ElementCollection getIngestionErrorsHelpIconCollection() { return driver.FindElementsById("IngestionErrorsHelp"); }
+    
+    public Element getCatalogErrorElement() { return driver.FindElementByXPath( "//*[@id='Catalogingblock']/div[1]/div/div[4]/span/a"); }
+    public Element getCopiedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Copyingblock\"]/div[1]/div/div[4]/span/a"); }
+    public Element getIndexedErrorElement() { return driver.FindElementByXPath( "//*[@id=\"Indexingblock\"]/div[1]/div/div[6]/span/a"); }
+    public ElementCollection getErrorsTable() {return driver.FindElementsByXPath( "//*[@id=\"myDataTable\"]/tbody/tr");}
     public ElementCollection getIngestHomeHelpButton() {return driver.FindElementsByCssSelector(".helptip");}
+    public Element getIngestHelpPopUpTitle() {return driver.FindElementByCssSelector(".popover-title");}
     public Element getIngestHelpPopUp() {return driver.FindElementByCssSelector(".popover-title");}
     public Element getIngestWizardSystemAndIngestTypeHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-9']/a");}
     public Element getIngestWizardConfigureMappingHelpButton() {return driver.FindElementByXPath("//div[@class= 'col-md-7']/a");}
+    public Element getIngestWizardHomeHelpButton() { return driver.FindElementByXPath("//div[@class= 'col-md-12']/h1/a");}
     public Element getIngestionDetailsHelpButton() {return driver.FindElementByXPath(" //span[@id = 'ui-id-1']/div/a");}
+    public Element getIngestionHomePageTitle() {return driver.FindElementByXPath("//h1[@class='page-title']");}
 
-    
     public String getIngestionTileName(int index){
     	if(index < driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().size()){
     		return driver.FindElementsByXPath("//span[@class = 'pTime font-md']").FindWebElements().get(index).getAttribute("title");
@@ -1602,4 +1610,3 @@ public class IngestionPage {
     }
     
 } 
- 
