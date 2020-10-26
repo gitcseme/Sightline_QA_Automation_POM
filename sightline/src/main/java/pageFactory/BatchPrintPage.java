@@ -135,6 +135,8 @@ public class BatchPrintPage {
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
     public Element getSourceSelectionBackBtn() {return driver.FindElementById("basis-for-printing-back-button");}
+    public Element getSourceSelectionSelectFolderRadioButton() {return driver.FindElementByCssSelector("#selectSearchRadioButton + i");}
+    public ElementCollection getSourceSelectionSelectSearchRows() {return driver.FindElementsByCssSelector("#searchTree a");}
     
     public BatchPrintPage(Driver driver){
 
