@@ -2904,7 +2904,7 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.login_to_new_batch_print(true, dataMap);
-			context.select_source_selection(true, dataMap);
+			context.select_source_selection_same_name_greater_than_250(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
 			context.select_basis_for_printing(true, dataMap);
 			dataMap.put("B", "Natives");
@@ -2925,7 +2925,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "jd"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_excel_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
