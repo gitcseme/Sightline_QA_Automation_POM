@@ -2821,16 +2821,17 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
-			prod.goToProductionHomePage().ScrollTo();
-			prod.goToProductionHomePage().click();
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/Production/Home");
 			driver.waitForPageToBeReady();
 			
-			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("productionName").toString())).click();
+			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("production_name").toString())).click();
 			
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
 			pass(dataMap, "Successfully deleted the target production");
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(dataMap, "Target production could not be deleted");
 		}
 	}
@@ -7925,11 +7926,10 @@ public class ProductionContext extends CommonContext {
 			//TC 6972 part 2Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMessageContainerRemovalMessage().Visible()  ;}}), Input.wait30);
+					prod.getMessageContainerRemovalMessage().Displayed()  ;}}), Input.wait30);
 			
 			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
 			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
-			System.out.println("Actual: " + actualMessage);
 			if (expectedMessage.equals(actualMessage)) {
 				pass(dataMap, "Test pass - expected message is shown.");
 			} else {
@@ -8110,25 +8110,27 @@ public class ProductionContext extends CommonContext {
 			String nativeData = (String)dataMap.get("native_data");
 			prod.getNativeChkBox().click();
 			prod.getNativeTab().click();
-			if (nativeData == "file_types") {
+			Actions builder = new Actions(driver.getWebDriver());
+			if (nativeData.equalsIgnoreCase("file_types")) {
+				builder.moveToElement(prod.getNative_SelectAllCheck().getWebElement()).perform();
 				prod.getNative_SelectAllCheck().click();
 			}
-			else if(nativeData == "tags") {
+			else if(nativeData.equalsIgnoreCase("tags")) {
+				builder.moveToElement(prod.getNativeSelectTagsButton().getWebElement()).perform();
 				prod.getNativeSelectTagsButton().click();
 				prod.getDefaultAutomationChkBox().click();
 				prod.getSelectTagsSelectBtn().click();
 			}
 			
-			else if(nativeData == "files_and_tags") {
+			else if(nativeData.equalsIgnoreCase("files_and_tags")) {
+				builder.moveToElement(prod.getNative_SelectAllCheck().getWebElement()).perform();
 				prod.getNative_SelectAllCheck().click();
+				builder.moveToElement(prod.getNativeSelectTagsButton().getWebElement()).perform();
 				prod.getNativeSelectTagsButton().click();
 				prod.getDefaultAutomationChkBox().click();
 				prod.getSelectTagsSelectBtn().click();
 			}
-				
-			
-			
-			
+			pass(dataMap, "passed native section");
 			
 		} else {
 			fail(dataMap, "Native Section not complete");
@@ -8160,19 +8162,23 @@ public class ProductionContext extends CommonContext {
 			//TC 6820 / 6821 / 6822Expand the Native sectionVerify depending on the native data provided, the correct file types, tags, or both are displayed correctly in the native section.If file types, verify the select all checkbox is enabled as well as the second checkbox to make sure.If tags, make sure the tag is displayed next to the "Select Tags" button.If both, verify both items above.
 			String nativeData = (String)dataMap.get("native_data");
 			prod.getNativeTab().click();
-			if (nativeData == "file_types") {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getNative_SelectAllCheck().Displayed()  ;}}), Input.wait30); 
+
+			if (nativeData.equalsIgnoreCase("file_types")) {
 				Assert.assertTrue(prod.getNative_SelectAllCheck().Displayed() && prod.getNative_SelectAllCheck().Enabled());
 				Assert.assertTrue(prod.getNative_OtherCheck().Displayed() && prod.getNative_OtherCheck().Enabled());
 			}
-			else if(nativeData == "tags") {
+			else if(nativeData.equalsIgnoreCase("tags")) {
 				Assert.assertTrue(prod.getNativeTag().getText().contains("Default Automation Tag"));
 			}
 			
-			else if(nativeData == "files_and_tags") {
+			else if(nativeData.equalsIgnoreCase("files_and_tags")) {
 				Assert.assertTrue(prod.getNative_SelectAllCheck().Displayed() && prod.getNative_SelectAllCheck().Enabled());
 				Assert.assertTrue(prod.getNative_OtherCheck().Displayed() && prod.getNative_OtherCheck().Enabled());
 				Assert.assertTrue(prod.getNativeTag().getText().contains("Default Automation Tag"));
 			}
+			pass(dataMap, "dataMap displays native component correctly");
 		} else {
 			fail (dataMap, "Verify Failed");
 		}
