@@ -3030,13 +3030,45 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_with_email_metadata_is_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC10203 Verify Ingestion should published successfully with new Email metadata
-			//
-			//* Verify ingestion is successfully published and no errors are displayed
-			//
-			throw new ImplementationException("verify_ingestion_with_email_metadata_is_published");
+			
+			String url = (String) dataMap.get("URL");
+    		webDriver.get(url+"Ingestion/Home");
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFilterByButton().Displayed()  ;}}), Input.wait30); 
+    		ingest.getFilterByButton().Click();
+    		for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected() && i!=8) ingest.getSelectFilterByOption(i).Click();
+			}
+			//Make sure published is clicked
+			if(!ingest.getSelectFilterByOption(8).Selected()) ingest.getSelectFilterByOption(8).Click();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			
+			ingest.getcardCanvas().Click();			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFirstPublishedTitle().Displayed()  ;}}), Input.wait30); 
+			 		ingest.getFirstPublishedTitle().Click();
+					//* Modal is displayed
+			 		Thread.sleep(10000);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    			ingest.getIngestionModal().Displayed()  ;}}), Input.wait30); 
+					
+					System.out.println(ingest.getIngestionTileText().getText());
+					String query = ingest.getIngestionTitle().GetAttribute("title");
+					dataMap.put("PublishedingestionName", ingest.getIngestionTitle().GetAttribute("title"));
+					
+					assertEquals(dataMap.get("ingestionName"), dataMap.get("PublishedingestionName"));
+					
+					
+					System.out.println(ingest.getIngestionStatusText().getText());
+					String status = ingest.getIngestionStatusText().getText();
+					dataMap.put("Status", ingest.getIngestionStatusText().GetAttribute("statusTitle"));
+					
+					Assert.assertEquals("Published", status);
+			
+					pass(dataMap,"verify_valid_email_metadata_is_published");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_with_email_metadata_is_published");
+			fail(dataMap,"verify_valid_email_metadata_is_not_published");
 		}
 
 	}
@@ -3114,10 +3146,17 @@ public class IngestionContext extends CommonContext {
 
 
 	@Then("^.*(\\[Not\\] )? verify_concatenated_values_are_displayed_correctly_in_the_email$")
-	public void verify_concatenated_values_are_displayed_correctly_in_the_email(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+	public void verify_concatenated_values_are_displayed_correctly_in_the_email(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {	
+		String expectedEmailAuthorName = "Phillip K Allen";
+		String expectedEmailBCCAddress = "#NOS OCRM All OCRM Staff;jsmith@ austintx.com";
+		String expectedEmailBCCName= ";Jeff Smith";
+		String expectedEmailCCName = "monkeyking@yahoo.com";
+		
 		if (scriptState) {
-			//TC10579 Verify concatenated email value should be displayed correctly for CCName and CCAddress fields in Doc ListTC10580 Verify concatenated email value should be displayed correctly for BCCName and BCCAddress fields in Doc ListTC10581 Verify concatenated email value should be displayed correctly for ToName and ToAddress fields in Doc ListTC10582 Verify concatenated email value should be displayed correctly for AuthorName and AuthorAddress fields in Doc List
+			//TC10579 Verify concatenated email value should be displayed correctly for CCName and CCAddress fields in Doc List
+			//TC10580 Verify concatenated email value should be displayed correctly for BCCName and BCCAddress fields in Doc List
+			//TC10581 Verify concatenated email value should be displayed correctly for ToName and ToAddress fields in Doc List
+			//TC10582 Verify concatenated email value should be displayed correctly for AuthorName and AuthorAddress fields in Doc List
 			//
 			//* For the test cases above we are validating conactenation of names and addresses in the emails
 			//* We need to look into the Metadata tab that is displayed to the right in the DocView
@@ -3128,18 +3167,75 @@ public class IngestionContext extends CommonContext {
 			//* but EmailAuthorName only displays sreekanth medarametla
 			//* This example, the test would pass
 			//
-			throw new ImplementationException("verify_concatenated_values_are_displayed_correctly_in_the_email");
+			driver.waitForPageToBeReady();
+			Thread.sleep(10000);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.SelectColumnBtn().Displayed() && ingest.SelectColumnBtn().Enabled() ;}}), 30);
+			ingest.SelectColumnBtn().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.AddToSelectedBtn().Visible() ;}}), 30);
+			for(int i=0; i<=2; i++) {
+				int index = i;
+				    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRemoveColLink(index).Displayed()  ;}}), Input.wait30); 
+					ingest.getRemoveColLink(i).Click();
+			}
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.EmailAuthorNameAndAddressCheckbox().Displayed() ;}}), 30);
+					ingest.getMetaDataElements(45).Click();   
+					ingest.getMetaDataElements(47).Click(); 
+					ingest.getMetaDataElements(49).Click();
+					ingest.getMetaDataElements(50).Click();
+					ingest.getMetaDataElements(52).Click();
+					ingest.getMetaDataElements(53).Click();
+					ingest.getMetaDataElements(75).Click();
+					ingest.getMetaDataElements(76).Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.AddToSelectedBtn().Displayed() ;}}), 30);
+			ingest.AddToSelectedBtn().Click();
+			ingest.OkBtn().Click();
+			driver.waitForPageToBeReady();
+	
+			String emailAuthorName = ingest.getFirstRowValues(6).getText();
+			String emailBCCAddress = ingest.getFirstRowValues(7).getText();
+			String emailBCCName = ingest.getFirstRowValues(8).getText();
+			String emailCCName = ingest.getFirstRowValues(10).getText();
+		
+			try {
+				Assert.assertEquals(expectedEmailAuthorName, emailAuthorName);
+				Assert.assertEquals(expectedEmailBCCAddress, emailBCCAddress );
+				Assert.assertEquals(expectedEmailBCCName, emailBCCName);
+				Assert.assertEquals(expectedEmailCCName, emailCCName);
+				
+			} catch(Exception e) {
+				fail(dataMap, "EmailAuthorName and EmailAuthor Address values are not correct!");
+			}
+
 		} else {
-			throw new ImplementationException("NOT verify_concatenated_values_are_displayed_correctly_in_the_email");
+			try {
+				String emailAuthorName = ingest.getFirstRowValues(6).getText();
+				String emailBCCAddress = ingest.getFirstRowValues(7).getText();
+				String emailBCCName = ingest.getFirstRowValues(8).getText();
+				String emailCCName = ingest.getFirstRowValues(10).getText();
+				Assert.assertTrue(!expectedEmailAuthorName.equals(emailAuthorName));
+				Assert.assertTrue(!expectedEmailBCCAddress.equals(emailBCCAddress));
+				Assert.assertTrue(!expectedEmailBCCName.equals(emailBCCName));
+				Assert.assertTrue(!expectedEmailCCName.equals(emailCCName));
+			} catch(Exception e) {
+				fail(dataMap, "EmailAuthorName and EmailAuthorNameAndAddress values are not correct!");
+			}
 		}
 
 	}
 
 
+
 	@Then("^.*(\\[Not\\] )? verify_valid_email_metadata_option_is_available$")
 	public void verify_valid_email_metadata_option_is_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
+		if (scriptState) {		
 			//TC10199 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10198 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10200 Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is availableTC10201 Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is availableTC10202 Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available
 			//* Once Field Cateogry is set to 'Email'
 			//* Click the destination field dropdown corresponding to Field Category with Email selected
@@ -3147,10 +3243,20 @@ public class IngestionContext extends CommonContext {
 			//* Validate 'EmailAuthorNameAndAddresses' option is displayed
 			//* Validate 'EmailCCNamesAndAddresses' option is displayed
 			//* Validate 'EmailBCCNamesAndAddresses' option is displayed
-			//
-			throw new ImplementationException("verify_valid_email_metadata_option_is_available");
+			
+			driver.waitForPageToBeReady();
+			String emailToAuthorName = ingest.SixthDesRowOptions().getText();
+			String emailBCCNameAndAddress = ingest.SeventhDesRowOptions().getText();
+			String emailCCNameAndAddress = ingest.EigthDesRowOptions().getText();
+			String emailToNamesAndAddress = ingest.NinthDesRowOptions().getText();
+			
+			Assert.assertTrue(emailToNamesAndAddress.equals("EmailToNamesAndAddresses"));
+			Assert.assertTrue(emailToAuthorName.equals("EmailAuthorNameAndAddress"));
+			Assert.assertTrue(emailCCNameAndAddress.equals("EmailCCNamesAndAddresses"));
+			Assert.assertTrue(emailBCCNameAndAddress.equals("EmailBCCNamesAndAddresses"));
+			
 		} else {
-			throw new ImplementationException("NOT verify_valid_email_metadata_option_is_available");
+			fail(dataMap, "Emails meta data is not correct!");
 		}
 	}
 	
