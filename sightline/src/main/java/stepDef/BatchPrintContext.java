@@ -234,7 +234,7 @@ public class BatchPrintContext extends CommonContext {
 							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
 					
 					// Check if "Other Exception File Types" field is shown
-					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
+					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 1) {
 						// if shown, enter placeholder text field
 						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
 						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
@@ -315,12 +315,12 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getInsertMetadataFieldOKButton().click();
 				}
 				
-				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("true")) {
+				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("false")) {
 					
 				}
 				
 
-				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("transparent")) {
 					
 
 				}
@@ -364,14 +364,13 @@ public class BatchPrintContext extends CommonContext {
 
 				if (dataMap.containsKey("sort_by")) {
 					//TODO: Remove sendKeys and use a select function
-					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+					String option = (String)dataMap.get("sort_by");
+					batchPrint.getSelectExportFileSortBy().click();
+					batchPrint.getSelectExportDropDownByOption(option).click();
 				}
 				
 
 				batchPrint.getGenerateButton().click();
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getGenerateSuccessMessage().Visible()  ;}}), Input.wait30);
 
 				
 			} catch (Exception e) {
@@ -1247,18 +1246,23 @@ public class BatchPrintContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_notification_displayed_when_background_process_initialized$")
 	public void verify_notification_displayed_when_background_process_initialized(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
 		if (scriptState) {
-			//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
-			//
-			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
-			//* New BATCHPRINT row with your INPROGRESS task is created
-			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
-			//
-			throw new ImplementationException("verify_notification_displayed_when_background_process_initialized");
-		} else {
-			throw new ImplementationException("NOT verify_notification_displayed_when_background_process_initialized");
-		}
 
+			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getGreenPopUpMessage().Displayed()  ;}}), Input.wait30);
+			Assert.assertEquals("Successfully initiated the batch print. You will be prompted with notification once completed.",batchPrint.getGreenPopUpMessage().getText());
+
+			//* New BATCHPRINT row with your INPROGRESS task is created
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getBackgroundTaskFirstRowStatus().Displayed()  ;}}), Input.wait30);
+			Assert.assertEquals("INPROGRESS", batchPrint.getBackgroundTaskFirstRowStatus().getText());
+			
+			pass(dataMap, "verified background notification");
+		}
+		else fail(dataMap, "Could not verify background notificaiton");
+			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
 	}
 
 
