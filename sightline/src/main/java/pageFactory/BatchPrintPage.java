@@ -140,6 +140,14 @@ public class BatchPrintPage {
     public Element getInsertMetadataFieldLink() { return driver.FindElementById("insertMetaDataHref"); }
     public Element getInsertMetadataFieldPopup() { return driver.FindElementByCssSelector(".popover.fade.right.in"); }
     public Element getMetadataDropdown() { return driver.FindElementById("locationMetaData"); }    
+    public Element getMediaFilesHelpIcon() { return driver.FindElementByXPath("//a[@data-original-title='Media Files']"); }
+    public Element getExcelFilesHelpIcon() { return driver.FindElementByXPath("//a[@data-original-title='Excel Files']"); }
+    public Element getOtherFileTypesHelpIcon() { return driver.FindElementByXPath("//a[@data-original-title='Other Exception File Types']"); }
+    public Element getFileTypeHelpPopup() { return driver.FindElementByCssSelector(".popover.fade.right.in"); }
+    public Element getCurrentBreadcrumb(String breadcrumb) { return driver.FindElementByXPath("//li[@class='current-crumb' and @title='"+breadcrumb+"']");}
+    public Element getSkipExcelFilesRadioButton() { return driver.FindElementByXPath("//input[@id='skipExcelFileRadioButton']/following-sibling::i"); }
+    public Element getIncludePlaceholdersToggle() { return driver.FindElementByXPath("//input[@id='includeExcelFileCheckBox']/following-sibling::i"); }
+    public Element getInsertMetadataFieldLinkText() { return driver.FindElementById("excelFileInsertMetadataLinkButton"); }
     
     
     public BatchPrintPage(Driver driver){

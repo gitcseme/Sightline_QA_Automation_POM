@@ -210,6 +210,10 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
+					
+					// waits until next page is shown
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCurrentBreadcrumb("Exception File Types").Visible()  ;}}), Input.wait30);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1322,7 +1326,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Skip Excel Files' radio button
-			throw new ImplementationException("select_skip_excel_files_radio_button");
+			try {
+				batchPrint.getSkipExcelFilesRadioButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBP_Exception_Excel().GetAttribute("style").contains("display: block;")  ;}}), Input.wait30);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_skip_excel_files_radio_button");
 		}
@@ -1339,7 +1349,17 @@ public class BatchPrintContext extends CommonContext {
 			//* 'Include Placeholders' tab displayed
 			//* Inert Metadata field is displayed
 			//
-			throw new ImplementationException("verify_skip_excel_files_on_exception_file_types_tab");
+			try {
+				if (batchPrint.getInsertMetadataFieldLinkText().Displayed()) {
+					pass(dataMap, "PASS! INsert Metadata Field is displayed!");
+				} else fail(dataMap, "FAIL! Insert Metadata Field is not displayed!");
+				
+				if (batchPrint.getIncludePlaceholdersToggle().Displayed()) {
+					pass(dataMap, "PASS! Include Placeholder toggle is displayed");
+				} else fail(dataMap, "FAIL! Include Placeholder toggle is not displayed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_skip_excel_files_on_exception_file_types_tab");
 		}
@@ -1352,7 +1372,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Other Exception File Types' help ? button
-			throw new ImplementationException("click_other_exception_file_types_help_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getExcelFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getOtherFileTypesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_other_exception_file_types_help_button");
 		}
@@ -1368,7 +1394,13 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Help displayed
 			//
-			throw new ImplementationException("verify_help_displayed_on_exception_file_types_tab");
+			try {
+				if (batchPrint.getFileTypeHelpPopup().Displayed()) {
+					pass(dataMap, "PASS! Help popup is displayed");
+				} else fail(dataMap, "FAIL! Help popup was not displayed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_help_displayed_on_exception_file_types_tab");
 		}
@@ -1381,7 +1413,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Excel Files' help ? button
-			throw new ImplementationException("click_excel_files_help_button");
+			try {
+//				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//						   batchPrint.getExcelFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getExcelFilesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_excel_files_help_button");
 		}
@@ -1394,7 +1432,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Media Files' help ? button
-			throw new ImplementationException("click_media_files_help_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getMediaFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getMediaFilesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_media_files_help_button");
 		}
