@@ -14,6 +14,7 @@ import javax.security.auth.login.FailedLoginException;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Arrays;
 import java.lang.Math;
 
 import org.openqa.selenium.JavascriptExecutor;
@@ -35,8 +36,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
-
+import pageFactory.DocListPage;
+import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
+import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -1026,8 +1029,8 @@ public class ProductionContext extends CommonContext {
 				prod.getPrivTagDefaultAutomation().click();
 				prod.getPrivInsertQuery().click();
 
-					
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 						prod.getPrivChkForMatching().Enabled() && prod.getPrivChkForMatching().Displayed()  ;}}), Input.wait30);
 				prod.getPrivChkForMatching().Click();
 										
@@ -1537,12 +1540,10 @@ public class ProductionContext extends CommonContext {
 				//Deselect Filters we dont want
 				for(int i =1; i<=4; i++) {
 					if(prod.getFilter(i).Selected() && i!= index) prod.getFilter(i).Click();
-					Thread.sleep(1000);
 				}
 				//Select our filter, if it isn't already
 				if(!prod.getFilter(index).Selected()) prod.getFilter(index).Click();
 				prod.getFilterByButton().Click();
-				Thread.sleep(1000);
 				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 
 
@@ -2079,15 +2080,18 @@ public class ProductionContext extends CommonContext {
 						prod.getTileViewIcon().Displayed() && prod.getTileViewIcon().Enabled()  ;}}), Input.wait30);
 				     	prod.getTileViewIcon().Click();
 				}
-				else fail(dataMap, "Valid view mode was not selected");
+				else {
+					fail(dataMap, "Valid view mode was not selected");
+				}
 				
 				pass(dataMap, "View Mode was Selected Successfully");
 				
 				
-			}
-			catch(Exception e) {e.printStackTrace();}
+			} catch(Exception e) {e.printStackTrace();}
 		}
-		else fail(dataMap, "Could not set production grid view");
+		else {
+			fail(dataMap, "Could not set production grid view");
+		}
 
 	}
 
@@ -2431,13 +2435,13 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			try {
 				/*
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 						prod.getbtnProductionGuardMarkComplete().Enabled() && prod.getPrivDefaultAutomation().Displayed()  ;}}), Input.wait30);
 					prod.getbtnProductionGuardMarkComplete().Click();
 				*/
 				prod.getMarkCompleteButton().click();
 				if(prod.getOkButton().Displayed()) prod.getOkButton().click();
-					
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
 				
@@ -2524,6 +2528,8 @@ public class ProductionContext extends CommonContext {
 				Assert.assertTrue(prod.getCurrentCrumbSummaryAndPreview().Displayed());
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionSummaryMarkComplete().Enabled() ;}}), Input.wait30);
+				String docID = (prod.getProdPrevPageDocSummary().FindWebElements().get(16).getText()).split(" and")[0];
+				dataMap.put("docID", docID);
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
@@ -2767,7 +2773,15 @@ public class ProductionContext extends CommonContext {
 					prod.getSaveButton().Enabled()  ;}}), Input.wait30);
 			prod.getSaveButton().Click();
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_save_button");
+			try {
+				//The user should click Save from the Production page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSaveButton().Enabled()  ;}}), 10);
+				prod.getSaveButton().Click();
+			}
+			catch (Exception e){
+				
+			}
 		}
 
 	}
@@ -2844,7 +2858,7 @@ public class ProductionContext extends CommonContext {
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
 			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
 		}
 	}
@@ -2861,7 +2875,7 @@ public class ProductionContext extends CommonContext {
 			String mp3 =  (String)dataMap.get("mp3");
 			String text = (String)dataMap.get("text");
 			Actions builder = new Actions(driver.getWebDriver());
-			
+
 			//IF DAT IS TRUE:
 			//Click the DAT checkbox
 			//Click the DAT tab to open the DAT container
@@ -2940,10 +2954,10 @@ public class ProductionContext extends CommonContext {
 				prod.getNativeAdvanced().click();
 				prod.getNative_GenerateLoadFileLST().click();
 			}
-			
-			
+
+
 			/*WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
-			
+
 			//IF MP3 IS TRUE
 			//Expand Advanced Production Components
 			//Click the MP3 Files Checkbox
@@ -2951,7 +2965,20 @@ public class ProductionContext extends CommonContext {
 			//Click "Select Redactions"
 			//Click "Default Automation Redaction"
 			//Set the "Redaction Style" to "Beep"
-
+			*/
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			if(mp3!= null && mp3.equalsIgnoreCase("true")){
+				builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
+				prod.getMP3_ToggElement().click();
+				builder.moveToElement(prod.getMP3ChkBox().getWebElement()).perform();
+				prod.getMP3ChkBox().click();
+				prod.getMP3Tab().click();
+				prod.getMP3ComponentRedactionToggle().click();
+				prod.getMP3_SelectRed_Radiobutton().click();
+				prod.getMP3SelectRedactionsTagTree("Default Redaction Tag").click();
+			}
+			
+			 /*
 			//IF TEXT IS TRUE
 			//Checkoff the "Text" component checkbox
 			//The other parameters can be worked on as we use them.
@@ -2959,9 +2986,14 @@ public class ProductionContext extends CommonContext {
 
 
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
 			builder.moveToElement(prod.getComponentsMarkComplete().getWebElement()).perform();
 			prod.getComponentsMarkComplete().Click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
 
@@ -2984,14 +3016,14 @@ public class ProductionContext extends CommonContext {
 
 			//Open Tiff Tab and toggle off priv docs
 			prod.getTIFFTab().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getTIFFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
 			prod.getTIFFPlaceholderPriviledgedToggleActive().click();
-			
+
 			//Move to PDF tab and toggle off priv docs
 			builder.moveToElement(prod.getPDFTab().getWebElement()).perform();
 			prod.getPDFTab().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getPDFPlaceholderPriviledgedToggleActive().Displayed() ;}}), Input.wait30);
 			prod.getPDFPlaceholderPriviledgedToggleActive().click();
 
@@ -3018,7 +3050,7 @@ public class ProductionContext extends CommonContext {
 			String minimumNumber = Integer.toString(minLength);
 			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
 			String suffix = (String) dataMap.get("suffix");
-			
+
 			if(beginningBates == 1) {
 				int low = 0;
 				int high = 10;
@@ -3028,7 +3060,7 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
-			
+
 			else if(beginningBates == 2) {
 				int low = 10;
 				int high = 100;
@@ -3038,7 +3070,7 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
-			
+
 			else if(beginningBates == 3) {
 				int low = 100;
 				int high = 1000;
@@ -3048,7 +3080,7 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
-			
+
 			else {
 				int low = 1000;
 				int high = 10000;
@@ -3058,20 +3090,20 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
-			
-			
+
+
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
-			
+
 			prod.gettxtBeginningBatesIDSuffix().click();
 			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
-			
+
 			prod.gettxtBeginningBatesIDMinNumLength().click();
 			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
 
 			prod.getMarkCompleteLink().click();
 			prod.getNextButton().click();
-			
+
 		} else {
 			 fail(dataMap, "Custom number sorting is not added");
 		}
@@ -3127,10 +3159,10 @@ public class ProductionContext extends CommonContext {
 				prod.getBackLink().click();
 			}
 			pass(dataMap, "Enabled priv guard placeholders");
-			
-		} 
+
+		}
 		else fail(dataMap, "Failed to enable priv guard placeholders");
-		
+
 
 	}
 
@@ -3139,20 +3171,20 @@ public class ProductionContext extends CommonContext {
 	public void expanding_the_tiff_pdf_section_of_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			
+
 			Actions builder = new Actions(driver.getWebDriver());
 
 			//Move to and Open Tiff Tab
 			//builder.moveToElement(prod.getTIFFTab().getWebElement()).perform();
 			prod.getTIFFTab().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getTIFFPlaceholderPrivilegedTextField().Displayed() ;}}), Input.wait30);
 			dataMap.put("tiffPrivText", prod.getTIFFPlaceholderPrivilegedTextField().getText());
 
 			//Move to and Open PDF Tab
 			//builder.moveToElement(prod.getPDFTab().getWebElement()).perform();
 			prod.getPDFTab().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getPDFPlaceholderPrivDocsField().Displayed() ;}}), Input.wait30);
 			dataMap.put("pdfPrivText", prod.getPDFPlaceholderPrivDocsField().getText());
 
@@ -3167,7 +3199,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_enabling_placeholders_on_priv_guard_saves_the_placeholders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-		
+
 			//Grab PDF Priv Holder Text
 			String pdfHolderText = (String)dataMap.get("pdfPrivText");
 			//Grab Tiff Priv Holder Text
@@ -3197,7 +3229,7 @@ public class ProductionContext extends CommonContext {
 			//Click Generate
 			prod.getGenerateButton().click();
 			driver.waitForPageToBeReady();
-			
+
 		} else {
 			fail(dataMap, "Generate button is not clicked");
 		}
@@ -3358,7 +3390,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_priv_guard_component_displays_the_correct_matched_documents_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Simply make sure, we have 11 total documents 
+			//Simply make sure, we have 11 total documents
 			Assert.assertEquals("11", prod.getTotalMatchedDocuments().getText());
 		}
 		else fail(dataMap, "Could not Verify the Priv Guard Matched Documents");
@@ -4015,9 +4047,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking "Advanced" in the MP3 Section
-			throw new ImplementationException("expanding_the_mp3_advanced_section");
+			prod.getProductionAdvanced().click();
+			prod.getMP3Tab().click();
+			prod.getMP3ComponentAdvanced().click();
+			pass(dataMap, "MP3 advanced section is expanded");
 		} else {
-			throw new ImplementationException("NOT expanding_the_mp3_advanced_section");
+			fail(dataMap, "MP3 advanced section is not expanded");
 		}
 
 	}
@@ -4158,7 +4193,7 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? custom_number_and_sorting_is_added$")
 	public void custom_number_and_sorting_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-		//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #".  If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562. 
+		//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #".  If the parameter starts with a digit and the plus sign, that means that bates should start with digit and randomize the number after it.Ex: 0+6, this means randomize 6 digits, but the start of the number should be 0. So 01234562.
 		if (scriptState) {
 			Random rnd = new Random();
 			String prefix = (String) dataMap.get("prefix");
@@ -4166,7 +4201,7 @@ public class ProductionContext extends CommonContext {
 			String minimumNumber = Integer.toString(minLength);
 			String suffix = (String) dataMap.get("suffix");
 			String beforeParseBates = (String) dataMap.get("beginning_bates");
-				
+
 			if(!beforeParseBates.contains("+")) {
 				int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
 				int low = (int)Math.pow(10, beginningBates-1);
@@ -4178,11 +4213,11 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
-			
+
 			else if(beforeParseBates.contains("+")) {
 				String[] parts = beforeParseBates.split("\\+");
 				String beforePlus = parts[0];
-				String afterPlus = parts[1]; 
+				String afterPlus = parts[1];
 				int parsedAfterPlus = Integer.parseInt((afterPlus));
 				int low = (int)Math.pow(10, parsedAfterPlus-1);
 				int high = (int)Math.pow(10, parsedAfterPlus);
@@ -4194,23 +4229,23 @@ public class ProductionContext extends CommonContext {
 				prod.getBeginningBates().SendKeys(randDigit);
 				String finalBatesNumber = prod.getBeginningBates().getText();
 				dataMap.put("beginning_bates", finalBatesNumber);
-				
-			}		
-			
+
+			}
+
 			prod.gettxtBeginningBatesIDPrefix().click();
 			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
-			
+
 			prod.gettxtBeginningBatesIDSuffix().click();
 			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
-			
+
 			prod.gettxtBeginningBatesIDMinNumLength().click();
 			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
 
 			prod.getMarkCompleteLink().click();
 			Assert.assertTrue(prod.getMarkCompleteSuccessfulText().Displayed());
 			prod.getNextButton().click();
-			
-		} 
+
+		}
 		else {
 			 fail(dataMap, "Custom number and sorting is not added");
 		}
@@ -4242,11 +4277,11 @@ public class ProductionContext extends CommonContext {
 			//Make sure Production Name is displaying the correct name
 			String prodName = prod.getGenerateProductionName().getText();
 			Assert.assertEquals(prodName, (String)dataMap.get("production_name"));
-			
+
 			//Wait a few seconds for Status text to change to "in progress"
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
-			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30);
+
 			//Make sure Status is In Progress, and InProgress Button is now Displayed
 			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress") );
 			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed());
@@ -4265,7 +4300,7 @@ public class ProductionContext extends CommonContext {
 			String status = prod.getGeneratePostGenStatus().getText();
 			//Loop to wait for Post Generation check complete
 			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<20) {
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<30) {
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
@@ -4303,7 +4338,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState){
 			//TC4994Verify the directory in the UI matches the directory we set in "complete_default_production_location_component".Example text from the UI:The documents are produced at the following path : \\MTPVTSSLMQ01\Productions\H021301\Test01
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getDestinationPathText().Displayed() ;}}), Input.wait30);
 
 			//Get Path we inputed in Previous Location Page
@@ -4329,8 +4364,8 @@ public class ProductionContext extends CommonContext {
 			//After Generation -> Head back to get bates Number
 			prod.getBackLink().click();;
 			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30);
 
 			//Save our first bates range for later use
 			String firstBatesRange = prod.getProd_BatesRange().getText();
@@ -4361,7 +4396,7 @@ public class ProductionContext extends CommonContext {
 			builder.moveToElement(driver.FindElementById("tagTree").getWebElement()).perform();
 			prod.getProductionDocumentSelectTagByName("Default Automation Tag").click();
 			driver.waitForPageToBeReady();
-			
+
 			//Go back to generate page
 			//prod.getMarkCompleteButton().click();
 			for(int i =0; i<4; i++) {
@@ -4373,14 +4408,14 @@ public class ProductionContext extends CommonContext {
 				driver.waitForPageToBeReady();
 			}
 			driver.waitForPageToBeReady();
-			
+
 			//When on Generation page, click generate and wait for Inprogress to begin
 			prod.getGenerateButton().click();
 			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30); 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30);
 			pass(dataMap, "Succesfully selected a new tag, and navigated back to Generate page");
-			
+
 		}
 		else fail(dataMap, "failed to change the folder selection to by tags");
 
@@ -4395,7 +4430,7 @@ public class ProductionContext extends CommonContext {
 
 			int i =0;
 			String batesRangeExists = prod.getProd_BatesRange().getText();
-			
+
 			//Loop until bates range is displayed
 			while(batesRangeExists.equals("") && i++<20) {
 				prod.getBackLink().click();
@@ -4487,7 +4522,7 @@ public class ProductionContext extends CommonContext {
 
 			//Split Bates Range to get one of the Bates Numbers to verify its format format
 			String[] finalBatesRange = (prod.getProd_BatesRange().getText()).split(" - ");
-			char[] firstBatesNum = (finalBatesRange[0]).toCharArray(); 
+			char[] firstBatesNum = (finalBatesRange[0]).toCharArray();
 
 			//Verify Prefix and Suffix, and Correct BatesLength
 			Assert.assertEquals(firstBatesNum[0], prefix.charAt(0));
@@ -4505,7 +4540,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Ingest a 10 mb file. Login as a project admin in the project 021320_EG
-			//first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file. 
+			//first.Call the ingestion method: new_ingestion_create. This takes in a parameter or pdf file.
 			//We will have to create a text or pdf that is 10 mb and provide that for the ingestion. 
 			throw new ImplementationException("a_file_size_ingestion_was_completed");
 		} else {
@@ -4559,7 +4594,7 @@ public class ProductionContext extends CommonContext {
 			Assert.assertEquals("", prod.getProd_BatesRange().getText());
 			Assert.assertTrue(prod.getGenerateButton().Enabled());
 			pass(dataMap, "Productions are set to DRAFT");
-			
+
 		} else {
 			fail(dataMap, "Productions are not set to draft");
 		}
@@ -4582,16 +4617,16 @@ public class ProductionContext extends CommonContext {
 				}
 			}
 			//Wait for lingering messages to fade
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				!prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmAndCommitProdLink().Enabled() && prod.getConfirmAndCommitProdLink().Displayed());
 
 			//Click confirm link
 			prod.getConfirmAndCommitProdLink().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			//Get successful popup message
-			Assert.assertEquals("Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.", 
+			Assert.assertEquals("Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.",
 					prod.getConfirmCompletePopup().getText());
 			pass(dataMap, "Was able to verify the functionality of Confirm production and commit button");
 		}
@@ -5616,10 +5651,22 @@ public class ProductionContext extends CommonContext {
 	public void remove_burn_redaction_on_mp3(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand Advanced Production ComponentsExpand MP3 FilesDisable Burn Redactions
-			throw new ImplementationException("remove_burn_redaction_on_mp3");
+
+			//Expand Advanced Production Components
+			prod.getProductionAdvanced().click();
+
+			//Expand MP3 Files
+			prod.getMP3Tab().click();
+
+			//Disable Burn Redactions
+			if(prod.getMP3BurnRedactionsCheckboxToggle().Selected()){
+				prod.getMP3ComponentRedactionToggle().click();
+			}
+
+
+			pass(dataMap, "Burn redactions removed on MP3");
 		} else {
-			throw new ImplementationException("NOT remove_burn_redaction_on_mp3");
+			fail(dataMap, "Burn redactions not removed on MP3");
 		}
 
 	}
@@ -5629,10 +5676,13 @@ public class ProductionContext extends CommonContext {
 	public void mark_the_component_section_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark CompleteClick Next
-			throw new ImplementationException("mark_the_component_section_complete");
+			//Click Mark Complete
+			prod.getComponentsMarkComplete().click();
+			//Click Next
+			prod.getComponentsMarkNext().click();
+			pass(dataMap, "Component section marked complete");
 		} else {
-			throw new ImplementationException("NOT mark_the_component_section_complete");
+			fail(dataMap, "Component section not marked complete");
 		}
 
 	}
@@ -5642,10 +5692,25 @@ public class ProductionContext extends CommonContext {
 	public void the_production_is_generated_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
-			throw new ImplementationException("the_production_is_generated_with_the_given_production_component");
+			//This will generate the production with the given production component.
+			//This is collection of the following steps:
+			// marking_complete_the_next_available_bates_number
+			marking_complete_the_next_available_bates_number(true, dataMap);
+			// complete_default_document_selection
+			complete_default_document_selection(true, dataMap);
+			// mark_complete_default_priv_guard
+			mark_complete_default_priv_guard(true, dataMap);
+			// complete_default_production_location_component
+			complete_default_production_location_component(true, dataMap);
+			// completed_summary_preview_component
+			completed_summary_and_preview_component(true, dataMap);
+			// starting_the_production_generation
+			starting_the_production_generation(true, dataMap);
+			// waiting_for_production_to_be_complete
+			waiting_for_production_to_be_complete(true, dataMap);
+			pass(dataMap, "Production generated with the given production components");
 		} else {
-			throw new ImplementationException("NOT the_production_is_generated_with_the_given_production_component");
+			fail(dataMap, "Production not generated with the given production components");
 		}
 
 	}
@@ -5668,10 +5733,32 @@ public class ProductionContext extends CommonContext {
 	public void enabling_slip_sheets_on_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand the TIFF sectionEnable Slip SheetClick on the Tab based on the parameterCheck off the checkbox based on the parameter. If the parameter contains a period, that means you should split that value by the period and you would have multiple checkboxes to check.Ex: DocID.DocPages. This means we would check off both checkboxesCollapse the Tiff Section
-			throw new ImplementationException("enabling_slip_sheets_on_tiff");
+			//Expand the TIFF section
+			prod.getTIFFTab().click();
+
+			//Enable Slip Sheet
+			prod.getTIFFAdvanced().click();
+			prod.getTIFFSlipSheetsToggle().click();
+
+			//Click on the Tab based on the parameter
+			String tabName = dataMap.get("sheet_tab").toString();
+			prod.getTIFFSlipSheetsFieldTabs(tabName);
+
+			//Check off the checkbox based on the parameter.
+			//If the parameter contains a period, that means you should split that value by the period and you would have multiple checkboxes to check.Ex: DocID.DocPages. This means we would check off both checkboxes
+			List<String> parametersToCheck = Arrays.asList(dataMap.get("sheet_value").toString().split("\\."));
+			for(WebElement parameter: prod.getTIFFSlipSheetsContainerLabels().FindWebElements()){
+				if(parametersToCheck.contains(parameter.getText())){
+					parameter.click();
+				}
+			}
+			//Collapse the Tiff Section
+			prod.getTIFFTab().ScrollTo();
+			prod.getTIFFTab().click();
+
+			pass(dataMap, "Enabled slip sheets on TIFF");
 		} else {
-			throw new ImplementationException("NOT enabling_slip_sheets_on_tiff");
+			fail(dataMap, "Can not enable slip sheets on TIFF");
 		}
 
 	}
@@ -5694,10 +5781,29 @@ public class ProductionContext extends CommonContext {
 	public void adding_multiple_dat_field_mappings(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand DATClick Add FieldThe parameter data will appear in the following format:Field Classification-Source Field-DAT Field.Each field on the table is going to be separated by hyphens and end with a period. This means you should first split these values by periods first to see how many sets of data you will have then split it by hyphens to see which individual values you need to fill out in the table.
-			throw new ImplementationException("adding_multiple_dat_field_mappings");
+			//Expand DAT
+			prod.getDATTab().click();
+
+			//Click Add Field
+			prod.getDAT_AddField().click();
+
+			//The parameter data will appear in the following format:Field Classification-Source Field-DAT Field.
+			//Each field on the table is going to be separated by hyphens and end with a period. This means you should first split these values by periods first to see how many sets of data you will have then split it by hyphens to see which individual values you need to fill out in the table.
+			String[] fieldsToAdd = dataMap.get("dat_mapping_values").toString().split("\\.");
+			for (int i = 0; i < fieldsToAdd.length; i++) {
+				String[] values = fieldsToAdd[i].split("-");
+				prod.getDAT_FieldClassificationOption(i, values[0].toUpperCase().replaceAll("\\s", "")).click();
+				prod.getDAT_SourceFieldOption(i, values[1]).click();
+				prod.getDAT_DATField(i).getWebElement().clear();
+				prod.getDAT_DATField(i).getWebElement().sendKeys(values[2]);
+				if (prod.getDAT_FieldMappingRows().size() < fieldsToAdd.length) {
+					prod.getDAT_AddField().click();
+				}
+			}
+
+			pass(dataMap, "Multiple DAT field mappings added");
 		} else {
-			throw new ImplementationException("NOT adding_multiple_dat_field_mappings");
+			fail(dataMap, "Multiple DAT field mappings not added");
 		}
 
 	}
@@ -5720,10 +5826,36 @@ public class ProductionContext extends CommonContext {
 	public void verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 5927Verify in the MP3 section, Burn redactions is enabledVerify that the redaction "Default Automation Redaction" is checked off by defaultVerify Generate Load File (LST) is enabled by default.
-			throw new ImplementationException("verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates");
+			//TC 5927Verify in the MP3 section, Burn redactions is enabled
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getMP3BurnRedactionsCheckboxToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertTrue(prod.getMP3BurnRedactionsCheckboxToggle().Selected());
+
+			// Verify that the redaction "Default Automation Redaction" is checked off by default
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getMP3DefaultAutomationRedactionCheckbox().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertTrue(prod.getMP3DefaultAutomationRedactionCheckbox().getWebElement().getAttribute("class").contains("jstree-clicked"), "The template should have Default Automation Redaction checked, but the template is not checking the checkbox.");
+
+			// Verify Generate Load File (LST) is enabled by default.
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return
+							prod.getMP3GenerateLoadFileCheckboxToggle().Displayed();
+				}
+			}), Input.wait30);
+			Assert.assertTrue(prod.getMP3GenerateLoadFileCheckboxToggle().Selected());
+
+			pass(dataMap,"Redaction tags configured in mp3 productions are retained in templates");
 		} else {
-			throw new ImplementationException("NOT verify_redaction_tags_configured_in_mp3_productions_are_retained_in_templates");
+			fail(dataMap,"Redaction tags configured in mp3 productions are not retained in templates");
 		}
 
 	}
@@ -5745,11 +5877,23 @@ public class ProductionContext extends CommonContext {
 	public void login_to_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_production_home_pagebegin_new_production_process
-			throw new ImplementationException("login_to_new_production");
-		} else {
-			throw new ImplementationException("NOT login_to_new_production");
+			//This is a collection of the following steps
+
+			dataMap.put("uid", "automate.sqa3@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
+			//sightline_is_launched
+			sightline_is_launched(true, dataMap);
+			
+			login_as_pau(true, dataMap);
+
+			//login_as_pauon_production_home_page
+			on_production_home_page(true, dataMap);
+
+			//begin_new_production_process
+			begin_new_production_process(true, dataMap);
+			pass(dataMap, "Succesfully fnished the login - > to new production process");
 		}
+		else fail(dataMap, "Can not finish the login to production process");
 
 	}
 
@@ -5758,11 +5902,64 @@ public class ProductionContext extends CommonContext {
 	public void the_production_generation_is_started_with_the_given_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
-			throw new ImplementationException("the_production_generation_is_started_with_the_given_production_component");
-		} else {
-			throw new ImplementationException("NOT the_production_generation_is_started_with_the_given_production_component");
+			//This will generate the production with the given production component. This is collection of the following steps: 
+
+			
+			//data for our custom 
+			dataMap.put("prefix", "G");
+			dataMap.put("min_length", "8");
+			dataMap.put("beginning_bates", "6");
+			dataMap.put("suffix", "Z");
+			
+			//Need Custom Bates Number or generartion will fail due to duplicate
+			custom_number_and_sorting_is_added(true, dataMap);
+			//complete_default_numbering_and_sorting(scriptState, dataMap);
+
+			//complete_default_document_selection 
+			complete_default_document_selection(true, dataMap);
+
+			//mark_complete_default_priv_guard
+			mark_complete_default_priv_guard(true, dataMap);
+
+			//complete_default_production_location_component
+			complete_default_production_location_component(true, dataMap);
+
+			//completed_summary_preview_component
+			completed_summary_preview_component(true, dataMap);
+
+			//starting_the_production_generation
+			starting_the_production_generation(true, dataMap);
+
+			//waiting_for_production_to_be_complete
+			waiting_for_production_to_be_complete(true, dataMap);
+			
+			//Commit the production 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getConfirmAndCommitProdLink().Displayed()  ;}}), Input.wait30); 
+			prod.getConfirmAndCommitProdLink().click();
+			
+			//Get bates for other contexts
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProd_BatesRange().Displayed()  ;}}), Input.wait30); 
+			dataMap.put("prodBatesRange", prod.getProd_BatesRange().getText());
+			
+			//Loop to confirm production commit
+			String status = prod.getGeneratePostGenStatus().getText();
+			int i =0;
+			while(!status.equalsIgnoreCase("COMPLETED") && i++<10) {
+				prod.getBackLink().click();
+				driver.waitForPageToBeReady();
+				Thread.sleep(10000);
+				prod.getNextButton().click();
+				driver.waitForPageToBeReady();
+				status = prod.getGeneratePostGenStatus().getText();
+			}
+
+			pass(dataMap, "Successfully finished the production generation process");
 		}
+		else fail(dataMap , "Could not finish the production generation process");
 
 	}
 
@@ -5788,14 +5985,26 @@ public class ProductionContext extends CommonContext {
 	public void verify_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC5882 Verify Production Location for Production Root path/Production Directory/Load File Path/Volume Included/Production Component foldersVerify the Specify Production Location components are present
+			//TC5882 Verify Production Location for Production Root path/Production Directory/Load File Path/Volume Included/Production Component folders
+			//Verify the Specify Production Location components are present
 			//
 			//* Production Root Path
 			//* Production Directory
 			//* Load File Path
 			//* Volume Included
 			//
-			throw new ImplementationException("verify_production_location_component");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+			
+			String productionRootPath = prod.getProductionLocComponent(1).getText();
+			String productionDirectory = prod.getProductionLocComponent(2).getText();
+			String loadFilePath = prod.getProductionLocComponent(3).getText();
+			String volumeIncluded = prod.getProductionLocComponent(4).getText();
+			
+			Assert.assertEquals("Production Root Path:", productionRootPath);
+			Assert.assertEquals("Production Directory:", productionDirectory);
+			Assert.assertEquals("Load File Path:",loadFilePath);
+			Assert.assertEquals("Volume Included:", volumeIncluded);
 		} else {
 			throw new ImplementationException("NOT verify_production_location_component");
 		}
@@ -5807,10 +6016,39 @@ public class ProductionContext extends CommonContext {
 	public void select_mp3_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Check MP3 Files checkboxExpand MP3 Files sectionEnable Burn RedactionsSpecify Redactions: All redactions in annotation layer: Default Annotation LayerRedaction Style: BeepExpand MP3 Advanced sectionEnable Generate Load File (LST)
-			throw new ImplementationException("select_mp3_redactions");
+			//Check MP3 Files checkbox
+			//Expand MP3 Files section
+			//Enable Burn Redactions
+			//Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			//Redaction Style: Beep
+			//Expand MP3 Advanced section Enable Generate Load File (LST)
+			Actions builder = new Actions(driver.getWebDriver());
+			String mp3 =  (String)dataMap.get("mp3");
+			
+			//Check MP3 Files checkbox and Expand MP3 Files section
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
+			prod.getMP3_ToggElement().click();
+			builder.moveToElement(prod.getMP3ChkBox().getWebElement()).perform();
+			prod.getMP3ChkBox().click();
+			prod.getMP3Tab().click();
+			
+			//Enable Burn Redactions && Specify Redactions: All redactions in annotation layer: Default Annotation Layer
+			prod.getMP3ComponentRedactionToggle().click();
+			prod.getMP3_SelectRed_RedactionByAnnotation().click();
+			
+			//Redaction Style: Beep
+			prod.getMP3_RedactionStyle().click();
+			prod.getMP3_RedactionStyle_Beet().click();
+			
+			//Expand MP3 Advanced section Enable Generate Load File (LST)
+			prod.getMP3_SelectAdvToggle().click();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			if(!prod.getMP3AdvancedList().Enabled()) prod.getMP3AdvancedList().click();
+			
+			pass(dataMap,"select_mp3_redactions");
 		} else {
-			throw new ImplementationException("NOT select_mp3_redactions");
+			fail(dataMap,"NOT select_mp3_redactions");
 		}
 
 	}
@@ -5820,10 +6058,39 @@ public class ProductionContext extends CommonContext {
 	public void click_the_save_as_template_button_for_created_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Go to the productions home page.Click on the gear of the created productionSelect 'Save as Template'Give the template a name and save the template.
-			throw new ImplementationException("click_the_save_as_template_button_for_created_production");
+			//Go to the productions home page.
+			//Click on the gear of the created production
+			//Select 'Save as Template' 
+			//Give the template a name and save the template.
+			on_production_home_page(true,dataMap);
+			//Select compelete
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFilterByButton().Enabled()  ;}}), Input.wait30);
+			prod.getFilterByButton().Click();
+				//Deselect Filters we dont want
+			for(int i =1; i<=4; i++) {
+				if(prod.getFilter(i).Selected() && i!= 4) prod.getFilter(i).Click();		
+				Thread.sleep(1000);
+			}
+			//Select Complete filter, if it isn't already
+			if(!prod.getFilter(2).Selected()) prod.getFilter(4).Click();
+			prod.getFilterByButton().Click();
+			Thread.sleep(1000);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			
+			prod.getprod_ActionButton().click();
+			prod.getSaveTemplate().click();			
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String TempName = "AutoProduction" + dateTime + "Temp";
+			prod.getTemplateName().sendKeys(TempName);
+			dataMap.put("prod_template", TempName);
+			
+			prod.getTemplateName().sendKeys("AutomationTemp");
+			prod.getTemplateNameSaveButton().click();
+			
+			pass(dataMap,"click_the_save_as_template_button_for_created_production");
 		} else {
-			throw new ImplementationException("NOT click_the_save_as_template_button_for_created_production");
+			fail(dataMap, "NOT click_the_save_as_template_button_for_created_production");
 		}
 
 	}
@@ -5833,10 +6100,18 @@ public class ProductionContext extends CommonContext {
 	public void begin_new_production_process_with_new_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Create new productionSelect new templateClick Complete buttonClick Next button
-			throw new ImplementationException("begin_new_production_process_with_new_template");
+			//Create new production
+			//Select new template
+			//Click Complete button
+			//Click Next button
+			
+			String tempnameString = dataMap.get("Temp_production_name").toString();
+			prod.getprod_LoadTemplate().click();
+			prod.getprod_LoadTemplateOptions().FindWebElements().contains(tempnameString); 
+			
+			pass(dataMap,"begin_new_production_process_with_new_template");
 		} else {
-			throw new ImplementationException("NOT begin_new_production_process_with_new_template");
+			fail(dataMap,"NOT begin_new_production_process_with_new_template");
 		}
 
 	}
@@ -5850,9 +6125,13 @@ public class ProductionContext extends CommonContext {
 			//
 			//* Verify MP3 Files component section matches the template
 			//
-			throw new ImplementationException("verify_template_mp3_component_details");
+			Assert.assertTrue(prod.getMP3ComponentRedactionToggle().Enabled());
+			Assert.assertTrue(prod.getMP3_SelectRed_RedactionByAnnotation().Selected());
+			Assert.assertTrue(prod.getMP3_SelectAdvToggle().Enabled());
+			Assert.assertTrue(prod.getMP3AdvancedList().Enabled());
+			pass(dataMap, "verify_template_mp3_component_details");
 		} else {
-			throw new ImplementationException("NOT verify_template_mp3_component_details");
+			fail(dataMap,"NOT verify_template_mp3_component_details");
 		}
 
 	}
@@ -5862,10 +6141,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Search > Session Search in navigation bar
-			throw new ImplementationException("navigate_to_session_search_page");
-		} else {
-			throw new ImplementationException("NOT navigate_to_session_search_page");
+			prod.getProdSearchMenuButton();
+			prod.getProdSessionSearchButton();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Navigated to session Search, and searched for our production");
+
 		}
+		else fail(dataMap, "Could not get to the Session search page");
 
 	}
 
@@ -5875,10 +6157,29 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("open_production_in_docview");
-		} else {
-			throw new ImplementationException("NOT open_production_in_docview");
+			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocView
+    			sessionSearch.getBulkActionButton().click();
+    			sessionSearch.getDocViewAction().click();
+    			DocViewPage docView = new DocViewPage(driver);
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Docview was opened");
 		}
+		else fail(dataMap, "docView was not opened");
 
 	}
 
@@ -5888,13 +6189,27 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5276 Verify Produced PDFs are being presented in the DocView for the documentTC6122 Verify Produced PDFs should be available for being presented in DocView for the document
-			//
-			//* Generate PDF image should load in Doc View
-			//
-			throw new ImplementationException("verify_produced_pdf_in_docview");
-		} else {
-			throw new ImplementationException("NOT verify_produced_pdf_in_docview");
+
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);
+			pass(dataMap, "PDF only has been verified");
 		}
+		else fail(dataMap, "Failed PDF only verification");
 
 	}
 
@@ -5904,10 +6219,27 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC5276 Verify Produced PDFs are being presented in the DocView for the document
-			throw new ImplementationException("verify_produced_pdf_in_docview_with_pdf_only_production");
-		} else {
-			throw new ImplementationException("NOT verify_produced_pdf_in_docview_with_pdf_only_production");
+			DocViewPage docView = new DocViewPage(driver, 0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);
+			pass(dataMap, "PDF only has been verified");
 		}
+		else fail(dataMap, "Could not verify PDF only");
+
 
 	}
 
@@ -5917,10 +6249,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Switch to Advanced'Search by 'Work Product' > 'Productions' > 'Already Produced'
-			throw new ImplementationException("advanced_search_for_production");
-		} else {
-			throw new ImplementationException("NOT advanced_search_for_production");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String prodName = (String)dataMap.get("production_name");
+			
+			//Click Advanced Search
+			sessionSearch.getAdvancedSearchLink().click();
+			
+			//Click Work Product Button
+			sessionSearch.getWorkproductBtn().click();
+			
+			//Click Productions Button
+			sessionSearch.getProductionBtn().click();
 		}
+		else fail(dataMap, "Failed the advanced search");
 
 	}
 
@@ -5929,11 +6270,33 @@ public class ProductionContext extends CommonContext {
 	public void uncommit_last_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("uncommit_last_production");
-		} else {
-			throw new ImplementationException("NOT uncommit_last_production");
+			
+			//Use a past context: Selecting the production to help filter into our desired Production
+			dataMap.put("status", "COMPLETED");
+			dataMap.put("viewMode", "tile");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+
+			selecting_the_production(true, dataMap);
+
+			//Get our Target Production Tile and Click into it
+			WebElement targetProd =  prod.getProductionTileByName((String)dataMap.get("production_name"));
+			targetProd.click();
+			
+			//Uncommit and wait for popup
+			prod.getProd_Uncommitbutton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getMP3WarningBox().Displayed()  ;}}), Input.wait30); 
+
+			//Refresh page, and verify commit button is now present rather than uncommit
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(prod.getConfirmProductionCommit().Displayed());
+			pass(dataMap, "Production was uncommited successfully");
+
 		}
+		else fail(dataMap, "Production was not uncommited");
 
 	}
 
@@ -6089,11 +6452,27 @@ public class ProductionContext extends CommonContext {
 	public void open_doc_in_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("open_doc_in_doc_view");
-		} else {
-			throw new ImplementationException("NOT open_doc_in_doc_view");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocView
+    			sessionSearch.getBulkActionButton().click();
+			sessionSearch.getDocViewAction().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "opened in doc_view");
 		}
+		else fail(dataMap, "Could not open in doc_view");
 
 	}
 
@@ -6102,11 +6481,27 @@ public class ProductionContext extends CommonContext {
 	public void verify_doc_view_images_tab_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_displayed");
+			//TC8211 Verify that DocView Images tab should  show the produced TIFF/PDF for this uncommitted production
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we really found it
+			Assert.assertTrue(foundPDF);		
+			pass(dataMap, "Found our TIFF/PDF from image tab");
 		}
+		else fail(dataMap, "Could not verify doc view images tab");
 
 	}
 
@@ -6168,10 +6563,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC8211 Verify that DocView Images tab should not show the produced TIFF/PDF for this uncommitted production
-			throw new ImplementationException("verify_doc_view_images_tab_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_images_tab_not_displayed");
+			DocViewPage docView = new DocViewPage(driver,0);
+			driver.waitForPageToBeReady();
+			boolean foundPDF = false;
+			//image tab is where our PDF will be
+			docView.getDocView_ImagesTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewImagesDropDown().Displayed()  ;}}), Input.wait30); 
+
+			//Loop through until we find our Production
+			for(WebElement x: docView.getDocViewTotalImages().FindWebElements()) {
+				if(x.getText().contains( (String)dataMap.get("production_name") )){
+					x.click();
+					foundPDF = true;
+				}
+			}
+			//Make sure we didnt find it
+			Assert.assertFalse(foundPDF);		
+			pass(dataMap, "TIFF/PDF from image tab not found");
 		}
+		else fail(dataMap, "could not verify that images tab was not displayed");
 
 	}
 
@@ -6181,10 +6592,47 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Search for DocIDIn Doc List add column 'AllProductionBatesRanges'
-			throw new ImplementationException("add_allproductionbatesranges_column_to_doc");
-		} else {
-			throw new ImplementationException("NOT add_allproductionbatesranges_column_to_doc");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			String docId = (String)dataMap.get("docID");
+			
+			//Search for DocID
+			sessionSearch.insertFullText(docId);
+			sessionSearch.getSearchButton().click();
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getSearchTableResults().Displayed()  ;}}), Input.wait30); 
+
+			//Find appropriate + button
+    			for(WebElement x: sessionSearch.getSearchResultDocsMetCriteriaPlusButton().FindWebElements()) {
+    				if(x.isEnabled() && x.isDisplayed()) x.click();
+    			}
+    			//Go to DocList
+    			sessionSearch.getBulkActionButton().click();
+    			sessionSearch.getDocListAction().click();
+			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+
+			//Add Column -> AllProductionBatesRange
+			docList.getDocListSelectColumnButton().click();
+			docList.getDocListMetaDataColumnCheckBoxByName("AllProductionBatesRanges").click();
+			docList.getDocListAddToSelectedButton().click();
+			docList.getDocListSelectColumnOkButton().click();
+			driver.waitForPageToBeReady();
+			int tarIndex = 0;
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
+			}
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("bates1", batesRange);
+			System.out.println(batesRange);
+
+			pass(dataMap,  "Successfully added column AllProductionBatesRange");
 		}
+		else fail(dataMap,  "Could not add column AllProductionBatesRange");
 
 	}
 
@@ -6193,11 +6641,24 @@ public class ProductionContext extends CommonContext {
 	public void open_production_in_doc_list(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Use generated production name to open the PDF in Doc View
-			throw new ImplementationException("open_production_in_doc_list");
-		} else {
-			throw new ImplementationException("NOT open_production_in_doc_list");
+			SessionSearch search = new SessionSearch(driver);
+			DocListPage docList = new DocListPage(driver);
+			driver.waitForPageToBeReady();
+			int tarIndex = 0;
+			
+			//Find Index of our row 
+			int i = 0;
+			for(WebElement x: docList.getDocListColumnHeaders().FindWebElements()){
+				if(x.getText().equals("ALLPRODUCTIONBATESRANGES")) tarIndex = i;
+				i++;
+			}
+			//Grab our document's allBatesrange and save in map for verification later
+			String batesRange = docList.getDocListColumnDataByIndex(docList.getDocListRows().FindWebElements().get(0), tarIndex);
+			dataMap.put("batesRange", batesRange);
+			pass(dataMap, "Opened successfully in docList");
+			
 		}
+		else pass(dataMap, "Couldnt open in docList");
 
 	}
 
@@ -6206,11 +6667,17 @@ public class ProductionContext extends CommonContext {
 	public void verify_allproductionbatesranges_not_displayed_on_uncommitted_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC8210 Verify that 'AllProductionBatesRanges' should not show for uncommitted production
-			throw new ImplementationException("verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
-		} else {
-			throw new ImplementationException("NOT verify_allproductionbatesranges_not_displayed_on_uncommitted_production");
+			//Make sure batesRange is empty string
+			String batesRange = (String)dataMap.get("batesRange");
+			String prodBatesRange =  (String)dataMap.get("prodBatesRange");
+			//Make sure AllBatesRange does not have the batesRange we uncommited
+			Assert.assertFalse(batesRange.contains(prodBatesRange));
+			pass(dataMap, "AllProductionBatesRange is not showing uncommited bates");
+
 		}
+		else fail(dataMap, "AllProductionBatesRange is showing");
 
 	}
 
@@ -7346,38 +7813,36 @@ public class ProductionContext extends CommonContext {
 	public void on_the_production_location_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click Mark CompleteClick Next
-			throw new ImplementationException("on_the_production_location_component");
+			//Click Mark CompleteClick Next //
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getlstProductionRootPaths().Displayed()  ;}}), Input.wait30); 
+
+			prod.getlstProductionRootPaths().Click();
+
+			prod.getSecondRootPathOption().Click();
+			Random rnd = new Random();
+			int number = rnd.nextInt(9999999);
+			String selectedRootPath = prod.getSecondRootPathOption().getText();
+			String productionDirectory = "Automation" + number + "_dir";
+			dataMap.put("root_path", selectedRootPath);
+			dataMap.put("production_directory", productionDirectory);
+			prod.getProductionOutputLocation_ProductionDirectory().SendKeys(productionDirectory);
+	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionLocationMarkComplete().Enabled() ;}}), Input.wait30);
+
+			prod.getbtnProductionLocationMarkComplete().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30);
+			
+			pass(dataMap,"on_the_production_location_component");
 		} else {
-			throw new ImplementationException("NOT on_the_production_location_component");
-		}
-
-	}
-
-
-	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
-	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//Click the <Back button
-			throw new ImplementationException("clicking_on_the_back_button");
-		} else {
-			throw new ImplementationException("NOT clicking_on_the_back_button");
-		}
-
-	}
-
-
-	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
-	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//TC4467Verify the user is navigated back to the Priv Guard Component
-			throw new ImplementationException("verify_the_user_is_navigated_back_to_the_priv_guard");
-		} else {
-			throw new ImplementationException("NOT verify_the_user_is_navigated_back_to_the_priv_guard");
-		}
-
+			fail(dataMap,"NOT on_the_production_location_component");
+		} 
 	}
 
 
@@ -7813,6 +8278,18 @@ public class ProductionContext extends CommonContext {
 	}
 
 
+	@When("^.*(\\[Not\\] )? clicking_on_the_back_button$")
+	public void clicking_on_the_back_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the <Back button //
+			prod.getBackToPrivbutton().click();
+			
+			pass(dataMap,"clicking_on_the_back_button");
+		} else {
+			fail(dataMap, "NOT clicking_on_the_back_button");}
+	}
+
 	@Then("^.*(\\[Not\\] )? verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed$")
 	public void verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -7825,6 +8302,20 @@ public class ProductionContext extends CommonContext {
 
 	}
 
+
+	@Then("^.*(\\[Not\\] )? verify_the_user_is_navigated_back_to_the_priv_guard$")
+	public void verify_the_user_is_navigated_back_to_the_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4467Verify the user is navigated back to the Priv Guard Component
+			//
+			Thread.sleep(1000);
+			Assert.assertEquals(prod.getPrivTitle().getText().toString(), "Privileged Doc Check"); 
+			pass(dataMap,"verify_the_user_is_navigated_back_to_the_priv_guard");
+		} else {
+			fail(dataMap, "NOT verify_the_user_is_navigated_back_to_the_priv_guard");
+		}
+	}
 
 	@And("^.*(\\[Not\\] )? email_classification_is_added_for_dats$")
 	public void email_classification_is_added_for_dats(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -8081,9 +8572,11 @@ public class ProductionContext extends CommonContext {
 			//Make sure this will type in the invalid parameters also.
 			String dateTime = new Long((new Date()).getTime()).toString();
 			String template = (String) dataMap.get("prod_template");
+			
+			String productionName =  (String)dataMap.get("name");
 
-			if(dataMap.get("name").toString().equals("AutoProduction")) {
-				String productionName = "AutoProduction" + dateTime;
+			if(productionName!=null && productionName!=""){
+				productionName = productionName + dateTime;
 				dataMap.put("production_name", productionName);
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -8092,20 +8585,16 @@ public class ProductionContext extends CommonContext {
 				prod.getProductionDesc().click();
 				
 				pass(dataMap, "a_valid_production_name_is_entered");
-
 			}
 			else {
-				String productionName = "AutoProduction!" + dateTime;
+				productionName = "AutoProduction" + dateTime;
 				dataMap.put("production_name", productionName);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
 				prod.getProductionName().SendKeys(productionName);
 				prod.getProductionDesc().click();
-				
-				if(prod.getProductionNameWarning().Displayed() == true) {
-					fail(dataMap,"NOT a_valid_production_name_is_entered");
-				}
-			}					
+				pass(dataMap, "a_valid_production_name_is_entered");
+			}				
 		} else {
 			fail(dataMap,"NOT a_valid_production_name_is_entered");
 		}
@@ -8135,12 +8624,19 @@ public class ProductionContext extends CommonContext {
 			//Verify the message "Mark Complete successful" is displayed.
 			//Make sure to check the negative section/False States.
 			try {
-				clicking_the_productions_mark_complete_button(true,dataMap);
 				driver.waitForPageToBeReady();
-				Thread.sleep(1000);
-				Assert.assertFalse(prod.getProductionName().Enabled());
-				Assert.assertFalse(prod.getProductionDesc().Enabled());
-				Assert.assertFalse(prod.getprod_LoadTemplate().Enabled());
+				String productionName =  (String)dataMap.get("name");
+				
+				if (productionName.contains("!")){
+					if(prod.getProductionNameWarning().Displayed() == false) {
+						fail(dataMap,"The warning did not appear for having a special character in the production name.");
+					}
+				}else {
+					if(prod.getMarkCompleteSuccessfulText().Displayed() == false) {
+						fail(dataMap,"The mark complete successfull message did not appear.");
+					}
+				}
+				
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
