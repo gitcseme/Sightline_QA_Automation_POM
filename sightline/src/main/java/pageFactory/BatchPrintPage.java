@@ -136,6 +136,10 @@ public class BatchPrintPage {
     public ElementCollection getAllBrandingToggleButtons() { return driver.FindElementsByCssSelector(".btn.btn-default.btn-xs"); }
     public Element getIncludeAppliedRedactionsToggle() { return driver.FindElementByXPath("//input[@id='includeAppliedRedactions']/following-sibling::i"); }
     public Element getOpaqueTransparentDiv() { return driver.FindElementById("OpaqueTransparentDiv"); }
+    public Element getTopCenterBrandingLocationButton() { return driver.FindElementById("btn-batchprint-branding-1"); }
+    public Element getInsertMetadataFieldLink() { return driver.FindElementById("insertMetaDataHref"); }
+    public Element getInsertMetadataFieldPopup() { return driver.FindElementByCssSelector(".popover.fade.right.in"); }
+    public Element getMetadataDropdown() { return driver.FindElementById("locationMetaData"); }    
     
     
     public BatchPrintPage(Driver driver){

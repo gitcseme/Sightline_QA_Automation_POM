@@ -1546,7 +1546,7 @@ public class BatchPrintContext extends CommonContext {
 			
 			try {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getAllBrandingToggleButtons().Visible()  ;}}), Input.wait30);
+						   batchPrint.getIncludeAppliedRedactionsToggle().Visible()  ;}}), Input.wait30);
 				
 				for (WebElement el : batchPrint.getAllBrandingToggleButtons().FindWebElements()) {
 					el.click();
@@ -1629,8 +1629,20 @@ public class BatchPrintContext extends CommonContext {
 	public void click_branding_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click branding position determined by 'branding_location'
-			throw new ImplementationException("click_branding_location");
+			
+			try {
+				//Click branding position determined by 'branding_location'
+				batchPrint.getTopCenterBrandingLocationButton().click();
+				
+				// wait for branding location popup
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT click_branding_location");
 		}
@@ -1643,7 +1655,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_insert_metadata_field_button_on_branding_redactions");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getInsertMetadataFieldLink().Visible()  ;}}), Input.wait30);
+			batchPrint.getInsertMetadataFieldLink().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getInsertMetadataFieldPopup().Visible()  ;}}), Input.wait30);
 		} else {
 			throw new ImplementationException("NOT click_insert_metadata_field_button_on_branding_redactions");
 		}
@@ -1660,7 +1677,13 @@ public class BatchPrintContext extends CommonContext {
 			//* Insert Metadata Field pops up
 			//* Dropdown of metadata fields is displayed
 			//
-			throw new ImplementationException("verify_metadata_displayed_on_branding_redactions");
+			try {
+				if (batchPrint.getMetadataDropdown().Displayed()) {
+					pass(dataMap, "PASS! Metadata Dropdown is displayed!");
+				} else fail(dataMap, "FAIL! Metadata dropdown is not displayed!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_metadata_displayed_on_branding_redactions");
 		}
