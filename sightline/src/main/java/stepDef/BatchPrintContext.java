@@ -62,10 +62,27 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection");
-		} else {
-			throw new ImplementationException("NOT select_source_selection");
-		}
+			try {
+				// wait until parent groups become visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+				
+				batchPrint.getSharedWithSG1SearchParentGroup().click();
+				
+				// wait until options become visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+				
+				// select option
+				batchPrint.getCustodianNameCheckbox().click();
+
+				// click Next button
+				batchPrint.getSourceSelectionNextButton().click();
+				pass(dataMap, "passed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}}
+		else fail(dataMap, "failed to select a source selection");
 
 	}
 
@@ -1214,10 +1231,15 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
-			throw new ImplementationException("login_to_new_batch_print");
-		} else {
-			throw new ImplementationException("NOT login_to_new_batch_print");
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			sightline_is_launched(true, dataMap);
+			login_as_pau(true, dataMap);
+			on_batch_print_page(true, dataMap);
+
+			pass(dataMap, "logged into batch print succesfully");
 		}
+		else fail(dataMap, "failed to log into batch print");
 
 	}
 
@@ -1245,10 +1267,10 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Back' button
-			throw new ImplementationException("click_source_selection_back_button");
-		} else {
-			throw new ImplementationException("NOT click_source_selection_back_button");
+			batchPrint.getSourceSelectionBackBtn().click();
+			pass(dataMap, "clicked the back button");
 		}
+		else fail(dataMap, "failed to click the back button");
 
 	}
 
@@ -1261,10 +1283,11 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Directed to Source Selection tab
 			//
-			throw new ImplementationException("verify_directed_to_source_selection_tab");
-		} else {
-			throw new ImplementationException("NOT verify_directed_to_source_selection_tab");
+			System.out.println(driver.getUrl());
+			Assert.assertEquals("http://mtpvtsslwb01.consilio.com/BatchPrint/#", driver.getUrl());
+			pass(dataMap, "redirected to source selection");
 		}
+		else fail(dataMap, "could not verify redirection to source selection");
 
 	}
 
@@ -1277,10 +1300,11 @@ public class BatchPrintContext extends CommonContext {
 			//* User navigates to Batch Print page (/BatchPrint)
 			//* Batch Print page is displayed
 			//
-			throw new ImplementationException("on_batch_print_page");
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
+			batchPrint = new BatchPrintPage(driver);
+			driver.waitForPageToBeReady();
+			pass(dataMap, "navigated to batch print page");
 		}
+		else fail(dataMap, "could not navigate to batch print page");
 
 	}
 
