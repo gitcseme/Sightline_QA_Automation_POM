@@ -87,6 +87,7 @@ public class BatchPrintPage {
     //new addition
     public Element getProductionRadioButton(){ return driver.FindElementByXPath(".//*[@id='priorProductionRadioButton']/following-sibling::i"); }
     public Element getSkippedFolderButton(){ return driver.FindElementByXPath(".//*[@id='includeFolderSkippedDocuments']/following-sibling::i"); }
+    public Element getAllSkippedDocumentsToggle() {return driver.FindElementById("includeFolderSkippedDocuments");}
     public Element getPDFCreationforAllButton(){ return driver.FindElementByXPath(".//*[@id='onePDFForAllDocRadioButton']/following-sibling::i"); }
     public Element getErrortext(){ return driver.FindElementByXPath(".//*[@id='BatchPrintErrorGrid']/tbody/tr[1]/td[2]"); }
     public Element getErrorInfoLink(){ return driver.FindElementById("idBtachPrintError"); }
@@ -135,6 +136,10 @@ public class BatchPrintPage {
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
     public Element getSourceSelectionBackBtn() {return driver.FindElementById("basis-for-printing-back-button");}
+    public Element getBasisForPrintingProductionDropDownOption(String option) { return driver.FindElementByXPath(String.format("//select[@id = 'ProductionDropDown']/option[text() = '%s']", option));}
+    public ElementCollection getBatchPrintAnalysisDocumentText() {return driver.FindElementsByCssSelector("#noIssuesDocDiv ul li");}
+    public ElementCollection getBatchPrintAnalysisColumnHeaders() {return driver.FindElementsByCssSelector("#issueDocGrid thead th");}
+    public ElementCollection getBtachPrintAnalysisFolderTree() {return driver.FindElementsById("folderTree");}
     
     public BatchPrintPage(Driver driver){
 

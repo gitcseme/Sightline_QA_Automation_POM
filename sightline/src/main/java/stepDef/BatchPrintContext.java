@@ -20,6 +20,7 @@ import java.util.Random;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.springframework.core.PrioritizedParameterNameDiscoverer;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -99,6 +100,14 @@ public class BatchPrintContext extends CommonContext {
 					if (dataMap.get("basis_for_printing").equals("Native")) {
 						
 						// Click next button since native is selected by default
+						batchPrint.getBasisForPrintingNextButton().click();
+					}
+					else {
+						Actions builder = new Actions(driver.getWebDriver());
+						batchPrint.getProductionRadioButton().click();
+						String option = (String)dataMap.get("prior_production1");
+						builder.moveToElement(batchPrint.getBasisForPrintingProductionDropDownOption(option).getWebElement()).perform();
+						batchPrint.getBasisForPrintingProductionDropDownOption(option).click();
 						batchPrint.getBasisForPrintingNextButton().click();
 					}
 					
@@ -1312,25 +1321,41 @@ public class BatchPrintContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_prior_productions_radio_button$")
 	public void verify_prior_productions_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4450 Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)' radio button is selected from 'Basis for Printing'Basis for Printing tab matches the following format:"You requested to print: 25 documentsOf those,There isno issues with 0 documents.However,There are 25 documents that need your decision below. Of those 25 documents:
 		if (scriptState) {
-			//TC4450 Verify Analysis tab when 'Prior Productions (TIFFs/PDFs)' radio button is selected from 'Basis for Printing'Basis for Printing tab matches the following format:"You requested to print: 25 documentsOf those,There isno issues with 0 documents.However,There are 25 documents that need your decision below. Of those 25 documents:
-			//
+			driver.waitForPageToBeReady();
 			//* 25 are not in any of your specified productions
+			String specifiedProductions = batchPrint.getBatchPrintAnalysisDocumentText().FindWebElements().get(1).getText();
+			Assert.assertEquals("25 are not in any of your specified productions", specifiedProductions);
+
 			//* 0 are in more than one production
-			//
+			String numOfMoreProductions = batchPrint.getBatchPrintAnalysisDocumentText().FindWebElements().get(2).getText();
+			Assert.assertEquals("0 are in more than one production", numOfMoreProductions);
+
 			//"Documents grid should have the following columns:
-			//
 			//* Doc ID
 			//* Skip Printing
-			//* Production columns as per selected production
 			//* Not in any production
-			//
-			//Make sure that checkbox should be displayed for the document as per the production.Make sure the pagination should be displayed for the grid.Folder tree structure should be displayed with toggling ON.If toggling is OFF then tree folder structure shouldnot be displayed.
-			throw new ImplementationException("verify_prior_productions_radio_button");
-		} else {
-			throw new ImplementationException("NOT verify_prior_productions_radio_button");
-		}
+			String colHeader1 = batchPrint.getBatchPrintAnalysisColumnHeaders().FindWebElements().get(1).getText();
+			String colHeader2 = batchPrint.getBatchPrintAnalysisColumnHeaders().FindWebElements().get(2).getText();
+			String colHeader3 = batchPrint.getBatchPrintAnalysisColumnHeaders().FindWebElements().get(3).getText();
+			Assert.assertEquals("DOC ID", colHeader1);
+			Assert.assertEquals("SKIP PRINTING", colHeader2);
+			Assert.assertEquals("NOT IN ANY PRODUCTION", colHeader3);
+			
+			int folderTree = batchPrint.getBtachPrintAnalysisFolderTree().FindWebElements().size();
+			if(batchPrint.getAllSkippedDocumentsToggle().GetAttribute("class").contains("active")) {
+				//Folder tree structure should be displayed with toggling ON.
+				Assert.assertEquals(1, folderTree);
+			}
+			//If toggling is OFF then tree folder structure shouldnot be displayed.
+			else Assert.assertEquals(0, folderTree);
 
+			pass(dataMap, "verified prior productions radio button");
+		}
+		else fail(dataMap, "could not verify prior productions radio button");
+			//* Production columns as per selected production
+			//Make sure that checkbox should be displayed for the document as per the production.Make sure the pagination should be displayed for the grid.
 	}
 
 
