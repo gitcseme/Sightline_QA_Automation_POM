@@ -3073,7 +3073,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "jd"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_When_slip_sheets_enabled_Then_verify_slip_sheets_enabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
