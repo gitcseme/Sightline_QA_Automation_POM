@@ -8994,4 +8994,210 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Indexed_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{Indexed} and open_ingestion_details_page When click_action_dropdown Then verify_approve_option_is_enabled_in_appropriate_situations");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "Indexed");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_action_dropdown(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1439");
+			context.verify_approve_option_is_enabled_in_appropriate_situations(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Failed_and_open_ingestion_details_page_When_click_error_count_Then_verify_ingestion_error_modal_works_as_expected() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{Failed} and open_ingestion_details_page When click_error_count Then verify_ingestion_error_modal_works_as_expected");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "Failed");
+			dataMap.put("view_type", "Grid View");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_error_count(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1441|TC#1443|TC#1444|TC#1445|TC#1446");
+			context.verify_ingestion_error_modal_works_as_expected(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Failed_and_open_ingestion_details_page_When_click_error_count_Then_verify_error_popup_closes_as_expected() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{Failed} and open_ingestion_details_page When click_error_count Then verify_error_popup_closes_as_expected");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "Failed");
+			dataMap.put("view_type", "Grid View");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_error_count(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1442");
+			context.verify_error_popup_closes_as_expected(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_InProgress_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{InProgress} and open_ingestion_details_page When click_action_dropdown Then verify_approve_option_is_enabled_in_appropriate_situations");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "In Progress");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_action_dropdown(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1439");
+			context.verify_approve_option_is_enabled_in_appropriate_situations(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Cataloged_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{Cataloged} and open_ingestion_details_page When click_action_dropdown Then verify_approve_option_is_enabled_in_appropriate_situations");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "Cataloged");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_action_dropdown(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1439");
+			context.verify_approve_option_is_enabled_in_appropriate_situations(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Copied_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_ingestion_home_page and search_for_existing_ingestion_by_{Copied} and open_ingestion_details_page When click_action_dropdown Then verify_approve_option_is_enabled_in_appropriate_situations");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_ingestion_home_page(true, dataMap);
+			dataMap.put("filterby", "Copied");
+			context.search_for_existing_ingestion_by_(true, dataMap);
+			context.open_ingestion_details_page(true, dataMap);
+			context.click_action_dropdown(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "1439");
+			context.verify_approve_option_is_enabled_in_appropriate_situations(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 } //end

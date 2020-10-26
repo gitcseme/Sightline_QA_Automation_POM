@@ -252,13 +252,15 @@ public class DocViewPage {
     public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
     public Element getBottomEditSideOfRedactionRectangle() {return driver.FindElementByCssSelector(".pccMarkHandleBottomLeft");}
     public Element getRedactionEditSaveBtn() {return driver.FindElementByXPath("//span[@class = 'fa fa-save']");}
+    public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
+    public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
     
     
-    //Constructor to just use the object instead of navigating to a new page
+    //default constructor
     public DocViewPage(Driver driver, int i) {
     		this.driver = driver;
     }
-    
+
     public DocViewPage(Driver driver){
 
         this.driver = driver;

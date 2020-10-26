@@ -206,6 +206,7 @@ public class ProductionPage {
 	public Element getProductionTileStatusTypeText() {return driver.FindElementByXPath("(//div[@class = 'col-md-12 font-xs']/strong)[1]");}
 	public Element getprod_Templatetext(){ return driver.FindElementById("templatesettxt"); }
 	public Element getprod_LoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
+	public ElementCollection getprod_LoadTemplateOptions(){ return driver.FindElementsByXPath("//*[@prodtype=\"PRODUCTION\"]"); }
 	public Element getTechissue_toggle(){ return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i"); }
 	public Element getTechissue_SelectTagButton(){ return driver.FindElementById("btnSelectTechIssueTags"); }
     public Element getTechissue_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFTechIssueDocPlaceHolderText']/preceding-sibling::div"); }
@@ -229,6 +230,7 @@ public class ProductionPage {
     public Element getArrow(){ return driver.FindElementByXPath("//div[@id='pName']//div//a[1]"); }
     public Element getSaveTemplate(){ return driver.FindElementByXPath("//*[@class='dropdown-menu']//a[contains(text(),'Save as Template')]"); }
     public Element getTemplateName(){ return driver.FindElementById("templatesettxt"); }
+    public Element getTemplateNameSaveButton(){ return driver.FindElementByXPath("/html/body/div[8]/div[3]/div/button[2]"); }
     public Element getCustomTemplateName(String tempName){ return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[1][contains(text(),'"+tempName+"')]"); }
     public Element getSave(){ return driver.FindElementByXPath("//button[@class='btn-primary']"); }
     public Element getManageTemplates(){ return driver.FindElementByXPath("//li[@class='ui-tabs-tab ui-corner-top ui-state-default ui-tab']//a[@class='ui-tabs-anchor']"); }
@@ -402,10 +404,14 @@ public class ProductionPage {
     public String mp3Warning = "For MP3 Files component, you must enable LST load file option or you must specify MP3FilePath in " + 
                                "the DAT, in order to generate a load file for the generated MP3s files.";
     public Element getMP3WarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }
+    public Element getMP3_ToggElement() {return driver.FindElementByXPath("//*[@id=\"accordion\"]/div[7]/h2/i");}
+    public Element getMP3SelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='MP3RedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
     public Element getConfirmCompletePopup() {return driver.FindElementByCssSelector("#divbigBoxes p");}
-
-
-    
+    public Element getMP3_SelectRed_RedactionByAnnotation() {return driver.FindElementByXPath("//*[@id='chkMP3RedactionByAnnotation']/following-sibling::i");}
+    public Element getMP3_SelectRed_Radiobutton() {return driver.FindElementByXPath("//*[@id='chkMP3SPecifytRedactions']/following-sibling::i");}
+    public Element getMP3_SelectAdvToggle(){return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[8]/div/div[1]/div[2]/div/div/div[2]/div[1]/i");}
+    public Element getMP3_RedactionStyle() {return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]");}
+    public Element getMP3_RedactionStyle_Beet(){return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]/option[2]");}
     public Element getMP3BurnRedactionsCheckboxToggle(){ return driver.FindElementById("chkMP3BurnRedactions"); }
     public Element getMP3DefaultAutomationRedactionCheckbox() {return driver.FindElementByCssSelector("#MP3RedactiontreeFolder a[data-content='Default Automation Redaction']"); }
     public Element getMP3GenerateLoadFileCheckboxToggle(){ return driver.FindElementById("chkMP3ProduceLoadFile"); }
@@ -640,10 +646,17 @@ public class ProductionPage {
     public Element getMP3RedactionsDefaultAutomation() { return driver.FindElementByXPath("//*[@id='MP3RedactiontreeFolder']//a[@id='7_anchor' and @data-content='Default Automation Redaction']"); }    
     public Element getMP3RedactionStyleValue() { return driver.FindElementById("lstFillerAudio"); }
     public Element getMP3BurnRedactions() { return driver.FindElementById("chkMP3BurnRedactions"); }
-    
+    public Element getProdSearchMenuButton() {return driver.FindElementById("3");}
+    public Element getProdSessionSearchButton() { return driver.FindElementByCssSelector("a[name='Session']");}
+    public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
+    public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
+    public Element getProductionCompletebutton() { return driver.FindElementById("btnProductionLocationMarkComplete"); }
+    public Element getProductionNextbutton() { return driver.FindElementById("btnProductionLocationNext"); }
+    public Element getBackToLocationbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionSummary\"]/div/div[1]/div/a"); }
+    public Element getBackToPrivbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a"); }
+    public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
 
-    
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
