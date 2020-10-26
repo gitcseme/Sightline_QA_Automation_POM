@@ -95,6 +95,8 @@ public class BatchPrintPage {
     public Element getSelectSearchParentOption(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+parent+"']/preceding-sibling::i"); }
     public Element getSelectSearchParentGroup(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='\"+parent+\"']/following-sibling::ul"); }
     public Element getSelectSearchOption(String option) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+option+"']"); }
+    public Element getSelectSearchChildGroup(String parent, String child) {return driver.FindElementByXPath(String.format("//*[@id='searchTree']//a[@data-content='%s']/following-sibling::ul/li/a[@data-content=%s']/i[1]",parent,child));}
+    public ElementCollection getSelectSearchChildOptions(String parent) {return driver.FindElementsByCssSelector("#searchTree a[data-content = 'My Saved Search'] + ul a i:first-child");}
     public Element getSourceSelectionNextButton() { return driver.FindElementById("source-selection-next-button"); }
     public Element getNativeRadioButton() { return driver.FindElementById("nativesRadioButton"); }
     public Element getBasisForPrintingNextButton() { return driver.FindElementById("basis-for-printing-next-button"); }
@@ -132,7 +134,7 @@ public class BatchPrintPage {
     public Element getPrintExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//ul[@id='redactor-toolbar-1']/following-sibling::div"); }
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
-
+    public Element getSourceSelectionBackBtn() {return driver.FindElementById("basis-for-printing-back-button");}
     
     public BatchPrintPage(Driver driver){
 
