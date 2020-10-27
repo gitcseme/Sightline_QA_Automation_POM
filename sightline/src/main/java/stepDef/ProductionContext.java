@@ -8136,7 +8136,6 @@ public class ProductionContext extends CommonContext {
 			//go to doclist
 			prod.getTotalDocumentsCount().click();
 			driver.waitForPageToBeReady();
-			Thread.sleep(5000);
 			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
@@ -8218,24 +8217,31 @@ public class ProductionContext extends CommonContext {
 	public void complete_document_tag_selection_with_family(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
+			Actions builder = new Actions(driver.getWebDriver());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocumentTagSelectionWithFamily_radio().Visible()  ;}}), Input.wait30); 
-			
-			prod.getDocumentTagSelectionWithFamily_radio().click();
-			prod.getDefaultChildTag().click();
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
+
 		
-			prod.getbtnDocumentsSelectionMarkComplete().click();
-//			prod.getMarkCompleteSuccessfulToaster().Visible();
-
-			driver.Navigate().refresh();
-
-			String totalDocValue = prod.getTotalDocumentsCount().getText().toString();
-			String familyDocVal = prod.getFamilyDocsCount().FindWebElements().get(4).getText();
-			String showEntry = "Showing 1 to " + totalDocValue + " of 5 entries";
 			
-			dataMap.put("totalDocCounts", totalDocValue);
-			dataMap.put("familyDocValue", familyDocVal);
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			prod.getMarkCompleteButton().click();
+
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
+			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
 		} else {
 			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
 		}
@@ -8249,11 +8255,16 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//Select doc source with family
 			driver.waitForPageToBeReady();
-			prod.getTotalDocumentsCount().click();
 			//* DocID: ID00000861
+			//First parent row with family docs
+			if(prod.getDocListParentChildDetailsRowButton().FindWebElements().size()>0) {
+				prod.getDocListParentChildDetailsRowButton().FindWebElements().get(0).click();
+			}
+			//Get all child rows of that parent and store size for verification later
+			int childDocs = prod.getChildDocuments().FindWebElements().size();
+			dataMap.put("childDocs", childDocs);
+			
 
-			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			prod.getProdGuardCompleteBtn().click();
 			
 		} else {
 			throw new ImplementationException("NOT select_docs_with_family_docs");
@@ -8267,19 +8278,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC7859 Production Document Selection to DocList with Child Documents
-			//
-			//* User should redirect to DocList with selected documents
 			
-			//* User should be able to see all documents with family documents (parent and child docs)
-			//
 			driver.waitForPageToBeReady();
+			int childDocs = (int)dataMap.get("childDocs");
+			int totalDocs = (int)dataMap.get("numOfDocs");
 			
-			String totalEntries = dataMap.get("totalDocCounts").toString();
-			String showExactValue = "Showing 1 to " + totalEntries + " of " + totalEntries + " entries";
-			System.out.println(totalEntries);
-			System.out.println(showExactValue);
 			
-			Assert.assertEquals(dataMap.get("totalDocCounts"),showExactValue);
+			//make sure child docs equals total docs minus the parent doc
+			Assert.assertEquals(childDocs,totalDocs-1);
 			
 			pass(dataMap, "TC7859");
 		} else {

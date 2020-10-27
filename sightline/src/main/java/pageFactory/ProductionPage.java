@@ -509,6 +509,7 @@ public class ProductionPage {
     public Element getDocListTableEntry() {return driver.FindElementByXPath("//table[@id='dtDocList']//tbody");}
     public Element getDocViewTableEntry() {return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody");}
     public Element getTotalOfDocumentsTable() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr");}
+    public ElementCollection getChildDocuments() {return driver.FindElementsByCssSelector("#childlist_861_dtDocList tbody tr");}
 
     public Element getDocListDropDownCount() { return driver.FindElementById("idPageLength");}
     public Element getDocListDropDownCountMax() { return driver.FindElementByCssSelector("#idPageLength option[value = '500']");}
@@ -531,6 +532,7 @@ public class ProductionPage {
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
      
     public Element getDocSelectSearchRadioButton() {return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");}
+    public ElementCollection getDocListParentChildDetailsRowButton() {return driver.FindElementsByCssSelector("#dtDocList tr td[class = ' details-control']");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
