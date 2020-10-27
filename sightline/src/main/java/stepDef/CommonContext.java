@@ -178,23 +178,30 @@ public class CommonContext {
     @When("^.*(\\[Not\\] )? on_production_home_page$")
 	public void on_production_home_page(boolean scriptState, HashMap dataMap)  throws ImplementationException, Exception {
     	prod = new ProductionPage(driver);
-    	
+
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
-
-		
-		if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
-			prod.changeProjectSelector().Click();
-		    prod.productionProjectSelector().Click();
-		}
-
-	    driver.waitForPageToBeReady();
+	    
 
 		if (scriptState) {
 			
 	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
+			driver.waitForPageToBeReady();
+			
+			if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
+				prod.changeProjectSelector().Click();
+			    prod.productionProjectSelector().Click();
+			}
+
+		    driver.waitForPageToBeReady();
+		    
+		 // switch to AutomationProductionSet
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+			driver.waitForPageToBeReady();
 			
 		} else {
 			webDriver.get("http://www.google.com");

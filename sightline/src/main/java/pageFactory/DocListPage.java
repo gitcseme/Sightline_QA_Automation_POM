@@ -2,12 +2,16 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
+import com.mongodb.client.model.ReturnDocument;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -21,8 +25,9 @@ public class DocListPage {
     BaseClass base;
   
     public Element getDocList_info(){ return driver.FindElementById("dtDocList_info"); }
+    public ElementCollection getDocListColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocList thead th");}
     public Element getDocListTable() { return driver.FindElementById("dtDocList"); }
-    public ElementCollection getDocListRows(){ return driver.FindElementsById("//*[@id='dtDocList']/tbody/tr"); }
+    public ElementCollection getDocListRows(){ return driver.FindElementsByXPath("//*[@id='dtDocList']/tbody/tr"); }
     public Element getColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]/a"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
      //Filters
@@ -89,6 +94,16 @@ public class DocListPage {
     public Element getDropdownMenu() { return driver.FindElementByCssSelector(".dropdown-menu.action-dd"); }
     public Element getActionName(String actionName) { return driver.FindElementByXPath("//a[text()='"+actionName+"']"); } 
     
+    public Element getDocListSelectColumnButton() {return driver.FindElementById("btnSelectColumn");}
+    public Element getDocListMetaDataColumnCheckBoxByName(String name) {return driver.FindElementByCssSelector(String.format(".checkbox  input[data-friendlbl='%s'] + i", name));}
+    public Element getDocListAddToSelectedButton() {return driver.FindElementById("addFormObjects");}
+    public Element getDocListSelectColumnOkButton() {return driver.FindElementById("btnUpdateColumns");}
+    
+    
+    //Pass in a row and the Column index -> Return Value
+    public String getDocListColumnDataByIndex(WebElement row, int index) {
+    		return (row.findElements(By.tagName("td"))).get(index).getText();
+    }
     
     public DocListPage(Driver driver){
 
