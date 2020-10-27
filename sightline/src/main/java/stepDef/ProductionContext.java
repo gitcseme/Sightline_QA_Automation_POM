@@ -3032,7 +3032,7 @@ public class ProductionContext extends CommonContext {
 			//IF TEXT IS TRUE
 			//Checkoff the "Text" component checkbox
 			//The other parameters can be worked on as we use them.
-			 */
+			
 
 
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
@@ -4449,10 +4449,10 @@ public class ProductionContext extends CommonContext {
 			//Navigate back to the Production Home Page URL
 			on_production_home_page(true,dataMap);
 			
-			// switch to AutomationProductionSet
+			// switch to DefaultProductionSet
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
-			prod.getProdExport_ProductionSets().SendKeys("AutomationProductionSet");
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
 			driver.waitForPageToBeReady();
 			
 			pass(dataMap,"refresh_back_to_production_home_page");
@@ -4548,7 +4548,7 @@ public class ProductionContext extends CommonContext {
 				if (x.isDisplayed()) {
 					a.moveToElement(x).perform();
 					Assert.assertTrue(x.isEnabled());
-					Thread.sleep(2000);
+					Thread.sleep(2500);
 				}
 			}
 			Assert.assertEquals(prod.getTIFF_PrivileTagSelected().getText(),"Privileged");

@@ -445,8 +445,6 @@ public class ProductionPage {
     public Element getMP3_SelectAdvToggle(){return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[8]/div/div[1]/div[2]/div/div/div[2]/div[1]/i");}
 
     public Element getMP3_SelectRed_RedactionByAnnotation() {return driver.FindElementByXPath("//*[@id='chkMP3RedactionByAnnotation']/following-sibling::i");}
-    public Element getMP3_SelectRed_Radiobutton() {return driver.FindElementByXPath("//*[@id='chkMP3SPecifytRedactions']/following-sibling::i");}
-    public Element getMP3_SelectAdvToggle(){return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[8]/div/div[1]/div[2]/div/div/div[2]/div[1]/i");}
     public Element getMP3_RedactionStyle() {return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]");}
     public Element getMP3_RedactionStyle_Beet(){return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]/option[2]");}
     public Element getMP3BurnRedactionsCheckboxToggle(){ return driver.FindElementById("chkMP3BurnRedactions"); }
