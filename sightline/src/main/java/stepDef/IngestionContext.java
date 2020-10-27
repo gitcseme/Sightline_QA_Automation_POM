@@ -1,6 +1,7 @@
 package stepDef;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+import org.apache.xalan.templates.ElemAttributeSet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -21,8 +23,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.JavascriptExecutor;  
+import org.openqa.selenium.JavascriptExecutor;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Set;
+import com.google.common.collect.Ordering;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -168,9 +172,17 @@ public class IngestionContext extends CommonContext {
 	public void click_source_system_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			ingest.getSpecifySourceSystem().Visible()  ;}}), Input.wait30); 
 	    	ingest.getSpecifySourceSystem().Click();
+	    	HashSet<String> sourceOptionSet = new HashSet<String>();
+	    	String [] sourceSystemOptions = ingest.getSpecifySourceSystem().getText().split("\\r?\\n");
+	    	for(int i =0; i<sourceSystemOptions.length; i++) {
+	    		System.out.println(sourceSystemOptions[i]);
+	    		sourceOptionSet.add(sourceSystemOptions[i]);
+	    	}
+	    	dataMap.put("sourceSystemSet", sourceOptionSet);
 		} else {
 			ingest.getNextButton().Click();
 		}
@@ -427,25 +439,21 @@ public class IngestionContext extends CommonContext {
 
 	@Then("^.*(\\[Not\\] )? verify_source_system_displays_expected_options$")
 	public void verify_source_system_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if(scriptState) {
+			
+			//The options that we should see
+			String [] expectedSystemOptions = new String[] {"TRUE", "NUIX", "ICE", "Mapped Data"};
 
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ingest.getSpecifySourceSystem().Displayed()  ;}}), Input.wait30); 
+			//The options that we do see
+			HashSet<String> ourSystemOptions = (HashSet<String>)dataMap.get("sourceSystemSet");
 
-			String specifySourceSystemText = ingest.getSpecifySourceSystem().getText();
-			if (specifySourceSystemText.contains("TRUE")
-							) {
-						pass(dataMap,"TRUE was found in the dropdown for Source System");
-					} else {
-						fail(dataMap,"TRUE was NOT found in the dropdown for Source System");
-					}
-		}catch (Exception e) {
-			if (scriptState) {
-				throw new Exception(e.getMessage());
-			} else {
-				pass(dataMap,"TRUE was NOT found in the dropdown for Source System");
-			}
+			//Verify that every option that should be there is there
+			for(int i = 0; i<expectedSystemOptions.length; i++) Assert.assertTrue(ourSystemOptions.contains(expectedSystemOptions[i]));
+			pass(dataMap, "Source System displays expected options");
+			
 		}
+		else fail(dataMap, "Source System does not display expected options");
 	}
 
 
@@ -2935,7 +2943,8 @@ public class IngestionContext extends CommonContext {
 			//
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					ingest.getBackButton().Visible()  ;}}), Input.wait30);
-			ingest.getBackButton().Click();
+			ingest.getBackButton().click();
+			Thread.sleep(5000);
 			pass(dataMap,"Clicking Ingest Button was successful");
 		} else {
 			fail(dataMap,"Clicking Ingest Button was NOT successful");
@@ -3021,13 +3030,45 @@ public class IngestionContext extends CommonContext {
 	public void verify_ingestion_with_email_metadata_is_published(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC10203 Verify Ingestion should published successfully with new Email metadata
-			//
-			//* Verify ingestion is successfully published and no errors are displayed
-			//
-			throw new ImplementationException("verify_ingestion_with_email_metadata_is_published");
+			
+			String url = (String) dataMap.get("URL");
+    		webDriver.get(url+"Ingestion/Home");
+    		
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFilterByButton().Displayed()  ;}}), Input.wait30); 
+    		ingest.getFilterByButton().Click();
+    		for(int i =1; i<=8; ++i){
+				if(ingest.getSelectFilterByOption(i).Selected() && i!=8) ingest.getSelectFilterByOption(i).Click();
+			}
+			//Make sure published is clicked
+			if(!ingest.getSelectFilterByOption(8).Selected()) ingest.getSelectFilterByOption(8).Click();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			
+			ingest.getcardCanvas().Click();			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getFirstPublishedTitle().Displayed()  ;}}), Input.wait30); 
+			 		ingest.getFirstPublishedTitle().Click();
+					//* Modal is displayed
+			 		Thread.sleep(10000);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    			ingest.getIngestionModal().Displayed()  ;}}), Input.wait30); 
+					
+					System.out.println(ingest.getIngestionTileText().getText());
+					String query = ingest.getIngestionTitle().GetAttribute("title");
+					dataMap.put("PublishedingestionName", ingest.getIngestionTitle().GetAttribute("title"));
+					
+					assertEquals(dataMap.get("ingestionName"), dataMap.get("PublishedingestionName"));
+					
+					
+					System.out.println(ingest.getIngestionStatusText().getText());
+					String status = ingest.getIngestionStatusText().getText();
+					dataMap.put("Status", ingest.getIngestionStatusText().GetAttribute("statusTitle"));
+					
+					Assert.assertEquals("Published", status);
+			
+					pass(dataMap,"verify_valid_email_metadata_is_published");
 		} else {
-			throw new ImplementationException("NOT verify_ingestion_with_email_metadata_is_published");
+			fail(dataMap,"verify_valid_email_metadata_is_not_published");
 		}
 
 	}
@@ -3105,10 +3146,17 @@ public class IngestionContext extends CommonContext {
 
 
 	@Then("^.*(\\[Not\\] )? verify_concatenated_values_are_displayed_correctly_in_the_email$")
-	public void verify_concatenated_values_are_displayed_correctly_in_the_email(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
+	public void verify_concatenated_values_are_displayed_correctly_in_the_email(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {	
+		String expectedEmailAuthorName = "Phillip K Allen";
+		String expectedEmailBCCAddress = "#NOS OCRM All OCRM Staff;jsmith@ austintx.com";
+		String expectedEmailBCCName= ";Jeff Smith";
+		String expectedEmailCCName = "monkeyking@yahoo.com";
+		
 		if (scriptState) {
-			//TC10579 Verify concatenated email value should be displayed correctly for CCName and CCAddress fields in Doc ListTC10580 Verify concatenated email value should be displayed correctly for BCCName and BCCAddress fields in Doc ListTC10581 Verify concatenated email value should be displayed correctly for ToName and ToAddress fields in Doc ListTC10582 Verify concatenated email value should be displayed correctly for AuthorName and AuthorAddress fields in Doc List
+			//TC10579 Verify concatenated email value should be displayed correctly for CCName and CCAddress fields in Doc List
+			//TC10580 Verify concatenated email value should be displayed correctly for BCCName and BCCAddress fields in Doc List
+			//TC10581 Verify concatenated email value should be displayed correctly for ToName and ToAddress fields in Doc List
+			//TC10582 Verify concatenated email value should be displayed correctly for AuthorName and AuthorAddress fields in Doc List
 			//
 			//* For the test cases above we are validating conactenation of names and addresses in the emails
 			//* We need to look into the Metadata tab that is displayed to the right in the DocView
@@ -3119,18 +3167,75 @@ public class IngestionContext extends CommonContext {
 			//* but EmailAuthorName only displays sreekanth medarametla
 			//* This example, the test would pass
 			//
-			throw new ImplementationException("verify_concatenated_values_are_displayed_correctly_in_the_email");
+			driver.waitForPageToBeReady();
+			Thread.sleep(10000);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.SelectColumnBtn().Displayed() && ingest.SelectColumnBtn().Enabled() ;}}), 30);
+			ingest.SelectColumnBtn().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.AddToSelectedBtn().Visible() ;}}), 30);
+			for(int i=0; i<=2; i++) {
+				int index = i;
+				    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRemoveColLink(index).Displayed()  ;}}), Input.wait30); 
+					ingest.getRemoveColLink(i).Click();
+			}
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.EmailAuthorNameAndAddressCheckbox().Displayed() ;}}), 30);
+					ingest.getMetaDataElements(45).Click();   
+					ingest.getMetaDataElements(47).Click(); 
+					ingest.getMetaDataElements(49).Click();
+					ingest.getMetaDataElements(50).Click();
+					ingest.getMetaDataElements(52).Click();
+					ingest.getMetaDataElements(53).Click();
+					ingest.getMetaDataElements(75).Click();
+					ingest.getMetaDataElements(76).Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.AddToSelectedBtn().Displayed() ;}}), 30);
+			ingest.AddToSelectedBtn().Click();
+			ingest.OkBtn().Click();
+			driver.waitForPageToBeReady();
+	
+			String emailAuthorName = ingest.getFirstRowValues(6).getText();
+			String emailBCCAddress = ingest.getFirstRowValues(7).getText();
+			String emailBCCName = ingest.getFirstRowValues(8).getText();
+			String emailCCName = ingest.getFirstRowValues(10).getText();
+		
+			try {
+				Assert.assertEquals(expectedEmailAuthorName, emailAuthorName);
+				Assert.assertEquals(expectedEmailBCCAddress, emailBCCAddress );
+				Assert.assertEquals(expectedEmailBCCName, emailBCCName);
+				Assert.assertEquals(expectedEmailCCName, emailCCName);
+				
+			} catch(Exception e) {
+				fail(dataMap, "EmailAuthorName and EmailAuthor Address values are not correct!");
+			}
+
 		} else {
-			throw new ImplementationException("NOT verify_concatenated_values_are_displayed_correctly_in_the_email");
+			try {
+				String emailAuthorName = ingest.getFirstRowValues(6).getText();
+				String emailBCCAddress = ingest.getFirstRowValues(7).getText();
+				String emailBCCName = ingest.getFirstRowValues(8).getText();
+				String emailCCName = ingest.getFirstRowValues(10).getText();
+				Assert.assertTrue(!expectedEmailAuthorName.equals(emailAuthorName));
+				Assert.assertTrue(!expectedEmailBCCAddress.equals(emailBCCAddress));
+				Assert.assertTrue(!expectedEmailBCCName.equals(emailBCCName));
+				Assert.assertTrue(!expectedEmailCCName.equals(emailCCName));
+			} catch(Exception e) {
+				fail(dataMap, "EmailAuthorName and EmailAuthorNameAndAddress values are not correct!");
+			}
 		}
 
 	}
 
 
+
 	@Then("^.*(\\[Not\\] )? verify_valid_email_metadata_option_is_available$")
 	public void verify_valid_email_metadata_option_is_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
+		if (scriptState) {		
 			//TC10199 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10198 Verify that Ingestion Email Metadata 'EmailToNamesAndAddresses' is availableTC10200 Verify that Ingestion Email Metadata 'EmailAuthorNameAndAddresses' is availableTC10201 Verify that Ingestion Email Metadata 'EmailCCNamesAndAddresses' is availableTC10202 Verify that Ingestion Email Metadata 'EmailBCCNamesAndAddresses' is available
 			//* Once Field Cateogry is set to 'Email'
 			//* Click the destination field dropdown corresponding to Field Category with Email selected
@@ -3138,10 +3243,20 @@ public class IngestionContext extends CommonContext {
 			//* Validate 'EmailAuthorNameAndAddresses' option is displayed
 			//* Validate 'EmailCCNamesAndAddresses' option is displayed
 			//* Validate 'EmailBCCNamesAndAddresses' option is displayed
-			//
-			throw new ImplementationException("verify_valid_email_metadata_option_is_available");
+			
+			driver.waitForPageToBeReady();
+			String emailToAuthorName = ingest.SixthDesRowOptions().getText();
+			String emailBCCNameAndAddress = ingest.SeventhDesRowOptions().getText();
+			String emailCCNameAndAddress = ingest.EigthDesRowOptions().getText();
+			String emailToNamesAndAddress = ingest.NinthDesRowOptions().getText();
+			
+			Assert.assertTrue(emailToNamesAndAddress.equals("EmailToNamesAndAddresses"));
+			Assert.assertTrue(emailToAuthorName.equals("EmailAuthorNameAndAddress"));
+			Assert.assertTrue(emailCCNameAndAddress.equals("EmailCCNamesAndAddresses"));
+			Assert.assertTrue(emailBCCNameAndAddress.equals("EmailBCCNamesAndAddresses"));
+			
 		} else {
-			throw new ImplementationException("NOT verify_valid_email_metadata_option_is_available");
+			fail(dataMap, "Emails meta data is not correct!");
 		}
 	}
 	
@@ -3861,10 +3976,10 @@ public class IngestionContext extends CommonContext {
 
 
 	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
-	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap)
-		throws ImplementationException, Exception {
+	public void open_ingestion_details_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	if (scriptState) {
+		/*
 		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return ingest.getFirstGearBtn().Displayed() ;}}), Input.wait30);
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3879,6 +3994,38 @@ public class IngestionContext extends CommonContext {
 	} else {
 		throw new ImplementationException("NOT open_ingestion_details_page");
 	}
+	*/
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			ingest.getIngestionTile(0).isDisplayed()  ;}}), Input.wait30); 
+		ingest.getIngestionTile(0).click();
+		pass(dataMap, "Ingestion details page was open");
+	}
+	else fail(dataMap, "Ingestion details page could not be open");
+
+}
+	
+	@When("^.*(\\[Not\\] )? open_ingestion_details_page$")
+	public void open_ingestion_details_page_with_errors(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		// this method expects a specific number of errors for an Ingestion
+		if (scriptState) {
+			String errorCount = dataMap.get("errorCount").toString();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getIngestionWithErrors(errorCount).Displayed()  ;}}), Input.wait30); 
+				String ingestionName = ingest.getIngestionWithErrors(errorCount).GetAttribute("title");	
+				ingest.getIngestionWithErrors(errorCount).click();
+				
+				// add ingestionName to dataMap
+				dataMap.put("ingestionName", ingestionName);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Unable to find Ingestion with "+errorCount+" errors!");
+			}
+
+
+		}
+		else fail(dataMap, "Ingestion details page could not be open");
 
 }
 
@@ -4008,10 +4155,21 @@ public class IngestionContext extends CommonContext {
 			//
 			//* Verify DOCID column displays files in a sequential order
 			//
-			throw new ImplementationException("verify_ingested_docs_are_in_sequential_order");
-		} else {
-			throw new ImplementationException("NOT verify_ingested_docs_are_in_sequential_order");
-		}
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getMappingDOCID1().Displayed() ;}}), Input.wait30);
+			
+			Assert.assertEquals(dataMap.get("docRow1"), ingest.getMappingDOCID1().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow2"), ingest.getMappingDOCID2().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow3"), ingest.getMappingDOCID3().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow4"), ingest.getMappingDOCID4().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow5"), ingest.getMappingDOCID5().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow6"), ingest.getMappingDOCID6().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow7"), ingest.getMappingDOCID7().getText().toString());
+			Assert.assertEquals(dataMap.get("docRow8"), ingest.getMappingDOCID8().getText().toString());
+			
+			pass(dataMap, "Passed Sequenced");
+		} else fail(dataMap, "Documents sequence is not in sequential order");
 
 	}
 
@@ -4144,6 +4302,723 @@ public class IngestionContext extends CommonContext {
 			throw new ImplementationException("verify_analysis_is_completed_by_the_time_specified");
 		} else {
 			throw new ImplementationException("NOT verify_analysis_is_completed_by_the_time_specified");
+		}
+
+	}
+
+	@When("^.*(\\[Not\\] )? click_ingestion_error_count$")
+	public void click_ingestion_error_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getDocErrorCountLink().Visible()  ;}}), Input.wait30); 
+			ingest.getDocErrorCountLink().click();
+		} else {
+			throw new ImplementationException("NOT click_ingestion_error_count");
+		}
+	}
+	
+	
+	@When("^.*(\\[Not\\] )? click_error_count$")
+	public void click_error_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//For a new ingestion that was just created, a refresh migh be necessary to see if it failed. 
+			//
+			//* On Ingestion Home page
+			//* Filter by Failed state
+			//* *Refresh on the page might be necessary*
+			//* Open Ingestion that was created
+			//* On Ingestion Details Page
+			//* Click on the Error count for the step that it failed on
+			//
+			
+			//click failed filter 
+			dataMap.put("filter_option", "Failed");
+			click_filter_by_dropdown(true, dataMap);
+			
+			//Refesh the page until last ingest is displayed
+			while(!ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").equals(dataMap.get("lastCreatedIngestionName"))) 
+				ingest.getRefreshButton().click();
+			
+			//open the Ingestion 
+			ingest.getIngestTile().FindWebElements().get(0).click();
+			System.out.println(ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").toString());
+			
+			// Click on the Error count for the step that it failed on
+			if(ingest.getCatalogErrorElement().Displayed()) ingest.getCatalogErrorElement().click();
+
+	
+			pass(dataMap, "click_error_count");
+		} else {
+			fail(dataMap,"NOT click_error_count");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_displays_error_for_unmatched_dates$")
+	public void verify_ingestion_displays_error_for_unmatched_dates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10138:Verify that cataloging error should be displayed if selected date format in Ingestion is different than in DAT ('MM/DD/YYYY')
+			//
+			//* Validate the ingestion fails when dates on the Ingestion and Dat file are not the same
+			//* Validate error displayed in the ingestion details page shows the following:
+			//
+			//"Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. 
+			//Please provide the matching date format"
+			while(!ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").equals(dataMap.get("lastCreatedIngestionName"))) 
+				ingest.getRefreshButton().click();
+			
+			//open the Ingestion 
+			ingest.getIngestTile().FindWebElements().get(0).click();
+			System.out.println(ingest.getIngestTile().FindWebElements().get(0).getAttribute("title").toString());
+			
+			// Click on the Error count for the step that it failed on
+			Assert.assertTrue(!ingest.getCatalogErrorElement().Displayed());
+			
+			pass(dataMap, "verify_ingestion_displays_error_for_unmatched_dates");
+		} else {
+			fail(dataMap, "NOT verify_ingestion_displays_error_for_unmatched_dates");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_is_successful_for_matched_dates$")
+	public void verify_ingestion_is_successful_for_matched_dates(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10124:Verify when user selects date & time format 'MM/DD/YYYY' for ingestion which is same as in the DAT file
+			//
+			//* Validate the ingestion is successfully processed to the catalog state without any errors
+			//* More specifically, no errors are displayed regarding the Dates being mismatched between the DAT file and the Ingestion value selected in he Wizard
+			//
+			String erroString = "Date format selected in the ingestion is not matching with the date format of the dates in the DAT file. Please provide the matching date format";
+			int size = ingest.getErrorsTable().FindWebElements().size();
+			for(int i = 1; i <= size; i++) {
+				Assert.assertFalse(ingest.getErrorsTable().FindWebElements().get(i).getText().contains(erroString));
+			}
+			pass(dataMap, "verify_ingestion_is_successful_for_matched_dates");
+		} else {
+			fail(dataMap, "NOT verify_ingestion_is_successful_for_matched_dates");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_help_icon$")
+	public void click_help_icon(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			String helpType = (String)dataMap.get("helpType");
+			String[] helpTitleNames = new String[3];
+			Boolean[] helpPopUps = new Boolean[3];
+			if(helpType.equals("homePage")){
+				for(WebElement x: ingest.getIngestHomeHelpButton().FindWebElements()) {
+					if(x.isDisplayed() && x.isEnabled()) x.click();
+				}
+			}
+			else if(helpType.equals("details")) {
+				ingest.getIngestionDetailsHelpButton().click();
+			}
+			//On Wizard Page, click all help icons on that page, and store their titles, and if the popup displayed or not for verification later
+			else if(helpType.equals("wizard")) {
+				
+				ingest.getIngestWizardSystemAndIngestTypeHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[0] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[0] = ingest.getIngestHelpPopUp().Displayed();
+
+				ingest.getIngestWizardConfigureMappingHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[1] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[1] = ingest.getIngestHelpPopUp().Displayed();
+				
+				ingest.getIngestWizardHomeHelpButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getIngestHelpPopUpTitle().Displayed()  ;}}), Input.wait30); 
+				helpTitleNames[2] = ingest.getIngestHelpPopUpTitle().getText();
+				helpPopUps[2] = ingest.getIngestHelpPopUp().Displayed();
+				
+				dataMap.put("trueValues", helpPopUps);
+				dataMap.put("titleNames", helpTitleNames);
+			}
+			else fail(dataMap, "Valid help menu not given");
+
+			pass(dataMap, "clicked the help icon");
+		}
+		else fail(dataMap, "Failed to click help icon");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tool_tips_are_displayed$")
+	public void verify_tool_tips_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC3019:Verify Tool tip displayTC10113:Verify that tooltip should be displayed for 'Date & Time Format' field
+			//
+			//* Throughtout the Ingestions application there are many tool tips. We need to validate each one dispalys a message after we click the tool tip icon
+			//* The following pages are the tool tip locations
+			//* Ingestion Wizard: Date & Time Format 
+			//
+			
+			String helpType = (String)dataMap.get("helpType");
+			String titleText = ingest.getIngestHelpPopUpTitle().getText();
+
+			//Verify Popup
+			Assert.assertTrue(ingest.getIngestHelpPopUp().Displayed());
+
+			//* Ingestions Home Page Header Title
+			if(helpType.equals("homePage")){
+				Assert.assertEquals(titleText, "Help Ingestion");
+			}
+			//* Ingestions Detail Page Header Title
+			else if(helpType.equals("details")) {
+				Assert.assertEquals(titleText, "Help Ingestion Details");
+			}
+			//If we are on the wizard page verify previous help icons, that we clicked and stored
+			else if(helpType.equals("wizard")) {
+				Boolean[] truePopups = (Boolean[])dataMap.get("trueValues");
+				String[] titles = (String[])dataMap.get("titleNames");
+				
+				for(int i =0; i<3; i++) Assert.assertTrue(truePopups[i]);
+
+				//* Ingestion Wizard: Header Page Title
+				Assert.assertEquals(titles[0], "Source Selection & Ingestion Type");
+				//* Ingestion Wizard: Srouce Selection & Ingestion Type Header
+				Assert.assertEquals(titles[1], "Configure Mapping");
+				//* Ingestion Wizard: Configure Field Mapping header
+				Assert.assertEquals(titles[2], "Ingestion Wizard");
+			}
+			else fail(dataMap, "Valid help menu not given");
+
+		}
+		else fail(dataMap, "Verified tool_tips are displayed");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_basic_displays_expected_options$")
+	public void verify_doc_basic_displays_expected_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11884:Derived FieldsValidate the following fields are displayed in t he dropdown:
+			//
+			//* SourceSystemID
+			//* HeadOfHouseholdDocumentID
+			//* NearNativeReady
+			//* DeDupeCode
+			//* AudioTrimmedDurationInt
+			//* AudioOriginalDurationInt
+			//* CreatedByIngestionGUID
+			//* AudioPlayerReady
+			//* AttachDocIDs
+			//* DocumentFileHASH
+			//* DateSavedTimeOnly
+			//* DateSavedDateOnly
+			//* DateEditedTimeOnly
+			//* DateEditedDateOnly
+			//* DocDateTimeOnly
+			//* DatePrintedTimeOnly
+			//* DocumentFileHASHID
+			//* ChatDurationNumeric
+			//* AppointmentEndTimeOnly
+			//* AppointmentEndDateOnly
+			//* AppointmentStartTimeOnly
+			//* AppointmentStartDateOnly
+			//* DateReceivedTimeOnly
+			//* DateReceivedDateOnly
+			//* DocDateDateOnly
+			//* DatePrintedDateOnly
+			//* DateAccessedTimeOnly
+			//* DateAccessedDateOnly
+			//* DateModifiedTimeOnly
+			//* DateModifiedDateOnly
+			//* DateCreatedTimeOnly
+			//* DateCreatedDateOnly
+			//* EmailStandardizedTimeZone
+			//* EmailTimeSentWithTimeZone
+			//* HeadOfHouseholdDocID
+			//* EmailAllDomains
+			//* EmailRecipientNames
+			//* EmailRecipientAddresses
+			//* EmailCCNames
+			//* EmailCCAddresses
+			//* EmailBCCNames
+			//* EmailBCCAddresses
+			//* EmailToNames
+			//* EmailToAddresses
+			//* EmailAuthorAddress
+			//* EmailAuthorName
+			//
+			HashSet<String> expectedValues = new HashSet<>();
+			expectedValues.add("Select");
+			expectedValues.add("RequirePDFGeneration");
+			expectedValues.add("MasterDate");
+			expectedValues.add("LastSaveDate");
+			expectedValues.add("LastPrintedDate");
+			expectedValues.add("LastEditDate");
+			expectedValues.add("LastAccessDate");
+			expectedValues.add("CreateDate");
+			expectedValues.add("DocDate");
+			expectedValues.add("LastModifiedDate");
+			expectedValues.add("DocPages");
+			expectedValues.add("DocFileSize");
+			expectedValues.add("DocFileExtension");
+			expectedValues.add("SourceParentDocID");
+			expectedValues.add("SourceDocID");
+			expectedValues.add("DataSource");
+			expectedValues.add("CustodianName");
+			expectedValues.add("DocFileName");
+			expectedValues.add("RecordType");
+			expectedValues.add("EmailMessageType");
+			expectedValues.add("DocFileType");
+			expectedValues.add("DocumentSubject");
+			expectedValues.add("GUID");
+			expectedValues.add("DupeCustodians");
+			expectedValues.add("ReviewExportID");
+			expectedValues.add("ProcessingOCRComplete");
+			expectedValues.add("HiddenProperties");
+			expectedValues.add("FileDescription");
+			expectedValues.add("ExceptionResolution");
+			expectedValues.add("ExcelProtectedWorkbook");
+			expectedValues.add("ExcelProtectedSheets");
+			expectedValues.add("DocFileExtensionCorrected");
+			expectedValues.add("AllCustodians");
+			expectedValues.add("ExceptionStatus");
+			expectedValues.add("NUIXCaseID");
+			expectedValues.add("DocPrimaryLanguage");
+			expectedValues.add("RevisionNumber");
+			expectedValues.add("PhysicalMedia");
+			expectedValues.add("Container");
+			expectedValues.add("MD5HASH");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getMappingFIELDCAT5().Displayed()  ;}}), Input.wait30);
+			ingest.getMappingFIELDCAT5().click();
+			ingest.getMappingFIELDCAT5().SendKeys("DOCBASIC");
+			ingest.getMappingFIELDCAT5().click();
+			
+			ingest.getMappingDESTINATIONFIELD5().click();
+			String[] currentDropDownValues = ingest.getMappingDESTINATIONFIELD5().getText().split("\\r?\\n");
+			for(int i =0; i<currentDropDownValues.length; i++) Assert.assertTrue(expectedValues.contains(currentDropDownValues[i]));
+
+		}
+		else fail(dataMap, "failed to verify expected options");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_populated_correctly$")
+	public void verify_configure_mapping_is_populated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC2124:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC2125:2125:"To verify that row population in the Configure Mapping will be as per the fields avialable in the DAT file".TC3016:To Verify mandatory fields displays with asterisk *
+			//
+			//* Validate that the rows in the configure mapping of the ingestion are populated correctly based on the ingestion DAT file used.
+			//* Validate asterisk are displayed for required fields:
+			//
+			//
+			//* SourceDocID
+			//* ParentSourceDocID
+			//* DataSource
+			//* CustodianName
+
+			//* All metadata (columns) in the DAT file should be displayed
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getMappingSourceFieldByRow(1).Displayed()  ;}}), Input.wait30);
+			for(int i =1; i<=25; i++) {
+				//Assert dropdowns are displayed, and their default values are not null
+				Assert.assertTrue(ingest.getMappingSourceFieldByRow(i).Displayed());
+				Assert.assertFalse(ingest.getMappingSourceFieldByRow(i).selectFromDropdown().getFirstSelectedOption().getText().equals(""));
+			}
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(1).selectFromDropdown().getFirstSelectedOption().getText(), "SourceDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(2).selectFromDropdown().getFirstSelectedOption().getText(), "SourceParentDocID");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(3).selectFromDropdown().getFirstSelectedOption().getText(), "DataSource");
+			Assert.assertEquals(ingest.getMappingDestinationFieldByRow(4).selectFromDropdown().getFirstSelectedOption().getText(), "CustodianName");
+			for(int i =1; i<=4; i++)Assert.assertTrue(ingest.getAsterickFields(i).getText().equals("*"));
+			System.out.println("done");
+			pass(dataMap, "configure mapping created successfully");
+		}
+		else fail(dataMap, "configure mapping not created successfully");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_status_detail_page$")
+	public void verify_ingestion_status_detail_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+			//TC2392:To Verify Ingestion Status in Ingestion Detail 
+			//:PageTC3015 verify page title displayCovered:
+			//TC3017:To verify default value display into combo box
+
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Home");
+	    		driver.waitForPageToBeReady();
+	    		
+			//* Validate Ingestion Home Page Title displays: "Ingestions"
+	    		Assert.assertEquals("Ingestions", ingest.getIngestionHomePageTitle().getText());
+
+			//* Validate the Failed status is displayed for the ingestion details page
+	    		
+	    		//Filter by Failed and click into first ingestion
+	    		ingest.getFilterByOption().click();
+	    		ingest.getSelectFilterByOption(2).click();
+	    		ingest.getSelectFilterByOption(3).click();
+	    		ingest.getFilterByOption().click();
+	    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!(ingest.getTotalIngestCount().getText().equals("0"))  ;}}), Input.wait30); 
+	    		ingest.getIngestionTile(0).click();
+
+	    		//Verify Failed status text
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				ingest.getFailedStatusDetailText().Displayed()  ;}}), Input.wait30); 
+			System.out.println(ingest.getFailedStatusDetailText().getText());
+			Assert.assertEquals("Failed", ingest.getFailedStatusDetailText().getText());
+			pass(dataMap, "Ingestion Status detail verified");
+
+		}
+		else fail(dataMap, "Failed to verify ingestion status");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_configure_mapping_is_disabled$")
+	public void verify_configure_mapping_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		//TC2126:To verify that unless mandatory fields are entered,user is not allowed to go to Mapping PageTC2553:To verify that all three screen of Ingestion process is collated in one screen
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+
+
+			//* Validate Configure mapping is still disabled if no required parameters are entered in the previous section.
+	    		Assert.assertTrue(ingest.getBackButton().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getPreviewRun().GetAttribute("disabled").equals("true"));
+	    		Assert.assertTrue(ingest.getAddButton().GetAttribute("disabled").equals("true"));
+
+			//* Validate 2 Sections are displayed: "Selection & Ingestion Type" and "Configure Field mapping" 
+
+	    		//Confirm Configure Mapping are displayed
+	    		Assert.assertTrue(ingest.getAddButton().Displayed());
+	    		Assert.assertTrue(ingest.getPreviewRun().Displayed());
+	    		Assert.assertTrue(ingest.getBackButton().Displayed());
+	    		
+	    		//Confirm Selection and Ingestion Type are displayed
+	    		Assert.assertTrue(ingest.getNextButton().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceSystem().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifyLocation().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceIngestionType().Displayed());
+	    		Assert.assertTrue(ingest.getSpecifySourceFolder().Displayed());
+	    		Assert.assertTrue(ingest.getNativeCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getDATcheckbox().Displayed());
+	    		Assert.assertTrue(ingest.getTextCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getTIFFCheckBox().Displayed());
+	    		Assert.assertTrue(ingest.getPDFCheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getMP3CheckBoxstionButton().Displayed());
+	    		Assert.assertTrue(ingest.getAudioTranscriptCheckBoxstionButton().Displayed());
+
+			pass(dataMap, "configure mapping is disabled");
+		}
+		else fail(dataMap, "configure mapping is not disabled");
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_date_time_drodpdown$")
+	public void click_date_time_drodpdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"Ingestion/Wizard");
+	    		driver.waitForPageToBeReady();
+	    		HashSet<String> dateFormats = new HashSet<String>();
+	    		
+	    		ingest.getDateFormat().click();
+	    		String [] formats = ingest.getDateFormat().getText().split("\\r?\\n");
+	    		for(int i =0; i<formats.length; i++) {
+	    			dateFormats.add(formats[i]);
+	    		}
+	    		dataMap.put("dateFormatSet", dateFormats);
+	    		pass(dataMap, "Succesfully clicked date_time dropdown");
+		}
+		else fail(dataMap, "failed to click date_time dropdown");
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_date_time_displays_correctly$")
+	public void verify_date_time_displays_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+			//TC10112:TODO for all date formats: Verify that in the ingestion wizard page, "date & time format" field should present the dropdown with the different supported formatsTC10114:Verify the default value for the 'Date & Time Format' fieldValidate date & time format section is displayed correctly with different options in the dropdown. We are checking if there are options presentValidate default option selected is "Select a format"
+		if (scriptState) {
+			//This is a list of all the Date Formats that need to be verified
+			String[] dateFormats = new String[]{"YYYY/MM/DD HH:MM:SS", "MM/DD/YYYY", "DD/MM/YYYY","MMDDYYYY","DDMMYYYY",
+			"YYYY/MM/DD","YYYY/DD/MM","MM/DD/YYYY HH:MI","DD/MM/YYYY HH:MI","MM/DD/YYYY HH:MI:SS","DD/MM/YYYY HH:MI:SS"};
+
+			//This is the Set of Formats we got from the page
+			HashSet<String> dateSet = (HashSet<String>)dataMap.get("dateFormatSet");
+
+			//Run through the Formats that need to be verified and make sure that they are in the Set
+			for(int i =0; i<dateFormats.length; i++) Assert.assertTrue(dateSet.contains(dateFormats[i]));
+
+			pass(dataMap, "verified that date time displays correctly");
+		}
+		else fail(dataMap, "Could not verify date time displays correctly");
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? search_for_existing_ingestion_by_$")
+	public void search_for_existing_ingestion_by_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This method will require different conditions depending on the status we are passing. For this method can we also include a secondary condition where if we need to select Grid view or Tile View.In the failed status, locate an existing ingestion that contains more than 50 errors. This is needed to validate multiple test cases. Once we are in the Grid View, click the header column for Errors twice to sort by DESC order. This way we can get an ingestion with more than 50 errors
+			click_filter_by_dropdown(true, dataMap);
+		} else {
+			throw new ImplementationException("NOT search_for_existing_ingestion_by_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_action_dropdown$")
+	public void click_action_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			try {
+				ingest.getActionDropdownButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getActionMenu().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			throw new ImplementationException("NOT click_action_dropdown");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_approve_option_is_enabled_in_appropriate_situations$")
+	public void verify_approve_option_is_enabled_in_appropriate_situations(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1439:To verify that Approve option in Action dropdown should be enable/disable on appropriae situation.
+			//
+			//* For every status an ingestion is in (In Progress, Cataloged, Copied, Indexed) we need to check the APPROVE option in the ingestion details page
+			//* Validate the APPROVE option is disabled in all of those statuses.
+			//
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					ingest.getApproveOption().Visible()  ;}}), Input.wait30);
+			
+			if (dataMap.get("filter_option").toString().matches("In Progress|Cataloged|Copied|Indexed")) {
+				if (!ingest.getApproveOption().GetAttribute("class").equalsIgnoreCase("disabled")) {
+					String msg = "Test passed! Approve option is not disaled!";
+					pass(dataMap, msg);
+				} else {
+					String msg = "Test failed! Approve option is disaled!";
+					fail(dataMap, msg);
+				}
+			}
+		} else {
+			throw new ImplementationException("NOT verify_approve_option_is_enabled_in_appropriate_situations");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ingestion_error_modal_works_as_expected$")
+	public void verify_ingestion_error_modal_works_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC1441:To Verify the sorting functionality if admin clicks on Column Heading
+			//TC1443:To verify that pagination is provide to Error details pop
+			//TC1444:To verify that Admin is able to browser all the Errors using navigation control
+			//TC1445:To verify that on error details page "DataTable Records Display" is displayed correctly
+			//TC1446:To verify that Ingestion name is displayed correctThe table we require for this test cases is located in the Ingestion Details pageYou have to Click the Error link to view the error details
+			//
+			//* Validate Column header can be sorted.
+			//* Make sure that clicking the header makes the items get sorted by DESC order or ASC order accordingly.
+			//* Validate the error modal also contains a pagination on the bottom right corner
+			//
+			//Click on the Previous, Next and specific page on the popup
+			//
+			//* Validate the buttons work as expected
+			//
+			//EX: If you are on a page other than the last, click the Next button make sure the page is one more than the previous
+			//EX: If you are on a page other than the first, click Previous button and the page should be one less
+			//EX: If you click on a page number make sure that number is highlighted/selected in the pagination
+			//
+			//* Validate the following text displays the correct ammount of entries when clicking a different page:
+			//* EX: if you are on Page 2 verify that the following is displayed"Showing 11 to 20 of 52 entries"
+			//* Validate Ingestion Name is displayed correctly in the error modal
+			//
+			try {
+				// wait for error table
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				// Sort Row Number In Dat column by ascending order
+				ingest.getRowNumberDatHeader().Click();
+				
+				// wait until rows are sorted
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRowNumberDatHeaderASCSorted().Displayed()  ;}}), Input.wait30); 
+				
+				// save values
+				List<WebElement> rows = ingest.getRowNumberInDATRows().FindWebElements();
+				List<Integer> DATValuesASC = new ArrayList<>();
+				for(WebElement row : rows) {
+					DATValuesASC.add(Integer.parseInt(row.getText()));
+				}
+				boolean sortedAsc = Ordering.natural().isStrictlyOrdered(DATValuesASC);
+				
+				// Verify rows are sorted in ascending order
+				if (sortedAsc) {
+					pass(dataMap, "PASS! Clicking the header sorts rows in ascending order");
+				} else fail(dataMap, "FAIL! Clicking the header does not sort rows in ascending order");
+
+				// Sort Row Number in DAT column by descending order
+				ingest.getRowNumberDatHeader().Click();
+				
+				// wait until rows are sorted
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getRowNumberDatHeaderDESCSorted().Displayed()  ;}}), Input.wait30); 
+				
+				// save values
+				List<WebElement> rowsDESC = ingest.getRowNumberInDATRows().FindWebElements();
+				List<String> DATValuesDESC = new ArrayList<>();
+				for(WebElement row : rowsDESC) {
+					DATValuesDESC.add(row.getText());
+				}
+				boolean sortedDesc = Ordering.natural().reverse().isOrdered(DATValuesDESC);
+				
+				// verify rows are sorted in descending order
+				if (sortedDesc) {
+					pass(dataMap, "PASS! Clicking the header sorts rows in ascending order");
+				} else fail(dataMap, "FAIL! Clicking the header does not sort rows in ascending order");
+				
+				// Verify pagination buttons are displayed
+				if (ingest.getPaginationButtons().Displayed()) {
+					pass(dataMap, "PASS! Pagination buttons are displayed");
+				} else fail(dataMap, "FAIL! Pagination buttons are not displayed");
+				
+				// Get active page number
+				int activePageNumber = Integer.parseInt(ingest.getActivePageNumber().getText());
+				int nextPageNumber = activePageNumber + 1;
+				
+				// click Next button
+				ingest.getPaginationNextButton().click();
+				driver.waitForPageToBeReady();
+			
+				String classAttr = ingest.getPageByNumber(nextPageNumber).GetAttribute("class");
+				if (classAttr.contains("active")) {
+					pass(dataMap, "Clicking next goes to next page!");
+				} else fail(dataMap, "Clicking Next button does not go to next page!");
+	
+				int newActivePageNumber = Integer.parseInt(ingest.getActivePageNumber().getText());
+				int prevPageNumber = newActivePageNumber - 1;		
+				
+				// Verify data table entries text
+				String dataTableEntriesText = ingest.getDataTableInfo().getText();
+				String expectedText = String.format("Showing 11 to 20 of %s entries", dataMap.get("errorCount"));
+				if (dataTableEntriesText.equals(expectedText)) {
+					pass(dataMap,"PASS! Expected entries text is shown");
+				} else fail(dataMap, "FAIL! Expected data entries text is not shown");
+
+				// click Previous button
+				ingest.getPaginationPreviousButton().click();
+				driver.waitForPageToBeReady();
+				
+				String classAttrNew = ingest.getPageByNumber(prevPageNumber).GetAttribute("class");
+				if (classAttrNew.contains("active")) {
+					pass(dataMap, "Clicking Previous goes to previous page!");
+				} else fail(dataMap, "Clicking Next button does not go to next page!");
+	
+				// go to page 3
+				ingest.getGotoPageByNumber(3).click();
+				driver.waitForPageToBeReady();
+				
+				// Verify page 3 is selected in pagination
+				String classAttr3 = ingest.getPageByNumber(3).GetAttribute("class");
+				if (classAttr3.contains("active")) {
+					pass(dataMap, "PASS! Clicking page 3 shows page 3 as selected");
+				} else fail(dataMap, "FAIL! Clicking page 3 does not show page 3 as selected");
+				
+				// Verify ingestion name shows at the top of dialog
+				String expectedIngestionName = dataMap.get("ingestionName").toString();
+				String actualIngestionName = ingest.getErrorDialogIngestionName().getText();
+				if (expectedIngestionName.equals(actualIngestionName)) {
+					pass(dataMap,"PASS! Ingestion name is shown on the dialog");
+				} else fail(dataMap,"FAIL! Ingestion name is not shown on the dialog");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			throw new ImplementationException("NOT verify_ingestion_error_modal_works_as_expected");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_error_popup_closes_as_expected$")
+	public void verify_error_popup_closes_as_expected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1442:To verify the functionality of Close and Back button on Error details pop upWe need to validate that the error modal can be closed multiple ways.The first one is clicking the back button in the modal.
+			//
+			//* Once the modal is closed we need to validate that we see the ingestion details page.
+			//
+			//Click the error count againThis time click on the Close button
+			//
+			//* Validate the ingestion details page and error modal disappears and Ingestion home page is displayed
+			//
+			try {
+				// wait for error table
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				// click back button
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getErrorDialogBackButton().Visible()  ;}}), Input.wait30); 
+				ingest.getErrorDialogBackButton().click();
+				
+				// Verify user is on Ingestion Details page
+				if (ingest.getIngestionPopupDetails().Displayed()) {
+					pass(dataMap, "PASS! Error popup closes as expected");
+				} else fail(dataMap, "FAIL! Clicking Back button does not return to Ingestion details popup as expected");
+				
+				// click error link again
+				click_ingestion_error_count(true, dataMap);
+				
+				// verify close button works as expected
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						ingest.getErrorDialogCloseButton().Visible()  ;}}), Input.wait30); 
+				ingest.getErrorDialogCloseButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!ingest.getDocErrorTable().Visible()  ;}}), Input.wait30); 
+				
+				if (ingest.getcardCanvas().Displayed()) {
+					pass(dataMap, "PASS! Error popup closes as expected");
+				} else fail(dataMap, "FAIL! Clicking close button on error popup does not return user to Ingestion home page");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			throw new ImplementationException("NOT verify_error_popup_closes_as_expected");
 		}
 
 	}
