@@ -8102,7 +8102,16 @@ public class ProductionContext extends CommonContext {
 	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+		
 			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			
+			
+			
+			
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDocumentTagSelectionWithFamily_radio().Visible()  ;}}), Input.wait30); 
 			
@@ -8119,6 +8128,7 @@ public class ProductionContext extends CommonContext {
 			
 			dataMap.put("totalDocCounts", totalDocValue);
 			dataMap.put("familyDocValue", familyDocVal);
+			
 			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
@@ -8139,10 +8149,8 @@ public class ProductionContext extends CommonContext {
 			driver.waitForPageToBeReady();
 			String familyDocValue = prod.getZeroFamilyDocs().getText().toString();
 			Assert.assertEquals("0",familyDocValue);
-			
 			pass(dataMap, "TC7858");
 			
-			throw new ImplementationException("verify_doclist_without_family_docs");
 		} else {
 			throw new ImplementationException("NOT verify_doclist_without_family_docs");
 		}
@@ -8253,6 +8261,8 @@ public class ProductionContext extends CommonContext {
 			
 			String totalEntries = dataMap.get("totalDocCounts").toString();
 			String showExactValue = "Showing 1 to " + totalEntries + " of " + totalEntries + " entries";
+			System.out.println(totalEntries);
+			System.out.println(showExactValue);
 			
 			Assert.assertEquals(dataMap.get("totalDocCounts"),showExactValue);
 			

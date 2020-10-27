@@ -7921,7 +7921,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke11"})
+	@Test(groups = {"Production", "Positive", "smoke2"})
 	public void test_Given_login_to_new_production_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_default_document_selection_When_select_docs_without_family_docs_Then_verify_doclist_without_family_docs() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7990,7 +7990,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke11"})
+	@Test(groups = {"Production", "Positive", "smoke2"})
 	public void test_Given_login_to_new_production_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_document_tag_selection_with_family_When_select_docs_with_family_docs_Then_verify_doclist_with_family_docs() throws Throwable
 	{
 
