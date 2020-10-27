@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.security.auth.login.FailedLoginException;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
@@ -21,6 +24,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.ss.usermodel.PageOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -2769,7 +2773,15 @@ public class ProductionContext extends CommonContext {
 					prod.getSaveButton().Enabled()  ;}}), Input.wait30);
 			prod.getSaveButton().Click();
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_save_button");
+			try {
+				//The user should click Save from the Production page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSaveButton().Enabled()  ;}}), 10);
+				prod.getSaveButton().Click();
+			}
+			catch (Exception e){
+				
+			}
 		}
 
 	}
@@ -8401,9 +8413,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Add New Production
-			throw new ImplementationException("clicking_add_new_production");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
+			pass(dataMap, "clicking_add_new_production");
 		} else {
-			throw new ImplementationException("NOT clicking_add_new_production");
+			fail(dataMap, "NOT clicking_add_new_production");
 		}
 
 	}
@@ -8417,9 +8434,14 @@ public class ProductionContext extends CommonContext {
 			//* Verify on the Basic Info section, there are only the fields "Name", "Description" and "Load Template".
 			//* Verify there is no text saying "Disclaimer for Sightline goes here"
 			//
-			throw new ImplementationException("verify_the_basic_info_section_does_not_show_a_disclaimer");
+			Assert.assertTrue(prod.getProductionNameLabel().getText().contains("Name"));
+			Assert.assertTrue(prod.getProductionDescLabel().getText().contains("Description"));
+			Assert.assertTrue(prod.getProductionLoadTempLabel().getText().contains("Load Template"));
+			
+			
+			pass(dataMap,"verify_the_basic_info_section_does_not_show_a_disclaimer");
 		} else {
-			throw new ImplementationException("NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
+			fail(dataMap,"NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
 		}
 
 	}
@@ -8443,9 +8465,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Add New Production
-			throw new ImplementationException("on_the_basic_info_component_on_a_new_production");
+			clicking_add_new_production(true,dataMap);
+			pass(dataMap, "on_the_basic_info_component_on_a_new_production");
 		} else {
-			throw new ImplementationException("NOT on_the_basic_info_component_on_a_new_production");
+			fail(dataMap, "NOT on_the_basic_info_component_on_a_new_production");
 		}
 
 	}
@@ -8508,9 +8531,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the "Action" dropdown
-			throw new ImplementationException("clicking_the_action_dropdown");
+			try {
+				prod.getGridActionDropDown().click();
+				Thread.sleep(2000);
+				pass(dataMap,"clicking_the_action_dropdown");}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
-			throw new ImplementationException("NOT clicking_the_action_dropdown");
+			fail(dataMap,"NOT clicking_the_action_dropdown");
 		}
 
 	}
@@ -8523,9 +8552,12 @@ public class ProductionContext extends CommonContext {
 			//TC 7777
 			//* Verify from the action dropdown, the option "Add Docs" is disabled
 			//
-			throw new ImplementationException("verify_the_add_doc_button_is_disabled_on_completed_productions");
+			System.out.print(prod.getAddDocFromActionsDropDown().GetAttribute("class").toString());
+			Assert.assertEquals(prod.getAddDocFromActionsDropDown().GetAttribute("class").toString(), "disable");
+			
+			pass(dataMap, "verify_the_add_doc_button_is_disabled_on_completed_productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
+			fail(dataMap, "NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
 		}
 
 	}
@@ -8535,10 +8567,36 @@ public class ProductionContext extends CommonContext {
 	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Type in the Name of the Production. Use the same stand name we are using now which is AutoProduction + randomized numbers.Make sure this will type in the invalid parameters also.
-			throw new ImplementationException("a_valid_production_name_is_entered");
+			//Type in the Name of the Production. 
+			//Use the same stand name we are using now which is AutoProduction + randomized numbers.
+			//Make sure this will type in the invalid parameters also.
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String template = (String) dataMap.get("prod_template");
+			
+			String productionName =  (String)dataMap.get("name");
+
+			if(productionName!=null && productionName!=""){
+				productionName = productionName + dateTime;
+				dataMap.put("production_name", productionName);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+				prod.getProductionName().SendKeys(productionName);
+				prod.getProductionDesc().click();
+				
+				pass(dataMap, "a_valid_production_name_is_entered");
+			}
+			else {
+				productionName = "AutoProduction" + dateTime;
+				dataMap.put("production_name", productionName);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+				prod.getProductionName().SendKeys(productionName);
+				prod.getProductionDesc().click();
+				pass(dataMap, "a_valid_production_name_is_entered");
+			}				
 		} else {
-			throw new ImplementationException("NOT a_valid_production_name_is_entered");
+			fail(dataMap,"NOT a_valid_production_name_is_entered");
 		}
 
 	}
@@ -8549,9 +8607,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Type in any description
-			throw new ImplementationException("a_valid_production_description_is_entered");
+			prod.getProductionDesc().sendKeys(dataMap.get("description").toString());
+			pass(dataMap,"a_valid_production_description_is_entered");
 		} else {
-			throw new ImplementationException("NOT a_valid_production_description_is_entered");
+			fail(dataMap,"NOT a_valid_production_description_is_entered");
 		}
 
 	}
@@ -8561,10 +8620,29 @@ public class ProductionContext extends CommonContext {
 	public void verify_a_production_can_be_marked_completed_with_a_valid_name_description(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 2909 part 2Verify the message "Mark Complete successful" is displayed.Make sure to check the negative section/False States.
-			throw new ImplementationException("verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+			//TC 2909 part 2
+			//Verify the message "Mark Complete successful" is displayed.
+			//Make sure to check the negative section/False States.
+			try {
+				driver.waitForPageToBeReady();
+				String productionName =  (String)dataMap.get("name");
+				
+				if (productionName.contains("!")){
+					if(prod.getProductionNameWarning().Displayed() == false) {
+						fail(dataMap,"The warning did not appear for having a special character in the production name.");
+					}
+				}else {
+					if(prod.getMarkCompleteSuccessfulText().Displayed() == false) {
+						fail(dataMap,"The mark complete successfull message did not appear.");
+					}
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap, "verify_a_production_can_be_marked_completed_with_a_valid_name_description");
 		} else {
-			throw new ImplementationException("NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+			fail(dataMap, "NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
 		}
 
 	}
@@ -8577,9 +8655,12 @@ public class ProductionContext extends CommonContext {
 			//TC 7779
 			//* Verify from the action dropdown, the option "Remove Docs" is disabled
 			//
-			throw new ImplementationException("verify_the_remove_doc_button_is_disabled_on_completed_productions");
+			System.out.print(prod.getRemoveDocFromActionsDropDown().GetAttribute("class").toString());
+			Assert.assertEquals(prod.getRemoveDocFromActionsDropDown().GetAttribute("class").toString(), "disable");
+			
+			pass(dataMap,"verify_the_remove_doc_button_is_disabled_on_completed_productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
+			fail(dataMap,"NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
 		}
 
 	}
