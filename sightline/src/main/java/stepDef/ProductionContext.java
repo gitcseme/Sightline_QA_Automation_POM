@@ -2904,7 +2904,7 @@ public class ProductionContext extends CommonContext {
 		while(i==0) {
 			selecting_the_production(true,dataMap);
 			try {
-			Thread.sleep(200);
+			Thread.sleep(300);
 			}
 			catch(Exception e) {}
 			prod.getprod_ActionButton().click();
@@ -8179,10 +8179,19 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click back to get back to the document sectionClick on the document count (Should be 20)Verify once you are on the doclist, that the bottom displays: Showing 1 to 10 of 20 entries
-			throw new ImplementationException("on_the_doclist_from_the_document_section");
-		} else {
-			throw new ImplementationException("NOT on_the_doclist_from_the_document_section");
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListEntryAmountText().Displayed()  ;}}), Input.wait30); 
+			Assert.assertTrue(prod.getDocListEntryAmountText().getText().equals("Showing 1 to 10 of 20 entries"));
+			pass(dataMap, "got to document selection");
 		}
+		else fail(dataMap, "failed to navigate to doclist from document selection");
 
 	}
 
@@ -8192,10 +8201,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//On the top left of DocList, click the Back to Source button
-			throw new ImplementationException("clicking_the_back_to_source_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_back_to_source_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListBackToSourceButton().Displayed()  ;}}), Input.wait30); 
+			prod.getDocListBackToSourceButton().click();
+			pass(dataMap, "Succesfully clicked back to source");
 		}
+		else fail(dataMap, "failed to click back to source");
 
 	}
 
@@ -8205,10 +8216,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 8343Verify the user is navigated back to the Production Location section of the production. 
-			throw new ImplementationException("verify_the_doclist_navigation_returns_the_user_to_the_production");
-		} else {
-			throw new ImplementationException("NOT verify_the_doclist_navigation_returns_the_user_to_the_production");
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(driver.getUrl().contains("Production"));
+			pass(dataMap, "verified back to production location page");
 		}
+		else fail(dataMap, "could not verify back to production location page");
 
 	}
 

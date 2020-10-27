@@ -7921,7 +7921,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke3"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_login_to_new_production_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_default_document_selection_When_select_docs_without_family_docs_Then_verify_doclist_without_family_docs() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7954,7 +7954,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "WIP"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_default_document_selection_and_on_the_doclist_from_the_document_section_When_clicking_the_back_to_source_button_Then_verify_the_doclist_navigation_returns_the_user_to_the_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7979,9 +7979,11 @@ public class ProductionRegression extends RegressionBase {
 			context.clicking_the_back_to_source_button(true, dataMap);
 			context.verify_the_doclist_navigation_returns_the_user_to_the_production(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -8029,7 +8031,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke11"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_complete_default_numbering_and_sorting_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_completing_the_priv_guard_section_and_navigating_back_When_clicking_the_productions_mark_incomplete_button_Then_verify_the_remove_option_on_the_rule_is_displayed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
