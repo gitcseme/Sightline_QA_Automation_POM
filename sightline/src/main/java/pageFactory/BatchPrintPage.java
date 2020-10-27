@@ -133,6 +133,15 @@ public class BatchPrintPage {
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
 
+    public ElementCollection getIncludeOtherExceptionFileTypesCheckBox() { return driver.FindElementsById("includeOtherExceptionFileTypesCheckBox"); }
+    public ElementCollection getAllBrandingToggleButtons() { return driver.FindElementsByCssSelector(".btn.btn-default.btn-xs"); }
+    public Element getIncludeAppliedRedactionsToggle() { return driver.FindElementByXPath("//input[@id='includeAppliedRedactions']/following-sibling::i"); }
+    public Element getOpaqueTransparentDiv() { return driver.FindElementById("OpaqueTransparentDiv"); }
+    public Element getTopCenterBrandingLocationButton() { return driver.FindElementById("btn-batchprint-branding-1"); }
+    public Element getInsertMetadataFieldLink() { return driver.FindElementById("insertMetaDataHref"); }
+    public Element getInsertMetadataFieldPopup() { return driver.FindElementByCssSelector(".popover.fade.right.in"); }
+    public Element getMetadataDropdown() { return driver.FindElementById("locationMetaData"); }    
+
     public Element getSearchRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectSearchRadioButton']/following-sibling::i"); }
     public Element getSearchSG1ExpandFolderIcon(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]/i"); }
     public Element getSearchSelectFile(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]//li[1]/a"); }
@@ -148,8 +157,6 @@ public class BatchPrintPage {
     public Element getPriorDefaultProductionOption() { return driver.FindElementByXPath("//*[@id=\"ProductionDropDown\"]//option[1]"); }
     public Element getAnalysisFolderDocExpand() { return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/i"); }
     public Element getAnalysisDefaultProductionOption() { return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/ul/li[10]/a"); }
-
-
     
     
     public BatchPrintPage(Driver driver){

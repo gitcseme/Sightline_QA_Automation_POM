@@ -20,6 +20,7 @@ import pageFactory.BatchPrintPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.SavedSearch;
 import pageFactory.BaseClass;
 import pageFactory.SessionSearch;
 import testScriptsSmoke.Input;
@@ -34,6 +35,7 @@ public class CommonContext {
 	IngestionPage ingest;
 	BatchPrintPage batchPrint;
 	BaseClass base;
+	SavedSearch savedSearch;
 
     @Given("^(\\[Not\\] )?sightline_is_launched$")
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) {
@@ -236,6 +238,21 @@ public class CommonContext {
 	    dataMap.put("ingestion_count", totalIngestCountText);
 
 	} 
+    
+	@And("^.*(\\[Not\\] )? on_saved_search_page$")
+	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
+			//* Saved Search page is displayed
+			//
+			savedSearch = new SavedSearch(driver);
+		} else {
+			fail(dataMap, "Not on the saved search page");
+		}
+
+	}
     
 	@And("^.*(\\[Not\\] )? on_batch_print_page$")
 	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {

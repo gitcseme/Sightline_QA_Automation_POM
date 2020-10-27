@@ -44,22 +44,6 @@ public class DocViewContext extends CommonContext {
 
 	 */
 
-	@And("^.*(\\[Not\\] )? on_saved_search_page$")
-	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
-			//* Saved Search page is displayed
-			//
-			driver.getWebDriver().get("http://mtpvtsslwb01.consilio.com/SavedSearch/SavedSearches");
-			driver.waitForPageToBeReady();
-			pass(dataMap, "On the saved search page");
-		} else {
-			fail(dataMap, "Not on the saved search page");
-		}
-
-	}
 
 
 	@And("^.*(\\[Not\\] )? open_saved_audio_doc_view$")
@@ -71,7 +55,7 @@ public class DocViewContext extends CommonContext {
 			//* Click radio button for first saved search
 			//* Click 'Doc View' button at the top of the page
 			//
-			throw new ImplementationException("open_saved_audio_doc_view");
+			
 		} else {
 			throw new ImplementationException("NOT open_saved_audio_doc_view");
 		}
@@ -86,7 +70,7 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click grey Redact tool button
 			//
-			throw new ImplementationException("click_grey_redact_tool");
+			
 		} else {
 			throw new ImplementationException("NOT click_grey_redact_tool");
 		}
@@ -112,7 +96,7 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC3485 Verify user after impersonating as RMU/Reviewer can see the redaction and can redact in an audio file
-			throw new ImplementationException("verify_audio_redaction");
+			
 		} else {
 			throw new ImplementationException("NOT verify_audio_redaction");
 		}
