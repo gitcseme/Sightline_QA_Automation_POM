@@ -62,9 +62,33 @@ public class BatchPrintContext extends CommonContext {
 			//* Select a source for Select Search
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection");
+			try {
+				// wait until parent groups become visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getSharedWithSG1SearchParentGroup().Visible()  ;}}), Input.wait30);
+				
+				batchPrint.getSharedWithSG1SearchParentGroup().click();
+				
+				// wait until options become visible
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+				
+				// select option
+				batchPrint.getCustodianNameCheckbox().click();
+
+				// click Next button
+				batchPrint.getSourceSelectionNextButton().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+//			batchPrint.getSearchRadioButton().click();
+//			batchPrint.getSearchSG1ExpandFolderIcon().click();
+//			batchPrint.getSearchSelectFile().click();
+//			
+//			batchPrint.getNextbtn().click();
+//			pass(dataMap,"select_source_selection");
 		} else {
-			throw new ImplementationException("NOT select_source_selection");
+			fail(dataMap, "NOT select_source_selection");
 		}
 
 	}
@@ -76,15 +100,21 @@ public class BatchPrintContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   batchPrint.getBasisForPrintingHeader().Visible()  ;}}), Input.wait30);
 				if (dataMap.containsKey("basis_for_printing")) {
 					if (dataMap.get("basis_for_printing").equals("Native")) {
-						
 						// Click next button since native is selected by default
 						batchPrint.getBasisForPrintingNextButton().click();
 					}
-					
+				}
+				if (dataMap.containsKey("basis_for_production")) {
+					if (dataMap.get("basis_for_production").equals("Prior Production")) {
+						batchPrint.getPriorProduction().click();
+						batchPrint.getPriorDefaultProductionOption().click();
+						batchPrint.getBasisForPrintingNextButton().click();
+					}
 				}
 				
 			} catch (Exception e) {
@@ -166,7 +196,7 @@ public class BatchPrintContext extends CommonContext {
 
 					// click Next button
 					batchPrint.getSourceSelectionNextButton().click();
-				}
+				} 
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -191,7 +221,20 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					batchPrint.getAnalysisnextbutton().click();
+					
+					// waits until next page is shown
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getCurrentBreadcrumb("Exception File Types").Visible()  ;}}), Input.wait30);
 				}
+				if (dataMap.containsKey("basis_for_production")) {
+					if (dataMap.get("basis_for_production").equals("Prior Production")) {
+						driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+						batchPrint.getAnalysisFolderDocExpand().click();
+						batchPrint.getAnalysisDefaultProductionOption().click();
+						batchPrint.getAnalysisnextbutton().click();
+					}
+				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 					batchPrint.getAnalysisnextbutton().click();
@@ -213,11 +256,11 @@ public class BatchPrintContext extends CommonContext {
 			//
 			try {
 				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
+//					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
 					
 					// Check if "Other Exception File Types" field is shown
-					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 0) {
+					if (batchPrint.getIncludeOtherExceptionFileTypesCheckBox().FindWebElements().size() > 0) {
 						// if shown, enter placeholder text field
 						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
 						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
@@ -842,9 +885,19 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_tag");
+			batchPrint.getTagsRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					batchPrint.getSelectAllTagsExpandFolder().Enabled()  ;}}), Input.wait30);
+			batchPrint.getSelectAllTagsExpandFolder().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getDefaulTags().Visible()  ;}}), Input.wait30);
+			batchPrint.getDefaulTags().click();
+			
+			batchPrint.getNextbtn().Click();
+			pass(dataMap, "select_tag");
 		} else {
-			throw new ImplementationException("NOT select_tag");
+			fail(dataMap, "NOT select_tag");
 		}
 
 	}
@@ -1151,6 +1204,8 @@ public class BatchPrintContext extends CommonContext {
 			//* Verify Slip Sheet fields and Export Format for selected tag
 			//
 			//
+			
+			driver.waitForPageToBeReady();
 			throw new ImplementationException("verify_selected_slipsheet_fields_for_selected_tag");
 		} else {
 			throw new ImplementationException("NOT verify_selected_slipsheet_fields_for_selected_tag");
@@ -1213,8 +1268,13 @@ public class BatchPrintContext extends CommonContext {
 	public void login_to_new_batch_print(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
-			throw new ImplementationException("login_to_new_batch_print");
+			//This is a collection of the following steps:
+			//sightline_is_launched
+			//login_as_pau
+			//on_batch_print_page
+			sightline_is_launched(true, dataMap);
+			login_as_pau(true, dataMap);
+			on_batch_print_page(true, dataMap);
 		} else {
 			throw new ImplementationException("NOT login_to_new_batch_print");
 		}
@@ -1268,23 +1328,6 @@ public class BatchPrintContext extends CommonContext {
 
 	}
 
-
-	@And("^.*(\\[Not\\] )? on_batch_print_page$")
-	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* User navigates to Batch Print page (/BatchPrint)
-			//* Batch Print page is displayed
-			//
-			throw new ImplementationException("on_batch_print_page");
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
-
-	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_prior_productions_radio_button$")
 	public void verify_prior_productions_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -1315,7 +1358,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Skip Excel Files' radio button
-			throw new ImplementationException("select_skip_excel_files_radio_button");
+			try {
+				batchPrint.getSkipExcelFilesRadioButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBP_Exception_Excel().GetAttribute("style").contains("display: block;")  ;}}), Input.wait30);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT select_skip_excel_files_radio_button");
 		}
@@ -1332,7 +1381,17 @@ public class BatchPrintContext extends CommonContext {
 			//* 'Include Placeholders' tab displayed
 			//* Inert Metadata field is displayed
 			//
-			throw new ImplementationException("verify_skip_excel_files_on_exception_file_types_tab");
+			try {
+				if (batchPrint.getInsertMetadataFieldLinkText().Displayed()) {
+					pass(dataMap, "PASS! INsert Metadata Field is displayed!");
+				} else fail(dataMap, "FAIL! Insert Metadata Field is not displayed!");
+				
+				if (batchPrint.getIncludePlaceholdersToggle().Displayed()) {
+					pass(dataMap, "PASS! Include Placeholder toggle is displayed");
+				} else fail(dataMap, "FAIL! Include Placeholder toggle is not displayed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_skip_excel_files_on_exception_file_types_tab");
 		}
@@ -1345,7 +1404,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Other Exception File Types' help ? button
-			throw new ImplementationException("click_other_exception_file_types_help_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getExcelFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getOtherFileTypesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_other_exception_file_types_help_button");
 		}
@@ -1361,7 +1426,13 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Help displayed
 			//
-			throw new ImplementationException("verify_help_displayed_on_exception_file_types_tab");
+			try {
+				if (batchPrint.getFileTypeHelpPopup().Displayed()) {
+					pass(dataMap, "PASS! Help popup is displayed");
+				} else fail(dataMap, "FAIL! Help popup was not displayed");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_help_displayed_on_exception_file_types_tab");
 		}
@@ -1374,7 +1445,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Excel Files' help ? button
-			throw new ImplementationException("click_excel_files_help_button");
+			try {
+//				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//						   batchPrint.getExcelFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getExcelFilesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_excel_files_help_button");
 		}
@@ -1387,7 +1464,13 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Media Files' help ? button
-			throw new ImplementationException("click_media_files_help_button");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getMediaFilesHelpIcon().Visible()  ;}}), Input.wait30);
+				batchPrint.getMediaFilesHelpIcon().click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT click_media_files_help_button");
 		}
@@ -1536,7 +1619,34 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Select Branding and Redactions
 			//If branding_location is 'All' then add branding to Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right options
-			throw new ImplementationException("toggle_branding_redactions_");
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getIncludeAppliedRedactionsToggle().Visible()  ;}}), Input.wait30);
+				
+				for (WebElement el : batchPrint.getAllBrandingToggleButtons().FindWebElements()) {
+					el.click();
+					// wait for branding location popup
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+					// wait for branding location text field
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getBrandingLocationTextField().Visible()  ;}}), Input.wait30);
+					// enter branding text
+					batchPrint.getBrandingLocationTextField().Clear();
+					batchPrint.getBrandingLocationTextField().sendKeys("test");
+					
+					// click OK button
+					batchPrint.getInsertMetadataFieldOKButton().click();
+					
+					// wait until popup not visible
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   !batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT toggle_branding_redactions_");
 		}
@@ -1549,7 +1659,7 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Do nothing
-			throw new ImplementationException("diff_branding_redaction_configs_set");
+
 		} else {
 			throw new ImplementationException("NOT diff_branding_redaction_configs_set");
 		}
@@ -1566,7 +1676,24 @@ public class BatchPrintContext extends CommonContext {
 			//* Verify user can toggle 'Include Applied Redactions' ON/OFF
 			//* Regardless of 'Include Applied Redactions' status user can place Branding on the Top Left, Top Center, Top Right, Bottom Left, Bottom Center, and Bottom Right
 			//
-			throw new ImplementationException("verify_include_applied_redactions_on_branding_redactions_tab");
+			
+			try {
+				// get class attribute value of 'Include Applied Redactions' button
+				String attr = batchPrint.getOpaqueTransparentDiv().GetAttribute("style");
+				
+				// click button
+				batchPrint.getIncludeAppliedRedactionsToggle().click();
+				driver.waitForPageToBeReady();
+				
+				String attrAfterClick = batchPrint.getOpaqueTransparentDiv().GetAttribute("style");
+				
+				if (!attr.equalsIgnoreCase(attrAfterClick)) {
+					pass(dataMap, "PASS! 'Include Applied Redactions' can be toggled on/off");
+				} else fail(dataMap, "FAIL! Include Applied Redactions' cannot be toggled on/off");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_include_applied_redactions_on_branding_redactions_tab");
 		}
@@ -1578,8 +1705,20 @@ public class BatchPrintContext extends CommonContext {
 	public void click_branding_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click branding position determined by 'branding_location'
-			throw new ImplementationException("click_branding_location");
+			
+			try {
+				//Click branding position determined by 'branding_location'
+				batchPrint.getTopCenterBrandingLocationButton().click();
+				
+				// wait for branding location popup
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						   batchPrint.getBandingLocationPopup().Visible()  ;}}), Input.wait30);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT click_branding_location");
 		}
@@ -1592,7 +1731,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_insert_metadata_field_button_on_branding_redactions");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getInsertMetadataFieldLink().Visible()  ;}}), Input.wait30);
+			batchPrint.getInsertMetadataFieldLink().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					   batchPrint.getInsertMetadataFieldPopup().Visible()  ;}}), Input.wait30);
 		} else {
 			throw new ImplementationException("NOT click_insert_metadata_field_button_on_branding_redactions");
 		}
@@ -1609,7 +1753,13 @@ public class BatchPrintContext extends CommonContext {
 			//* Insert Metadata Field pops up
 			//* Dropdown of metadata fields is displayed
 			//
-			throw new ImplementationException("verify_metadata_displayed_on_branding_redactions");
+			try {
+				if (batchPrint.getMetadataDropdown().Displayed()) {
+					pass(dataMap, "PASS! Metadata Dropdown is displayed!");
+				} else fail(dataMap, "FAIL! Metadata dropdown is not displayed!");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_metadata_displayed_on_branding_redactions");
 		}
