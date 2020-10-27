@@ -310,6 +310,13 @@ public class ProductionPage {
     public Element getExportSetDropdown() { return driver.FindElementByCssSelector("[value='2064']"); }
     public Element getAddNewProductionButton(){ return driver.FindElementByXPath("//a[text()='Add a New Production']"); }
     public Element getAddNewExportButton(){ return driver.FindElementByXPath("//a[text()='Add a New Export']"); }
+    public Element getProductionHomePageTitle(){ return driver.FindElementByClassName("page-title");}	
+    public Element getProductionHomePageCurrentlySelectedProductionSet(){return driver.FindElementByCssSelector("#ProductionSetInfo>span.font-lg");}	
+    public ElementCollection getProductionSetsOptions(){return driver.FindElementsByCssSelector("#ProductionSets>option");}	
+    public ElementCollection getProductionsLastModifiedUser(){ return driver.FindElementsByClassName("prod-lastMod");}	
+    public ElementCollection getProductionLastModifiedData(){return driver.FindElementsByXPath("//span[@class='prod-lastMod']/..");}	
+    public Element getProductionLastModifiedDataByName(String name){return driver.FindElementByXPath(String.format("//a[@class='prod-Title'][contains(.,'%s')]/../..//span[@class='prod-lastMod']/..", name));}	
+    public ElementCollection getProductionTileNames(){ return driver.FindElementsByClassName("prod-Title");}
     
     // Basic Info
     public Element getBasicInfoTemplate(String value) { return driver.FindElementByCssSelector(String.format("#ddlTemplate [label='Custom Templates']%s",value)); }
@@ -537,7 +544,7 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
-
+    public Element getProductionGridViewProductionNameColumnHeader() {return driver.FindElementByCssSelector("th[aria-label='Production Name: activate to sort column ascending']");}	
     public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
     public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}
@@ -699,6 +706,7 @@ public class ProductionPage {
     public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
     public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
+    public Element getPopUpBoxText(){return driver.FindElementByCssSelector("#divbigBoxes p");}	
     public Element getProductionTitleLink(String title) { return driver.FindElementByXPath(String.format("//a[@title='%s']", title)); } 
     public Element getTIFFSelectTagsModal() { return driver.FindElementByXPath("//div[@id='myModal']//form[@class='smart-form client-form']"); }
     public Element getProductionComponentCompleteSuccessCloseBtn() { return driver.FindElementById("botClose3"); }
@@ -3464,6 +3472,3 @@ public class ProductionPage {
     }
   	    
 }
-    
-
-   

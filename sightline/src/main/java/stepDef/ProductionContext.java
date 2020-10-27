@@ -3,6 +3,7 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8985,9 +8986,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Store the name of the first production that is displayed.This is going to be used later.
-			throw new ImplementationException("store_the_first_productions_name");
+			dataMap.put("first prod name", prod.getProductionTileNameByIndex(0));
+			pass(dataMap, "Stored the first production name");
 		} else {
-			throw new ImplementationException("NOT store_the_first_productions_name");
+			fail(dataMap, "Cannot store the first production name");
 		}
 
 	}
@@ -9012,9 +9014,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Use the first production's name that was stored to type it into the new production's name field.
-			throw new ImplementationException("enter_the_name_of_the_existing_production");
+			prod.getProductionName().click();
+			prod.getProductionName().sendKeys(dataMap.get("first prod name").toString());
+			pass(dataMap, "Entered the name of the existing production");
 		} else {
-			throw new ImplementationException("NOT enter_the_name_of_the_existing_production");
+			fail(dataMap, "Did not enter the name of the existing production");
 		}
 
 	}
@@ -9024,10 +9028,23 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4470Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
-			throw new ImplementationException("verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+			//TC 4470
+			//Click Mark Complete Button
+			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+			prod.getMarkCompleteButton().click();
+
+			// Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getPopUpBoxText().Visible()  ;}}), Input.wait30);
+			String actualText = prod.getPopUpBoxText().getText();
+			String expectedText = "60001000011 : You cannot create this production since a production with the same name already exists in the project.";
+			Assert.assertEquals(actualText, expectedText);
+
+			pass(dataMap, "The user is not able to enter a dupe name for productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+			fail(dataMap, "NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
 		}
 
 	}
@@ -9038,9 +9055,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the Sort By dropdown and select Production Name
-			throw new ImplementationException("setting_the_sort_dropdown_by_production_name");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getSortByButton().Visible()  ;}}), Input.wait30);
+			prod.getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
+
+			pass(dataMap, "Setting the sort dropdown by production name");
 		} else {
-			throw new ImplementationException("NOT setting_the_sort_dropdown_by_production_name");
+			fail(dataMap, "Not setting the sort dropdown by production name");
 		}
 
 	}
@@ -9050,10 +9071,21 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_of_the_productions_is_by_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 3708Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name");
+			//TC 3708
+			//Verify the first 15 productions on the list of productions are sorted in alphabetical order.
+			driver.scrollingToBottomofAPage();
+			List<WebElement> productionTiles = prod.getProductionTileNames().FindWebElements();
+			int iterations = productionTiles.size() > 15 ? 15 : productionTiles.size();
+			String previousProductionName = "";
+			for(int i = 0 ; i < iterations ; i++) {
+				String currentProductionName = productionTiles.get(i).getText();
+				if (currentProductionName.compareTo(previousProductionName) < 0)
+					fail(dataMap,"The sorting of the productions is not by name");
+				previousProductionName = currentProductionName;
+			}
+			pass(dataMap, "The sorting of the productions is by name");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name");
+			fail(dataMap,"The sorting of the productions is not by name");
 		}
 
 	}
@@ -9205,16 +9237,36 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 4431 
 			//* Verify the title of the page displays as "Productions & Exports"
+			Assert.assertEquals(prod.getProductionHomePageTitle().getText(), "Productions & Exports");
+
 			//* Verify there is a link for "Add a New Production"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30);
+
 			//* Verify there is a dropdown for Production/Export Sets
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+
 			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
+			String selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			String productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
+			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
+
 			//* Click the dropdown for Productions Set, and change it to another production set
+			prod.clickProductionSetByIndex(prod.getProductionSetsOptions().size()-1);
+			driver.waitForPageToBeReady();
+
 			//* Verify the Production set name under "PRODUCTIONS SET" is updated to the new production set's name.
+			selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
+			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
+
 			//* Set the production set back to the original. 
-			//
-			throw new ImplementationException("verify_the_production_home_page_is_displayed_correctly");
+			prod.clickProductionSetByIndex(0);
+
+			pass(dataMap, "The production home page is displayed correctly");
 		} else {
-			throw new ImplementationException("NOT verify_the_production_home_page_is_displayed_correctly");
+			fail(dataMap, "The production home page is not displayed correctly");
 		}
 
 	}
@@ -9225,9 +9277,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
-			throw new ImplementationException("clicking_the_production_name_column");
+			prod.getProductionGridViewProductionNameColumnHeader().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProductionGridViewProductionNameColumnHeader().getWebElement().getAttribute("class").equals("sorting_asc");}}), Input.wait30);
+			pass(dataMap, "clicking the production name column");
 		} else {
-			throw new ImplementationException("NOT clicking_the_production_name_column");
+			fail(dataMap, "Not clicking the production name column");
 		}
 
 	}
@@ -9238,9 +9293,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			List<WebElement> productionItems = prod.getProductionItemsGrid().FindWebElements();
+			//remove first item (column headers)
+			productionItems.remove(0);
+			String previousProductionName = "";
+			for(WebElement currentProduction : productionItems) {
+				if (currentProduction.getText().compareTo(previousProductionName) < 0)
+					fail(dataMap, "The sorting of the productions is not by name in grid view");
+				previousProductionName = currentProduction.getText();
+			}
+			pass(dataMap, "The sorting of the productions is by name in grid view");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			fail(dataMap, "The sorting of the productions is not by name in grid view");
 		}
 
 	}
@@ -9277,9 +9341,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Productions button on the left side of the screen
-			throw new ImplementationException("navigate_back_to_the_production_home_page");
+			prod.goToProductionHomePage().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Navigated back to the production home page");
 		} else {
-			throw new ImplementationException("NOT navigate_back_to_the_production_home_page");
+			fail(dataMap, "Did not navigate back to the production home page");
 		}
 
 	}
@@ -9289,10 +9355,27 @@ public class ProductionContext extends CommonContext {
 	public void store_the_first_productions_info(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Store the name of the first production that is displayed.Store the Last Modified user name of the first production that is displayed.Store the time stamp of the last modified date of the first production that is displayed.This is going to be used later.
-			throw new ImplementationException("store_the_first_productions_info");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+
+			driver.waitForPageToBeReady();
+
+			//Store the name of the first production that is displayed.
+			dataMap.put("firstProductionName", prod.getProductionTileNameByIndex(0));
+
+			//Store the Last Modified user name of the first production that is displayed.
+			String lastModifiedUserNameOfFirstProduction = prod.getProductionsLastModifiedUser().FindWebElements().get(0).getText();
+			dataMap.put("firstProductionLastModifiedUsername", prod.getProductionsLastModifiedUser().FindWebElements().get(0).getText());
+
+			//Store the time stamp of the last modified date of the first production that is displayed. This is going to be used later.
+			String lastModifiedDataOfFirstProduction = prod.getProductionLastModifiedData().FindWebElements().get(0).getText();
+			String[] split = lastModifiedDataOfFirstProduction.split("\n");
+			dataMap.put("firstProductionLastModifiedDate", split[split.length-1]);
+
+			pass(dataMap, "Stored the first productions info");
 		} else {
-			throw new ImplementationException("NOT store_the_first_productions_info");
+			fail(dataMap, "Did not store the first productions info");
 		}
 
 	}
@@ -9302,10 +9385,38 @@ public class ProductionContext extends CommonContext {
 	public void open_the_production_created_edit_the_name_then_save_using_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click the name of the production that was createdClick Back to go back to Basic InfoClick Mark IncompleteChange the name of the production to add 3 more random numbers at the end.Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
-			throw new ImplementationException("open_the_production_created_edit_the_name_then_save_using_");
+			//Click the name of the production that was created
+			prod.getProductionTileByName(dataMap.get("firstProductionName").toString()).click();
+
+			//Click Back to go back to Basic Info
+			prod.getBackLink().click();
+
+			//Click Mark Incomplete
+			prod.getMarkIncompleteLink().click();
+			driver.waitForPageToBeReady();
+
+			//Change the name of the production to add 3 more random numbers at the end.
+			Random random = new Random();
+			int randomNumbers = random.nextInt(900) + 100;
+			prod.getProductionName().sendKeys(String.valueOf(randomNumbers));
+
+			//Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
+			long sevenHours = 3600*1000*7; //in milli-seconds.  The server time is ahead 7 hours.
+			int offset = 0; //for some reason the timestamp of when you click "save" or "mark complete" is behind by 5 sec. I use this value to account for that.
+
+			if(dataMap.get("save_option").toString().equals("save")){
+				prod.getSaveButton().click();
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
+				dataMap.put("newTimeStamp", newTimeStamp);
+				pass(dataMap, "Opened the production created and edited the name then saved");
+			} else if(dataMap.get("save_option").toString().equals("markcomplete")){
+				prod.getMarkCompleteLink().click();
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
+				dataMap.put("newTimeStamp", newTimeStamp);
+				pass(dataMap, "Opened the production created and edited the name then marked complete");
+			}
 		} else {
-			throw new ImplementationException("NOT open_the_production_created_edit_the_name_then_save_using_");
+			fail(dataMap, "Can't open the production created and edit the name then save");
 		}
 
 	}
@@ -9328,10 +9439,27 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_last_modified_date_on_productions_gets_updated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 7739 / 7740Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.Verify the new timestamp on the production matches the timestap we captured after clicking Save
-			throw new ImplementationException("verify_the_last_modified_date_on_productions_gets_updated");
+			//TC 7739 / 7740
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+			
+			
+			driver.waitForPageToBeReady();
+
+			//Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.
+			Assert.assertNotEquals(dataMap.get("firstProductionLastModifiedDate"), dataMap.get("newTimeStamp"));
+
+			//Verify the new timestamp on the production matches the timestap we captured after clicking Save
+			String lastModifiedData = prod.getProductionLastModifiedDataByName(dataMap.get("firstProductionName").toString()).getText();
+			String[] splitData = lastModifiedData.split("\n");
+			String lastModifiedDate = splitData[splitData.length-1];
+
+			Assert.assertEquals(lastModifiedDate, dataMap.get("newTimeStamp"));
+
+			pass(dataMap, "The last modified date on productions gets updated");
 		} else {
-			throw new ImplementationException("NOT verify_the_last_modified_date_on_productions_gets_updated");
+			fail(dataMap, "The last modified date on productions does not get updated");
 		}
 
 	}

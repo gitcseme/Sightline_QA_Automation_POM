@@ -9510,7 +9510,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_first_productions_name_and_on_the_basic_info_component_on_a_new_production_and_enter_the_name_of_the_existing_production_When_clicking_the_productions_mark_complete_button_Then_verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9530,7 +9530,6 @@ public class ProductionRegression extends RegressionBase {
 			context.store_the_first_productions_name(true, dataMap);
 			context.on_the_basic_info_component_on_a_new_production(true, dataMap);
 			context.enter_the_name_of_the_existing_production(true, dataMap);
-			context.clicking_the_productions_mark_complete_button(true, dataMap);
 			context.verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -9546,7 +9545,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_setting_the_sort_dropdown_by_production_name_Then_verify_the_sorting_of_the_productions_is_by_name() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9693,7 +9692,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_When_on_production_home_page_Then_verify_the_production_home_page_is_displayed_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9724,7 +9723,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_the_production_grid_is_set_to_grid_view_When_clicking_the_production_name_column_Then_verify_the_sorting_of_the_productions_is_by_name_in_grid_view() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9914,7 +9913,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_navigate_back_to_the_production_home_page_and_store_the_first_productions_info_and_open_the_production_created_edit_the_name_then_save_using_save_When_navigate_back_to_the_production_home_page_Then_verify_the_last_modified_date_on_productions_gets_updated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9925,8 +9924,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("Test Case", "7739");
-			dataMap.put("Test Case", "7740");
+			dataMap.put("Test Case", "7739|7740");
 			dataMap.put("uid", "qapau4@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
@@ -9953,7 +9951,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_navigate_back_to_the_production_home_page_and_store_the_first_productions_info_and_open_the_production_created_edit_the_name_then_save_using_markcomplete_When_navigate_back_to_the_production_home_page_Then_verify_the_last_modified_date_on_productions_gets_updated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
