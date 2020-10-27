@@ -1789,7 +1789,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_production_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2305,7 +2305,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "WIP"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_4_When_click_download_file_link_Then_verify_pdf_from_selected_production_slipsheet_field() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2316,24 +2316,28 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_production", "Prior Production");
 			context.select_basis_for_printing(true, dataMap);
 			context.select_analysis(true, dataMap);
+			dataMap.put("excel_files", "print");
+			context.select_exception_file_types(true, dataMap);
 			dataMap.put("enable_slip_sheets", "true");
 			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
 			dataMap.put("use_prior_production", "false");
 			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
-			context.select_slip_sheets_(true, dataMap);
+			context.select_slip_sheets(true, dataMap);
 			dataMap.put("branding_location", "center");
 			dataMap.put("include_applied_redactions", "false");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
 			dataMap.put("index", "4");
 			dataMap.put("export_file_name", "Begin Bates");
-			context.select_export_format_(true, dataMap);
+			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "4648|4650|4653|4654|4655|4656");
@@ -2352,7 +2356,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_tag() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2363,10 +2367,13 @@ public class BatchPrintRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+		    dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			context.select_tag(true, dataMap);
-			dataMap.put("basis_for_production", "Native");
+			//dataMap.put("basis_for_production", "Native");
+			dataMap.put("basis_for_printing", "Native");
 			context.select_basis_for_printing(true, dataMap);
 			context.select_analysis(true, dataMap);
 			dataMap.put("A", "");
@@ -2376,14 +2383,14 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
 			dataMap.put("use_prior_production", "false");
 			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
-			context.select_slip_sheets_(true, dataMap);
+			context.select_slip_sheets(true, dataMap);
 			dataMap.put("branding_location", "center");
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
 			dataMap.put("C", "1");
 			dataMap.put("export_file_name", "DocID");
-			context.select_export_format_(true, dataMap);
+			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "9710|9711");
@@ -2402,7 +2409,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive" ,"WIP"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocFileName_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_tag() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2866,7 +2873,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_select_skip_excel_files_radio_button_Then_verify_skip_excel_files_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2876,6 +2883,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -2898,7 +2907,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_other_exception_file_types_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2908,6 +2917,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -2930,7 +2941,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_excel_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2940,6 +2951,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -2962,7 +2975,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_media_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2972,6 +2985,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio8@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -3135,7 +3150,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_toggle_branding_redactions_trueopaqueAll_When_diff_branding_redaction_configs_set_Then_verify_include_applied_redactions_on_branding_redactions_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3145,6 +3160,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio7@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
@@ -3219,7 +3236,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_click_TopCenter_branding_location_When_click_insert_metadata_field_button_on_branding_redactions_Then_verify_metadata_displayed_on_branding_redactions() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3229,6 +3246,8 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "sqa.consilio7@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_to_new_batch_print(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Native");
