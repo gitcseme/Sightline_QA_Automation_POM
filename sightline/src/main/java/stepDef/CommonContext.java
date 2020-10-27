@@ -184,19 +184,26 @@ public class CommonContext {
 		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
-
-		
-		if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
-			prod.changeProjectSelector().Click();
-		    prod.productionProjectSelector().Click();
-		}
-
-	    driver.waitForPageToBeReady();
+	    
 
 		if (scriptState) {
 			
 	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
+			driver.waitForPageToBeReady();
+			
+			if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
+				prod.changeProjectSelector().Click();
+			    prod.productionProjectSelector().Click();
+			}
+
+		    driver.waitForPageToBeReady();
+		    
+		 // switch to AutomationProductionSet
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+			driver.waitForPageToBeReady();
 			
 		} else {
 			webDriver.get("http://www.google.com");
@@ -256,6 +263,17 @@ public class CommonContext {
 			//* Batch Print page is displayed
 			//
 			batchPrint = new BatchPrintPage(driver);
+			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+		    
+		    if (scriptState) {
+		    	String url = (String) dataMap.get("URL");
+		    		webDriver.get(url+"/BatchPrint/");
+		    		
+		    } else {
+		    		webDriver.get("http://www.google.com");
+		    }
+
+		    driver.waitForPageToBeReady();
 		} else {
 			throw new ImplementationException("NOT on_batch_print_page");
 		}

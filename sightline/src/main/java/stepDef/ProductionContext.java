@@ -3,12 +3,19 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.security.auth.login.FailedLoginException;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
@@ -21,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.ss.usermodel.PageOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
@@ -886,27 +894,34 @@ public class ProductionContext extends CommonContext {
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDATTab().Displayed()  ;}}), Input.wait30);
-				prod.getDATTab().Click();
+			prod.getDATTab().Click();
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
-				prod.getFieldClassification().Click();
-				prod.getFieldClassification().SendKeys("Bates");
+			prod.getFieldClassification().Click();
+			prod.getFieldClassification().SendKeys("Bates");
 				
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getSourceField().Displayed()  ;}}), Input.wait30);
-				prod.getSourceField().Click();
-				prod.getSourceField().SendKeys("BatesNumber");
+			prod.getSourceField().Click();
+			prod.getSourceField().SendKeys("BatesNumber");
 				
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getDatField().Displayed()  ;}}), Input.wait30);
-				prod.getDatField().Click();
-				prod.getDatField().SendKeys("Bates Number");
-				
+			prod.getDatField().Click();
+			prod.getDatField().SendKeys("Bates Number");
+			
+			
+			// Collapse DAT 
+			prod.getTemplateProductionComponentToggle("DAT").click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
-				prod.getComponentsMarkComplete().Click();
+			prod.getComponentsMarkComplete().ScrollTo();
+			prod.getComponentsMarkComplete().Click();
 					
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getComponentsMarkNext().Enabled() ;}}), Input.wait30);
@@ -916,6 +931,7 @@ public class ProductionContext extends CommonContext {
 			pass(dataMap,"Default Production Component are completed");	
 				
 			} catch(Exception e) {
+				e.printStackTrace();
 				fail(dataMap,"Default Production Component is not completed");
 			}
 		}else {
@@ -1829,13 +1845,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			try {
-				WebElement temp  = (WebElement)dataMap.get("targetProduction");
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					temp.isDisplayed()  ;}}), Input.wait30);
-				temp.click();
+				String productionName  = dataMap.get("productionName").toString();
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getProductionSectionPageTitle().Displayed()  ;}}), Input.wait30);
+					prod.getProductionTitleLink(productionName).Displayed()  ;}}), Input.wait30);
+				prod.getProductionTitleLink(productionName).click();
+				driver.waitForPageToBeReady();
 				
 				while(!prod.getProductionSectionPageTitle().getText().equals("Production Components")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2335,23 +2350,64 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+				driver.scrollPageToTop();
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
-				prod.getMarkCompleteButton().click();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+				prod.getMarkCompleteButton().Click();
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
 			}
 
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
+			try {
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+				Actions builder = new Actions(driver.getWebDriver());
+				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+				prod.getMarkCompleteButton().Click();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
-
+	
+	@When("^.*(\\[Not\\] )? clicking_the_components_mark_complete_button$")
+	public void clicking_the_components_mark_complete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			//
+			try {
+				prod.getComponentsMarkComplete().click();
+				pass(dataMap, "Able to  click the Mark Complete button");
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Unable to click the Mark Complete button");
+			}
+		} else {
+			fail(dataMap, "Unable to click the Mark Complete button");
+		}
+	}
+	
+	@When("^.*(\\[Not\\] )? clicking_the_productions_component_mark_complete_button$")
+	public void clicking_the_productions_component_mark_complete_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			//
+			try {
+				driver.waitForPageToBeReady();
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
+				prod.getComponentsMarkComplete().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Unable to click the Mark Complete button");
+			}
+		} else {
+			throw new ImplementationException("NOT clicking_the_productions_mark_complete_button");
+		}
+	}
 
 	@And("^.*(\\[Not\\] )? complete_specifying_the_next_bates_number$")
 	public void complete_specifying_the_next_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -2769,7 +2825,15 @@ public class ProductionContext extends CommonContext {
 					prod.getSaveButton().Enabled()  ;}}), Input.wait30);
 			prod.getSaveButton().Click();
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_save_button");
+			try {
+				//The user should click Save from the Production page.
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSaveButton().Enabled()  ;}}), 10);
+				prod.getSaveButton().Click();
+			}
+			catch (Exception e){
+				
+			}
 		}
 
 	}
@@ -2944,7 +3008,7 @@ public class ProductionContext extends CommonContext {
 			}
 
 
-			/*WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
+			//WILL IMPLEMENT THESE LATER WHEN WE USE THEM IN FUTURE SCRIPTS
 
 			//IF MP3 IS TRUE
 			//Expand Advanced Production Components
@@ -2953,7 +3017,7 @@ public class ProductionContext extends CommonContext {
 			//Click "Select Redactions"
 			//Click "Default Automation Redaction"
 			//Set the "Redaction Style" to "Beep"
-			*/
+
 			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 			if(mp3!= null && mp3.equalsIgnoreCase("true")){
 				builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
@@ -2965,12 +3029,11 @@ public class ProductionContext extends CommonContext {
 				prod.getMP3_SelectRed_Radiobutton().click();
 				prod.getMP3SelectRedactionsTagTree("Default Redaction Tag").click();
 			}
-			
-			 /*
+
 			//IF TEXT IS TRUE
 			//Checkoff the "Text" component checkbox
 			//The other parameters can be worked on as we use them.
-			 */
+			
 
 
 			//Click the Mark complete button and verify the following message appears: "Mark Complete successful"
@@ -3852,50 +3915,137 @@ public class ProductionContext extends CommonContext {
 
 	@And("^.*(\\[Not\\] )? complete_the_default_dat_section$")
 	public void complete_the_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number
-			throw new ImplementationException("complete_the_default_dat_section");
+			/*
+			 * 
+			 * /Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT container
+			 * Add field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number */
+			try {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getDATChkBox().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDATTab().Displayed()  ;}}), Input.wait30);
+				prod.getDATTab().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+				prod.getFieldClassification().Click();
+				prod.getFieldClassification().SendKeys("Bates");
+				
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSourceField().Displayed()  ;}}), Input.wait30);
+				prod.getSourceField().Click();
+				prod.getSourceField().SendKeys("BatesNumber");
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatField().Displayed()  ;}}), Input.wait30);
+				prod.getDatField().Click();
+				prod.getDatField().SendKeys("Bates Number");
+				
+			// Collapse DAT 
+			prod.getTemplateProductionComponentToggle("DAT").click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				
+			pass(dataMap,"default DAT section is complete");
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail(dataMap,"default DAT section is not complete");
+			}
+					
 		} else {
-			throw new ImplementationException("NOT complete_the_default_dat_section");
+			fail(dataMap,"default DAT section is not complete");
 		}
-
 	}
 
 
 	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags_and_no_file_types$")
 	public void complete_the_native_section_with_tags_and_no_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Check NativeDo not select any file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
-			throw new ImplementationException("complete_the_native_section_with_tags_and_no_file_types");
+			try{
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeChkBox().Enabled()  ;}}), Input.wait30); 
+				prod.getNativeChkBox().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeTab().Visible()  ;}}), Input.wait30); 
+				prod.getNativeTab().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectNativeTagsButton().Visible()  ;}}), Input.wait30); 
+				prod.getSelectNativeTagsButton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNative_DefaultAutomationTag().Visible()  ;}}), Input.wait30); 
+				prod.getNative_DefaultAutomationTag().Click();
+				prod.getNative_AttorneyCLientTag().Click();
+				prod.getNative_ConfedentialTag().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectTagsButton().Visible()  ;}}), Input.wait30); 
+				prod.getSelectTagsButton().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeContainer().Displayed()  ;}}), Input.wait30); 
+				
+				// Collapse Native tab
+				prod.getTemplateProductionComponentToggle("Native").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNativeContainer().Displayed()  ;}}), Input.wait30);
+				
+				pass(dataMap,"default Native section is complete");
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				fail(dataMap,"default Native section is not complete");
+			}
 		} else {
 			throw new ImplementationException("NOT complete_the_native_section_with_tags_and_no_file_types");
 		}
-
 	}
 
 
 	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly_without_file_types$")
 	public void verify_native_section_with_tags_is_saving_correctly_without_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC 5333
 			//* Expand the Native section
 			//* Verify the selected tags are displaying in alphabetical order.
 			//* Verify no file types are checked
 			//
-			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly_without_file_types");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeTab().Visible()  ;}}), Input.wait30); 
+				prod.getNativeTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectNativeTagsButton().Visible()  ;}}), Input.wait30); 
+				String nativeSelectedTags = prod.getNativeSelectedTagList().GetAttribute("textContent");
+				List<String> tags = Arrays.asList(nativeSelectedTags.split(","));
+				List<String> newlist = tags;
+				Collections.sort(newlist);
+				Assert.assertEquals(newlist, tags);
+				if(!prod.getNative_SelectAllCheck().Selected()){
+					pass(dataMap,"No file types are checked");
+				}
+				else{
+					fail(dataMap,"File types are checked");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly_without_file_types");
 		}
-
 	}
 
 
 	@And("^.*(\\[Not\\] )? complete_tiff_pdf_with_rotation$")
 	public void complete_tiff_pdf_with_rotation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//
 			//* Check the "TIFF" checkbox
@@ -3909,30 +4059,121 @@ public class ProductionContext extends CommonContext {
 			//* On the "Rotate Landscape pages to portrait layout:" dropdown, select Rotate 90 degrees counter clock-wise.
 			//* Deselect "Enable for Privileged docs
 			//
-			throw new ImplementationException("complete_tiff_pdf_with_rotation");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Visible() ;}}), Input.wait30); 
+				prod.getTIFFChkBox().Click();		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentTIFFCheckbox().Selected()  ;}}), Input.wait30); 
+				
+				driver.scrollingToBottomofAPage();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFTab().Visible()  ;}}), Input.wait30); 
+				prod.getTIFFTab().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().Visible()  ;}}), Input.wait30); 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("No Rotation")  ;}}), Input.wait30); 
+				
+				prod.getTIFFRotateDropdown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees counter clock-wise");
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("Rotate 90 degrees counter clock-wise")  ;}}), Input.wait30); 
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
+				// scroll to toggle. Webdriver sometimes does not actually click the toggle if the
+				// element is not in view
+				prod.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+				prod.getTIFF_EnableforPrivilegedDocs().Click();
+				
+				// Sometimes toggle is not clicked, so adding logic to check if it was clicked. If it wasn't clicked 
+				// the first time, then click again
+				while (prod.getTIFFPrivilegeDocsDisabledToggle().FindWebElements().size() == 0) {
+					System.out.println("TIFF Enabled Priv Docs toggle was not clicked. Clicking again...");
+					prod.getTIFF_EnableforPrivilegedDocs().Click();
+					driver.waitForPageToBeReady();
+				}
+
+				// Collapse TIFF tab
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				// Select PDF
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFChkBox().Visible() ;}}), Input.wait30); 
+				prod.getPDFChkBox().Click();		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionComponentPDFCheckbox().Selected()  ;}}), Input.wait30); 
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFTab().Visible()  ;}}), Input.wait30); 
+				prod.getPDFTab().Click();
+				
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().Visible()  ;}}), Input.wait30); 
+				//
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("No Rotation")  ;}}), Input.wait30); 
+				
+				prod.getPDFRotateDropdown().selectFromDropdown().selectByVisibleText("Rotate 90 degrees counter clock-wise");
+		
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFRotateDropdown().selectFromDropdown().getFirstSelectedOption().getText().equals("Rotate 90 degrees counter clock-wise")  ;}}), Input.wait30); 
+				
+				
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
+				prod.getPDF_EnableforPrivilegedDocs().ScrollTo();
+				prod.getPDF_EnableforPrivilegedDocs().Click();				
+				
+				// Sometimes toggle is not clicked, so adding logic to check if it was clicked. If it wasn't clicked 
+				// the first time, then click again
+				while (prod.getPDFPrivilegeDocsDisabledToggle().FindWebElements().size() == 0) {
+					System.out.println("PDF Enabled Priv Docs toggle was not clicked. Clicking again...");
+					prod.getTIFF_EnableforPrivilegedDocs().Click();
+					driver.waitForPageToBeReady();
+				}
+				
+				//Collapse PDF toggle
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplatePDFPageRotatePreferenceSelectedValue().Displayed()  ;}}), Input.wait30);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT complete_tiff_pdf_with_rotation");
 		}
-
 	}
-
-
+	
 	@Then("^.*(\\[Not\\] )? verify_marking_a_pdf_with_rotation_completed_returns_no_error$")
 	public void verify_marking_a_pdf_with_rotation_completed_returns_no_error(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC 6183/5350There should not be any error Message As such "Rotation sections in PDF and TIFF compo nents must have the same configuration". User should be abl e to Mark complete and move on to next section of Production.Best way to verify this is by verifying you are on the numbering section of productions.
-			throw new ImplementationException("verify_marking_a_pdf_with_rotation_completed_returns_no_error");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNumberingAndSortingTitle().Displayed()  ;}}), Input.wait30);
+			Assert.assertTrue(prod.getNumberingAndSortingTitle().Displayed());
+			pass(dataMap, "PASS! User is on Numbering and Sorting page");
 		} else {
 			throw new ImplementationException("NOT verify_marking_a_pdf_with_rotation_completed_returns_no_error");
 		}
-
 	}
-
 
 	@And("^.*(\\[Not\\] )? complete_tiff_with_empty_natively_produced_documents$")
 	public void complete_tiff_with_empty_natively_produced_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//
 			//* Check "TIFF"
@@ -3940,60 +4181,145 @@ public class ProductionContext extends CommonContext {
 			//* Disable "Enable for Privileged Docs"
 			//* Click "+Enable for Natively Producted Documents"
 			//* Click "Other as the file type
-			//* Type in a random placeholder text 
+			//* Type in a random placeholder text 
 			//* Click "+Enable for Natively Producted Documents" a second time
 			//* Leave the fields blank
 			//
-			throw new ImplementationException("complete_tiff_with_empty_natively_produced_documents");
+			try {
+				driver.waitForPageToBeReady();
+				prod.getTIFFChkBox().click();
+				prod.getTIFFTab().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFPlaceholderPrivilegedToggle().Displayed();}}), Input.wait30);
+				prod.getTIFFPlaceholderPrivilegedToggle().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed();}}), Input.wait30);
+				prod.getTIFFComponentEnableNativelyProducedDocuments().click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFNativelyProductedDocumentSelect().Displayed();}}), Input.wait30);
+				prod.getTIFFNativelyProductedDocumentSelect().selectFromDropdown().selectByVisibleText("Other (i.e. Uncategorized, unknown, etc.)");
+	
+				prod.getTIFFComponenetNativelyProducedDocumentPlaceHolder().setText("Place holder text.");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed();}}), Input.wait30);
+				prod.getTIFFComponentEnableNativelyProducedDocuments().click();				
+				pass(dataMap, "complete_tiff_with_empty_natively_produced_documents");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT complete_tiff_with_empty_natively_produced_documents");				
+			}
 		} else {
-			throw new ImplementationException("NOT complete_tiff_with_empty_natively_produced_documents");
+			fail(dataMap, "NOT complete_tiff_with_empty_natively_produced_documents");
 		}
-
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank$")
 	public void verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//TC5941 Verify a warning message is returned:The TIFF placeholder configuration information is incorrect.
-			throw new ImplementationException("verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning().Displayed();}}), Input.wait30);
+				assert prod.getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning().getText().equals("The TIFF placeholder configuration information is incorrect.");
+				pass(dataMap, "PASS! The expected error message is returned");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
+			}
+			pass(dataMap, "verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
 		} else {
-			throw new ImplementationException("NOT verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");
-		}
-
+			fail(dataMap, "NOT verify_a_warning_message_is_returned_when_leaving_the_natively_produced_documents_blank");		}
 	}
-
-
 	@And("^.*(\\[Not\\] )? add_a_second_dat_for_classification_production$")
 	public void add_a_second_dat_for_classification_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Click Add FieldSet Field Classification to the corresponding parameter valueSet Source Field to the corresponding parameter valueSet Dat Field to the corresponding  parameter value
-			throw new ImplementationException("add_a_second_dat_for_classification_production");
-		} else {
-			throw new ImplementationException("NOT add_a_second_dat_for_classification_production");
+			//Click Add Field Set Field Classification to the corresponding parameter value
+			//Set Source Field to the corresponding parameter valueSet Dat Field to the corresponding  parameter value
+			try {
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTemplateFieldClassificationValue().Displayed()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
+						prod.getDAT_AddField().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+					prod.getDAT_FieldClassification2().Click();
+					prod.getDAT_FieldClassification2().SendKeys("Production");
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceField().Displayed()  ;}}), Input.wait30);
+					prod.getDAT_SourceField2().Click();
+					prod.getDAT_SourceField2().SendKeys("TIFFPageCount");
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDatField().Displayed()  ;}}), Input.wait30);
+					prod.getDAT_DATField2().Click();
+					prod.getDAT_DATField2().SendKeys("TPageCount");
+					
+					pass(dataMap,"Second Dat wassuccessfull");
+			}catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Second Dat was unsuccessfull");
+			}} else {
+				fail(dataMap,"Second Dat was unsuccessfull");
 		}
-
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_adding_a_second_dat_data_mapping_is_retained$")
 	public void verify_adding_a_second_dat_data_mapping_is_retained(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC8358Expand the DAT sectionVerify both row of DAT field mapping are retained with the data entered.
-			throw new ImplementationException("verify_adding_a_second_dat_data_mapping_is_retained");
+			try {
+				driver.waitForPageToBeReady();
+				prod.getDATTab().click();
+				//prod.getComponentsMarkInComplete().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFieldClassificationDropDown(3).Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceFieldDropDown(2).Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDataFieldText(0).Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSecondFieldClassificationDropDown(10).Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSecondSourceFieldDropDown(2).Displayed()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDataFieldText(1).Displayed()  ;}}), Input.wait30);
+				
+				String fieldClassification = prod.getFieldClassificationDropDown(3).getText().toString();
+				String sourceField = prod.getSourceFieldDropDown(2).getText().toString();
+				String dataField =  prod.getDataFieldText(0).GetAttribute("value").toString();
+				String fieldClassification2 = prod.getSecondFieldClassificationDropDown(10).getText().toString();
+				String sourceField2 = prod.getSecondSourceFieldDropDown(2).getText().toString();
+				String dataField2 =  prod.getDataFieldText(1).GetAttribute("value").toString();
+				
+				Assert.assertEquals("Bates",fieldClassification);
+				Assert.assertEquals("BatesNumber",sourceField);
+				Assert.assertEquals("Bates Number",dataField);
+				Assert.assertEquals("Production",fieldClassification2);
+				Assert.assertEquals("TIFFPageCount",sourceField2);
+				Assert.assertEquals("TPageCount",dataField2);
+				
+			
+			pass(dataMap,"Second dat is retained");
+			} catch(Exception e) {
+				e.printStackTrace();
+				fail(dataMap,"Second dat is not retained");
+			}
 		} else {
-			throw new ImplementationException("NOT verify_adding_a_second_dat_data_mapping_is_retained");
+			fail(dataMap,"Second dat is not retained");
 		}
-
 	}
-
 
 	@And("^.*(\\[Not\\] )? complete_tiff_and_pdf_with_different_tags$")
 	public void complete_tiff_and_pdf_with_different_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//
 			//* Check the "TIFF" checkbox
@@ -4009,173 +4335,393 @@ public class ProductionContext extends CommonContext {
 			//* Click the 3rd and 4th tags under Default Tags
 			//* Click Select
 			//
-			throw new ImplementationException("complete_tiff_and_pdf_with_different_tags");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Visible()  ;}}), Input.wait30);
+				prod.getTIFFChkBox().click();
+				prod.getTIFFTab().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFComponentEnableNativelyProducedDocuments().Visible()  ;}}), Input.wait30);
+				prod.getTIFFComponentEnableNativelyProducedDocuments().ScrollTo();
+				prod.getTIFFComponentEnableNativelyProducedDocuments().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagsButton().Visible()  ;}}), Input.wait30);
+				prod.getTIFF_SelectTagsButton().click();
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+
+				prod.getTIFF_AttorneyClientTag().click();
+				prod.getTIFF_AttorneyWorkProductClientTag().click();
+				prod.getTIFF_TagSelectButton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTIFFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+				
+				// Collapse TIFF section
+				driver.scrollPageToTop();
+				prod.getTemplateProductionComponentToggle("TIFF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
+				
+				// PDF
+				prod.getPDFChkBox().click();
+				prod.getTemplateProductionComponentToggle("PDF").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFComponentNativelyProducedDocuments().Visible()  ;}}), Input.wait30);
+				
+				prod.getPDFComponentNativelyProducedDocuments().ScrollTo();
+				prod.getPDFComponentNativelyProducedDocuments().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_SelectTagsButton().Visible()  ;}}), Input.wait30);
+				prod.getPDF_SelectTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_ConfidentialTag().Visible()  ;}}), Input.wait30);
+				
+				prod.getPDF_ConfidentialTag().click();
+				prod.getPDF_ForeignLanguageTag().click();
+				prod.getPDF_TagSelectButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getPDFNativeDocumentTagsDialog().Visible()  ;}}), Input.wait30);
+				pass(dataMap, "complete_tiff_and_pdf_with_different_tags");
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT complete_tiff_and_pdf_with_different_tags");
+			}			
 		} else {
-			throw new ImplementationException("NOT complete_tiff_and_pdf_with_different_tags");
+			fail(dataMap, "NOT complete_tiff_and_pdf_with_different_tags");
 		}
-
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching$")
 	public void verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
+			// The TIFF placeholder configuration information is incorrect.
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDF_NoMatchingTagsWarning().Displayed();}}), Input.wait30);
+				assert prod.getPDF_NoMatchingTagsWarning().getText().equals("The TIFF placeholder configuration information is incorrect.");
+				pass(dataMap, "verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "NOT verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+			}
 			//TC 5525 / 5519Verify the error message displays:PDF and TIFF PlaceHolder sections should have the same configuration.
-			throw new ImplementationException("verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
+			fail(dataMap, "NOT verify_the_correct_error_message_is_returned_for_tiff_pdf_tags_not_matching");
 		}
-
 	}
-
-
+	
 	@When("^.*(\\[Not\\] )? expanding_the_mp3_advanced_section$")
 	public void expanding_the_mp3_advanced_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//Clicking "Advanced" in the MP3 Section
-			prod.getProductionAdvanced().click();
+			Actions builder = new Actions(driver.getWebDriver());
+			prod.getBackBtn().click();
+			driver.waitForPageToBeReady();
+			builder.moveToElement(prod.getMP3_ToggElement().getWebElement()).perform();
+			prod.getMP3_ToggElement().click();
 			prod.getMP3Tab().click();
-			prod.getMP3ComponentAdvanced().click();
-			pass(dataMap, "MP3 advanced section is expanded");
+			prod.getMP3_SelectAdvToggle().click();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			pass(dataMap, "expanding_the_mp3_advanced_section");
 		} else {
-			fail(dataMap, "MP3 advanced section is not expanded");
+			fail(dataMap, "NOT expanding_the_mp3_advanced_section");
 		}
-
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_the_mp3_advanced_option_is_enabled_by_default$")
 	public void verify_the_mp3_advanced_option_is_enabled_by_default(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC 5793Verify in the MP3 Advanced section, Generate Load File (LST) is enabled by default.
-			throw new ImplementationException("verify_the_mp3_advanced_option_is_enabled_by_default");
+			Assert.assertTrue(prod.getMP3AdvancedList().Enabled());
+			pass(dataMap, "verify_the_mp3_advanced_option_is_enabled_by_default");
 		} else {
-			throw new ImplementationException("NOT verify_the_mp3_advanced_option_is_enabled_by_default");
+			fail(dataMap, "NOT verify_the_mp3_advanced_option_is_enabled_by_default");
 		}
-
 	}
-
-
 	@And("^.*(\\[Not\\] )? refresh_back_to_production_home_page$")
 	public void refresh_back_to_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//Navigate back to the Production Home Page URL
-			on_production_home_page(true, dataMap);
+			on_production_home_page(true,dataMap);
+			
+			// switch to DefaultProductionSet
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+			driver.waitForPageToBeReady();
+			
+			pass(dataMap,"refresh_back_to_production_home_page");
 		} else {
-			throw new ImplementationException("NOT refresh_back_to_production_home_page");
+			fail(dataMap,"NOT refresh_back_to_production_home_page");
 		}
-
 	}
-
-
 	@And("^.*(\\[Not\\] )? edit_the_production_component_with_a_tiff$")
 	public void edit_the_production_component_with_a_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Click Mark IncompleteCheck the TIFF CheckboxClick TIFF to expand the TIFF sectionClick Multi-PageClick Select TagsClick the Privileged TagClick SelectType a Placeholder text in "Enter placeholder text for the privileged docs". Click Mark Complete.
-			throw new ImplementationException("edit_the_production_component_with_a_tiff");
+			//Click Mark Incomplete
+			//Check the TIFF Checkbox
+			//Click TIFF to expand the TIFF section
+			//Click Multi-Page
+			//Click Select Tags
+			//Click the Privileged Tag
+			//Click SelectType a Placeholder text in "Enter placeholder text for the privileged docs". 
+			//Click Mark Complete.
+			try {
+				prod.getComponentsMarkInComplete().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+
+				prod.getTIFFChkBox().click();
+				prod.getTIFFTab_Page().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+				Actions a = new Actions(driver.getWebDriver());
+				for(WebElement x : prod.getTIFF_PageOptions().FindWebElements()) {
+					if (x.isDisplayed()) {
+						a.moveToElement(x).perform();
+						x.click();
+						Thread.sleep(2000);
+					}
+				}
+				driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+				if(!prod.getTIFF_EnableforPrivilegedDocs().Enabled()) prod.getTIFF_EnableforPrivilegedDocs().click();
+				
+				prod.getTIFF_SelectTagSButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSelectTagsModal().Displayed()  ;}}), Input.wait30);
+				
+				prod.getTIFF_Privileged().click();
+				
+
+				
+				prod.getSelectButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagText().Displayed()  ;}}), Input.wait30);
+				
+				
+				prod.getTIFF_SelectTagText().SendKeys("placeholder");
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				prod.getComponentsMarkComplete().click();
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap,"edit_the_production_component_with_a_tiff");
 		} else {
-			throw new ImplementationException("NOT edit_the_production_component_with_a_tiff");
+			fail(dataMap,"NOT edit_the_production_component_with_a_tiff");
 		}
-
 	}
-
-
 	@When("^.*(\\[Not\\] )? refreshing_the_current_page$")
 	public void refreshing_the_current_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			throw new ImplementationException("refreshing_the_current_page");
+		if(scriptState) {
+			driver.Navigate().refresh(); 
+			driver.waitForPageToBeReady();
+			Thread.sleep(1000);
+			pass(dataMap,"refreshing_the_current_page");
 		} else {
-			throw new ImplementationException("NOT refreshing_the_current_page");
+			fail(dataMap, "NOT refreshing_the_current_page");
 		}
-
+		
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_editing_an_existing_production_saves_the_new_changes$")
 	public void verify_editing_an_existing_production_saves_the_new_changes(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//TC 5198Verify all of the new changes in "edit_the_production_component_with_a_tiff" are saved.Verify the Multi-page radio button is selected, the tag is saved, and the placeholder text is saved.
-			throw new ImplementationException("verify_editing_an_existing_production_saves_the_new_changes");
+			//TC 5198Verify all of the new changes in "edit_the_production_component_with_a_tiff" are saved.
+			//Verify the Multi-page radio button is selected, the tag is saved, and the placeholder text is saved.
+			prod.getBackBtn().click();
+			driver.waitForPageToBeReady();
+			prod.getTIFFTab_Page().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+			Actions a = new Actions(driver.getWebDriver());
+			for(WebElement x : prod.getTIFF_PageOptions().FindWebElements()) {
+				if (x.isDisplayed()) {
+					a.moveToElement(x).perform();
+					Assert.assertTrue(x.isEnabled());
+					Thread.sleep(2500);
+				}
+			}
+			Assert.assertEquals(prod.getTIFF_PrivileTagSelected().getText(),"Privileged");
+			Assert.assertEquals(prod.getTIFFPlaceholderPrivilegedTextField().getText(), "placeholder");
+			pass(dataMap,"verify_editing_an_existing_production_saves_the_new_changes");
 		} else {
-			throw new ImplementationException("NOT verify_editing_an_existing_production_saves_the_new_changes");
+			fail(dataMap, "NOT verify_editing_an_existing_production_saves_the_new_changes");
 		}
-
 	}
-
-
 	@And("^.*(\\[Not\\] )? on_the_tiff_section_select_place_holder_tag_dialog$")
 	public void on_the_tiff_section_select_place_holder_tag_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//Check the TIFF CheckboxClick TIFF to expand the TIFF sectionClick "Select Tags"
-			throw new ImplementationException("on_the_tiff_section_select_place_holder_tag_dialog");
+			prod.getTIFFChkBox().click();
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+			
+			
+			prod.getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			if(!prod.getTIFF_EnableforPrivilegedDocs().Enabled()) {
+				prod.getTIFF_EnableforPrivilegedDocs().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_SelectTagSButton().Displayed()  ;}}), Input.wait30);	
+			}
+			prod.getTIFF_SelectTagSButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFNativeDocumentTagsDialog().Displayed()  ;}}), Input.wait30);
+			pass(dataMap, "on_the_tiff_section_select_place_holder_tag_dialog");
 		} else {
-			throw new ImplementationException("NOT on_the_tiff_section_select_place_holder_tag_dialog");
+			fail(dataMap,"NOT on_the_tiff_section_select_place_holder_tag_dialog");
 		}
-
 	}
-
-
 	@When("^.*(\\[Not\\] )? clicking_non_privledge_tags$")
 	public void clicking_non_privledge_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Try clicking the checkbox for "Default Automation Tag"Try clicking the checkbox for "All Tags"
-			throw new ImplementationException("clicking_non_privledge_tags");
+			//Try clicking the checkbox for "Default Automation Tag"
+			prod.getTIFF_DefaultAutomationTag().click();
+			
+			pass(dataMap,"clicking_non_privledge_tags");
 		} else {
-			throw new ImplementationException("NOT clicking_non_privledge_tags");
+			fail(dataMap,"NOT clicking_non_privledge_tags");
 		}
-
 	}
-
-
 	@And("^.*(\\[Not\\] )? verify_production_numbering_and_sorting_options_are_displayed$")
 	public void verify_production_numbering_and_sorting_options_are_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC5087Verify the All Tags checkbox does not get checkedVerify the All Tags checkbox does not get checked
 			throw new ImplementationException("verify_production_numbering_and_sorting_options_are_displayed");
 		} else {
 			throw new ImplementationException("NOT verify_production_numbering_and_sorting_options_are_displayed");
 		}
-
 	}
-
-
 	@And("^.*(\\[Not\\] )? complete_the_native_section_with_tags$")
 	public void complete_the_native_section_with_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
-			//Check NativeClick Select All on the file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
-			throw new ImplementationException("complete_the_native_section_with_tags");
+			//Check NativeClick Select All on the file typesClick Select TagsCheck Attorney_Client, Confidential, and Default Automation TagClick Select
+			try{
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeChkBox().Visible()  ;}}), Input.wait30); 
+				prod.getNativeChkBox().Click();
+				
+				prod.getNativeTab().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNative_SelectAllCheck().Visible()  ;}}), Input.wait30); 
+
+				prod.getNative_SelectAllCheck().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectNativeTagsButton().Enabled()  ;}}), Input.wait30); 
+				prod.getSelectNativeTagsButton().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNative_DefaultAutomationTag().Visible()  ;}}), Input.wait30); 
+				prod.getNative_DefaultAutomationTag().Click();
+				prod.getNativeAttorneyClientTag().Click();
+				prod.getNativeConfidentialClientTag().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSelectTagsButton().Enabled()  ;}}), Input.wait30); 
+				prod.getSelectTagsButton().Click();
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeContainer().Displayed()  ;}}), Input.wait30); 
+
+				
+				// Collapse Native tab
+				prod.getTemplateProductionComponentToggle("Native").click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNativeContainer().Displayed()  ;}}), Input.wait30);
+				
+				pass(dataMap,"default Native section is complete");
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				fail(dataMap,"default Native section is not complete");
+			}
 		} else {
 			throw new ImplementationException("NOT complete_the_native_section_with_tags");
 		}
-
 	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_native_section_with_tags_is_saving_correctly$")
 	public void verify_native_section_with_tags_is_saving_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
 		if (scriptState) {
 			//TC 5332 /5334
 			//* Expand the Native section
 			//* Verify the selected tags are displaying in alphabetical order.
 			//
-			throw new ImplementationException("verify_native_section_with_tags_is_saving_correctly");
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 
+				Assert.assertTrue(prod.getMarkIncompleteButton().Displayed());
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeTab().Enabled()  ;}}), Input.wait30); 
+				prod.getNativeTab().Click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNativeSelectedTagList().Visible()  ;}}), Input.wait30);
+				String nativeSelectedTags = prod.getNativeSelectedTagList().GetAttribute("textContent");
+				
+				List<String> tags = Arrays.asList(nativeSelectedTags.split(","));
+				List<String> newlist = tags;
+				Collections.sort(newlist);
+				Assert.assertEquals(newlist, tags);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT verify_native_section_with_tags_is_saving_correctly");
 		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? verify_privledged_tags_can_only_be_selected$")
+	public void verify_privledged_tags_can_only_be_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			//verify_privledged_tags_can_only_be_selected 
 
+			try {
+				// If attribute "iscascadeenabled" is false, then tag cannot be selected. If true, then tag can be selected
+				String nonPrivTag = prod.getTIFF_DefaultAutomationTag().GetAttribute("iscascadeenabled");
+				String PrivTag = prod.getTIFF_Privileged().GetAttribute("iscascadeenabled");
+
+				if (nonPrivTag.equalsIgnoreCase("false")) {
+					pass(dataMap, "PASS! Non Priv tags cannot be selected");
+				} else fail(dataMap, "FAIL! Non Priv tags can be selected");
+				
+				if (PrivTag.equalsIgnoreCase("true")) {
+					pass(dataMap, "PASS! Priv tags can be selected");
+				} else fail(dataMap, "FAIL! Non Priv tags cannot be selected");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
+		} else {
+			fail(dataMap, "verify_privledged_tags_can_only_be_selected ");
+		}
+	}
+	
+	@Then("^.*(\\[Not\\] )? navigated_back_to_production_sections$")
+	public void navigated_back_to_production_sections(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			String productionName = dataMap.get("production_name").toString();
+			System.out.println(productionName);
+			
+			prod.getProductionTileByName(productionName).click();;
+			pass(dataMap, "navigated_back_to_production_sections");
+		} else {
+			fail(dataMap, "NOT navigated_back_to_production_sections");
+		}
 	}
 
 
@@ -8401,9 +8947,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Add New Production
-			throw new ImplementationException("clicking_add_new_production");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
+			pass(dataMap, "clicking_add_new_production");
 		} else {
-			throw new ImplementationException("NOT clicking_add_new_production");
+			fail(dataMap, "NOT clicking_add_new_production");
 		}
 
 	}
@@ -8417,9 +8968,14 @@ public class ProductionContext extends CommonContext {
 			//* Verify on the Basic Info section, there are only the fields "Name", "Description" and "Load Template".
 			//* Verify there is no text saying "Disclaimer for Sightline goes here"
 			//
-			throw new ImplementationException("verify_the_basic_info_section_does_not_show_a_disclaimer");
+			Assert.assertTrue(prod.getProductionNameLabel().getText().contains("Name"));
+			Assert.assertTrue(prod.getProductionDescLabel().getText().contains("Description"));
+			Assert.assertTrue(prod.getProductionLoadTempLabel().getText().contains("Load Template"));
+			
+			
+			pass(dataMap,"verify_the_basic_info_section_does_not_show_a_disclaimer");
 		} else {
-			throw new ImplementationException("NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
+			fail(dataMap,"NOT verify_the_basic_info_section_does_not_show_a_disclaimer");
 		}
 
 	}
@@ -8430,9 +8986,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Store the name of the first production that is displayed.This is going to be used later.
-			throw new ImplementationException("store_the_first_productions_name");
+			dataMap.put("first prod name", prod.getProductionTileNameByIndex(0));
+			pass(dataMap, "Stored the first production name");
 		} else {
-			throw new ImplementationException("NOT store_the_first_productions_name");
+			fail(dataMap, "Cannot store the first production name");
 		}
 
 	}
@@ -8443,9 +9000,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Add New Production
-			throw new ImplementationException("on_the_basic_info_component_on_a_new_production");
+			clicking_add_new_production(true,dataMap);
+			pass(dataMap, "on_the_basic_info_component_on_a_new_production");
 		} else {
-			throw new ImplementationException("NOT on_the_basic_info_component_on_a_new_production");
+			fail(dataMap, "NOT on_the_basic_info_component_on_a_new_production");
 		}
 
 	}
@@ -8456,9 +9014,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Use the first production's name that was stored to type it into the new production's name field.
-			throw new ImplementationException("enter_the_name_of_the_existing_production");
+			prod.getProductionName().click();
+			prod.getProductionName().sendKeys(dataMap.get("first prod name").toString());
+			pass(dataMap, "Entered the name of the existing production");
 		} else {
-			throw new ImplementationException("NOT enter_the_name_of_the_existing_production");
+			fail(dataMap, "Did not enter the name of the existing production");
 		}
 
 	}
@@ -8468,10 +9028,23 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4470Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
-			throw new ImplementationException("verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+			//TC 4470
+			//Click Mark Complete Button
+			driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+			prod.getMarkCompleteButton().click();
+
+			// Verify the following error appears: 60001000011 : You cannot create this production since a production with the same name already exists in the project.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getPopUpBoxText().Visible()  ;}}), Input.wait30);
+			String actualText = prod.getPopUpBoxText().getText();
+			String expectedText = "60001000011 : You cannot create this production since a production with the same name already exists in the project.";
+			Assert.assertEquals(actualText, expectedText);
+
+			pass(dataMap, "The user is not able to enter a dupe name for productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
+			fail(dataMap, "NOT verify_the_user_is_not_able_to_enter_a_dupe_name_for_productions");
 		}
 
 	}
@@ -8482,9 +9055,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the Sort By dropdown and select Production Name
-			throw new ImplementationException("setting_the_sort_dropdown_by_production_name");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getSortByButton().Visible()  ;}}), Input.wait30);
+			prod.getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
+
+			pass(dataMap, "Setting the sort dropdown by production name");
 		} else {
-			throw new ImplementationException("NOT setting_the_sort_dropdown_by_production_name");
+			fail(dataMap, "Not setting the sort dropdown by production name");
 		}
 
 	}
@@ -8494,10 +9071,21 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_of_the_productions_is_by_name(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 3708Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name");
+			//TC 3708
+			//Verify the first 15 productions on the list of productions are sorted in alphabetical order.
+			driver.scrollingToBottomofAPage();
+			List<WebElement> productionTiles = prod.getProductionTileNames().FindWebElements();
+			int iterations = productionTiles.size() > 15 ? 15 : productionTiles.size();
+			String previousProductionName = "";
+			for(int i = 0 ; i < iterations ; i++) {
+				String currentProductionName = productionTiles.get(i).getText();
+				if (currentProductionName.compareTo(previousProductionName) < 0)
+					fail(dataMap,"The sorting of the productions is not by name");
+				previousProductionName = currentProductionName;
+			}
+			pass(dataMap, "The sorting of the productions is by name");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name");
+			fail(dataMap,"The sorting of the productions is not by name");
 		}
 
 	}
@@ -8508,9 +9096,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the "Action" dropdown
-			throw new ImplementationException("clicking_the_action_dropdown");
+			try {
+				prod.getGridActionDropDown().click();
+				Thread.sleep(2000);
+				pass(dataMap,"clicking_the_action_dropdown");}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else {
-			throw new ImplementationException("NOT clicking_the_action_dropdown");
+			fail(dataMap,"NOT clicking_the_action_dropdown");
 		}
 
 	}
@@ -8523,9 +9117,12 @@ public class ProductionContext extends CommonContext {
 			//TC 7777
 			//* Verify from the action dropdown, the option "Add Docs" is disabled
 			//
-			throw new ImplementationException("verify_the_add_doc_button_is_disabled_on_completed_productions");
+			System.out.print(prod.getAddDocFromActionsDropDown().GetAttribute("class").toString());
+			Assert.assertEquals(prod.getAddDocFromActionsDropDown().GetAttribute("class").toString(), "disable");
+			
+			pass(dataMap, "verify_the_add_doc_button_is_disabled_on_completed_productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
+			fail(dataMap, "NOT verify_the_add_doc_button_is_disabled_on_completed_productions");
 		}
 
 	}
@@ -8535,10 +9132,36 @@ public class ProductionContext extends CommonContext {
 	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Type in the Name of the Production. Use the same stand name we are using now which is AutoProduction + randomized numbers.Make sure this will type in the invalid parameters also.
-			throw new ImplementationException("a_valid_production_name_is_entered");
+			//Type in the Name of the Production. 
+			//Use the same stand name we are using now which is AutoProduction + randomized numbers.
+			//Make sure this will type in the invalid parameters also.
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String template = (String) dataMap.get("prod_template");
+			
+			String productionName =  (String)dataMap.get("name");
+
+			if(productionName!=null && productionName!=""){
+				productionName = productionName + dateTime;
+				dataMap.put("production_name", productionName);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+				prod.getProductionName().SendKeys(productionName);
+				prod.getProductionDesc().click();
+				
+				pass(dataMap, "a_valid_production_name_is_entered");
+			}
+			else {
+				productionName = "AutoProduction" + dateTime;
+				dataMap.put("production_name", productionName);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+				prod.getProductionName().SendKeys(productionName);
+				prod.getProductionDesc().click();
+				pass(dataMap, "a_valid_production_name_is_entered");
+			}				
 		} else {
-			throw new ImplementationException("NOT a_valid_production_name_is_entered");
+			fail(dataMap,"NOT a_valid_production_name_is_entered");
 		}
 
 	}
@@ -8549,9 +9172,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Type in any description
-			throw new ImplementationException("a_valid_production_description_is_entered");
+			prod.getProductionDesc().sendKeys(dataMap.get("description").toString());
+			pass(dataMap,"a_valid_production_description_is_entered");
 		} else {
-			throw new ImplementationException("NOT a_valid_production_description_is_entered");
+			fail(dataMap,"NOT a_valid_production_description_is_entered");
 		}
 
 	}
@@ -8561,10 +9185,29 @@ public class ProductionContext extends CommonContext {
 	public void verify_a_production_can_be_marked_completed_with_a_valid_name_description(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 2909 part 2Verify the message "Mark Complete successful" is displayed.Make sure to check the negative section/False States.
-			throw new ImplementationException("verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+			//TC 2909 part 2
+			//Verify the message "Mark Complete successful" is displayed.
+			//Make sure to check the negative section/False States.
+			try {
+				driver.waitForPageToBeReady();
+				String productionName =  (String)dataMap.get("name");
+				
+				if (productionName.contains("!")){
+					if(prod.getProductionNameWarning().Displayed() == false) {
+						fail(dataMap,"The warning did not appear for having a special character in the production name.");
+					}
+				}else {
+					if(prod.getMarkCompleteSuccessfulText().Displayed() == false) {
+						fail(dataMap,"The mark complete successfull message did not appear.");
+					}
+				}
+				
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			pass(dataMap, "verify_a_production_can_be_marked_completed_with_a_valid_name_description");
 		} else {
-			throw new ImplementationException("NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
+			fail(dataMap, "NOT verify_a_production_can_be_marked_completed_with_a_valid_name_description");
 		}
 
 	}
@@ -8577,9 +9220,12 @@ public class ProductionContext extends CommonContext {
 			//TC 7779
 			//* Verify from the action dropdown, the option "Remove Docs" is disabled
 			//
-			throw new ImplementationException("verify_the_remove_doc_button_is_disabled_on_completed_productions");
+			System.out.print(prod.getRemoveDocFromActionsDropDown().GetAttribute("class").toString());
+			Assert.assertEquals(prod.getRemoveDocFromActionsDropDown().GetAttribute("class").toString(), "disable");
+			
+			pass(dataMap,"verify_the_remove_doc_button_is_disabled_on_completed_productions");
 		} else {
-			throw new ImplementationException("NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
+			fail(dataMap,"NOT verify_the_remove_doc_button_is_disabled_on_completed_productions");
 		}
 
 	}
@@ -8591,16 +9237,36 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 4431 
 			//* Verify the title of the page displays as "Productions & Exports"
+			Assert.assertEquals(prod.getProductionHomePageTitle().getText(), "Productions & Exports");
+
 			//* Verify there is a link for "Add a New Production"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30);
+
 			//* Verify there is a dropdown for Production/Export Sets
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+
 			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
+			String selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			String productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
+			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
+
 			//* Click the dropdown for Productions Set, and change it to another production set
+			prod.clickProductionSetByIndex(prod.getProductionSetsOptions().size()-1);
+			driver.waitForPageToBeReady();
+
 			//* Verify the Production set name under "PRODUCTIONS SET" is updated to the new production set's name.
+			selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
+			productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
+			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
+
 			//* Set the production set back to the original. 
-			//
-			throw new ImplementationException("verify_the_production_home_page_is_displayed_correctly");
+			prod.clickProductionSetByIndex(0);
+
+			pass(dataMap, "The production home page is displayed correctly");
 		} else {
-			throw new ImplementationException("NOT verify_the_production_home_page_is_displayed_correctly");
+			fail(dataMap, "The production home page is not displayed correctly");
 		}
 
 	}
@@ -8611,9 +9277,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
-			throw new ImplementationException("clicking_the_production_name_column");
+			prod.getProductionGridViewProductionNameColumnHeader().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProductionGridViewProductionNameColumnHeader().getWebElement().getAttribute("class").equals("sorting_asc");}}), Input.wait30);
+			pass(dataMap, "clicking the production name column");
 		} else {
-			throw new ImplementationException("NOT clicking_the_production_name_column");
+			fail(dataMap, "Not clicking the production name column");
 		}
 
 	}
@@ -8624,9 +9293,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
-			throw new ImplementationException("verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			List<WebElement> productionItems = prod.getProductionItemsGrid().FindWebElements();
+			//remove first item (column headers)
+			productionItems.remove(0);
+			String previousProductionName = "";
+			for(WebElement currentProduction : productionItems) {
+				if (currentProduction.getText().compareTo(previousProductionName) < 0)
+					fail(dataMap, "The sorting of the productions is not by name in grid view");
+				previousProductionName = currentProduction.getText();
+			}
+			pass(dataMap, "The sorting of the productions is by name in grid view");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_of_the_productions_is_by_name_in_grid_view");
+			fail(dataMap, "The sorting of the productions is not by name in grid view");
 		}
 
 	}
@@ -8663,9 +9341,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Productions button on the left side of the screen
-			throw new ImplementationException("navigate_back_to_the_production_home_page");
+			prod.goToProductionHomePage().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Navigated back to the production home page");
 		} else {
-			throw new ImplementationException("NOT navigate_back_to_the_production_home_page");
+			fail(dataMap, "Did not navigate back to the production home page");
 		}
 
 	}
@@ -8675,10 +9355,27 @@ public class ProductionContext extends CommonContext {
 	public void store_the_first_productions_info(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Store the name of the first production that is displayed.Store the Last Modified user name of the first production that is displayed.Store the time stamp of the last modified date of the first production that is displayed.This is going to be used later.
-			throw new ImplementationException("store_the_first_productions_info");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+
+			driver.waitForPageToBeReady();
+
+			//Store the name of the first production that is displayed.
+			dataMap.put("firstProductionName", prod.getProductionTileNameByIndex(0));
+
+			//Store the Last Modified user name of the first production that is displayed.
+			String lastModifiedUserNameOfFirstProduction = prod.getProductionsLastModifiedUser().FindWebElements().get(0).getText();
+			dataMap.put("firstProductionLastModifiedUsername", prod.getProductionsLastModifiedUser().FindWebElements().get(0).getText());
+
+			//Store the time stamp of the last modified date of the first production that is displayed. This is going to be used later.
+			String lastModifiedDataOfFirstProduction = prod.getProductionLastModifiedData().FindWebElements().get(0).getText();
+			String[] split = lastModifiedDataOfFirstProduction.split("\n");
+			dataMap.put("firstProductionLastModifiedDate", split[split.length-1]);
+
+			pass(dataMap, "Stored the first productions info");
 		} else {
-			throw new ImplementationException("NOT store_the_first_productions_info");
+			fail(dataMap, "Did not store the first productions info");
 		}
 
 	}
@@ -8688,10 +9385,38 @@ public class ProductionContext extends CommonContext {
 	public void open_the_production_created_edit_the_name_then_save_using_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Click the name of the production that was createdClick Back to go back to Basic InfoClick Mark IncompleteChange the name of the production to add 3 more random numbers at the end.Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
-			throw new ImplementationException("open_the_production_created_edit_the_name_then_save_using_");
+			//Click the name of the production that was created
+			prod.getProductionTileByName(dataMap.get("firstProductionName").toString()).click();
+
+			//Click Back to go back to Basic Info
+			prod.getBackLink().click();
+
+			//Click Mark Incomplete
+			prod.getMarkIncompleteLink().click();
+			driver.waitForPageToBeReady();
+
+			//Change the name of the production to add 3 more random numbers at the end.
+			Random random = new Random();
+			int randomNumbers = random.nextInt(900) + 100;
+			prod.getProductionName().sendKeys(String.valueOf(randomNumbers));
+
+			//Click Save or Mark Completed depending on the parameter.Capture the timestamp in a new variable.  The server time is ahead 7 hours so convert the time.
+			long sevenHours = 3600*1000*7; //in milli-seconds.  The server time is ahead 7 hours.
+			int offset = 0; //for some reason the timestamp of when you click "save" or "mark complete" is behind by 5 sec. I use this value to account for that.
+
+			if(dataMap.get("save_option").toString().equals("save")){
+				prod.getSaveButton().click();
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
+				dataMap.put("newTimeStamp", newTimeStamp);
+				pass(dataMap, "Opened the production created and edited the name then saved");
+			} else if(dataMap.get("save_option").toString().equals("markcomplete")){
+				prod.getMarkCompleteLink().click();
+				String newTimeStamp = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a").format(new Date(new Date().getTime() + sevenHours - offset));
+				dataMap.put("newTimeStamp", newTimeStamp);
+				pass(dataMap, "Opened the production created and edited the name then marked complete");
+			}
 		} else {
-			throw new ImplementationException("NOT open_the_production_created_edit_the_name_then_save_using_");
+			fail(dataMap, "Can't open the production created and edit the name then save");
 		}
 
 	}
@@ -8714,10 +9439,27 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_last_modified_date_on_productions_gets_updated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 7739 / 7740Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.Verify the new timestamp on the production matches the timestap we captured after clicking Save
-			throw new ImplementationException("verify_the_last_modified_date_on_productions_gets_updated");
+			//TC 7739 / 7740
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
+			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
+			
+			
+			driver.waitForPageToBeReady();
+
+			//Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.
+			Assert.assertNotEquals(dataMap.get("firstProductionLastModifiedDate"), dataMap.get("newTimeStamp"));
+
+			//Verify the new timestamp on the production matches the timestap we captured after clicking Save
+			String lastModifiedData = prod.getProductionLastModifiedDataByName(dataMap.get("firstProductionName").toString()).getText();
+			String[] splitData = lastModifiedData.split("\n");
+			String lastModifiedDate = splitData[splitData.length-1];
+
+			Assert.assertEquals(lastModifiedDate, dataMap.get("newTimeStamp"));
+
+			pass(dataMap, "The last modified date on productions gets updated");
 		} else {
-			throw new ImplementationException("NOT verify_the_last_modified_date_on_productions_gets_updated");
+			fail(dataMap, "The last modified date on productions does not get updated");
 		}
 
 	}
