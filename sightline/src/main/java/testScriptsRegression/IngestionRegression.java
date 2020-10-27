@@ -6236,7 +6236,7 @@ public class IngestionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_select_valid_email_metadata_and_click_preview_run_button_When_click_run_ingest_button_Then_verify_ingestion_with_email_metadata_is_published() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6247,11 +6247,13 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("dat_load_file", "DAT4_STC_newdateformatEmailData - Copy.dat");
+			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "GD_994_Native_Text_ForProduction");
+			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "EmailCCNameAndCCAddress");
 			dataMap.put("source_system", "TRUE");
@@ -6274,7 +6276,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion, Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_datasets_home_page_and_search_for_dataset_When_on_doc_view_Then_verify_concatenated_values_are_displayed_correctly_in_the_email() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6285,6 +6287,8 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_datasets_home_page(true, dataMap);
 			dataMap.put("dataset_name", "Email Set");
@@ -6305,7 +6309,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_When_select_valid_email_metadata_Then_verify_valid_email_metadata_option_is_available() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6316,11 +6320,13 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
 			dataMap.put("source_location", "IngestionTestData"+File.separator+"Automation");
-			dataMap.put("source_folder", "GD_994_Native_Text_ForProduction");
+			dataMap.put("source_folder", "SQA_Default_Automation");
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "NUIX");
@@ -7479,7 +7485,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion, Positive", "WIP"})
+	@Test(groups = {"Ingestion, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_publish_ingested_files_When_search_for_ingested_docs_Then_verify_ingested_docs_are_in_sequential_order() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -7490,6 +7496,8 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
 			dataMap.put("dat_load_file", "loadfile.dat");
@@ -7498,11 +7506,21 @@ public class IngestionRegression extends RegressionBase {
 			dataMap.put("date_time", "MM/DD/YYY");
 			dataMap.put("doc_key", "DOCID");
 			dataMap.put("source_system", "ICE");
-			context.new_ingestion_created(true, dataMap);
-			context.click_preview_run_button(true, dataMap);
-			context.click_run_ingest_button(true, dataMap);
-			context.publish_ingested_files(true, dataMap);
-			context.search_for_ingested_docs(true, dataMap);
+			dataMap.put("actionNavigateDoc", "docView");
+			dataMap.put("docRow1","ID00002550");
+			dataMap.put("docRow2","ID00002551");
+			dataMap.put("docRow3","ID00002552");
+			dataMap.put("docRow4","ID00002553");
+			dataMap.put("docRow5","ID00002554");
+			dataMap.put("docRow6","ID00002555");
+			dataMap.put("docRow7","ID00002556");
+			dataMap.put("docRow8","ID00002557");
+//			context.new_ingestion_created(true, dataMap);
+//			context.click_preview_run_button(true, dataMap);
+//			context.click_run_ingest_button(true, dataMap);
+//			context.publish_ingested_files(true, dataMap);
+			context.search_for_ingestion(true, dataMap);
+			dataMap.put("TestCase", "6318");
 			context.verify_ingested_docs_are_in_sequential_order(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -8996,7 +9014,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Indexed_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9007,9 +9025,11 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "Indexed");
+			dataMap.put("filter_option", "Indexed");
 			context.search_for_existing_ingestion_by_(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
 			context.click_action_dropdown(true, dataMap);
@@ -9030,7 +9050,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Failed_and_open_ingestion_details_page_When_click_error_count_Then_verify_ingestion_error_modal_works_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9041,13 +9061,15 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "Failed");
-			dataMap.put("view_type", "Grid View");
+			dataMap.put("filter_option", "Failed");
 			context.search_for_existing_ingestion_by_(true, dataMap);
-			context.open_ingestion_details_page(true, dataMap);
-			context.click_error_count(true, dataMap);
+			dataMap.put("errorCount", 52);
+			context.open_ingestion_details_page_with_errors(true, dataMap);
+			context.click_ingestion_error_count(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "1441|TC#1443|TC#1444|TC#1445|TC#1446");
 			context.verify_ingestion_error_modal_works_as_expected(true, dataMap);
@@ -9065,7 +9087,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Failed_and_open_ingestion_details_page_When_click_error_count_Then_verify_error_popup_closes_as_expected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9076,13 +9098,14 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "Failed");
-			dataMap.put("view_type", "Grid View");
+			dataMap.put("filter_option", "Failed");
 			context.search_for_existing_ingestion_by_(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
-			context.click_error_count(true, dataMap);
+			context.click_ingestion_error_count(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "1442");
 			context.verify_error_popup_closes_as_expected(true, dataMap);
@@ -9100,7 +9123,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_InProgress_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9111,9 +9134,11 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "In Progress");
+			dataMap.put("filter_option", "In Progress");
 			context.search_for_existing_ingestion_by_(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
 			context.click_action_dropdown(true, dataMap);
@@ -9134,7 +9159,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Cataloged_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9145,9 +9170,11 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "Cataloged");
+			dataMap.put("filter_option", "Cataloged");
 			context.search_for_existing_ingestion_by_(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
 			context.click_action_dropdown(true, dataMap);
@@ -9168,7 +9195,7 @@ public class IngestionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Ingestion", "Positive"})
+	@Test(groups = {"Ingestion", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_ingestion_home_page_and_search_for_existing_ingestion_by_Copied_and_open_ingestion_details_page_When_click_action_dropdown_Then_verify_approve_option_is_enabled_in_appropriate_situations() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9179,9 +9206,11 @@ public class IngestionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio10@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			context.on_ingestion_home_page(true, dataMap);
-			dataMap.put("filterby", "Copied");
+			dataMap.put("filter_option", "Copied");
 			context.search_for_existing_ingestion_by_(true, dataMap);
 			context.open_ingestion_details_page(true, dataMap);
 			context.click_action_dropdown(true, dataMap);
