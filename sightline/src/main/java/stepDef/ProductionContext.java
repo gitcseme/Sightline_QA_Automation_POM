@@ -9137,7 +9137,7 @@ public class ProductionContext extends CommonContext {
 			//Make sure this will type in the invalid parameters also.
 			String dateTime = new Long((new Date()).getTime()).toString();
 			String template = (String) dataMap.get("prod_template");
-			
+
 			String productionName =  (String)dataMap.get("name");
 
 			if(productionName!=null && productionName!=""){
@@ -9158,8 +9158,9 @@ public class ProductionContext extends CommonContext {
 						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
 				prod.getProductionName().SendKeys(productionName);
 				prod.getProductionDesc().click();
-				pass(dataMap, "a_valid_production_name_is_entered");
-			}				
+
+			}					
+
 		} else {
 			fail(dataMap,"NOT a_valid_production_name_is_entered");
 		}
@@ -9201,7 +9202,6 @@ public class ProductionContext extends CommonContext {
 						fail(dataMap,"The mark complete successfull message did not appear.");
 					}
 				}
-				
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
