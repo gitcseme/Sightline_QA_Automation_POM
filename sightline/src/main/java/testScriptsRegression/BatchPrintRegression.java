@@ -1788,7 +1788,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive"})
+	@Test(groups = {"BatchPrint, Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_production_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2355,7 +2355,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "WIP"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_tag_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_DocID_When_click_download_file_link_Then_verify_selected_slipsheet_fields_for_selected_tag() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
