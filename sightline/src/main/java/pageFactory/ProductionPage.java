@@ -745,11 +745,9 @@ public class ProductionPage {
     public Element getSpecifyProdLocBackBtn() {return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a");}
     public Element getPrivMarkIncompleteBtn() {return driver.FindElementById("btnProductionGuardMarkInComplete");}
     public ElementCollection getPrivRemoveBtn() {return driver.FindElementsByXPath("//*[@id=\"Rule 1\"]");}
-    public Element getShowingValueEntries() {return driver.FindElementByXPath("//*[@id=\"dtDocList_info\"]");}
-    public Element getSelectFolders() {return driver.FindElementByXPath("//*[@id=\"rdbFolders\"]");}
-    public Element getFolderArrow() {return driver.FindElementByXPath("//*[@id=\"-1\"]/i");}
-    public Element getDefaultFolder() {return driver.FindElementByXPath("//*[@id=\"1031_anchor\"]/i[1]");}
-    public Element getZeroFamilyDocs() {return driver.FindElementByXPath("//*[@id=\"0\"]");}
+    
+    public Element getDocSelectionNumOfFamilyDocs() {return driver.FindElementById("ProductionDocumentsSelectedCount");}
+    public Element getIncludeFamilyToggle() { return driver.FindElementByCssSelector("#ProductionDocumentsSelection_ToIncludeFamilies + input +i");}
 
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

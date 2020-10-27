@@ -8102,33 +8102,41 @@ public class ProductionContext extends CommonContext {
 	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-		
-			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
+			Actions builder = new Actions(driver.getWebDriver());
+			
+			//Go back to Doc Selection Page
 			driver.waitForPageToBeReady();
 			prod.getBackLink().click();
 			driver.waitForPageToBeReady();
-			
-			
-			
-			
-			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDocumentTagSelectionWithFamily_radio().Visible()  ;}}), Input.wait30); 
-			
-			prod.getSelectFolders().click();
-			prod.getFolderArrow().click();
-			prod.getDefaultFolder().click();
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
 
-			prod.getbtnDocumentsSelectionMarkComplete().click();
+		
+			//Make Incomplete
+			prod.getMarkIncompleteButton().click();
+			
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			//Toggle off Include Family Docs and Mark complete
+			prod.getIncludeFamilyToggle().click();
+			prod.getMarkCompleteButton().click();
 
-			driver.Navigate().refresh();
-			String totalDocValue = prod.getTotalDocumentsCount().getText().toString();
-			String familyDocVal = prod.getFamilyDocsCount().FindWebElements().get(4).getText();
-			String showEntry = "Showing 1 to " + totalDocValue + " of 5 entries";
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
 			
-			dataMap.put("totalDocCounts", totalDocValue);
-			dataMap.put("familyDocValue", familyDocVal);
-			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			Thread.sleep(5000);
 			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
@@ -8146,9 +8154,18 @@ public class ProductionContext extends CommonContext {
 			//* User should redirect to DocList with selected documents
 			//* User should be able to see all documents without family documents
 			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
+			int expectedDocuments = (int)dataMap.get("numOfDocs");
+
+			//Maximize amount of documents shown in table
+			prod.getDocListDropDownCount().click();
+			prod.getDocListDropDownCountMax().click();
 			driver.waitForPageToBeReady();
-			String familyDocValue = prod.getZeroFamilyDocs().getText().toString();
-			Assert.assertEquals("0",familyDocValue);
+
+			//Get number of rows and make sure its equal to the previous recorded value
+			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
+			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
 			pass(dataMap, "TC7858");
 			
 		} else {
@@ -8256,8 +8273,6 @@ public class ProductionContext extends CommonContext {
 			//* User should be able to see all documents with family documents (parent and child docs)
 			//
 			driver.waitForPageToBeReady();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getShowingValueEntries().Visible()  ;}}), Input.wait30);
 			
 			String totalEntries = dataMap.get("totalDocCounts").toString();
 			String showExactValue = "Showing 1 to " + totalEntries + " of " + totalEntries + " entries";
