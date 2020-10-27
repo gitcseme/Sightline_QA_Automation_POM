@@ -28,6 +28,8 @@ public class DocViewRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio7@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("project", "05May Proj_LCN");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG M21");
