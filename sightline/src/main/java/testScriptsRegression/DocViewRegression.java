@@ -28,6 +28,8 @@ public class DocViewRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "sqa.consilio7@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			dataMap.put("project", "05May Proj_LCN");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG M21");
@@ -780,7 +782,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke11"})
+	@Test(groups = {"DocView, Positive", "pending" })
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_all_page_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -804,9 +806,11 @@ public class DocViewRegression extends RegressionBase {
 			context.place_redaction(true, dataMap);
 			context.verify_alternate_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -817,7 +821,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "pending"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_page_range_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -922,9 +926,11 @@ public class DocViewRegression extends RegressionBase {
 			context.place_redaction(true, dataMap);
 			context.verify_alternate_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1091,7 +1097,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive", "smoke11"})
+	@Test(groups = {"DocView, Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_trueSGSame1_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

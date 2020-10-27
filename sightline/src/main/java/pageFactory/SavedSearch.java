@@ -116,11 +116,11 @@ public class SavedSearch {
     public SavedSearch(Driver driver){
 
         this.driver = driver;
+        search = new SessionSearch(driver);
         this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
-        search = new SessionSearch(driver);
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 

@@ -252,6 +252,7 @@ public class DocViewPage {
     public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
     public Element getBottomEditSideOfRedactionRectangle() {return driver.FindElementByCssSelector(".pccMarkHandleBottomLeft");}
     public Element getRedactionEditSaveBtn() {return driver.FindElementByXPath("//span[@class = 'fa fa-save']");}
+    public ElementCollection getRedactionTagOptions() {return driver.FindElementsByCssSelector("#ddlRedactionTags option");}
     public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
     
