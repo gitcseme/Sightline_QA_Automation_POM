@@ -266,6 +266,7 @@ public class ProductionPage {
     public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id='selectedMetadataField']"); }
     public ElementCollection getTIFF_BrandingInsertMetadataFieldOptions(){ return driver.FindElementsByXPath("//*[@id='selectedMetadataField']/option"); }
     public Element getMetaDataInsertButton() {return driver.FindElementByCssSelector("#MetadataPopup > footer > input");}
+    public ElementCollection getPDF_CalculatedList() { return driver.FindElementsByXPath("//ul[@id='pdfCalculatedList']//strong"); }
 
     //added by shilpi on 08/17
     public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
@@ -785,11 +786,11 @@ public class ProductionPage {
 		getBasicInfoCompleteButton().Click();
 
 		//Added to get rid of Toast message, which I think is effecting the rest of Script
-		/*
+
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
 		driver.FindElementById("botClose1").Click();
-		*/
+
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 

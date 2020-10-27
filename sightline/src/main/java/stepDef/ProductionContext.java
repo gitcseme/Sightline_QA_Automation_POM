@@ -32,6 +32,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.google.common.collect.Ordering;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -2342,9 +2344,7 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//
 			try {
-				driver.FindElementByTagName("body").SendKeys(Keys.HOME.toString());
-				Actions builder = new Actions(driver.getWebDriver());
-				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+				driver.scrollPageToTop();
 				prod.getMarkCompleteButton().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
@@ -3869,30 +3869,35 @@ public class ProductionContext extends CommonContext {
 	public void complete_the_default_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			//Production Components page is already displayedClick the DAT checkboxClick the DAT tab to open the DAT containerAdd field classification: BatesAdd source field: BatesNumberEnter DAT field: Bates Number
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
-				prod.getDATChkBox().Click();
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDATTab().Displayed()  ;}}), Input.wait30);
-				prod.getDATTab().Click();
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
+					prod.getDATChkBox().Click();
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getDATTab().Displayed()  ;}}), Input.wait30);
+					prod.getDATTab().Click();
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
-				prod.getFieldClassification().Click();
-				prod.getFieldClassification().SendKeys("Bates");
-				
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getSourceField().Displayed()  ;}}), Input.wait30);
-				prod.getSourceField().Click();
-				prod.getSourceField().SendKeys("BatesNumber");
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDatField().Displayed()  ;}}), Input.wait30);
-				prod.getDatField().Click();
-				prod.getDatField().SendKeys("Bates Number");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+					prod.getFieldClassification().Click();
+					prod.getFieldClassification().SendKeys("Bates");
+					
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceField().Displayed()  ;}}), Input.wait30);
+					prod.getSourceField().selectFromDropdown().selectByVisibleText("BatesNumber");
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDatField().Displayed()  ;}}), Input.wait30);
+					prod.getDatField().Click();
+					prod.getDatField().SendKeys("Bates Number");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT complete_the_default_dat_section");
 		}
@@ -8234,173 +8239,178 @@ public class ProductionContext extends CommonContext {
 			//If area = calculated Expand the Advanced sectionEnable Slip SheetsClick on the CALCULATED Tab
 			
 			
-				String component = (String)dataMap.get("component");
-				String area = (String)dataMap.get("area");
+				try {
+					String component = (String)dataMap.get("component");
+					String area = (String)dataMap.get("area");
 				
-				if(component.equalsIgnoreCase("TIFF")){
+					if(component.equalsIgnoreCase("TIFF")){
+
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFChkBox().Click();
+					
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFTab().Click();
+						if(area.equalsIgnoreCase("branding")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFF_OpenBrandingInsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+							prod.getTIFF_OpenBrandingInsertMetadataFieldClick().click();
+						}
+						
+						else if(area.equalsIgnoreCase("placeholder")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFFPlaceholderTechMetadataLink().Visible()  ;}}), Input.wait30); 
+							prod.getTIFFPlaceholderTechMetadataLink().click();
+						}
+						
+						else if(area.equalsIgnoreCase("filetypes")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTiff_NativeDoc().Visible()  ;}}), Input.wait30); 
+							prod.getTiff_NativeDoc().click();
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFFPlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
+							prod.getTIFFPlaceHolderInsertMetaData().click();
+						}
+						
+						else if(area.equalsIgnoreCase("redactions")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFBurnRedactionToggle().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+							prod.getTIFF_SpecifyRedactText().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFRedactionsInsertMetaData().click();
+						}
+						
+						else if(area.equalsIgnoreCase("techissue")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+				            {return prod.getTechissue_toggle().Visible() ;}}), Input.wait30);
+				            prod.getTechissue_toggle().Click();
+				            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+				            {return prod.getTIFFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
+				            prod.getTIFFTechIssueInsertMetaData().Click();
+						}
+						
+						else if(area.equalsIgnoreCase("slipsheets")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFAdvanced().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFSlipSheetsToggle().click();
+						}
+						else if (area.equalsIgnoreCase("calculated"))
+						{
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFAdvanced().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFSlipSheetsToggle().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
+							prod.getSlipSheetCalculatedTab().click();
+						}
+						else 
+						{
+							fail(dataMap, "Valid area was not selected");
+						}
+					}
+					
+					else if((component.equalsIgnoreCase("PDF"))) {
 
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getTIFFChkBox().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFChkBox().Click();
+							prod.getPDFChkBox().Displayed()  ;}}), Input.wait30);
+						prod.getPDFChkBox().Click();
 				
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFTab().Click();
+						prod.getPDFTab().Displayed()  ;}}), Input.wait30);
+						prod.getPDFTab().Click();
+					
+					
 					if(area.equalsIgnoreCase("branding")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getTIFF_OpenBrandingInsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-						prod.getTIFF_OpenBrandingInsertMetadataFieldClick().click();
+								prod.getPDF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+						prod.getPDF_InsertMetadataFieldClick().click();
 					}
 					
 					else if(area.equalsIgnoreCase("placeholder")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getTIFFPlaceholderTechMetadataLink().Visible()  ;}}), Input.wait30); 
-						prod.getTIFFPlaceholderTechMetadataLink().click();
+								prod.getPDF_PlaceholderInsertMetaData().Visible()  ;}}), Input.wait30); 
+						prod.getPDF_PlaceholderInsertMetaData().click();
 					}
 					
 					else if(area.equalsIgnoreCase("filetypes")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getTiff_NativeDoc().Visible()  ;}}), Input.wait30); 
-						prod.getTiff_NativeDoc().click();
+								prod.getpdf_NativeDoc().Visible()  ;}}), Input.wait30); 
+						prod.getPdf_NativeDoc().click();
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								prod.getTIFFPlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
-						prod.getTIFFPlaceHolderInsertMetaData().click();
+								prod.getPDFNativePlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
+						prod.getPDFNativePlaceHolderInsertMetaData().click();
 					}
 					
 					else if(area.equalsIgnoreCase("redactions")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFBurnRedactionToggle().click();
+								  prod.getPDFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFBurnRedactionToggle().click();
 						
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
-						prod.getTIFF_SpecifyRedactText().click();
+								  prod.getPDF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+						prod.getPDF_SpecifyRedactText().click();
 						
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFRedactionsInsertMetaData().click();
+								  prod.getPDFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
+						prod.getPDFRedactionsInsertMetaData().click();
 					}
-					
 					else if(area.equalsIgnoreCase("techissue")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-			            {return prod.getTechissue_toggle().Visible() ;}}), Input.wait30);
-			            prod.getTechissue_toggle().Click();
+			            {return prod.getPDFPlaceholderTechIssueToggle().Visible() ;}}), Input.wait30);
+			            prod.getPDFPlaceholderTechIssueToggle().Click();
 			            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-			            {return prod.getTIFFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
-			            prod.getTIFFTechIssueInsertMetaData().Click();
+			            {return prod.getPDFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
+			            prod.getPDFTechIssueInsertMetaData().Click();
 					}
-					
 					else if(area.equalsIgnoreCase("slipsheets")) {
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFAdvanced().click();
+								  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+						prod.getPDFAdvanced().click();
 						
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFSlipSheetsToggle().click();
+								  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetsToggle().click();
 					}
 					else if (area.equalsIgnoreCase("calculated"))
 					{
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFAdvanced().click();
+								  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+						prod.getPDFAdvanced().click();
 						
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
-						prod.getTIFFSlipSheetsToggle().click();
+								  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetsToggle().click();
 						
 						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-								  prod.getSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
-						prod.getSlipSheetCalculatedTab().click();
+								  prod.getPDFSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetCalculatedTab().click();
 					}
+			}
 					else 
 					{
 						fail(dataMap, "Valid area was not selected");
 					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				
-				else if((component.equalsIgnoreCase("PDF"))) {
 
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPDFChkBox().Displayed()  ;}}), Input.wait30);
-					prod.getPDFChkBox().Click();
-			
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getPDFTab().Displayed()  ;}}), Input.wait30);
-					prod.getPDFTab().Click();
-				
-				
-				if(area.equalsIgnoreCase("branding")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getPDF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-					prod.getPDF_InsertMetadataFieldClick().click();
-				}
-				
-				else if(area.equalsIgnoreCase("placeholder")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getPDF_PlaceholderInsertMetaData().Visible()  ;}}), Input.wait30); 
-					prod.getPDF_PlaceholderInsertMetaData().click();
-				}
-				
-				else if(area.equalsIgnoreCase("filetypes")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getpdf_NativeDoc().Visible()  ;}}), Input.wait30); 
-					prod.getPdf_NativeDoc().click();
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							prod.getPDFNativePlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
-					prod.getPDFNativePlaceHolderInsertMetaData().click();
-				}
-				
-				else if(area.equalsIgnoreCase("redactions")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
-					prod.getPDFBurnRedactionToggle().click();
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
-					prod.getPDF_SpecifyRedactText().click();
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
-					prod.getPDFRedactionsInsertMetaData().click();
-				}
-				else if(area.equalsIgnoreCase("techissue")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-		            {return prod.getPDFPlaceholderTechIssueToggle().Visible() ;}}), Input.wait30);
-		            prod.getPDFPlaceholderTechIssueToggle().Click();
-		            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-		            {return prod.getPDFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
-		            prod.getPDFTechIssueInsertMetaData().Click();
-				}
-				else if(area.equalsIgnoreCase("slipsheets")) {
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
-					prod.getPDFAdvanced().click();
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
-					prod.getPDFSlipSheetsToggle().click();
-				}
-				else if (area.equalsIgnoreCase("calculated"))
-				{
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
-					prod.getPDFAdvanced().click();
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
-					prod.getPDFSlipSheetsToggle().click();
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							  prod.getPDFSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
-					prod.getPDFSlipSheetCalculatedTab().click();
-				}
-		}
-				else 
-				{
-					fail(dataMap, "Valid area was not selected");
-				}
-				
 			
 		} else {
 			throw new ImplementationException("NOT on_the_section_insert_metadata_field_dialog");
@@ -8413,11 +8423,16 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_insert_metadata_field_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//if area = slipsheetdo not click anythingif area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
+			//if area = slipsheetdo not click anything
+			//if area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
 			String component = (String)dataMap.get("component");
 			String area = (String)dataMap.get("area");
 		
-				if(area.equalsIgnoreCase("branding") || area.equalsIgnoreCase("placeholder") || area.equalsIgnoreCase("filetypes") || area.equalsIgnoreCase("redactions") || area.equalsIgnoreCase("techissue")) { 
+				if(area.equalsIgnoreCase("branding") 
+						|| area.equalsIgnoreCase("placeholder") 
+						|| area.equalsIgnoreCase("filetypes") 
+						|| area.equalsIgnoreCase("redactions") 
+						|| area.equalsIgnoreCase("techissue")) { 
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
 						return prod.getTIFF_InsertMetadataFieldClick().Visible() ;}}), Input.wait30); 
 					prod.getTIFF_InsertMetadataFieldClick().click(); 
@@ -8439,25 +8454,56 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.
 			//Click Cancel.
-			ArrayList<String> expectedAlphabetOrder = new ArrayList<String>();
-			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
-				expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
-				
-			}
+
+			try {
+				if (dataMap.containsKey("area")) {
+					if (dataMap.get("area").toString().equalsIgnoreCase("calculated")) {
+						List<String> expectedCalculatedOptions = new ArrayList<String>();
+						for(WebElement option : prod.getPDF_CalculatedList().FindWebElements()) {
+							expectedCalculatedOptions.add(option.getText().toLowerCase());
+						}
+
+						Collections.sort(expectedCalculatedOptions);
 						
-			Collections.sort(expectedAlphabetOrder);
-			
-			ArrayList<String> actualOptionString = new ArrayList<String>();
-			for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
-				actualOptionString.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+						
+						List<String> actualCalculatedOptions = new ArrayList<String>();
+						for(WebElement option : prod.getPDF_CalculatedList().FindWebElements()) {
+							actualCalculatedOptions.add(option.getText().toLowerCase());
+						}
+						if (expectedCalculatedOptions.equals(actualCalculatedOptions)) {
+							pass(dataMap, "PASS! Calculated tab is alphabetical!");
+						} else {
+							fail(dataMap, "FAIL! Calculated tab is not alphabetical");
+						}
+						
+					} else {
+						ArrayList<String> expectedAlphabetOrder = new ArrayList<String>();
+						for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+							expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+							
+						}
+									
+						Collections.sort(expectedAlphabetOrder);
+						
+						ArrayList<String> actualOptionString = new ArrayList<String>();
+						for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+							actualOptionString.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+						}
+						Assert.assertEquals(actualOptionString, expectedAlphabetOrder);
+						
+						prod.getTIFF_InsertMetadataFieldClick().click();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+							return prod.getMetaDataInsertButton().Visible() ;}}), Input.wait30); 
+						prod.getMetaDataInsertButton().click();
+						pass(dataMap,"verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			Assert.assertEquals(actualOptionString, expectedAlphabetOrder);
 			
-			prod.getTIFF_InsertMetadataFieldClick().click();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
-				return prod.getMetaDataInsertButton().Visible() ;}}), Input.wait30); 
-			prod.getMetaDataInsertButton().click();
-			pass(dataMap,"verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+
+			
 		} else {
 			fail(dataMap, "NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
 		}
@@ -8742,26 +8788,31 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Add FieldThe Field Classification should be the same used in the first dat fieldThe Source Field should be the same used in the first dat fieldThe DAT field should be the same used in the first dat field
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
-				prod.getDAT_AddField().Click();
-				
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
+					prod.getDAT_AddField().Click();
+					
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getFieldClassificationDropdown(1).Displayed()  ;}}), Input.wait30);
-				prod.getFieldClassificationDropdown(1).Click();
-				prod.getFieldClassificationDropdown(1).SendKeys("Bates");
-				
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getSourceFieldDropdown(1).Displayed()  ;}}), Input.wait30);
-				prod.getSourceFieldDropdown(1).Click();
-				prod.getSourceFieldDropdown(1).SendKeys("BatesNumber");
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getDatFieldDropdown(1).Displayed()  ;}}), Input.wait30);
-				prod.getDatFieldDropdown(1).Click();
-				prod.getDatFieldDropdown(1).SendKeys("Bates Number");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFieldClassificationDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getFieldClassificationDropdown(1).Click();
+					prod.getFieldClassificationDropdown(1).SendKeys("Bates");
+					
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getSourceFieldDropdown(1).Click();
+					prod.getSourceFieldDropdown(1).SendKeys("BatesNumber");
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDatFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getDatFieldDropdown(1).Click();
+					prod.getDatFieldDropdown(1).SendKeys("Bates Number");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT complete_the_second_dat_section_with_duplicate_information");
 		}
