@@ -8057,7 +8057,7 @@ public class ProductionRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_When_clicking_the_productions_save_button_Then_verify_the_sorting_options_in_the_numbering_compoent_display_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8096,7 +8096,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke11"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_and_on_the_next_bates_number_dialog_When_clicking_the_x_button_on_the_next_bates_dialog_Then_verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8134,7 +8134,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_When_clicking_the_productions_save_button_Then_verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8173,7 +8173,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke11"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_default_production_component_When_clicking_the_use_metadata_field_radio_button_Then_verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

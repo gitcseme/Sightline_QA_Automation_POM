@@ -8382,11 +8382,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Bates fields have to be clear before clicking radio button
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-					prod.getBeginningBates().Visible()  ;}}), Input.wait30);
-			prod.getBeginningBates().Clear();
-			prod.gettxtBeginningBatesIDMinNumLength().Clear();
-			prod.getSaveButton().click();
+			prod.getNumDocumentLevelRadioButtonCheck().click();
 			prod.getNumUseMetaFieldButton().click();
 			pass(dataMap, "Clicked the use metadata field radio button");
 		} else {

@@ -517,12 +517,12 @@ public class ProductionPage {
     public Element getDocListDropDownCountMax() { return driver.FindElementByCssSelector("#idPageLength option[value = '500']");}
 
     public Element getNumDocumentLevelRadioButton() { return driver.FindElementByCssSelector("div.col-md-8:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
-    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementById("rdbDocumentLevel");} 
+    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementByXPath("//*[@id='rdbDocumentLevel']/../i");} 
     public Element getNumPageLevelRadioButtonCheck() {return driver.FindElementById("rdbPageLevel");} 
     public Element getNumPageLevelRadioButton() {return driver.FindElementByCssSelector(".Number > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButton() {return driver.FindElementByCssSelector(".productionOnly > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButtonCheck() {return driver.FindElementById("rdbSpecifyNumber");}
-    public Element getNumUseMetaFieldButton() {return driver.FindElementById("#divSubDivUserMetaDataField > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumUseMetaFieldButton() {return driver.FindElementByXPath("//*[@id='rdbUserMetadata']/../i");}
     public Element getNumUseMetaFieldButtonCheck() { return driver.FindElementById("rdbUserMetadata");}
     public Element getNumSortMetaRadioButton() {return driver.FindElementById("div.box:nth-child(2) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumSortMetaRadioButtonCheck() {return driver.FindElementById("rdbSortByField");}
