@@ -42,6 +42,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import pageFactory.LoginPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
@@ -955,7 +956,7 @@ public class ProductionContext extends CommonContext {
 					prod.getNumAndSortNextBtn().Enabled()  ;}}), Input.wait30);
 
 				prod.getNumAndSortNextBtn().Click();
-							
+				
 				pass(dataMap,"Default numbering and sorting is complete");
 			}catch(Exception e) {
 				fail(dataMap,"Default numbering and sorting is not complete");
@@ -2906,7 +2907,7 @@ public class ProductionContext extends CommonContext {
 		while(i==0) {
 			selecting_the_production(true,dataMap);
 			try {
-			Thread.sleep(200);
+			Thread.sleep(300);
 			}
 			catch(Exception e) {}
 			prod.getprod_ActionButton().click();
@@ -8103,8 +8104,41 @@ public class ProductionContext extends CommonContext {
 	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_without_family_docs");
+			Actions builder = new Actions(driver.getWebDriver());
+			
+			//Go back to Doc Selection Page
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
+
+		
+			//Make Incomplete
+			prod.getMarkIncompleteButton().click();
+			
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			//Toggle off Include Family Docs and Mark complete
+			prod.getIncludeFamilyToggle().click();
+			prod.getMarkCompleteButton().click();
+
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
+			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
 		}
@@ -8121,7 +8155,20 @@ public class ProductionContext extends CommonContext {
 			//* User should redirect to DocList with selected documents
 			//* User should be able to see all documents without family documents
 			//
-			throw new ImplementationException("verify_doclist_without_family_docs");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
+			int expectedDocuments = (int)dataMap.get("numOfDocs");
+
+			//Maximize amount of documents shown in table
+			prod.getDocListDropDownCount().click();
+			prod.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
+
+			//Get number of rows and make sure its equal to the previous recorded value
+			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
+			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
+			pass(dataMap, "TC7858");
+			
 		} else {
 			throw new ImplementationException("NOT verify_doclist_without_family_docs");
 		}
@@ -8134,10 +8181,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click back to get back to the document sectionClick on the document count (Should be 20)Verify once you are on the doclist, that the bottom displays: Showing 1 to 10 of 20 entries
-			throw new ImplementationException("on_the_doclist_from_the_document_section");
-		} else {
-			throw new ImplementationException("NOT on_the_doclist_from_the_document_section");
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			Thread.sleep(2000);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListEntryAmountText().Displayed()  ;}}), Input.wait30); 
+			Assert.assertTrue(prod.getDocListEntryAmountText().getText().equals("Showing 1 to 10 of 20 entries"));
+			pass(dataMap, "got to document selection");
 		}
+		else fail(dataMap, "failed to navigate to doclist from document selection");
 
 	}
 
@@ -8147,10 +8207,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//On the top left of DocList, click the Back to Source button
-			throw new ImplementationException("clicking_the_back_to_source_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_back_to_source_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListBackToSourceButton().Displayed()  ;}}), Input.wait30); 
+			prod.getDocListBackToSourceButton().click();
+			pass(dataMap, "Succesfully clicked back to source");
 		}
+		else fail(dataMap, "failed to click back to source");
 
 	}
 
@@ -8160,10 +8222,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 8343Verify the user is navigated back to the Production Location section of the production. 
-			throw new ImplementationException("verify_the_doclist_navigation_returns_the_user_to_the_production");
-		} else {
-			throw new ImplementationException("NOT verify_the_doclist_navigation_returns_the_user_to_the_production");
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(driver.getUrl().contains("Production"));
+			pass(dataMap, "verified back to production location page");
 		}
+		else fail(dataMap, "could not verify back to production location page");
 
 	}
 
@@ -8172,8 +8235,31 @@ public class ProductionContext extends CommonContext {
 	public void complete_document_tag_selection_with_family(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
-			throw new ImplementationException("complete_document_tag_selection_with_family");
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
+
+		
+			
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			prod.getMarkCompleteButton().click();
+
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
+			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
 		} else {
 			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
 		}
@@ -8186,11 +8272,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Select doc source with family
-			//
+			driver.waitForPageToBeReady();
 			//* DocID: ID00000861
-			//
-			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_with_family_docs");
+			//First parent row with family docs
+			if(prod.getDocListParentChildDetailsRowButton().FindWebElements().size()>0) {
+				prod.getDocListParentChildDetailsRowButton().FindWebElements().get(0).click();
+			}
+			//Get all child rows of that parent and store size for verification later
+			int childDocs = prod.getChildDocuments().FindWebElements().size();
+			dataMap.put("childDocs", childDocs);
+			
+
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_with_family_docs");
 		}
@@ -8203,11 +8296,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC7859 Production Document Selection to DocList with Child Documents
-			//
-			//* User should redirect to DocList with selected documents
-			//* User should be able to see all documents with family documents (parent and child docs)
-			//
-			throw new ImplementationException("verify_doclist_with_family_docs");
+			
+			driver.waitForPageToBeReady();
+			int childDocs = (int)dataMap.get("childDocs")-1;
+			int totalDocs = (int)dataMap.get("numOfDocs");
+			
+			
+			//make sure child docs equals total docs minus the parent doc
+			Assert.assertEquals(childDocs,totalDocs);
+			
+			pass(dataMap, "TC7859");
 		} else {
 			throw new ImplementationException("NOT verify_doclist_with_family_docs");
 		}
@@ -8220,7 +8318,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Mark CompletedClick NextClick Back
-			throw new ImplementationException("completing_the_priv_guard_section_and_navigating_back");
+			driver.waitForPageToBeReady();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProdGuardCompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getProdGuardCompleteBtn().click();
+			prod.getbtnProductionGuardNext().click();
+			prod.getSpecifyProdLocBackBtn().click();
 		} else {
 			throw new ImplementationException("NOT completing_the_priv_guard_section_and_navigating_back");
 		}
@@ -8233,7 +8340,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Mark Incomplete
-			throw new ImplementationException("clicking_the_productions_mark_incomplete_button");
+			driver.waitForPageToBeReady();
+			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivMarkIncompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivMarkIncompleteBtn().click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_incomplete_button");
 		}
@@ -8246,7 +8358,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 4466Verify the button "Remove" is displayed once the Mark incomplete button is clicked on.
-			throw new ImplementationException("verify_the_remove_option_on_the_rule_is_displayed");
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivSecondRuleRemoveBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivSecondRuleRemoveBtn().click();
+			
+			pass(dataMap, "TC4466");
 		} else {
 			throw new ImplementationException("NOT verify_the_remove_option_on_the_rule_is_displayed");
 		}
@@ -8258,10 +8377,38 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_options_in_the_numbering_compoent_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4930Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
-			throw new ImplementationException("verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			//TC 4930
+			// Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortMetaRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					 prod.getNumSortBySelectedTagsRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelRadioButton().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".
+			prod.getNumSortBySelectedTagsRadioButton().ScrollTo();
+			prod.getNumSortBySelectedTagsRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGrid().Visible()  ;}}),Input.wait30);
+
+			List<WebElement> headers = prod.getNumSortBySelectedGridHeaders().FindWebElements();
+			Assert.assertEquals(headers.get(0).getText(),"AVAILABLE TAGS");
+			Assert.assertEquals(headers.get(1).getText(),"SELECTED TAGS");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGridTags().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
+			prod.getNumCustomSortUploadExcelRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelSelectExcelButton().Visible()  ;}}),Input.wait30);
+
+			pass(dataMap,"The sorting options in the numbering component is display correctly");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			fail(dataMap,"The sorting options in the numbering component is not display correctly");
 		}
 
 	}
@@ -8272,9 +8419,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Click here link
-			throw new ImplementationException("on_the_next_bates_number_dialog");
+			prod.getNumNextBatesLink().click();
+			pass(dataMap, "On the next bates number dialog");
 		} else {
-			throw new ImplementationException("NOT on_the_next_bates_number_dialog");
+			fail(dataMap, "Not on the next bates number dialog");
 		}
 
 	}
@@ -8285,9 +8433,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the X to close the dialog
-			throw new ImplementationException("clicking_the_x_button_on_the_next_bates_dialog");
+			prod.getNumBatesDialogCloseButton().click();
+			pass(dataMap, "Clicked the x button on the next bates dialog");
 		} else {
-			throw new ImplementationException("NOT clicking_the_x_button_on_the_next_bates_dialog");
+			fail(dataMap, "Cannot click the x button on the next bates dialog");
 		}
 
 	}
@@ -8297,10 +8446,19 @@ public class ProductionContext extends CommonContext {
 	public void verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8364Verify clicking X closes the dialog.Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
-			throw new ImplementationException("verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			//TC 8364
+			//Verify clicking X closes the dialog.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					!prod.getNumNextBatesNumberDialog().Visible()  ;}}), Input.wait30);
+
+			//Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
+			Assert.assertEquals(prod.getBeginningBates().getWebElement().getAttribute("value"),"0");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDPrefix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDSuffix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDMinNumLength().getWebElement().getAttribute("value"),"0");
+			pass(dataMap,"Clicking X on the next bates number dialog does not populate any fields");
 		} else {
-			throw new ImplementationException("NOT verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			fail(dataMap,"Clicking X on the next bates number dialog populates fields");
 		}
 
 	}
@@ -8310,10 +8468,29 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8156Verify the dropdown in SORTING is sorted AlphabeticallyVerify the dropdown under Sub-sort By is sorted Alphabetically
-			throw new ImplementationException("verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			//TC 8156
+			//Verify the dropdown in SORTING is sorted Alphabetically
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortingMetadataDropdownList().Visible()  ;}}), Input.wait30);
+
+			String previousOption = "";
+
+			for (WebElement currentOption: prod.getNumSortingMetadataDropdownList().FindWebElements()) {
+				//System.out.println(currentOption.getText());
+				if(currentOption.getText().toLowerCase().compareTo(previousOption) < 0) fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText().toLowerCase();
+			}
+
+			previousOption = "";
+			//Verify the dropdown under Sub-sort By is sorted Alphabetically
+			for (WebElement currentOption: prod.getNumSortingMetadataSubSortDropdownList().FindWebElements()) {
+				if (currentOption.getText().toLowerCase().compareTo(previousOption) < 0) fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText().toLowerCase();
+			}
+			pass(dataMap, "The sorting metadata dropdowns are sorted alphabetically");
+
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
 		}
 
 	}
@@ -8323,10 +8500,12 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_use_metadata_field_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_the_use_metadata_field_radio_button");
+			//Bates fields have to be clear before clicking radio button
+			prod.getNumDocumentLevelRadioButtonCheck().click();
+			prod.getNumUseMetaFieldButton().click();
+			pass(dataMap, "Clicked the use metadata field radio button");
 		} else {
-			throw new ImplementationException("NOT clicking_the_use_metadata_field_radio_button");
+			fail(dataMap, "Cannot click the use metadata field radio button");
 		}
 
 	}
@@ -8336,10 +8515,12 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8346Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
-			throw new ImplementationException("verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			//TC 8346
+			// Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
+			Assert.assertFalse(prod.getNumNextBatesLink().Visible());
+			pass(dataMap, "The click here link is not available when the option use metadata field is selected");
 		} else {
-			throw new ImplementationException("NOT verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			fail(dataMap, "The click here link is still available");
 		}
 
 	}
