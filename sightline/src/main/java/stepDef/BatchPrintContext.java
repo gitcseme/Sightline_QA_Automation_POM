@@ -1260,7 +1260,7 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
-			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("uid", "automate.sqa1@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			sightline_is_launched(true, dataMap);
 			login_as_pau(true, dataMap);
@@ -1292,14 +1292,27 @@ public class BatchPrintContext extends CommonContext {
 			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
 			String processID = batchPrint.getBackgroundTaskFirstRowID().getText();
 			batchPrint.getOpenNotificationsMenu().click();
-			while(batchPrint.getBackGroundTaskCompleteNotification(processID).FindWebElements().size() == 0) {
-				driver.getWebDriver().navigate().refresh();
-				driver.waitForPageToBeReady();
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					batchPrint.getOpenNotificationsMenu().Displayed()  ;}}), Input.wait30);
-				batchPrint.getOpenNotificationsMenu().click();
+			try {
+				while(batchPrint.getFirstBackgroundTaskInProgress().Exists()) {
+					Thread.sleep(5000);
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						batchPrint.getOpenNotificationsMenu().Displayed()  ;}}), Input.wait30);
+					batchPrint.getOpenNotificationsMenu().click();
+				}
+			}catch(Exception e) {
+				// This is used to exit the loop for now since the above returns an error when the process is completed.
+					System.out.println(processID);
 			}
-			System.out.println(batchPrint.getBackGroundTaskCompleteNotification(processID).FindWebElements().get(0).getText());
+			driver.getWebDriver().navigate().refresh();
+			batchPrint.getOpenNotificationsMenu().click();
+			Thread.sleep(3000);
+			String completeMessage = "Your Batch Print with Batch Print Id " + processID + " is COMPLETED";
+			String getBackgroundTaskById = "//span[@id='"+ processID + "']";
+			String messageFromDropdown = driver.FindElementByXPath(getBackgroundTaskById).getText();
+			
+			Assert.assertEquals(completeMessage, messageFromDropdown);
 			
 			pass(dataMap, "verified background notification");
 		}

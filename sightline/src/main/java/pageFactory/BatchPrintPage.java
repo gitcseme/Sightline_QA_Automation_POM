@@ -175,6 +175,9 @@ public class BatchPrintPage {
     public Element getAnalysisDefaultProductionOption() { return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/ul/li[10]/a"); }
     public ElementCollection getBackGroundTaskCompleteNotification(String id) {return driver.FindElementsByCssSelector(String.format("#bgTask span[id = '%s']", id));}
     public Element getOpenNotificationsMenu() {return driver.FindElementByCssSelector("#activity i");}
+    public Element getFirstBackgroundTaskInProgress() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='INPROGRESS']");}
+    public Element getFirstBackgroundTaskCompleted() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='COMPLETED']");}
+  
     
     
     public BatchPrintPage(Driver driver){
