@@ -2758,7 +2758,7 @@ public class BatchPrintRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke2"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_When_select_export_format_Then_verify_notification_displayed_when_background_process_initialized() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

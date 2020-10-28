@@ -1289,10 +1289,21 @@ public class BatchPrintContext extends CommonContext {
 				batchPrint.getBackgroundTaskFirstRowStatus().Displayed()  ;}}), Input.wait30);
 			Assert.assertEquals("INPROGRESS", batchPrint.getBackgroundTaskFirstRowStatus().getText());
 			
+			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
+			String processID = batchPrint.getBackgroundTaskFirstRowID().getText();
+			batchPrint.getOpenNotificationsMenu().click();
+			while(batchPrint.getBackGroundTaskCompleteNotification(processID).FindWebElements().size() == 0) {
+				driver.getWebDriver().navigate().refresh();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					batchPrint.getOpenNotificationsMenu().Displayed()  ;}}), Input.wait30);
+				batchPrint.getOpenNotificationsMenu().click();
+			}
+			System.out.println(batchPrint.getBackGroundTaskCompleteNotification(processID).FindWebElements().get(0).getText());
+			
 			pass(dataMap, "verified background notification");
 		}
 		else fail(dataMap, "Could not verify background notificaiton");
-			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
 	}
 
 
