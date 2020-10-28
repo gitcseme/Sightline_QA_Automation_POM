@@ -851,6 +851,7 @@ public class DocViewContext extends CommonContext {
 			//Prerequisite: Rectangle redaction exists on document
 			docView = new DocViewPage(driver, 0);
 			driver.waitForPageToBeReady();
+			Random rnd = new Random();
 			Actions builder = new Actions(driver.getWebDriver());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
@@ -864,8 +865,14 @@ public class DocViewContext extends CommonContext {
 			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getBottomEditSideOfRedactionRectangle().Enabled() && docView.getBottomEditSideOfRedactionRectangle().Displayed()  ;}}), Input.wait30); 
+			String temp= docView.getBottomEditSideOfRedactionRectangle().GetAttribute("data-pcc-mark");
+
 			//* Change redaction dimensions
-             builder.moveToElement(docView.getBottomEditSideOfRedactionRectangle().getWebElement()).clickAndHold().moveByOffset(-5, -5).release().perform();
+             for(WebElement x: docView.getAllEditSidesOfRedactionRectangle(temp).FindWebElements()) {
+            	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+            	 		x.isDisplayed() && x.isEnabled()  ;}}), Input.wait30); 
+            	 	builder.moveToElement(x).clickAndHold().moveByOffset(rnd.nextInt(20)-10, rnd.nextInt(20)-10).release().perform();
+             }
 
              //get new dimension
              String afterEditDimension = docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getCssValue("height");
