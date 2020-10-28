@@ -2838,7 +2838,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_When_select_basis_for_printing_Then_verify_prior_productions_radio_button() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2848,21 +2848,25 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau1@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			context.select_source_selection(true, dataMap);
 			dataMap.put("basis_for_printing", "Prior Production");
 			dataMap.put("A", "");
-			dataMap.put("prior_production1", "SQA Automation Template");
+			dataMap.put("prior_production1", "SQA Production Template");
 			context.select_basis_for_printing(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "4450");
 			context.verify_prior_productions_radio_button(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
