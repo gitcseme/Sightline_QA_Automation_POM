@@ -78,19 +78,11 @@ public class BatchPrintContext extends CommonContext {
 
 				// click Next button
 				batchPrint.getSourceSelectionNextButton().click();
+				pass(dataMap, "passed");
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
-//			batchPrint.getSearchRadioButton().click();
-//			batchPrint.getSearchSG1ExpandFolderIcon().click();
-//			batchPrint.getSearchSelectFile().click();
-//			
-//			batchPrint.getNextbtn().click();
-//			pass(dataMap,"select_source_selection");
-		} else {
-			fail(dataMap, "NOT select_source_selection");
-		}
-
+			}}
+		else fail(dataMap, "failed to select a source selection");
 	}
 
 
@@ -260,7 +252,7 @@ public class BatchPrintContext extends CommonContext {
 //							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
 					
 					// Check if "Other Exception File Types" field is shown
-					if (batchPrint.getIncludeOtherExceptionFileTypesCheckBox().FindWebElements().size() > 0) {
+					if (batchPrint.getOtherExceptionFileTypesDiv().FindWebElements().size() > 1) {
 						// if shown, enter placeholder text field
 						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
 						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
@@ -341,12 +333,12 @@ public class BatchPrintContext extends CommonContext {
 					batchPrint.getInsertMetadataFieldOKButton().click();
 				}
 				
-				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("true")) {
+				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("false")) {
 					
 				}
 				
 
-				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("true")) {
+				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("transparent")) {
 					
 
 				}
@@ -390,14 +382,13 @@ public class BatchPrintContext extends CommonContext {
 
 				if (dataMap.containsKey("sort_by")) {
 					//TODO: Remove sendKeys and use a select function
-					batchPrint.getSelectExportFileSortBy().sendKeys(dataMap.get("sort_by").toString());
+					String option = (String)dataMap.get("sort_by");
+					batchPrint.getSelectExportFileSortBy().click();
+					batchPrint.getSelectExportDropDownByOption(option).click();
 				}
 				
 
 				batchPrint.getGenerateButton().click();
-				
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getGenerateSuccessMessage().Visible()  ;}}), Input.wait30);
 
 				
 			} catch (Exception e) {
@@ -1268,16 +1259,16 @@ public class BatchPrintContext extends CommonContext {
 	public void login_to_new_batch_print(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//This is a collection of the following steps:
-			//sightline_is_launched
-			//login_as_pau
-			//on_batch_print_page
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
+			dataMap.put("uid", "automate.sqa1@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
 			sightline_is_launched(true, dataMap);
 			login_as_pau(true, dataMap);
 			on_batch_print_page(true, dataMap);
-		} else {
-			throw new ImplementationException("NOT login_to_new_batch_print");
+
+			pass(dataMap, "logged into batch print succesfully");
 		}
+		else fail(dataMap, "failed to log into batch print");
 
 	}
 
@@ -1285,18 +1276,47 @@ public class BatchPrintContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_notification_displayed_when_background_process_initialized$")
 	public void verify_notification_displayed_when_background_process_initialized(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
 		if (scriptState) {
-			//TC4561 Verify background process should be initialized by selecting Production setsTC4562 Verify notification should be displayed when background process for production set is initialized
-			//
-			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
-			//* New BATCHPRINT row with your INPROGRESS task is created
-			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
-			//
-			throw new ImplementationException("verify_notification_displayed_when_background_process_initialized");
-		} else {
-			throw new ImplementationException("NOT verify_notification_displayed_when_background_process_initialized");
-		}
 
+			//* Verify green Batch Print successfully created message displayed before directing user to My Background Tasks
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getGreenPopUpMessage().Displayed()  ;}}), Input.wait30);
+			Assert.assertEquals("Successfully initiated the batch print. You will be prompted with notification once completed.",batchPrint.getGreenPopUpMessage().getText());
+
+			//* New BATCHPRINT row with your INPROGRESS task is created
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getBackgroundTaskFirstRowStatus().Displayed()  ;}}), Input.wait30);
+			Assert.assertEquals("INPROGRESS", batchPrint.getBackgroundTaskFirstRowStatus().getText());
+			
+			//* Notification displayed after Batch Print is COMPLETED.  "Your Batch Print with Batch Print Id ## is COMPLETED"
+			String processID = batchPrint.getBackgroundTaskFirstRowID().getText();
+			batchPrint.getOpenNotificationsMenu().click();
+			try {
+				while(batchPrint.getFirstBackgroundTaskInProgress().Exists()) {
+					Thread.sleep(5000);
+					driver.getWebDriver().navigate().refresh();
+					driver.waitForPageToBeReady();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						batchPrint.getOpenNotificationsMenu().Displayed()  ;}}), Input.wait30);
+					batchPrint.getOpenNotificationsMenu().click();
+				}
+			}catch(Exception e) {
+				// This is used to exit the loop for now since the above returns an error when the process is completed.
+					System.out.println(processID);
+			}
+			driver.getWebDriver().navigate().refresh();
+			batchPrint.getOpenNotificationsMenu().click();
+			Thread.sleep(3000);
+			String completeMessage = "Your Batch Print with Batch Print Id " + processID + " is COMPLETED";
+			String getBackgroundTaskById = "//span[@id='"+ processID + "']";
+			String messageFromDropdown = driver.FindElementByXPath(getBackgroundTaskById).getText();
+			
+			Assert.assertEquals(completeMessage, messageFromDropdown);
+			
+			pass(dataMap, "verified background notification");
+		}
+		else fail(dataMap, "Could not verify background notificaiton");
 	}
 
 
@@ -1305,10 +1325,10 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Back' button
-			throw new ImplementationException("click_source_selection_back_button");
-		} else {
-			throw new ImplementationException("NOT click_source_selection_back_button");
+			batchPrint.getSourceSelectionBackBtn().click();
+			pass(dataMap, "clicked the back button");
 		}
+		else fail(dataMap, "failed to click the back button");
 
 	}
 
@@ -1321,10 +1341,28 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Directed to Source Selection tab
 			//
-			throw new ImplementationException("verify_directed_to_source_selection_tab");
-		} else {
-			throw new ImplementationException("NOT verify_directed_to_source_selection_tab");
+			System.out.println(driver.getUrl());
+			Assert.assertEquals("http://mtpvtsslwb01.consilio.com/BatchPrint/#", driver.getUrl());
+			pass(dataMap, "redirected to source selection");
 		}
+		else fail(dataMap, "could not verify redirection to source selection");
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_batch_print_page$")
+	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Batch Print page (/BatchPrint)
+			//* Batch Print page is displayed
+			//
+			batchPrint = new BatchPrintPage(driver);
+			driver.waitForPageToBeReady();
+			pass(dataMap, "navigated to batch print page");
+		}
+		else fail(dataMap, "could not navigate to batch print page");
 
 	}
 

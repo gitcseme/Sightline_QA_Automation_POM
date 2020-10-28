@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.testng.annotations.Test;
 
+import com.google.protobuf.Empty;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -2757,7 +2758,7 @@ public class BatchPrintRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_When_select_export_format_Then_verify_notification_displayed_when_background_process_initialized() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -2790,9 +2791,11 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("TestCase", "4561|4562");
 			context.verify_notification_displayed_when_background_process_initialized(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -2820,9 +2823,11 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("TestCase", "4387");
 			context.verify_directed_to_source_selection_tab(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
