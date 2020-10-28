@@ -42,6 +42,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
+import pageFactory.LoginPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
@@ -955,7 +956,7 @@ public class ProductionContext extends CommonContext {
 					prod.getNumAndSortNextBtn().Enabled()  ;}}), Input.wait30);
 
 				prod.getNumAndSortNextBtn().Click();
-							
+				
 				pass(dataMap,"Default numbering and sorting is complete");
 			}catch(Exception e) {
 				fail(dataMap,"Default numbering and sorting is not complete");
@@ -2906,7 +2907,7 @@ public class ProductionContext extends CommonContext {
 		while(i==0) {
 			selecting_the_production(true,dataMap);
 			try {
-			Thread.sleep(200);
+			Thread.sleep(300);
 			}
 			catch(Exception e) {}
 			prod.getprod_ActionButton().click();
@@ -8103,8 +8104,41 @@ public class ProductionContext extends CommonContext {
 	public void select_docs_without_family_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Select doc sourceClick Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_without_family_docs");
+			Actions builder = new Actions(driver.getWebDriver());
+			
+			//Go back to Doc Selection Page
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
+
+		
+			//Make Incomplete
+			prod.getMarkIncompleteButton().click();
+			
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			//Toggle off Include Family Docs and Mark complete
+			prod.getIncludeFamilyToggle().click();
+			prod.getMarkCompleteButton().click();
+
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
+			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_without_family_docs");
 		}
@@ -8121,7 +8155,20 @@ public class ProductionContext extends CommonContext {
 			//* User should redirect to DocList with selected documents
 			//* User should be able to see all documents without family documents
 			//
-			throw new ImplementationException("verify_doclist_without_family_docs");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getDocListTableEntry().Enabled() && prod.getDocListTableEntry().Displayed()  ;}}), Input.wait30);
+			int expectedDocuments = (int)dataMap.get("numOfDocs");
+
+			//Maximize amount of documents shown in table
+			prod.getDocListDropDownCount().click();
+			prod.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
+
+			//Get number of rows and make sure its equal to the previous recorded value
+			int numberOfDocumentsInTable = prod.getDocListTableEntry().getWebElement().findElements(By.tagName("tr")).size();
+			Assert.assertEquals(numberOfDocumentsInTable, expectedDocuments);
+			pass(dataMap, "TC7858");
+			
 		} else {
 			throw new ImplementationException("NOT verify_doclist_without_family_docs");
 		}
@@ -8134,10 +8181,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click back to get back to the document sectionClick on the document count (Should be 20)Verify once you are on the doclist, that the bottom displays: Showing 1 to 10 of 20 entries
-			throw new ImplementationException("on_the_doclist_from_the_document_section");
-		} else {
-			throw new ImplementationException("NOT on_the_doclist_from_the_document_section");
+			driver.waitForPageToBeReady();
+			prod.getBackLink().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
+			Thread.sleep(2000);
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListEntryAmountText().Displayed()  ;}}), Input.wait30); 
+			Assert.assertTrue(prod.getDocListEntryAmountText().getText().equals("Showing 1 to 10 of 20 entries"));
+			pass(dataMap, "got to document selection");
 		}
+		else fail(dataMap, "failed to navigate to doclist from document selection");
 
 	}
 
@@ -8147,10 +8207,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//On the top left of DocList, click the Back to Source button
-			throw new ImplementationException("clicking_the_back_to_source_button");
-		} else {
-			throw new ImplementationException("NOT clicking_the_back_to_source_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDocListBackToSourceButton().Displayed()  ;}}), Input.wait30); 
+			prod.getDocListBackToSourceButton().click();
+			pass(dataMap, "Succesfully clicked back to source");
 		}
+		else fail(dataMap, "failed to click back to source");
 
 	}
 
@@ -8160,10 +8222,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 8343Verify the user is navigated back to the Production Location section of the production. 
-			throw new ImplementationException("verify_the_doclist_navigation_returns_the_user_to_the_production");
-		} else {
-			throw new ImplementationException("NOT verify_the_doclist_navigation_returns_the_user_to_the_production");
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(driver.getUrl().contains("Production"));
+			pass(dataMap, "verified back to production location page");
 		}
+		else fail(dataMap, "could not verify back to production location page");
 
 	}
 
@@ -8172,8 +8235,31 @@ public class ProductionContext extends CommonContext {
 	public void complete_document_tag_selection_with_family(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Make sure "Select Tags:" radio button is selectedClick "Default Child Tag" checkboxClick the Mark complete button and verify the following message appears: "Mark Complete successful"Verify the total documents is 5 and at the bottom the family included number displays 4.Click Next
-			throw new ImplementationException("complete_document_tag_selection_with_family");
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTotalDocumentsCount().Displayed()  ;}}), Input.wait30); 
+			String originalDocs = prod.getTotalDocumentsCount().getText();
+
+		
+			
+			//Select Tag that gives us family docs -> Default Child Tag
+			prod.getTagsRadioButton().click();
+			WebElement x = driver.FindElementsByCssSelector("#tagTree a").FindWebElements().get(2);
+			builder.moveToElement(x).perform();
+			prod.getProductionDocumentSelectTagByName("Default Child Tag").click();
+			
+			prod.getMarkCompleteButton().click();
+
+			//wait for document number to update
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!prod.getTotalDocumentsCount().getText().equals(originalDocs)  ;}}), Input.wait30); 
+			//Get the number of docs we will need to verify in doclist
+			int numOfDocsToVerify = Integer.parseInt(prod.getTotalDocumentsCount().getText());
+			dataMap.put("numOfDocs", numOfDocsToVerify);
+			
+			//go to doclist
+			prod.getTotalDocumentsCount().click();
+			driver.waitForPageToBeReady();
 		} else {
 			throw new ImplementationException("NOT complete_document_tag_selection_with_family");
 		}
@@ -8186,11 +8272,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Select doc source with family
-			//
+			driver.waitForPageToBeReady();
 			//* DocID: ID00000861
-			//
-			//Click Mark CompleteClick 'Total Docs Selected Incl Families #' link
-			throw new ImplementationException("select_docs_with_family_docs");
+			//First parent row with family docs
+			if(prod.getDocListParentChildDetailsRowButton().FindWebElements().size()>0) {
+				prod.getDocListParentChildDetailsRowButton().FindWebElements().get(0).click();
+			}
+			//Get all child rows of that parent and store size for verification later
+			int childDocs = prod.getChildDocuments().FindWebElements().size();
+			dataMap.put("childDocs", childDocs);
+			
+
+			
 		} else {
 			throw new ImplementationException("NOT select_docs_with_family_docs");
 		}
@@ -8203,11 +8296,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC7859 Production Document Selection to DocList with Child Documents
-			//
-			//* User should redirect to DocList with selected documents
-			//* User should be able to see all documents with family documents (parent and child docs)
-			//
-			throw new ImplementationException("verify_doclist_with_family_docs");
+			
+			driver.waitForPageToBeReady();
+			int childDocs = (int)dataMap.get("childDocs")-1;
+			int totalDocs = (int)dataMap.get("numOfDocs");
+			
+			
+			//make sure child docs equals total docs minus the parent doc
+			Assert.assertEquals(childDocs,totalDocs);
+			
+			pass(dataMap, "TC7859");
 		} else {
 			throw new ImplementationException("NOT verify_doclist_with_family_docs");
 		}
@@ -8220,7 +8318,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Mark CompletedClick NextClick Back
-			throw new ImplementationException("completing_the_priv_guard_section_and_navigating_back");
+			driver.waitForPageToBeReady();
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_UP.toString());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getProdGuardCompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getProdGuardCompleteBtn().click();
+			prod.getbtnProductionGuardNext().click();
+			prod.getSpecifyProdLocBackBtn().click();
 		} else {
 			throw new ImplementationException("NOT completing_the_priv_guard_section_and_navigating_back");
 		}
@@ -8233,7 +8340,12 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking Mark Incomplete
-			throw new ImplementationException("clicking_the_productions_mark_incomplete_button");
+			driver.waitForPageToBeReady();
+			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivMarkIncompleteBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivMarkIncompleteBtn().click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_productions_mark_incomplete_button");
 		}
@@ -8246,7 +8358,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 4466Verify the button "Remove" is displayed once the Mark incomplete button is clicked on.
-			throw new ImplementationException("verify_the_remove_option_on_the_rule_is_displayed");
+			driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPrivSecondRuleRemoveBtn().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPrivSecondRuleRemoveBtn().click();
+			
+			pass(dataMap, "TC4466");
 		} else {
 			throw new ImplementationException("NOT verify_the_remove_option_on_the_rule_is_displayed");
 		}
