@@ -789,7 +789,10 @@ public class ProductionPage {
     public Element getNumSortBySelectedTagsRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(3) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
     public Element getMessageContainerRemovalMessage() { return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p"); }    
     public Element getPDFBlankPageRemoveToggle2() { return driver.FindElementByXPath("//div[@id='PDFContainer']//label[@class='toggle']//input[@id='chkPDFBlankPageRemove']/following-sibling::i"); } 
-
+    public Element getTIFFPDFBlankPageWarningMessage() { return driver.FindElementByXPath("//div[@id='Msg1']//p"); }
+    public Element getMessagePopup() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//p"); }
+    
+    
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {

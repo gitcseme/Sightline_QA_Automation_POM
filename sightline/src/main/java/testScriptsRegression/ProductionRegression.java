@@ -8307,7 +8307,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_the_pdf_section_is_expanded_When_enabling_blank_page_removal_for_pdf_Then_verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8626,7 +8626,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_complete_native_section_with_file_types_When_clicking_the_productions_mark_complete_and_incomplete_button_Then_verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8663,7 +8663,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_complete_native_section_with_tags_When_clicking_the_productions_mark_complete_and_incomplete_button_Then_verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8700,7 +8700,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_complete_native_section_with_files_and_tags_When_clicking_the_productions_mark_complete_and_incomplete_button_Then_verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -8737,7 +8737,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_the_native_checkbox_is_enabled_When_clicking_the_productions_mark_complete_button_Then_verify_an_error_message_is_returned_on_empty_native_components() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9032,7 +9032,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "jd"})
+	@Test(groups = {"Production", "Positive", "smoke"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_on_the_pdf_section_branding_insert_metadata_field_dialog_When_clicking_the_insert_metadata_field_dropdown_Then_verify_the_metadata_field_dropdown_is_sorted_alphabetically() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9291,7 +9291,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_clicking_the_new_line_dropdown_Then_verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -9309,6 +9309,7 @@ public class ProductionRegression extends RegressionBase {
 			context.on_production_home_page(true, dataMap);
 			dataMap.put("prod_template", "false");
 			context.begin_new_production_process(true, dataMap);
+			context.expanding_the_dat_production_component(true, dataMap);
 			context.clicking_the_new_line_dropdown(true, dataMap);
 			context.verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown(true, dataMap);
 		} catch (ImplementationException e) {
@@ -9325,7 +9326,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "smoke"})
+	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_the_tiff_section_is_expanded_When_enabling_blank_page_removal_for_tiff_Then_verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled() throws Throwable
 	{
 
