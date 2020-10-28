@@ -5843,7 +5843,7 @@ public class ProductionRegression extends RegressionBase {
 
 	//Run This at your own risk, It delete's all drafts 1 by 1
 	//Try to use this only when there has been a build up of production drafts
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void deleteALLDrafts() throws Throwable{
 		HashMap dataMap = new HashMap();
 
@@ -8317,6 +8317,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "6972");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -8329,12 +8330,17 @@ public class ProductionRegression extends RegressionBase {
 			context.enabling_blank_page_removal_for_pdf(true, dataMap);
 			context.verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -8626,6 +8632,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
+
 	@Test(groups = {"Production", "Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_and_complete_the_default_dat_section_and_complete_native_section_with_file_types_When_clicking_the_productions_mark_complete_and_incomplete_button_Then_verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted() throws Throwable
 	{
@@ -8636,6 +8643,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "6820|6821|6822");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -8650,12 +8658,15 @@ public class ProductionRegression extends RegressionBase {
 			context.clicking_the_productions_mark_complete_and_incomplete_button(true, dataMap);
 			context.verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -8747,6 +8758,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "6415");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -8760,12 +8772,15 @@ public class ProductionRegression extends RegressionBase {
 			context.clicking_the_productions_mark_complete_button(true, dataMap);
 			context.verify_an_error_message_is_returned_on_empty_native_components(true, dataMap);
 		} catch (ImplementationException e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -9301,6 +9316,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "6327");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -9313,12 +9329,15 @@ public class ProductionRegression extends RegressionBase {
 			context.clicking_the_new_line_dropdown(true, dataMap);
 			context.verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown(true, dataMap);
 		} catch (ImplementationException e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -9335,6 +9354,7 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("Test Case", "6972");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau1@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -9347,12 +9367,15 @@ public class ProductionRegression extends RegressionBase {
 			context.enabling_blank_page_removal_for_tiff(true, dataMap);
 			context.verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled(true, dataMap);
 		} catch (ImplementationException e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			context.delete_created_productions(true, dataMap);
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.delete_created_productions(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 

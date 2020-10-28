@@ -2357,6 +2357,7 @@ public class ProductionContext extends CommonContext {
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 				prod.getMarkCompleteButton().Click();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
@@ -2886,16 +2887,17 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
-			prod.goToProductionHomePage().ScrollTo();
-			prod.goToProductionHomePage().click();
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/Production/Home");
 			driver.waitForPageToBeReady();
 			
-			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("productionName").toString())).click();
+			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("production_name").toString())).click();
 			
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
 			pass(dataMap, "Successfully deleted the target production");
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(dataMap, "Target production could not be deleted");
 		}
 	}
@@ -8692,7 +8694,7 @@ public class ProductionContext extends CommonContext {
 			//TC 6972 part 2Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					prod.getMessageContainerRemovalMessage().Visible()  ;}}), Input.wait30);
+					prod.getMessageContainerRemovalMessage().Displayed()  ;}}), Input.wait30);
 			
 			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
 			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
@@ -8927,9 +8929,10 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30);
 			prod.getMarkIncompleteButton().click();
+
 			
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_mark_complete_and_incomplete_button");
+			fail(dataMap, "Did not click Mark Complete and Mark Incomplete button");
 		}
 
 	}
@@ -8972,7 +8975,7 @@ public class ProductionContext extends CommonContext {
 			}
 			
 		} else {
-			throw new ImplementationException("NOT verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+			fail (dataMap, "Verify Failed");
 		}
 
 	}
@@ -9006,6 +9009,7 @@ public class ProductionContext extends CommonContext {
 				pass(dataMap, "PASS! Expected message appears when trying to Mark Complete with an empty native component");
 			} else fail(dataMap, "FAIL! Expected message does not appear when trying to Mark Complete with an empty native component");
 			
+
 		} else {
 			throw new ImplementationException("NOT verify_an_error_message_is_returned_on_empty_native_components");
 		}

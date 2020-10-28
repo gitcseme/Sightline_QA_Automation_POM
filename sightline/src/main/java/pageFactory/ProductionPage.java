@@ -23,11 +23,7 @@ public class ProductionPage {
     
     public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
     public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
-    public Element getProductionNameLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[1]"); }
-    public Element getProductionNameWarning(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[2]/span/span"); }
     public Element getProductionDesc(){ return driver.FindElementById("ProductionDescription"); }
-    public Element getProductionDescLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[2]/label[1]"); }
-    public Element getProductionLoadTempLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[3]/label[1]"); }
     public Element getBasicInfoMarkComplete(){ return driver.FindElementById("BasicInfoMarkComplete"); }
     public Element getBasicInfoSave(){ return driver.FindElementById("BasicInfoSave"); }
     public Element getBasicInfoNext(){ return driver.FindElementById("BasicInfoNext"); }
@@ -59,6 +55,7 @@ public class ProductionPage {
     public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
     public Element getManageTemplateTab() { return driver.FindElementById("ui-id-2"); }
     public Element getManageTemplateDiv() { return driver.FindElementById("tabs-b"); }
+    public Element getSelectTagsSelectBtn() { return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm submitNativeSelection']");}
  
     public Element getTileViewIcon() { return driver.FindElementById("TileView"); }
     public Element getTileProdCount() { return driver.FindElementById("hddtotalProductionCount"); }
@@ -67,7 +64,6 @@ public class ProductionPage {
     
     public Element getComponentsMarkComplete(){ return driver.FindElementById("ComponentsMarkComplete"); }
     public Element getComponentsMarkNext(){ return driver.FindElementById("ComponentsNext"); }
-    public Element getComponentsMarkInComplete(){ return driver.FindElementById("ComponentsMarkInComplete"); }
     public Element getBeginningBates(){ return driver.FindElementById("txtBeginningBatesID"); }
     public Element gettxtBeginningBatesIDPrefix(){ return driver.FindElementById("txtBeginningBatesIDPrefix"); }
     public Element gettxtBeginningBatesIDSuffix(){ return driver.FindElementById("txtBeginningBatesIDSuffix"); }
@@ -82,6 +78,7 @@ public class ProductionPage {
     public Element getbtnDocumentsSelectionNext(){ return driver.FindElementById("btnDocumentsSelectionNext"); }
     public Element getbtnProductionGuardMarkComplete(){ return driver.FindElementById("btnProductionGuardMarkComplete"); }
     public Element getbtnProductionGuardNext(){ return driver.FindElementById("btnProductionGuardNext"); }
+    public Element getToastXButton() {return driver.FindElementByXPath("//i[@id='botClose7']");}
     public Element getOkButton(){ return driver.FindElementById("bot1-Msg1"); }
     public Element getlstProductionRootPaths(){ return driver.FindElementById("lstProductionRootPaths"); }
     public Element getProductionOutputLocation_ProductionDirectory(){ return driver.FindElementById("ProductionOutputLocation_ProductionDirectory"); }
@@ -104,36 +101,18 @@ public class ProductionPage {
     public Element getNativeChkBox(){ return driver.FindElementByXPath("//input[@name='IsNativeSelected']/following-sibling::i"); }
     public Element getNativeTab(){ return driver.FindElementByXPath("//a[@href='#NativeContainer']"); }
     public Element getNative_SelectAllCheck(){ return driver.FindElementByXPath(".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i"); }
+    public Element getNative_OtherCheck(){ return driver.FindElementByXPath("(.//*[@id='native-table']//input[@class='clsNativeFileLst']/following-sibling::i)[1]"); }
     public Element getNative_GenerateLoadFileLST(){ return driver.FindElementByXPath(".//*[@id='NativeContainer']//input[@name='ProduceLoadFile']/following-sibling::i"); }
+    public Element getNativeErrorBoxText() {return driver.FindElementByXPath("//div[@id='divbigBoxes']//p");}
+    public Element getNativeTag() {return driver.FindElementByXPath("//span[@id='NativeTagsLabel' ]");}
+    public Element getNativeSelectTagsButton() { return driver.FindElementByXPath("//*[@id=\"btnSelectNativeTags\"]"); }
     public Element getTIFFChkBox(){ return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i"); }
     public Element getTIFFTab(){ return driver.FindElementByXPath("//a[@href='#TIFFContainer']"); }
-    public Element getTIFFTab_Page(){ return driver.FindElementByXPath("//*[@id=\"accordion\"]/div[3]/div[1]/h4/a"); }
     public Element getTIFF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
     public Element getTIFF_InsertMetadataFieldOKButton(){ return driver.FindElementByXPath(".//*[@id='MetadataPopup']//button[contains(.,'OK')]"); }
     public Element getTIFF_EnableforPrivilegedDocs(){ return driver.FindElementByXPath(".//*[@id='TIFFContainer']//input[@name='CommonTIFFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i"); }
-    public ElementCollection getTIFFPrivilegeDocsDisabledToggle() { return driver.FindElementsByXPath("//input[@id='chkEnabledforPrivDocs' and @class='TIFF-encryp-check']"); }
     public Element getPDF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divPDFCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
-    public Element getTIFF_SelectTagSButton(){ return driver.FindElementByXPath("//*[@id='btnSelectPrevTags']"); }
-    public Element getTIFF_AllTags(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[3]/div[2]/div/div[1]/div/div[5]/div/div/div/form/fieldset/div/div[1]/div/ul/li/a/i[1]"); }
-    public Element getTIFF_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Default Automation Tag']/parent::li"); }
-    public Element getTIFF_Privileged(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Privileged']/parent::li"); }
-    public Element getTIFF_PrivileTagSelected(){ return driver.FindElementByXPath("//*[@id='PrevTagsLabel']"); }
-    public Element getTIFF_PlaceholderText(){ return driver.FindElementByXPath(""); }
-    public Element getNative_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Default Automation Tag']");}
-    public Element getNative_AttorneyCLientTag() {return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[2]/div[2]/div/div/div[3]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[4]/ul/li[1]/a/i[1]");}
-    public Element getNative_ConfedentialTag() {return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[2]/div[2]/div/div/div[3]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[4]/ul/li[3]/a/i[1]");}
-    public Element getSelectTagsButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitNativeSelection");}
-    public Element getTIFF_SelectTagsButton() {return driver.FindElementById("btnTIFFPHSelectTags_0");}
-    public Element getTIFF_SelectTagText(){ return driver.FindElementByCssSelector("div.col-md-12.tiff-img-logic > div:nth-child(3) > div.col-md-5.red.box > fieldset > div > div"); }
-    public ElementCollection getTIFF_PageOptions(){ return driver.FindElementsByXPath("//label[@class = 'radio']//span[contains(text(), 'Multi-page')]/preceding-sibling::i");}
     
-    public Element getTIFF_AttorneyClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Attorney_Client']");}
-    public Element getNativeAttorneyClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Attorney_Client']");}
-    public Element getNativeConfidentialClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Confidential']");}
-    public Element getTIFF_AttorneyWorkProductClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Attorney_WorkProduct']");}    
-    public Element getTIFF_TagSelectButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitSelectionTIFF");}
-    public Element getSelectButton() { return driver.FindElementByXPath("//*[@class ='btn btn-primary btn-sm submitSelectionTIFF']"); }
-   
     public Element getTextChkBox(){ return driver.FindElementByXPath(".//*[@id='accordion']//input[@name='IsTextSelected']/following-sibling::i"); }
     public Element getTextTab(){ return driver.FindElementByXPath("//a[@href='#TextContainer']"); }
     public Element getPDFChkBox(){ return driver.FindElementByXPath(".//*[@id='accordion']//input[@name='IsPDFSelected']/following-sibling::i"); }
@@ -141,13 +120,9 @@ public class ProductionPage {
     public Element getKeepFamiliesTogether(){ return driver.FindElementByXPath(".//*[@id='divSortByMetadata_1']//input[@name='ProductionSortingSettings.SortByIsKeepFamiliesTogether']/following-sibling::i"); }
     public Element getSelectFolder(String foldername){ return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]"); }
     public Element getSelectFolderCheckbox (String foldername) { return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]//i[1]"); }
-    public Element getPDF_SelectTagsButton() {return driver.FindElementById("btnPDFPHSelectTags_0");}
-    public Element getPDF_ConfidentialTag() {return driver.FindElementByXPath("//div[@id='tagTreePDFComponent']//a[text()='Confidential']");}
-    public Element getPDF_ForeignLanguageTag() {return driver.FindElementByXPath("//div[@id='tagTreePDFComponent']//a[text()='Foreign_Language']");}
-    public Element getPDF_TagSelectButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitSelectionPDF");}
+
     public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
     public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbTags']/following-sibling::i"); }
-    public Element getPDF_NoMatchingTagsWarning() {return driver.FindElementByCssSelector("[class=\"bigBox animated fadeIn fast\"] p");}
     
     //09252020
     public Element getFolderDropBox(){ return driver.FindElementByXPath("//*[@id='-1_anchor']"); }
@@ -196,7 +171,6 @@ public class ProductionPage {
     public Element getPreviewprod(){ return driver.FindElementById("btnPreview"); }
     public Element getNative_AdvToggle(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[@class='advanced-dd-toggle']"); }   
     public Element getProdStateFilter(){ return driver.FindElementById("productionStateFilter"); }   
-    public Element getNativeContainer() { return driver.FindElementById("NativeContainer"); }
     //added by shilpi on 29/04/2020
     public Element getPDF_SpecifyRedactText(){ return driver.FindElementByXPath("//*[@class='PDF-TIFF-Config']//a[@class='add-redaction-logic']"); }
     public Element getPDF_BurnRedtoggle(){ return driver.FindElementByXPath("//*[@id='chkPDFBurnRedactions']/following-sibling::i"); }
@@ -217,7 +191,102 @@ public class ProductionPage {
     public Element getTIFFSelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='TIFFRedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
 
     public Element getDoc_Count(){ return driver.FindElementByXPath("//*[@id='frmProductionConfirmation']//div[@class='drk-gray-widget']/span[1]"); }   
-    public Element getProd_Uncommitbutton(){ return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]"); }   
+    public Element getProd_Uncommitbutton(){ return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]"); }  
+    public Element getNativeContainer() { return driver.FindElementById("NativeContainer"); }
+    public Element getTIFFComponentEnableNativelyProducedDocuments() {return driver.FindElementByCssSelector(".add-tiff-img-logic");}
+    public Element getTIFFNativelyProductedDocumentSelect() { return driver.FindElementById("TIFFFileTypes_0"); }
+    public Element getTIFFComponenetNativelyProducedDocumentPlaceHolder() {return driver.FindElementByCssSelector("[class=\"form-group col-md-12 img-logic-group tiff-placeholderDiv\"] [class=\"col-md-5 red box\"] [class=\"redactor-box\"] p");}
+    public Element getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning() {return driver.FindElementByCssSelector("[class=\"bigBox animated fadeIn fast\"] p");}
+    public Element getFieldClassificationDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='TY_0']/option[%s]", index));}
+    public Element getSourceFieldDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='SF_0']/option[%s]", index));}
+    public Element getDataFieldText(int index) {return driver.FindElementByXPath(String.format("//*[@id='DATFL_%s']", index));} 
+    public Element getSecondFieldClassificationDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='TY_1']/option[%s]", index));}
+    public Element getSecondSourceFieldDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='SF_1']/option[%s]", index));}
+    public Element getTIFF_SelectTagSButton(){ return driver.FindElementByXPath("//*[@id='btnSelectPrevTags']"); }
+    public Element getTIFFNativeDocumentTagsDialog() { return driver.FindElementByXPath("//div[@id='TIFFContainer']//form[@class='smart-form client-form']"); }
+    public Element getTIFF_AttorneyClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Attorney_Client']");}
+    public Element getNativeAttorneyClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Attorney_Client']");}
+    public Element getNativeConfidentialClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Confidential']");}
+    public Element getTIFF_AttorneyWorkProductClientTag() {return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Attorney_WorkProduct']");} 
+    public Element getTIFF_TagSelectButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitSelectionTIFF");}
+    public Element getTIFF_SelectTagsButton() {return driver.FindElementById("btnTIFFPHSelectTags_0");}
+    public Element getPDFComponentNativelyProducedDocuments() {return driver.FindElementByCssSelector(".add-pdf-img-logic");}
+    public Element getPDF_SelectTagsButton() {return driver.FindElementById("btnPDFPHSelectTags_0");}
+    public Element getPDFNativeDocumentTagsDialog() { return driver.FindElementByXPath("//div[@id='myPDFModal']//form[@class='smart-form client-form']"); }
+    public Element getPDF_ConfidentialTag() {return driver.FindElementByXPath("//div[@id='tagTreePDFComponent']//a[text()='Confidential']");}
+    public Element getPDF_ForeignLanguageTag() {return driver.FindElementByXPath("//div[@id='tagTreePDFComponent']//a[text()='Foreign_Language']");}
+    public Element getPDF_TagSelectButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitSelectionPDF");}
+    public Element getPDF_NoMatchingTagsWarning() {return driver.FindElementByCssSelector("[class=\"bigBox animated fadeIn fast\"] p");}
+    public Element getBackBtn() {return driver.FindElementByXPath("//*[@id=\"divLoadView\"]/form/div[1]/div/a");}
+    public Element getComponentsMarkInComplete(){ return driver.FindElementById("ComponentsMarkInComplete"); }
+    public Element getTIFFTab_Page(){ return driver.FindElementByXPath("//*[@id=\"accordion\"]/div[3]/div[1]/h4/a"); }
+    public ElementCollection getTIFF_PageOptions(){ return driver.FindElementsByXPath("//label[@class = 'radio']//span[contains(text(), 'Multi-page')]/preceding-sibling::i");}
+    public Element getTIFFSelectTagsModal() { return driver.FindElementByXPath("//div[@id='myModal']//form[@class='smart-form client-form']"); }
+    public Element getTIFF_Privileged(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Privileged']/parent::li"); }
+    public Element getTIFF_PrivileTagSelected(){ return driver.FindElementByXPath("//*[@id='PrevTagsLabel']"); }
+    public Element getSelectButton() { return driver.FindElementByXPath("//*[@class ='btn btn-primary btn-sm submitSelectionTIFF']"); }
+    public Element getTIFF_SelectTagText(){ return driver.FindElementByCssSelector("div.col-md-12.tiff-img-logic > div:nth-child(3) > div.col-md-5.red.box > fieldset > div > div"); }
+    public Element getTIFF_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Default Automation Tag']/parent::li"); }
+    public Element getIncludeFamilyToggle() { return driver.FindElementByCssSelector("#ProductionDocumentsSelection_ToIncludeFamilies + input +i");}
+    public Element getTotalDocumentsCount() {return driver.FindElementByXPath("//*[@id=\"TotalDocumentsCount\"]");}
+    public ElementCollection getDocListParentChildDetailsRowButton() {return driver.FindElementsByCssSelector("#dtDocList tr td[class = ' details-control']");}
+    public ElementCollection getChildDocuments() {return driver.FindElementsByXPath("//table[@id='dtDocList']/tbody/tr");}
+    public Element getProdGuardCompleteBtn() {return driver.FindElementById("btnProductionGuardMarkComplete");}
+    public Element getSpecifyProdLocBackBtn() {return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a");}
+    public Element getPrivMarkIncompleteBtn() {return driver.FindElementById("btnProductionGuardMarkInComplete");}
+    public Element getPrivSecondRuleRemoveBtn() {return driver.FindElementByXPath("//*[.='Remove']/../*[@id='Rule 2']");}
+    
+    public Element getNumSortBySelectedTagsRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(3) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getTIFFPDFBlankPageWarningMessage() { return driver.FindElementByXPath("//div[@id='Msg1']//p"); }
+    public Element getMessagePopup() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//p"); }
+    public Element getNumCustomSortUploadExcelRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(4) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumSortBySelectedGrid() { return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]");}
+    public ElementCollection getNumSortBySelectedGridHeaders() { return driver.FindElementsByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]//h3"); }
+    public ElementCollection getNumSortBySelectedGridTags() { return driver.FindElementsByCssSelector("div[id='tagsTree']>ul>li>ul>li") ;}
+    public Element getNumCustomSortUploadExcelSelectExcelButton(){ return driver.FindElementByCssSelector("input[type=file]");}
+    public ElementCollection getNumSortingMetadataDropdownList(){ return driver.FindElementsByCssSelector("#lstSortingMetaData>option");}
+    public ElementCollection getNumSortingMetadataSubSortDropdownList(){ return driver.FindElementsByCssSelector("#lstSubSortingMetaData>option");}
+    public Element getNumNextBatesNumberDialog(){ return driver.FindElementByCssSelector("div[aria-describedby='NextBatesPopUpdiv']");}
+    public Element getNumBatesDialogCloseButton(){ return driver.FindElementByClassName("ui-dialog-titlebar-close");}
+    public Element getBasicInfoMarkedCompleteCloseBtn() { return driver.FindElementById("botClose1"); }
+    public Element getFieldClassificationDropdown(int index) {return driver.FindElementById(String.format("TY_%s", index));}
+    public Element getSourceFieldDropdown(int index) {return driver.FindElementById(String.format("SF_%s", index));}	
+    public Element getDatFieldDropdown(int index) {return driver.FindElementById(String.format("DATFL_%s", index));}	
+    public Element MultipleDatForceOccuranceMsg() {return driver.FindElementByCssSelector("#Msg1 > div > span");}	
+    public Element MultipleDatForceOccuranceSubMsg() {return driver.FindElementByCssSelector("#Msg1 > div > p");}	
+    public Element getTIFF_OpenBrandingInsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id=\"divLeftHeaderBranding\"]/div[2]/div[2]/label/a"); }	
+    public ElementCollection getTIFF_BrandingInsertMetadataFieldOptions(){ return driver.FindElementsByXPath("//*[@id='selectedMetadataField']/option"); }	
+    public Element getMetaDataInsertButton() {return driver.FindElementByCssSelector("#MetadataPopup > footer > input");}	
+    public Element getTIFFPlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#LaunchMetaData0");}	
+    public Element getTIFFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getTIFFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c7 > div.panel-body > div > div.tiff-conf > div.col-md-12.tiff-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#tiff-internal-tab-1 > li:nth-child(3) > a > span");}	
+    public Element getBrandingMetaDataList() {return driver.FindElementByXPath("//*[@id=\"MetadataPopup\"]/fieldset/div/div/div");}	
+    public Element getPDF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[5]/div[2]/div/div/div[3]/div/div[1]/div/div[2]/div[2]/div[2]/label/a"); }	
+    public Element getPDF_PlaceholderInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(3) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getPdf_NativeDoc(){ return driver.FindElementByXPath("//*[@class='add-pdf-img-logic']"); }	
+    public Element getPDFNativePlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#divImagePDFPHImage_0 > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getPDFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divPDFRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getPDFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
+    public Element getPDFSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#pdf-internal-tab-1 > li:nth-child(3) > a > span");}
+    public Element getPopUpBoxText(){return driver.FindElementByCssSelector("#divbigBoxes p");}	
+    public Element getProductionComponentCompleteSuccessCloseBtn() { return driver.FindElementById("botClose3"); }
+    public ElementCollection getPrivDocElementSection() { return driver.FindElementsByXPath("//div[@class='PDF-TIFF-Config']//div[@class='col-md-5 red box']"); }
+    public ElementCollection getPDF_CalculatedList() { return driver.FindElementsByXPath("//ul[@id='pdfCalculatedList']//strong"); }
+    public Element getSelectDefaultAutomationRedactionTag() {return driver.FindElementByXPath("//*[@id='tagTreeTIFFComponent']//a[contains(text(), 'Default Automation Redaction')]/i[1]");}	
+    public Element getAbbreviatedText() {return driver.FindElementByXPath("//*[@id=\"divRedaction_0\"]/div[2]/label/input");}	
+    public Element getMappingIncompleteErrorMessage() {return driver.FindElementByCssSelector("#divbigBoxes p");}	
+    public Element getPrivledgeTextEditor() {return driver.FindElementByXPath("//div[@class='redactor-editor']"); } 	
+    public String duplicateDatWarning = "Multiple source fields cannot be mapped to the same field in the DAT file.";	
+    public String emptyDataMappingWarning = "Specified Redaction Text in TIFF Burned Redactions cannot be blank.";	
+    public Element getEmailSourceFieldEmailOption(int index) {return driver.FindElementByCssSelector(String.format("#SF_0 > option:nth-child(%s)", index));}	
+    public Element getContinueButton() {return driver.FindElementByCssSelector("#bot1-Msg1");}	
+    public Element getDuplicateDatWarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }	
+    public Element getProductionNameLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[1]"); }
+    public Element getProductionDescLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[2]/label[1]"); }
+    public Element getProductionLoadTempLabel(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[3]/label[1]"); }
+    
+    
     //added by shilpi
     public Element getTextcomponent_text(){ return driver.FindElementByXPath("//*[@id='TextContainer']//p"); }
     public Element getTiff_placeholdertext(){ return driver.FindElementByXPath("//*[@class='col-md-12 tiff-img-logic']/label[2]"); }
@@ -290,11 +359,17 @@ public class ProductionPage {
     public Element getGenerateLoadFile(){ return driver.FindElementByXPath("//div[@class='panel-body']//div[@class='col-md-12']//div[@class='col-md-4']//i[@class='pull-right']"); }
     public Element getSlipSheets(){ return driver.FindElementByXPath("//div[@class='form-group col-md-12 wrapperNew no-padding']//i[@class='pull-left']"); }
     public Element getAvailableFields(int i){ return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style']//li["+i+"]//a"); }
-    public Element getTIFF_OpenBrandingInsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id=\"divLeftHeaderBranding\"]/div[2]/div[2]/label/a"); }	
-    public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//*[@id='selectedMetadataField']"); }	
-    public ElementCollection getTIFF_BrandingInsertMetadataFieldOptions(){ return driver.FindElementsByXPath("//*[@id='selectedMetadataField']/option"); }	
-    public Element getMetaDataInsertButton() {return driver.FindElementByCssSelector("#MetadataPopup > footer > input");}	
-    public ElementCollection getPDF_CalculatedList() { return driver.FindElementsByXPath("//ul[@id='pdfCalculatedList']//strong"); }
+    public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//div[@class='col-md-8 tiff-logic insertPopup']//a[@class='LaunchPopup']"); }
+    public Element getProductionNameWarning(){ return driver.FindElementByXPath("//*[@id=\"MainDivBasicInfo\"]/div[3]/div/div/div/div/div[1]/label[2]/span/span"); }
+    
+    public Element getProductionHomePageTitle(){ return driver.FindElementByClassName("page-title");}	
+    public Element getProductionHomePageCurrentlySelectedProductionSet(){return driver.FindElementByCssSelector("#ProductionSetInfo>span.font-lg");}	
+    public ElementCollection getProductionSetsOptions(){return driver.FindElementsByCssSelector("#ProductionSets>option");}	
+    public Element getProductionGridViewProductionNameColumnHeader() {return driver.FindElementByCssSelector("th[aria-label='Production Name: activate to sort column ascending']");}	
+    public ElementCollection getProductionsLastModifiedUser(){ return driver.FindElementsByClassName("prod-lastMod");}	
+    public ElementCollection getProductionLastModifiedData(){return driver.FindElementsByXPath("//span[@class='prod-lastMod']/..");}	
+    public Element getProductionLastModifiedDataByName(String name){return driver.FindElementByXPath(String.format("//a[@class='prod-Title'][contains(.,'%s')]/../..//span[@class='prod-lastMod']/..", name));}	
+    
     //added by shilpi on 08/17
     public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
     public Element getDocumentGeneratetext() { return driver.FindElementByXPath("//span[contains(text(),'Documents Generated')]"); }
@@ -313,12 +388,6 @@ public class ProductionPage {
     public Element getExportSetDropdown() { return driver.FindElementByCssSelector("[value='2064']"); }
     public Element getAddNewProductionButton(){ return driver.FindElementByXPath("//a[text()='Add a New Production']"); }
     public Element getAddNewExportButton(){ return driver.FindElementByXPath("//a[text()='Add a New Export']"); }
-    public Element getProductionHomePageTitle(){ return driver.FindElementByClassName("page-title");}	
-    public Element getProductionHomePageCurrentlySelectedProductionSet(){return driver.FindElementByCssSelector("#ProductionSetInfo>span.font-lg");}	
-    public ElementCollection getProductionSetsOptions(){return driver.FindElementsByCssSelector("#ProductionSets>option");}	
-    public ElementCollection getProductionsLastModifiedUser(){ return driver.FindElementsByClassName("prod-lastMod");}	
-    public ElementCollection getProductionLastModifiedData(){return driver.FindElementsByXPath("//span[@class='prod-lastMod']/..");}	
-    public Element getProductionLastModifiedDataByName(String name){return driver.FindElementByXPath(String.format("//a[@class='prod-Title'][contains(.,'%s')]/../..//span[@class='prod-lastMod']/..", name));}	
     public ElementCollection getProductionTileNames(){ return driver.FindElementsByClassName("prod-Title");}
     
     // Basic Info
@@ -350,9 +419,6 @@ public class ProductionPage {
 
     
     // Production Components - TIFF
-    public Element getTIFFComponentEnableNativelyProducedDocuments() {return driver.FindElementByCssSelector(".add-tiff-img-logic");}
-    public Element getTIFFComponentNativelyProducedDocumentsType(int option) {return driver.FindElementByCssSelector("[class=\"custom-scroll tiff-multi-select\"] [value=\"" + option + "\"]");}
-    public Element getTIFFComponenetNativelyProducedDocumentPlaceHolder() {return driver.FindElementByCssSelector("[class=\"form-group col-md-12 img-logic-group tiff-placeholderDiv\"] [class=\"col-md-5 red box\"] [class=\"redactor-box\"] p");}
     public Element getTIFFAdvanced() { return driver.FindElementByCssSelector("#TIFFContainer  div.advanced-dd-toggle"); }
     public Element getTIFFMultiRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='1']"); }
     public Element getTIFFSingleRadio() { return driver.FindElementByCssSelector("#TIFFContainer #CommonTIFFSettings_PageType[value='0']"); }
@@ -378,13 +444,13 @@ public class ProductionPage {
     public Element getTIFFPlaceholderTechTextField() { return driver.FindElementByCssSelector(".tiff-img-logic > div:nth-child(3) > div:nth-child(2) > fieldset:nth-child(3) > div:nth-child(1) > div:nth-child(1)"); }
     //public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
     public Element getTIFFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector(".tiff-img-logic > div:nth-child(3) > div:nth-child(2) > div:nth-child(4) > label:nth-child(1) > a:nth-child(1)"); }
-    public Element getTIFFPlaceHolderBlankNativelyProducedDocumentsWarning() {return driver.FindElementByCssSelector("[class=\"bigBox animated fadeIn fast\"] p");}
+
 
     public Element getTIFFPlaceholderNative() { return driver.FindElementByCssSelector("#TIFFContainer .tiff-img-logic .add-tiff-img-logic"); }
     public Element getTIFFBurnRedactionToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkBurnRedactions + input + i"); }
     public Element getTIFFSlipSheetsToggle() { return driver.FindElementByCssSelector("#TIFFContainer #chkIsTIFFSlipSheetEnabled + input + i"); }
     public Element getTIFFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#TIFFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
-    public Element getPDFPlaceholderPrivDocsField() {return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the privileged docs']");}
+
     public Element getTIFFSlipSheetsFieldTabs(String tabName){ return driver.FindElementByXPath(String.format("//*[@id='TIFFContainer']//span[contains(text(),'%s')]", tabName));}
     public ElementCollection getTIFFSlipSheetsContainerLabels() { return driver.FindElementsByCssSelector(".SlipSheetslistContainer #tiffMetadataList li label");}
 
@@ -401,9 +467,10 @@ public class ProductionPage {
     public Element getPDFPlaceholderTechIssueToggle() { return driver.FindElementByCssSelector("#PDFContainer #chkPDFExceptionDocs + input + i"); }
     public Element getPDFPlaceholderTechTagsButton() { return driver.FindElementByCssSelector("#PDFContainer #btnSelectPDFTechIssueTags"); }
     public Element getPDFPlaceholderTechTextField() { return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the Tech Issue docs']"); }
+    public Element getPDFPlaceholderPrivDocsField() {return driver.FindElementByCssSelector("#PDFContainer div[placeholder='Enter placeholder text for the privileged docs']");}
     public Element getPDFPlaceholderTechMetadataLink() { return driver.FindElementByCssSelector("#PDFContainer .tiff-img-logic > div:nth-of-type(2) [title='Insert Metadata Field']"); }
     public Element getPDFAdvancedRemovedExcel() { return driver.FindElementByCssSelector("#PDFContainer [name='TIFFOnlyPreviewPages'] + i + strong"); }
-    public Element getPDFComponentNativelyProducedDocuments() {return driver.FindElementByCssSelector(".add-pdf-img-logic");}
+
     public Element getPDFFirstPageElement() {return driver.FindElementByCssSelector("#c3 > div:nth-child(1) > div:nth-child(1) > strong:nth-child(1)");}
     public Element getPDFMultiRadio() {return driver.FindElementByCssSelector("#PDFContainer #CommonPDFSettings_PageType[value='1']");}
     public Element getPDFSingleRadio() {return driver.FindElementByCssSelector("#PDFContainer #CommonPDFSettings_PageType[value='0']");}
@@ -451,10 +518,9 @@ public class ProductionPage {
     public Element getMP3_ToggElement() {return driver.FindElementByXPath("//*[@id=\"accordion\"]/div[7]/h2/i");}
     public Element getMP3SelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='MP3RedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
     public Element getConfirmCompletePopup() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+    public Element getMP3_SelectRed_RedactionByAnnotation() {return driver.FindElementByXPath("//*[@id='chkMP3RedactionByAnnotation']/following-sibling::i");}
     public Element getMP3_SelectRed_Radiobutton() {return driver.FindElementByXPath("//*[@id='chkMP3SPecifytRedactions']/following-sibling::i");}
     public Element getMP3_SelectAdvToggle(){return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[8]/div/div[1]/div[2]/div/div/div[2]/div[1]/i");}
-
-    public Element getMP3_SelectRed_RedactionByAnnotation() {return driver.FindElementByXPath("//*[@id='chkMP3RedactionByAnnotation']/following-sibling::i");}
     public Element getMP3_RedactionStyle() {return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]");}
     public Element getMP3_RedactionStyle_Beet(){return driver.FindElementByXPath("//*[@id=\"lstFillerAudio\"]/option[2]");}
     public Element getMP3BurnRedactionsCheckboxToggle(){ return driver.FindElementById("chkMP3BurnRedactions"); }
@@ -472,7 +538,11 @@ public class ProductionPage {
     public Element getDATDateFormat() {return driver.FindElementById("lstDateFormat");}
     public Element getDATRedactionsButton() {return driver.FindElementById("ChkRedacted_0");}
     public Element getDATPrivilegedButton() {return driver.FindElementById("ChkPrev_0");}
-    
+    public Element getDatNewLine(String value) { return driver.FindElementByCssSelector(String.format("#lstNewLineSeparator%s",value)); }
+    public Element getGridActionDropDown() { return driver.FindElementByXPath("//*[@id=\"DropDownAction\"]/span"); }    
+    public Element getAddDocFromActionsDropDown() { return driver.FindElementById("AddDocuments"); }
+    public Element getRemoveDocFromActionsDropDown() { return driver.FindElementById("RemoveDocuments"); }
+
 
     //9-21
 
@@ -485,7 +555,7 @@ public class ProductionPage {
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
-    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("//*[@id='1031_anchor']/i[1]");}
+    public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("(//a[text()='Default Automation Tag'])[1]");}
     public Element getDefaultTagsChkBox() {return driver.FindElementByXPath("//*[@id='26_anchor']/i[1]");}
     public Element getDefaultSecurityGroupChkBox() {return driver.FindElementByXPath("//*[@id='1g_anchor']/i[1]");}
     
@@ -512,18 +582,17 @@ public class ProductionPage {
     public Element getDocListTableEntry() {return driver.FindElementByXPath("//table[@id='dtDocList']//tbody");}
     public Element getDocViewTableEntry() {return driver.FindElementByXPath("//table[@id='SearchDataTable']//tbody");}
     public Element getTotalOfDocumentsTable() {return driver.FindElementByXPath("//*[@id='SearchDataTable']/tbody/tr");}
-    public ElementCollection getChildDocuments() {return driver.FindElementsByXPath("//table[@id='dtDocList']/tbody/tr");}
 
     public Element getDocListDropDownCount() { return driver.FindElementById("idPageLength");}
     public Element getDocListDropDownCountMax() { return driver.FindElementByCssSelector("#idPageLength option[value = '500']");}
 
     public Element getNumDocumentLevelRadioButton() { return driver.FindElementByCssSelector("div.col-md-8:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
-    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementByXPath("//*[@id='rdbDocumentLevel']/../i");} 
+    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementById("rdbDocumentLevel");} 
     public Element getNumPageLevelRadioButtonCheck() {return driver.FindElementById("rdbPageLevel");} 
     public Element getNumPageLevelRadioButton() {return driver.FindElementByCssSelector(".Number > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButton() {return driver.FindElementByCssSelector(".productionOnly > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButtonCheck() {return driver.FindElementById("rdbSpecifyNumber");}
-    public Element getNumUseMetaFieldButton() {return driver.FindElementByXPath("//*[@id='rdbUserMetadata']/../i");}
+    public Element getNumUseMetaFieldButton() {return driver.FindElementById("#divSubDivUserMetaDataField > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumUseMetaFieldButtonCheck() { return driver.FindElementById("rdbUserMetadata");}
     public Element getNumSortMetaRadioButton() {return driver.FindElementById("div.box:nth-child(2) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumSortMetaRadioButtonCheck() {return driver.FindElementById("rdbSortByField");}
@@ -535,7 +604,6 @@ public class ProductionPage {
     public Element getNumMetaDataSuffix() {return driver.FindElementById("txtUserMetadataFieldSuffix");}
      
     public Element getDocSelectSearchRadioButton() {return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");}
-    public ElementCollection getDocListParentChildDetailsRowButton() {return driver.FindElementsByCssSelector("#dtDocList tr td[class = ' details-control']");}
 
     
     public Element getTIFFFirstPageElement() {return driver.FindElementByCssSelector("#c7 > div:nth-child(1) > div:nth-child(1) > label:nth-child(1)");}
@@ -549,7 +617,7 @@ public class ProductionPage {
     public Element getTIFFLSTLoadFileToggle() {return driver.FindElementById("chkTIFFProduceLoadFile");}
     public Element getTIFFLSTLoadFileType() {return driver.FindElementById("LoadFileType");}
     public Element getTiFFPrivToggleButton() {return driver.FindElementById("chkEnabledforPrivDocs");}
-    public Element getProductionGridViewProductionNameColumnHeader() {return driver.FindElementByCssSelector("th[aria-label='Production Name: activate to sort column ascending']");}	
+
     public Element getProductionGridViewActionDropDown() {return driver.FindElementById("DropDownAction");}
     public Element getProductionGridViewActionOpenWizard() {return driver.FindElementById("OpenInWizard");}
     public Element getProductionGridViewActionDelete() {return driver.FindElementById("Delete");}
@@ -569,7 +637,6 @@ public class ProductionPage {
     public Element getDefaultAutomationTemplateView() { return driver.FindElementByXPath("//a[contains(@onclick, 'DefaultAutomationTemplate')]");}
     public Element getSavedTemplate() {return driver.FindElementByXPath("//*[@id=\"viewProduction\"]");}
     public Element getBackLink() {return driver.FindElementByXPath("//a[text()[contains(.,'Back')]]");}
-    public Element getBackBtn() {return driver.FindElementByXPath("//*[@id=\"divLoadView\"]/form/div[1]/div/a");}
     public Element getGenarateTitle() { return driver.FindElementByCssSelector("[data-original-title='Production Components']"); }
     public Element getGenerateButton() {return driver.FindElementByXPath("//button[text()='Generate']");}
     public Element goToProductionHomePage() {return driver.FindElementByCssSelector("a[id='8']");}
@@ -577,7 +644,8 @@ public class ProductionPage {
     public Element getGenerateInProgressStatus() {return driver.FindElementByXPath("//label[text()='IN PROGRESS']");}
     public Element getGeneratePreGenStatus() {return driver.FindElementByXPath("//label[text()='Pre generation check in progress']");}
     public WebElement getGeneratePostGenStatus() {return driver.FindElementsByCssSelector(".col-md-2.labelAlign").FindWebElements().get(2);}    
-    public Element getGenerateProductionName() {return driver.FindElementByCssSelector(".col-md-4.labelAlign");}   
+    public Element getGenerateProductionName() {return driver.FindElementByCssSelector(".col-md-4.labelAlign");}
+
 
     public Element getProductionGear() {return driver.FindElementByCssSelector("[class=\"fa fa-lg fa-gear\"]");}
     public Element getProductionDeleteButton() {return driver.FindElementByCssSelector("#pName > div.dropdown.pull-right.actionBtn.font-xs.open > dl > dt:nth-child(2) > a");}
@@ -617,15 +685,6 @@ public class ProductionPage {
     public Element getActionColumHeader() { return driver.FindElementById("hdrAction"); }
     public Element getSaveButton() { return driver.FindElementByXPath("//*[text()='Save']"); }
     public Element getPrivDocsStatus() { return driver.FindElementByXPath("(//span[@class='text-success'])[1]"); }
-    public Element getFieldClassificationDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='TY_0']/option[%s]", index));}
-    public Element getSecondFieldClassificationDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='TY_1']/option[%s]", index));}
-    public Element getSourceFieldDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='SF_0']/option[%s]", index));}
-    public Element getSecondSourceFieldDropDown(int index) {return driver.FindElementByXPath(String.format("//*[@id='SF_1']/option[%s]", index));}
-    public Element getDataFieldText(int index) {return driver.FindElementByXPath(String.format("//*[@id='DATFL_%s']", index));} 
-    public Element getBasicInfoMarkedCompleteCloseBtn() { return driver.FindElementById("botClose1"); }
-    
-    public Element getSelectNativeTagsButton() {return driver.FindElementById("btnSelectNativeTags");}
-    public Element getNativeSelectedTagList() {return driver.FindElementById("NativeTagsLabel");}
 
     public Element getProductionTitleName() {return driver.FindElementByXPath("//*[@id='cardCanvas']/ul/li[1]/div[1]/a");}
     public Element getProdductionNameOnQCPage() {return driver.FindElementByXPath("//*[@class='col-md-3']//div[@class='panel-title-container']/h2");}
@@ -656,11 +715,7 @@ public class ProductionPage {
     public Element getTotalDocumentsNumber() { return driver.FindElementByXPath("//label[contains(text(), 'Total Documents')]/following-sibling::label"); }
     public ElementCollection getProductionConfirmPopupCloseBtn(int i) {return driver.FindElementsById(String.format("botClose%s",i));}
     public Element getProductionDocumentSelectTagByName(String name) {return driver.FindElementByCssSelector(String.format("#tagTree a[data-content='%s'] i.jstree-checkbox", name));}
-    public Element getCounterClockRotate() {return driver.FindElementByXPath("//*[@id='dldPageRotatePreference']/option[3]");}
-    public Element getPDFCounterClockRotate() {return driver.FindElementByXPath("//*[@id='dldPDFPageRotatePreference']/option[3]");}
-    public Element getPDF_EnableforPrivilegedDocs(){ return driver.FindElementByXPath(".//*[@id='PDFContainer']//input[@name='CommonPDFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i"); }
-    public ElementCollection getPDFPrivilegeDocsDisabledToggle() { return driver.FindElementsByXPath("//input[@id='chkPDFPrivDocs' and @class='PDF-encryp-check']"); }
-    public Element getNumberingAndSortingTitle() {return driver.FindElementByXPath("//*[@id='divLoadView']/form/div[1]/div/h2");}
+
     public Element getPreGenerationCheckFailedLink() {return driver.FindElementById("ProductionErrorLaunchPopUp");}
     public Element getErrorDataTable() {return driver.FindElementByXPath("//*[@id='GenerateErrorDataTable']/tbody/tr/td[2]"); }
     public Element getCloseModalButton() {return driver.FindElementById("GenerateErrorDetailsPopUpClose");}
@@ -671,6 +726,9 @@ public class ProductionPage {
     public Element getAutomationTemplateWidget() { return driver.FindElementByCssSelector(".ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-resizable"); }
     public Element getTemplateProductionComponentsPanel() { return driver.FindElementById("accordion"); }
     public Element getTemplateProductionComponentToggle(String prodComponent) { return driver.FindElementByXPath("//form[@id='divProductionComponents']//h4//a[contains(text(), '"+prodComponent+"')]"); }
+    public Element getNative_AttorneyCLientTag() {return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[2]/div[2]/div/div/div[3]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[4]/ul/li[1]/a/i[1]");}
+    public Element getNative_ConfedentialTag() {return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[2]/div[2]/div/div/div[3]/div/div/div/form/fieldset/div/div[1]/div/ul/li/ul/li[4]/ul/li[3]/a/i[1]");}
+    public Element getSelectTagsButton() {return driver.FindElementByCssSelector(".btn.btn-primary.btn-sm.submitNativeSelection");}
     
     public Element getTemplateFieldClassificationValue() { return driver.FindElementById("TY_0"); }
     public Element getTemplatePrivRulesList() { return driver.FindElementById("qb-1"); }
@@ -711,88 +769,26 @@ public class ProductionPage {
     public ElementCollection getProdPrevPageDocSummary() {return driver.FindElementsByCssSelector(".col-md-12 label");}
     public Element getProductionLocComponent(int index) {return driver.FindElementByXPath(String.format("//*[@id=\"frmProductionLocation\"]/div/div[3]/div/div/div/div[1]/div/div[%s]/label[1]",index));}
     public Element getSummaryPageLabels(int index) {return driver.FindElementByCssSelector(String.format("#frmProductionSummary > div > div:nth-child(2) > div > div > div > div.col-md-8 > div:nth-child(%s) > label:nth-child(1)", index));}
-    public Element getFieldClassificationDropdown(int index) {return driver.FindElementById(String.format("TY_%s", index));}	
-    public Element getSourceFieldDropdown(int index) {return driver.FindElementById(String.format("SF_%s", index));}	
-    public Element getDatFieldDropdown(int index) {return driver.FindElementById(String.format("DATFL_%s", index));}	
-    public Element MultipleDatForceOccuranceMsg() {return driver.FindElementByCssSelector("#Msg1 > div > span");}	
-    public Element MultipleDatForceOccuranceSubMsg() {return driver.FindElementByCssSelector("#Msg1 > div > p");}	
-    public Element getContinueButton() {return driver.FindElementByCssSelector("#bot1-Msg1");}	
-    public Element getDuplicateDatWarningBox() { return driver.FindElementByCssSelector("#divbigBoxes p"); }	
-    public String duplicateDatWarning = "Multiple source fields cannot be mapped to the same field in the DAT file.";	
-    public String emptyDataMappingWarning = "Specified Redaction Text in TIFF Burned Redactions cannot be blank.";	
-    public Element getEmailSourceFieldEmailOption(int index) {return driver.FindElementByCssSelector(String.format("#SF_0 > option:nth-child(%s)", index));}	
-    public Element getSelectDefaultAutomationRedactionTag() {return driver.FindElementByXPath("//*[@id='tagTreeTIFFComponent']//a[contains(text(), 'Default Automation Redaction')]/i[1]");}	
-    public Element getAbbreviatedText() {return driver.FindElementByXPath("//*[@id=\"divRedaction_0\"]/div[2]/label/input");}	
-    public Element getMappingIncompleteErrorMessage() {return driver.FindElementByCssSelector("#divbigBoxes p");}	
-    public Element getPrivledgeTextEditor() {return driver.FindElementByXPath("//div[@class='redactor-editor']"); } 	
-    public Element getTIFFPlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#LaunchMetaData0");}	
-    public Element getTIFFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getTIFFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c7 > div.panel-body > div > div.tiff-conf > div.col-md-12.tiff-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#tiff-internal-tab-1 > li:nth-child(3) > a > span");}	
-    public Element getBrandingMetaDataList() {return driver.FindElementByXPath("//*[@id=\"MetadataPopup\"]/fieldset/div/div/div");}	
-    public Element getPDF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div/div[4]/form/div/div[5]/div[2]/div/div/div[3]/div/div[1]/div/div[2]/div[2]/div[2]/label/a"); }	
-    public Element getPDF_PlaceholderInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(3) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getPdf_NativeDoc(){ return driver.FindElementByXPath("//*[@class='add-pdf-img-logic']"); }	
-    public Element getPDFNativePlaceHolderInsertMetaData() {return driver.FindElementByCssSelector("#divImagePDFPHImage_0 > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getPDFRedactionsInsertMetaData() {return driver.FindElementByCssSelector("#divPDFRedaction_0 > div.form-group.col-md-10 > div.col-md-5.no-padding > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getPDFTechIssueInsertMetaData() {return driver.FindElementByCssSelector("#c3 > div > div.tiff-conf > div > div.col-md-12.pdf-img-logic > div:nth-child(4) > div.col-md-5.red.box > div.col-md-12.text-right.no-padding > label > a");}	
-    public Element getPDFSlipSheetCalculatedTab() {return driver.FindElementByCssSelector("#pdf-internal-tab-1 > li:nth-child(3) > a > span");}
-    public Element getPopUpBoxText(){return driver.FindElementByCssSelector("#divbigBoxes p");}	
-    public Element getProductionTitleLink(String title) { return driver.FindElementByXPath(String.format("//a[@title='%s']", title)); } 
-    public Element getTIFFSelectTagsModal() { return driver.FindElementByXPath("//div[@id='myModal']//form[@class='smart-form client-form']"); }
-    public Element getProductionComponentCompleteSuccessCloseBtn() { return driver.FindElementById("botClose3"); }
-    public ElementCollection getPrivDocElementSection() { return driver.FindElementsByXPath("//div[@class='PDF-TIFF-Config']//div[@class='col-md-5 red box']"); }
-    public Element getTIFFNativeDocumentTagsDialog() { return driver.FindElementByXPath("//div[@id='TIFFContainer']//form[@class='smart-form client-form']"); }
-    public Element getPDFNativeDocumentTagsDialog() { return driver.FindElementByXPath("//div[@id='myPDFModal']//form[@class='smart-form client-form']"); }
-    public Element getTIFFNativelyProductedDocumentSelect() { return driver.FindElementById("TIFFFileTypes_0"); }
+    public Element getTIFFBlankPageRemovalToggle() {  return driver.FindElementByXPath("//div[@id='TIFFContainer']//label[@class='toggle']//input[@id='chkTIFFBlankPageRemove']/following-sibling::i"); }
+    public Element getMessageContainerRemovalMessage() { return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p"); }    
+    public ElementCollection getSuccessMessageCloseButtonCol() { return driver.FindElementsById("botClose1"); }
+    public Element getSuccessMessageCloseButton() { return driver.FindElementById("botClose1"); }
+    public Element getPDFBlankPageRemoveToggle2() { return driver.FindElementByXPath("//div[@id='PDFContainer']//label[@class='toggle']//input[@id='chkPDFBlankPageRemove']/following-sibling::i"); } 
+    public Element getSelectNativeTagsButton() {return driver.FindElementById("btnSelectNativeTags");}
+    public Element getNativeSelectedTagList() {return driver.FindElementById("NativeTagsLabel");}
+    public ElementCollection getTIFFPrivilegeDocsDisabledToggle() { return driver.FindElementsByXPath("//input[@id='chkEnabledforPrivDocs' and @class='TIFF-encryp-check']"); }
+    public Element getPDF_EnableforPrivilegedDocs(){ return driver.FindElementByXPath(".//*[@id='PDFContainer']//input[@name='CommonPDFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i"); }
+    public ElementCollection getPDFPrivilegeDocsDisabledToggle() { return driver.FindElementsByXPath("//input[@id='chkPDFPrivDocs' and @class='PDF-encryp-check']"); }
     
-    public Element getGridActionDropDown() { return driver.FindElementByXPath("//*[@id=\"DropDownAction\"]/span"); }    
-    public Element getAddDocFromActionsDropDown() { return driver.FindElementById("AddDocuments"); }
-    public Element getRemoveDocFromActionsDropDown() { return driver.FindElementById("RemoveDocuments"); }
+    public Element getNative_DefaultAutomationTag(){ return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']//a[text()='Default Automation Tag']");}
+    public Element getNumberingAndSortingTitle() {return driver.FindElementByXPath("//*[@id='divLoadView']/form/div[1]/div/h2");}
     public Element getProductionCompletebutton() { return driver.FindElementById("btnProductionLocationMarkComplete"); }
     public Element getProductionNextbutton() { return driver.FindElementById("btnProductionLocationNext"); }
     public Element getBackToLocationbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionSummary\"]/div/div[1]/div/a"); }
     public Element getBackToPrivbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a"); }
     public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
-    public Element getDocumentTagSelectionWithFamily_radio() {return driver.FindElementByXPath("//*[@id='frmDocumentsSelection']/div/div[3]/div/div/div/div/div[2]/label/i");}
-    public Element getDefaultChildTag() {return driver.FindElementByXPath("//a[@data-content=\"Default Child Tag\"]");}
-    public Element getMarkCompleteSuccessfulToaster() {return driver.FindElementByXPath("//*[@id=\"bigBoxColor7\"]/p");}
-    public Element getTotalDocumentsCount() {return driver.FindElementByXPath("//*[@id=\"TotalDocumentsCount\"]");}
-    public Element getDocumentSelectionCompleteBtn() {return driver.FindElementByXPath("//*[@id=\"btnDocumentsSelectionMarkComplete\"]");}
-    public ElementCollection getFamilyDocsCount() {return driver.FindElementsById("#\\34");}
-    public Element getDocumentSelectionNextBtn() {return driver.FindElementById("btnDocumentsSelectionNext");}
-    public Element getAddRuleBtn() {return driver.FindElementById("contentmetadata");}
-    public Element getPrivDefaultChildBtn() {return driver.FindElementByXPath("//*[@id=\"28_anchor\"]/i[1]");}
-    public Element getPrivQueryBtn() {return driver.FindElementByXPath("//*[@id=\"insertQueryBtn\"]");}
-    public Element getCheckForMatchingDocBtn() {return driver.FindElementById("btnDocumentMatch");}
-    public Element getPrivDocListBtn() {return driver.FindElementById("btnGoToDocList");}
-    public Element getFirstDocId() {return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[2]/label/i");}
-    public Element getPrivDocIdYesBtn() {return driver.FindElementById("bot1-Msg1");}
-    public Element getProdGuardCompleteBtn() {return driver.FindElementById("btnProductionGuardMarkComplete");}
-    public Element getFamilyList() {return driver.FindElementByXPath("//*[@id=\"dtDocList\"]/tbody/tr[1]/td[3]");}
-    public ElementCollection getChildList(int i) {return driver.FindElementsByXPath(String.format("//*[@id=\"childlist_861_dtDocList\"]/tbody/tr[%s]",i));}
-    public Element getSpecifyProdLocBackBtn() {return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a");}
-    public Element getPrivMarkIncompleteBtn() {return driver.FindElementById("btnProductionGuardMarkInComplete");}
-    public Element getPrivSecondRuleRemoveBtn() {return driver.FindElementByXPath("//*[.='Remove']/../*[@id='Rule 2']");}
-    
-    public Element getDocSelectionNumOfFamilyDocs() {return driver.FindElementById("ProductionDocumentsSelectedCount");}
-    public Element getIncludeFamilyToggle() { return driver.FindElementByCssSelector("#ProductionDocumentsSelection_ToIncludeFamilies + input +i");}
-    public Element getNumCustomSortUploadExcelRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(4) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
-    public Element getNumSortBySelectedGrid() { return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]");}
-    public ElementCollection getNumSortBySelectedGridHeaders() { return driver.FindElementsByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]//h3"); }
-    public ElementCollection getNumSortBySelectedGridTags() { return driver.FindElementsByCssSelector("div[id='tagsTree']>ul>li>ul>li") ;}
-    public Element getNumCustomSortUploadExcelSelectExcelButton(){ return driver.FindElementByCssSelector("input[type=file]");}
-    public ElementCollection getNumSortingMetadataDropdownList(){ return driver.FindElementsByCssSelector("#lstSortingMetaData>option");}
-    public ElementCollection getNumSortingMetadataSubSortDropdownList(){ return driver.FindElementsByCssSelector("#lstSubSortingMetaData>option");}
-    public Element getNumNextBatesNumberDialog(){ return driver.FindElementByCssSelector("div[aria-describedby='NextBatesPopUpdiv']");}
-    public Element getNumBatesDialogCloseButton(){ return driver.FindElementByClassName("ui-dialog-titlebar-close");}
-    public Element getNumSortBySelectedTagsRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(3) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
-    public Element getMessageContainerRemovalMessage() { return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p"); }    
-    public Element getPDFBlankPageRemoveToggle2() { return driver.FindElementByXPath("//div[@id='PDFContainer']//label[@class='toggle']//input[@id='chkPDFBlankPageRemove']/following-sibling::i"); } 
-    public Element getTIFFPDFBlankPageWarningMessage() { return driver.FindElementByXPath("//div[@id='Msg1']//p"); }
-    public Element getMessagePopup() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//p"); }
-    
-    
+    public Element getProductionTitleLink(String title) { return driver.FindElementByXPath(String.format("//a[@title='%s']", title)); } 
+
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
@@ -855,7 +851,6 @@ public class ProductionPage {
     public void addNewProduction(String productionName, String template) {
     	try {
     		
-    	
 			
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
@@ -884,11 +879,15 @@ public class ProductionPage {
 		getBasicInfoCompleteButton().Click();
 
 		//Added to get rid of Toast message, which I think is effecting the rest of Script
-        
+		/*
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
+		driver.FindElementById("botClose1").Click();
+		*/
+		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoMarkedCompleteCloseBtn().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkedCompleteCloseBtn().Click();
-
+				getSuccessMessageCloseButton().Visible()  ;}}), Input.wait30); 
+		getSuccessMessageCloseButton().click();
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
@@ -1644,7 +1643,7 @@ public class ProductionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-		//getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
 		
 		driver.scrollingToBottomofAPage();
 		
@@ -3541,4 +3540,4 @@ public class ProductionPage {
     }
   	    
 }
-
+    
