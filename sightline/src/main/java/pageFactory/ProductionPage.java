@@ -517,12 +517,12 @@ public class ProductionPage {
     public Element getDocListDropDownCountMax() { return driver.FindElementByCssSelector("#idPageLength option[value = '500']");}
 
     public Element getNumDocumentLevelRadioButton() { return driver.FindElementByCssSelector("div.col-md-8:nth-child(3) > label:nth-child(1) > i:nth-child(2)");}
-    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementById("rdbDocumentLevel");} 
+    public Element getNumDocumentLevelRadioButtonCheck() {return driver.FindElementByXPath("//*[@id='rdbDocumentLevel']/../i");} 
     public Element getNumPageLevelRadioButtonCheck() {return driver.FindElementById("rdbPageLevel");} 
     public Element getNumPageLevelRadioButton() {return driver.FindElementByCssSelector(".Number > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButton() {return driver.FindElementByCssSelector(".productionOnly > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumBatesRadioButtonCheck() {return driver.FindElementById("rdbSpecifyNumber");}
-    public Element getNumUseMetaFieldButton() {return driver.FindElementById("#divSubDivUserMetaDataField > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumUseMetaFieldButton() {return driver.FindElementByXPath("//*[@id='rdbUserMetadata']/../i");}
     public Element getNumUseMetaFieldButtonCheck() { return driver.FindElementById("rdbUserMetadata");}
     public Element getNumSortMetaRadioButton() {return driver.FindElementById("div.box:nth-child(2) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
     public Element getNumSortMetaRadioButtonCheck() {return driver.FindElementById("rdbSortByField");}
@@ -752,6 +752,17 @@ public class ProductionPage {
     public Element getBackToLocationbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionSummary\"]/div/div[1]/div/a"); }
     public Element getBackToPrivbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a"); }
     public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
+    public Element getNumCustomSortUploadExcelRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(4) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
+    public Element getNumSortBySelectedGrid() { return driver.FindElementByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]");}
+    public ElementCollection getNumSortBySelectedGridHeaders() { return driver.FindElementsByXPath("//div[@id='divSpecifyTagOrder_1']/div[1]//h3"); }
+    public ElementCollection getNumSortBySelectedGridTags() { return driver.FindElementsByCssSelector("div[id='tagsTree']>ul>li>ul>li") ;}
+    public Element getNumCustomSortUploadExcelSelectExcelButton(){ return driver.FindElementByCssSelector("input[type=file]");}
+    public ElementCollection getNumSortingMetadataDropdownList(){ return driver.FindElementsByCssSelector("#lstSortingMetaData>option");}
+    public ElementCollection getNumSortingMetadataSubSortDropdownList(){ return driver.FindElementsByCssSelector("#lstSubSortingMetaData>option");}
+    public Element getNumNextBatesNumberDialog(){ return driver.FindElementByCssSelector("div[aria-describedby='NextBatesPopUpdiv']");}
+    public Element getNumBatesDialogCloseButton(){ return driver.FindElementByClassName("ui-dialog-titlebar-close");}
+    public Element getNumSortBySelectedTagsRadioButton() {return driver.FindElementByCssSelector("div.box:nth-child(3) > div:nth-child(1) > label:nth-child(1) > i:nth-child(2)");}
+
 
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
