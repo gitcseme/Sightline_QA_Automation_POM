@@ -63,6 +63,7 @@ public class BatchPrintPage {
     public Element getInsertMetadataFieldOKButton(){ return driver.FindElementById("myModalOk"); }
     public Element getSelectExportFileName(){ return driver.FindElementById("exportFileDropDown"); }
     public Element getSelectExportFileSortBy(){ return driver.FindElementById("exportFileSortByDropDown"); }
+    public Element getSelectExportDropDownByOption(String option) {return driver.FindElementByXPath(String.format("//select[@id = 'exportFileSortByDropDown']/option[text() = '%s']", option));}
     public Element getGenerateButton(){ return driver.FindElementById("generate-batch-print-button"); }
     public Element getbackgroundDownLoadLink(){ return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[contains(.,'Download File')]"); }
     public Element getTaskType(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[1]/td[2]"); }
@@ -95,6 +96,8 @@ public class BatchPrintPage {
     public Element getSelectSearchParentOption(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+parent+"']/preceding-sibling::i"); }
     public Element getSelectSearchParentGroup(String parent) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='\"+parent+\"']/following-sibling::ul"); }
     public Element getSelectSearchOption(String option) { return driver.FindElementByXPath("//*[@id='searchTree']//a[@data-content='"+option+"']"); }
+    public Element getSelectSearchChildGroup(String parent, String child) {return driver.FindElementByXPath(String.format("//*[@id='searchTree']//a[@data-content='%s']/following-sibling::ul/li/a[@data-content=%s']/i[1]",parent,child));}
+    public ElementCollection getSelectSearchChildOptions(String parent) {return driver.FindElementsByCssSelector("#searchTree a[data-content = 'My Saved Search'] + ul a i:first-child");}
     public Element getSourceSelectionNextButton() { return driver.FindElementById("source-selection-next-button"); }
     public Element getNativeRadioButton() { return driver.FindElementById("nativesRadioButton"); }
     public Element getBasisForPrintingNextButton() { return driver.FindElementById("basis-for-printing-next-button"); }
@@ -119,6 +122,7 @@ public class BatchPrintPage {
 
     public Element getBackgroundTaskFirstRowStatus() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[8]"); }
     public Element getBackgroundTaskFirstRowDownloadLink() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[9]/a"); }
+    public Element getBackgroundTaskFirstRowID() { return driver.FindElementByXPath("//table[@id='dt_basic']//tr[1]/td[1]");}
     public Element getOnePDFForAllDocsRadioButton() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); } 
     public Element getGenerateSuccessMessage() { return driver.FindElementById("bigBox4"); }
 
@@ -134,6 +138,11 @@ public class BatchPrintPage {
     public Element getPrintExcelPlaceholderTextInputField() { return driver.FindElementByXPath("//ul[@id='redactor-toolbar-1']/following-sibling::div"); }
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
+    public Element getSourceSelectionBackBtn() {return driver.FindElementById("basis-for-printing-back-button");}
+    public Element getGreenPopUpMessage() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+    public Element getBackGroundTasksApplyButton() {return driver.FindElementById("btnAppyFilter");}
+    public ElementCollection getBackGroundTasksTableRows() {return driver.FindElementsByCssSelector("#dt_basic tbody tr ");}
+
     public ElementCollection getIncludeOtherExceptionFileTypesCheckBox() { return driver.FindElementsById("includeOtherExceptionFileTypesCheckBox"); }
     public ElementCollection getAllBrandingToggleButtons() { return driver.FindElementsByCssSelector(".btn.btn-default.btn-xs"); }
     public Element getIncludeAppliedRedactionsToggle() { return driver.FindElementByXPath("//input[@id='includeAppliedRedactions']/following-sibling::i"); }
@@ -157,6 +166,27 @@ public class BatchPrintPage {
     public Element getSlipSheetsAllRedactionTagsList() { return driver.FindElementByXPath("//a[text()='All Redaction Tags']/preceding-sibling::i/parent::li[contains(@class, 'open')]"); }
     public ElementCollection getSlipSheetsAllTagsOptions() { return driver.FindElementsByXPath("//a[text()='All Tags']/parent::li/ul[@class='jstree-children']//a"); }
     public ElementCollection getSlipSheetsAllRedactionTagsOptions() { return driver.FindElementsByXPath("//a[text()='All Redaction Tags']/parent::li/ul[@class='jstree-children']//a"); }
+
+    public Element getSearchRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectSearchRadioButton']/following-sibling::i"); }
+    public Element getSearchSG1ExpandFolderIcon(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]/i"); }
+    public Element getSearchSelectFile(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]//li[1]/a"); }
+    public Element getTagsRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectTagRadioButton']/following-sibling::i"); }
+    public Element getSelectAllTagsExpandFolder(){ return driver.FindElementByXPath("//*[@id=\"tagTree\"]/ul/li/i"); }
+    public Element getDefaulTags() { return driver.FindElementByXPath("//*[@class='jstree-children']/li[4]/a[1]/i[1]"); }
+    public Element get0Docs() { return driver.FindElementByXPath("//*[@class='jstree-children']/li[1]/a[1]/i[1]"); }
+    public Element get0DocsAnalysisTitleText() { return driver.FindElementByXPath("//*[@id=\"view-content\"]/div[3]/div/div/div/div/h4"); }
+    public Element get0DocsAnalysisText() { return driver.FindElementByXPath("//*[@id=\"view-content\"]/div[3]/div/div/div/div/div"); }
+    public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectFolderRadioButton']/following-sibling::i"); }
+    public Element getFolderAllTagsExpandFolder(){ return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/i"); }
+    public Element getPriorProduction() { return driver.FindElementByXPath(".//*[@id='priorProductionRadioButton']/following-sibling::i"); }
+    public Element getPriorDefaultProductionOption() { return driver.FindElementByXPath("//*[@id=\"ProductionDropDown\"]//option[1]"); }
+    public Element getAnalysisFolderDocExpand() { return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/i"); }
+    public Element getAnalysisDefaultProductionOption() { return driver.FindElementByXPath("//*[@id='folderTree']/ul/li/ul/li[10]/a"); }
+    public ElementCollection getBackGroundTaskCompleteNotification(String id) {return driver.FindElementsByCssSelector(String.format("#bgTask span[id = '%s']", id));}
+    public Element getOpenNotificationsMenu() {return driver.FindElementByCssSelector("#activity i");}
+    public Element getFirstBackgroundTaskInProgress() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='INPROGRESS']");}
+    public Element getFirstBackgroundTaskCompleted() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='COMPLETED']");}
+  
     
     
     public BatchPrintPage(Driver driver){
