@@ -858,7 +858,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke11"})
+	@Test(groups = {"DocView, Positive", "smoke3"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_rectangle_redaction() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -900,7 +900,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive","smoke"})
+	@Test(groups = {"DocView, Positive","smoke3"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -910,7 +910,7 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.default_redaction_tag_does_not_exist(true, dataMap);
 			context.sightline_is_launched(true, dataMap);
@@ -1097,7 +1097,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive", "smoke"})
+	@Test(groups = {"DocView, Positive", "smoke2"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_trueSGSame1_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

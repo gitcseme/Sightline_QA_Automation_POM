@@ -136,6 +136,8 @@ public class DocViewContext extends CommonContext {
 			SavedSearch savedSearch = new SavedSearch(driver,0);
 			savedSearch.getSavedSearchGroupName(securityGroup).click();
 			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
