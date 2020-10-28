@@ -863,16 +863,18 @@ public class DocViewContext extends CommonContext {
 
 			//* Click existing rectangle redaction
 			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getBottomEditSideOfRedactionRectangle().Enabled() && docView.getBottomEditSideOfRedactionRectangle().Displayed()  ;}}), Input.wait30); 
-			String temp= docView.getBottomEditSideOfRedactionRectangle().GetAttribute("data-pcc-mark");
-
+			if( ((String)dataMap.get("dimensions")).equals("true")) {
 			//* Change redaction dimensions
-             for(WebElement x: docView.getAllEditSidesOfRedactionRectangle(temp).FindWebElements()) {
-            	 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-            	 		x.isDisplayed() && x.isEnabled()  ;}}), Input.wait30); 
-            	 	builder.moveToElement(x).clickAndHold().moveByOffset(rnd.nextInt(20)-10, rnd.nextInt(20)-10).release().perform();
-             }
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					docView.getBottomEditSideOfRedactionRectangle().Enabled() && docView.getBottomEditSideOfRedactionRectangle().Displayed()  ;}}), Input.wait30); 
+				String temp= docView.getBottomEditSideOfRedactionRectangle().GetAttribute("data-pcc-mark");
+	
+				for(WebElement x: docView.getAllEditSidesOfRedactionRectangle(temp).FindWebElements()) {
+            	 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+            	 				x.isDisplayed() && x.isEnabled()  ;}}), Input.wait30); 
+            	 		builder.moveToElement(x).clickAndHold().moveByOffset(rnd.nextInt(20)-10, rnd.nextInt(20)-10).release().perform();
+				}
+			}
 
              //get new dimension
              String afterEditDimension = docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getCssValue("height");
@@ -926,7 +928,9 @@ public class DocViewContext extends CommonContext {
 			String firstTag = (String)dataMap.get("beforeTag");
 			String secondTag = (String)dataMap.get("afterTag");
 			//Make sure dimensions have changed
-			Assert.assertFalse(firstDimension.equals(secondDimension));
+			if( ((String)dataMap.get("dimensions")).equals("true")) {
+				Assert.assertFalse(firstDimension.equals(secondDimension));
+			}
 			//Make sure tags have changed
 			Assert.assertFalse(firstTag.equals(secondTag));
 			pass(dataMap, "verified that the redaction was edited");
