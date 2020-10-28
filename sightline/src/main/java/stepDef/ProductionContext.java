@@ -2357,6 +2357,7 @@ public class ProductionContext extends CommonContext {
 				Actions builder = new Actions(driver.getWebDriver());
 				builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
 				prod.getMarkCompleteButton().Click();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				fail(dataMap, "Unable to click the Mark Complete button");
@@ -2886,16 +2887,17 @@ public class ProductionContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? delete_created_productions$")
 	public void  delete_created_productions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		try {
-			prod.goToProductionHomePage().ScrollTo();
-			prod.goToProductionHomePage().click();
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/Production/Home");
 			driver.waitForPageToBeReady();
 			
-			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("productionName").toString())).click();
+			prod.getProductionTileSettingsByName(prod.getProductionTileByName(dataMap.get("production_name").toString())).click();
 			
 			prod.getDelete().click();
 			prod.getProductionDeleteOkButton().click();
 			pass(dataMap, "Successfully deleted the target production");
 		} catch (Exception e) {
+			e.printStackTrace();
 			fail(dataMap, "Target production could not be deleted");
 		}
 	}
@@ -8656,7 +8658,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//The PDF section is expanded
-			throw new ImplementationException("the_pdf_section_is_expanded");
+			//Expand the PDF Section
+		
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTemplateProductionComponentToggle("PDF").Visible()  ;}}), Input.wait30);
+			prod.getTemplateProductionComponentToggle("PDF").click();
+
 		} else {
 			throw new ImplementationException("NOT the_pdf_section_is_expanded");
 		}
@@ -8668,8 +8676,10 @@ public class ProductionContext extends CommonContext {
 	public void enabling_blank_page_removal_for_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("enabling_blank_page_removal_for_pdf");
+			driver.scrollPageToTop();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFBlankPageRemoveToggle2().Visible()  ;}}), Input.wait30);
+			prod.getPDFBlankPageRemoveToggle2().click();
 		} else {
 			throw new ImplementationException("NOT enabling_blank_page_removal_for_pdf");
 		}
@@ -8682,7 +8692,17 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6972 part 2Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
-			throw new ImplementationException("verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMessageContainerRemovalMessage().Displayed()  ;}}), Input.wait30);
+			
+			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
+			if (expectedMessage.equals(actualMessage)) {
+				pass(dataMap, "Test pass - expected message is shown.");
+			} else {
+				fail(dataMap, "Test failed - \"" + expectedMessage + "\" was expected, instead got \"" + actualMessage + "\"");
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_message_displayed_when_pdf_blank_page_removal_is_enabled");
 		}
@@ -8853,8 +8873,46 @@ public class ProductionContext extends CommonContext {
 	public void complete_native_section_with_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Checkoff NativeExpand NativeIf Native Data is file_types:Check Select All for File TypesIf Native Data is tags:Click Select TagsClick Default Automation TagClick SelectIf Native Data is files_and_tags:Check Select All for File TypesClick Select TagsClick Default Automation TagClick Select
-			throw new ImplementationException("complete_native_section_with_");
+			//Checkoff NativeExpand Native
+			//If Native Data is file_types:Check Select All for File Types
+			//If Native Data is tags: 
+			//   Click Select Tags
+			//Click Default Automation Tag
+			//Click Select
+			//If Native Data is files_and_tags:
+			//Check Select All for File Types
+			//Click Select Tags
+			//Click Default Automation Tag
+			//Click Select
+			
+			// Expand Native toggle
+			prod.getNativeChkBox().click();
+			prod.getTemplateProductionComponentToggle("Native").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNative_SelectAllCheck().Displayed()  ;}}), Input.wait30);
+			
+			String nativeData = dataMap.get("native_data").toString();
+			
+			if (nativeData.equalsIgnoreCase("file_types")) {
+				prod.getNative_SelectAllCheck().click();
+			} else if (nativeData.equalsIgnoreCase("tags")) {
+				prod.getSelectNativeTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNative_DefaultAutomationTag().Displayed()  ;}}), Input.wait30);
+				prod.getNative_DefaultAutomationTag().click();
+				prod.getSelectTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNative_DefaultAutomationTag().Displayed()  ;}}), Input.wait30);
+			} else if (nativeData.equalsIgnoreCase("files_and_tags")) {
+				prod.getNative_SelectAllCheck().click();
+				prod.getSelectNativeTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNative_DefaultAutomationTag().Displayed()  ;}}), Input.wait30);
+				prod.getNative_DefaultAutomationTag().click();
+				prod.getSelectTagsButton().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						!prod.getNative_DefaultAutomationTag().Displayed()  ;}}), Input.wait30);
+			}
 		} else {
 			throw new ImplementationException("NOT complete_native_section_with_");
 		}
@@ -8867,9 +8925,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the Mark Complete ButtonClick the Mark Incomplete Button
-			throw new ImplementationException("clicking_the_productions_mark_complete_and_incomplete_button");
+			prod.getMarkCompleteButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkIncompleteButton().Enabled()  ;}}), Input.wait30);
+			prod.getMarkIncompleteButton().click();
+
+			
 		} else {
-			throw new ImplementationException("NOT clicking_the_productions_mark_complete_and_incomplete_button");
+			fail(dataMap, "Did not click Mark Complete and Mark Incomplete button");
 		}
 
 	}
@@ -8879,10 +8942,40 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 6820 / 6821 / 6822Expand the Native sectionVerify depending on the native data provided, the correct file types, tags, or both are displayed correctly in the native section.If file types, verify the select all checkbox is enabled as well as the second checkbox to make sure.If tags, make sure the tag is displayed next to the "Select Tags" button.If both, verify both items above.
-			throw new ImplementationException("verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+			//TC 6820 / 6821 / 6822
+			//Expand the Native section
+			//Verify depending on the native data provided, the correct file types, tags, or both are displayed correctly in the native section.
+			//If file types, verify the select all checkbox is enabled as well as the second checkbox to make sure.
+			//If tags, make sure the tag is displayed next to the "Select Tags" button.If both, verify both items above.
+			
+			prod.getTemplateProductionComponentToggle("Native").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNative_SelectAllCheck().Displayed()  ;}}), Input.wait30);
+			
+			String nativeData = dataMap.get("native_data").toString();
+			if (nativeData.equalsIgnoreCase("file_types")) {
+				for (WebElement el : prod.getNativeSelectFileTypeOrTagsTableCheckboxes().FindWebElements()) {
+					if(el.getAttribute("checked").equals("true")) {
+						pass(dataMap, "PASS! All checkboxes are selected");
+					} else fail(dataMap, "FAIL! All checkboxes are not selected");
+				}
+			} else if (nativeData.equalsIgnoreCase("tags")) {
+				if (prod.getNativeSelectedTagList().getText().equals("Default Automation Tag")) {
+					pass(dataMap, "PASS! Tag value is retained");
+				} else fail(dataMap, "FAIL! Tag value is not retained");
+			} else if (nativeData.equalsIgnoreCase("files_and_tags")) {
+				for (WebElement el : prod.getNativeSelectFileTypeOrTagsTableCheckboxes().FindWebElements()) {
+					if(el.getAttribute("checked").equals("true")) {
+						pass(dataMap, "PASS! All checkboxes are selected");
+					} else fail(dataMap, "FAIL! All checkboxes are not selected");
+				}
+				if (prod.getNativeSelectedTagList().getText().equals("Default Automation Tag")) {
+					pass(dataMap, "PASS! Tag value is retained");
+				} else fail(dataMap, "FAIL! Tag value is not retained");
+			}
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_native_component_displays_the_saved_data_correctly_after_being_incompleted");
+			fail (dataMap, "Verify Failed");
 		}
 
 	}
@@ -8893,7 +8986,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the checkbox for the Native section
-			throw new ImplementationException("the_native_checkbox_is_enabled");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getNativeChkBox().Visible()  ;}}), Input.wait30);
+			prod.getNativeChkBox().click();
 		} else {
 			throw new ImplementationException("NOT the_native_checkbox_is_enabled");
 		}
@@ -8906,7 +9001,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6415Verify the following error is returned: You must select at least a file group type or a tag in the Native components section
-			throw new ImplementationException("verify_an_error_message_is_returned_on_empty_native_components");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMessagePopup().Visible()  ;}}), Input.wait30);
+			String actualMsg = prod.getMessagePopup().getText();
+			String expectedMsg = "You must select at least a file group type or a tag in the Native components section";
+			if (actualMsg.equals(expectedMsg)) {
+				pass(dataMap, "PASS! Expected message appears when trying to Mark Complete with an empty native component");
+			} else fail(dataMap, "FAIL! Expected message does not appear when trying to Mark Complete with an empty native component");
+			
+
 		} else {
 			throw new ImplementationException("NOT verify_an_error_message_is_returned_on_empty_native_components");
 		}
@@ -9205,7 +9308,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the New Line dropdown
-			throw new ImplementationException("clicking_the_new_line_dropdown");
+			prod.getDATNewLine().click();
 		} else {
 			throw new ImplementationException("NOT clicking_the_new_line_dropdown");
 		}
@@ -9217,8 +9320,43 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC6327 Verify the dropdown has an option with the value -1039 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(255)".Verify the dropdown has an option with the value -875 in their http selector dropdown.Verify the dropdown has an option with the text "ASCII(90)".Verify the dropdown has an option with the text "ASCII(20)".Verify the dropdown has a total of 255 options to select. Should be ASCII 1-255. Don't need to verify each option is in the dropdown, but that the count of the dropdown is 255.
-			throw new ImplementationException("verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
+			//TC6327 Verify the dropdown has an option with the value -1039 in their http selector dropdown.
+			//Verify the dropdown has an option with the text "ASCII(255)".
+			//Verify the dropdown has an option with the value -875 in their http selector dropdown.
+			//Verify the dropdown has an option with the text "ASCII(90)".
+			//Verify the dropdown has an option with the text "ASCII(20)".Verify the dropdown has a total of 255 options to select. 
+			//Should be ASCII 1-255. Don't need to verify each option is in the dropdown, but that the count of the dropdown is 255.
+			try {
+				List<String> options = new ArrayList<>();
+				List<String> values = new ArrayList<>();
+				for (WebElement el : prod.getDATNewLine().selectFromDropdown().getOptions()) {
+					options.add(el.getText());
+					values.add(el.getAttribute("value"));
+				}
+				
+				if (options.contains("ASCII(255)")) {
+					pass(dataMap, "PASS! ASCII(255) is in list!");
+				} else {fail(dataMap, "FAIL! ASCII(255) is not in list!");}
+					
+				if (options.contains("ASCII(90)")) {
+					pass(dataMap, "PASS! ASCII(90) is in list!");
+				} else {fail(dataMap, "FAIL! ASCII(90) is not in list!");}
+
+				if (options.contains("ASCII(20)")) {
+					pass(dataMap, "PASS! ASCII(20) is in list!");
+				} else {fail(dataMap, "FAIL! ASCII(20) is not in list!");}
+
+				if (options.size() == 255) {
+					pass(dataMap, "PASS! There are 255 options to select");
+				} else {fail(dataMap, "FAIL! There are not 255 options to select! Only "+options.size()+" appear");}
+
+				if (values.contains("-875")) {
+					pass(dataMap, "PASS! Dropdown contains value -875");
+				} else {fail(dataMap, "FAIL! Dropdown does not contain value -875");}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_dat_new_line_delimiters_are_displaying_from_the_dropdown");
 		}
@@ -9231,7 +9369,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Expand the Tiff Section
-			throw new ImplementationException("the_tiff_section_is_expanded");
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTemplateTIFFPlaceholderText().Displayed()  ;}}), Input.wait30);
 		} else {
 			throw new ImplementationException("NOT the_tiff_section_is_expanded");
 		}
@@ -9244,7 +9384,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Blank Page Removal to enable it on the TIff section
-			throw new ImplementationException("enabling_blank_page_removal_for_tiff");
+			prod.getTIFFBlankRemovalToggle().Click();
 		} else {
 			throw new ImplementationException("NOT enabling_blank_page_removal_for_tiff");
 		}
@@ -9257,7 +9397,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 6972Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
-			throw new ImplementationException("verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFPDFBlankPageWarningMessage().Visible()  ;}}), Input.wait30);
+			String actualMsg = prod.getTIFFPDFBlankPageWarningMessage().getText();
+			String expectedMsg = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+			if (actualMsg.equals(expectedMsg)) {
+				pass(dataMap, "PASS! Expected message is shown");
+			} else fail(dataMap, "FAIL! Expected message is not shown. '" + actualMsg + "' is shown instead");
 		} else {
 			throw new ImplementationException("NOT verify_the_message_displayed_when_tiff_blank_page_removal_is_enabled");
 		}
@@ -9731,6 +9877,7 @@ public class ProductionContext extends CommonContext {
 			}
 		} else {
 			fail(dataMap,"NOT clicking_the_action_dropdown");
+
 		}
 
 	}
@@ -9787,8 +9934,10 @@ public class ProductionContext extends CommonContext {
 
 			}					
 
+
 		} else {
 			fail(dataMap,"NOT a_valid_production_name_is_entered");
+
 		}
 
 	}
@@ -9798,11 +9947,13 @@ public class ProductionContext extends CommonContext {
 	public void a_valid_production_description_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//Type in any description
 			prod.getProductionDesc().sendKeys(dataMap.get("description").toString());
 			pass(dataMap,"a_valid_production_description_is_entered");
 		} else {
 			fail(dataMap,"NOT a_valid_production_description_is_entered");
+
 		}
 
 	}
@@ -9873,10 +10024,12 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
 
+
 			//* Verify the Currently selected production set's name is displayed under the label for "PRODUCTIONS SET".
 			String selectedProductionSetName = prod.getProdExport_ProductionSets().selectFromDropdown().getFirstSelectedOption().getText().replace(" (Production Set)", "");
 			String productionSetLabelText = prod.getProductionHomePageCurrentlySelectedProductionSet().getText();
 			Assert.assertEquals(productionSetLabelText,selectedProductionSetName);
+
 
 			//* Click the dropdown for Productions Set, and change it to another production set
 			prod.clickProductionSetByIndex(prod.getProductionSetsOptions().size()-1);
@@ -9890,7 +10043,9 @@ public class ProductionContext extends CommonContext {
 			//* Set the production set back to the original. 
 			prod.clickProductionSetByIndex(0);
 
+
 			pass(dataMap, "The production home page is displayed correctly");
+
 		} else {
 			fail(dataMap, "The production home page is not displayed correctly");
 		}
@@ -9902,11 +10057,13 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_production_name_column(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//Since it is on grid view, click on the column PRODUCTION NAME to sort it
 			prod.getProductionGridViewProductionNameColumnHeader().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 					prod.getProductionGridViewProductionNameColumnHeader().getWebElement().getAttribute("class").equals("sorting_asc");}}), Input.wait30);
 			pass(dataMap, "clicking the production name column");
+
 		} else {
 			fail(dataMap, "Not clicking the production name column");
 		}
@@ -9918,6 +10075,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_of_the_productions_is_by_name_in_grid_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC 3709Verify the first 15 productions  on the list of productions are sorted in alphabetical order.
 			List<WebElement> productionItems = prod.getProductionItemsGrid().FindWebElements();
 			//remove first item (column headers)
@@ -9929,6 +10087,7 @@ public class ProductionContext extends CommonContext {
 				previousProductionName = currentProduction.getText();
 			}
 			pass(dataMap, "The sorting of the productions is by name in grid view");
+
 		} else {
 			fail(dataMap, "The sorting of the productions is not by name in grid view");
 		}
@@ -9940,8 +10099,23 @@ public class ProductionContext extends CommonContext {
 	public void deleting_the_first_production_listed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Clicking the settings button on the first productionClick DeleteClick Ok
-			throw new ImplementationException("deleting_the_first_production_listed");
+			//TC 6972Verify the following message appears "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?"Click Continue
+			//MsgTitle
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMessageContainerRemovalMessage().Visible()  ;}}), Input.wait30);
+			
+			String expectedMessage = "Enabling Blank Page Removal doubles the overall production time. Are you sure you want to continue?";
+			String actualMessage = prod.getMessageContainerRemovalMessage().getText();
+			
+			String message = "Test pass: ";
+			if (expectedMessage.equals(actualMessage)) {
+				pass(dataMap, "Test pass - expected message is shown.");
+			} else {
+				fail(dataMap, "Test failed - \"" + expectedMessage + "\" was expected, instead got \"" + actualMessage + "\"");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT deleting_the_first_production_listed");
 		}
@@ -10065,13 +10239,7 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_last_modified_date_on_productions_gets_updated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 7739 / 7740
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30);
-			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
-			
-			
-			driver.waitForPageToBeReady();
+
 
 			//Verify the time stamp of when you stored the production's info vs the timestamp of when you made your change do not match.
 			Assert.assertNotEquals(dataMap.get("firstProductionLastModifiedDate"), dataMap.get("newTimeStamp"));
