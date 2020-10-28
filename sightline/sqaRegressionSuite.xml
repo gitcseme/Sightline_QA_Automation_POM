@@ -13,6 +13,8 @@
         <class name="testScriptsRegression.IngestionRegression" ></class>  
         <class name="testScriptsRegression.ExportRegression" ></class>  
         <class name="testScriptsRegression.SearchRegression" ></class>  
+        <class name="testScriptsRegression.BatchPrintRegression" ></class>  
+        <class name="testScriptsRegression.DocViewRegression" ></class>  
     </classes>
 	</test> 
 	  

@@ -29,6 +29,7 @@ import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 
 import pageFactory.DocViewPage;
+import pageFactory.SavedSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -45,39 +46,6 @@ public class DocViewContext extends CommonContext {
 
 
 
-	@And("^.*(\\[Not\\] )? login_as_rmu$")
-	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* Enter Username and password for Review Manager user
-			//* User is logged in
-			//* Sightline Home page is displayed
-			//
-			throw new ImplementationException("login_as_rmu");
-		} else {
-			throw new ImplementationException("NOT login_as_rmu");
-		}
-
-	}
-
-
-	@And("^.*(\\[Not\\] )? on_saved_search_page$")
-	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//
-			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
-			//* Saved Search page is displayed
-			//
-			throw new ImplementationException("on_saved_search_page");
-		} else {
-			throw new ImplementationException("NOT on_saved_search_page");
-		}
-
-	}
-
-
 	@And("^.*(\\[Not\\] )? open_saved_audio_doc_view$")
 	public void open_saved_audio_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -87,7 +55,7 @@ public class DocViewContext extends CommonContext {
 			//* Click radio button for first saved search
 			//* Click 'Doc View' button at the top of the page
 			//
-			throw new ImplementationException("open_saved_audio_doc_view");
+			
 		} else {
 			throw new ImplementationException("NOT open_saved_audio_doc_view");
 		}
@@ -102,7 +70,7 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click grey Redact tool button
 			//
-			throw new ImplementationException("click_grey_redact_tool");
+			
 		} else {
 			throw new ImplementationException("NOT click_grey_redact_tool");
 		}
@@ -128,7 +96,7 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC3485 Verify user after impersonating as RMU/Reviewer can see the redaction and can redact in an audio file
-			throw new ImplementationException("verify_audio_redaction");
+			
 		} else {
 			throw new ImplementationException("NOT verify_audio_redaction");
 		}
@@ -142,12 +110,17 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click 'Saved with SG1' search group
+			SavedSearch savedSearch = new SavedSearch(driver);
+			savedSearch.getSavedSearchByGroupName("Saved with SG1");
+
 			//* Click radio button for first saved search
+			savedSearch.getSavedSearchTableRadioButtons().getElementByIndex(0).click();
 			//* Click 'Doc View' button at the top of the page
-			//
-			throw new ImplementationException("open_saved_search_doc_view");
+			savedSearch.getToDocView().click();
+
+			pass(dataMap, "Open saved search doc view");
 		} else {
-			throw new ImplementationException("NOT open_saved_search_doc_view");
+			fail(dataMap,"Cannot open save search doc view");
 		}
 
 	}
