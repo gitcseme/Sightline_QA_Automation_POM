@@ -2945,7 +2945,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_When_click_excel_files_help_button_Then_verify_help_displayed_on_exception_file_types_tab() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3131,7 +3131,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke"})
 	public void test_Given_login_to_new_batch_print_When_click_select_search_radio_button_Then_verify_my_shared_removed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3147,9 +3147,11 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("TestCase", "4398");
 			context.verify_my_shared_removed(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

@@ -140,6 +140,8 @@ public class BatchPrintPage {
     public Element getExcelFileOptions() { return driver.FindElementByCssSelector("div.batch-print div.row.step-source-selection div.col-md-8.smart-form"); }
     public Element getBasisForPrintingHeader() { return driver.FindElementByXPath("//h2[contains(text(), 'Basis for Printing')]"); }
     public Element getSourceSelectionBackBtn() {return driver.FindElementById("basis-for-printing-back-button");}
+    public Element getSourceSelectionSelectFolderRadioButton() {return driver.FindElementByCssSelector("#selectSearchRadioButton + i");}
+    public ElementCollection getSourceSelectionSelectSearchRows() {return driver.FindElementsByCssSelector("#searchTree a");}
     public Element getBasisForPrintingProductionDropDownOption(String option) { return driver.FindElementByXPath(String.format("//select[@id = 'ProductionDropDown']/option[text() = '%s']", option));}
     public ElementCollection getBatchPrintAnalysisDocumentText() {return driver.FindElementsByCssSelector("#noIssuesDocDiv ul li");}
     public ElementCollection getBatchPrintAnalysisColumnHeaders() {return driver.FindElementsByCssSelector("#issueDocGrid thead th");}
@@ -192,7 +194,6 @@ public class BatchPrintPage {
     public Element getFirstBackgroundTaskInProgress() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='INPROGRESS']");}
     public Element getFirstBackgroundTaskCompleted() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='COMPLETED']");}
   
-    
     
     public BatchPrintPage(Driver driver){
 

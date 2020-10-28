@@ -1720,10 +1720,10 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Select Search' radio button on Source Selection tab
-			throw new ImplementationException("click_select_search_radio_button");
-		} else {
-			throw new ImplementationException("NOT click_select_search_radio_button");
+			batchPrint.getSourceSelectionSelectFolderRadioButton().click();
+			pass(dataMap, "clicked select search radio button");
 		}
+		else fail(dataMap, "failed to click select search radio button");
 
 	}
 
@@ -1731,15 +1731,20 @@ public class BatchPrintContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_my_shared_removed$")
 	public void verify_my_shared_removed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		if (scriptState) {
 			//TC4398 Verify that 'My Shared' it should be removed from Batch Print
-			//
+		if (scriptState) {
 			//* 'My Shared' is not a 'Select Search' option
-			//
-			throw new ImplementationException("verify_my_shared_removed");
-		} else {
-			throw new ImplementationException("NOT verify_my_shared_removed");
+			boolean pass = true;
+			for(WebElement row: batchPrint.getSourceSelectionSelectSearchRows().FindWebElements()) {
+				//If my shared is still in search, mark our pass variable as failed
+				if(row.getText().equals("My Shared")) pass = false;
+				
+			}
+			//Verify that our pass variable has remained true
+			Assert.assertTrue(pass);
+			pass(dataMap, "Verified that my shared is not an option");
 		}
+		else fail(dataMap, "failed to verify my shared is not an option");
 
 	}
 
