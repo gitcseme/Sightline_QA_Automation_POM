@@ -33,6 +33,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.google.common.collect.Ordering;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -2398,6 +2400,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
 				prod.getComponentsMarkComplete().Click();
+
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 
 			} catch (Exception e) {
@@ -3953,8 +3956,7 @@ public class ProductionContext extends CommonContext {
 		} catch(Exception e) {
 			e.printStackTrace();
 			fail(dataMap,"default DAT section is not complete");
-			}
-					
+			}		
 		} else {
 			fail(dataMap,"default DAT section is not complete");
 		}
@@ -8256,10 +8258,38 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_options_in_the_numbering_compoent_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4930Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
-			throw new ImplementationException("verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			//TC 4930
+			// Verify the three radio button options are "Sort by Metadata", "Sort by Selected Tags", "Custom Sort - Upload Excel".
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortMetaRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					 prod.getNumSortBySelectedTagsRadioButton().Visible()  ;}}),Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelRadioButton().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking Sort by Selected Tag, a grid displays with the header "AVAILABLE TAGS" and "SELECTED TAGS" with a list of tags under the "AVAILABLE TAGS".
+			prod.getNumSortBySelectedTagsRadioButton().ScrollTo();
+			prod.getNumSortBySelectedTagsRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGrid().Visible()  ;}}),Input.wait30);
+
+			List<WebElement> headers = prod.getNumSortBySelectedGridHeaders().FindWebElements();
+			Assert.assertEquals(headers.get(0).getText(),"AVAILABLE TAGS");
+			Assert.assertEquals(headers.get(1).getText(),"SELECTED TAGS");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortBySelectedGridTags().Visible()  ;}}),Input.wait30);
+
+			// Verify when clicking "Custom Sort - Upload Excel", the button "Select Excel is displayed.
+			prod.getNumCustomSortUploadExcelRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumCustomSortUploadExcelSelectExcelButton().Visible()  ;}}),Input.wait30);
+
+			pass(dataMap,"The sorting options in the numbering component is display correctly");
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_options_in_the_numbering_compoent_display_correctly");
+			fail(dataMap,"The sorting options in the numbering component is not display correctly");
 		}
 
 	}
@@ -8270,9 +8300,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click on the Click here link
-			throw new ImplementationException("on_the_next_bates_number_dialog");
+			prod.getNumNextBatesLink().click();
+			pass(dataMap, "On the next bates number dialog");
 		} else {
-			throw new ImplementationException("NOT on_the_next_bates_number_dialog");
+			fail(dataMap, "Not on the next bates number dialog");
 		}
 
 	}
@@ -8283,9 +8314,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the X to close the dialog
-			throw new ImplementationException("clicking_the_x_button_on_the_next_bates_dialog");
+			prod.getNumBatesDialogCloseButton().click();
+			pass(dataMap, "Clicked the x button on the next bates dialog");
 		} else {
-			throw new ImplementationException("NOT clicking_the_x_button_on_the_next_bates_dialog");
+			fail(dataMap, "Cannot click the x button on the next bates dialog");
 		}
 
 	}
@@ -8295,10 +8327,19 @@ public class ProductionContext extends CommonContext {
 	public void verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8364Verify clicking X closes the dialog.Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
-			throw new ImplementationException("verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			//TC 8364
+			//Verify clicking X closes the dialog.
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					!prod.getNumNextBatesNumberDialog().Visible()  ;}}), Input.wait30);
+
+			//Verify no values are entered into Beginning Bates #, Prefix, Suffix, or Min Number Length. Min Number Length is 0 by default
+			Assert.assertEquals(prod.getBeginningBates().getWebElement().getAttribute("value"),"0");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDPrefix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDSuffix().getWebElement().getAttribute("value"),"");
+			Assert.assertEquals(prod.gettxtBeginningBatesIDMinNumLength().getWebElement().getAttribute("value"),"0");
+			pass(dataMap,"Clicking X on the next bates number dialog does not populate any fields");
 		} else {
-			throw new ImplementationException("NOT verify_clicking_x_on_the_next_bates_number_dialog_does_not_populate_any_fields");
+			fail(dataMap,"Clicking X on the next bates number dialog populates fields");
 		}
 
 	}
@@ -8308,10 +8349,29 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8156Verify the dropdown in SORTING is sorted AlphabeticallyVerify the dropdown under Sub-sort By is sorted Alphabetically
-			throw new ImplementationException("verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			//TC 8156
+			//Verify the dropdown in SORTING is sorted Alphabetically
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+					prod.getNumSortingMetadataDropdownList().Visible()  ;}}), Input.wait30);
+
+			String previousOption = "";
+
+			for (WebElement currentOption: prod.getNumSortingMetadataDropdownList().FindWebElements()) {
+				//System.out.println(currentOption.getText());
+				if(currentOption.getText().toLowerCase().compareTo(previousOption) < 0) fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText().toLowerCase();
+			}
+
+			previousOption = "";
+			//Verify the dropdown under Sub-sort By is sorted Alphabetically
+			for (WebElement currentOption: prod.getNumSortingMetadataSubSortDropdownList().FindWebElements()) {
+				if (currentOption.getText().toLowerCase().compareTo(previousOption) < 0) fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
+				previousOption = currentOption.getText().toLowerCase();
+			}
+			pass(dataMap, "The sorting metadata dropdowns are sorted alphabetically");
+
 		} else {
-			throw new ImplementationException("NOT verify_the_sorting_metadata_dropdowns_are_sorted_alphabetically");
+			fail(dataMap, "The sorting metadata dropdowns are not sorted alphabetically");
 		}
 
 	}
@@ -8321,10 +8381,12 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_use_metadata_field_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("clicking_the_use_metadata_field_radio_button");
+			//Bates fields have to be clear before clicking radio button
+			prod.getNumDocumentLevelRadioButtonCheck().click();
+			prod.getNumUseMetaFieldButton().click();
+			pass(dataMap, "Clicked the use metadata field radio button");
 		} else {
-			throw new ImplementationException("NOT clicking_the_use_metadata_field_radio_button");
+			fail(dataMap, "Cannot click the use metadata field radio button");
 		}
 
 	}
@@ -8334,10 +8396,12 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8346Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
-			throw new ImplementationException("verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			//TC 8346
+			// Verify the "Click here" link when Speciy Bates Numbering option is selected is not there because the option was changed to Use Metadata Field
+			Assert.assertFalse(prod.getNumNextBatesLink().Visible());
+			pass(dataMap, "The click here link is not available when the option use metadata field is selected");
 		} else {
-			throw new ImplementationException("NOT verify_the_click_here_link_is_not_available_when_the_option_use_metadata_field_is_selected");
+			fail(dataMap, "The click here link is still available");
 		}
 
 	}
@@ -8385,7 +8449,28 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Production Components page is already displayedClick Add FieldAdd 2nd field classification: BatesAdd 2nd source field: BatesNumberEnter 2nd DAT field: Bates Number 2
-			throw new ImplementationException("completed_the_second_default_dat_section");
+			prod.getTemplateProductionComponentToggle("DAT").click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
+				prod.getDAT_AddField().Click();
+				
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFieldClassificationDropdown(1).Displayed()  ;}}), Input.wait30);
+				prod.getFieldClassificationDropdown(1).Click();
+				prod.getFieldClassificationDropdown(1).SendKeys("Bates");
+				
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSourceFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+				prod.getSourceFieldDropdown(1).Click();
+				prod.getSourceFieldDropdown(1).SendKeys("BatesNumber");
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+				prod.getDatFieldDropdown(1).Click();
+				prod.getDatFieldDropdown(1).SendKeys("Bates Number2");
 		} else {
 			throw new ImplementationException("NOT completed_the_second_default_dat_section");
 		}
@@ -8398,7 +8483,26 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Production Components page is already displayedClick Add FieldAdd 3rd field classification: BatesAdd 3rd source field: BatesNumberEnter 3rd DAT field: Bates Number 3
-			throw new ImplementationException("completed_the_third_default_dat_section");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
+				prod.getDAT_AddField().Click();
+				
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFieldClassificationDropdown(1).Displayed()  ;}}), Input.wait30);
+				prod.getFieldClassificationDropdown(2).Click();
+				prod.getFieldClassificationDropdown(2).SendKeys("Bates");
+				
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSourceFieldDropdown(2).Displayed()  ;}}), Input.wait30);
+				prod.getSourceFieldDropdown(2).Click();
+				prod.getSourceFieldDropdown(2).SendKeys("BatesNumber");
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDatFieldDropdown(2).Displayed()  ;}}), Input.wait30);
+				prod.getDatFieldDropdown(2).Click();
+				prod.getDatFieldDropdown(2).SendKeys("Bates Number3");
 		} else {
 			throw new ImplementationException("NOT completed_the_third_default_dat_section");
 		}
@@ -8411,7 +8515,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 7357Verify the following message appears:The same DAT source field has been found to occur more than once. DAT configuration includes mapping of a project field with multiple DAT fields. Do you want to continue with this configuration?Click Continue
-			throw new ImplementationException("verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class");
+			String actualMessage = "The same DAT source field has been found to occur more than once.";
+			String actualSubMsg= "DAT configuration includes mapping of a project field with multiple DAT fields. Do you want to continue with this configuration?";
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.MultipleDatForceOccuranceMsg().Displayed()  ;}}), Input.wait30);
+			String message = prod.MultipleDatForceOccuranceMsg().getText();
+			String subMsg = prod.MultipleDatForceOccuranceSubMsg().getText();
+			Assert.assertEquals(message, actualMessage);
+			Assert.assertEquals(subMsg, actualSubMsg);
+			Assert.assertTrue(prod.MultipleDatForceOccuranceMsg().Displayed());
+
 		} else {
 			throw new ImplementationException("NOT verify_the_production_can_be_completed_with_multiple_dats_with_the_same_field_class");
 		}
@@ -8686,8 +8799,189 @@ public class ProductionContext extends CommonContext {
 	public void on_the_section_insert_metadata_field_dialog(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand the TIFF or PDF section depending on the component variable.If area = brandingIn the branding section, click Insert Metadata Field. If area = placeholderIn the placeholder section, click Insert Metadata Field. If area = filetypesIn the placeholder section, Click Enable for Natively Producted Documentsclick Insert Metadata Field. If area = redactionsIn the Redactions section, enable Burn RedactionsClick Specify Redaction Text by Selecting Redaction TagsClick Insert Metadata Field.If area = techissueIn the placeholder section, click Enable for Tech Issue DocsClick Insert Metadata Field.If area = slipsheetsExpand the Advanced sectionEnable Slip SheetsIf area = calculatedExpand the Advanced sectionEnable Slip SheetsClick on the CALCULATED Tab
-			throw new ImplementationException("on_the_section_insert_metadata_field_dialog");
+			//Expand the TIFF or PDF section depending on the component variable.
+			//If area = branding In the branding section, click Insert Metadata Field.
+			// If area = placeholder In the placeholder section, click Insert Metadata Field.
+			// If area = filetypes In the placeholder section, Click Enable for Natively Producted Documentsclick Insert Metadata Field.
+			// If area = redactions In the Redactions section, enable Burn RedactionsClick Specify Redaction Text by Selecting Redaction TagsClick Insert Metadata Field.
+			//If area = techissue In the placeholder section, click Enable for Tech Issue DocsClick Insert Metadata Field.
+			//If area = slipsheets Expand the Advanced sectionEnable Slip Sheets
+			//If area = calculated Expand the Advanced sectionEnable Slip SheetsClick on the CALCULATED Tab
+			
+			
+				try {
+					String component = (String)dataMap.get("component");
+					String area = (String)dataMap.get("area");
+				
+					if(component.equalsIgnoreCase("TIFF")){
+
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFChkBox().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFChkBox().Click();
+					
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFTab().Click();
+						if(area.equalsIgnoreCase("branding")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFF_OpenBrandingInsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+							prod.getTIFF_OpenBrandingInsertMetadataFieldClick().click();
+						}
+						
+						else if(area.equalsIgnoreCase("placeholder")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFFPlaceholderTechMetadataLink().Visible()  ;}}), Input.wait30); 
+							prod.getTIFFPlaceholderTechMetadataLink().click();
+						}
+						
+						else if(area.equalsIgnoreCase("filetypes")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTiff_NativeDoc().Visible()  ;}}), Input.wait30); 
+							prod.getTiff_NativeDoc().click();
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									prod.getTIFFPlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
+							prod.getTIFFPlaceHolderInsertMetaData().click();
+						}
+						
+						else if(area.equalsIgnoreCase("redactions")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFBurnRedactionToggle().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+							prod.getTIFF_SpecifyRedactText().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFRedactionsInsertMetaData().click();
+						}
+						
+						else if(area.equalsIgnoreCase("techissue")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+				            {return prod.getTechissue_toggle().Visible() ;}}), Input.wait30);
+				            prod.getTechissue_toggle().Click();
+				            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+				            {return prod.getTIFFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
+				            prod.getTIFFTechIssueInsertMetaData().Click();
+						}
+						
+						else if(area.equalsIgnoreCase("slipsheets")) {
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFAdvanced().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFSlipSheetsToggle().click();
+						}
+						else if (area.equalsIgnoreCase("calculated"))
+						{
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFAdvanced().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+							prod.getTIFFSlipSheetsToggle().click();
+							
+							driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+									  prod.getSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
+							prod.getSlipSheetCalculatedTab().click();
+						}
+						else 
+						{
+							fail(dataMap, "Valid area was not selected");
+						}
+					}
+					
+					else if((component.equalsIgnoreCase("PDF"))) {
+
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							prod.getPDFChkBox().Displayed()  ;}}), Input.wait30);
+						prod.getPDFChkBox().Click();
+				
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getPDFTab().Displayed()  ;}}), Input.wait30);
+						prod.getPDFTab().Click();
+					
+					
+					if(area.equalsIgnoreCase("branding")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getPDF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
+						prod.getPDF_InsertMetadataFieldClick().click();
+					}
+					
+					else if(area.equalsIgnoreCase("placeholder")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getPDF_PlaceholderInsertMetaData().Visible()  ;}}), Input.wait30); 
+						prod.getPDF_PlaceholderInsertMetaData().click();
+					}
+					
+					else if(area.equalsIgnoreCase("filetypes")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getpdf_NativeDoc().Visible()  ;}}), Input.wait30); 
+						prod.getPdf_NativeDoc().click();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								prod.getPDFNativePlaceHolderInsertMetaData().Visible()  ;}}), Input.wait30); 
+						prod.getPDFNativePlaceHolderInsertMetaData().click();
+					}
+					
+					else if(area.equalsIgnoreCase("redactions")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFBurnRedactionToggle().click();
+						
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+						prod.getPDF_SpecifyRedactText().click();
+						
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFRedactionsInsertMetaData().Displayed()  ;}}), Input.wait30);
+						prod.getPDFRedactionsInsertMetaData().click();
+					}
+					else if(area.equalsIgnoreCase("techissue")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+			            {return prod.getPDFPlaceholderTechIssueToggle().Visible() ;}}), Input.wait30);
+			            prod.getPDFPlaceholderTechIssueToggle().Click();
+			            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+			            {return prod.getPDFTechIssueInsertMetaData().Visible() ;}}), Input.wait30);
+			            prod.getPDFTechIssueInsertMetaData().Click();
+					}
+					else if(area.equalsIgnoreCase("slipsheets")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+						prod.getPDFAdvanced().click();
+						
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetsToggle().click();
+					}
+					else if (area.equalsIgnoreCase("calculated"))
+					{
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFAdvanced().Displayed()  ;}}), Input.wait30);
+						prod.getPDFAdvanced().click();
+						
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFSlipSheetsToggle().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetsToggle().click();
+						
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								  prod.getPDFSlipSheetCalculatedTab().Displayed()  ;}}), Input.wait30);
+						prod.getPDFSlipSheetCalculatedTab().click();
+					}
+			}
+					else 
+					{
+						fail(dataMap, "Valid area was not selected");
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			
 		} else {
 			throw new ImplementationException("NOT on_the_section_insert_metadata_field_dialog");
 		}
@@ -8699,10 +8993,26 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_insert_metadata_field_dropdown(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//if area = slipsheetdo not click anythingif area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
-			throw new ImplementationException("clicking_the_insert_metadata_field_dropdown");
+			//if area = slipsheetdo not click anything
+			//if area = calculateddo not click anythingelseClick the Insert Metadata field dropdown
+			String component = (String)dataMap.get("component");
+			String area = (String)dataMap.get("area");
+		
+				if(area.equalsIgnoreCase("branding") 
+						|| area.equalsIgnoreCase("placeholder") 
+						|| area.equalsIgnoreCase("filetypes") 
+						|| area.equalsIgnoreCase("redactions") 
+						|| area.equalsIgnoreCase("techissue")) { 
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+						return prod.getTIFF_InsertMetadataFieldClick().Visible() ;}}), Input.wait30); 
+					prod.getTIFF_InsertMetadataFieldClick().click(); 
+					} 
+				else {
+					System.out.println("Waiting for page to load");
+				}			
+			pass(dataMap, "clicking_the_insert_metadata_field_dropdown");
 		} else {
-			throw new ImplementationException("NOT clicking_the_insert_metadata_field_dropdown");
+			fail(dataMap, "NOT clicking_the_insert_metadata_field_dropdown");
 		}
 
 	}
@@ -8712,10 +9022,60 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_metadata_field_dropdown_is_sorted_alphabetically(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.Click Cancel.
-			throw new ImplementationException("verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+			//TC 8022, 8034, 8037, 8039, 8041, 8043, 8046Verify the options in the dropdown for "Insert Metadata Field" is sorted alphabetically.
+			//Click Cancel.
+
+			try {
+				if (dataMap.containsKey("area")) {
+					if (dataMap.get("area").toString().equalsIgnoreCase("calculated")) {
+						List<String> expectedCalculatedOptions = new ArrayList<String>();
+						for(WebElement option : prod.getPDF_CalculatedList().FindWebElements()) {
+							expectedCalculatedOptions.add(option.getText().toLowerCase());
+						}
+
+						Collections.sort(expectedCalculatedOptions);
+						
+						
+						List<String> actualCalculatedOptions = new ArrayList<String>();
+						for(WebElement option : prod.getPDF_CalculatedList().FindWebElements()) {
+							actualCalculatedOptions.add(option.getText().toLowerCase());
+						}
+						if (expectedCalculatedOptions.equals(actualCalculatedOptions)) {
+							pass(dataMap, "PASS! Calculated tab is alphabetical!");
+						} else {
+							fail(dataMap, "FAIL! Calculated tab is not alphabetical");
+						}
+						
+					} else {
+						ArrayList<String> expectedAlphabetOrder = new ArrayList<String>();
+						for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+							expectedAlphabetOrder.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+							
+						}
+									
+						Collections.sort(expectedAlphabetOrder);
+						
+						ArrayList<String> actualOptionString = new ArrayList<String>();
+						for(int i = 0; i < prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().size(); i++) {
+							actualOptionString.add(prod.getTIFF_BrandingInsertMetadataFieldOptions().FindWebElements().get(i).getText().toLowerCase());
+						}
+						Assert.assertEquals(actualOptionString, expectedAlphabetOrder);
+						
+						prod.getTIFF_InsertMetadataFieldClick().click();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){
+							return prod.getMetaDataInsertButton().Visible() ;}}), Input.wait30); 
+						prod.getMetaDataInsertButton().click();
+						pass(dataMap,"verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+
+			
 		} else {
-			throw new ImplementationException("NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
+			fail(dataMap, "NOT verify_the_metadata_field_dropdown_is_sorted_alphabetically");
 		}
 
 	}
@@ -8790,8 +9150,50 @@ public class ProductionContext extends CommonContext {
 	public void the_tiff_section_is_enabled_with_burn_redactions_enabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Check the TIFF checkboxExpand the Tiff SectionDisable Enable for Privileged DocsEnable the button Burn RedactionsClick Specify Redaction Text by Selecting Redaction TagsVerify the field "Abbreviated Text:" displays "RED" by default and the placeholder text displays "REDACTED". Click Select Refaction Tag(s)Check Default Automation RedactionClick Select
-			throw new ImplementationException("the_tiff_section_is_enabled_with_burn_redactions_enabled");
+			//Check the TIFF checkbox
+			//Expand the Tiff Section
+			//Disable Enable for Privileged Docs
+			//Enable the button Burn Redactions
+			//Click Specify Redaction Text by Selecting Redaction Tags
+			//Verify the field "Abbreviated Text:" displays "RED" by default and the placeholder text displays "REDACTED". 
+			//Click Select Refaction Tag(s)
+			//Check Default Automation Redaction
+			//Click Select
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getTIFFChkBox().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFTab().Displayed()  ;}}), Input.wait30);
+				prod.getTIFFTab().Click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getTIFF_EnableforPrivilegedDocs().Displayed()  ;}}), Input.wait30);
+				prod.getTIFF_EnableforPrivilegedDocs().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getTIFFBurnRedactionToggle().Displayed()  ;}}), Input.wait30);
+				prod.getTIFFBurnRedactionToggle().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getTIFF_SpecifyRedactText().Displayed()  ;}}), Input.wait30);
+				prod.getTIFF_SpecifyRedactText().click();
+	
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getTIFF_SelectRedtagbuton().Displayed()  ;}}), Input.wait30);
+				prod.getTIFF_SelectRedtagbuton().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getSelectDefaultAutomationRedactionTag().Displayed()  ;}}), Input.wait30);
+				prod.getSelectDefaultAutomationRedactionTag().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						  prod.getTIFF_SelectRedtags_SelectButton().Displayed()  ;}}), Input.wait30);
+				prod.getTIFF_SelectRedtags_SelectButton().click();
+				
+				Assert.assertEquals(prod.getTIFF_Red_Placeholdertext().getText(),"REDACTED");
+				Assert.assertEquals(prod.getAbbreviatedText().GetAttribute("value"), "RED");
+				
 		} else {
 			throw new ImplementationException("NOT the_tiff_section_is_enabled_with_burn_redactions_enabled");
 		}
@@ -8804,7 +9206,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Delete the text for placeholder in redactions. The text shold be "REDACTED" by default, erase this value.Click Mark Complete.
-			throw new ImplementationException("erase_the_placeholder_mark_complete");
+			Actions builder = new Actions(driver.getWebDriver());
+			Thread.sleep(2000);
+			WebElement e = webDriver.findElement(By.xpath("//div[@class='redactor-editor']/p"));
+			JavascriptExecutor js = (JavascriptExecutor)webDriver;
+			js.executeScript("arguments[0].value = '';", e);
+			e.clear();
+			
+			builder.moveToElement(prod.getMarkCompleteButton().getWebElement()).perform();
+			prod.getMarkCompleteButton().click();
+			
 		} else {
 			throw new ImplementationException("NOT erase_the_placeholder_mark_complete");
 		}
@@ -8829,7 +9240,23 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 11369, 11366Verify an error message is displayed: Specified Redaction Text in TIFF Burned Redactions cannot be blank.
-			throw new ImplementationException("verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed");
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getMappingIncompleteErrorMessage().Visible()  ;}}), Input.wait30);
+				String warningText = prod.getMappingIncompleteErrorMessage().getText();
+				
+				if (warningText.equals(prod.emptyDataMappingWarning)) {
+					pass(dataMap,"Found expected error message for empty mapping dat file");
+				} else {
+					fail(dataMap,"Expected error message for empty mapping does not match");
+				}
+			} catch (Exception e) {
+				if (scriptState) {
+					fail(dataMap,"Not found expected error message for empty mapping");
+				}
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_an_error_is_returned_when_a_blank_redaction_placeholder_is_marked_completed");
 		}
@@ -8856,7 +9283,18 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Check off DAT sectionExpand DAT sectionIn FIELDCLASSIFICATION set it to Email
-			throw new ImplementationException("email_classification_is_added_for_dats");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getDATChkBox().Displayed()  ;}}), Input.wait30);
+				prod.getDATChkBox().Click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDATTab().Displayed()  ;}}), Input.wait30);
+				prod.getDATTab().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+				prod.getFieldClassification().Click();
+				prod.getFieldClassification().SendKeys("Email");
 		} else {
 			throw new ImplementationException("NOT email_classification_is_added_for_dats");
 		}
@@ -8869,7 +9307,10 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Clicking the dropdown for DAT's SOURCE FIELD
-			throw new ImplementationException("clicking_the_dats_source_field_dropdown");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSourceField().Displayed()  ;}}), Input.wait30);
+				prod.getSourceField().Click();
+			
 		} else {
 			throw new ImplementationException("NOT clicking_the_dats_source_field_dropdown");
 		}
@@ -8882,7 +9323,29 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 7975 Verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category.
-			throw new ImplementationException("verify_the_email_field_classification_has_the_correct_options");
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceField().Displayed()  ;}}), Input.wait30);
+				Assert.assertTrue(prod.getEmailSourceFieldEmailOption(8).Displayed());
+				Assert.assertEquals("EmailAuthorNameAndAddress", prod.getEmailSourceFieldEmailOption(8).getText());
+				
+				Assert.assertTrue(prod.getEmailSourceFieldEmailOption(31).Displayed());
+				Assert.assertEquals("EmailToNamesAndAddresses", prod.getEmailSourceFieldEmailOption(31).getText());
+				
+				Assert.assertTrue(prod.getEmailSourceFieldEmailOption(14).Displayed());
+				Assert.assertEquals("EmailCCNamesAndAddresses", prod.getEmailSourceFieldEmailOption(14).getText());
+				
+				Assert.assertTrue(prod.getEmailSourceFieldEmailOption(11).Displayed());
+				Assert.assertEquals("EmailBCCNamesAndAddresses", prod.getEmailSourceFieldEmailOption(11).getText());
+				
+				pass(dataMap,"All Email options are displayed for DAT file");
+			}
+			catch(Exception e) {
+				fail(dataMap,"All Email options are not displayed for DAT file");
+				throw new Exception(e.getMessage());
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_email_field_classification_has_the_correct_options");
 		}
@@ -8895,7 +9358,33 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Add FieldThe Field Classification should be the same used in the first dat fieldThe Source Field should be the same used in the first dat fieldThe DAT field should be the same used in the first dat field
-			throw new ImplementationException("complete_the_second_dat_section_with_duplicate_information");
+			try {
+				prod.getTemplateProductionComponentToggle("DAT").click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDAT_AddField().Displayed()  ;}}), Input.wait30);
+					prod.getDAT_AddField().Click();
+					
+
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getFieldClassificationDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getFieldClassificationDropdown(1).Click();
+					prod.getFieldClassificationDropdown(1).SendKeys("Bates");
+					
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSourceFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getSourceFieldDropdown(1).Click();
+					prod.getSourceFieldDropdown(1).SendKeys("BatesNumber");
+					
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDatFieldDropdown(1).Displayed()  ;}}), Input.wait30);
+					prod.getDatFieldDropdown(1).Click();
+					prod.getDatFieldDropdown(1).SendKeys("Bates Number");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else {
 			throw new ImplementationException("NOT complete_the_second_dat_section_with_duplicate_information");
 		}
@@ -8908,7 +9397,25 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 7361Click Continue on the warning message.Verify the following warning appears after clicking Continue: "Multiple source fields cannot be mapped to the same field in the DAT file."
-			throw new ImplementationException("verify_an_error_is_returned_from_using_duplicate_dat_fields_values");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.MultipleDatForceOccuranceMsg().Displayed()  ;}}), Input.wait30);
+			prod.getContinueButton().click();
+			
+			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getDuplicateDatWarningBox().Visible()  ;}}), Input.wait30);
+				String warningText = prod.getDuplicateDatWarningBox().getText();
+				if (warningText.equals(prod.duplicateDatWarning)) {
+					pass(dataMap,"Found expected error message for duplicate dat file");
+				} else {
+					fail(dataMap,"Expected error message for duplicate dat does not match");
+				}
+			} catch (Exception e) {
+				if (scriptState) {
+					fail(dataMap,"Not found expected error message for MP3 with list off");
+				}
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_an_error_is_returned_from_using_duplicate_dat_fields_values");
 		}
@@ -9137,7 +9644,7 @@ public class ProductionContext extends CommonContext {
 			//Make sure this will type in the invalid parameters also.
 			String dateTime = new Long((new Date()).getTime()).toString();
 			String template = (String) dataMap.get("prod_template");
-			
+
 			String productionName =  (String)dataMap.get("name");
 
 			if(productionName!=null && productionName!=""){
@@ -9158,8 +9665,9 @@ public class ProductionContext extends CommonContext {
 						prod.getProductionName().Displayed()  ;}}), Input.wait30); 
 				prod.getProductionName().SendKeys(productionName);
 				prod.getProductionDesc().click();
-				pass(dataMap, "a_valid_production_name_is_entered");
-			}				
+
+			}					
+
 		} else {
 			fail(dataMap,"NOT a_valid_production_name_is_entered");
 		}
@@ -9201,7 +9709,6 @@ public class ProductionContext extends CommonContext {
 						fail(dataMap,"The mark complete successfull message did not appear.");
 					}
 				}
-				
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
