@@ -2,7 +2,11 @@ package stepDef;
 
 import static org.testng.Assert.assertEquals;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +24,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
 import java.lang.Math;
+import java.nio.charset.Charset;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -33,6 +38,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.Ordering;
 
 import automationLibrary.Driver;
@@ -986,13 +992,18 @@ public class ProductionContext extends CommonContext {
 				
 				//Select Default Automation Folder	
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
-					prod.getDefaultAutomationChkBox().Click();
+						prod.getDefaultAutomationFolderChechbox().Displayed()  ;}}), Input.wait30);
+					prod.getDefaultAutomationFolderChechbox().Click();
 				
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
 					prod.getDocumentMarkCompleteBtn().Click();
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				prod.getSuccessMessageCloseBtn().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
@@ -2501,6 +2512,8 @@ public class ProductionContext extends CommonContext {
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+				prod.getSuccessMessageCloseBtn().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -2943,10 +2956,10 @@ public class ProductionContext extends CommonContext {
 			if(dat!=null && dat.equalsIgnoreCase("true")){
 				prod.getDATChkBox().click();
 				prod.getDATTab().click();
-				prod.getFieldClassification().click();
-				prod.getFieldClassification().SendKeys("Bates");
-				prod.getSourceField().click();
-				prod.getSourceField().SendKeys("BatesNumber");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+						prod.getFieldClassification().Visible()  ;}}), Input.wait30);
+				prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Bates");;
+				prod.getSourceField().selectFromDropdown().selectByVisibleText("BatesNumber");;
 				prod.getDatField().click();
 				prod.getDatField().SendKeys("Bates Number");
 			}
@@ -3054,6 +3067,9 @@ public class ProductionContext extends CommonContext {
 				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
 
+			// Close toast message
+			prod.getSuccessMessageCloseBtn().click();
+			
 			//Click the next button
 			prod.getNextButton().click();
 			pass(dataMap, "Complex Components were enabled");
@@ -4749,7 +4765,7 @@ public class ProductionContext extends CommonContext {
 				String randDigit = Integer.toString(randMultiDigit);
 				dataMap.put("beginning_bates", randDigit);
 				prod.getBeginningBates().click();
-				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().Clear();
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
 
@@ -4781,7 +4797,10 @@ public class ProductionContext extends CommonContext {
 			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
 
 			prod.getMarkCompleteLink().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteSuccessfulText().Visible()  ;}}), Input.wait30);
 			Assert.assertTrue(prod.getMarkCompleteSuccessfulText().Displayed());
+			prod.getSuccessMessageCloseBtn().click();
 			prod.getNextButton().click();
 
 		}
@@ -4796,6 +4815,9 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_production_generate_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
+			// Save Bates range to data map
+			
 			//Clicking the Generate Button.
 			prod.getGenerateButton().click();
 			driver.waitForPageToBeReady();
@@ -4839,7 +4861,7 @@ public class ProductionContext extends CommonContext {
 			String status = prod.getGeneratePostGenStatus().getText();
 			//Loop to wait for Post Generation check complete
 			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<30) {
+			while(!status.equalsIgnoreCase("post generation check complete") && i++<100) {
 				prod.getBackLink().click();
 				driver.waitForPageToBeReady();
 				Thread.sleep(10000);
@@ -4849,6 +4871,14 @@ public class ProductionContext extends CommonContext {
 			}
 			Assert.assertEquals("Post generation check complete", status);
 
+			// Save bates range to dataMap
+			String batesRange = prod.getProd_BatesRange().getText();
+			String[] range = batesRange.split("-");
+			String firstBatesNumber = range[0].replaceAll("\\s+","");
+			String lastBatesNumber = range[1].replaceAll("\\s+","");
+			dataMap.put("firstBatesNumber", firstBatesNumber);
+			dataMap.put("lastBatesNumber", lastBatesNumber);
+			
 			//Make Complete and Next
 			prod.getMarkCompleteButton().click();
 			prod.getNextButton().click();
@@ -5015,7 +5045,30 @@ public class ProductionContext extends CommonContext {
 			//* Navigate to the path copied
 			//* Double click the file to open the production
 			//
-			throw new ImplementationException("navigating_to_the_vm_production_location");
+			connect_to_shared_drive_production_location(true, dataMap);
+		} else {
+			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
+		}
+
+	}
+	
+	@When("^.*(\\[Not\\] )? connect_to_shared_drive_production_location$")
+	public void connect_to_shared_drive_production_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Review Production
+			//* Copy the path of the VM
+			//* Connect to the Virtual Machine
+			//* Open file explorer
+			//* Type the following into the directory search bar: "\\MTPVTSSLMQ01" Computer
+			//* Navigate to the path copied
+			//* Double click the file to open the production
+			//
+
+
+
+
 		} else {
 			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
 		}
@@ -5027,8 +5080,41 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_generated_files_display_id_as_the_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4993Verify on the document generated, the key ID should be the bates number for the production.
-			throw new ImplementationException("verify_the_generated_files_display_id_as_the_bates_number");
+			//TC 4993 Verify on the document generated, the key ID should be the bates number for the production.
+
+			String prodDirectory = dataMap.get("production_directory").toString();
+
+			// get list of bates numbers from the generated DAT file
+			List<String> batesRange = getProductionBatesRangeFromDATFile(prodDirectory);
+
+			// get first bates number from file
+			String firstBatesNumber = batesRange.get(0);
+			// get last bates number from file
+			String lastBatesNumber = batesRange.get(batesRange.size() - 1);
+			
+			// remove non-printable characters and retain only ASCII characters
+			String p1 = CharMatcher.INVISIBLE.removeFrom(firstBatesNumber);
+			String firstBatesNumberClean = CharMatcher.ASCII.retainFrom(p1);
+			
+			String p2 = CharMatcher.INVISIBLE.removeFrom(lastBatesNumber);
+			String lastBatesNumberClean = CharMatcher.ASCII.retainFrom(p2);
+			
+			// get expected bates numbers from dataMap
+			String expectedFirstBatesNumber = dataMap.get("firstBatesNumber").toString();
+			String expectedLastBatesNumber = dataMap.get("lastBatesNumber").toString();
+					
+			if (firstBatesNumberClean.equals(expectedFirstBatesNumber)) {
+				pass(dataMap, "PASS! First bates number in file is as expected");
+			} else {
+				fail(dataMap, "FAIL! First bates number in file is not what was expected. Expected " + expectedFirstBatesNumber + " but got " + firstBatesNumber + " instead");
+			}
+			
+			if (lastBatesNumberClean.equals(expectedLastBatesNumber)) {
+				pass(dataMap, "PASS! Last bates number in file is as expected");
+			} else {
+				fail(dataMap, "FAIL! Last bates number in file is not what was expected. Expected " + expectedLastBatesNumber + " but got " + lastBatesNumber + " instead");
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_generated_files_display_id_as_the_bates_number");
 		}
@@ -10428,4 +10514,48 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+    public List<String> getProductionBatesRangeFromDATFile(String directory) throws IOException {
+    	// Retruns list of bates range from production dat file from shared drive
+    	
+    	//TODO: add logic to change dirName based on OS
+		String dirName = "/Volumes/Productions/H021301/" + directory;
+		
+		
+		List<String> datFileContents = new ArrayList<String>();
+		try {
+			File dir = new File(dirName);
+			String[] children = dir.list();
+			if (children == null) {
+				
+			} else {
+				int i=0;
+				String fileName = children[i];
+
+				String fullPath = dir + File.separator + fileName;
+				while (i<children.length && !fileName.contains(".dat")) {
+					i++;
+					fileName = children[i];
+				}
+				
+				FileReader in = new FileReader(fullPath);
+				BufferedReader br = new BufferedReader(in);
+				
+				
+				
+				String line;
+				while ((line = br.readLine()) != null) {
+					datFileContents.add(line);
+				}
+				
+				// remove first line/header "Bates Number" from list
+				datFileContents.remove(0);
+				
+			}	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return datFileContents;	
+    }
+	
 }//EOF
