@@ -772,7 +772,7 @@ public class ProductionPage {
     public Element getTIFFBlankPageRemovalToggle() {  return driver.FindElementByXPath("//div[@id='TIFFContainer']//label[@class='toggle']//input[@id='chkTIFFBlankPageRemove']/following-sibling::i"); }
     public Element getMessageContainerRemovalMessage() { return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p"); }    
     public ElementCollection getSuccessMessageCloseButtonCol() { return driver.FindElementsById("botClose1"); }
-    public Element getSuccessMessageCloseButton() { return driver.FindElementById("botClose1"); }
+    public Element getSuccessMessageCloseButton() { return driver.FindElementByXPath("//*[.='Success !']/../i"); }
     public Element getPDFBlankPageRemoveToggle2() { return driver.FindElementByXPath("//div[@id='PDFContainer']//label[@class='toggle']//input[@id='chkPDFBlankPageRemove']/following-sibling::i"); } 
     public Element getSelectNativeTagsButton() {return driver.FindElementById("btnSelectNativeTags");}
     public Element getNativeSelectedTagList() {return driver.FindElementById("NativeTagsLabel");}

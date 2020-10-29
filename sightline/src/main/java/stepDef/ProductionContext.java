@@ -10257,4 +10257,155 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+	@Then("^.*(\\[Not\\] )? verify_bates_range_blank_on_generate_tab$")
+	public void verify_bates_range_blank_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7052 Verify that 'Bates Range' should be blank before pre-gen check completed
+			//
+			//* Bates Range displayed blank before Pre-Gen check
+			//
+			throw new ImplementationException("verify_bates_range_blank_on_generate_tab");
+		} else {
+			throw new ImplementationException("NOT verify_bates_range_blank_on_generate_tab");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_bates_range_on_generate_tab$")
+	public void verify_bates_range_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7022 Verify that 'Bates Range' is displayed in Production Generate stepTC7054 Verify that once Pre-Gen check is successfully completed, then value of Bates Range is displayedTC7055 Verify that the pre-gen checks continue to show through out the next steps of the production
+			//
+			//* Bates Range displayed after Pre-Gen check
+			//
+			throw new ImplementationException("verify_bates_range_on_generate_tab");
+		} else {
+			throw new ImplementationException("NOT verify_bates_range_on_generate_tab");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_export_bates_button_disabled_on_generate_tab$")
+	public void verify_export_bates_button_disabled_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7130 Verify that Export bates is disabled if pre gen check is not completed
+			//
+			//* 'Export Bates' button is displayed but disabled on the Generage tab if pre-gen check is not completed
+			//
+			throw new ImplementationException("verify_export_bates_button_disabled_on_generate_tab");
+		} else {
+			throw new ImplementationException("NOT verify_export_bates_button_disabled_on_generate_tab");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_export_bates_button_enabled_on_generate_tab$")
+	public void verify_export_bates_button_enabled_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7127 Verify that user can export only after pre-gen check is completed
+			//
+			//* 'Export Bates' button is displayed and enabled on the Generate tab after pre-gen check
+			//
+			throw new ImplementationException("verify_export_bates_button_enabled_on_generate_tab");
+		} else {
+			throw new ImplementationException("NOT verify_export_bates_button_enabled_on_generate_tab");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_export_bates_button_displayed_on_generate_tab$")
+	public void verify_export_bates_button_displayed_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7062 Verify that Export Bates option is available on Production-Generate tab
+			//
+			//* 'Export Bates' button displayed but is not enabled (clickable) on the Generate tab
+			//
+			throw new ImplementationException("verify_export_bates_button_displayed_on_generate_tab");
+		} else {
+			throw new ImplementationException("NOT verify_export_bates_button_displayed_on_generate_tab");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? replace_seed_pdf$")
+	public void replace_seed_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Prerequisite: Select PDF that has multiple pagesClick 'Replace Seed PDF' buttonSelect PDF file with multiple page
+			throw new ImplementationException("replace_seed_pdf");
+		} else {
+			throw new ImplementationException("NOT replace_seed_pdf");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_replace_seed_pdf_cancel_button$")
+	public void click_replace_seed_pdf_cancel_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_replace_seed_pdf_cancel_button");
+		} else {
+			throw new ImplementationException("NOT click_replace_seed_pdf_cancel_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_replace_seed_pdf_canceled$")
+	public void verify_replace_seed_pdf_canceled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7721 Verify that on clicking of 'Cancel' button the popup "Save Seed PDF" should be closed
+			throw new ImplementationException("verify_replace_seed_pdf_canceled");
+		} else {
+			throw new ImplementationException("NOT verify_replace_seed_pdf_canceled");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? marking_complete_without_updating_the_bates_number$")
+	public void marking_complete_without_updating_the_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Do not change Beginning Bates, Prefix, or Suffix fields
+			//* Click Mark Complete
+			//* Click Next
+			//
+			throw new ImplementationException("marking_complete_without_updating_the_bates_number");
+		} else {
+			throw new ImplementationException("NOT marking_complete_without_updating_the_bates_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_failed_generation_bates_range$")
+	public void verify_failed_generation_bates_range(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7053 Verify that if any error occurs in Pre-Gen checks then Bates Range should not be displayed
+			//
+			//* Bates Range not displayed on Generate tab
+			//
+			throw new ImplementationException("verify_failed_generation_bates_range");
+		} else {
+			throw new ImplementationException("NOT verify_failed_generation_bates_range");
+		}
+
+	}
 }//EOF
