@@ -502,7 +502,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_redaction_transparent() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -620,7 +620,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive" ,"smoke12"})
+	@Test(groups = {"DocView, Positive" ,"smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_click_rectangle_redaction_button_When_click_rectangle_redaction_button_Then_verify_redaction_control_in_off_state() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -663,7 +663,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_nav_to_other_doc_When_delete_redaction_with_keyboard_delete_key_Then_verify_redaction_not_deleted_with_keyboard() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -744,7 +744,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive","smoke12"})
+	@Test(groups = {"DocView, Positive","smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_click_grey_redact_tool_When_rectangle_redaction_deleted_Then_verify_rectangle_redaction_deleted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -862,7 +862,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_rectangle_redaction() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -985,7 +985,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_this_page_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1023,7 +1023,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_nav_to_other_doc_When_nav_back_to_first_doc_Then_verify_redactions_menu_remains_open() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1061,7 +1061,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke12"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

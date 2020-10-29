@@ -250,6 +250,7 @@ public class DocViewPage {
     public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
     public ElementCollection getCloseButton() { return driver.FindElementsById("botClose1");}
     public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
+    public Element getDocViewTotalPages() {return driver.FindElementById("lblTotalPageCount_divDocViewer");}
     public Element getBottomEditSideOfRedactionRectangle() {return driver.FindElementByCssSelector(".pccMarkHandleBottomLeft");}
     public ElementCollection getAllEditSidesOfRedactionRectangle(String handleID) {return driver.FindElementsByCssSelector(String.format("div div[data-pcc-mark = '%s']",handleID));}
     public Element getRedactionEditSaveBtn() {return driver.FindElementByXPath("//span[@class = 'fa fa-save']");}
