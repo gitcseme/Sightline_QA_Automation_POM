@@ -5586,7 +5586,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke"})
 	public void test_Given_verify_a_complex_production_is_able_to_be_generated_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_generated_files_display_id_as_the_bates_number() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -5597,7 +5597,7 @@ public class ProductionRegression extends RegressionBase {
 
 		try {
 			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("uid", "sqa.consilio9@sqapowered.com");
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
@@ -5605,6 +5605,13 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("prod_template", "false");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("dat", "true");
+			dataMap.put("text", "false");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("translations", "false");
+			dataMap.put("mp3", "false");
+			dataMap.put("archive_file", "false");
+			dataMap.put("tiff", "true");
 			context.complete_complex_production_component(true, dataMap);
 			dataMap.put("prefix", "S");
 			dataMap.put("min_length", "8");
@@ -5616,17 +5623,8 @@ public class ProductionRegression extends RegressionBase {
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
 			context.clicking_the_production_generate_button(true, dataMap);
-			dataMap.put("dat", "true");
-			dataMap.put("text", "false");
-			dataMap.put("native", "false");
-			dataMap.put("pdf", "false");
-			dataMap.put("translations", "false");
-			dataMap.put("mp3", "false");
-			dataMap.put("archive_file", "false");
-			dataMap.put("tiff", "true");
 			context.verify_a_complex_production_is_able_to_be_generated(true, dataMap);
 			context.waiting_for_production_to_be_complete(true, dataMap);
-			context.navigating_to_the_vm_production_location(true, dataMap);
 			context.verify_the_generated_files_display_id_as_the_bates_number(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());

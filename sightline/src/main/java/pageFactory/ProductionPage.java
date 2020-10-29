@@ -1,6 +1,11 @@
 package pageFactory;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -556,6 +561,7 @@ public class ProductionPage {
     public Element getSourceField() {return driver.FindElementById("SF_0");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
     public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("(//a[text()='Default Automation Tag'])[1]");}
+    public Element getDefaultAutomationFolderChechbox() { return driver.FindElementByXPath("//a[text()='Default Automation Folder']"); }
     public Element getDefaultTagsChkBox() {return driver.FindElementByXPath("//*[@id='26_anchor']/i[1]");}
     public Element getDefaultSecurityGroupChkBox() {return driver.FindElementByXPath("//*[@id='1g_anchor']/i[1]");}
     
@@ -788,6 +794,7 @@ public class ProductionPage {
     public Element getBackToPrivbutton() { return driver.FindElementByXPath("//*[@id=\"frmProductionLocation\"]/div/div[1]/div/a"); }
     public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
     public Element getProductionTitleLink(String title) { return driver.FindElementByXPath(String.format("//a[@title='%s']", title)); } 
+    public Element getSuccessMessageCloseBtn() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//i[contains(@id, 'botClose')]"); }
 
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
@@ -3538,6 +3545,8 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNextBatesNumbersDialog().Displayed()  ;}}), Input.wait30); 
     }
+    
+
   	    
 }
     
