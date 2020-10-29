@@ -10056,6 +10056,8 @@ public class ProductionRegression extends RegressionBase {
 			context.complete_default_document_selection(true, dataMap);
 			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
+			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_pregen_in_progress(true, dataMap);
 			context.verify_bates_range_blank_on_generate_tab(true, dataMap);
 		} catch (ImplementationException e) {
@@ -10093,6 +10095,7 @@ public class ProductionRegression extends RegressionBase {
 			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_pregen_complete(true, dataMap);
 			context.verify_bates_range_on_generate_tab(true, dataMap);
 		} catch (ImplementationException e) {
@@ -10129,6 +10132,7 @@ public class ProductionRegression extends RegressionBase {
 			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_pregen_complete(true, dataMap);
 			context.verify_export_bates_button_enabled_on_generate_tab(true, dataMap);
 		} catch (ImplementationException e) {
@@ -10165,6 +10169,8 @@ public class ProductionRegression extends RegressionBase {
 			context.complete_default_document_selection(true, dataMap);
 			context.mark_complete_default_priv_guard(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
+			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_pregen_in_progress(true, dataMap);
 			context.verify_export_bates_button_displayed_on_generate_tab(true, dataMap);
 		} catch (ImplementationException e) {
