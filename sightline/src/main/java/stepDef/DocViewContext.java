@@ -854,12 +854,17 @@ public class DocViewContext extends CommonContext {
 			Random rnd = new Random();
 			Actions builder = new Actions(driver.getWebDriver());
 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewNumOfPages().FindWebElements().get(0).isDisplayed()  ;}}), Input.wait30); 
+			String pageNumString = docView.getDocViewNumOfPages().FindWebElements().get(0).getText();
+			System.out.println(pageNumString);
+			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+
 			//Process of zooming out and scrolling through pages until we get into the view of a redaction to edit
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getMagnifyGlassZoomOutButton().Displayed()	;}}), Input.wait30); 
 			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
-			String pageNumString = docView.getDocViewNumOfPages().FindWebElements().get(0).getText();
-			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+			
 			for(int j=0; j<totalPages; j++) {
 				docView.getNextRedactionPage().click();
 				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
