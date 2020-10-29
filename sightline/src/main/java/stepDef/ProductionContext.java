@@ -10290,22 +10290,6 @@ public class ProductionContext extends CommonContext {
 	}
 
 
-	@Then("^.*(\\[Not\\] )? verify_export_bates_button_disabled_on_generate_tab$")
-	public void verify_export_bates_button_disabled_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
-			//TC7130 Verify that Export bates is disabled if pre gen check is not completed
-			//
-			//* 'Export Bates' button is displayed but disabled on the Generage tab if pre-gen check is not completed
-			//
-			throw new ImplementationException("verify_export_bates_button_disabled_on_generate_tab");
-		} else {
-			throw new ImplementationException("NOT verify_export_bates_button_disabled_on_generate_tab");
-		}
-
-	}
-
-
 	@Then("^.*(\\[Not\\] )? verify_export_bates_button_enabled_on_generate_tab$")
 	public void verify_export_bates_button_enabled_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -10327,6 +10311,7 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC7062 Verify that Export Bates option is available on Production-Generate tab
+			//TC7130 Verify that Export bates is disabled if pre gen check is not completed
 			//
 			//* 'Export Bates' button displayed but is not enabled (clickable) on the Generate tab
 			//
@@ -10405,6 +10390,41 @@ public class ProductionContext extends CommonContext {
 			throw new ImplementationException("verify_failed_generation_bates_range");
 		} else {
 			throw new ImplementationException("NOT verify_failed_generation_bates_range");
+		}
+
+	}
+	
+	@When("^.*(\\[Not\\] )? waiting_for_production_to_be_pregen_in_progress$")
+	public void waiting_for_production_to_be_pregen_in_progress(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			// Click on the back button
+			// Click on the next button
+			// Status should change to Pre generation check in progress
+			// 
+			throw new ImplementationException("waiting_for_production_to_be_pregen_in_progress");
+		} else {
+			throw new ImplementationException("NOT waiting_for_production_to_be_pregen_in_progress");
+		}
+
+	}
+	
+	@When("^.*(\\[Not\\] )? waiting_for_production_to_be_pregen_complete$")
+	public void waiting_for_production_to_be_pregen_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			// Click on the back button
+			// Click on the next button
+			// Status should change to Pre generation check in progress
+			// Click on the back button
+			// Click on the next button
+			// Status should change to "Generate in progress".
+			// 
+			throw new ImplementationException("waiting_for_production_to_be_pregen_complete");
+		} else {
+			throw new ImplementationException("NOT waiting_for_production_to_be_pregen_complete");
 		}
 
 	}
