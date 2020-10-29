@@ -1170,9 +1170,11 @@ public class DocViewRegression extends RegressionBase {
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

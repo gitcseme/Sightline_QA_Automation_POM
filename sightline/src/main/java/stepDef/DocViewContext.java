@@ -853,8 +853,17 @@ public class DocViewContext extends CommonContext {
 			driver.waitForPageToBeReady();
 			Random rnd = new Random();
 			Actions builder = new Actions(driver.getWebDriver());
+
+			//Process of zooming out and scrolling through pages until we get into the view of a redaction to edit
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+				docView.getMagnifyGlassZoomOutButton().Displayed()	;}}), Input.wait30); 
+			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
+			String pageNumString = docView.getDocViewNumOfPages().FindWebElements().get(0).getText();
+			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+			for(int j=0; j<totalPages; j++) {
+				docView.getNextRedactionPage().click();
+				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
+			}
 			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
 
 			//get original dimension
@@ -870,9 +879,11 @@ public class DocViewContext extends CommonContext {
 				String temp= docView.getBottomEditSideOfRedactionRectangle().GetAttribute("data-pcc-mark");
 	
 				for(WebElement x: docView.getAllEditSidesOfRedactionRectangle(temp).FindWebElements()) {
-            	 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-            	 				x.isDisplayed() && x.isEnabled()  ;}}), Input.wait30); 
-            	 		builder.moveToElement(x).clickAndHold().moveByOffset(rnd.nextInt(20)-10, rnd.nextInt(20)-10).release().perform();
+            	 		int xCord = rnd.nextInt(6)-3;
+            	 		int yCord = rnd.nextInt(6)-3;
+            	 		if(x.isDisplayed() && x.isEnabled()) {
+            	 			builder.clickAndHold(x).moveByOffset(xCord,yCord).release().perform();
+					}
 				}
 			}
 
@@ -883,6 +894,7 @@ public class DocViewContext extends CommonContext {
 
 			//* Change redaction tag
              String beforeTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+
              docView.getDocView_Redactedit_selectlabel().click();
              for(WebElement x: docView.getRedactionTagOptions().FindWebElements()) {
             	 	if(x.getText().equals(beforeTag)) continue;

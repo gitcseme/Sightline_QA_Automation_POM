@@ -256,6 +256,10 @@ public class DocViewPage {
     public ElementCollection getRedactionTagOptions() {return driver.FindElementsByCssSelector("#ddlRedactionTags option");}
     public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
+    public Element getMagnifyGlassSearchButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search']");}
+    public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
+    public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
+    public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
     
     
     //default constructor
