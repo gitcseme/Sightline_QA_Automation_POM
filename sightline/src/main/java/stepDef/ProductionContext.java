@@ -4837,15 +4837,15 @@ public class ProductionContext extends CommonContext {
 
 			//Make sure Production Name is displaying the correct name
 			String prodName = prod.getGenerateProductionName().getText();
-			Assert.assertEquals(prodName, (String)dataMap.get("production_name"));
+			Assert.assertEquals(prodName, (String)dataMap.get("production_name"), "The production name is displayed correctly");
 
 			//Wait a few seconds for Status text to change to "in progress"
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30);
 
 			//Make sure Status is In Progress, and InProgress Button is now Displayed
-			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress") );
-			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed());
+			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress"), "The IN PROGRESS status is shown correctly" );
+			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed(), "The INProgress button is displayed correctly");
 			pass(dataMap, "Complex Production was able to be generated");
 		}
 		else fail(dataMap, "Could not verify a complex production can be generated");
@@ -4857,33 +4857,42 @@ public class ProductionContext extends CommonContext {
 	public void waiting_for_production_to_be_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
-			String status = prod.getGeneratePostGenStatus().getText();
-			//Loop to wait for Post Generation check complete
-			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<100) {
-				prod.getBackLink().click();
-				driver.waitForPageToBeReady();
-				Thread.sleep(10000);
+			try {
+				//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
+				String status = prod.getGeneratePostGenStatus().getText();
+				//Loop to wait for Post Generation check complete
+				int i =0, j =0;
+				while(!status.equalsIgnoreCase("post generation check complete") && i++<100) {
+					prod.getBackLink().click();
+					driver.waitForPageToBeReady();
+					Thread.sleep(10000);
+					prod.getNextButton().click();
+					driver.waitForPageToBeReady();
+					status = prod.getGeneratePostGenStatus().getText();
+				}
+				if (i==100) {
+					System.out.println("Refreshed page 100 times and production is still not in complete status!");
+					fail(dataMap, "Refreshed page 100 times and production is still not in complete status!");
+				}
+				Assert.assertEquals("Post generation check complete", status);
+
+				// Save bates range to dataMap
+				String batesRange = prod.getProd_BatesRange().getText();
+				String[] range = batesRange.split("-");
+				String firstBatesNumber = range[0].replaceAll("\\s+","");
+				String lastBatesNumber = range[1].replaceAll("\\s+","");
+				dataMap.put("firstBatesNumber", firstBatesNumber);
+				dataMap.put("lastBatesNumber", lastBatesNumber);
+				
+				//Make Complete and Next
+				prod.getMarkCompleteButton().click();
 				prod.getNextButton().click();
 				driver.waitForPageToBeReady();
-				status = prod.getGeneratePostGenStatus().getText();
+				pass(dataMap, "Passed, post generation check for production");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			Assert.assertEquals("Post generation check complete", status);
 
-			// Save bates range to dataMap
-			String batesRange = prod.getProd_BatesRange().getText();
-			String[] range = batesRange.split("-");
-			String firstBatesNumber = range[0].replaceAll("\\s+","");
-			String lastBatesNumber = range[1].replaceAll("\\s+","");
-			dataMap.put("firstBatesNumber", firstBatesNumber);
-			dataMap.put("lastBatesNumber", lastBatesNumber);
-			
-			//Make Complete and Next
-			prod.getMarkCompleteButton().click();
-			prod.getNextButton().click();
-			driver.waitForPageToBeReady();
-			pass(dataMap, "Passed, post generation check for production");
 		}
 		else fail(dataMap, "Production Failed, or Timed out");
 
@@ -5082,38 +5091,44 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 4993 Verify on the document generated, the key ID should be the bates number for the production.
 
-			String prodDirectory = dataMap.get("production_directory").toString();
+			try {
+				String prodDirectory = dataMap.get("production_directory").toString();
+				// get expected bates numbers from dataMap
+				String expectedFirstBatesNumber = dataMap.get("firstBatesNumber").toString();
+				String expectedLastBatesNumber = dataMap.get("lastBatesNumber").toString();
+				
+				// get list of bates numbers from the generated DAT file
+				List<String> batesRange = getProductionBatesRangeFromDATFile(dataMap, prodDirectory);
+				
+				// get first bates number from file
+				String firstBatesNumber = batesRange.get(0);
+				// get last bates number from file
+				String lastBatesNumber = batesRange.get(batesRange.size() - 1);
+				
+				// remove non-printable characters and retain only ASCII characters
+				String p1 = CharMatcher.INVISIBLE.removeFrom(firstBatesNumber);
+				String firstBatesNumberClean = CharMatcher.ASCII.retainFrom(p1);
+				
+				String p2 = CharMatcher.INVISIBLE.removeFrom(lastBatesNumber);
+				String lastBatesNumberClean = CharMatcher.ASCII.retainFrom(p2);
+				
 
-			// get list of bates numbers from the generated DAT file
-			List<String> batesRange = getProductionBatesRangeFromDATFile(prodDirectory);
+						
+				if (firstBatesNumberClean.equals(expectedFirstBatesNumber)) {
+					pass(dataMap, "PASS! First bates number in file is as expected");
+				} else {
+					fail(dataMap, "FAIL! First bates number in file is not what was expected. Expected " + expectedFirstBatesNumber + " but got " + firstBatesNumber + " instead");
+				}
+				
+				if (lastBatesNumberClean.equals(expectedLastBatesNumber)) {
+					pass(dataMap, "PASS! Last bates number in file is as expected");
+				} else {
+					fail(dataMap, "FAIL! Last bates number in file is not what was expected. Expected " + expectedLastBatesNumber + " but got " + lastBatesNumber + " instead");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			// get first bates number from file
-			String firstBatesNumber = batesRange.get(0);
-			// get last bates number from file
-			String lastBatesNumber = batesRange.get(batesRange.size() - 1);
-			
-			// remove non-printable characters and retain only ASCII characters
-			String p1 = CharMatcher.INVISIBLE.removeFrom(firstBatesNumber);
-			String firstBatesNumberClean = CharMatcher.ASCII.retainFrom(p1);
-			
-			String p2 = CharMatcher.INVISIBLE.removeFrom(lastBatesNumber);
-			String lastBatesNumberClean = CharMatcher.ASCII.retainFrom(p2);
-			
-			// get expected bates numbers from dataMap
-			String expectedFirstBatesNumber = dataMap.get("firstBatesNumber").toString();
-			String expectedLastBatesNumber = dataMap.get("lastBatesNumber").toString();
-					
-			if (firstBatesNumberClean.equals(expectedFirstBatesNumber)) {
-				pass(dataMap, "PASS! First bates number in file is as expected");
-			} else {
-				fail(dataMap, "FAIL! First bates number in file is not what was expected. Expected " + expectedFirstBatesNumber + " but got " + firstBatesNumber + " instead");
-			}
-			
-			if (lastBatesNumberClean.equals(expectedLastBatesNumber)) {
-				pass(dataMap, "PASS! Last bates number in file is as expected");
-			} else {
-				fail(dataMap, "FAIL! Last bates number in file is not what was expected. Expected " + expectedLastBatesNumber + " but got " + lastBatesNumber + " instead");
-			}
 			
 		} else {
 			throw new ImplementationException("NOT verify_the_generated_files_display_id_as_the_bates_number");
@@ -10505,7 +10520,7 @@ public class ProductionContext extends CommonContext {
 			// Click on the back button
 			// Click on the next button
 			// Status should change to Pre generation check in progress
-			// Click on the back button
+			// Click on the back button 
 			// Click on the next button
 			// Status should change to "Generate in progress".
 			// 
@@ -10516,7 +10531,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 	
-    public List<String> getProductionBatesRangeFromDATFile(String directory) throws IOException {
+    public List<String> getProductionBatesRangeFromDATFile(HashMap dataMap, String directory) throws IOException {
     	// Retruns list of bates range from production dat file from shared drive
     	
     	//TODO: add logic to change dirName based on OS
@@ -10528,7 +10543,8 @@ public class ProductionContext extends CommonContext {
 			File dir = new File(dirName);
 			String[] children = dir.list();
 			if (children == null) {
-				
+				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", dirName));
+				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", dirName));
 			} else {
 				int i=0;
 				String fileName = children[i];
@@ -10539,16 +10555,15 @@ public class ProductionContext extends CommonContext {
 					fileName = children[i];
 				}
 				
+				System.out.println("Full file path: " + fullPath);
+				
 				FileReader in = new FileReader(fullPath);
 				BufferedReader br = new BufferedReader(in);
-				
-				
 				
 				String line;
 				while ((line = br.readLine()) != null) {
 					datFileContents.add(line);
 				}
-				
 				// remove first line/header "Bates Number" from list
 				datFileContents.remove(0);
 				
