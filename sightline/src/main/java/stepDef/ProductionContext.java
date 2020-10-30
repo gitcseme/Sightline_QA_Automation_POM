@@ -10344,6 +10344,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
+
 	@Then("^.*(\\[Not\\] )? verify_bates_range_blank_on_generate_tab$")
 	public void verify_bates_range_blank_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
