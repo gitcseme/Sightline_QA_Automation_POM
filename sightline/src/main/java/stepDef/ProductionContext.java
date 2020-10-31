@@ -3,9 +3,12 @@ package stepDef;
 import static org.testng.Assert.assertEquals;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +34,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.pdfbox.contentstream.PDFStreamEngine;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.state.PDGraphicsState;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.ss.usermodel.PageOrder;
 import org.openqa.selenium.By;
@@ -1017,12 +1024,30 @@ public class ProductionContext extends CommonContext {
 				
 				pass(dataMap,"Default document sections has been completed");
 			}catch(Exception e) {
+				e.printStackTrace();
 				fail(dataMap,"Default document sections has not been completed");
 			}	
 		} else {
 			fail(dataMap,"Default document sections has not been completed");
 		}
 
+	}
+	
+	@And("^.*(\\[Not\\] )? mark_complete_priv_guard_section$")
+	public void mark_complete_priv_guard_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30);
+			prod.getbtnProductionGuardMarkComplete().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+			prod.getSuccessMessageCloseBtn().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30);
+			prod.getbtnProductionGuardNext().click();
+		}
 	}
 
 
@@ -2083,7 +2108,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-
+ 
 	@And("^.*(\\[Not\\] )? the_production_grid_is_set_to_view$")
 	public void the_production_grid_is_set_to_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -2566,9 +2591,14 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
 
+				prod.closeSuccessToastMessage();
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 	
 
+				
+
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
 
@@ -2603,6 +2633,7 @@ public class ProductionContext extends CommonContext {
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
+				prod.closeSuccessToastMessage();
 				prod.getbtnProductionSummaryNext().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getCurrentCrumbGenerate().Displayed()  ;}}), Input.wait30); 
@@ -2660,7 +2691,6 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_using_the_next_bates_generations_a_production_successfully$")
 	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -2749,7 +2779,6 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_editing_the_bates_number_after_generation_is_displaying_correctly$")
 	public void verify_editing_the_bates_number_after_generation_is_displaying_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -5054,7 +5083,7 @@ public class ProductionContext extends CommonContext {
 			//* Navigate to the path copied
 			//* Double click the file to open the production
 			//
-			connect_to_shared_drive_production_location(true, dataMap);
+
 		} else {
 			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
 		}
@@ -6047,11 +6076,16 @@ public class ProductionContext extends CommonContext {
 				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
 				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+						!prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
 				
 				prod.getComponentsMarkComplete().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getComponentsMarkNext().Enabled()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				prod.getSuccessMessageCloseBtn().click();
+				
 				prod.getComponentsMarkNext().click();
 				driver.waitForPageToBeReady();
 				
@@ -6122,13 +6156,20 @@ public class ProductionContext extends CommonContext {
 				dataMap.put("fullBatesNumber", fullBatesNumber);
 				
 				prod.getNumAndSortMarkComplete().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				
+				prod.getSuccessMessageCloseBtn().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getNumAndSortNext().Enabled()  ;}}), Input.wait30);
+				
+
 				prod.getNumAndSortNext().click();
 				driver.waitForPageToBeReady();
 
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT the_default_template_for_numbering_is_displayed");
@@ -6154,8 +6195,77 @@ public class ProductionContext extends CommonContext {
 	public void updating_redaction_style_adding_redaction_text_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand the Tiff sectionChange the redaction style based on the parameterClick Specify Redaction Text by Selecting Redaction Tags:Change the text to "Automated Redaction"
-			throw new ImplementationException("updating_redaction_style_adding_redaction_text_");
+			//Expand the Tiff section
+			//Change the redaction style based on the parameter
+			//Click Specify Redaction Text by Selecting Redaction Tags:
+			//Change the text to "Automated Redaction"
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			String redactionStyle = dataMap.get("redaction_style").toString();
+			
+			prod.getTIFFRedactionStyleDropdown().ScrollTo();
+			prod.getTIFFRedactionStyleDropdown().selectFromDropdown().selectByVisibleText(redactionStyle);
+			
+			prod.getTIFFSpecifyRedactText().ScrollTo();
+			prod.getTIFFSpecifyRedactText().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFF_Red_Placeholdertext().Displayed()  ;}}), Input.wait30);
+			
+			prod.getTIFF_Red_Placeholdertext().ScrollTo();
+			prod.getTIFF_Red_Placeholdertext().Clear();
+			prod.getTIFF_Red_Placeholdertext().SendKeys("Automated Redaction");
+			
+			prod.getTIFFSelectRedactionTagButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			prod.getTIFFDefaultAutomationRedactionTag().click();
+			prod.getTIFF_TagSelectButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTIFFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			
+			driver.scrollPageToTop();
+			
+			// Collapse TIFF section
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTIFFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			// Expand PDF section
+			prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPDFRedactionStyleDropdown().ScrollTo();
+			prod.getPDFRedactionStyleDropdown().selectFromDropdown().selectByVisibleText(redactionStyle);
+			
+			prod.getPDF_SpecifyRedactText().ScrollTo();
+			prod.getPDF_SpecifyRedactText().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDF_Red_Placeholdertext().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPDF_Red_Placeholdertext().ScrollTo();
+			prod.getPDF_Red_Placeholdertext().Clear();
+			prod.getPDF_Red_Placeholdertext().SendKeys("Automated Redaction");
+			
+			prod.getPDFSelectRedactionTagButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			prod.getPDFDefaultAutomationRedactionTag().click();
+			prod.getPDF_TagSelectButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getPDFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			
+			driver.scrollPageToTop();
+			
+			// Collapse PDF section
+			prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getPDFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
 		} else {
 			throw new ImplementationException("NOT updating_redaction_style_adding_redaction_text_");
 		}
@@ -6172,7 +6282,10 @@ public class ProductionContext extends CommonContext {
 			//* Also, make sure a thin black border is provided around the white redaction
 			//* Verify the redacted text entered in "Updating_refaction_style_add_redaction_text" is added to the documentation
 			//
-			throw new ImplementationException("verify_the_redaction_documents_are_redacted_with_the_proper_style");
+			String directory = "Automation562965_dir";
+			String expectedRedactedText = "Automated Redaction";
+			
+			is_document_redacted(dataMap, directory, expectedRedactedText);
 		} else {
 			throw new ImplementationException("NOT verify_the_redaction_documents_are_redacted_with_the_proper_style");
 		}
@@ -10001,7 +10114,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-
+ 
 	@And("^.*(\\[Not\\] )? a_valid_production_name_is_entered$")
 	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -10572,5 +10685,87 @@ public class ProductionContext extends CommonContext {
 		}
 		return datFileContents;	
     }
+    
+    public Boolean is_document_redacted(HashMap dataMap, String directory, String expectedText) throws IOException {
+
+		try {
+			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
+					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+	    	System.out.println("fullPDFPath: " + fullPDFPath);
+			
+	    	File dir = new File(fullPDFPath);
+			String[] children = dir.list();
+			
+			System.out.println("dir: " + dir);
+			if (children == null) {
+				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+//				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+			} else {
+				int i=0;
+				String fileName = children[i];
+
+				System.out.println("list: " + children);
+				while (i<children.length) {
+					i++;
+					fileName = children[i];
+					System.out.println("files: " + children[i]);
+					
+					String fullFilePath = dir + File.separator + children[i];
+					System.out.println("fullFilePath: " + fullFilePath);
+					
+					PDDocument document = PDDocument.load(new File(fullFilePath));
+					PDFTextStripper pdfTextStripper = new PDFTextStripper();
+					String text = pdfTextStripper.getText(document);
+					pdfTextStripper.setSortByPosition(true);
+					pdfTextStripper.setStartPage(0);
+					pdfTextStripper.setEndPage(document.getNumberOfPages());
+					
+					System.out.println("text: " + text);
+
+//				    PDFStreamEngine engine = new PDFStreamEngine(ResourceLoader.loadProperties("org/apache/pdfbox/resources/PageDrawer.properties"));
+//				    PDPage page = (PDPage)document.getDocumentCatalog().getAllPages().get(0);
+//				    engine.processStream(page, page.findResources(), page.getContents().getStream());
+//				    PDGraphicsState graphicState = engine.getGraphicsState();
+//				    System.out.println(graphicState.getStrokingColor().getColorSpace().getName());
+//				    float colorSpaceValues[] = graphicState.getStrokingColor().getColorSpace();
+//				    for (float c : colorSpaceValues) {
+//				        System.out.println(c * 255);
+//				    }
+					
+					
+					Pattern p = Pattern.compile(expectedText);
+					Matcher matcher = p.matcher(text);
+				
+					if (matcher.find()) {
+						System.out.println("pass!!!");
+						pass(dataMap, "Branding is displayed in the preview of the pdf");
+						break;
+					}
+					
+					document.close();
+				}
+				if (i == children.length) {
+					System.out.println("FAIL! Opened all PDFs and failed to find redaction");
+				}
+				
+//	    			System.out.println("Full file path: " + fullPath);
+//	    			
+//	    			FileReader in = new FileReader(fullPath);
+//	    			BufferedReader br = new BufferedReader(in);
+//	    			
+//	    			String line;
+//	    			while ((line = br.readLine()) != null) {
+//	    				datFileContents.add(line);
+//	    			}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+    }
+    	
 	
 }//EOF
