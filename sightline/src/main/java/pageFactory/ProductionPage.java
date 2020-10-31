@@ -194,7 +194,12 @@ public class ProductionPage {
     public Element getPDF_SelectRed_Radiobutton(){ return driver.FindElementByXPath("//*[@id='chkPDFSPecifytRedactions']/following-sibling::i"); }   
     public Element getPDFSelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='PDFRedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
     public Element getTIFFSelectRedactionsTagTree(String tag) {return driver.FindElementByXPath(String.format("(//*[@id='TIFFRedactiontreeFolder']//a[contains(text(), '%s')]/i)[1]",tag));}
-
+    public Element getTIFFSpecifyRedactText() { return driver.FindElementByXPath("//div[@id='TIFFContainer']//a[@class='add-redaction-logic']"); }
+    public Element getTIFFDefaultAutomationRedactionTag() { return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[text()='Default Automation Redaction']"); }
+    public Element getPDFDefaultAutomationRedactionTag() { return driver.FindElementByXPath("//div[@id='tagTreePDFComponent']//a[text()='Default Automation Redaction']"); }
+    public Element getTIFFSelectRedactionTagButton() { return driver.FindElementById("btnTiffRedTAG_0"); }
+    public Element getPDFSelectRedactionTagButton() { return driver.FindElementById("btnPdfRedTAG_0"); }
+     
     public Element getDoc_Count(){ return driver.FindElementByXPath("//*[@id='frmProductionConfirmation']//div[@class='drk-gray-widget']/span[1]"); }   
     public Element getProd_Uncommitbutton(){ return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]"); }  
     public Element getNativeContainer() { return driver.FindElementById("NativeContainer"); }
@@ -795,7 +800,10 @@ public class ProductionPage {
     public Element getPrivTitle() { return driver.FindElementByXPath("//*[@class='panel-title-container']"); }
     public Element getProductionTitleLink(String title) { return driver.FindElementByXPath(String.format("//a[@title='%s']", title)); } 
     public Element getSuccessMessageCloseBtn() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//i[contains(@id, 'botClose')]"); }
+    public Element getTIFFRedactionStyleDropdown() { return driver.FindElementById("lstTIFFRedactionStyle"); }
+    public Element getPDFRedactionStyleDropdown() { return driver.FindElementById("lstPDFRedactionStyle"); }
 
+    
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
     	if(driver.FindElementsByCssSelector("[id=ProductionSets] option ").FindWebElements().size() > index) {
@@ -3546,6 +3554,11 @@ public class ProductionPage {
 				getNextBatesNumbersDialog().Displayed()  ;}}), Input.wait30); 
     }
     
+    public void closeSuccessToastMessage() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+		getSuccessMessageCloseBtn().click();
+    }
 
   	    
 }
