@@ -894,11 +894,7 @@ public class ProductionPage {
 		getBasicInfoCompleteButton().Click();
 
 		//Added to get rid of Toast message, which I think is effecting the rest of Script
-		/*
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-				driver.FindElementById("botClose1").Visible()  ;}}), Input.wait30); 
-		driver.FindElementById("botClose1").Click();
-		*/
+		closeSuccessToastMessage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSuccessMessageCloseButton().Visible()  ;}}), Input.wait30); 
