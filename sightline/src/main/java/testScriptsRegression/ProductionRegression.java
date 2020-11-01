@@ -6124,7 +6124,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 	
-	@Test(groups = {"Production", "Positive", "wip"})
+	@Test(groups = {"Production", "Positive", "jd1"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_adding_branding_to_pdf_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_branding_is_displayed_on_the_generated_production() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6139,21 +6139,20 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.on_production_home_page(true, dataMap);
 			context.store_the_default_template_values(true, dataMap);
 			context.refresh_back_to_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.begin_new_production_process(true, dataMap);
 			context.adding_branding_to_pdf(true, dataMap);
 			context.the_default_template_for_production_components_is_displayed(true, dataMap);
 			context.the_default_template_for_numbering_is_displayed(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
-			context.complete_default_priv_guard_documents_are_matched(true, dataMap);
+			context.mark_complete_priv_guard_section(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
 			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_complete(true, dataMap);
-			context.navigating_to_the_vm_production_location(true, dataMap);
 			context.verify_the_branding_is_displayed_on_the_generated_production(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -6169,7 +6168,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "jd1"})
+	@Test(groups = {"Production", "Positive", "jd1-"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_updating_redaction_style_adding_redaction_text_Whitewithblackfont_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_redaction_documents_are_redacted_with_the_proper_style() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6179,27 +6178,27 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-//			context.sightline_is_launched(true, dataMap);
-//			dataMap.put("uid", "qapau4@consilio.com");
-//			dataMap.put("pwd", "Q@test_10");
-//			context.login_as_pau(true, dataMap);
-//			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
-//			context.on_production_home_page(true, dataMap);
-//			dataMap.put("prod_template", "DefaultAutomationTemplate");
-//			context.store_the_default_template_values(true, dataMap);
-//			context.refresh_back_to_production_home_page(true, dataMap);
-//			context.begin_new_production_process(true, dataMap);
-//			dataMap.put("redaction_style", "White with black font");
-//			context.updating_redaction_style_adding_redaction_text_(true, dataMap);
-//			context.the_default_template_for_production_components_is_displayed(true, dataMap);
-//			context.the_default_template_for_numbering_is_displayed(true, dataMap);
-//			context.complete_default_document_selection(true, dataMap);
-//			context.mark_complete_priv_guard_section(true, dataMap);
-//			context.complete_default_production_location_component(true, dataMap);
-//			context.completed_summary_preview_component(true, dataMap);
-//			context.starting_the_production_generation(true, dataMap);
-//			context.waiting_for_production_to_be_complete(true, dataMap);
-//			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+			context.on_production_home_page(true, dataMap);
+			dataMap.put("prod_template", "DefaultAutomationTemplate");
+			context.store_the_default_template_values(true, dataMap);
+			context.refresh_back_to_production_home_page(true, dataMap);
+			context.begin_new_production_process(true, dataMap);
+			dataMap.put("redaction_style", "White with black font");
+			context.updating_redaction_style_adding_redaction_text_(true, dataMap);
+			context.the_default_template_for_production_components_is_displayed(true, dataMap);
+			context.the_default_template_for_numbering_is_displayed(true, dataMap);
+			context.complete_default_document_selection(true, dataMap);
+			context.mark_complete_priv_guard_section(true, dataMap);
+			context.complete_default_production_location_component(true, dataMap);
+			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
+			context.waiting_for_production_to_be_complete(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
 			context.verify_the_redaction_documents_are_redacted_with_the_proper_style(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -6215,7 +6214,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production", "Positive", "wip"})
+	@Test(groups = {"Production", "Positive", "jd1-"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_store_the_default_template_values_and_refresh_back_to_production_home_page_and_begin_new_production_process_and_updating_redaction_style_adding_redaction_text_Blackwithwhitefont_and_the_default_template_for_production_components_is_displayed_and_the_default_template_for_numbering_is_displayed_and_complete_default_document_selection_and_complete_default_priv_guard_documents_are_matched_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_redaction_documents_are_redacted_with_the_proper_style() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -6230,22 +6229,21 @@ public class ProductionRegression extends RegressionBase {
 			dataMap.put("pwd", "Q@test_10");
 			context.login_as_pau(true, dataMap);
 			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.on_production_home_page(true, dataMap);
 			context.store_the_default_template_values(true, dataMap);
 			context.refresh_back_to_production_home_page(true, dataMap);
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
 			context.begin_new_production_process(true, dataMap);
 			dataMap.put("redaction_style", "Black with white font");
 			context.updating_redaction_style_adding_redaction_text_(true, dataMap);
 			context.the_default_template_for_production_components_is_displayed(true, dataMap);
 			context.the_default_template_for_numbering_is_displayed(true, dataMap);
 			context.complete_default_document_selection(true, dataMap);
-			context.complete_default_priv_guard_documents_are_matched(true, dataMap);
+			context.mark_complete_priv_guard_section(true, dataMap);
 			context.complete_default_production_location_component(true, dataMap);
 			context.completed_summary_preview_component(true, dataMap);
 			context.starting_the_production_generation(true, dataMap);
 			context.waiting_for_production_to_be_complete(true, dataMap);
-			context.navigating_to_the_vm_production_location(true, dataMap);
 			context.verify_the_redaction_documents_are_redacted_with_the_proper_style(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
