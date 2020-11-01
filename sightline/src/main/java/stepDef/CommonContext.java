@@ -19,6 +19,7 @@ import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.openqa.selenium.WebDriver;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -324,6 +325,24 @@ public class CommonContext {
 		driver.waitForPageToBeReady();
 								
 	}
+    
+    public String get_productions_drive_path() {
+    	String mountPath = "";
+		if(SystemUtils.IS_OS_LINUX){
+			mountPath = "";
+		} else if(SystemUtils.IS_OS_WINDOWS){
+			mountPath = "Z:" + File.separator + "H021301" + File.separator;
+		} else if(SystemUtils.IS_OS_MAC){
+			mountPath = File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301" + File.separator;
+		}
+    	
+		return mountPath;
+    }
+    
+    public String get_ingestions_drive_path() {
+    	String mountPath = "";
+    	return mountPath;
+    }
     
    
     public HashMap close_browser(boolean scriptState, HashMap dataMap) {

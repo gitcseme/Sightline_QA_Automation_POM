@@ -6186,11 +6186,20 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 5089Verify the branding text with the black and white color style is displayed on the generated production
 
-			String directory = dataMap.get("production_directory").toString();
-			String brandingText = dataMap.get("pdf_branding_text").toString();
+			//String directory = dataMap.get("production_directory").toString();
+			//String brandingText = dataMap.get("pdf_branding_text").toString();
 			
-			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
-					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			String directory = "Automation888999_dir";
+			String brandingText = "Automation";
+			
+			String drivePath = get_productions_drive_path();
+			String productionPath = directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			
+			String fullPDFPath = drivePath + productionPath;
+			System.out.println("fullPDFPath: " + fullPDFPath);
+			
+//			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
+//					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
 
 	    	File dir = new File(fullPDFPath);
 	    	
@@ -6206,8 +6215,6 @@ public class ProductionContext extends CommonContext {
 					int i=0;
 					int pdfCounter = 0;
 					String fileName = children[i];
-
-					System.out.println("length: " + children.length);
 					
 					while (i<children.length) {
 						// iterate through all pdfs
