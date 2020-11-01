@@ -1,13 +1,25 @@
 package stepDef;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import automationLibrary.Driver;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.openqa.selenium.WebDriver;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -313,6 +325,25 @@ public class CommonContext {
 		driver.waitForPageToBeReady();
 								
 	}
+    
+    public String get_productions_drive_path() {
+    	String mountPath = "";
+		if(SystemUtils.IS_OS_LINUX){
+			mountPath = "";
+		} else if(SystemUtils.IS_OS_WINDOWS){
+			mountPath = "Z:" + File.separator + "H021301" + File.separator;
+		} else if(SystemUtils.IS_OS_MAC){
+			mountPath = File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301" + File.separator;
+		}
+    	
+		return mountPath;
+    }
+    
+    public String get_ingestions_drive_path() {
+    	String mountPath = "";
+    	return mountPath;
+    }
+    
    
     public HashMap close_browser(boolean scriptState, HashMap dataMap) {
 		try{ 

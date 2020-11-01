@@ -2,7 +2,14 @@ package stepDef;
 
 import static org.testng.Assert.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,19 +27,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
 import java.lang.Math;
+import java.nio.charset.Charset;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.pdfbox.contentstream.PDFStreamEngine;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.graphics.state.PDGraphicsState;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.ss.usermodel.PageOrder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.google.common.base.CharMatcher;
 import com.google.common.collect.Ordering;
 
 import automationLibrary.Driver;
@@ -43,6 +56,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 import pageFactory.LoginPage;
+import pageFactory.ColorTextStripper;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
@@ -986,13 +1000,18 @@ public class ProductionContext extends CommonContext {
 				
 				//Select Default Automation Folder	
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getDefaultAutomationChkBox().Displayed()  ;}}), Input.wait30);
-					prod.getDefaultAutomationChkBox().Click();
+						prod.getDefaultAutomationFolderChechbox().Displayed()  ;}}), Input.wait30);
+					prod.getDefaultAutomationFolderChechbox().Click();
 				
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDocumentMarkCompleteBtn().Enabled()  ;}}), Input.wait30);
 					prod.getDocumentMarkCompleteBtn().Click();
+				
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				prod.getSuccessMessageCloseBtn().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getDocumentNextBtn().Enabled()  ;}}), Input.wait30);
@@ -1006,12 +1025,30 @@ public class ProductionContext extends CommonContext {
 				
 				pass(dataMap,"Default document sections has been completed");
 			}catch(Exception e) {
+				e.printStackTrace();
 				fail(dataMap,"Default document sections has not been completed");
 			}	
 		} else {
 			fail(dataMap,"Default document sections has not been completed");
 		}
 
+	}
+	
+	@And("^.*(\\[Not\\] )? mark_complete_priv_guard_section$")
+	public void mark_complete_priv_guard_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30);
+			prod.getbtnProductionGuardMarkComplete().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+			prod.getSuccessMessageCloseBtn().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30);
+			prod.getbtnProductionGuardNext().click();
+		}
 	}
 
 
@@ -2072,7 +2109,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-
+ 
 	@And("^.*(\\[Not\\] )? the_production_grid_is_set_to_view$")
 	public void the_production_grid_is_set_to_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -2501,6 +2538,8 @@ public class ProductionContext extends CommonContext {
 
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
+
+				prod.getSuccessMessageCloseBtn().click();
 				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -2553,9 +2592,14 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed()  ;}}), Input.wait30); 	
 
+				prod.closeSuccessToastMessage();
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getProductionLocationMarkIncompleteButton().Displayed()  ;}}), Input.wait30); 	
 
+				
+
+				
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
 
@@ -2590,6 +2634,7 @@ public class ProductionContext extends CommonContext {
 				prod.getbtnProductionSummaryMarkComplete().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getMarkCompleteSuccessfulText().Displayed() && prod.getbtnProductionSummaryNext().Enabled() ;}}), Input.wait30); 
+				prod.closeSuccessToastMessage();
 				prod.getbtnProductionSummaryNext().Click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getCurrentCrumbGenerate().Displayed()  ;}}), Input.wait30); 
@@ -2647,7 +2692,6 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_using_the_next_bates_generations_a_production_successfully$")
 	public void verify_using_the_next_bates_generations_a_production_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -2736,7 +2780,6 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
-
 
 	@Then("^.*(\\[Not\\] )? verify_editing_the_bates_number_after_generation_is_displaying_correctly$")
 	public void verify_editing_the_bates_number_after_generation_is_displaying_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -2943,10 +2986,10 @@ public class ProductionContext extends CommonContext {
 			if(dat!=null && dat.equalsIgnoreCase("true")){
 				prod.getDATChkBox().click();
 				prod.getDATTab().click();
-				prod.getFieldClassification().click();
-				prod.getFieldClassification().SendKeys("Bates");
-				prod.getSourceField().click();
-				prod.getSourceField().SendKeys("BatesNumber");
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+						prod.getFieldClassification().Visible()  ;}}), Input.wait30);
+				prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Bates");;
+				prod.getSourceField().selectFromDropdown().selectByVisibleText("BatesNumber");;
 				prod.getDatField().click();
 				prod.getDatField().SendKeys("Bates Number");
 			}
@@ -3054,6 +3097,9 @@ public class ProductionContext extends CommonContext {
 				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
 			Assert.assertTrue(prod.getConfirmCompletePopup().Displayed());
 
+			// Close toast message
+			prod.getSuccessMessageCloseBtn().click();
+			
 			//Click the next button
 			prod.getNextButton().click();
 			pass(dataMap, "Complex Components were enabled");
@@ -4749,7 +4795,7 @@ public class ProductionContext extends CommonContext {
 				String randDigit = Integer.toString(randMultiDigit);
 				dataMap.put("beginning_bates", randDigit);
 				prod.getBeginningBates().click();
-				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().Clear();
 				prod.getBeginningBates().SendKeys(randDigit);
 			}
 
@@ -4781,7 +4827,10 @@ public class ProductionContext extends CommonContext {
 			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
 
 			prod.getMarkCompleteLink().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteSuccessfulText().Visible()  ;}}), Input.wait30);
 			Assert.assertTrue(prod.getMarkCompleteSuccessfulText().Displayed());
+			prod.getSuccessMessageCloseBtn().click();
 			prod.getNextButton().click();
 
 		}
@@ -4796,6 +4845,9 @@ public class ProductionContext extends CommonContext {
 	public void clicking_the_production_generate_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
+			// Save Bates range to data map
+			
 			//Clicking the Generate Button.
 			prod.getGenerateButton().click();
 			driver.waitForPageToBeReady();
@@ -4815,15 +4867,15 @@ public class ProductionContext extends CommonContext {
 
 			//Make sure Production Name is displaying the correct name
 			String prodName = prod.getGenerateProductionName().getText();
-			Assert.assertEquals(prodName, (String)dataMap.get("production_name"));
+			Assert.assertEquals(prodName, (String)dataMap.get("production_name"), "The production name is displayed correctly");
 
 			//Wait a few seconds for Status text to change to "in progress"
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 				!(prod.getGeneratePostGenStatus().getText()).equals("DRAFT")  ;}}), Input.wait30);
 
 			//Make sure Status is In Progress, and InProgress Button is now Displayed
-			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress") );
-			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed());
+			Assert.assertTrue(prod.getGeneratePostGenStatus().getText().contains("IN PROGRESS") || prod.getGeneratePostGenStatus().getText().contains("in progress"), "The IN PROGRESS status is shown correctly" );
+			Assert.assertTrue(prod.getGenerateInProgressButton().Displayed(), "The INProgress button is displayed correctly");
 			pass(dataMap, "Complex Production was able to be generated");
 		}
 		else fail(dataMap, "Could not verify a complex production can be generated");
@@ -4835,25 +4887,42 @@ public class ProductionContext extends CommonContext {
 	public void waiting_for_production_to_be_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
-			String status = prod.getGeneratePostGenStatus().getText();
-			//Loop to wait for Post Generation check complete
-			int i =0, j =0;
-			while(!status.equalsIgnoreCase("post generation check complete") && i++<30) {
-				prod.getBackLink().click();
-				driver.waitForPageToBeReady();
-				Thread.sleep(10000);
+			try {
+				//We will need to create a loop here. This loop should check to see if the status changes to Post generation check complete, if not wait 10 seconds and refresh the page. If the status changes to the correct one, exit the loop.Afterwards, click Mark CompleteClick NextDo this loop 20 times max, and it will fail if nothing is returned in that time
+				String status = prod.getGeneratePostGenStatus().getText();
+				//Loop to wait for Post Generation check complete
+				int i =0, j =0;
+				while(!status.equalsIgnoreCase("post generation check complete") && i++<100) {
+					prod.getBackLink().click();
+					driver.waitForPageToBeReady();
+					Thread.sleep(10000);
+					prod.getNextButton().click();
+					driver.waitForPageToBeReady();
+					status = prod.getGeneratePostGenStatus().getText();
+				}
+				if (i==100) {
+					System.out.println("Refreshed page 100 times and production is still not in complete status!");
+					fail(dataMap, "Refreshed page 100 times and production is still not in complete status!");
+				}
+				Assert.assertEquals("Post generation check complete", status);
+
+				// Save bates range to dataMap
+				String batesRange = prod.getProd_BatesRange().getText();
+				String[] range = batesRange.split("-");
+				String firstBatesNumber = range[0].replaceAll("\\s+","");
+				String lastBatesNumber = range[1].replaceAll("\\s+","");
+				dataMap.put("firstBatesNumber", firstBatesNumber);
+				dataMap.put("lastBatesNumber", lastBatesNumber);
+				
+				//Make Complete and Next
+				prod.getMarkCompleteButton().click();
 				prod.getNextButton().click();
 				driver.waitForPageToBeReady();
-				status = prod.getGeneratePostGenStatus().getText();
+				pass(dataMap, "Passed, post generation check for production");
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			Assert.assertEquals("Post generation check complete", status);
 
-			//Make Complete and Next
-			prod.getMarkCompleteButton().click();
-			prod.getNextButton().click();
-			driver.waitForPageToBeReady();
-			pass(dataMap, "Passed, post generation check for production");
 		}
 		else fail(dataMap, "Production Failed, or Timed out");
 
@@ -5015,7 +5084,30 @@ public class ProductionContext extends CommonContext {
 			//* Navigate to the path copied
 			//* Double click the file to open the production
 			//
-			throw new ImplementationException("navigating_to_the_vm_production_location");
+
+		} else {
+			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
+		}
+
+	}
+	
+	@When("^.*(\\[Not\\] )? connect_to_shared_drive_production_location$")
+	public void connect_to_shared_drive_production_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click Review Production
+			//* Copy the path of the VM
+			//* Connect to the Virtual Machine
+			//* Open file explorer
+			//* Type the following into the directory search bar: "\\MTPVTSSLMQ01" Computer
+			//* Navigate to the path copied
+			//* Double click the file to open the production
+			//
+
+
+
+
 		} else {
 			throw new ImplementationException("NOT navigating_to_the_vm_production_location");
 		}
@@ -5027,8 +5119,47 @@ public class ProductionContext extends CommonContext {
 	public void verify_the_generated_files_display_id_as_the_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4993Verify on the document generated, the key ID should be the bates number for the production.
-			throw new ImplementationException("verify_the_generated_files_display_id_as_the_bates_number");
+			//TC 4993 Verify on the document generated, the key ID should be the bates number for the production.
+
+			try {
+				String prodDirectory = dataMap.get("production_directory").toString();
+				// get expected bates numbers from dataMap
+				String expectedFirstBatesNumber = dataMap.get("firstBatesNumber").toString();
+				String expectedLastBatesNumber = dataMap.get("lastBatesNumber").toString();
+				
+				// get list of bates numbers from the generated DAT file
+				List<String> batesRange = getProductionBatesRangeFromDATFile(dataMap, prodDirectory);
+				
+				// get first bates number from file
+				String firstBatesNumber = batesRange.get(0);
+				// get last bates number from file
+				String lastBatesNumber = batesRange.get(batesRange.size() - 1);
+				
+				// remove non-printable characters and retain only ASCII characters
+				String p1 = CharMatcher.INVISIBLE.removeFrom(firstBatesNumber);
+				String firstBatesNumberClean = CharMatcher.ASCII.retainFrom(p1);
+				
+				String p2 = CharMatcher.INVISIBLE.removeFrom(lastBatesNumber);
+				String lastBatesNumberClean = CharMatcher.ASCII.retainFrom(p2);
+				
+
+						
+				if (firstBatesNumberClean.equals(expectedFirstBatesNumber)) {
+					pass(dataMap, "PASS! First bates number in file is as expected");
+				} else {
+					fail(dataMap, "FAIL! First bates number in file is not what was expected. Expected " + expectedFirstBatesNumber + " but got " + firstBatesNumber + " instead");
+				}
+				
+				if (lastBatesNumberClean.equals(expectedLastBatesNumber)) {
+					pass(dataMap, "PASS! Last bates number in file is as expected");
+				} else {
+					fail(dataMap, "FAIL! Last bates number in file is not what was expected. Expected " + expectedLastBatesNumber + " but got " + lastBatesNumber + " instead");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_generated_files_display_id_as_the_bates_number");
 		}
@@ -5774,6 +5905,7 @@ public class ProductionContext extends CommonContext {
 			//
 			String brandingText = "Automation branding on PDF";
 			dataMap.put("pdfBrandingText", brandingText);
+			dataMap.put("pdf_branding_text", brandingText);
 			
 			try {
 				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
@@ -5784,12 +5916,12 @@ public class ProductionContext extends CommonContext {
 				prod.getPDFBrandingPlaceholderTextField().SendKeys(brandingText);
 				
 				// Collapse PDF section
-				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				driver.scrollPageToTop();
 				prod.getTemplateProductionComponentToggle("PDF").click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						!prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 
 			
@@ -5946,11 +6078,16 @@ public class ProductionContext extends CommonContext {
 				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
 				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
+						!prod.getPDFPlaceholderTag().Displayed()  ;}}), Input.wait30);
 				
 				prod.getComponentsMarkComplete().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getComponentsMarkNext().Enabled()  ;}}), Input.wait30);
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				prod.getSuccessMessageCloseBtn().click();
+				
 				prod.getComponentsMarkNext().click();
 				driver.waitForPageToBeReady();
 				
@@ -6021,13 +6158,20 @@ public class ProductionContext extends CommonContext {
 				dataMap.put("fullBatesNumber", fullBatesNumber);
 				
 				prod.getNumAndSortMarkComplete().click();
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getSuccessMessageCloseBtn().Visible()  ;}}), Input.wait30);
+				
+				prod.getSuccessMessageCloseBtn().click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						prod.getNumAndSortNext().Enabled()  ;}}), Input.wait30);
+				
+
 				prod.getNumAndSortNext().click();
 				driver.waitForPageToBeReady();
 
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 		} else {
 			throw new ImplementationException("NOT the_default_template_for_numbering_is_displayed");
@@ -6041,7 +6185,60 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5089Verify the branding text with the black and white color style is displayed on the generated production
-			throw new ImplementationException("verify_the_branding_is_displayed_on_the_generated_production");
+
+			String directory = dataMap.get("production_directory").toString();
+			String brandingText = dataMap.get("pdf_branding_text").toString();
+			
+			String drivePath = get_productions_drive_path();
+			String productionPath = directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			String fullPDFPath = drivePath + productionPath;
+			
+
+	    	File dir = new File(fullPDFPath);
+	    	
+			try {
+
+				String[] children = dir.list();
+				
+				System.out.println("dir: " + dir);
+				if (children == null) {
+					System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+					fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+				} else {
+					int i=0;
+					int pdfCounter = 0;
+					String fileName = children[i];
+					
+					while (i<children.length) {
+						// iterate through all pdfs
+
+						fileName = children[i];
+					
+						String fullFilePath = dir + File.separator + children[i];
+						
+						PDDocument document = PDDocument.load(new File(fullFilePath));
+						PDFTextStripper pdfTextStripper = new PDFTextStripper();
+
+						String text = pdfTextStripper.getText(document);
+												
+						Pattern textPattern = Pattern.compile(brandingText);
+						Matcher textMatcher = textPattern.matcher(text);
+
+						// check if expected text is found
+						if (textMatcher.find()) {
+							pdfCounter++;
+						}
+												
+						document.close();
+						i++;
+					}
+					if (pdfCounter == children.length) {
+						pass(dataMap, "PASS! All pdfs contain expected branding text!");
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_branding_is_displayed_on_the_generated_production");
 		}
@@ -6053,8 +6250,81 @@ public class ProductionContext extends CommonContext {
 	public void updating_redaction_style_adding_redaction_text_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Expand the Tiff sectionChange the redaction style based on the parameterClick Specify Redaction Text by Selecting Redaction Tags:Change the text to "Automated Redaction"
-			throw new ImplementationException("updating_redaction_style_adding_redaction_text_");
+			//Expand the Tiff section
+			//Change the redaction style based on the parameter
+			//Click Specify Redaction Text by Selecting Redaction Tags:
+			//Change the text to "Automated Redaction"
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			String redactionStyle = dataMap.get("redaction_style").toString();
+			
+			prod.getTIFFRedactionStyleDropdown().ScrollTo();
+			prod.getTIFFRedactionStyleDropdown().selectFromDropdown().selectByVisibleText(redactionStyle);
+			
+			prod.getTIFFSpecifyRedactText().ScrollTo();
+			prod.getTIFFSpecifyRedactText().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFF_Red_Placeholdertext().Displayed()  ;}}), Input.wait30);
+			
+			
+			String redactedText = "Automated Redaction";
+			dataMap.put("redacted_text", redactedText);
+			
+			prod.getTIFF_Red_Placeholdertext().ScrollTo();
+			prod.getTIFF_Red_Placeholdertext().Clear();
+			prod.getTIFF_Red_Placeholdertext().SendKeys(redactedText);
+			
+			prod.getTIFFSelectRedactionTagButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getTIFFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			prod.getTIFFDefaultAutomationRedactionTag().click();
+			prod.getTIFF_TagSelectButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTIFFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			
+			driver.scrollPageToTop();
+			
+			// Collapse TIFF section
+			prod.getTemplateProductionComponentToggle("TIFF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getTIFFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			// Expand PDF section
+			prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPDFRedactionStyleDropdown().ScrollTo();
+			prod.getPDFRedactionStyleDropdown().selectFromDropdown().selectByVisibleText(redactionStyle);
+			
+			prod.getPDF_SpecifyRedactText().ScrollTo();
+			prod.getPDF_SpecifyRedactText().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDF_Red_Placeholdertext().Displayed()  ;}}), Input.wait30);
+			
+			prod.getPDF_Red_Placeholdertext().ScrollTo();
+			prod.getPDF_Red_Placeholdertext().Clear();
+			prod.getPDF_Red_Placeholdertext().SendKeys("Automated Redaction");
+			
+			prod.getPDFSelectRedactionTagButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getPDFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			prod.getPDFDefaultAutomationRedactionTag().click();
+			prod.getPDF_TagSelectButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getPDFDefaultAutomationRedactionTag().Visible()  ;}}), Input.wait30);
+			
+			driver.scrollPageToTop();
+			
+			// Collapse PDF section
+			prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!prod.getPDFRedactionStyleDropdown().Displayed()  ;}}), Input.wait30);
+			
 		} else {
 			throw new ImplementationException("NOT updating_redaction_style_adding_redaction_text_");
 		}
@@ -6071,7 +6341,82 @@ public class ProductionContext extends CommonContext {
 			//* Also, make sure a thin black border is provided around the white redaction
 			//* Verify the redacted text entered in "Updating_refaction_style_add_redaction_text" is added to the documentation
 			//
-			throw new ImplementationException("verify_the_redaction_documents_are_redacted_with_the_proper_style");
+			
+			String redactedStyle = dataMap.get("redaction_style").toString();
+			String directory = dataMap.get("production_directory").toString();
+			String redactedText = dataMap.get("redacted_text").toString();
+			
+			
+			// set expected color rgb values
+			String rgbValue = "";
+			if (redactedStyle.equals("White with black font")) {
+				rgbValue = "RGB 0.0 0.0 0.0";
+			} else if (redactedStyle.equals("Black with white font")) {
+				rgbValue = "RGB 1.0 1.0 1.0";
+			}
+			
+			String drivePath = get_productions_drive_path();
+			String productionPath = directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			String fullPDFPath = drivePath + productionPath;
+
+
+	    	File dir = new File(fullPDFPath);
+			
+			try {
+
+				String[] children = dir.list();
+				
+				System.out.println("dir: " + dir);
+				if (children == null) {
+					System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+//					fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+				} else {
+					int i=0;
+					String fileName = children[i];
+
+					while (i<children.length) {
+						// iterate through all pdfs
+						i++;
+						fileName = children[i];
+					
+						String fullFilePath = dir + File.separator + children[i];
+						
+						PDDocument document = PDDocument.load(new File(fullFilePath));
+						PDFTextStripper pdfTextStripper = new PDFTextStripper();
+						
+						PDFTextStripper colorStripper = new ColorTextStripper();					
+						
+						String text = pdfTextStripper.getText(document);
+						String color = colorStripper.getText(document);		
+						
+						Pattern textPattern = Pattern.compile(redactedText);
+						Matcher textMatcher = textPattern.matcher(text);
+					
+						Pattern colorPattern = Pattern.compile(rgbValue);
+						Matcher colorMatcher = colorPattern.matcher(color);
+						
+
+						// check if expected text is found
+						if (textMatcher.find()) {
+							// if expected redaction text is found, check if font color is expected value
+							if (colorMatcher.find()) {
+								System.out.println("color and text match");
+								pass(dataMap, "PASS! Expected redaction text was found with expected font color");
+								break;
+							}
+						}
+						
+						document.close();
+					}
+					if (i == children.length) {
+						fail(dataMap, "FAIL! Iterated through all pdf files and did not find expected redaction text");
+					}
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_redaction_documents_are_redacted_with_the_proper_style");
 		}
@@ -9900,7 +10245,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
-
+ 
 	@And("^.*(\\[Not\\] )? a_valid_production_name_is_entered$")
 	public void a_valid_production_name_is_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -10258,6 +10603,7 @@ public class ProductionContext extends CommonContext {
 
 	}
 
+
 	@Then("^.*(\\[Not\\] )? verify_bates_range_blank_on_generate_tab$")
 	public void verify_bates_range_blank_on_generate_tab(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -10418,7 +10764,7 @@ public class ProductionContext extends CommonContext {
 			// Click on the back button
 			// Click on the next button
 			// Status should change to Pre generation check in progress
-			// Click on the back button
+			// Click on the back button 
 			// Click on the next button
 			// Status should change to "Generate in progress".
 			// 
@@ -10428,4 +10774,52 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+	
+    public List<String> getProductionBatesRangeFromDATFile(HashMap dataMap, String directory) throws IOException {
+    	// Retruns list of bates range from production dat file from shared drive
+    	
+
+		String drivePath = get_productions_drive_path();
+    	String dirName = drivePath + directory;
+
+		
+		List<String> datFileContents = new ArrayList<String>();
+		try {
+			File dir = new File(dirName);
+			String[] children = dir.list();
+			if (children == null) {
+				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", dirName));
+				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", dirName));
+			} else {
+				int i=0;
+				String fileName = children[i];
+
+				String fullPath = dir + File.separator + fileName;
+				while (i<children.length && !fileName.contains(".dat")) {
+					i++;
+					fileName = children[i];
+				}
+				
+				System.out.println("Full file path: " + fullPath);
+				
+				FileReader in = new FileReader(fullPath);
+				BufferedReader br = new BufferedReader(in);
+				
+				String line;
+				while ((line = br.readLine()) != null) {
+					datFileContents.add(line);
+				}
+				// remove first line/header "Bates Number" from list
+				datFileContents.remove(0);
+				
+			}	
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return datFileContents;	
+    }
+        	
+	
 }//EOF
+
+
