@@ -6134,25 +6134,25 @@ public class ProductionRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-			context.sightline_is_launched(true, dataMap);
-			dataMap.put("uid", "qapau4@consilio.com");
-			dataMap.put("pwd", "Q@test_10");
-			context.login_as_pau(true, dataMap);
-			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
-			dataMap.put("prod_template", "DefaultAutomationTemplate");
-			context.on_production_home_page(true, dataMap);
-			context.store_the_default_template_values(true, dataMap);
-			context.refresh_back_to_production_home_page(true, dataMap);
-			context.begin_new_production_process(true, dataMap);
-			context.adding_branding_to_pdf(true, dataMap);
-			context.the_default_template_for_production_components_is_displayed(true, dataMap);
-			context.the_default_template_for_numbering_is_displayed(true, dataMap);
-			context.complete_default_document_selection(true, dataMap);
-			context.mark_complete_priv_guard_section(true, dataMap);
-			context.complete_default_production_location_component(true, dataMap);
-			context.completed_summary_preview_component(true, dataMap);
-			context.starting_the_production_generation(true, dataMap);
-			context.waiting_for_production_to_be_complete(true, dataMap);
+//			context.sightline_is_launched(true, dataMap);
+//			dataMap.put("uid", "qapau4@consilio.com");
+//			dataMap.put("pwd", "Q@test_10");
+//			context.login_as_pau(true, dataMap);
+//			dataMap.put("url", "http://mtpvtsslwb01.consilio.com/");
+//			dataMap.put("prod_template", "DefaultAutomationTemplate");
+//			context.on_production_home_page(true, dataMap);
+//			context.store_the_default_template_values(true, dataMap);
+//			context.refresh_back_to_production_home_page(true, dataMap);
+//			context.begin_new_production_process(true, dataMap);
+//			context.adding_branding_to_pdf(true, dataMap);
+//			context.the_default_template_for_production_components_is_displayed(true, dataMap);
+//			context.the_default_template_for_numbering_is_displayed(true, dataMap);
+//			context.complete_default_document_selection(true, dataMap);
+//			context.mark_complete_priv_guard_section(true, dataMap);
+//			context.complete_default_production_location_component(true, dataMap);
+//			context.completed_summary_preview_component(true, dataMap);
+//			context.starting_the_production_generation(true, dataMap);
+//			context.waiting_for_production_to_be_complete(true, dataMap);
 			context.verify_the_branding_is_displayed_on_the_generated_production(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
