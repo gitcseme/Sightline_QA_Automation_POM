@@ -5916,7 +5916,7 @@ public class ProductionContext extends CommonContext {
 				prod.getPDFBrandingPlaceholderTextField().SendKeys(brandingText);
 				
 				// Collapse PDF section
-				prod.getTemplateProductionComponentToggle("PDF").ScrollTo();
+				driver.scrollPageToTop();
 				prod.getTemplateProductionComponentToggle("PDF").click();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						!prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
