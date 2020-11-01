@@ -6186,20 +6186,13 @@ public class ProductionContext extends CommonContext {
 		if (scriptState) {
 			//TC 5089Verify the branding text with the black and white color style is displayed on the generated production
 
-			//String directory = dataMap.get("production_directory").toString();
-			//String brandingText = dataMap.get("pdf_branding_text").toString();
-			
-			String directory = "Automation888999_dir";
-			String brandingText = "Automation";
+			String directory = dataMap.get("production_directory").toString();
+			String brandingText = dataMap.get("pdf_branding_text").toString();
 			
 			String drivePath = get_productions_drive_path();
 			String productionPath = directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
-			
 			String fullPDFPath = drivePath + productionPath;
-			System.out.println("fullPDFPath: " + fullPDFPath);
 			
-//			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
-//					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
 
 	    	File dir = new File(fullPDFPath);
 	    	
@@ -6362,8 +6355,10 @@ public class ProductionContext extends CommonContext {
 				rgbValue = "RGB 1.0 1.0 1.0";
 			}
 			
-			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
-					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			String drivePath = get_productions_drive_path();
+			String productionPath = directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+			String fullPDFPath = drivePath + productionPath;
+
 
 	    	File dir = new File(fullPDFPath);
 			
@@ -10782,9 +10777,10 @@ public class ProductionContext extends CommonContext {
     public List<String> getProductionBatesRangeFromDATFile(HashMap dataMap, String directory) throws IOException {
     	// Retruns list of bates range from production dat file from shared drive
     	
-    	//TODO: add logic to change dirName based on OS
-		String dirName = "/Volumes/Productions/H021301/" + directory;
-		
+
+		String drivePath = get_productions_drive_path();
+    	String dirName = drivePath + directory;
+
 		
 		List<String> datFileContents = new ArrayList<String>();
 		try {
@@ -10821,74 +10817,7 @@ public class ProductionContext extends CommonContext {
 		}
 		return datFileContents;	
     }
-    
-//    public Boolean is_document_redacted(HashMap dataMap, String directory, String expectedText) throws IOException {
-
-//		try {
-//			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
-//					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
-//	    	System.out.println("fullPDFPath: " + fullPDFPath);
-//			
-//	    	File dir = new File(fullPDFPath);
-//			String[] children = dir.list();
-//			
-//			System.out.println("dir: " + dir);
-//			if (children == null) {
-//				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
-////				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
-//			} else {
-//				int i=0;
-//				String fileName = children[i];
-//
-//				System.out.println("list: " + children);
-//				while (i<children.length) {
-//					i++;
-//					fileName = children[i];
-//					System.out.println("files: " + children[i]);
-//					
-//					String fullFilePath = dir + File.separator + children[i];
-//					System.out.println("fullFilePath: " + fullFilePath);
-//					
-//					PDDocument document = PDDocument.load(new File(fullFilePath));
-//					PDFTextStripper pdfTextStripper = new PDFTextStripper();
-//					
-//					PDFTextStripper colorStripper = new ColorTextStripper();					
-//					
-//					String text = pdfTextStripper.getText(document);
-//					
-//					System.out.println("text: " + text);
-//
-//					String color = colorStripper.getText(document);
-//					System.out.println("color: " + color);					
-//					
-//					Pattern p = Pattern.compile(expectedText);
-//					Matcher matcher = p.matcher(text);
-//				
-//					if (color.contains(s))
-//					
-//					if (matcher.find()) {
-//						System.out.println("pass!!!");
-//						pass(dataMap, "Branding is displayed in the preview of the pdf");
-//						break;
-//					}
-//					
-//					document.close();
-//				}
-//				if (i == children.length) {
-//					System.out.println("FAIL! Opened all PDFs and failed to find redaction");
-//					fail(dataMap, "FAIL! Opened all PDFs and failed to find redaction");
-//				}
-//
-//
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return null;
-//
-//    }
-    	
+        	
 	
 }//EOF
 
