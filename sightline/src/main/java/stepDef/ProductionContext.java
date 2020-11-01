@@ -56,6 +56,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 import pageFactory.LoginPage;
+import pageFactory.ColorTextStripper;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.ProductionPage;
@@ -5904,6 +5905,7 @@ public class ProductionContext extends CommonContext {
 			//
 			String brandingText = "Automation branding on PDF";
 			dataMap.put("pdfBrandingText", brandingText);
+			dataMap.put("pdf_branding_text", brandingText);
 			
 			try {
 				prod.getTemplateProductionComponentToggle("PDF").waitAndClick(10);
@@ -5919,7 +5921,7 @@ public class ProductionContext extends CommonContext {
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						!prod.getPriveldge_SelectPDFTagButton().Visible()  ;}}), Input.wait30);
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 
 			
@@ -6183,7 +6185,60 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//TC 5089Verify the branding text with the black and white color style is displayed on the generated production
-			throw new ImplementationException("verify_the_branding_is_displayed_on_the_generated_production");
+
+			String directory = dataMap.get("production_directory").toString();
+			String brandingText = dataMap.get("pdf_branding_text").toString();
+			
+			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
+					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+
+	    	File dir = new File(fullPDFPath);
+	    	
+			try {
+
+				String[] children = dir.list();
+				
+				System.out.println("dir: " + dir);
+				if (children == null) {
+					System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+					fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+				} else {
+					int i=0;
+					int pdfCounter = 0;
+					String fileName = children[i];
+
+					System.out.println("length: " + children.length);
+					
+					while (i<children.length) {
+						// iterate through all pdfs
+
+						fileName = children[i];
+					
+						String fullFilePath = dir + File.separator + children[i];
+						
+						PDDocument document = PDDocument.load(new File(fullFilePath));
+						PDFTextStripper pdfTextStripper = new PDFTextStripper();
+
+						String text = pdfTextStripper.getText(document);
+												
+						Pattern textPattern = Pattern.compile(brandingText);
+						Matcher textMatcher = textPattern.matcher(text);
+
+						// check if expected text is found
+						if (textMatcher.find()) {
+							pdfCounter++;
+						}
+												
+						document.close();
+						i++;
+					}
+					if (pdfCounter == children.length) {
+						pass(dataMap, "PASS! All pdfs contain expected branding text!");
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		} else {
 			throw new ImplementationException("NOT verify_the_branding_is_displayed_on_the_generated_production");
 		}
@@ -6214,9 +6269,13 @@ public class ProductionContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					prod.getTIFF_Red_Placeholdertext().Displayed()  ;}}), Input.wait30);
 			
+			
+			String redactedText = "Automated Redaction";
+			dataMap.put("redacted_text", redactedText);
+			
 			prod.getTIFF_Red_Placeholdertext().ScrollTo();
 			prod.getTIFF_Red_Placeholdertext().Clear();
-			prod.getTIFF_Red_Placeholdertext().SendKeys("Automated Redaction");
+			prod.getTIFF_Red_Placeholdertext().SendKeys(redactedText);
 			
 			prod.getTIFFSelectRedactionTagButton().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -6282,10 +6341,80 @@ public class ProductionContext extends CommonContext {
 			//* Also, make sure a thin black border is provided around the white redaction
 			//* Verify the redacted text entered in "Updating_refaction_style_add_redaction_text" is added to the documentation
 			//
-			String directory = "Automation562965_dir";
-			String expectedRedactedText = "Automated Redaction";
 			
-			is_document_redacted(dataMap, directory, expectedRedactedText);
+			String redactedStyle = dataMap.get("redaction_style").toString();
+			String directory = dataMap.get("production_directory").toString();
+			String redactedText = dataMap.get("redacted_text").toString();
+			
+			
+			// set expected color rgb values
+			String rgbValue = "";
+			if (redactedStyle.equals("White with black font")) {
+				rgbValue = "RGB 0.0 0.0 0.0";
+			} else if (redactedStyle.equals("Black with white font")) {
+				rgbValue = "RGB 1.0 1.0 1.0";
+			}
+			
+			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
+					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+
+	    	File dir = new File(fullPDFPath);
+			
+			try {
+
+				String[] children = dir.list();
+				
+				System.out.println("dir: " + dir);
+				if (children == null) {
+					System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+//					fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+				} else {
+					int i=0;
+					String fileName = children[i];
+
+					while (i<children.length) {
+						// iterate through all pdfs
+						i++;
+						fileName = children[i];
+					
+						String fullFilePath = dir + File.separator + children[i];
+						
+						PDDocument document = PDDocument.load(new File(fullFilePath));
+						PDFTextStripper pdfTextStripper = new PDFTextStripper();
+						
+						PDFTextStripper colorStripper = new ColorTextStripper();					
+						
+						String text = pdfTextStripper.getText(document);
+						String color = colorStripper.getText(document);		
+						
+						Pattern textPattern = Pattern.compile(redactedText);
+						Matcher textMatcher = textPattern.matcher(text);
+					
+						Pattern colorPattern = Pattern.compile(rgbValue);
+						Matcher colorMatcher = colorPattern.matcher(color);
+						
+
+						// check if expected text is found
+						if (textMatcher.find()) {
+							// if expected redaction text is found, check if font color is expected value
+							if (colorMatcher.find()) {
+								System.out.println("color and text match");
+								pass(dataMap, "PASS! Expected redaction text was found with expected font color");
+								break;
+							}
+						}
+						
+						document.close();
+					}
+					if (i == children.length) {
+						fail(dataMap, "FAIL! Iterated through all pdf files and did not find expected redaction text");
+					}
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			throw new ImplementationException("NOT verify_the_redaction_documents_are_redacted_with_the_proper_style");
 		}
@@ -10686,86 +10815,74 @@ public class ProductionContext extends CommonContext {
 		return datFileContents;	
     }
     
-    public Boolean is_document_redacted(HashMap dataMap, String directory, String expectedText) throws IOException {
+//    public Boolean is_document_redacted(HashMap dataMap, String directory, String expectedText) throws IOException {
 
-		try {
-			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
-					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
-	    	System.out.println("fullPDFPath: " + fullPDFPath);
-			
-	    	File dir = new File(fullPDFPath);
-			String[] children = dir.list();
-			
-			System.out.println("dir: " + dir);
-			if (children == null) {
-				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
-//				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
-			} else {
-				int i=0;
-				String fileName = children[i];
-
-				System.out.println("list: " + children);
-				while (i<children.length) {
-					i++;
-					fileName = children[i];
-					System.out.println("files: " + children[i]);
-					
-					String fullFilePath = dir + File.separator + children[i];
-					System.out.println("fullFilePath: " + fullFilePath);
-					
-					PDDocument document = PDDocument.load(new File(fullFilePath));
-					PDFTextStripper pdfTextStripper = new PDFTextStripper();
-					String text = pdfTextStripper.getText(document);
-					pdfTextStripper.setSortByPosition(true);
-					pdfTextStripper.setStartPage(0);
-					pdfTextStripper.setEndPage(document.getNumberOfPages());
-					
-					System.out.println("text: " + text);
-
-//				    PDFStreamEngine engine = new PDFStreamEngine(ResourceLoader.loadProperties("org/apache/pdfbox/resources/PageDrawer.properties"));
-//				    PDPage page = (PDPage)document.getDocumentCatalog().getAllPages().get(0);
-//				    engine.processStream(page, page.findResources(), page.getContents().getStream());
-//				    PDGraphicsState graphicState = engine.getGraphicsState();
-//				    System.out.println(graphicState.getStrokingColor().getColorSpace().getName());
-//				    float colorSpaceValues[] = graphicState.getStrokingColor().getColorSpace();
-//				    for (float c : colorSpaceValues) {
-//				        System.out.println(c * 255);
-//				    }
-					
-					
-					Pattern p = Pattern.compile(expectedText);
-					Matcher matcher = p.matcher(text);
-				
-					if (matcher.find()) {
-						System.out.println("pass!!!");
-						pass(dataMap, "Branding is displayed in the preview of the pdf");
-						break;
-					}
-					
-					document.close();
-				}
-				if (i == children.length) {
-					System.out.println("FAIL! Opened all PDFs and failed to find redaction");
-				}
-				
-//	    			System.out.println("Full file path: " + fullPath);
-//	    			
-//	    			FileReader in = new FileReader(fullPath);
-//	    			BufferedReader br = new BufferedReader(in);
-//	    			
-//	    			String line;
-//	    			while ((line = br.readLine()) != null) {
-//	    				datFileContents.add(line);
-//	    			}
-
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-
-    }
+//		try {
+//			String fullPDFPath =  File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301"  
+//					+ File.separator + directory + File.separator + "VOL0001" + File.separator + "PDF" + File.separator + "0001";
+//	    	System.out.println("fullPDFPath: " + fullPDFPath);
+//			
+//	    	File dir = new File(fullPDFPath);
+//			String[] children = dir.list();
+//			
+//			System.out.println("dir: " + dir);
+//			if (children == null) {
+//				System.out.println(String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+////				fail(dataMap, String.format("No files in directory %s! Check if Check if MTPVTSSLMQ01 is mounted correctly on the machine. MTPVTSSLMQ01 needs to be mounted in order to access the files", fullPDFPath));
+//			} else {
+//				int i=0;
+//				String fileName = children[i];
+//
+//				System.out.println("list: " + children);
+//				while (i<children.length) {
+//					i++;
+//					fileName = children[i];
+//					System.out.println("files: " + children[i]);
+//					
+//					String fullFilePath = dir + File.separator + children[i];
+//					System.out.println("fullFilePath: " + fullFilePath);
+//					
+//					PDDocument document = PDDocument.load(new File(fullFilePath));
+//					PDFTextStripper pdfTextStripper = new PDFTextStripper();
+//					
+//					PDFTextStripper colorStripper = new ColorTextStripper();					
+//					
+//					String text = pdfTextStripper.getText(document);
+//					
+//					System.out.println("text: " + text);
+//
+//					String color = colorStripper.getText(document);
+//					System.out.println("color: " + color);					
+//					
+//					Pattern p = Pattern.compile(expectedText);
+//					Matcher matcher = p.matcher(text);
+//				
+//					if (color.contains(s))
+//					
+//					if (matcher.find()) {
+//						System.out.println("pass!!!");
+//						pass(dataMap, "Branding is displayed in the preview of the pdf");
+//						break;
+//					}
+//					
+//					document.close();
+//				}
+//				if (i == children.length) {
+//					System.out.println("FAIL! Opened all PDFs and failed to find redaction");
+//					fail(dataMap, "FAIL! Opened all PDFs and failed to find redaction");
+//				}
+//
+//
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//
+//		return null;
+//
+//    }
     	
 	
 }//EOF
+
+
