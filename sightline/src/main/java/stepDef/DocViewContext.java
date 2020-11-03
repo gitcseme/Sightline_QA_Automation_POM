@@ -766,4 +766,138 @@ public class DocViewContext extends CommonContext {
 		}
 
 	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_saved_search_rmu$")
+	public void login_to_saved_search_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
+			throw new ImplementationException("login_to_saved_search_rmu");
+		} else {
+			throw new ImplementationException("NOT login_to_saved_search_rmu");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? open_saved_doc_view$")
+	public void open_saved_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Click 'Saved with SG1' search group
+			//* Click radio button for first saved search
+			//* Click 'Doc View' button at the top of the page
+			//
+			throw new ImplementationException("open_saved_doc_view");
+		} else {
+			throw new ImplementationException("NOT open_saved_doc_view");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_docview_doc_$")
+	public void select_docview_doc_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click doc with matcahing docid on Doc View page
+			throw new ImplementationException("select_docview_doc_");
+		} else {
+			throw new ImplementationException("NOT select_docview_doc_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? apply_rectangle_redaction$")
+	public void apply_rectangle_redaction(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonrectangle_redaction_appliedclick_grey_redact_tool
+			throw new ImplementationException("apply_rectangle_redaction");
+		} else {
+			throw new ImplementationException("NOT apply_rectangle_redaction");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_propagation_in_exact_dupe$")
+	public void verify_redaction_propagation_in_exact_dupe(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6030 Exact dupes in the same security group: Verify redaction propagation in a document when exact dupes in the same security groupVerify redaction propagation applied to exact duplicate doc
+			//
+			//* Redaction coordinates
+			//* Redaction applied
+			//* History of redaction has the last redaction applied
+			//
+			//Delete the redaction from both documents after verification
+			throw new ImplementationException("verify_redaction_propagation_in_exact_dupe");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_propagation_in_exact_dupe");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_$")
+	public void login_as_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Enter Username and password for impersonated user
+			//* User is logged in
+			//* Sightline Home page is displayed
+			//
+			throw new ImplementationException("login_as_");
+		} else {
+			throw new ImplementationException("NOT login_as_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? change_role_to_$")
+	public void change_role_to_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click user info dropdownClick 'Change Role' buttonEnter matching impersonation informationSightline Home page is displayed
+			throw new ImplementationException("change_role_to_");
+		} else {
+			throw new ImplementationException("NOT change_role_to_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_saved_search_page$")
+	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
+			//* Saved Search page is displayed
+			//
+			throw new ImplementationException("on_saved_search_page");
+		} else {
+			throw new ImplementationException("NOT on_saved_search_page");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? apply_this_page_redaction$")
+	public void apply_this_page_redaction(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:click_grey_redact_toolclick_this_page_redaction_buttonthis_page_redaction_appliedclick_grey_redact_tool
+			throw new ImplementationException("apply_this_page_redaction");
+		} else {
+			throw new ImplementationException("NOT apply_this_page_redaction");
+		}
+
+	}
 }//eof
