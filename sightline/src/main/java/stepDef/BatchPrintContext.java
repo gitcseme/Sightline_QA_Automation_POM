@@ -296,11 +296,17 @@ public class BatchPrintContext extends CommonContext {
 				}
 				else{
 					String metaData = (String)dataMap.get("field_for_slip_sheets");
+					String workProductFolder = (String)dataMap.get("workproduct_for_slipsheets");
+
+					//Select MetaData and Add to selected
 					batchPrint.getSlipSheetsMetaDataCheckBoxByName(metaData).click();
 					batchPrint.getSelectColumnAddtoSelected().click();
 
+					//Switch to work tab -> Expand All folder - > choose desired folder and add to selected
 					batchPrint.getSlipSheetsWorkProductTab().click();
-
+					batchPrint.getAllFoldersExpandArrow().click();
+					batchPrint.getWorkProductFolderCheckBoxByName(workProductFolder).click();
+					batchPrint.getSelectColumnAddtoSelected().click();
 				}
 				
 				batchPrint.getSlipSheetsNextButton().click();
@@ -315,9 +321,7 @@ public class BatchPrintContext extends CommonContext {
 
 
 	@And("^.*(\\[Not\\] )? select_branding_redactions$")
-	public void select_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
+	public void select_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception { if (scriptState) {
 			//
 			//* Select Branding and Redactions
 			//* Click Next button
