@@ -5,12 +5,16 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.sql.DriverAction;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.text.ChangedCharSetException;
+
 import java.util.List;
 import java.util.Random;
 
@@ -30,11 +34,12 @@ import com.beust.jcommander.JCommander.Builder;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import ch.qos.logback.core.Context;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
-
+import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.SavedSearch;
 import testScriptsSmoke.Input;
@@ -489,8 +494,11 @@ public class DocViewContext extends CommonContext {
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 
+			//Store default value of dropdown for later context's verifications
+
 			//Using consilio's method, these parameters seem to work well
 			docView.redactbyrectangle(100, 10, 0, "SGSame1");
+			dataMap.put("defaultValue", docView.PageViewTagString());
 
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
 			docView.getDocViewSaveRedactionButton().click();
@@ -559,6 +567,11 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//Grab our default tag and compare with expected value. 
+			if(dataMap.get("defaultValue")!=null) {
+				Assert.assertEquals((String)dataMap.get("defaultValue"), "SGSame1");
+				pass(dataMap, "the default tag was selected");
+				return;
+			}
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
 			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
@@ -688,10 +701,19 @@ public class DocViewContext extends CommonContext {
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
 			//
-			throw new ImplementationException("this_page_redaction_applied");
-		} else {
-			throw new ImplementationException("NOT this_page_redaction_applied");
+			docView.getDocView_SelectReductionLabel().click();
+			String defaultValue = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+
+			dataMap.put("defaultValue", defaultValue);
+			docView.getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText("SGSame1");
+			
+			docView.getDocViewSaveRedactionButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			pass(dataMap, "applied this page redaction");
+			
 		}
+		else fail(dataMap, "failed to apply this page redaction");
 
 	}
 
@@ -1007,10 +1029,13 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonrectangle_redaction_appliedclick_grey_redact_tool
-			throw new ImplementationException("apply_rectangle_redaction");
-		} else {
-			throw new ImplementationException("NOT apply_rectangle_redaction");
+			click_grey_redact_tool(scriptState, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			rectangle_redaction_applied(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
+			pass(dataMap, "successfully applied rectangle redaction");
 		}
+		else fail(dataMap, "failed to apply rectangle redaction");
 
 	}
 
@@ -1043,10 +1068,80 @@ public class DocViewContext extends CommonContext {
 			//* User is logged in
 			//* Sightline Home page is displayed
 			//
-			throw new ImplementationException("login_as_");
-		} else {
-			throw new ImplementationException("NOT login_as_");
+			base = new BaseClass(driver);
+			String desiredRole = (String)dataMap.get("impersonate");
+			String desiredDomain = (String)dataMap.get("domain");
+			String desiredProject = (String)dataMap.get("project");
+			String desiredSG =  (String)dataMap.get("security_group");
+ 
+			dataMap.put("uid", "automate.sqa2@sqapowered.com");
+			dataMap.put("pwd", "Q@test_10");
+			login_as_pau(scriptState, dataMap);
+
+			base.getSignoutMenu().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getCurrentRole().Displayed()  ;}}), Input.wait30); 
+
+			//if we are not currently logged in to our current role, impersonate to it
+			if(!desiredRole.equalsIgnoreCase(base.getCurrentRole().getText())) {
+				
+				base.getChangeRole().click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					base.getSelectRole().Displayed()  ;}}), Input.wait30); 
+				base.getSelectRole().click();
+				base.getSelectRole().selectFromDropdown().selectByVisibleText(desiredRole);
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					base.getSelectRole().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredRole)  ;}}), Input.wait30); 
+
+				
+				if(desiredRole.equalsIgnoreCase("Project Administrator")){
+					base.getAvlDomain().click();
+					base.getAvlDomain().selectFromDropdown().selectByVisibleText(desiredDomain);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlDomain().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredDomain)  ;}}), Input.wait30); 
+
+					base.getAvlProject().click();
+					base.getAvlProject().selectFromDropdown().selectByVisibleText(desiredProject);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlProject().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredProject)  ;}}), Input.wait30); 
+				}
+				else if(desiredRole.equalsIgnoreCase("Domain Administrator")){
+					base.getAvlDomain().click();
+					base.getAvlDomain().selectFromDropdown().selectByVisibleText(desiredDomain);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlDomain().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredDomain)  ;}}), Input.wait30); 
+
+				}
+				else if(desiredRole.equalsIgnoreCase("Review Manager")) {
+					base.getAvlDomain().click();
+					base.getAvlDomain().selectFromDropdown().selectByVisibleText(desiredDomain);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlDomain().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredDomain)  ;}}), Input.wait30); 
+
+					base.getAvlProject().click();
+					base.getAvlProject().selectFromDropdown().selectByVisibleText(desiredProject);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlProject().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredProject)  ;}}), Input.wait30); 
+					
+					base.getAvlSecurity().click();
+					base.getAvlSecurity().selectFromDropdown().selectByVisibleText(desiredSG);
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						base.getAvlSecurity().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredSG)  ;}}), Input.wait30); 
+				}
+				else fail(dataMap, "Invalid role selection");
+				
+				base.getSaveChangeRole().click();
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					base.getSignoutMenu().Displayed() && base.getSignoutMenu().Enabled()  ;}}), Input.wait30); 
+
+			}
+			else base.getSignoutMenu().click();
+			
+			pass(dataMap, "successfully login/switch to desired role");
+
 		}
+		else fail(dataMap, "failed to login/switch to desired role");
 
 	}
 
@@ -1056,10 +1151,48 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click user info dropdownClick 'Change Role' buttonEnter matching impersonation informationSightline Home page is displayed
-			throw new ImplementationException("change_role_to_");
-		} else {
-			throw new ImplementationException("NOT change_role_to_");
-		}
+			base = new BaseClass(driver);
+			String desiredRole = (String)dataMap.get("impersonate");
+			String desiredDomain = (String)dataMap.get("domain");
+			String desiredProject = (String)dataMap.get("project");
+			String desiredSG =  (String)dataMap.get("security_group");
+			
+			base.getSignoutMenu().click();
+			base.getChangeRole().click();
+			
+			
+			//Change to desired role
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getSelectRole().Displayed()  ;}}), Input.wait30); 
+			base.getSelectRole().click();
+			base.getSelectRole().selectFromDropdown().selectByVisibleText(desiredRole);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getSelectRole().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredRole)  ;}}), Input.wait30); 
+
+			//Change domain
+			base.getAvlDomain().click();
+			base.getAvlDomain().selectFromDropdown().selectByVisibleText(desiredDomain);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getAvlDomain().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredDomain)  ;}}), Input.wait30); 
+
+			//Change Project
+			base.getAvlProject().click();
+			base.getAvlProject().selectFromDropdown().selectByVisibleText(desiredProject);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getAvlProject().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredProject)  ;}}), Input.wait30); 
+					
+			//Change Security
+			base.getAvlSecurity().click();
+			base.getAvlSecurity().selectFromDropdown().selectByVisibleText(desiredSG);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getAvlSecurity().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredSG)  ;}}), Input.wait30); 
+		
+			base.getSaveChangeRole().click();
+			driver.waitForPageToBeReady();
+
+			pass(dataMap, "changed roll successfully");
+		}	
+		else fail(dataMap, "failed to change role");
 
 	}
 
@@ -1072,10 +1205,9 @@ public class DocViewContext extends CommonContext {
 			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
 			//* Saved Search page is displayed
 			//
-			throw new ImplementationException("on_saved_search_page");
-		} else {
-			throw new ImplementationException("NOT on_saved_search_page");
+			savedSearch = new SavedSearch(driver);
 		}
+		else fail(dataMap, "failed to navigate to saved search page");
 
 	}
 
@@ -1085,10 +1217,12 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_this_page_redaction_buttonthis_page_redaction_appliedclick_grey_redact_tool
-			throw new ImplementationException("apply_this_page_redaction");
-		} else {
-			throw new ImplementationException("NOT apply_this_page_redaction");
+			click_grey_redact_tool(scriptState, dataMap);
+			click_this_page_redaction_button(scriptState, dataMap);
+			this_page_redaction_applied(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
 		}
+		else fail(dataMap, "failed to apply this page redaction");
 
 	}
 }//eof

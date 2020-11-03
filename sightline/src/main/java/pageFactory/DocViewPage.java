@@ -32,6 +32,7 @@ public class DocViewPage {
     SessionSearch sp;
     SoftAssert softAssertion;
     Alert alert;
+    String defaultRedactionTagString;
     
     public Element getDocView_info(){ return driver.FindElementById("totalRecords"); }
     public Element getAddComment1(){ return driver.FindElementById("1_textarea"); }
@@ -44,6 +45,7 @@ public class DocViewPage {
     public Element getSaveRemark(){ return driver.FindElementByXPath("(//span[@id='remarksSaveCancelControls']/i[2])[1]"); }
     public Element getCompleteDocBtn(){ return driver.FindElementById("btnDocumentComplete"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
+    public String PageViewTagString() {return defaultRedactionTagString;}
    
 //Audio-----------------------------------------------------------
     public Element getDocView_IconFileType(){ return driver.FindElementById("icofiletype"); }
@@ -1759,8 +1761,8 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		 
 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 		    getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+		    defaultRedactionTagString = getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
 		    getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
-		 
      
 	 }
 	 
