@@ -1,5 +1,9 @@
 package stepDef;
 
+import java.awt.Color;
+import java.awt.Point;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,9 +20,12 @@ import org.openqa.selenium.interactions.Actions;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.poi.hssf.record.formula.functions.Count;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
+
+import com.beust.jcommander.JCommander.Builder;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -43,6 +50,7 @@ public class DocViewContext extends CommonContext {
 	public void on_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
+	DocViewPage docView;
 
 
 
@@ -70,10 +78,24 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click grey Redact tool button
 			//
+			docView = new DocViewPage(driver,0);
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getGreyRedactButton().Displayed()  ;}}), Input.wait30); 
 			
-		} else {
-			throw new ImplementationException("NOT click_grey_redact_tool");
+			//Move to grey button and click
+			builder.moveToElement(docView.getGreyRedactButton().getWebElement()).perform();;
+			Thread.sleep(2000);
+			docView.getGreyRedactButton().click();
+
+			driver.waitForPageToBeReady();
+			int originalRedactionCount = docView.getExistingRectangleRedactions().FindWebElements().size();
+			dataMap.put("originalRedactionCount", originalRedactionCount);
+
+			pass(dataMap, "Clicked grey redact button");
+			
 		}
+		else fail(dataMap, "Clicked the grey redact tool");
 
 	}
 
@@ -110,14 +132,17 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click 'Saved with SG1' search group
-			SavedSearch savedSearch = new SavedSearch(driver);
-			savedSearch.getSavedSearchByGroupName("Saved with SG1");
-
+			String securityGroup = (String)dataMap.get("security_group");
+			SavedSearch savedSearch = new SavedSearch(driver,0);
+			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
 			//* Click radio button for first saved search
-			savedSearch.getSavedSearchTableRadioButtons().getElementByIndex(0).click();
+			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
 			savedSearch.getToDocView().click();
-
+			driver.waitForPageToBeReady();
 			pass(dataMap, "Open saved search doc view");
 		} else {
 			fail(dataMap,"Cannot open save search doc view");
@@ -130,13 +155,14 @@ public class DocViewContext extends CommonContext {
 	public void click_rectangle_redaction_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Click Rectangle Redact button
-			//
-			throw new ImplementationException("click_rectangle_redaction_button");
-		} else {
-			throw new ImplementationException("NOT click_rectangle_redaction_button");
+			//Find rectangle button and click it
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			pass(dataMap, "Clicked Rectangle Button");
+			
 		}
+		else fail(dataMap, "failed to click button");
 
 	}
 
@@ -148,10 +174,11 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Open developer tools by pressing F12
 			//
-			throw new ImplementationException("open_dev_tools_f12");
-		} else {
-			throw new ImplementationException("NOT open_dev_tools_f12");
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_F12);
+			robot.keyRelease(KeyEvent.VK_F12);
 		}
+		else fail(dataMap, "Failed to open developer tools");
 
 	}
 
@@ -164,10 +191,17 @@ public class DocViewContext extends CommonContext {
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 			//
-			throw new ImplementationException("add_redaction_to_page_without_saving");
-		} else {
-			throw new ImplementationException("NOT add_redaction_to_page_without_saving");
+			System.out.println("waiting");
+			WebElement el = docView.getRectangleButton().FindWebElements().get(0);
+			int x = el.getLocation().getX();
+			int y = el.getLocation().getY();
+			System.out.println(x);
+			System.out.println(y);
+			Actions builder = new Actions(driver.getWebDriver());
+
+			docView.redactbyrectangle(0,0,0,"SGSame1");
 		}
+		else fail(dataMap, "Failed to add redaction to page without saving");
 
 	}
 
@@ -452,15 +486,20 @@ public class DocViewContext extends CommonContext {
 	public void rectangle_redaction_applied(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			//* Place rectangle redaction on the document
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
+
+			//Using consilio's method, these parameters seem to work well
+			docView.redactbyrectangle(100, 10, 0, "SGSame1");
+
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
-			//
-			throw new ImplementationException("rectangle_redaction_applied");
-		} else {
-			throw new ImplementationException("NOT rectangle_redaction_applied");
+			docView.getDocViewSaveRedactionButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			 
+			pass(dataMap, "Redaction rectangle was applied");
 		}
+		else fail(dataMap, "Redaction rectangle could not be applied");
 
 	}
 
@@ -468,12 +507,17 @@ public class DocViewContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_redaction_transparent$")
 	public void verify_redaction_transparent(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC11665 Verify that rectangle redaction should be transparent all the time and content should be visible
 		if (scriptState) {
-			//TC11665 Verify that rectangle redaction should be transparent all the time and content should be visible
-			throw new ImplementationException("verify_redaction_transparent");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_transparent");
+			double opacity = 0.0;
+			//Verify all Redactions have an opacity (transparency) of less than 1
+			for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+				opacity = Double.parseDouble(x.getCssValue("opacity"));
+				Assert.assertTrue(opacity<1.0);
+			}
+			pass(dataMap, "Redactions have remainded transparent");
 		}
+		else fail(dataMap, "redactions were not transparent");
 
 	}
 
@@ -498,10 +542,12 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("place_redaction");
-		} else {
-			throw new ImplementationException("NOT place_redaction");
+			 Actions actions = new Actions(driver.getWebDriver());  
+             WebElement text = docView.getDocView_Redactrec_textarea();
+             actions.moveToElement(text, 100,10).clickAndHold().moveByOffset(100, 10).release().perform();
+			pass(dataMap, "placed redaction");
 		}
+		else fail(dataMap, "couldn't place redaction");
 
 	}
 
@@ -509,15 +555,17 @@ public class DocViewContext extends CommonContext {
 	@Then("^.*(\\[Not\\] )? verify_default_redaction_tag_selected$")
 	public void verify_default_redaction_tag_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
+		//TC11377 Verify that when applies 'Rectangle' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11378 Verify that when applies 'This Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11379 Verify that when applies 'All Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11380 Verify that when applies 'Page Range' redaction for the first time then application should automatically select the 'Default Redaction Tag'
 		if (scriptState) {
-			//TC11377 Verify that when applies 'Rectangle' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11378 Verify that when applies 'This Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11379 Verify that when applies 'All Page' redaction for the first time then application should automatically select the 'Default Redaction Tag'TC11380 Verify that when applies 'Page Range' redaction for the first time then application should automatically select the 'Default Redaction Tag'
 			//
-			//* Verify 'Default Redaction Tag' is selected
-			//
-			throw new ImplementationException("verify_default_redaction_tag_selected");
-		} else {
-			throw new ImplementationException("NOT verify_default_redaction_tag_selected");
+			//Grab our default tag and compare with expected value. 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
+			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+			Assert.assertEquals(defaultTag, "Default Redaction Tag");
+			pass(dataMap, "The default tag was selected");
 		}
+		else fail(dataMap, "Verify default redaction tag not selected");
 
 	}
 
@@ -540,10 +588,15 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4828 Verify that when redaction control in red "on" state, if the icon is clicked again by the user, it must revert to an "off" state
-			throw new ImplementationException("verify_redaction_control_in_off_state");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_control_in_off_state");
+			String color = "";
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					color = x.getCssValue("color");
+				}
+			}
+			Assert.assertEquals(color, "rgba(118, 115, 115, 1)");
 		}
+		else fail(dataMap, "Color was not in off state");
 
 	}
 
@@ -555,10 +608,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click another document in the mini doc list window
 			//
-			throw new ImplementationException("nav_to_other_doc");
-		} else {
-			throw new ImplementationException("NOT nav_to_other_doc");
+			docView.getDocViewTableRows().FindWebElements().get(1).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewNumOfPages().FindWebElements().size()!=0  ;}}), Input.wait30); 
 		}
+		else fail(dataMap, "Couldnt select another document");
 
 	}
 
@@ -567,11 +622,23 @@ public class DocViewContext extends CommonContext {
 	public void delete_redaction_with_keyboard_delete_key(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("delete_redaction_with_keyboard_delete_key");
-		} else {
-			throw new ImplementationException("NOT delete_redaction_with_keyboard_delete_key");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			//Save amount of redactions before we attempt to delete
+			int existingRedactions = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(existingRedactions==0) {
+				fail(dataMap, "No redactions to test");
+				return;
+			}
+			dataMap.put("firstRedactionCount", existingRedactions);
+			Actions builder = new Actions(driver.getWebDriver());
+			//Get the last redaction added(last index in our list of redactions)
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(existingRedactions-1)).click().build().perform();
+			builder.sendKeys(Keys.DELETE);
+			pass(dataMap, "Attempted to delete redaction with keyboard");
 		}
+		else fail(dataMap, "failed to attempt to delete redaction with keyboard");
 
 	}
 
@@ -581,10 +648,15 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC9552 Verify that when 'Rectangle' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard actionTC9553 Verify that when 'This Page' redaction selected to delete with 'Delete' key from keyboard should be disabled keyboard action
-			throw new ImplementationException("verify_redaction_not_deleted_with_keyboard");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_not_deleted_with_keyboard");
+
+			int firstRedactionCount = (int)dataMap.get("firstRedactionCount");
+			int currentRedactions = docView.getExistingRectangleRedactions().FindWebElements().size();
+			//Make sure the number of redactions we recorded before attempting to delete is equal to the number of redactions now (nothing got deleted)
+			Assert.assertEquals(firstRedactionCount, currentRedactions);
+
+			pass(dataMap, "Redaction was not deleted with keyboard");
 		}
+		else fail(dataMap, "Redaction was deleted with keyboard");
 
 	}
 
@@ -596,10 +668,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click This Page redaction button
 			//
-			throw new ImplementationException("click_this_page_redaction_button");
-		} else {
-			throw new ImplementationException("NOT click_this_page_redaction_button");
+			for(WebElement x: docView.getThisPageButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			pass(dataMap, "Clicked the this page redaction button");
 		}
+		else fail(dataMap, "Failed to click this page redactin button");
 
 	}
 
@@ -628,11 +702,16 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click the first document in the mini doc list window
-			//
-			throw new ImplementationException("nav_back_to_first_doc");
-		} else {
-			throw new ImplementationException("NOT nav_back_to_first_doc");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+			docView.getDocViewTableRows().FindWebElements().get(0).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewNumOfPages().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			pass(dataMap, "navigated back to original document");
+
 		}
+		else fail(dataMap, "couldnt navigate back to original document");
 
 	}
 
@@ -641,14 +720,26 @@ public class DocViewContext extends CommonContext {
 	public void rectangle_redaction_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			//* Click redacted rectangle
-			//* Click 'Delete Selected' trashcan button
-			//
-			throw new ImplementationException("rectangle_redaction_deleted");
-		} else {
-			throw new ImplementationException("NOT rectangle_redaction_deleted");
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(size == 0) {
+				fail(dataMap, "no redactions to delete");
+				return;
+			}
+			Actions builder = new Actions(driver.getWebDriver());
+			//Get the last redaction added(last index in our list of redactions)
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			//get rid of prior save popup
+			if(docView.getCloseButton().FindWebElements().size()!=0) {
+				docView.getCloseButton().FindWebElements().get(0).click();
+			}
+			//delete redaction
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Annotate_DeleteIcon().Displayed()  ;}}), Input.wait30); 
+			docView.getDocView_Annotate_DeleteIcon().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "deleted redaction");
 		}
+		else fail(dataMap, "Could not delete redaction");
 
 	}
 
@@ -657,11 +748,16 @@ public class DocViewContext extends CommonContext {
 	public void verify_rectangle_redaction_deleted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+
 			//TC3495 Verify user can delete the redaction in a document
-			throw new ImplementationException("verify_rectangle_redaction_deleted");
-		} else {
-			throw new ImplementationException("NOT verify_rectangle_redaction_deleted");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+
+			Assert.assertEquals(docView.getConfirmPopUp().getText(), "Redaction Removed successfully.");
+			pass(dataMap, "Deleted Redaction successfully");
+
 		}
+		else fail(dataMap, "failed to delete redaction");
 
 	}
 
@@ -673,10 +769,9 @@ public class DocViewContext extends CommonContext {
 			//
 			//* 'Default Redaction Tag' does not exist
 			//
-			throw new ImplementationException("default_redaction_tag_does_not_exist");
-		} else {
-			throw new ImplementationException("NOT default_redaction_tag_does_not_exist");
+			pass(dataMap, "This is a script where a default redaction does not exist");
 		}
+		else fail(dataMap, "default redaction must exist");
 
 	}
 
@@ -689,10 +784,13 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Verify another tag aside from 'Default Redaction Tag' is selected
 			//
-			throw new ImplementationException("verify_alternate_redaction_tag_selected");
-		} else {
-			throw new ImplementationException("NOT verify_alternate_redaction_tag_selected");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
+			String defaultTag = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+			Assert.assertFalse(defaultTag.equals("Default Redaction Tag"));
+			pass(dataMap, "verified alternate redaction tag");
 		}
+		else fail(dataMap, "could not verify alternate redaction tag");
 
 	}
 
@@ -702,10 +800,20 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC3226 Verify RMU/Reviewer can redact by selecting rectangle location in document in context of an assignment
-			throw new ImplementationException("verify_rectangle_redaction");
-		} else {
-			throw new ImplementationException("NOT verify_rectangle_redaction");
+			
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().size()!=0 ;}}), Input.wait30); 
+
+			//Just make sure that the original Redcation count we recorded before we added the redaction, is 1 less than the new count after we added a redaction
+			int originalRedactionCount = (int)dataMap.get("originalRedactionCount");
+			int currentRedactionCount = docView.getExistingRectangleRedactions().FindWebElements().size();
+			Assert.assertEquals(currentRedactionCount,originalRedactionCount+1);
+			pass(dataMap, "verified rectangle redaction");
 		}
+		else fail(dataMap, "could not verify rectangle_redaction");
+
 
 	}
 
@@ -715,10 +823,23 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC4983 Verify when Redactions menu is selected from doc view and navigates to another document from mini doc list child window then previously selected panels/menus should remain
-			throw new ImplementationException("verify_redactions_menu_remains_open");
-		} else {
-			throw new ImplementationException("NOT verify_redactions_menu_remains_open");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+			Boolean rectangleBtn = false;
+			Boolean thisPageBtn = false;
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) rectangleBtn = true;
+			}
+			for(WebElement x: docView.getThisPageButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) thisPageBtn = true;
+			}
+			Assert.assertTrue(thisPageBtn);
+			Assert.assertTrue(rectangleBtn);
+			pass(dataMap, "redactions menu remained open");
+
 		}
+		else fail(dataMap, "redactions menu did not remain open");
 
 	}
 
@@ -728,14 +849,72 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Prerequisite: Rectangle redaction exists on document
+			docView = new DocViewPage(driver, 0);
+			driver.waitForPageToBeReady();
+			Random rnd = new Random();
+			Actions builder = new Actions(driver.getWebDriver());
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!docView.getDocViewTotalPages().getText().equals("")  ;}}), Input.wait30); 
+			String pageNumString = docView.getDocViewTotalPages().getText();
+			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+
+			//Process of zooming out and scrolling through pages until we get into the view of a redaction to edit
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getMagnifyGlassZoomOutButton().Displayed()	;}}), Input.wait30); 
+			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
+			
+			for(int j=0; j<totalPages; j++) {
+				docView.getNextRedactionPage().click();
+				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
+			}
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+
+			//get original dimension
+			double originalDimension = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"))
+					* Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
+
+
 			//* Click existing rectangle redaction
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+
 			//* Change redaction dimensions
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getBottomEditSideOfRedactionRectangle().Enabled() && docView.getBottomEditSideOfRedactionRectangle().Displayed()  ;}}), Input.wait30); 
+			String temp= docView.getBottomEditSideOfRedactionRectangle().GetAttribute("data-pcc-mark");
+	
+			for(WebElement x: docView.getAllEditSidesOfRedactionRectangle(temp).FindWebElements()) {
+            	 	int xCord = rnd.nextInt(6)-3;
+            	 	int yCord = rnd.nextInt(6)-3;
+            	 	if(x.isDisplayed() && x.isEnabled()) {
+            	 		builder.clickAndHold(x).moveByOffset(xCord,yCord).release().perform();
+				}
+			}
+			
+
+             //get new dimension
+			double afterEditDimension = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"))
+					* Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
+
+             dataMap.put("originalDimension", originalDimension);
+             dataMap.put("afterEditDimension", afterEditDimension);
+
 			//* Change redaction tag
-			//
-			throw new ImplementationException("edit_redaction_");
-		} else {
-			throw new ImplementationException("NOT edit_redaction_");
+             String beforeTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+
+             docView.getDocView_Redactedit_selectlabel().click();
+             for(WebElement x: docView.getRedactionTagOptions().FindWebElements()) {
+            	 	if(x.getText().equals(beforeTag)) continue;
+            	 	x.click();
+            	 	break;
+             }
+             String afterTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+
+             dataMap.put("beforeTag", beforeTag);
+             dataMap.put("afterTag", afterTag);
+             pass(dataMap, "edited the redaction");
 		}
+		else fail(dataMap, "could not edit the redaction");
 
 	}
 
@@ -747,10 +926,13 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Click 'Save' redaction button
 			//
-			throw new ImplementationException("save_redaction_edit");
-		} else {
-			throw new ImplementationException("NOT save_redaction_edit");
+			docView.getRedactionEditSaveBtn().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "saved the redaction");
 		}
+		else fail(dataMap, "could not save the redaction");
 
 	}
 
@@ -760,10 +942,19 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//TC11427 Verify that user should be able to edit an applied redaction and change the redaction tag that was applied automatically
-			throw new ImplementationException("verify_redaction_edited");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_edited");
+			double firstDimension = (double)dataMap.get("originalDimension");
+			double secondDimension = (double)dataMap.get("afterEditDimension");
+			String firstTag = (String)dataMap.get("beforeTag");
+			String secondTag = (String)dataMap.get("afterTag");
+			//Make sure dimensions have changed
+			if( ((String)dataMap.get("dimensions")).equals("true")) {
+				Assert.assertFalse(firstDimension==secondDimension);
+			}
+			//Make sure tags have changed
+			Assert.assertFalse(firstTag.equals(secondTag));
+			pass(dataMap, "verified that the redaction was edited");
 		}
+		else fail(dataMap, "could not verify that the redaction was edited");
 
 	}
 
