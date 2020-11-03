@@ -72,7 +72,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				// wait until options become visible
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
 				
 				// select option
 				batchPrint.getCustodianNameCheckbox().click();
@@ -281,10 +281,10 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Next button
 			//
 			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
+
 				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
 
 					// Disable slip sheets
 					batchPrint.getEnableSlipSheetsToggle().click();
@@ -293,6 +293,14 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getSlipSheetsDisabledPanel().Visible()  ;}}), Input.wait30);
 					
+				}
+				else{
+					String metaData = (String)dataMap.get("field_for_slip_sheets");
+					batchPrint.getSlipSheetsMetaDataCheckBoxByName(metaData).click();
+					batchPrint.getSelectColumnAddtoSelected().click();
+
+					batchPrint.getSlipSheetsWorkProductTab().click();
+
 				}
 				
 				batchPrint.getSlipSheetsNextButton().click();
@@ -1360,8 +1368,16 @@ public class BatchPrintContext extends CommonContext {
 			//* User navigates to Batch Print page (/BatchPrint)
 			//* Batch Print page is displayed
 			//
-			batchPrint = new BatchPrintPage(driver);
-			driver.waitForPageToBeReady();
+
+			batchPrint = new BatchPrintPage(driver, 0);
+			//Select EG Project
+			batchPrint.changeProjectSelector().click();
+			batchPrint.changeProjectSelectorField().click();
+			
+			
+			//Navigate to Batch Print Page
+			batchPrint.getMenuBatchPrint().click();
+
 			pass(dataMap, "navigated to batch print page");
 		}
 		else fail(dataMap, "could not navigate to batch print page");

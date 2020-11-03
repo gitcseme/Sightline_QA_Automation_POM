@@ -193,8 +193,14 @@ public class BatchPrintPage {
     public Element getOpenNotificationsMenu() {return driver.FindElementByCssSelector("#activity i");}
     public Element getFirstBackgroundTaskInProgress() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='INPROGRESS']");}
     public Element getFirstBackgroundTaskCompleted() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='COMPLETED']");}
-  
+    public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
+    public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
+    public Element getSlipSheetsMetaDataCheckBoxByName(String name) {return driver.FindElementByCssSelector(String.format("#tab1 li input[data-friendlbl='%s'] + i",name));}
+    public Element getAllFoldersExpandArrow() {return driver.FindElementByXPath("(//a[@data-content = 'All Folders']//preceding-sibling::i)[1]");}
     
+    public BatchPrintPage(Driver driver, int i) {
+    		this.driver = driver;
+    }
     public BatchPrintPage(Driver driver){
 
         this.driver = driver;
