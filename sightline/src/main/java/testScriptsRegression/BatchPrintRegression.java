@@ -3288,4 +3288,249 @@ public class BatchPrintRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{DocFileName}{DocID}{Asc}{OnePDFforeachdoc} When click_download_file_link Then verify_native_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "One PDF for each doc");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("sort_by_order", "Asc");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
+			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforalldocs_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{DocFileName}{DocID}{Asc}{OnePDFforalldocs} When click_download_file_link Then verify_native_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "One PDF for all docs");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("sort_by_order", "Asc");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
+			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{DocFileName}{DocID}{Desc}{OnePDFforeachdoc} When click_download_file_link Then verify_native_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "One PDF for each doc");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("sort_by_order", "Desc");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
+			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{DocFileName}{DocFileName}{Asc}{OnePDFforeachdoc} When click_download_file_link Then verify_native_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "One PDF for each doc");
+			dataMap.put("sort_by", "DocFileName");
+			dataMap.put("sort_by_order", "Asc");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
+			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection and select_basis_for_printing and select_analysis and select_slip_sheets and select_branding_redactions and select_export_format_{DocFileName}{DocFileName}{Desc}{OnePDFforeachdoc} When click_download_file_link Then verify_native_pdf_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection(true, dataMap);
+			dataMap.put("basis_for_production", "Native");
+			context.select_basis_for_printing(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("enable_slip_sheets", "true");
+			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
+			dataMap.put("use_prior_production", "false");
+			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
+			context.select_slip_sheets(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "true");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions(true, dataMap);
+			dataMap.put("pdf_creation", "One PDF for each doc");
+			dataMap.put("sort_by", "DocFileName");
+			dataMap.put("sort_by_order", "Desc");
+			dataMap.put("export_file_name", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
+			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//eof

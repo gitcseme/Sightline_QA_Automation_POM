@@ -1902,4 +1902,22 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_pdf_generated$")
+	public void verify_native_pdf_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4539 Verify PDF file should be generated at the displayed path of batch print background process with doc ID as asc as per selected 'One PDF for each document'TC4540 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for all documents'TC4541 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with Doc ID as selected in desc sortTC4543 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in asc sortTC4544 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in desc sortTC4506 Verify that user can select Export file options
+			//
+			//
+			//* PDFs are generated based on Export Format
+			//
+			//
+			throw new ImplementationException("verify_native_pdf_generated");
+		} else {
+			throw new ImplementationException("NOT verify_native_pdf_generated");
+		}
+
+	}
 }//eof
