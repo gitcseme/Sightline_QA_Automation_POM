@@ -266,7 +266,8 @@ public class DocViewPage {
     public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
     public Element getDocumentHistoryTab() {return driver.FindElementById("liDocumentHistory");}
     public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
-    
+    public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
+    public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
     
     //default constructor
     public DocViewPage(Driver driver, int i) {
@@ -287,7 +288,6 @@ public class DocViewPage {
     public WebElement getCorrectSurfaceLevel() {
     		for(int i =0; i<10; i++) {
     			for(int j=0; j<10; j++) {
-    				System.out.println(String.format("ig%slevel%s", i,j));
     				if(driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().size()!=0) {
     					return driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().get(0);
     				}

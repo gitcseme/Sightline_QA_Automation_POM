@@ -1042,7 +1042,6 @@ public class DocViewContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getDocViewTableRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
 			for(WebElement x: docView.getDocViewTableRows().FindWebElements()) {
-				System.out.println(x.findElements(By.cssSelector("td")).get(1).getText());
 				if ( (x.findElements(By.cssSelector(" td")).get(1).getText().equals(target)) ) {
 					x.click();
 				}
@@ -1082,37 +1081,62 @@ public class DocViewContext extends CommonContext {
 			//
 			//Delete the redaction from both documents after verification
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getDocView_Analytics_NearDupeTab().Displayed()  ;}}), Input.wait30); 
-			docView.getDocView_Analytics_NearDupeTab().click();
-			
-
-			String docID = docView.getNearDupeDocID().getText();
-			System.out.println(docID);
-			dataMap.put("docid", docID);
-			select_docview_doc_(scriptState, dataMap);
-			
 			double originalx, originaly, originalHeight, originalWidth;
 			originalx = (double)dataMap.get("originalx");
 			originaly = (double)dataMap.get("originaly");
 			originalHeight = (double)dataMap.get("height");
 			originalWidth = (double)dataMap.get("width");
+
+
+			//Get our near dupe and save it's docID (Work around that we can possibly ignore once we can actually get an exact dupe)
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Analytics_NearDupeTab().Displayed()  ;}}), Input.wait30); 
+			docView.getDocView_Analytics_NearDupeTab().click();
 			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getNearDupeDocID().Displayed()  ;}}), Input.wait30); 
+			String docID = docView.getNearDupeDocID().getText();
+			dataMap.put("docid", docID);
+
+			select_docview_doc_(scriptState, dataMap);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+						
+			//Coordinates and Dimensions of Duped Redaction
 			double dupex = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("x"));
 			double dupey = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("y"));
 			double dupeWidth = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("width"));
 			double dupeHeight = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("height"));
 			
+			//Click into All History Tab
 			docView.getDocumentHistoryTab().click();
 			docView.getViewAllHistoryButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getViewAllHistoryColumnHeaders().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+
+			//Click TimeStamp column once, wait for it to register and click again to sort by most recent (descending)
+			docView.getViewAllHistoryColumnHeaders().FindWebElements().get(3).click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getViewAllHistoryColumnHeaders().FindWebElements().get(3).getAttribute("aria-sort").equalsIgnoreCase("ascending")  ;}}), Input.wait30); 
+			docView.getViewAllHistoryColumnHeaders().FindWebElements().get(3).click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getViewAllHistoryColumnHeaders().FindWebElements().get(3).getAttribute("aria-sort").equalsIgnoreCase("descending")  ;}}), Input.wait30); 
 			
+
+			String redactionHistory = docView.getViewAllHistoryRows().FindWebElements().get(1).findElements(By.cssSelector(" td")).get(0).getText();
+			
+			//Make Sure Dimensions and Coordinates of Redactions are Equal across the dupes, and also make sure the Dupe's history is recorded as redactionTagged
 			Assert.assertEquals(originalx, dupex);
 			Assert.assertEquals(originaly, dupey);
 			Assert.assertEquals(originalHeight, dupeWidth);
 			Assert.assertEquals(originalWidth, dupeHeight);
-
-
+			Assert.assertEquals(redactionHistory, "RedactionTagged");
 			
+			//Delete redaction finally
+			rectangle_redaction_deleted(scriptState, dataMap);
 			pass(dataMap, "verified redaction propagation in exact dupe");
 		}
 		else fail(dataMap, "failed to verify redaction propagation in exact dupe");
