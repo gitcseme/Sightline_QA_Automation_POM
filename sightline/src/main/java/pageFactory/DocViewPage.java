@@ -264,6 +264,8 @@ public class DocViewPage {
     public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
     public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
     public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
+    public Element getDocumentHistoryTab() {return driver.FindElementById("liDocumentHistory");}
+    public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
     
     
     //default constructor

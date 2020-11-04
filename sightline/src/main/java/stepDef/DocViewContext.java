@@ -1103,6 +1103,9 @@ public class DocViewContext extends CommonContext {
 			double dupeWidth = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("width"));
 			double dupeHeight = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("height"));
 			
+			docView.getDocumentHistoryTab().click();
+			docView.getViewAllHistoryButton().click();
+			
 			Assert.assertEquals(originalx, dupex);
 			Assert.assertEquals(originaly, dupey);
 			Assert.assertEquals(originalHeight, dupeWidth);
