@@ -504,6 +504,15 @@ public class DocViewContext extends CommonContext {
 			docView.getDocViewSaveRedactionButton().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			
+			double originalx = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("x"));
+			double originaly = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("y"));
+			double width = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("width"));
+			double height = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("height"));
+			dataMap.put("originalx", originalx);
+			dataMap.put("originaly", originaly);
+			dataMap.put("width", width);
+			dataMap.put("height", height);
 			 
 			pass(dataMap, "Redaction rectangle was applied");
 		}
@@ -986,10 +995,15 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
-			throw new ImplementationException("login_to_saved_search_rmu");
-		} else {
-			throw new ImplementationException("NOT login_to_saved_search_rmu");
+			dataMap.put("uid", "qapau2@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			sightline_is_launched(scriptState, dataMap);
+			login_as_rmu(scriptState, dataMap);
+			on_saved_search_page(scriptState, dataMap);
+			
+			pass(dataMap, "successfully logged into saved search as RMU");
 		}
+		else fail(dataMap, "failed to login to saved search as RMU");
 
 	}
 
@@ -998,15 +1012,22 @@ public class DocViewContext extends CommonContext {
 	public void open_saved_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			//* Click 'Saved with SG1' search group
+			String securityGroup = (String)dataMap.get("security_group");
+			SavedSearch savedSearch = new SavedSearch(driver,0);
+			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
 			//* Click radio button for first saved search
+			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
-			//
-			throw new ImplementationException("open_saved_doc_view");
-		} else {
-			throw new ImplementationException("NOT open_saved_doc_view");
+			savedSearch.getToDocView().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "Open saved search doc view");
+
 		}
+		else fail(dataMap, "failed to open saved doc view");
 
 	}
 
@@ -1016,10 +1037,19 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click doc with matcahing docid on Doc View page
-			throw new ImplementationException("select_docview_doc_");
-		} else {
-			throw new ImplementationException("NOT select_docview_doc_");
+			docView = new DocViewPage(driver, 0);
+			String target = (String)dataMap.get("docid");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			for(WebElement x: docView.getDocViewTableRows().FindWebElements()) {
+				System.out.println(x.findElements(By.cssSelector("td")).get(1).getText());
+				if ( (x.findElements(By.cssSelector(" td")).get(1).getText().equals(target)) ) {
+					x.click();
+				}
+			}
+			pass(dataMap, "successfully opened the docview doc");
 		}
+		else fail(dataMap, "failed to select the docview doc");
 
 	}
 
@@ -1051,10 +1081,38 @@ public class DocViewContext extends CommonContext {
 			//* History of redaction has the last redaction applied
 			//
 			//Delete the redaction from both documents after verification
-			throw new ImplementationException("verify_redaction_propagation_in_exact_dupe");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_propagation_in_exact_dupe");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Analytics_NearDupeTab().Displayed()  ;}}), Input.wait30); 
+			docView.getDocView_Analytics_NearDupeTab().click();
+			
+
+			String docID = docView.getNearDupeDocID().getText();
+			System.out.println(docID);
+			dataMap.put("docid", docID);
+			select_docview_doc_(scriptState, dataMap);
+			
+			double originalx, originaly, originalHeight, originalWidth;
+			originalx = (double)dataMap.get("originalx");
+			originaly = (double)dataMap.get("originaly");
+			originalHeight = (double)dataMap.get("height");
+			originalWidth = (double)dataMap.get("width");
+			
+			double dupex = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("x"));
+			double dupey = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("y"));
+			double dupeWidth = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("width"));
+			double dupeHeight = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("height"));
+			
+			Assert.assertEquals(originalx, dupex);
+			Assert.assertEquals(originaly, dupey);
+			Assert.assertEquals(originalHeight, dupeWidth);
+			Assert.assertEquals(originalWidth, dupeHeight);
+
+
+			
+			pass(dataMap, "verified redaction propagation in exact dupe");
 		}
+		else fail(dataMap, "failed to verify redaction propagation in exact dupe");
 
 	}
 
