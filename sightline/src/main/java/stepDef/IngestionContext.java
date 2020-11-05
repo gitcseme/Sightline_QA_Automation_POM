@@ -5022,4 +5022,125 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
-} //end
+
+
+	@And("^.*(\\[Not\\] )? overlay_ingestion_recreated$")
+	public void overlay_ingestion_recreated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Recreate ingestion using the same data set
+			//
+			throw new ImplementationException("overlay_ingestion_recreated");
+		} else {
+			throw new ImplementationException("NOT overlay_ingestion_recreated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_metadata_updated_after_full_analytics_successful_for_overlay$")
+	public void verify_metadata_updated_after_full_analytics_successful_for_overlay(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5575
+			//
+			//* Verify metadata updated in Overlays is displayed after Full Analytics successful
+			//
+			throw new ImplementationException("verify_metadata_updated_after_full_analytics_successful_for_overlay");
+		} else {
+			throw new ImplementationException("NOT verify_metadata_updated_after_full_analytics_successful_for_overlay");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_full_analytics_successful_for_overlays$")
+	public void verify_full_analytics_successful_for_overlays(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5574
+			//
+			//* Validate Full Analytics ran successfully
+			//* Overlay document should be displayed in project
+			//
+			throw new ImplementationException("verify_full_analytics_successful_for_overlays");
+		} else {
+			throw new ImplementationException("NOT verify_full_analytics_successful_for_overlays");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? verify_ice_ingestion_returns_document_count$")
+	public void verify_ice_ingestion_returns_document_count(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8782:To Verify Ingestion Add Only end to End Flow with Source System as ICECovered:TC8772: To verify that option "ICE" is available in the Source System dropdown in Ingestion
+			//* When ICE ingestion is completed
+			//* And Analytics have been ran
+			//* And documents have been searched
+			//* Validate that documents are returned
+			//
+			throw new ImplementationException("verify_ice_ingestion_returns_document_count");
+		} else {
+			throw new ImplementationException("NOT verify_ice_ingestion_returns_document_count");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_ice_overlay_runs_end_to_end$")
+	public void verify_ice_overlay_runs_end_to_end(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8805:To Verify Ingestion Overlay end to End Flow with Source System as ICETC11219:Verify the bullhorn Notification if data processing is failed in Sightline indexingCovered:TC9023: ICE: Verify that A notification is sent to the user about the ingestion failure, the analytics process would not be kicked off automatically, so the user needs to manually kick off analytics.
+			//
+			//* validate the ice overlay ingestion runs sucessfully
+			//* validate a notification is sent to the user
+			//* validate notification displays the processes being ran
+			//
+			throw new ImplementationException("verify_ice_overlay_runs_end_to_end");
+		} else {
+			throw new ImplementationException("NOT verify_ice_overlay_runs_end_to_end");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_delete_option_is_disabled$")
+	public void verify_delete_option_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC835: To verify that user is not able to delete the ingestion which is in Compelete, Inprogress, Pause, Ingestion File Error and Start Indexing
+			//
+			//* Validate the delete option can not be clicked on
+			//
+			throw new ImplementationException("verify_delete_option_is_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_delete_option_is_disabled");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_total_unique_ingested_doc_count_displayed$")
+	public void verify_total_unique_ingested_doc_count_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC8421:To verify that total unqiue ingested document cout displays unqiue count if user perform only PDF overlay
+			//TC8422:To verify that total unqiue ingested document cout displays unqiue count if user perform only Native overlay
+			//TC8423:To verify that total unqiue ingested document cout displays unqiue count if user perform only TIFF overlay
+			//TC8424:To verify that total unqiue ingested document cout displays unqiue count if user perform only MP3 overlay
+			//TC8425:To verify that total unqiue ingested document cout displays unqiue count if user perform only Text overlayCovered: TC8420:To verify that the total unique ingested docs count in the ingestions page should present the unique number of docs ingested and published
+			//
+			//* Verify only the Total Unique ingested Document count is displayed on Ingestion page
+			//
+			//
+			throw new ImplementationException("verify_total_unique_ingested_doc_count_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_total_unique_ingested_doc_count_displayed");
+		}
+
+	}
+} //eof
