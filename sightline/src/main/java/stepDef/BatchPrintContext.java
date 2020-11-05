@@ -375,7 +375,10 @@ public class BatchPrintContext extends CommonContext {
 					
 
 				}
-				
+				//Wait for Redaction Edit Box to go away before clicking next
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					!batchPrint.getRedactionEditBox().Displayed() ;}}), Input.wait30);
+
 				batchPrint.getBrandingAndRedactionNextButton().click();
 				
 
@@ -2035,6 +2038,9 @@ public class BatchPrintContext extends CommonContext {
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			  savedSearch.getSavedSearchTableRadioButtons().FindWebElements().size()!=0  ;}}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getSavedSearchTableRadioButtons().FindWebElements().get(1).isEnabled()  ;}}), Input.wait30);
+
 			savedSearch.getSavedSearchTableRadioButtons().FindWebElements().get(1).click();;
 			savedSearch.getToDocList().click();
 			

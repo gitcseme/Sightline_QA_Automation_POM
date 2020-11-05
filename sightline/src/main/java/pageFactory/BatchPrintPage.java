@@ -43,6 +43,7 @@ public class BatchPrintPage {
     public Element getSelectSavedSearch(String searchname){ return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li[1]//a[contains(text(),'"+searchname+"')]"); }
     public Element getSelectTag(String tagName){ return driver.FindElementByXPath("//a[starts-with(text(),'"+tagName+"')]"); }
     public Element getSelectFolder(String folderName){ return driver.FindElementByXPath("//a[starts-with(text(),'"+folderName+"')]"); }
+    public Element getRedactionEditBox() {return driver.FindElementById("Edit User Group");}
     
     
     public Element getNextbtn(){ return driver.FindElementByXPath("//a[contains(text(),'Next')]"); }
