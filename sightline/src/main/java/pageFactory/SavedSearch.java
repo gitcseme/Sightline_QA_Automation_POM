@@ -40,6 +40,7 @@ public class SavedSearch {
     public Element getSavedSearchNewGroupExpand(){ return driver.FindElementByXPath(".//*[@id='-1']/i"); }
     public Element getSavedSearchGroupName(){ return driver.FindElementByXPath(".//*[@id='jsTreeSavedSearch']//a[contains(.,'New node')]"); }
     public Element getSavedSearchByGroupName(String groupName){ return driver.FindElementByXPath(String.format(".//*[@id='jsTreeSavedSearch']//li/a[@data-content='%s']", groupName));}
+    public Element getSharedWithSG1() {return driver.FindElementByCssSelector("#jsTreeSavedSearch li a[data-content= 'Shared with SG1']");}
     public Element getShareSerachBtn(){ return driver.FindElementById("rbnShare"); }
     public ElementCollection getSavedSearchTableRadioButtons(){ return driver.FindElementsByCssSelector("#SavedSearchGrid>tbody>tr>td>label>i"); }
     
@@ -110,11 +111,11 @@ public class SavedSearch {
     public SavedSearch(Driver driver){
 
         this.driver = driver;
+        search = new SessionSearch(driver);
         this.driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
-        search = new SessionSearch(driver);
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 

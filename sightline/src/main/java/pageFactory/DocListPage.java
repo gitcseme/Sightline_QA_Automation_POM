@@ -98,11 +98,16 @@ public class DocListPage {
     public Element getDocListMetaDataColumnCheckBoxByName(String name) {return driver.FindElementByCssSelector(String.format(".checkbox  input[data-friendlbl='%s'] + i", name));}
     public Element getDocListAddToSelectedButton() {return driver.FindElementById("addFormObjects");}
     public Element getDocListSelectColumnOkButton() {return driver.FindElementById("btnUpdateColumns");}
+    public Element getDocListDropDownCountMax() { return driver.FindElementByCssSelector("#idPageLength option[value = '500']");}
+
     
     
     //Pass in a row and the Column index -> Return Value
     public String getDocListColumnDataByIndex(WebElement row, int index) {
     		return (row.findElements(By.tagName("td"))).get(index).getText();
+    }
+    public DocListPage(Driver driver, int i) {
+    		this.driver = driver;
     }
     
     public DocListPage(Driver driver){

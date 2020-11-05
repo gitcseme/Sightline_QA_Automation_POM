@@ -1,8 +1,12 @@
 package stepDef;
 
+import static org.testng.Assert.assertTrue;
+
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -25,8 +29,12 @@ import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.By.ByCssSelector;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
+
+import com.beust.jcommander.JCommander.Builder;
+import com.sun.jna.platform.unix.X11;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -37,6 +45,8 @@ import cucumber.api.java.en.When;
 import cucumber.api.java.en.And;
 
 import pageFactory.BatchPrintPage;
+import pageFactory.DocListPage;
+import pageFactory.SavedSearch;
 import testScriptsSmoke.Input;
 
 @SuppressWarnings({"rawtypes", "unchecked" })
@@ -72,7 +82,7 @@ public class BatchPrintContext extends CommonContext {
 				
 				// wait until options become visible
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
+					batchPrint.getCustodianNameCheckbox().Visible()  ;}}), Input.wait30);
 				
 				// select option
 				batchPrint.getCustodianNameCheckbox().click();
@@ -109,6 +119,7 @@ public class BatchPrintContext extends CommonContext {
 						batchPrint.getPriorDefaultProductionOption().click();
 						batchPrint.getBasisForPrintingNextButton().click();
 					}
+					else batchPrint.getBasisForPrintingNextButton().click();
 				}
 				
 			} catch (Exception e) {
@@ -211,10 +222,9 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Next button
 			//
 			try {
-				if (dataMap.get("basis_for_printing").equals("Native")) {
+				if (dataMap.get("basis_for_printing")!=null && dataMap.get("basis_for_printing").equals("Native")) {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
-					batchPrint.getAnalysisnextbutton().click();
 					
 					// waits until next page is shown
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -225,10 +235,10 @@ public class BatchPrintContext extends CommonContext {
 						driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
 						batchPrint.getAnalysisFolderDocExpand().click();
 						batchPrint.getAnalysisDefaultProductionOption().click();
-						batchPrint.getAnalysisnextbutton().click();
 					}
 				}
 				
+			batchPrint.getAnalysisnextbutton().click();
 			} catch (Exception e) {
 				e.printStackTrace();
 					batchPrint.getAnalysisnextbutton().click();
@@ -249,7 +259,7 @@ public class BatchPrintContext extends CommonContext {
 			//* Click Next button
 			//
 			try {
-				if (dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
+				if (dataMap.get("excel_files")!=null && dataMap.get("excel_files").toString().equalsIgnoreCase("print")) {
 //					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //							   batchPrint.getExcelFileOptions().Visible()  ;}}), Input.wait30);
 					
@@ -259,8 +269,8 @@ public class BatchPrintContext extends CommonContext {
 						batchPrint.getPrintExcelPlaceholderTextInputField().click(); // clicking to "enable" the textfield in order to use SendKeys
 						batchPrint.getPrintExcelPlaceholderTextInputField().sendKeys("Placeholder Automation text");
 					}
-					batchPrint.getExceptionFileTypesNextButton().click();
 				}
+				batchPrint.getExceptionFileTypesNextButton().click();
 			} catch (Exception e) {
 				e.printStackTrace();
 
@@ -280,11 +290,12 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Slip Sheets
 			//* Click Next button
 			//
+			Actions builder = new Actions(driver.getWebDriver());
 			try {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
+
 				if (dataMap.get("enable_slip_sheets").toString().equalsIgnoreCase("false")) {
-					
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getEnableSlipSheetsToggle().Visible()  ;}}), Input.wait30);
 
 					// Disable slip sheets
 					batchPrint.getEnableSlipSheetsToggle().click();
@@ -294,7 +305,29 @@ public class BatchPrintContext extends CommonContext {
 							   batchPrint.getSlipSheetsDisabledPanel().Visible()  ;}}), Input.wait30);
 					
 				}
+				else{
+					String metaData = (String)dataMap.get("field_for_slip_sheets");
+					String workProductFolder = (String)dataMap.get("workproduct_for_slipsheets");
+
+					driver.FindElement(By.tagName("body")).sendKeys(Keys.PAGE_DOWN.toString());
+					driver.FindElement(By.tagName("body")).sendKeys(Keys.PAGE_DOWN.toString());
+					//Select MetaData and Add to selected
+					batchPrint.getSlipSheetsMetaDataCheckBoxByName(metaData).click();
+
+					//builder.moveToElement(batchPrint.getSelectColumnAddtoSelected().getWebElement());
+					batchPrint.getSelectColumnAddtoSelected().click();
+
+					//Switch to work tab -> Expand All folder - > choose desired folder and add to selected
+					batchPrint.getSlipSheetsWorkProductTab().click();
+					batchPrint.getAllFoldersExpandArrow().click();
+      				driver.FindElement(By.tagName("body")).sendKeys(Keys.PAGE_DOWN.toString());
+					batchPrint.getWorkProductFolderCheckBoxByName(workProductFolder).click();
+					batchPrint.getSelectColumnAddtoSelected().click();
+				}
 				
+     			driver.FindElement(By.tagName("body")).sendKeys(Keys.HOME.toString());
+     			driver.FindElement(By.tagName("body")).sendKeys(Keys.HOME.toString());
+     			builder.moveToElement(batchPrint.getSlipSheetsNextButton().getWebElement()).perform();
 				batchPrint.getSlipSheetsNextButton().click();
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -307,9 +340,7 @@ public class BatchPrintContext extends CommonContext {
 
 
 	@And("^.*(\\[Not\\] )? select_branding_redactions$")
-	public void select_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		if (scriptState) {
+	public void select_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception { if (scriptState) {
 			//
 			//* Select Branding and Redactions
 			//* Click Next button
@@ -1080,13 +1111,29 @@ public class BatchPrintContext extends CommonContext {
 	public void select_export_format_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			String fileName = (String)dataMap.get("export_file_name");
+			String sortByOption = (String)dataMap.get("sort_by");
+			String sortOrder = ((String)dataMap.get("sort_by_order")).toUpperCase();
+			String pdfCreation = (String)dataMap.get("pdf_creation");
+			
+
 			//
 			//* Select Export Format
 			//* Click Generate button
 			//Ignore the index parameter, it isnt going to be used.
-			throw new ImplementationException("select_export_format_");
-		} else {
-			throw new ImplementationException("NOT select_export_format_");
+			
+			batchPrint.getSelectExportFileName().click();
+			batchPrint.getSelectExportDropDownByOption(fileName).click();
+			
+			batchPrint.getSelectExportFileSortBy().click();
+			batchPrint.getSelectExportFileSortByOption(sortByOption);
+			
+			batchPrint.getSelectExportSortByOrder().click();
+			batchPrint.getSelectExportSortByOrderOption(sortOrder).click();;
+			
+			if(pdfCreation.equalsIgnoreCase("one pdf for all docs")) batchPrint.getPDFCreationforAllButton().click();
+		
+			batchPrint.getGenerateButton().click();
 		}
 
 	}
@@ -1360,8 +1407,16 @@ public class BatchPrintContext extends CommonContext {
 			//* User navigates to Batch Print page (/BatchPrint)
 			//* Batch Print page is displayed
 			//
-			batchPrint = new BatchPrintPage(driver);
-			driver.waitForPageToBeReady();
+
+			batchPrint = new BatchPrintPage(driver, 0);
+			//Select EG Project
+			batchPrint.changeProjectSelector().click();
+			batchPrint.changeProjectSelectorField().click();
+			
+			
+			//Navigate to Batch Print Page
+			batchPrint.getMenuBatchPrint().click();
+
 			pass(dataMap, "navigated to batch print page");
 		}
 		else fail(dataMap, "could not navigate to batch print page");
@@ -1908,16 +1963,136 @@ public class BatchPrintContext extends CommonContext {
 	public void verify_native_pdf_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC4539 Verify PDF file should be generated at the displayed path of batch print background process with doc ID as asc as per selected 'One PDF for each document'TC4540 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for all documents'TC4541 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with Doc ID as selected in desc sortTC4543 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in asc sortTC4544 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in desc sortTC4506 Verify that user can select Export file options
-			//
+			//TC4539 Verify PDF file should be generated at the displayed path of batch print background process with doc ID as asc as per selected'One PDF for each document'
+			//TC4540 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for all documents'
+			//TC4541 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with Doc ID as selected in desc sort
+			//TC4543 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in asc sort
+			//TC4544 Verify PDF file should be generated at the displayed path of batch print background process as per selected 'One PDF for each document' with File Name as selected in desc sort
+			//TC4506 Verify that user can select Export file options
 			//
 			//* PDFs are generated based on Export Format
 			//
-			//
-			throw new ImplementationException("verify_native_pdf_generated");
-		} else {
-			throw new ImplementationException("NOT verify_native_pdf_generated");
-		}
 
-	}
+			ArrayList<String> zipFiles = new ArrayList<>();
+			
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+				String temp;
+				
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to finish downloading
+				Thread.sleep(20000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+					
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						
+						int numOfEntries = zipFile.size();
+						if(((String)dataMap.get("pdf_creation")).equalsIgnoreCase("one pdf for all docs")) {
+							if(numOfEntries == 1) pass(dataMap, "one pdf for all docs verfied to be 1");
+							else fail(dataMap, "not one pdf for all docs");
+							return;
+						}
+						
+						
+						//Grabbing all zip file entries for comparison later
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							zipFiles.add(entry.getName());
+						}
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			}catch(Exception e) {
+				fail(dataMap, "Single pdf not generated!");
+				e.printStackTrace();
+			}
+			
+			
+			//Go To saved Search Page and find SG1 -> Ericka -> DocList
+			Actions builder = new Actions(driver.getWebDriver());
+			SavedSearch savedSearch = new SavedSearch(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getToDocList().Displayed() && savedSearch.getToDocList().Enabled()  ;}}), Input.wait30);
+			for(WebElement t: driver.FindElementsByCssSelector("#jsTreeSavedSearch li").FindWebElements()) {
+				if(t.getText().equals("Shared with SG1")) t.click();
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getSavedSearchTableRadioButtons().FindWebElements().size()!=0  ;}}), Input.wait30);
+			savedSearch.getSavedSearchTableRadioButtons().FindWebElements().get(1).click();;
+			savedSearch.getToDocList().click();
+			
+			//Display Max number of rows per page
+			DocListPage docList = new DocListPage(driver, 0);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  docList.getDocList_SelectLenthtobeshown().Displayed()  ;}}), Input.wait30);
+			docList.getDocList_SelectLenthtobeshown().click();
+			docList.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
+			
+			String sortOption = (String)dataMap.get("sort_by");
+			String sortOrder = (String)dataMap.get("sort_by_order");
+			ArrayList<String> expectedSort = new ArrayList<>();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  docList.getDocList_SelectLenthtobeshown().Displayed()  ;}}), Input.wait30);
+
+			//Sort column by docid either ascending or descending, and save those sorted columns into a list
+			if(sortOption.equalsIgnoreCase("docid")) {
+				docList.getDocListColumnHeaders().FindWebElements().get(2).click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docList.getDocListColumnHeaders().FindWebElements().get(2).getAttribute("aria-sort").equals("ascending")  ;}}), Input.wait30);
+				if(sortOrder.equalsIgnoreCase("desc")) {
+					docList.getDocListColumnHeaders().FindWebElements().get(2).click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docList.getDocListColumnHeaders().FindWebElements().get(2).getAttribute("aria-sort").equals("descending")  ;}}), Input.wait30);
+				}
+				for(WebElement x: docList.getDocListRows().FindWebElements()) {
+					expectedSort.add(x.findElements(By.tagName("td")).get(4).getText());
+				}
+			}
+
+			//Sort column by docfileName either ascending or descending, and save those sorted columns into a list
+			if(sortOption.equalsIgnoreCase("docfilename")) {
+				docList.getDocListColumnHeaders().FindWebElements().get(4).click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docList.getDocListColumnHeaders().FindWebElements().get(4).getAttribute("aria-sort").equals("ascending")  ;}}), Input.wait30);
+				if(sortOrder.equalsIgnoreCase("desc")) {
+					docList.getDocListColumnHeaders().FindWebElements().get(4).click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						docList.getDocListColumnHeaders().FindWebElements().get(4).getAttribute("aria-sort").equals("descending")  ;}}), Input.wait30);
+				}
+				for(WebElement x: docList.getDocListRows().FindWebElements()) {
+					expectedSort.add(x.findElements(By.tagName("td")).get(4).getText());
+				}
+			}
+
+			Assert.assertEquals(zipFiles.size(), expectedSort.size());
+			for(int j=0; j<zipFiles.size(); j++) {
+				//Instead of seeing if they are equal we just need to make sure that the expectedSort(from docList) name is contained in the Zipfile name
+				//Zip File ex name: [001]  Your Bonus Target and Q1 Bonus.pdf.pdf
+				//DocList Name: Your Bonus Target and Q1 Bonus.pdf
+				Assert.assertTrue(zipFiles.get(j).contains(expectedSort.get(j)));
+			}
+		    pass(dataMap, "verified that native pdf was generated");
+
+	       }
+	       else fail(dataMap, "failed to verify native pdf generated");
+       }
 }//eof
