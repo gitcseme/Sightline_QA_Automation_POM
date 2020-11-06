@@ -3290,7 +3290,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3344,7 +3344,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforalldocs_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3396,7 +3396,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3448,7 +3448,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting 
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3501,7 +3501,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
