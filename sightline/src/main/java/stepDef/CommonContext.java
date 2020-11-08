@@ -55,20 +55,22 @@ public class CommonContext {
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 
-		if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
-			driver.Manage().window().maximize();}
-		else driver.Manage().window().fullscreen();
+		//if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+		//	driver.Manage().window().maximize();
+		//} else driver.Manage().window().fullscreen();
 
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-        
 		String url;
 		if (scriptState) {
-			url = (String) dataMap.get("URL");
+			url = Input.url;
+			dataMap.put("URL",url);
+	        
 			webDriver.get(url);
 			driver.waitForPageToBeReady();
 			pass(dataMap,String.format("Opened page %s",url));
 		} else {
 			url = "http://www.sqasquared.com";
+			dataMap.put("URL",url);
+
 			webDriver.get(url);
 			pass(dataMap,String.format("Opened random page %s",url));
 		}
@@ -83,6 +85,8 @@ public class CommonContext {
 			lp.loginToSightLine(uid, pwd, true, dataMap);
 			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
 		} else {
+			// this approach allows the negative state to provide a specific uid 
+			// to test for specific negative tests
 			if (uid != null && uid.length() > 0) {
 				lp.loginToSightLine(uid, pwd, false, dataMap);
 			}
@@ -91,37 +95,21 @@ public class CommonContext {
 
     
     @And("^(.*\\[Not\\] )?login_as_pau$")
-	public void login_as_pau(boolean scriptState, HashMap dataMap) {
-		lp = new LoginPage(driver);
-		if (scriptState) {
-			lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
-		} else {
-			String uid = (String) dataMap.get("uid");
-			String pwd = (String) dataMap.get("pwd");
-			
-			if (uid != null && uid.length() > 0) {
-				lp.loginToSightLine(uid, pwd, false, dataMap);
-			}
-		}
+	public void login_as_pau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String uid = Input.pa1userName;
+		String pwd = Input.pa1password;
+		dataMap.put("uid",uid);
+		dataMap.put("pwd",pwd);
+    	login(scriptState, dataMap);
 	}
     
     @And("^(.*\\[Not\\] )?login_as_sau$")
-	public void login_as_sau(boolean scriptState, HashMap dataMap) {
-		lp = new LoginPage(driver);
-		
-		ingest = new IngestionPage(driver);
-		
-		if (scriptState) {
-			lp.loginToSightLine("juan.guzman@consilio.com","Q@test_10", true, dataMap);
-			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
-		} else {
-			String uid = (String) dataMap.get("uid");
-			String pwd = (String) dataMap.get("pwd");
-			
-			if (uid != null && uid.length() > 0) {
-				lp.loginToSightLine(uid, pwd, false, dataMap);
-			}
-		}
+	public void login_as_sau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String uid = Input.sa1userName;
+		String pwd = Input.sa1password;
+		dataMap.put("uid",uid);
+		dataMap.put("pwd",pwd);
+    	login(scriptState, dataMap);
 	}
 
 	@And("^.*(\\[Not\\] )? login_as_rmu$")
@@ -180,43 +168,34 @@ public class CommonContext {
 	public void select_project(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				lp.getSelectProjectDD().Enabled()  ;}}), Input.wait30); 
-		
+
 		String project = (String) dataMap.get("project");
-		lp.getSelectProjectDD().Click();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				lp.getSelectProject(project).Visible()  ;}}), Input.wait30); 
-		lp.getSelectProject(project).Click();
-    	driver.waitForPageToBeReady();
+		
+		if (!lp.getSelectProjectDD().getText().equals(project)) {
+			lp.getSelectProjectDD().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					lp.getSelectProject(project).Visible()  ;}}), Input.wait30); 
+			lp.getSelectProject(project).Click();
+	    	driver.waitForPageToBeReady();
+		}
 	}
 	
     @When("^.*(\\[Not\\] )? on_production_home_page$")
 	public void on_production_home_page(boolean scriptState, HashMap dataMap)  throws ImplementationException, Exception {
     	prod = new ProductionPage(driver);
 
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
-	    
 
 		if (scriptState) {
-			
 	        String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
 			driver.waitForPageToBeReady();
-			
-			if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
-				prod.changeProjectSelector().Click();
-			    prod.productionProjectSelector().Click();
-			}
-
-		    driver.waitForPageToBeReady();
 		    
 		 // switch to AutomationProductionSet
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
 			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
-			driver.waitForPageToBeReady();
-			
 		} else {
 			webDriver.get("http://www.google.com");
 		}
@@ -228,17 +207,10 @@ public class CommonContext {
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
     public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 	    ingest = new IngestionPage(driver);
-	    if (!ingest.changeProjectSelector().getText().equals("Auto_Smoke2901")) {
-	    	ingest.changeProjectSelector().Click();
-	    	ingest.ingestionProjectSelector().Click();
-		}
-
-    	dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
 	    
 	    if (scriptState) {
 	    	String url = (String) dataMap.get("URL");
-	    		webDriver.get(url+"Ingestion/Home");
-	    		
+	    		webDriver.get(url+"Ingestion/Home");    		
 	    } else {
 	    		webDriver.get("http://www.google.com");
 	    }
@@ -253,13 +225,15 @@ public class CommonContext {
     
 	@And("^.*(\\[Not\\] )? on_saved_search_page$")
 	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		savedSearch = new SavedSearch(driver);
 
 		if (scriptState) {
 			//
 			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
 			//* Saved Search page is displayed
 			//
-			savedSearch = new SavedSearch(driver);
+	    	String url = (String) dataMap.get("URL");
+    		webDriver.get(url+"/SavedSearch/SavedSearches");
 		} else {
 			fail(dataMap, "Not on the saved search page");
 		}
@@ -268,57 +242,42 @@ public class CommonContext {
     
 	@And("^.*(\\[Not\\] )? on_batch_print_page$")
 	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		batchPrint = new BatchPrintPage(driver);
 
 		if (scriptState) {
 			//
 			//* User navigates to Batch Print page (/BatchPrint)
 			//* Batch Print page is displayed
 			//
-			batchPrint = new BatchPrintPage(driver);
-			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		    
-		    if (scriptState) {
-		    	String url = (String) dataMap.get("URL");
-		    		webDriver.get(url+"/BatchPrint/");
+	    	String url = (String) dataMap.get("URL");
+	    		webDriver.get(url+"/BatchPrint/");
 		    		
-		    } else {
-		    		webDriver.get("http://www.google.com");
-		    }
-
-		    driver.waitForPageToBeReady();
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
+	    } else {
+	    		webDriver.get("http://www.google.com");
+	    }
 
 	}
     
     @And("^.*(\\[Not\\] )? on_admin_home_page$")
 	public void on_admin_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"Project/Project");
+			webDriver.get(url+"/Project/Project");
 		} else {
 			webDriver.get("http://www.google.com");
 		}
-			driver.waitForPageToBeReady();
+		
+		driver.waitForPageToBeReady();
 								
 	}
     
     @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
 	public void on_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		
 		ingest = new IngestionPage(driver);
-		ingest.changeProjectSelector().Click();
-		ingest.changeProjectSelectorField().Click();
 
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"Ingestion/Home");
+			webDriver.get(url+"/Ingestion/Home");
 		} else {
 			webDriver.get("http://www.google.com");
 		}
