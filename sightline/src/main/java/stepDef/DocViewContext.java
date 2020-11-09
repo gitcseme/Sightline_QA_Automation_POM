@@ -698,6 +698,17 @@ public class DocViewContext extends CommonContext {
 			for(WebElement x: docView.getThisPageButton().FindWebElements()) {
 				if(x.isDisplayed() && x.isEnabled()) x.click();
 			}
+			//Save data about the applied redaction
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			double originalx = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("x"));
+			double originaly = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("y"));
+			double width = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"));
+			double height = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
+			dataMap.put("originalx", originalx);
+			dataMap.put("originaly", originaly);
+			dataMap.put("width", width);
+			dataMap.put("height", height);
+
 			pass(dataMap, "Clicked the this page redaction button");
 		}
 		else fail(dataMap, "Failed to click this page redactin button");
@@ -718,8 +729,9 @@ public class DocViewContext extends CommonContext {
 			docView.getDocView_SelectReductionLabel().click();
 			String defaultValue = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
 
+			String tag = (String)dataMap.get("redactionTag");
 			dataMap.put("defaultValue", defaultValue);
-			docView.getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText("SGSame1");
+			docView.getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(tag);
 			
 			docView.getDocViewSaveRedactionButton().click();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1027,6 +1039,8 @@ public class DocViewContext extends CommonContext {
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(savedSearch.getToDocView().getWebElement()).perform();
 			//savedSearch.getToDocView().click();
 			savedSearch.getToDocView2().click();
 			driver.waitForPageToBeReady();
@@ -1648,10 +1662,32 @@ public class DocViewContext extends CommonContext {
 			//* Verify redaction applied
 			//* Delete redaction after verification
 			//
-			throw new ImplementationException("verify_redaction_applied");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_applied");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			double originalx = (double)dataMap.get("originalx");
+			double originaly = (double)dataMap.get("originaly");
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			
+			double currentX = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("x"));
+			double currentY = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("y"));
+			double currentWidth = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"));
+			double currentHeight = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
+			
+			//Make sure orignal values after redaction, have persisted. i.e the redaction was applied
+			Assert.assertEquals(originalx, currentX);
+			Assert.assertEquals(originaly, currentY);
+			Assert.assertEquals(originalWidth, currentWidth);
+			Assert.assertEquals(originalHeight, currentHeight);
+			
+			rectangle_redaction_deleted(scriptState, dataMap);
+
+			pass(dataMap, "Successfully verified redaction applied");
+
 		}
+		else fail(dataMap, "failed to verify redaction applied");
 
 	}
 
