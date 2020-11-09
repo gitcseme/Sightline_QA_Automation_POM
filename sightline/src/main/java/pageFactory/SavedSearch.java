@@ -69,6 +69,7 @@ public class SavedSearch {
     public ElementCollection getCounts(){ return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody/tr"); }
     public Element getToDocList(){ return driver.FindElementById("btnDocumentList"); }
     public Element getToDocView(){ return driver.FindElementById("document-btn"); }
+    public Element getToDocView2() {return driver.FindElementByCssSelector("#document-btn i");}
     public Element getCountofDocs(){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[4]"); }
     
     public Element getSavedSearchToBulkFolder(){ return driver.FindElementById("rbnFolder"); }

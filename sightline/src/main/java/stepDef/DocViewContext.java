@@ -495,9 +495,10 @@ public class DocViewContext extends CommonContext {
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 
 			//Store default value of dropdown for later context's verifications
+			String tag = (String)dataMap.get("redactionTag");
 
 			//Using consilio's method, these parameters seem to work well
-			docView.redactbyrectangle(100, 10, 0, "SGSame1");
+			docView.redactbyrectangle(100, 10, 0, tag);
 			dataMap.put("defaultValue", docView.PageViewTagString());
 
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
@@ -505,10 +506,14 @@ public class DocViewContext extends CommonContext {
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
 			
-			double originalx = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("x"));
-			double originaly = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("y"));
-			double width = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("width"));
-			double height = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(0).getAttribute("height"));
+			
+			dataMap.put("originalRedactionCount", docView.getExistingRectangleRedactions().FindWebElements().size());
+			
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			double originalx = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("x"));
+			double originaly = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("y"));
+			double width = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"));
+			double height = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
 			dataMap.put("originalx", originalx);
 			dataMap.put("originaly", originaly);
 			dataMap.put("width", width);
@@ -995,8 +1000,8 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
-			dataMap.put("uid", "qapau2@consilio.com");
-			dataMap.put("pwd", "Q@test_10");
+			//dataMap.put("uid", "qapau2@consilio.com");
+			//dataMap.put("pwd", "Q@test_10");
 			sightline_is_launched(scriptState, dataMap);
 			login_as_rmu(scriptState, dataMap);
 			on_saved_search_page(scriptState, dataMap);
@@ -1022,7 +1027,8 @@ public class DocViewContext extends CommonContext {
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			//* Click 'Doc View' button at the top of the page
-			savedSearch.getToDocView().click();
+			//savedSearch.getToDocView().click();
+			savedSearch.getToDocView2().click();
 			driver.waitForPageToBeReady();
 			pass(dataMap, "Open saved search doc view");
 
@@ -1697,10 +1703,9 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click the browser reload page
-			throw new ImplementationException("reload_the_page");
-		} else {
-			throw new ImplementationException("NOT reload_the_page");
+			driver.getWebDriver().navigate().refresh();
 		}
+		else fail(dataMap, "failed to reload the page");
 
 	}
 
@@ -1745,10 +1750,42 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Deleted redaction does not display on document
 			//
-			throw new ImplementationException("verify_redaction_deleted_in_doc_view");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_deleted_in_doc_view");
+			int beforeDeleteSize = (int)dataMap.get("originalRedactionCount");
+			if(beforeDeleteSize!=1) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			}
+			//In the case we are going to 1 redaction to 0 -> Just make sure no redactions are left and return pass
+			else {
+				Assert.assertTrue((docView.getExistingRectangleRedactions().FindWebElements().size())==0);
+				pass(dataMap, "verified redaction deleted in docView");
+				return;
+			}
+			//Otherwise go through existing redactions
+			int afterDeleteSize = docView.getExistingRectangleRedactions().FindWebElements().size();
+			double originalx = (double)dataMap.get("originalx");
+			double originaly = (double)dataMap.get("originaly");
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+			
+			//First make sure a redaction was deleted
+			Assert.assertTrue(beforeDeleteSize == afterDeleteSize+1);
+			
+			//Go through redactions and make sure none of them were the original redaction
+			for(WebElement x : docView.getExistingRectangleRedactions().FindWebElements()) {
+				double tempx = Double.parseDouble(x.getAttribute("x"));
+				double tempy = Double.parseDouble(x.getAttribute("y"));
+				double tempHeight = Double.parseDouble(x.getAttribute("height"));
+				double tempWidth = Double.parseDouble(x.getAttribute("width"));
+				Assert.assertTrue(tempx!=originalx);
+				Assert.assertTrue(tempy!=originaly);
+				Assert.assertTrue(originalHeight!=tempHeight);
+				Assert.assertTrue(originalWidth!=tempWidth);
+			}
+			pass(dataMap, "redaction was verfiied to be delted in doc view");
 		}
+		else fail(dataMap, "failed to verify redaction deleted in doc_view");
 
 	}
 

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Alert;
@@ -1761,10 +1762,12 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
              Actions actions = new Actions(driver.getWebDriver());  
              //WebElement text = getDocView_Redactrec_textarea();
              WebElement text = getCorrectSurfaceLevel();
-             
+             Random rand = new Random();
+             int x = rand.nextInt(99) + 1;
+             int y = rand.nextInt(9) + 1;
              actions.moveToElement(text, off1,off2)
              .clickAndHold()
-             .moveByOffset(100, 10)
+             .moveByOffset(x, y)
              .release()
              .perform();
 		 }
