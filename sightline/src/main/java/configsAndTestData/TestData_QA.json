@@ -1,0 +1,1381 @@
+{"08122020_NV":{"variables":
+					[
+						{"name":"uid","value":"sqa.consilio4@sqapowered.com"}
+						,{"name":"pwd","value":"Q@test_10"}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"EmailAuthorDomain"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"8795"}
+								,{"name":"TestCase","value":"150"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorDomain"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"8795"}
+								,{"name":"TestCase","value":"2675"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorName"}
+								,{"name":"metaDataValue","value":"\"chris germany\""}
+								,{"name":"expectedPureHit","value":"1776"}
+								,{"name":"TestCase","value":"2668"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"\"chris germany\""}
+								,{"name":"expectedPureHit","value":"1776"}
+								,{"name":"TestCase","value":"2669"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
+								,{"name":"metaDataValue","value":"symes"}
+								,{"name":"expectedPureHit","value":"120"}
+								,{"name":"TestCase","value":"151"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientAddresss"}
+								,{"name":"metaDataValue","value":"\"Joe\""}
+								,{"name":"expectedPureHit","value":"76"}
+								,{"name":"TestCase","value":"172"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientAddress"}
+								,{"name":"metaDataValue","value":"\"Joe Belford\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"173"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientAddress"}
+								,{"name":"metaDataValue","value":"\"Don Miller\""}
+								,{"name":"expectedPureHit","value":"214"}
+								,{"name":"TestCase","value":"2680"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientName"}
+								,{"name":"metaDataValue","value":"\"Don Miller\""}
+								,{"name":"expectedPureHit","value":"232"}
+								,{"name":"TestCase","value":"2681"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientAddresss"}
+								,{"name":"metaDataValue","value":"\"DoesNotExist\""}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"176"}
+							]
+							,[
+								{"name":"metaDataOption","value":"SourceDocId"}
+								,{"name":"metaDataValue","value":"ICE000478-10-00002452"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"183"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocId"}
+								,{"name":"metaDataValue","value":"ID00037210"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"2106"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocId"}
+								,{"name":"metaDataValue","value":"ID00037*"}
+								,{"name":"expectedPureHit","value":"1000"}
+								,{"name":"TestCase","value":"2108"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocId"}
+								,{"name":"metaDataValue","value":"DoesNotExist"}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"2109"}
+							]
+							,[
+								{"name":"metaDataOption","value":"SourceParentDocId"}
+								,{"name":"metaDataValue","value":"ICE000478-10-00000270"}
+								,{"name":"expectedPureHit","value":"69"}
+								,{"name":"TestCase","value":"183"}
+							]
+							,[
+								{"name":"metaDataOption","value":"IngestionName"}
+								,{"name":"metaDataValue","value":"Noe3"}
+								,{"name":"expectedPureHit","value":"14726"}
+								,{"name":"TestCase","value":"343"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DataSource"}
+								,{"name":"metaDataValue","value":"Noe3"}
+								,{"name":"expectedPureHit","value":"14726"}
+								,{"name":"TestCase","value":"2674"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileType"}
+								,{"name":"metaDataValue","value":"document"}
+								,{"name":"expectedPureHit","value":"5267"}
+								,{"name":"TestCase","value":"152"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileExtension"}
+								,{"name":"metaDataValue","value":"pdf"}
+								,{"name":"expectedPureHit","value":"287"}
+								,{"name":"TestCase","value":"2976"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"\"Subpoena Response Team\""}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"169"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"\"Noe*\""}
+								,{"name":"expectedPureHit","value":"34578"}
+								,{"name":"TestCase","value":"170"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"\"N?e*\""}
+								,{"name":"expectedPureHit","value":"34578"}
+								,{"name":"TestCase","value":"170"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAllDomains"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"10240"}
+								,{"name":"TestCase","value":"341"}
+							]
+							,[
+								{"name":"metaDataOption","value":"FullPath"}
+								,{"name":"metaDataValue","value":"brad_mckay_000.pst"}
+								,{"name":"expectedPureHit","value":"10240"}
+								,{"name":"TestCase","value":"160"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"DoesNotExist"}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"164"}
+							]
+							,[
+								{"name":"metaDataOption","value":"AnalyticsExceptions"}
+								,{"name":"metaDataValue","value":"\"FileGroupID '257' not ingested\""}
+								,{"name":"expectedPureHit","value":"2824"}
+								,{"name":"TestCase","value":"9680"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"metaDataValue","value":"\"2009-05-12 04:35:31\""}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9683"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocPrimaryLanguage"}
+								,{"name":"metaDataValue","value":"Spanish"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"9685"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocumentFileHASH"}
+								,{"name":"metaDataValue","value":"BFFB16064A4FC0D79882014E06BB92CD"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9686"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailBCCAddresses"}
+								,{"name":"metaDataValue","value":"strawbale@crest.org"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"9687"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailBCCNames"}
+								,{"name":"metaDataValue","value":"strawbale"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"9688"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailCCAddresses"}
+								,{"name":"metaDataValue","value":"\"grant masson\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9689"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailCCNames"}
+								,{"name":"metaDataValue","value":"\"grant masson\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9690"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailConversionIndex"}
+								,{"name":"metaDataValue","value":"01C9D2BB153604B459A05FC347938AD760F4DCF4B4C5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9691"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailInclusionScore"}
+								,{"name":"metaDataValue","value":"00000000"}
+								,{"name":"expectedPureHit","value":"22876"}
+								,{"name":"TestCase","value":"9692"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"1999-12-13 17:25:00"}
+								,{"name":"expectedPureHit","value":"22876"}
+								,{"name":"TestCase","value":"9692"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailThreadSequenceID"}
+								,{"name":"metaDataValue","value":"F00003f00-0000+"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"9694"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailToAddresses"}
+								,{"name":"metaDataValue","value":"\"erin norris\""}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"9695"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailToAddresses"}
+								,{"name":"metaDataValue","value":"\"erin norris\""}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"10301"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailToNames"}
+								,{"name":"metaDataValue","value":"\"erin norris\""}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"9696"}
+							]
+							,[
+								{"name":"metaDataOption","value":"ExcelProtectedSheets"}
+								,{"name":"metaDataValue","value":"TRUE"}
+								,{"name":"expectedPureHit","value":"46"}
+								,{"name":"TestCase","value":"9697"}
+							]
+							,[
+								{"name":"metaDataOption","value":"ExcelProtectedWorkbook"}
+								,{"name":"metaDataValue","value":"TRUE"}
+								,{"name":"expectedPureHit","value":"3"}
+								,{"name":"TestCase","value":"9698"}
+							]
+							,[
+								{"name":"metaDataOption","value":"FileInvestigatorFileType"}
+								,{"name":"metaDataValue","value":"\"MS Outlook Message\""}
+								,{"name":"expectedPureHit","value":"30286"}
+								,{"name":"TestCase","value":"9699"}
+							]
+							,[
+								{"name":"metaDataOption","value":"HasException"}
+								,{"name":"metaDataValue","value":"1"}
+								,{"name":"expectedPureHit","value":"589"}
+								,{"name":"TestCase","value":"9701"}
+							]
+							,[
+								{"name":"metaDataOption","value":"RequiredPDFGeneration"}
+								,{"name":"metaDataValue","value":"TRUE"}
+								,{"name":"expectedPureHit","value":"3"}
+								,{"name":"TestCase","value":"9698"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"dean craig \\(craig.dean@enron.com\\)\""}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10566"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailCCNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"sales@intcx.com \\(sales@intcx.com\\)\""}
+								,{"name":"expectedPureHit","value":"15"}
+								,{"name":"TestCase","value":"10567"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailBCCNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"webb \\(webb\\)\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10568"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailToNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"terie hindsley \\(teriehindsley@hotmail.com\\)\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10574"}
+							]
+						]} 	
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchForEach_MetaData_When_Then_verify_search_returned":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"advancedSearch", "value":"yes"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"530"}
+								,{"name":"TestCase","value":"3124"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientAddresses"}
+								,{"name":"metaDataValue","value":"symes"}
+								,{"name":"expectedPureHit","value":"109"}
+								,{"name":"TestCase","value":"3125"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientDomai"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"5267"}
+								,{"name":"TestCase","value":"3126"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"dean craig \\(craig.dean@enron.com\\)\""}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10570"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailCCNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"sales@intcx.com \\(sales@intcx.com\\)\""}
+								,{"name":"expectedPureHit","value":"15"}
+								,{"name":"TestCase","value":"10571"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailBCCNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"webb \\(webb\\)\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10572"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailToNameAndAddress"}
+								,{"name":"metaDataValue","value":"\"terie hindsley \\(teriehindsley@hotmail.com\\)\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10573"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchRegex_When_Then_verify_search_returned":
+					[
+						{"name":"metaDataOptions","value":[
+							[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"\"##all\""}
+								,{"name":"expectedPureHit","value":"8795"}
+								,{"name":"TestCase","value":"10303"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"imceanotes-jennifer"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10316"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataValue","value":"\"##[sl(e|a)4]@bakercapital.com\""}
+								,{"name":"expectedPureHit","value":"8795"}
+								,{"name":"TestCase","value":"10303"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataValue","value":"\"##maria.pavlou@enron.com\""}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10307"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataValue","value":"\"maria.pavlou@enron.com\""}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10485"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"imceanotes-jennifer"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10485"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailCCAddress"}
+								,{"name":"metaDataValue","value":"professional_email@yahoo.com"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10485"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"(\"## Test mail on [0-9]{4}/[0-9]{2}/[0-9]{2}\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10305"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"(\"##RP[0-9]{2}-[0-9]{3}\")"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10306"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"(\"##[0-9]{4}/[0-9]{2}/[0-9]{2}\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10313"}
+							]
+							,[
+								{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"(\"email@domain.com\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10487"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"(\"email@domain.com\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10484"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"(EmailAuthorName: (\"Don*\") NOT EmailAuthorName:(\"Don Miller\")"}
+								,{"name":"expectedPureHit","value":"87"}
+								,{"name":"TestCase","value":"2937"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"\"##0.375\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10298"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"\"##[09]{3}-[0-9]{3}-[0-9]{4}\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10299"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"\"##[5-9]{5}-[1-4]{4}\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10314"}
+							]
+							,[
+								{"name":"searchType","value":"fulltext"}
+								,{"name":"metaDataValue","value":"\"##[0-9]{5}-[0-4]{4}\""}
+								,{"name":"expectedPureHit","value":"313"}
+								,{"name":"TestCase","value":"10315"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchis_When_Then_verify_is_search_criteria":
+					[
+						{"name":"searchType","value":"IS"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"EmailAllDomainCount"}
+								,{"name":"metaDataValue","value":"2"}
+								,{"name":"expectedPureHit","value":"8795"}
+								,{"name":"TestCase","value":"153"}
+							]
+							,[
+								{"name":"metaDataOption","value":"NearDupeCount"}
+								,{"name":"metaDataValue","value":"5"}
+								,{"name":"expectedPureHit","value":"312"}
+								,{"name":"TestCase","value":"340"}
+							]
+							,[
+								{"name":"metaDataOption","value":"NearDupeCount"}
+								,{"name":"metaDataValue","value":"5"}
+								,{"name":"expectedPureHit","value":"312"}
+								,{"name":"TestCase","value":"9702"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DupeCount"}
+								,{"name":"metaDataValue","value":"5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"915"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"metaDataValue","value":"2019-06-07"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"2679"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2020-02-18"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8058"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2020-02-18"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8080"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2020-02-18"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8080"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"1999-12-13 17:25:00"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9693"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileSize"}
+								,{"name":"metaDataValue","value":"67"}
+								,{"name":"expectedPureHit","value":"136"}
+								,{"name":"TestCase","value":"471"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocPages"}
+								,{"name":"metaDataValue","value":"13"}
+								,{"name":"expectedPureHit","value":"52"}
+								,{"name":"TestCase","value":"9684"}
+							]
+							,[
+								{"name":"metaDataOption","value":"FileInvestigatorFileGroup"}
+								,{"name":"metaDataValue","value":"261"}
+								,{"name":"expectedPureHit","value":"30311"}
+								,{"name":"TestCase","value":"9700"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchfull_text_search_When_Then_verify_fulltext_search_criteria":
+					[
+						{"name":"searchType","value":"FULLTEXT"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataValue","value":"\"Eri?a*\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"171"}
+							]
+							,[
+								{"name":"metaDataValue","value":"Erika"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"196"}
+							]
+							,[
+								{"name":"metaDataValue","value":"(CustodianName: \"P Allen\") OR (CustodianName: \"P Vinod\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"168"}
+							]
+							,[
+								{"name":"metaDataValue","value":"O & M"}
+								,{"name":"expectedPureHit","value":"640"}
+								,{"name":"TestCase","value":"9980"}
+							]
+							,[
+								{"name":"metaDataValue","value":"$500"}
+								,{"name":"expectedPureHit","value":"2365"}
+								,{"name":"TestCase","value":"9981"}
+							]
+							,[
+								{"name":"metaDataValue","value":"@enron"}
+								,{"name":"expectedPureHit","value":"474"}
+								,{"name":"TestCase","value":"9979"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get free stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10220"}
+							]
+							,[
+								{"name":"metaDataValue","value":"631-45-3222"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10300"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ellen@msn.*"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ellen@msn.c?m"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ell*@msn.com"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486"}
+							]
+							,[
+								{"name":"metaDataValue","value":"e??en@msn.com"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486"}
+							]
+							,[
+								{"name":"metaDataValue","value":"email @ home"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10488"}
+							]
+							,[
+								{"name":"metaDataValue","value":"imcea*-jennifer"}
+								,{"name":"expectedPureHit","value":"3"}
+								,{"name":"TestCase","value":"10607"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchfull_text_search_When_Then_verify_fulltext_search_criteria":
+					[
+						{"name":"searchType","value":"FULLTEXT"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataValue","value":"\"Eri?a*\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"171_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"Erika"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"196_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"(CustodianName: \"P Allen\") OR (CustodianName: \"P Vinod\")"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"168_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"O & M"}
+								,{"name":"expectedPureHit","value":"640"}
+								,{"name":"TestCase","value":"10028"}
+							]
+							,[
+								{"name":"metaDataValue","value":"$500"}
+								,{"name":"expectedPureHit","value":"2365"}
+								,{"name":"TestCase","value":"10029"}
+							]
+							,[
+								{"name":"metaDataValue","value":"@enron"}
+								,{"name":"expectedPureHit","value":"474"}
+								,{"name":"TestCase","value":"10027"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get free stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10220_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"631-45-3222"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10300_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ellen@msn.*"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ellen@msn.c?m"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"ell*@msn.com"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"e??en@msn.com"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10486_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"email @ home"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10488_adv"}
+							]
+							,[
+								{"name":"metaDataValue","value":"imcea*-jennifer"}
+								,{"name":"expectedPureHit","value":"3"}
+								,{"name":"TestCase","value":"10607_adv"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria":
+					[
+						{"name":"searchType","value":"RANGE"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"metaDataValue","value":"2019-06-07"}
+								,{"name":"metaDataVal2","value":"2019-06-14"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8071"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2001-05-03"}
+								,{"name":"metaDataVal2","value":"2001-06-11"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8059"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2001-05-03"}
+								,{"name":"metaDataVal2","value":"2001-06-11"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"8081"}
+							]
+						]}
+					]
+				,"test_Given_verify_long_search_criteria_When_click_search_Then_verify_search_returned":
+					[
+						{"name":"longSearchList","value":[
+							[
+								{"name":"entrySearchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"\"P Allen\""}
+							]
+							,[
+								{"name":"entrySearchType","value":"condition"}
+								,{"name":"condition","value":"OR"}
+							]
+							,[
+								{"name":"entrySearchType","value":"metaData"}
+								,{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"\"P Vinod\""}
+							]
+						]}
+						,{"name":"expectedPureHit","value":"152"}
+						,{"name":"TestCase","value":"167"}
+						,{"name":"searchType","value":"LONG"}
+					]
+				,"test_Given_on_production_Search_Session_page_and_select_advanced_search_with_CustodianName_When_Then_verify_autosuggest":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"advancedSearch", "value":"yes"}
+						,{"name":"searchList","value":[
+							[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"xV"}
+								,{"name":"TestCase","value":"11228"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileType"}
+								,{"name":"metaDataValue","value":"Doc"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11229"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"Tod"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11230"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11231"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11232"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" T"}
+								,{"name":"TestCase","value":"11284"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"@V"}
+								,{"name":"TestCase","value":"11286"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" V "}
+								,{"name":"TestCase","value":"11287"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" 1"}
+								,{"name":"TestCase","value":"11285"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_not_select_search_with_metaDataValue_causes_autosuggest_When_Then_not_verify_autosuggest":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"advancedSearch", "value":"no"}
+						,{"name":"searchList","value":[
+							[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"xV"}
+								,{"name":"TestCase","value":"11233"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileType"}
+								,{"name":"metaDataValue","value":"Doc"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11234"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"Tod"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11235"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11236"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"11237"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"T"}
+								,{"name":"TestCase","value":"7994"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"@V"}
+								,{"name":"TestCase","value":"11281"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" V "}
+								,{"name":"TestCase","value":"11287"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"1"}
+								,{"name":"TestCase","value":"11280"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"searchList","value":[
+							[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" V"}
+								,{"name":"additionalKeys1","value":"il"}
+								,{"name":"additionalKeys2","value":"la"}
+								,{"name":"TestCase","value":"5708"}
+							]
+							,[
+								{"name":"metaDataOption","value":"DocFileType"}
+								,{"name":"metaDataValue","value":"Doc"}
+								,{"name":"additionalKeys","value":"um"}
+								,{"name":"additionalKeys1","value":"e"}
+								,{"name":"additionalKeys2","value":"nt"}
+								,{"name":"TestCase","value":"5709"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"L B"}
+								,{"name":"additionalKeys1","value":"ut"}
+								,{"name":"additionalKeys2","value":"ler"}
+								,{"name":"TestCase","value":"5710"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"L B"}
+								,{"name":"additionalKeys1","value":"ut"}
+								,{"name":"additionalKeys2","value":"ler"}
+								,{"name":"TestCase","value":"5711"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"metaDataValue","value":"Tod"}
+								,{"name":"additionalKeys","value":"ay's'"}
+								,{"name":"additionalKeys1","value":" 3pm "}
+								,{"name":"additionalKeys2","value":"Mtng"}
+								,{"name":"TestCase","value":"5712"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":" V"}
+								,{"name":"additionalKeys1","value":"il"}
+								,{"name":"additionalKeys2","value":"la"}
+								,{"name":"TestCase","value":"29"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"metaDataValue","value":"Noe"}
+								,{"name":"additionalKeys","value":"   V"}
+								,{"name":"additionalKeys1","value":"il"}
+								,{"name":"additionalKeys2","value":"la"}
+								,{"name":"TestCase","value":"11282"}
+							]
+						]}
+					]
+				,"test_Given_verify_searched_save_When_Then_verify_current_login_session_saved_search_SEARCH5":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"metaDataOption","value":"CustodianName"}
+						,{"name":"metaDataValue","value":"\"Noe Villa\""}
+						,{"name":"TestCase","value":"80"}
+					]
+				,"test_Given_verify_searched_save_and_modify_search_criteria_When_Then_verify_user_modified_session_query_not_changed_saved_query":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"metaDataOption","value":"CustodianName"}
+						,{"name":"metaDataValue","value":"\"Noe Villa\""}
+						,{"name":"TestCase","value":"149"}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_search_When_cancel_save_search_Then_verify_search_not_saved":
+					[
+						{"name":"searchType","value":"metaData"}
+						,{"name":"metaDataOption","value":"CustodianName"}
+						,{"name":"metaDataValue","value":"\"Noe Villa\""}
+						,{"name":"TestCase","value":"410"}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_with_proximity_When_Then_verify_search_returned":
+					[
+						{"name":"searchType","value":"Content"}
+						,{"name":"advancedSearch", "value":"yes"}
+						,{"name":"proximitySearchList","value":[
+							[
+								{"name":"metaDataValue","value":"(\"Environmental Practices\"~7 AND management) OR m0ney"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"11555"}
+							]
+							,[
+								{"name":"metaDataValue","value":"(\"Environmental Practices\"~7 OR management) NOT m0ney"}
+								,{"name":"expectedPureHit","value":"2479"}
+								,{"name":"TestCase","value":"11556"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"(SmartSea* Reca*) ((\"##[a-z]{8}\") develope*)\"~20"}
+								,{"name":"expectedPureHit","value":"411"}
+								,{"name":"TestCase","value":"11557"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Practices Environmental\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10266"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Prac* Environ*\"~6"}
+								,{"name":"expectedPureHit","value":"14"}
+								,{"name":"TestCase","value":"10264"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Prac?ices Environ?ental\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10265"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"9751"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice?\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9752"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nev* (pow* OR cogen*)\"~5"}
+								,{"name":"expectedPureHit","value":"92"}
+								,{"name":"TestCase","value":"9810"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nev?da (pow?r OR cogener?tion)\"~5"}
+								,{"name":"expectedPureHit","value":"73"}
+								,{"name":"TestCase","value":"9812"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natu* OR peo*) (fir* OR resour*)\"~5"}
+								,{"name":"expectedPureHit","value":"1079"}
+								,{"name":"TestCase","value":"10222"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natu* OR peo*) (fire OR \"Resources Corp\")\"~3"}
+								,{"name":"expectedPureHit","value":"30"}
+								,{"name":"TestCase","value":"10223"}
+							]
+							,[
+								{"name":"searchValue","value":"\"comm?dity (\"r?sk c?ntracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10243"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nevada (pow* OR cogen*)\"~5"}
+								,{"name":"expectedPureHit","value":"75"}
+								,{"name":"TestCase","value":"9809"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nevada (pow?r OR cogener?tion)\"~5"}
+								,{"name":"expectedPureHit","value":"73"}
+								,{"name":"TestCase","value":"9811"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10226"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10227"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"37"}
+								,{"name":"TestCase","value":"10232"}
+							]
+							,[
+								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10235"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 AND \"commercial enron\"~5"}
+								,{"name":"expectedPureHit","value":"21"}
+								,{"name":"TestCase","value":"10247"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 OR \"commercial enron\"~5"}
+								,{"name":"expectedPureHit","value":"115"}
+								,{"name":"TestCase","value":"10248"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 NOT \"natural fired\"~5"}
+								,{"name":"expectedPureHit","value":"21"}
+								,{"name":"TestCase","value":"10249"}
+							]
+							,[
+								{"name":"searchValue","value":"\"financial (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"102"}
+								,{"name":"TestCase","value":"10430"}
+							]
+							,[
+								{"name":"searchValue","value":"\"finan* (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"104"}
+								,{"name":"TestCase","value":"10431"}
+							]
+							,[
+								{"name":"searchValue","value":"\"financi?l (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"102"}
+								,{"name":"TestCase","value":"10432"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR turbine\")\"~3"}
+								,{"name":"expectedPureHit","value":"39"}
+								,{"name":"TestCase","value":"10445"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"TestCase","value":"10449"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"TestCase","value":"10450"}
+							]
+							,[
+								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10451"}
+							]
+							,[
+								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10452"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_search_with_proximity_When_Then_verify_search_returned":
+					[
+						{"name":"searchType","value":"Content"}
+						,{"name":"proximitySearchList","value":[
+							[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"10240"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(\"##[a-z]{5}\") Practice\"~3"}
+								,{"name":"expectedPureHit","value":"303"}
+								,{"name":"TestCase","value":"10268"}
+							]
+							,[
+								{"name":"searchValue","value":"\"##[a-z]{10}-[a-z]{7} Enron*\"~3"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10270"}
+							]
+							,[
+								{"name":"searchValue","value":"c0mpany OR (\"(\"##[a-z]{5}\") Practice\"~3 OR m0ney) OR TruthF1nder"}
+								,{"name":"expectedPureHit","value":"303"}
+								,{"name":"TestCase","value":"11549"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6 AND Eliminate"}
+								,{"name":"expectedPureHit","value":"5"}
+								,{"name":"TestCase","value":"11550"}
+							]
+							,[
+								{"name":"searchValue","value":"(\"Environmental Practice*\"~6 AND Services) NOT M0ney"}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"11551"}
+							]
+							,[
+								{"name":"searchValue","value":"c0mpany OR (\"(\"##[a-z]{13}\") Practice*\"~6 OR m0ney) OR TruthF1nder"}
+								,{"name":"expectedPureHit","value":"142"}
+								,{"name":"TestCase","value":"11552"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(SmartSearch  OR  develope*) (\"##precis?on.\"  OR  w?ere   OR  m?ne*)\"~10"}
+								,{"name":"expectedPureHit","value":"10"}
+								,{"name":"TestCase","value":"11553"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practices\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9601"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Practices Environmental\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10263"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"10521"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"9599"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice?\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9599"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"9753"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice?\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9754"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environmental Practice?\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"9754"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nevada (pow* OR cogen*)\"~5"}
+								,{"name":"expectedPureHit","value":"75"}
+								,{"name":"TestCase","value":"9803"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nev* (pow* OR cogen*)\"~5"}
+								,{"name":"expectedPureHit","value":"92"}
+								,{"name":"TestCase","value":"9804"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nevada (pow?r OR cogener?tion)\"~5"}
+								,{"name":"expectedPureHit","value":"73"}
+								,{"name":"TestCase","value":"9805"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Nev?da (pow?r OR cogener?tion)\"~5"}
+								,{"name":"expectedPureHit","value":"73"}
+								,{"name":"TestCase","value":"9806"}
+							]
+							,[
+								{"name":"searchValue","value":"\"sell (\"mw @ 6500\")\"~5"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10063"}
+							]
+							,[
+								{"name":"searchValue","value":"\"commercial (\"construction & engineering\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10064"}
+							]
+							,[
+								{"name":"searchValue","value":"\"$/start accordance\"~5"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10065"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natu* OR peo*) (fir* OR resour*)\"~5"}
+								,{"name":"expectedPureHit","value":"1079"}
+								,{"name":"TestCase","value":"10224"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natu* OR peo*) (fire OR \"Resources Corp\")\"~3"}
+								,{"name":"expectedPureHit","value":"30"}
+								,{"name":"TestCase","value":"10225"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10228"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10229"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"37"}
+								,{"name":"TestCase","value":"10230"}
+							]
+							,[
+								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10234"}
+							]
+							,[
+								{"name":"searchValue","value":"\"comm?dity (\"r?sk c?ntracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10241"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 AND \"commercial enron\"~5"}
+								,{"name":"expectedPureHit","value":"21"}
+								,{"name":"TestCase","value":"10244"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 OR \"commercial enron\"~5"}
+								,{"name":"expectedPureHit","value":"115"}
+								,{"name":"TestCase","value":"10245"}
+							]
+							,[
+								{"name":"searchValue","value":"\"concept valuable\"~3 NOT \"natural fired\"~5"}
+								,{"name":"expectedPureHit","value":"21"}
+								,{"name":"TestCase","value":"10246"}
+							]
+							,[
+								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10255"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environ* Prac*\"~6"}
+								,{"name":"expectedPureHit","value":"14"}
+								,{"name":"TestCase","value":"10258"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Prac* Environ*\"~6"}
+								,{"name":"expectedPureHit","value":"14"}
+								,{"name":"TestCase","value":"10261"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Environ?ental Prac?ices\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10259"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Prac?ices Environ?ental\"~6"}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"10262"}
+							]
+							,[
+								{"name":"searchValue","value":"\"financial (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"102"}
+								,{"name":"TestCase","value":"10332"}
+							]
+							,[
+								{"name":"searchValue","value":"\"finan* (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"104"}
+								,{"name":"TestCase","value":"10333"}
+							]
+							,[
+								{"name":"searchValue","value":"\"financi?l (fixated responsibility)\"~6"}
+								,{"name":"expectedPureHit","value":"102"}
+								,{"name":"TestCase","value":"10334"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR turbine\")\"~3"}
+								,{"name":"expectedPureHit","value":"39"}
+								,{"name":"TestCase","value":"10443"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"TestCase","value":"10447"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"TestCase","value":"10448"}
+							]
+							,[
+								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10453"}
+							]
+							,[
+								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine engine\")\"~3"}
+								,{"name":"expectedPureHit","value":"2"}
+								,{"name":"TestCase","value":"10454"}
+							]
+							,[
+								{"name":"searchValue","value":"\"VOM $0.92\"~4"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"9741"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Capacity 97%\"~4"}
+								,{"name":"expectedPureHit","value":"19"}
+								,{"name":"TestCase","value":"9742"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(\"##[a-z]{13}\") practices\"~6"}
+								,{"name":"expectedPureHit","value":"45"}
+								,{"name":"TestCase","value":"10267"}
+							]
+							,[
+								{"name":"searchValue","value":"\"##[a-z]{10}-[a-z]{7} Enron*\"~7"}
+								,{"name":"expectedPureHit","value":"11"}
+								,{"name":"TestCase","value":"10269"}
+							]
+							,[
+								{"name":"metaDataValue","value":"(\"Environmental Practice*\"~7 OR management) OR m0ney"}
+								,{"name":"expectedPureHit","value":"2480"}
+								,{"name":"TestCase","value":"11554"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"(SmartSearch  OR  develope*) (\"##precis?on.\"  OR  w?ere   OR  m?ne*)\"~10"}
+								,{"name":"expectedPureHit","value":"10"}
+								,{"name":"TestCase","value":"11558"}
+							]
+						]}
+					]
+				}
+}

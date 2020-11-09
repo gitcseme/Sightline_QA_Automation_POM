@@ -1,14 +1,19 @@
 package testScriptsRegression;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.testng.annotations.BeforeSuite;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -68,5 +73,39 @@ public class RegressionBase {
 	      }
 
 	}
+
+    public void getMethodData(HashMap dataMap, String methodName) {
+        JSONParser parser = new JSONParser();
+        String env = Input.config.env;
+        String projectName = Input.projectName;
+        try {
+           Object obj = parser.parse(new FileReader(System.getProperty("user.dir")+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"configsAndTestData"+File.separator+"TestData_"+env+".json"));
+           JSONObject jsonObject = (JSONObject)obj;
+           try {
+        	   JSONObject projectJson = (JSONObject)jsonObject.get(projectName);
+        	   dataMap.put("project", projectName);
+	           JSONArray list = (JSONArray) projectJson.get("variables");
+	           if (list != null) {
+		           Iterator<JSONObject> iterator = list.iterator();
+		           while (iterator.hasNext()) {
+		        	   JSONObject v = iterator.next();
+		        	   dataMap.put(v.get("name"), v.get("value"));
+		           }       
+	           }
+	           list = (JSONArray)projectJson.get(methodName);
+	           if (list != null) {
+	        	   Iterator<JSONObject> iterator = list.iterator();
+		           while (iterator.hasNext()) {
+		        	   JSONObject v = iterator.next();
+		        	   dataMap.put(v.get("name"), v.get("value"));
+		           }  
+	           }
+           } catch(Exception e) {
+               throw new Exception(String.format("Project '%s' undefined for '%s' environment json",projectName,env));
+           }    	
+        } catch(Exception e) {
+           e.printStackTrace();
+        }    	
+    }
 
 }

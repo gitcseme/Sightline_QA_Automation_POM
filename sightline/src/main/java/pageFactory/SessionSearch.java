@@ -18,10 +18,12 @@ public class SessionSearch {
     BaseClass base;
   
     public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
-    public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
+    public String EnterSearchStringLocator = ".//*[@id='xEdit']/li/input";
+    public Element getEnterSearchString(){ return driver.FindElementByXPath(EnterSearchStringLocator); }
     public Element getEditSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]/li[2]",index)); }
     public Element getSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]",index)); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
+    public String QuerySearchButton = "//*[@id='qSearch']";
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
     public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
    
@@ -101,8 +103,11 @@ public class SessionSearch {
     public Element getMetaDataSearchText2(){ return driver.FindElementById("val2"); }
     public Element getMetaDataEditSearchBtn(){ return driver.FindElementByXPath("//*[@id='val1']/../../../../div[2]/button"); }
     public Element getMetaDataInserQuery(){ return driver.FindElementById("insertQueryBtn"); }
+    public String MetaDataCancelButtonXPath = "//*[@id='insertmetadataPop']//a[@id='close']";
    
     //Advance Search
+    public String AdvanceLabelXPath = "//*[@id='Adv']//span[contains(text(),'Advanced')]";
+    public Element getAdvancedLabel() { return driver.FindElementByXPath(AdvanceLabelXPath); }
     public Element getAdvancedSearchLink(){ return driver.FindElementByXPath("//*[@id='advancedswitch']"); }
     public String ContentAndMetaDatabtnXPath = "//button[@id='contentmetadata']";
     public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath(ContentAndMetaDatabtnXPath); }
@@ -114,7 +119,9 @@ public class SessionSearch {
     public ElementCollection getSecurityNamesTree(){ return driver.FindElementsByXPath("//*[@id='JSTree']/div/label"); }
     
     //advanced Content search
-    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath("//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']"); }
+//  public String AdvancedContentSearchInputXPath = "//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+  public String AdvancedContentSearchInputXPath = "//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath(AdvancedContentSearchInputXPath); }
     
     //Audio Search
     public Element getAs_Audio(){ return driver.FindElementById("audio"); }
@@ -181,7 +188,8 @@ public class SessionSearch {
     public Element getConceptuallyPlayButton(){ return driver.FindElementByXPath("//*[contains(@id,'playButton')]"); }
     
     //modify advanced search
-    public Element getModifyASearch(){ return driver.FindElementById("qModifySearch"); }
+    public String ModifySearchLocator = "(.//*[@id='qModifySearch'])";
+    public Element getModifyASearch(){ return driver.FindElementById(ModifySearchLocator); }
   //added by shilpi
     public Element getThreadedAddButton(){ return driver.FindElementByXPath(".//*[@id='002']/i[2]"); }
     public Element getNearDupesAddButton(){ return driver.FindElementByXPath(".//*[@id='003']/i[2]"); }
@@ -233,7 +241,9 @@ public class SessionSearch {
     public String SearchQueryTextXpath = "//*[@id='xEdit']/li";
     public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
     public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
-    public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
+    public String RemoveSearchQueryXPath = "(//*[@id='xEdit']//a[@href='#'])";
+    public String RemoveSearchQueryLocator = "#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']";
+    public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector(RemoveSearchQueryLocator); }
     
     public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
     public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
@@ -266,7 +276,8 @@ public class SessionSearch {
 
     // SavedSearchList
     public Element getSavedSearchList() { return driver.FindElementById("sessionSearchList"); }
-    public Element getAutoSuggest() { return driver.FindElementByCssSelector("ul.ui-autocomplete li.ui-menu-item a"); }
+    public String AutoSuggestXPath = "//li[@class='ui-menu-item']/div";
+    public Element getAutoSuggest() { return driver.FindElementByCssSelector("ul.ui-ete li.ui-menu-item a"); }
     public Element isSearchInProgress() { return driver.FindElementById("imgLoadPM"); }
 
     public SessionSearch(Driver driver){
@@ -288,7 +299,9 @@ public class SessionSearch {
 		Actions builder=new Actions(driver.getWebDriver());
 		// Mouse hover to see X button
 		builder.moveToElement(removeLineItem.getWebElement()).perform();
-		return getRemoveSearchQuery();		
+		Element removeSearchQuery = getActiveElementByXPath(RemoveSearchQueryXPath);
+		return removeSearchQuery;		
+//		return getRemoveSearchQuery();		
     }
 
     public String getToolTipMsgBS(String isOrRange, String metaDataField) {
@@ -636,8 +649,8 @@ public class SessionSearch {
     
     public void enterBasicContentSearchString(String SearchString) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
-    	getEnterSearchString().SendKeys(SearchString) ;
+    			getActiveElementByXPath(EnterSearchStringLocator).Visible()  ;}}), Input.wait30); 
+    	getActiveElementByXPath(EnterSearchStringLocator).SendKeys(SearchString) ;
     }
     
     //Function to perform content search for a given search string
