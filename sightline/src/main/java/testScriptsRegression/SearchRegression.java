@@ -343,6 +343,51 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchis_When_Then_verify_is_search_criteria() throws Throwable
+	{
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
+     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+	        while (optionsList.hasNext()) {
+	        	JSONArray option = optionsList.next();
+	     	    Iterator<JSONObject> iterator = option.iterator();
+		        while (iterator.hasNext()) {
+		        	JSONObject data = iterator.next();
+		        	dataMap.put(data.get("name"), data.get("value"));
+		        }
+				context.create_advanced_search(true, dataMap);
+				context.click_search(true, dataMap);
+				context.verify_search_returned(true, dataMap);
+				context.remove_search_criteria(true, dataMap);
+			}
+			
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
 	/*
 	public void test_Given_verify_fulltext_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	*/
@@ -485,6 +530,50 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchrange_When_Then_verify_range_search_criteria() throws Throwable
+	{
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
+     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+	        while (optionsList.hasNext()) {
+	        	JSONArray option = optionsList.next();
+	     	    Iterator<JSONObject> iterator = option.iterator();
+		        while (iterator.hasNext()) {
+		        	JSONObject data = iterator.next();
+		        	dataMap.put(data.get("name"), data.get("value"));
+		        }
+				context.create_advanced_search(true, dataMap);
+				context.click_search(true, dataMap);
+				context.verify_search_returned(true, dataMap);
+				context.remove_search_criteria(true, dataMap);
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 	/*
 	public void test_Given_on_production_Search_Session_page_and_create_searchlong_search_When_Then_verify_long_search_criteria() throws Throwable
 	*/

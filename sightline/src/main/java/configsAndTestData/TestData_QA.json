@@ -321,7 +321,7 @@
 								,{"name":"TestCase","value":"3125"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientDomai"}
+								{"name":"metaDataOption","value":"EmailRecipientDomain"}
 								,{"name":"metaDataValue","value":"enron.com"}
 								,{"name":"expectedPureHit","value":"5267"}
 								,{"name":"TestCase","value":"3126"}
@@ -349,6 +349,12 @@
 								,{"name":"metaDataValue","value":"\"terie hindsley \\(teriehindsley@hotmail.com\\)\""}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10573"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAllDomains"}
+								,{"name":"metaDataValue","value":"enron.com"}
+								,{"name":"expectedPureHit","value":"10240"}
+								,{"name":"TestCase","value":"3123"}
 							]
 						]}
 					]
@@ -487,64 +493,52 @@
 								,{"name":"TestCase","value":"340"}
 							]
 							,[
-								{"name":"metaDataOption","value":"NearDupeCount"}
-								,{"name":"metaDataValue","value":"5"}
-								,{"name":"expectedPureHit","value":"312"}
-								,{"name":"TestCase","value":"9702"}
-							]
-							,[
-								{"name":"metaDataOption","value":"DupeCount"}
-								,{"name":"metaDataValue","value":"5"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"915"}
-							]
-							,[
 								{"name":"metaDataOption","value":"MasterDate"}
-								,{"name":"metaDataValue","value":"2019-06-07"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"2679"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"659"}
+								,{"name":"TestCase","value":"8063"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"5"}
+								,{"name":"TestCase","value":"8065"}
 							]
 							,[
 								{"name":"metaDataOption","value":"EmailSentDate"}
-								,{"name":"metaDataValue","value":"2020-02-18"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"8058"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"659"}
+								,{"name":"TestCase","value":"8067"}
+							]
+							,[
+								{"name":"metaDataOption","value":"AppointmentStartdate"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"8060"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchis_When_Then_verify_is_search_criteria":
+					[
+						{"name":"searchType","value":"IS"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"659"}
+								,{"name":"TestCase","value":"8124"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"5"}
+								,{"name":"TestCase","value":"8126"}
 							]
 							,[
 								{"name":"metaDataOption","value":"EmailSentDate"}
-								,{"name":"metaDataValue","value":"2020-02-18"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"8080"}
-							]
-							,[
-								{"name":"metaDataOption","value":"EmailSentDate"}
-								,{"name":"metaDataValue","value":"2020-02-18"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"8080"}
-							]
-							,[
-								{"name":"metaDataOption","value":"EmailSentDate"}
-								,{"name":"metaDataValue","value":"1999-12-13 17:25:00"}
-								,{"name":"expectedPureHit","value":"1"}
-								,{"name":"TestCase","value":"9693"}
-							]
-							,[
-								{"name":"metaDataOption","value":"DocFileSize"}
-								,{"name":"metaDataValue","value":"67"}
-								,{"name":"expectedPureHit","value":"136"}
-								,{"name":"TestCase","value":"471"}
-							]
-							,[
-								{"name":"metaDataOption","value":"DocPages"}
-								,{"name":"metaDataValue","value":"13"}
-								,{"name":"expectedPureHit","value":"52"}
-								,{"name":"TestCase","value":"9684"}
-							]
-							,[
-								{"name":"metaDataOption","value":"FileInvestigatorFileGroup"}
-								,{"name":"metaDataValue","value":"261"}
-								,{"name":"expectedPureHit","value":"30311"}
-								,{"name":"TestCase","value":"9700"}
+								,{"name":"metaDataValue","value":"2001-02-09"}
+								,{"name":"expectedPureHit","value":"659"}
+								,{"name":"TestCase","value":"8128"}
 							]
 						]}
 					]
@@ -588,6 +582,21 @@
 								,{"name":"TestCase","value":"10220"}
 							]
 							,[
+								{"name":"metaDataValue","value":"\"get free stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"6629"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get f%e stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10066"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get-free-stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"11512"}
+							]
+							,[
 								{"name":"metaDataValue","value":"631-45-3222"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10300"}
@@ -621,6 +630,56 @@
 								{"name":"metaDataValue","value":"imcea*-jennifer"}
 								,{"name":"expectedPureHit","value":"3"}
 								,{"name":"TestCase","value":"10607"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Sheila.weisman@csfb.com\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11505"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Sheila.weisman@csfb\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11506"}
+							]
+							,[
+								{"name":"searchValue","value":"\"Sheila\""}
+								,{"name":"expectedPureHit","value":"72"}
+								,{"name":"TestCase","value":"11507"}
+							]
+							,[
+								{"name":"searchValue","value":"\"weisman\""}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"11508"}
+							]
+							,[
+								{"name":"searchValue","value":"\"rogers hou ect\""}
+								,{"name":"expectedPureHit","value":"140"}
+								,{"name":"TestCase","value":"11516"}
+							]
+							,[
+								{"name":"searchValue","value":"\"when you are done\""}
+								,{"name":"expectedPureHit","value":"8"}
+								,{"name":"TestCase","value":"11518"}
+							]
+							,[
+								{"name":"searchValue","value":"\"rogers hou ect\""}
+								,{"name":"expectedPureHit","value":"140"}
+								,{"name":"TestCase","value":"11500"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"631 45 3222\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10503"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get-free-stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10503"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"when you are done thanks\""}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11504"}
 							]
 						]}
 					]
@@ -657,6 +716,11 @@
 								{"name":"metaDataValue","value":"@enron"}
 								,{"name":"expectedPureHit","value":"474"}
 								,{"name":"TestCase","value":"10027"}
+							]
+							,[
+								{"name":"metaDataValue","value":"\"get f%e stuff\""}
+								,{"name":"expectedPureHit","value":"4"}
+								,{"name":"TestCase","value":"10030"}
 							]
 							,[
 								{"name":"metaDataValue","value":"\"get free stuff\""}
@@ -706,24 +770,79 @@
 						,{"name":"metaDataOptions","value":[
 							[
 								{"name":"metaDataOption","value":"MasterDate"}
-								,{"name":"metaDataValue","value":"2019-06-07"}
-								,{"name":"metaDataVal2","value":"2019-06-14"}
-								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"expectedPureHit","value":"6457"}
 								,{"name":"TestCase","value":"8071"}
 							]
 							,[
 								{"name":"metaDataOption","value":"EmailSentDate"}
-								,{"name":"metaDataValue","value":"2001-05-03"}
-								,{"name":"metaDataVal2","value":"2001-06-11"}
-								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"metaDataValue","value":"2001-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2001-06-11 01:00:00"}
+								,{"name":"expectedPureHit","value":"3319"}
 								,{"name":"TestCase","value":"8059"}
 							]
 							,[
 								{"name":"metaDataOption","value":"EmailSentDate"}
 								,{"name":"metaDataValue","value":"2001-05-03"}
 								,{"name":"metaDataVal2","value":"2001-06-11"}
-								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"expectedPureHit","value":"3412"}
 								,{"name":"TestCase","value":"8081"}
+							]
+							,[
+								{"name":"metaDataOption","value":"AppointmentStartDate"}
+								,{"name":"metaDataValue","value":"2020-01-01"}
+								,{"name":"metaDataVal2","value":"2020-06-30"}
+								,{"name":"expectedPureHit","value":"0"}
+								,{"name":"TestCase","value":"8061"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"metaDataValue","value":"2019-05-03"}
+								,{"name":"metaDataVal2","value":"2019-06-11"}
+								,{"name":"expectedPureHit","value":"6579"}
+								,{"name":"TestCase","value":"8064"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2001-05-03"}
+								,{"name":"metaDataVal2","value":"2001-06-11"}
+								,{"name":"expectedPureHit","value":"3412"}
+								,{"name":"TestCase","value":"8068"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"metaDataValue","value":"2001-05-03"}
+								,{"name":"metaDataVal2","value":"2001-06-11"}
+								,{"name":"expectedPureHit","value":"758"}
+								,{"name":"TestCase","value":"8066"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchrange_When_Then_verify_range_search_criteria":
+					[
+						{"name":"searchType","value":"RANGE"}
+						,{"name":"metaDataOptions","value":[
+							[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"metaDataValue","value":"2000-01-01"}
+								,{"name":"metaDataVal2","value":"2000-03-31"}
+								,{"name":"expectedPureHit","value":"1378"}
+								,{"name":"TestCase","value":"8124"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"metaDataValue","value":"2000-01-01"}
+								,{"name":"metaDataVal2","value":"2000-03-31"}
+								,{"name":"expectedPureHit","value":"299"}
+								,{"name":"TestCase","value":"8126"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"metaDataValue","value":"2000-01-01"}
+								,{"name":"metaDataVal2","value":"2009-03-31"}
+								,{"name":"expectedPureHit","value":"1040"}
+								,{"name":"TestCase","value":"8128"}
 							]
 						]}
 					]
@@ -1035,24 +1154,34 @@
 								,{"name":"TestCase","value":"9811"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10226"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10227"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"37"}
 								,{"name":"TestCase","value":"10232"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(natural AND fire) (combustion AND \"turbine generator\")\"~3"}
+								,{"name":"expectedPureHit","value":"37"}
+								,{"name":"TestCase","value":"10233"}
 							]
 							,[
 								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
 								,{"name":"expectedPureHit","value":"29"}
 								,{"name":"TestCase","value":"10235"}
+							]
+							,[
+								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								,{"name":"expectedPureHit","value":"29"}
+								,{"name":"TestCase","value":"10251"}
 							]
 							,[
 								{"name":"searchValue","value":"\"concept valuable\"~3 AND \"commercial enron\"~5"}
@@ -1085,29 +1214,84 @@
 								,{"name":"TestCase","value":"10432"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR turbine\")\"~3"}
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR turbine)\"~3"}
 								,{"name":"expectedPureHit","value":"39"}
 								,{"name":"TestCase","value":"10445"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(natural AND fire) (combustion AND turbine)\"~3"}
+								,{"name":"expectedPureHit","value":"39"}
+								,{"name":"TestCase","value":"10446"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10449"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10450"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10451"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10452"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natural (\"turbine generator\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10250"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natural (\"fire\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10492"}
+							]
+							,[
+								{"name":"searchValue","value":"\"sell (\"mw @ 6500\")\"~5"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10508"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in-progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11249"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in -progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11249"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in- progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11249"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in - progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11249"}
+							]
+							,[
+								{"name":"searchValue","value":"\"e-mail in-progress)\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11251"}
+							]
+							,[
+								{"name":"searchValue","value":"\"e-mail (\"in- progress\")\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11251"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(\"e- mail\") (\"in- progress\")\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11251"}
 							]
 						]}
 					]
@@ -1241,17 +1425,17 @@
 								,{"name":"TestCase","value":"10225"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10228"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10229"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"37"}
 								,{"name":"TestCase","value":"10230"}
 							]
@@ -1326,24 +1510,29 @@
 								,{"name":"TestCase","value":"10443"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10447"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10448"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10453"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine engine\")\"~3"}
+								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10454"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natural (\"turbine generator\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10254"}
 							]
 							,[
 								{"name":"searchValue","value":"\"VOM $0.92\"~4"}
@@ -1374,6 +1563,81 @@
 								{"name":"metaDataValue","value":"\"(SmartSearch  OR  develope*) (\"##precis?on.\"  OR  w?ere   OR  m?ne*)\"~10"}
 								,{"name":"expectedPureHit","value":"10"}
 								,{"name":"TestCase","value":"11558"}
+							]
+							,[
+								{"name":"searchValue","value":"\"sell (\"mw @ 6500\")\"~5"}
+								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"TestCase","value":"10490"}
+							]
+							,[
+								{"name":"searchValue","value":"\"natural (\"fire\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10492"}
+							]
+							,[
+								{"name":"searchValue","value":"\"pipeline (\"facility (used OR new)\"~5)\"~5"}
+								,{"name":"expectedPureHit","value":"5"}
+								,{"name":"TestCase","value":"10639"}
+							]
+							,[
+								{"name":"searchValue","value":"\"pipeline (\"facil* (used OR new)\"~5)\"~5"}
+								,{"name":"expectedPureHit","value":"9"}
+								,{"name":"TestCase","value":"10640"}
+							]
+							,[
+								{"name":"searchValue","value":"\"New (\"theme (economy OR several)\"~3)\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"10641"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in-progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11248"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in -progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11248"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in- progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11248"}
+							]
+							,[
+								{"name":"searchValue","value":"\"version (\"in - progress\")\"~5"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11248"}
+							]
+							,[
+								{"name":"searchValue","value":"\"e-mail in-progress)\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11250"}
+							]
+							,[
+								{"name":"searchValue","value":"\"e-mail (\"in- progress\")\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11250"}
+							]
+							,[
+								{"name":"searchValue","value":"\"(\"e- mail\") (\"in- progress\")\"~100"}
+								,{"name":"expectedPureHit","value":"1"}
+								,{"name":"TestCase","value":"11250"}
+							]
+							,[
+								{"name":"searchValue","value":"\"simple-cycle\"~3"}
+								,{"name":"expectedPureHit","value":"439"}
+								,{"name":"TestCase","value":"11513"}
+							]
+							,[
+								{"name":"searchValue","value":"\"rogers ect\"~3"}
+								,{"name":"expectedPureHit","value":"156"}
+								,{"name":"TestCase","value":"11517"}
+							]
+							,[
+								{"name":"searchValue","value":"\"when done\"~3"}
+								,{"name":"expectedPureHit","value":"97"}
+								,{"name":"TestCase","value":"11521"}
 							]
 						]}
 					]
