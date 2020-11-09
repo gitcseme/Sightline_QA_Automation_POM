@@ -5143,4 +5143,21 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? wait_until_ingestion_is_approved$")
+	public void wait_until_ingestion_is_approved(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Once you are redirected to the Ingestion Home page after running the Ingestion, save the Ingestion name into the dataMap with the key "ingestionName"
+			//* In the Filter By dropdown, select Approved
+			//* Click the Refresh link until the Ingestion appears
+			//
+			throw new ImplementationException("wait_until_ingestion_is_approved");
+		} else {
+			throw new ImplementationException("NOT wait_until_ingestion_is_approved");
+		}
+
+	}
 } //eof

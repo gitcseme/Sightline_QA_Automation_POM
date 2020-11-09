@@ -10818,8 +10818,830 @@ public class ProductionContext extends CommonContext {
 		}
 		return datFileContents;	
     }
-        	
-	
+        
+
+	@And("^.*(\\[Not\\] )? on_the_native_pdf_mp3_project$")
+	public void on_the_native_pdf_mp3_project(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select the following project: NativePDFMp3Project from the Project dropdown.If the current project has MP3 files in the default automation folder, then just use that.
+			throw new ImplementationException("on_the_native_pdf_mp3_project");
+		} else {
+			throw new ImplementationException("NOT on_the_native_pdf_mp3_project");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enabling_natively_producted_documents_in_the_tiff_section$")
+	public void enabling_natively_producted_documents_in_the_tiff_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionClick Enable for Natively Produced DocumentsSelect File Types as whatever the parameter for tiff_file_type is.Enter a placeholder text "Automated Placeholder <FILE TYPE>" for example: Automated Placeholder Multimedia
+			throw new ImplementationException("enabling_natively_producted_documents_in_the_tiff_section");
+		} else {
+			throw new ImplementationException("NOT enabling_natively_producted_documents_in_the_tiff_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_multimedia_file_group_with_native_files_generate_succesfully$")
+	public void verify_multimedia_file_group_with_native_files_generate_succesfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5842Background info:The folder selection should contain mp3 files. You can check this by going to doc explorer and filtering by folder at the top. The list of documents should contain the audio files for mp3.Verify native, tiff, and dat files are generated successfully for the production. This means if 20 documents are in the folder, 20 docs should be created in the production folder based on file type as well. So if tiff was selected, there should be a folder named TIFF with 20 documents that all have the TIFF extension file.
+			throw new ImplementationException("verify_multimedia_file_group_with_native_files_generate_succesfully");
+		} else {
+			throw new ImplementationException("NOT verify_multimedia_file_group_with_native_files_generate_succesfully");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated$")
+	public void verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5264Verify all documents generated for the production are numbers chronologically based on bates number.Ex. There are 20 documents. The starting bates is A500 and the ending bates is A519. The first document in the folder for productions should be named A500 and there should be 20 documents named with the same pattern all the way to A519. 
+			throw new ImplementationException("verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated");
+		} else {
+			throw new ImplementationException("NOT verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_file_based_placeholdering_for_multimedia_is_successful$")
+	public void verify_the_file_based_placeholdering_for_multimedia_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 58381. Verify the production opens up successfully2. Verify the production displays the placeholder successfully.
+			throw new ImplementationException("verify_the_file_based_placeholdering_for_multimedia_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_the_file_based_placeholdering_for_multimedia_is_successful");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_second_dat_field_is_added$")
+	public void a_second_dat_field_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Add Field on the DAT Field MappingUse the parameters to fill in the data on the screen for the new DAT field
+			throw new ImplementationException("a_second_dat_field_is_added");
+		} else {
+			throw new ImplementationException("NOT a_second_dat_field_is_added");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_native_path_are_populated_in_the_production$")
+	public void verify_the_native_path_are_populated_in_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5165Verify the DAT native path should be displayed correctly in the generated production
+			throw new ImplementationException("verify_the_native_path_are_populated_in_the_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_native_path_are_populated_in_the_production");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? adding_tags_to_native_component$")
+	public void adding_tags_to_native_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check off NativeExpand NativeClick SELECT ALLClick Select TagsCheck Default Automation TagClick SelectExpand the "Advanced" option and enable "Generate Load File (LST)
+			throw new ImplementationException("adding_tags_to_native_component");
+		} else {
+			throw new ImplementationException("NOT adding_tags_to_native_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_was_generated_successfully_with_native_excluded$")
+	public void verify_the_production_was_generated_successfully_with_native_excluded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 53371. Verify the production opens up successfully2. Verify native should be excluded from Production for the redacted documents.
+			throw new ImplementationException("verify_the_production_was_generated_successfully_with_native_excluded");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_was_generated_successfully_with_native_excluded");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_the_production_created$")
+	public void select_the_production_created(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the link of the production's name to open the production
+			throw new ImplementationException("select_the_production_created");
+		} else {
+			throw new ImplementationException("NOT select_the_production_created");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? regenerate_the_in_progress_production$")
+	public void regenerate_the_in_progress_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click back to go to the Generate componentClick Mark IncompleteClick RegenerateCall the method: waiting_for_production_to_be_completeTo wait for the production to be completed
+			throw new ImplementationException("regenerate_the_in_progress_production");
+		} else {
+			throw new ImplementationException("NOT regenerate_the_in_progress_production");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? storing_the_new_bates_number$")
+	public void storing_the_new_bates_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Store the new bates number to verify in the outcome in a new variable in the dictionary
+			throw new ImplementationException("storing_the_new_bates_number");
+		} else {
+			throw new ImplementationException("NOT storing_the_new_bates_number");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_regenerating_an_existing_production_is_successful$")
+	public void verify_regenerating_an_existing_production_is_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5211Verify the bates number regenerated is the same bates number generated as before
+			throw new ImplementationException("verify_regenerating_an_existing_production_is_successful");
+		} else {
+			throw new ImplementationException("NOT verify_regenerating_an_existing_production_is_successful");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_pdf_tiff_is_enabled_for_multi_page$")
+	public void the_pdf_tiff_is_enabled_for_multi_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFFSelect the option for Multi-pageCollapse TIFFExpand PDFSelect the option for Multi-pageCollapse PDF
+			throw new ImplementationException("the_pdf_tiff_is_enabled_for_multi_page");
+		} else {
+			throw new ImplementationException("NOT the_pdf_tiff_is_enabled_for_multi_page");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_numbering_is_set_to_page_level$")
+	public void the_numbering_is_set_to_page_level(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select Page LevelClick Mark CompleteClick Next
+			throw new ImplementationException("the_numbering_is_set_to_page_level");
+		} else {
+			throw new ImplementationException("NOT the_numbering_is_set_to_page_level");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_with_the_given_production_component_numbering$")
+	public void the_production_is_generated_with_the_given_production_component_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:complete_default_document_selectionmark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_is_generated_with_the_given_production_component_numbering");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_with_the_given_production_component_numbering");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number$")
+	public void verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5168Verify the Production Generated on the f inal destination Should have B ates No in Sync with The Docu ment Page No.
+			throw new ImplementationException("verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number");
+		} else {
+			throw new ImplementationException("NOT verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_progressed_through_priv_guard$")
+	public void the_production_is_progressed_through_priv_guard(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:marking_complete_the_next_available_bates_numbercomplete_default_document_selectionmark_complete_default_priv_guard
+			throw new ImplementationException("the_production_is_progressed_through_priv_guard");
+		} else {
+			throw new ImplementationException("NOT the_production_is_progressed_through_priv_guard");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_location_is_completed_with_split_sub_folders$")
+	public void the_production_location_is_completed_with_split_sub_folders(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//1. Set the Production Root Path: to the second option in the dropdown.     1 a. The first option in the dropdown is "Select", so that is why we want it to default to the second.2. Type in a Production Directory:      2 a. The directory should be "Automation" + random 7 digit number + _ + dir     2 b. Ex: Automation5264345_dirMake sure to store the value for the Root Path and directory as it will be used laterSet the Split Count to 53. Click the Mark complete button and verify the following message appears: "Mark Complete successful"4. Click Next
+			throw new ImplementationException("the_production_location_is_completed_with_split_sub_folders");
+		} else {
+			throw new ImplementationException("NOT the_production_location_is_completed_with_split_sub_folders");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_with_the_given_production_through_production_location$")
+	public void the_production_is_generated_with_the_given_production_through_production_location(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:completed_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_is_generated_with_the_given_production_through_production_location");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_with_the_given_production_through_production_location");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_split_count_should_split_the_productions_folders_by_the_number_entered$")
+	public void verify_the_split_count_should_split_the_productions_folders_by_the_number_entered(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5272Verify if the split count is set to 5, that means that each folder in the production's path only counts a maximum of 5 documents per folder.EX: If the document select had 20 documents, there should be 4 folders with 5 documents each.
+			throw new ImplementationException("verify_the_split_count_should_split_the_productions_folders_by_the_number_entered");
+		} else {
+			throw new ImplementationException("NOT verify_the_split_count_should_split_the_productions_folders_by_the_number_entered");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enabling_tech_issue_docs_on_tiff_pdf$")
+	public void enabling_tech_issue_docs_on_tiff_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the TIFF sectionEnable for Tech Issue DocsClick Select TagsSelect Technical_Issue tagType in a placeholder "Automated Tech Tag Placeholder"Close the TIFF sectionExpand the PDF sectionEnable for Tech Issue DocsClick Select TagsSelect Technical_Issue tagType in a placeholder "Automated Tech Tag Placeholder"Close the PDF section
+			throw new ImplementationException("enabling_tech_issue_docs_on_tiff_pdf");
+		} else {
+			throw new ImplementationException("NOT enabling_tech_issue_docs_on_tiff_pdf");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs$")
+	public void verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5002Verify the placeholder text should be displayed on the generated PDF/TIFF
+			throw new ImplementationException("verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs");
+		} else {
+			throw new ImplementationException("NOT verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enabling_natively_produced_documents_in_the_tiff_section$")
+	public void enabling_natively_produced_documents_in_the_tiff_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionClick Enable for Natively Produced DocumentsSelect File Types as whatever the parameter for tiff_file_type is.Enter a placeholder text "Automated Placeholder <FILE TYPE>" for example: Automated Placeholder Multimedia
+			throw new ImplementationException("enabling_natively_produced_documents_in_the_tiff_section");
+		} else {
+			throw new ImplementationException("NOT enabling_natively_produced_documents_in_the_tiff_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_placeholdering_is_enabled_for_non_priv_documents$")
+	public void verify_the_placeholdering_is_enabled_for_non_priv_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Verify Placeholders Display|TC#5000Verify the document created contains a TIFF generated with the placeholder.Verify the text generated is the extracted text from the native
+			throw new ImplementationException("verify_the_placeholdering_is_enabled_for_non_priv_documents");
+		} else {
+			throw new ImplementationException("NOT verify_the_placeholdering_is_enabled_for_non_priv_documents");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? a_third_dat_field_is_added$")
+	public void a_third_dat_field_is_added(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Add Field on the DAT Field MappingUse the parameters to fill in the data on the screen for the new DAT field
+			throw new ImplementationException("a_third_dat_field_is_added");
+		} else {
+			throw new ImplementationException("NOT a_third_dat_field_is_added");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? enabling_tech_issue_docs_on_tiff$")
+	public void enabling_tech_issue_docs_on_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the TIFF sectionEnable for Tech Issue DocsClick Select TagsSelect Technical_Issue tagType in a placeholder "Automated Tech Tag Placeholder"Close the TIFF section
+			throw new ImplementationException("enabling_tech_issue_docs_on_tiff");
+		} else {
+			throw new ImplementationException("NOT enabling_tech_issue_docs_on_tiff");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_document_selection_is_completed$")
+	public void the_document_selection_is_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//doc_options is used to select the appropriate radio buttondoc_selection is used to check the checkbox from the listClick Mark CompleteClick Next
+			throw new ImplementationException("the_document_selection_is_completed");
+		} else {
+			throw new ImplementationException("NOT the_document_selection_is_completed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_production_is_generated_with_the_given_production_component_through_document$")
+	public void the_production_is_generated_with_the_given_production_component_through_document(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This will generate the production with the given production component. This is collection of the following steps:mark_complete_default_priv_guardcomplete_default_production_location_componentcompleted_summary_preview_componentstarting_the_production_generationwaiting_for_production_to_be_complete
+			throw new ImplementationException("the_production_is_generated_with_the_given_production_component_through_document");
+		} else {
+			throw new ImplementationException("NOT the_production_is_generated_with_the_given_production_component_through_document");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tech_issue_docs_display_correctly$")
+	public void verify_tech_issue_docs_display_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5256Verify productions should display the tech issue placeholder on the tech issue documents. Verify the TIFFPageCount from the DAT file should be 1 for the documents which are TechIssue documents.
+			throw new ImplementationException("verify_tech_issue_docs_display_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_tech_issue_docs_display_correctly");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_was_generated_successfully_with_family_documents$")
+	public void verify_the_production_was_generated_successfully_with_family_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5094 / 52601. Verify the production opens up successfully2. Verify the total documents should be 8 pages constructed of the 5 family documents.5260 is verified on step "complete_document_tag_select_with_family"
+			throw new ImplementationException("verify_the_production_was_generated_successfully_with_family_documents");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_was_generated_successfully_with_family_documents");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_productions_generated_with_password_protexted_documents_are_successful$")
+	public void verify_productions_generated_with_password_protexted_documents_are_successful(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//RT 5341Background info:The document selection should have included a password protexted PDF. You can check by going to doc explorer, at the top filter by folder and filter the Default Automation Folder. Check to see the PDFs in the folder has any password protected data.You should be on the Quality Control & Confirmation pageVerify the grid for AUTOMATED QC CHECK has successes for each row in the grid.Test case 5274 covers the code for this.
+			throw new ImplementationException("verify_productions_generated_with_password_protexted_documents_are_successful");
+		} else {
+			throw new ImplementationException("NOT verify_productions_generated_with_password_protexted_documents_are_successful");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_multi_page_documents_are_generated_in_single_pages$")
+	public void verify_multi_page_documents_are_generated_in_single_pages(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5342Background info:The document selection should have included multi page documents. With single page selected in number and sorting, this means a 5 page document would generate 5 pdfs instead of a single pdf. Verify a multi page document is generating pdfs based on the number of pages of the document.
+			throw new ImplementationException("verify_multi_page_documents_are_generated_in_single_pages");
+		} else {
+			throw new ImplementationException("NOT verify_multi_page_documents_are_generated_in_single_pages");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production$")
+	public void verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5091 / 5160 / 5161 / 5162 / 5163 / 6460Verify the generated production has the placeholder text on it for specific file types specified in "enabling_natively_produced_documents_in_the_tiff_section"Verify the redaction text is displayed on the redacted documents based on the default automation redacted tag.Verify the redactions are burned where the redaction was added originally. This means if the redaction was the whole page, that the whole document is burned or if it was a specific section, only that section is burned.
+			throw new ImplementationException("verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production");
+		} else {
+			throw new ImplementationException("NOT verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_is_generated_successfully_without_any_errors$")
+	public void verify_the_production_is_generated_successfully_without_any_errors(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5274You should be on the Quality Control & Confirmation pageVerify the grid for AUTOMATED QC CHECK has successes for each row in the grid. 
+			throw new ImplementationException("verify_the_production_is_generated_successfully_without_any_errors");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_is_generated_successfully_without_any_errors");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents$")
+	public void verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5343Verify redacted documents that were generated keep the redaction style of a black outline, white background, and black font.
+			throw new ImplementationException("verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? entering_tiff_pdf_branding$")
+	public void entering_tiff_pdf_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand the TIFF sectionIn the branding section, enter the following branding in the text field based on the branding_value parameterCollapse the TIFF section.Expand the PDF sectionIn the branding section, enter the following branding in the text field based on the branding_value parameterCollapse the PDF section.
+			throw new ImplementationException("entering_tiff_pdf_branding");
+		} else {
+			throw new ImplementationException("NOT entering_tiff_pdf_branding");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_generated_should_have_branding_wrap_across_the_document$")
+	public void verify_the_production_generated_should_have_branding_wrap_across_the_document(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5278Verify the branding entered is wrapping across the document and not running off the document.The branding should also be centered and not left aligned. 
+			throw new ImplementationException("verify_the_production_generated_should_have_branding_wrap_across_the_document");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_generated_should_have_branding_wrap_across_the_document");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_bates_range_displays_on_the_production_slip_sheet$")
+	public void verify_the_production_bates_range_displays_on_the_production_slip_sheet(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 50691. Verify Production should be generated and Slip Sheet should be displayed Production bates range
+			throw new ImplementationException("verify_the_production_bates_range_displays_on_the_production_slip_sheet");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_bates_range_displays_on_the_production_slip_sheet");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? the_numbering_is_set_to_document$")
+	public void the_numbering_is_set_to_document(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Radio button for Document in the numbering sectionClick Mark CompleteClick Next
+			throw new ImplementationException("the_numbering_is_set_to_document");
+		} else {
+			throw new ImplementationException("NOT the_numbering_is_set_to_document");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering$")
+	public void verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5916 / 6127 / 6128 / 6129You should be on the Quality Control & Confirmation pageVerify the grid for AUTOMATED QC CHECK has successes for each row in the grid.
+			throw new ImplementationException("verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering");
+		} else {
+			throw new ImplementationException("NOT verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_if_no_rotation_specified_generated_productions_retain_thieir_layout$")
+	public void verify_if_no_rotation_specified_generated_productions_retain_thieir_layout(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5351Background info:The document selection should have included documents in portrait mode and landscape mode. You can check by going to doc explorer, at the top filter by folder and filter the Default Automation Folder. Check to see the files to see if any are in landscape or portrait mode.Verify the documents that are landscape are still in landscape layout on the generated production.Verify the documents that are in portrait are still in portrait layout on the generated production.
+			throw new ImplementationException("verify_if_no_rotation_specified_generated_productions_retain_thieir_layout");
+		} else {
+			throw new ImplementationException("NOT verify_if_no_rotation_specified_generated_productions_retain_thieir_layout");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_branding_for_image_docs$")
+	public void select_tiff_branding_for_image_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionEnter text for branding
+			throw new ImplementationException("select_tiff_branding_for_image_docs");
+		} else {
+			throw new ImplementationException("NOT select_tiff_branding_for_image_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_branding_applied_for_image_docs_generated$")
+	public void verify_branding_applied_for_image_docs_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Prerequisite: Mapped ingestion should be completed for documents having 'RequiredPDFGeneration' is TRUETC10474 Verify that branding is applied on all pages for image based documents on generated TIFF fileTC10475 Verify that branding is applied on all pages for image based documents on generated PDF file
+			throw new ImplementationException("verify_branding_applied_for_image_docs_generated");
+		} else {
+			throw new ImplementationException("NOT verify_branding_applied_for_image_docs_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_blank_page_removal_tiff_pdf_component_$")
+	public void select_blank_page_removal_tiff_pdf_component_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionEnable or Disable 'Blank Page Removal' toggle based on 'blank_page_removal' fieldExpand PDF sectionEnable or Disable 'Blank Page Removal' toggle based on 'blank_page_removal' field
+			throw new ImplementationException("select_blank_page_removal_tiff_pdf_component_");
+		} else {
+			throw new ImplementationException("NOT select_blank_page_removal_tiff_pdf_component_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_blank_page_removal_generated_correctly$")
+	public void verify_blank_page_removal_generated_correctly(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5513 To verify that if Blank Page Removal toggle is ON then it should produced the TIFF without blank pages
+			//TC5514 To verify that if Blank Page Removal toggle is OFF then it should produced the TIFF/PDF with blank pages
+			//
+			//* Verify blank pages are removed or not removed
+			//
+			//
+			throw new ImplementationException("verify_blank_page_removal_generated_correctly");
+		} else {
+			throw new ImplementationException("NOT verify_blank_page_removal_generated_correctly");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_clockwise_rotation$")
+	public void select_tiff_clockwise_rotation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSet Rotate Landscape pages to protrait layout: 'Rotate 90 degrees clock-wise'
+			throw new ImplementationException("select_tiff_clockwise_rotation");
+		} else {
+			throw new ImplementationException("NOT select_tiff_clockwise_rotation");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_rotate_90_degrees_clockwise_generated$")
+	public void verify_rotate_90_degrees_clockwise_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5627 To verify that Rotate 90 degrees clockwise page is rotated before the branding is applied
+			throw new ImplementationException("verify_rotate_90_degrees_clockwise_generated");
+		} else {
+			throw new ImplementationException("NOT verify_rotate_90_degrees_clockwise_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_natively_produced_docs$")
+	public void select_tiff_natively_produced_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionClick Placeholders 'Enable for Natively Produced Documents' buttonSelect File Types from 'file_types'Add tags for selected file types
+			throw new ImplementationException("select_tiff_natively_produced_docs");
+		} else {
+			throw new ImplementationException("NOT select_tiff_natively_produced_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_with_database_file_types$")
+	public void verify_production_generated_with_database_file_types(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5362 Verify File group type (.mdb/.mdf) selection under Native for Production should work fineTC5364 Verify "Enable Placeholders by Selecting File Types" for (.mdb/.mdf) under TIFF/PDF should work for Productions
+			throw new ImplementationException("verify_production_generated_with_database_file_types");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_with_database_file_types");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_branding_for_all_pages_of_redacted_image_docs$")
+	public void select_branding_for_all_pages_of_redacted_image_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionSelect LEFT branding locationClick branding 'Insert Metadata Field' buttonInsert 'Confidentiality' metadata fieldSelect CENTER branding locationClick branding 'Insert Metadata Field' buttonInsert 'BatesNumber' metadata fieldSelect RIGHT branding locationClick branding 'Insert Metadata Field' buttonInsert 'Confidentiality' metadata fieldExpand PDF sectionSelect LEFT branding locationClick branding 'Insert Metadata Field' buttonInsert 'Confidentiality' metadata fieldSelect CENTER branding locationClick branding 'Insert Metadata Field' buttonInsert 'BatesNumber' metadata fieldSelect RIGHT branding locationClick branding 'Insert Metadata Field' buttonInsert 'Confidentiality' metadata field
+			throw new ImplementationException("select_branding_for_all_pages_of_redacted_image_docs");
+		} else {
+			throw new ImplementationException("NOT select_branding_for_all_pages_of_redacted_image_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_branding_applied_on_all_pages_for_redacted_image_docs$")
+	public void verify_branding_applied_on_all_pages_for_redacted_image_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Prerequisite: Mapped ingestion should be completed for documents having 'RequiredPDFGeneration' is TRUETC10477 Verify that branding is applied on all pages for redacted image based documents
+			throw new ImplementationException("verify_branding_applied_on_all_pages_for_redacted_image_docs");
+		} else {
+			throw new ImplementationException("NOT verify_branding_applied_on_all_pages_for_redacted_image_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_native_file_types_component$")
+	public void select_native_file_types_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Check Native boxExpand Native sectionSelect file_type checkboxClick 'Select Tags' button
+			throw new ImplementationException("select_native_file_types_component");
+		} else {
+			throw new ImplementationException("NOT select_native_file_types_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_pdf_branding_for_image_docs$")
+	public void select_pdf_branding_for_image_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand PDF sectionEnter text for branding
+			throw new ImplementationException("select_pdf_branding_for_image_docs");
+		} else {
+			throw new ImplementationException("NOT select_pdf_branding_for_image_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_endingbates_dat_component$")
+	public void select_endingbates_dat_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DAT sectionSpecify DAT Field Mapping:
+			//
+			//* Bates > ProductionBatesRange
+			//* Bates > EndingBates
+			//
+			throw new ImplementationException("select_endingbates_dat_component");
+		} else {
+			throw new ImplementationException("NOT select_endingbates_dat_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_endingbates_generated$")
+	public void verify_endingbates_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5530 To Verify Field EndingBates in Production
+			throw new ImplementationException("verify_endingbates_generated");
+		} else {
+			throw new ImplementationException("NOT verify_endingbates_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_dat_component_checkboxes_$")
+	public void select_dat_component_checkboxes_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand DAT section
+			throw new ImplementationException("select_dat_component_checkboxes_");
+		} else {
+			throw new ImplementationException("NOT select_dat_component_checkboxes_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redactions_and_privileged_checkboxes_in_generation$")
+	public void verify_redactions_and_privileged_checkboxes_in_generation(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5756 To Verify Redaction check box under DAT Section in Production Component Section.
+			//TC5757 To Verify Redaction Check box along with Priviledge Check box,In Generated DAT of Production.
+			throw new ImplementationException("verify_redactions_and_privileged_checkboxes_in_generation");
+		} else {
+			throw new ImplementationException("NOT verify_redactions_and_privileged_checkboxes_in_generation");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_tiff_placeholdering_$")
+	public void select_tiff_placeholdering_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Expand TIFF sectionClick 'Enable for Natively Produced Documents' buttonSelect file types defined by 'placeholder_file_type1' and 'placeholder_file_type2'Select Tags defined by 'placeholder_tag1' and 'placeholder_tag2'
+			throw new ImplementationException("select_tiff_placeholdering_");
+		} else {
+			throw new ImplementationException("NOT select_tiff_placeholdering_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_placeholder_for_file_types_and_tags_generated$")
+	public void verify_placeholder_for_file_types_and_tags_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5515 To Verify selection of  one or more tags for placeholdering a set of documents.(For Production)
+			//TC5516 To Verify selection of  one or more tags without selecting any file types for placeholdering a set of documents.(For Production).TC5518 To Verify placeholders of the docs of the selected file types are produced in Production.Verify placeholders are generated for the following scenarios:
+			//
+			//* File types and tags
+			//* Tags only
+			//* File types only
+			//
+			//
+			throw new ImplementationException("verify_placeholder_for_file_types_and_tags_generated");
+		} else {
+			throw new ImplementationException("NOT verify_placeholder_for_file_types_and_tags_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_pdf_with_comments_signature_document_selection$")
+	public void complete_pdf_with_comments_signature_document_selection(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select PDF with Comments/Signature found here:
+			//
+			//* \\INBCTASLSTR01\Storage\IngestionTestData\Automation\RPMXCON-40140
+			//
+			throw new ImplementationException("complete_pdf_with_comments_signature_document_selection");
+		} else {
+			throw new ImplementationException("NOT complete_pdf_with_comments_signature_document_selection");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_generated_with_comments_signature$")
+	public void verify_production_generated_with_comments_signature(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Prerequisite: PDF with Comments/Signature should be intested by Uploaded datasetTC11142 Verify that Production should generate successfully and PDF/TIFF should produce with Comments/Signature
+			throw new ImplementationException("verify_production_generated_with_comments_signature");
+		} else {
+			throw new ImplementationException("NOT verify_production_generated_with_comments_signature");
+		}
+
+	}
 }//EOF
-
-
