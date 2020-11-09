@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.testng.annotations.Test;
 
+import com.google.protobuf.Empty;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -1305,7 +1306,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_DomainAdmin_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_this_page_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1317,7 +1318,7 @@ public class DocViewRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "");
-			dataMap.put("impersonate", "Domain Admin");
+			dataMap.put("impersonate", "Domain Administrator");
 			dataMap.put("security_group", "");
 			dataMap.put("domain", "de");
 			context.login_as_(true, dataMap);
@@ -1331,9 +1332,11 @@ public class DocViewRegression extends RegressionBase {
 			context.apply_this_page_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1344,7 +1347,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_ProjectAdmin_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_this_page_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1356,8 +1359,8 @@ public class DocViewRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
-			dataMap.put("impersonate", "Project Admin");
-			dataMap.put("security_group", "");
+			dataMap.put("impersonate", "Project Administrator");
+			dataMap.put("security_group", "SG1");
 			dataMap.put("domain", "Not a Domain");
 			context.login_as_(true, dataMap);
 			dataMap.put("project", "021320_EG");
@@ -1370,9 +1373,11 @@ public class DocViewRegression extends RegressionBase {
 			context.apply_this_page_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1383,7 +1388,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_ReviewManager_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_this_page_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1409,9 +1414,11 @@ public class DocViewRegression extends RegressionBase {
 			context.apply_this_page_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1422,7 +1429,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive" ,"smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_DomainAdmin_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_rectangle_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1434,7 +1441,7 @@ public class DocViewRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "");
-			dataMap.put("impersonate", "Domain Admin");
+			dataMap.put("impersonate", "Domain Administrator");
 			dataMap.put("security_group", "");
 			dataMap.put("domain", "de");
 			context.login_as_(true, dataMap);
@@ -1448,9 +1455,11 @@ public class DocViewRegression extends RegressionBase {
 			context.apply_rectangle_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1461,7 +1470,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_ProjectAdmin_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_rectangle_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1473,7 +1482,7 @@ public class DocViewRegression extends RegressionBase {
 		try {
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
-			dataMap.put("impersonate", "Project Admin");
+			dataMap.put("impersonate", "Project Administrator");
 			dataMap.put("security_group", "");
 			dataMap.put("domain", "Not a Domain");
 			context.login_as_(true, dataMap);
@@ -1500,7 +1509,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke5"})
 	public void test_Given_sightline_is_launched_and_login_as_ReviewManager_and_change_role_to_Reviewer_and_on_saved_search_page_and_open_saved_search_doc_view_When_apply_rectangle_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1525,10 +1534,13 @@ public class DocViewRegression extends RegressionBase {
 			context.open_saved_search_doc_view(true, dataMap);
 			context.apply_rectangle_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
+			
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
