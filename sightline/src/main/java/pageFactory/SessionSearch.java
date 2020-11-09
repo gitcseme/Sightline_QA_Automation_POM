@@ -119,7 +119,9 @@ public class SessionSearch {
     public ElementCollection getSecurityNamesTree(){ return driver.FindElementsByXPath("//*[@id='JSTree']/div/label"); }
     
     //advanced Content search
-    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath("//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']"); }
+//  public String AdvancedContentSearchInputXPath = "//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+  public String AdvancedContentSearchInputXPath = "//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath(AdvancedContentSearchInputXPath); }
     
     //Audio Search
     public Element getAs_Audio(){ return driver.FindElementById("audio"); }

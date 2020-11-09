@@ -187,7 +187,7 @@ public class SearchContext extends CommonContext {
 
 	public void createAdvancedSearch(String searchType, String option, String searchString, String searchString2) throws ImplementationException {
 		if (searchType.equalsIgnoreCase("content")) {
-			sessionSearch.getAdvancedContentSearchInput().SendKeys(searchString) ;
+			sessionSearch.getActiveElementByXPath(sessionSearch.AdvancedContentSearchInputXPath).SendKeys(searchString) ;
 		} else if (searchType.equalsIgnoreCase("metaData")) {
 			sessionSearch.selectMetaDataOption(option);
 			sessionSearch.setMetaDataValue( null,searchString,null);
