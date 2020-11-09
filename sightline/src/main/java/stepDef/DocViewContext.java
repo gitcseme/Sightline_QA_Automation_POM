@@ -21,6 +21,7 @@ import java.util.Random;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.springframework.aop.ThrowsAdvice;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -30,6 +31,7 @@ import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import com.beust.jcommander.JCommander.Builder;
+import com.sun.jna.platform.unix.X11;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -1349,10 +1351,12 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Highlight tool button
-			throw new ImplementationException("click_highlight_tool");
-		} else {
-			throw new ImplementationException("NOT click_highlight_tool");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_AnnotateIcon().Displayed()  ;}}), Input.wait30); 
+			docView.getDocView_AnnotateIcon().click();
+			pass(dataMap, "successfully clicked highlight tool button");
 		}
+		else fail(dataMap, "failed to click highlight tool button");
 
 	}
 
@@ -1726,11 +1730,57 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_highlight_toolclick_rectangle_highlight_buttonrectangle_highlight_appliedclick_highlight_tool
-			throw new ImplementationException("apply_rectangle_highlight");
-		} else {
-			throw new ImplementationException("NOT apply_rectangle_highlight");
+			
+			click_highlight_tool(scriptState, dataMap);
+			click_rectangle_highlight_button(scriptState, dataMap);
+			rectangle_highlight_applied(scriptState, dataMap);
+			click_highlight_tool(scriptState, dataMap);
+			pass(dataMap, "was able to apply rectangle highlight");
 		}
+		else fail(dataMap, "failed to apply rectangle highlight");
 
+	}
+	
+	@And("^.*(\\[Not\\] )? applied rectangel highlight button") 
+	public void rectangle_highlight_applied(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if(scriptState){
+			Random rand = new Random();
+			int x = rand.nextInt(99) + 1;
+			int y = rand.nextInt(9) + 1;
+			docView.highlightByRectangle(x, y, 0);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingHighlightRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			int size = docView.getExistingHighlightRedactions().FindWebElements().size();
+			dataMap.put("originalHighlightCount", size);
+
+			double originalx = Double.parseDouble(docView.getExistingHighlightRedactions().FindWebElements().get(size-1).getAttribute("x"));
+			double originaly = Double.parseDouble(docView.getExistingHighlightRedactions().FindWebElements().get(size-1).getAttribute("y"));
+			double width = Double.parseDouble(docView.getExistingHighlightRedactions().FindWebElements().get(size-1).getAttribute("width"));
+			double height = Double.parseDouble(docView.getExistingHighlightRedactions().FindWebElements().get(size-1).getAttribute("height"));
+			dataMap.put("highlightx", originalx);
+			dataMap.put("highlighty", originaly);
+			dataMap.put("highlightWidth", width);
+			dataMap.put("highlightHeight", height);
+
+			pass(dataMap, "rectangle highlight applied");
+		}
+		else fail(dataMap, "failed to apply rectange_highlight");
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_rectangle_highlight_button")
+	public void click_rectangle_highlight_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception{
+		if(scriptState){
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getRectangleButton().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			for(WebElement x: docView.getRectangleButton().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) x.click();
+			}
+			
+		}
+		else fail(dataMap, "failed to click rectangle highlight button");
+		
 	}
 
 
@@ -1754,10 +1804,31 @@ public class DocViewContext extends CommonContext {
 			//* Click highlighted rectangle
 			//* Click 'Delete Selected' trashcan button
 			//
-			throw new ImplementationException("rectangle_highlight_deleted");
-		} else {
-			throw new ImplementationException("NOT rectangle_highlight_deleted");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingHighlightRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			int size = docView.getExistingHighlightRedactions().FindWebElements().size();
+			if(size == 0) {
+				fail(dataMap, "no highlights to delete");
+				return;
+			}
+			Actions builder = new Actions(driver.getWebDriver());
+			double originalHeight = (double)dataMap.get("highlightHeight");
+			double originalWidth = (double)dataMap.get("highlightWidth");
+
+			//Find our rectangle to delete based on dimensions of last placed highlight
+			for(WebElement x: docView.getExistingHighlightRedactions().FindWebElements()) {
+				if(Double.parseDouble(x.getAttribute("width")) != originalWidth && Double.parseDouble(x.getAttribute("height")) != originalHeight) continue;
+				builder.moveToElement(x).click().build().perform();
+				break;
+			}
+			//builder.moveToElement(docView.getExistingHighlightRedactions().FindWebElements().get(size-1)).click().build().perform();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Annotate_DeleteIcon().Displayed()  ;}}), Input.wait30); 
+
+			docView.getDocView_Annotate_DeleteIcon().click();
+			pass(dataMap, "succesfully deleted highlight redaction");
 		}
+		else fail(dataMap, "was unable to delete highlight redaction");
 
 	}
 
@@ -1766,14 +1837,48 @@ public class DocViewContext extends CommonContext {
 	public void verify_redaction_highlight_deleted_in_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			//TC7848 Verify the Redaction Tag & Highlighting is deleted successfully in DocView
 			//
 			//* Deleted Redaction & Highlight are not displayed on document
 			//
-			throw new ImplementationException("verify_redaction_highlight_deleted_in_doc_view");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_highlight_deleted_in_doc_view");
+
+			//First verify redaction rectangle deleted
+			verify_redaction_deleted_in_doc_view(scriptState, dataMap);
+
+
+			int beforeDeleteSize = (int)dataMap.get("originalHighlightCount");
+			if(beforeDeleteSize!=1) {
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					docView.getExistingHighlightRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			}
+			//In the case we are going to 1 highlight to 0 -> Just make sure no highlights are left and return pass
+			else {
+				Assert.assertTrue((docView.getExistingHighlightRedactions().FindWebElements().size())==0);
+				pass(dataMap, "verified redaction deleted in docView");
+				return;
+			}
+			//Otherwise go through existing redactions
+			int afterDeleteSize = docView.getExistingHighlightRedactions().FindWebElements().size();
+			double originalHeight = (double)dataMap.get("highlightHeight");
+			double originalWidth = (double)dataMap.get("highlightWidth");
+			
+			//First make sure a redaction was deleted
+			Assert.assertTrue(beforeDeleteSize == afterDeleteSize+1);
+			
+			//Go through redactions and make sure none of them were the original redaction
+			for(WebElement x : docView.getExistingHighlightRedactions().FindWebElements()) {
+				double tempHeight = Double.parseDouble(x.getAttribute("height"));
+				double tempWidth = Double.parseDouble(x.getAttribute("width"));
+
+				Assert.assertTrue(originalHeight!=tempHeight);
+				Assert.assertTrue(originalWidth!=tempWidth);
+			}
+			pass(dataMap, "redaction was verfiied to be delted in doc view");
+
 		}
+		else fail(dataMap, "unable to verify highlight redaction deleted");
 
 	}
 
@@ -1800,8 +1905,6 @@ public class DocViewContext extends CommonContext {
 			}
 			//Otherwise go through existing redactions
 			int afterDeleteSize = docView.getExistingRectangleRedactions().FindWebElements().size();
-			double originalx = (double)dataMap.get("originalx");
-			double originaly = (double)dataMap.get("originaly");
 			double originalHeight = (double)dataMap.get("height");
 			double originalWidth = (double)dataMap.get("width");
 			
@@ -1810,12 +1913,8 @@ public class DocViewContext extends CommonContext {
 			
 			//Go through redactions and make sure none of them were the original redaction
 			for(WebElement x : docView.getExistingRectangleRedactions().FindWebElements()) {
-				double tempx = Double.parseDouble(x.getAttribute("x"));
-				double tempy = Double.parseDouble(x.getAttribute("y"));
 				double tempHeight = Double.parseDouble(x.getAttribute("height"));
 				double tempWidth = Double.parseDouble(x.getAttribute("width"));
-				Assert.assertTrue(tempx!=originalx);
-				Assert.assertTrue(tempy!=originaly);
 				Assert.assertTrue(originalHeight!=tempHeight);
 				Assert.assertTrue(originalWidth!=tempWidth);
 			}

@@ -233,6 +233,7 @@ public class DocViewPage {
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
     public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level0").getWebElement(); }
     public ElementCollection getExistingRectangleRedactions() {return driver.FindElementsByCssSelector(".igViewerGraphics g rect[style = 'opacity: 0.5;']");}
+    public ElementCollection getExistingHighlightRedactions() {return driver.FindElementsByCssSelector(".igAnchor g[data-pcc-mark = 'textmark-1'] ~ rect");}
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocViewReactEditTagByName(String name) {return driver.FindElementByCssSelector(String.format("#ddlRedactionTags option[title = '%s']", name));}
@@ -1754,6 +1755,26 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 				
 					
 			}
+	 
+	 public void highlightByRectangle(int off1, int off2, int coordinate) throws InterruptedException
+	 {
+		try {
+			Actions actions = new Actions(driver.getWebDriver());  
+             //WebElement text = getDocView_Redactrec_textarea();
+             WebElement text = getCorrectSurfaceLevel();
+             Random rand = new Random();
+             int x = rand.nextInt(99) + 1;
+             int y = rand.nextInt(9) + 1;
+             actions.moveToElement(text, off1,off2)
+             .clickAndHold()
+             .moveByOffset(x, y)
+             .release()
+             .perform();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
 	 
 	 public void redactbyrectangle(int off1,int off2,int cordinate,String redactiontag) throws InterruptedException
 	 {
