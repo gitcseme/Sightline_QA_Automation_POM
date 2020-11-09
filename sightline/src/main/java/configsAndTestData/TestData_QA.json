@@ -1,6 +1,6 @@
 {"08122020_NV":{"variables":
 					[
-						{"name":"uid","value":"sqa.consilio4@sqapowered.com"}
+						{"name":"uid","value":"sqa.consilio11@sqapowered.com"}
 						,{"name":"pwd","value":"Q@test_10"}
 					]
 				,"test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned":
@@ -1094,202 +1094,202 @@
 								,{"name":"TestCase","value":"11557"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Practices Environmental\"~6"}
+								{"name":"metaDataValue","value":"\"Practices Environmental\"~6"}
 								,{"name":"expectedPureHit","value":"8"}
 								,{"name":"TestCase","value":"10266"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Prac* Environ*\"~6"}
+								{"name":"metaDataValue","value":"\"Prac* Environ*\"~6"}
 								,{"name":"expectedPureHit","value":"14"}
 								,{"name":"TestCase","value":"10264"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Prac?ices Environ?ental\"~6"}
+								{"name":"metaDataValue","value":"\"Prac?ices Environ?ental\"~6"}
 								,{"name":"expectedPureHit","value":"8"}
 								,{"name":"TestCase","value":"10265"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Environmental Practice*\"~6"}
+								{"name":"metaDataValue","value":"\"Environmental Practice*\"~6"}
 								,{"name":"expectedPureHit","value":"9"}
 								,{"name":"TestCase","value":"9751"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Environmental Practice?\"~6"}
+								{"name":"metaDataValue","value":"\"Environmental Practice?\"~6"}
 								,{"name":"expectedPureHit","value":"8"}
 								,{"name":"TestCase","value":"9752"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Nev* (pow* OR cogen*)\"~5"}
+								{"name":"metaDataValue","value":"\"Nev* (pow* OR cogen*)\"~5"}
 								,{"name":"expectedPureHit","value":"92"}
 								,{"name":"TestCase","value":"9810"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Nev?da (pow?r OR cogener?tion)\"~5"}
+								{"name":"metaDataValue","value":"\"Nev?da (pow?r OR cogener?tion)\"~5"}
 								,{"name":"expectedPureHit","value":"73"}
 								,{"name":"TestCase","value":"9812"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natu* OR peo*) (fir* OR resour*)\"~5"}
+								{"name":"metaDataValue","value":"\"(natu* OR peo*) (fir* OR resour*)\"~5"}
 								,{"name":"expectedPureHit","value":"1079"}
 								,{"name":"TestCase","value":"10222"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natu* OR peo*) (fire OR \"Resources Corp\")\"~3"}
+								{"name":"metaDataValue","value":"\"(natu* OR peo*) (fire OR \"Resources Corp\")\"~3"}
 								,{"name":"expectedPureHit","value":"30"}
 								,{"name":"TestCase","value":"10223"}
 							]
 							,[
-								{"name":"searchValue","value":"\"comm?dity (\"r?sk c?ntracts\"~3)\"~3"}
+								{"name":"metaDataValue","value":"\"comm?dity (\"r?sk c?ntracts\"~3)\"~3"}
 								,{"name":"expectedPureHit","value":"29"}
 								,{"name":"TestCase","value":"10243"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Nevada (pow* OR cogen*)\"~5"}
+								{"name":"metaDataValue","value":"\"Nevada (pow* OR cogen*)\"~5"}
 								,{"name":"expectedPureHit","value":"75"}
 								,{"name":"TestCase","value":"9809"}
 							]
 							,[
-								{"name":"searchValue","value":"\"Nevada (pow?r OR cogener?tion)\"~5"}
+								{"name":"metaDataValue","value":"\"Nevada (pow?r OR cogener?tion)\"~5"}
 								,{"name":"expectedPureHit","value":"73"}
 								,{"name":"TestCase","value":"9811"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion OR \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"natu* fir* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10226"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natu* fir* (combustion \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"natu* fir* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10227"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"(natural OR fire) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"37"}
 								,{"name":"TestCase","value":"10232"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural AND fire) (combustion AND \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"(natural AND fire) (combustion AND \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"37"}
 								,{"name":"TestCase","value":"10233"}
 							]
 							,[
-								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								{"name":"metaDataValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
 								,{"name":"expectedPureHit","value":"29"}
 								,{"name":"TestCase","value":"10235"}
 							]
 							,[
-								{"name":"searchValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
+								{"name":"metaDataValue","value":"\"commodity (\"risk contracts\"~3)\"~3"}
 								,{"name":"expectedPureHit","value":"29"}
 								,{"name":"TestCase","value":"10251"}
 							]
 							,[
-								{"name":"searchValue","value":"\"concept valuable\"~3 AND \"commercial enron\"~5"}
+								{"name":"metaDataValue","value":"\"concept valuable\"~3 AND \"commercial enron\"~5"}
 								,{"name":"expectedPureHit","value":"21"}
 								,{"name":"TestCase","value":"10247"}
 							]
 							,[
-								{"name":"searchValue","value":"\"concept valuable\"~3 OR \"commercial enron\"~5"}
+								{"name":"metaDataValue","value":"\"concept valuable\"~3 OR \"commercial enron\"~5"}
 								,{"name":"expectedPureHit","value":"115"}
 								,{"name":"TestCase","value":"10248"}
 							]
 							,[
-								{"name":"searchValue","value":"\"concept valuable\"~3 NOT \"natural fired\"~5"}
+								{"name":"metaDataValue","value":"\"concept valuable\"~3 NOT \"natural fired\"~5"}
 								,{"name":"expectedPureHit","value":"21"}
 								,{"name":"TestCase","value":"10249"}
 							]
 							,[
-								{"name":"searchValue","value":"\"financial (fixated responsibility)\"~6"}
+								{"name":"metaDataValue","value":"\"financial (fixated responsibility)\"~6"}
 								,{"name":"expectedPureHit","value":"102"}
 								,{"name":"TestCase","value":"10430"}
 							]
 							,[
-								{"name":"searchValue","value":"\"finan* (fixated responsibility)\"~6"}
+								{"name":"metaDataValue","value":"\"finan* (fixated responsibility)\"~6"}
 								,{"name":"expectedPureHit","value":"104"}
 								,{"name":"TestCase","value":"10431"}
 							]
 							,[
-								{"name":"searchValue","value":"\"financi?l (fixated responsibility)\"~6"}
+								{"name":"metaDataValue","value":"\"financi?l (fixated responsibility)\"~6"}
 								,{"name":"expectedPureHit","value":"102"}
 								,{"name":"TestCase","value":"10432"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural OR fire) (combustion OR turbine)\"~3"}
+								{"name":"metaDataValue","value":"\"(natural OR fire) (combustion OR turbine)\"~3"}
 								,{"name":"expectedPureHit","value":"39"}
 								,{"name":"TestCase","value":"10445"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(natural AND fire) (combustion AND turbine)\"~3"}
+								{"name":"metaDataValue","value":"\"(natural AND fire) (combustion AND turbine)\"~3"}
 								,{"name":"expectedPureHit","value":"39"}
 								,{"name":"TestCase","value":"10446"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* OR fi*) (combustion OR \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"(nat* OR fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10449"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(nat* fi*) (combustion OR \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"(nat* fi*) (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"43"}
 								,{"name":"TestCase","value":"10450"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion OR \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"nat* fi* (combustion OR \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10451"}
 							]
 							,[
-								{"name":"searchValue","value":"\"nat* fi* (combustion \"turbine generator\")\"~3"}
+								{"name":"metaDataValue","value":"\"nat* fi* (combustion \"turbine generator\")\"~3"}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10452"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natural (\"turbine generator\")\"~5"}
+								{"name":"metaDataValue","value":"\"natural (\"turbine generator\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10250"}
 							]
 							,[
-								{"name":"searchValue","value":"\"natural (\"fire\")\"~5"}
+								{"name":"metaDataValue","value":"\"natural (\"fire\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10492"}
 							]
 							,[
-								{"name":"searchValue","value":"\"sell (\"mw @ 6500\")\"~5"}
+								{"name":"metaDataValue","value":"\"sell (\"mw @ 6500\")\"~5"}
 								,{"name":"expectedPureHit","value":"6"}
 								,{"name":"TestCase","value":"10508"}
 							]
 							,[
-								{"name":"searchValue","value":"\"version (\"in-progress\")\"~5"}
+								{"name":"metaDataValue","value":"\"version (\"in-progress\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11249"}
 							]
 							,[
-								{"name":"searchValue","value":"\"version (\"in -progress\")\"~5"}
+								{"name":"metaDataValue","value":"\"version (\"in -progress\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11249"}
 							]
 							,[
-								{"name":"searchValue","value":"\"version (\"in- progress\")\"~5"}
+								{"name":"metaDataValue","value":"\"version (\"in- progress\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11249"}
 							]
 							,[
-								{"name":"searchValue","value":"\"version (\"in - progress\")\"~5"}
+								{"name":"metaDataValue","value":"\"version (\"in - progress\")\"~5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11249"}
 							]
 							,[
-								{"name":"searchValue","value":"\"e-mail in-progress)\"~100"}
+								{"name":"metaDataValue","value":"\"e-mail in-progress)\"~100"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11251"}
 							]
 							,[
-								{"name":"searchValue","value":"\"e-mail (\"in- progress\")\"~100"}
+								{"name":"metaDataValue","value":"\"e-mail (\"in- progress\")\"~100"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11251"}
 							]
 							,[
-								{"name":"searchValue","value":"\"(\"e- mail\") (\"in- progress\")\"~100"}
+								{"name":"metaDataValue","value":"\"(\"e- mail\") (\"in- progress\")\"~100"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"11251"}
 							]
