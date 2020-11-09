@@ -127,6 +127,7 @@ public class DocViewPage {
     public Element getDocView_HdrCoddingForm(){ return driver.FindElementByXPath(".//*[@id='HdrCoddingForm']/div/div/i"); }
     public Element getDocView_HdrMetaData(){ return driver.FindElementByXPath(".//*[@id='HdrMetaData']/div/div/i"); }
     public Element getDocView_HdrAnalytics(){ return driver.FindElementByXPath(".//*[@id='HdrAnalytics']/div/div/i"); }
+    public Element getNearDupeDocID() {return driver.FindElementByXPath("(//table[@id = 'dtDocumentNearDuplicates']/tbody/tr/td)[2]");}
     
     //All Tabs-----------------------------------------------------------
     public Element getDocView_DefaultViewTab(){ return driver.FindElementById("aliDocumentDefaultView"); }
@@ -263,7 +264,10 @@ public class DocViewPage {
     public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
     public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
     public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
-    
+    public Element getDocumentHistoryTab() {return driver.FindElementById("liDocumentHistory");}
+    public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
+    public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
+    public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
     
     //default constructor
     public DocViewPage(Driver driver, int i) {
@@ -279,6 +283,17 @@ public class DocViewPage {
         base = new BaseClass(driver);
         sp = new SessionSearch(driver);
         this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+    }
+    
+    public WebElement getCorrectSurfaceLevel() {
+    		for(int i =0; i<10; i++) {
+    			for(int j=0; j<10; j++) {
+    				if(driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().size()!=0) {
+    					return driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().get(0);
+    				}
+    			}
+    		}
+    		return null;
     }
     
     
@@ -1744,7 +1759,8 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		 try {
 			  System.out.println(off1+"...."+off2);
              Actions actions = new Actions(driver.getWebDriver());  
-             WebElement text = getDocView_Redactrec_textarea();
+             //WebElement text = getDocView_Redactrec_textarea();
+             WebElement text = getCorrectSurfaceLevel();
              
              actions.moveToElement(text, off1,off2)
              .clickAndHold()

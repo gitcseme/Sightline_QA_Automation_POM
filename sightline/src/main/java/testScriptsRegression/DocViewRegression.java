@@ -1268,7 +1268,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke2"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_and_apply_rectangle_redaction_When_select_docview_doc_ID00000006_Then_verify_redaction_propagation_in_exact_dupe() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1288,14 +1288,16 @@ public class DocViewRegression extends RegressionBase {
 			dataMap.put("A", "");
 			context.select_docview_doc_(true, dataMap);
 			context.apply_rectangle_redaction(true, dataMap);
-			dataMap.put("docid", "ID00000006");
+			//dataMap.put("docid", "ID00000006");
 			dataMap.put("A", "");
 			context.select_docview_doc_(true, dataMap);
 			context.verify_redaction_propagation_in_exact_dupe(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
