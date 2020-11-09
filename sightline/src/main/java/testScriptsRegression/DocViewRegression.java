@@ -502,7 +502,7 @@ public class DocViewRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive", "WP"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_redaction_transparent() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -512,6 +512,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -525,12 +527,16 @@ public class DocViewRegression extends RegressionBase {
 			context.rectangle_redaction_applied(true, dataMap);
 			context.verify_redaction_transparent(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -538,7 +544,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_all_page_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -548,6 +554,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -574,7 +582,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_page_range_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -584,6 +592,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -610,7 +620,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive" ,"smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_click_rectangle_redaction_button_When_click_rectangle_redaction_button_Then_verify_redaction_control_in_off_state() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -620,6 +630,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -632,15 +644,18 @@ public class DocViewRegression extends RegressionBase {
 			context.click_rectangle_redaction_button(true, dataMap);
 			context.rectangle_redaction_applied(true, dataMap);
 			context.click_rectangle_redaction_button(true, dataMap);
-			context.click_rectangle_redaction_button(true, dataMap);
 			context.verify_redaction_control_in_off_state(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -648,7 +663,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_nav_to_other_doc_When_delete_redaction_with_keyboard_delete_key_Then_verify_redaction_not_deleted_with_keyboard() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -658,6 +673,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -673,9 +690,11 @@ public class DocViewRegression extends RegressionBase {
 			context.delete_redaction_with_keyboard_delete_key(true, dataMap);
 			context.verify_redaction_not_deleted_with_keyboard(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -725,7 +744,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive","smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_and_rectangle_redaction_applied_and_click_grey_redact_tool_When_rectangle_redaction_deleted_Then_verify_rectangle_redaction_deleted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -735,6 +754,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -750,9 +771,11 @@ public class DocViewRegression extends RegressionBase {
 			context.rectangle_redaction_deleted(true, dataMap);
 			context.verify_rectangle_redaction_deleted(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -763,7 +786,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "Pending"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_all_page_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -787,9 +810,11 @@ public class DocViewRegression extends RegressionBase {
 			context.place_redaction(true, dataMap);
 			context.verify_alternate_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -800,7 +825,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "Pending"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_page_range_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -837,7 +862,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_rectangle_redaction_applied_Then_verify_rectangle_redaction() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -847,6 +872,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -860,12 +887,16 @@ public class DocViewRegression extends RegressionBase {
 			context.rectangle_redaction_applied(true, dataMap);
 			context.verify_rectangle_redaction(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+			context.click_grey_redact_tool(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
 			context.close_browser(true, dataMap);
 		}
 
@@ -873,7 +904,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive","Pending"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -883,6 +914,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau2@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.default_redaction_tag_does_not_exist(true, dataMap);
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
@@ -897,9 +930,11 @@ public class DocViewRegression extends RegressionBase {
 			context.place_redaction(true, dataMap);
 			context.verify_alternate_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -910,7 +945,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive","Pending"})
 	public void test_Given_default_redaction_tag_does_not_exist_and_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_this_page_redaction_button_When_place_redaction_Then_verify_alternate_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -920,6 +955,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.default_redaction_tag_does_not_exist(true, dataMap);
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
@@ -940,6 +977,7 @@ public class DocViewRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 
@@ -947,7 +985,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_this_page_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -957,17 +995,18 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
-			dataMap.put("security_group", "SG1");
+			dataMap.put("security_group", "SG2");
 			dataMap.put("domain", "Not a Domain");
 			context.login_as_rmu(true, dataMap);
 			context.on_saved_search_page(true, dataMap);
 			context.open_saved_search_doc_view(true, dataMap);
 			context.click_grey_redact_tool(true, dataMap);
 			context.click_this_page_redaction_button(true, dataMap);
-			context.place_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -976,6 +1015,7 @@ public class DocViewRegression extends RegressionBase {
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 
@@ -983,7 +1023,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_nav_to_other_doc_When_nav_back_to_first_doc_Then_verify_redactions_menu_remains_open() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -993,6 +1033,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -1019,7 +1061,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_click_grey_redact_tool_and_click_rectangle_redaction_button_When_place_redaction_Then_verify_default_redaction_tag_selected() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1029,10 +1071,12 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
-			dataMap.put("security_group", "SG1");
+			dataMap.put("security_group", "SG2");
 			dataMap.put("domain", "Not a Domain");
 			context.login_as_rmu(true, dataMap);
 			context.on_saved_search_page(true, dataMap);
@@ -1042,19 +1086,22 @@ public class DocViewRegression extends RegressionBase {
 			context.place_redaction(true, dataMap);
 			context.verify_default_redaction_tag_selected(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
+
 			context.close_browser(true, dataMap);
 		}
 
 		report.endTest(test);
 	}
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_trueSGSame1_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1064,6 +1111,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("uid", "qapau2@consilio.com");
 			dataMap.put("pwd", "Q@test_10");
@@ -1074,15 +1123,17 @@ public class DocViewRegression extends RegressionBase {
 			context.login_as_rmu(true, dataMap);
 			context.on_saved_search_page(true, dataMap);
 			context.open_saved_search_doc_view(true, dataMap);
-			dataMap.put("tag", "SGSame1");
+			dataMap.put("tag", "SGSame2");
 			dataMap.put("dimensions", "true");
 			context.edit_redaction_(true, dataMap);
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1093,7 +1144,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_falseSGSame1_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1103,6 +1154,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -1117,9 +1170,11 @@ public class DocViewRegression extends RegressionBase {
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1130,7 +1185,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_falseSGSame2_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1140,6 +1195,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -1154,9 +1211,11 @@ public class DocViewRegression extends RegressionBase {
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -1167,7 +1226,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke14"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_search_doc_view_and_edit_redaction_trueSGSame2_When_save_redaction_edit_Then_verify_redaction_edited() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1177,6 +1236,8 @@ public class DocViewRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
+			dataMap.put("uid", "qapau3@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
@@ -1191,9 +1252,11 @@ public class DocViewRegression extends RegressionBase {
 			context.save_redaction_edit(true, dataMap);
 			context.verify_redaction_edited(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
