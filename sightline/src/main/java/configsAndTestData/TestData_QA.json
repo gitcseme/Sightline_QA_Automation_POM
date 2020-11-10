@@ -38,61 +38,61 @@
 								,{"name":"TestCase","value":"151"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientAddresss"}
+								{"name":"metaDataOption","value":"EmailRecipientAddresses"}
 								,{"name":"metaDataValue","value":"\"Joe\""}
 								,{"name":"expectedPureHit","value":"76"}
 								,{"name":"TestCase","value":"172"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientAddress"}
+								{"name":"metaDataOption","value":"EmailRecipientAddresses"}
 								,{"name":"metaDataValue","value":"\"Joe Belford\""}
 								,{"name":"expectedPureHit","value":"4"}
 								,{"name":"TestCase","value":"173"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientAddress"}
+								{"name":"metaDataOption","value":"EmailRecipientAddresses"}
 								,{"name":"metaDataValue","value":"\"Don Miller\""}
 								,{"name":"expectedPureHit","value":"214"}
 								,{"name":"TestCase","value":"2680"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientName"}
+								{"name":"metaDataOption","value":"EmailRecipientNames"}
 								,{"name":"metaDataValue","value":"\"Don Miller\""}
 								,{"name":"expectedPureHit","value":"232"}
 								,{"name":"TestCase","value":"2681"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientAddresss"}
+								{"name":"metaDataOption","value":"EmailRecipientAddresses"}
 								,{"name":"metaDataValue","value":"\"DoesNotExist\""}
 								,{"name":"expectedPureHit","value":"0"}
 								,{"name":"TestCase","value":"176"}
 							]
 							,[
-								{"name":"metaDataOption","value":"SourceDocId"}
+								{"name":"metaDataOption","value":"SourceDocID"}
 								,{"name":"metaDataValue","value":"ICE000478-10-00002452"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"183"}
 							]
 							,[
-								{"name":"metaDataOption","value":"DocId"}
+								{"name":"metaDataOption","value":"DocID"}
 								,{"name":"metaDataValue","value":"ID00037210"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"2106"}
 							]
 							,[
-								{"name":"metaDataOption","value":"DocId"}
+								{"name":"metaDataOption","value":"DocID"}
 								,{"name":"metaDataValue","value":"ID00037*"}
 								,{"name":"expectedPureHit","value":"1000"}
 								,{"name":"TestCase","value":"2108"}
 							]
 							,[
-								{"name":"metaDataOption","value":"DocId"}
+								{"name":"metaDataOption","value":"DocID"}
 								,{"name":"metaDataValue","value":"DoesNotExist"}
 								,{"name":"expectedPureHit","value":"0"}
 								,{"name":"TestCase","value":"2109"}
 							]
 							,[
-								{"name":"metaDataOption","value":"SourceParentDocId"}
+								{"name":"metaDataOption","value":"SourceParentDocID"}
 								,{"name":"metaDataValue","value":"ICE000478-10-00000270"}
 								,{"name":"expectedPureHit","value":"69"}
 								,{"name":"TestCase","value":"183"}
@@ -112,7 +112,7 @@
 							,[
 								{"name":"metaDataOption","value":"DocFileType"}
 								,{"name":"metaDataValue","value":"document"}
-								,{"name":"expectedPureHit","value":"5267"}
+								,{"name":"expectedPureHit","value":"9220"}
 								,{"name":"TestCase","value":"152"}
 							]
 							,[
@@ -130,13 +130,13 @@
 							,[
 								{"name":"metaDataOption","value":"CustodianName"}
 								,{"name":"metaDataValue","value":"\"Noe*\""}
-								,{"name":"expectedPureHit","value":"34578"}
+								,{"name":"expectedPureHit","value":"34758"}
 								,{"name":"TestCase","value":"170"}
 							]
 							,[
 								{"name":"metaDataOption","value":"CustodianName"}
 								,{"name":"metaDataValue","value":"\"N?e*\""}
-								,{"name":"expectedPureHit","value":"34578"}
+								,{"name":"expectedPureHit","value":"34758"}
 								,{"name":"TestCase","value":"170"}
 							]
 							,[
@@ -148,7 +148,7 @@
 							,[
 								{"name":"metaDataOption","value":"FullPath"}
 								,{"name":"metaDataValue","value":"brad_mckay_000.pst"}
-								,{"name":"expectedPureHit","value":"10240"}
+								,{"name":"expectedPureHit","value":"1373"}
 								,{"name":"TestCase","value":"160"}
 							]
 							,[
@@ -165,14 +165,14 @@
 							]
 							,[
 								{"name":"metaDataOption","value":"CreateDate"}
-								,{"name":"metaDataValue","value":"\"2009-05-12 04:35:31\""}
+								,{"name":"metaDataValue","value":"2009-05-12 04:35:31"}
 								,{"name":"expectedPureHit","value":"8"}
 								,{"name":"TestCase","value":"9683"}
 							]
 							,[
 								{"name":"metaDataOption","value":"DocPrimaryLanguage"}
 								,{"name":"metaDataValue","value":"Spanish"}
-								,{"name":"expectedPureHit","value":"6"}
+								,{"name":"expectedPureHit","value":"8"}
 								,{"name":"TestCase","value":"9685"}
 							]
 							,[
@@ -206,13 +206,13 @@
 								,{"name":"TestCase","value":"9690"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailConversionIndex"}
+								{"name":"metaDataOption","value":"EmailConversationIndex"}
 								,{"name":"metaDataValue","value":"01C9D2BB153604B459A05FC347938AD760F4DCF4B4C5"}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"9691"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailInclusionScore"}
+								{"name":"metaDataOption","value":"EmailInclusiveScore"}
 								,{"name":"metaDataValue","value":"00000000"}
 								,{"name":"expectedPureHit","value":"22876"}
 								,{"name":"TestCase","value":"9692"}
@@ -220,7 +220,7 @@
 							,[
 								{"name":"metaDataOption","value":"EmailSentDate"}
 								,{"name":"metaDataValue","value":"1999-12-13 17:25:00"}
-								,{"name":"expectedPureHit","value":"22876"}
+								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"9692"}
 							]
 							,[
@@ -272,7 +272,7 @@
 								,{"name":"TestCase","value":"9701"}
 							]
 							,[
-								{"name":"metaDataOption","value":"RequiredPDFGeneration"}
+								{"name":"metaDataOption","value":"RequirePDFGeneration"}
 								,{"name":"metaDataValue","value":"TRUE"}
 								,{"name":"expectedPureHit","value":"3"}
 								,{"name":"TestCase","value":"9698"}
@@ -284,19 +284,19 @@
 								,{"name":"TestCase","value":"10566"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailCCNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailCCNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"sales@intcx.com \\(sales@intcx.com\\)\""}
 								,{"name":"expectedPureHit","value":"15"}
 								,{"name":"TestCase","value":"10567"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailBCCNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailBCCNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"webb \\(webb\\)\""}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10568"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailToNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailToNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"terie hindsley \\(teriehindsley@hotmail.com\\)\""}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10574"}
@@ -321,7 +321,7 @@
 								,{"name":"TestCase","value":"3125"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailRecipientDomain"}
+								{"name":"metaDataOption","value":"EmailRecipientDomains"}
 								,{"name":"metaDataValue","value":"enron.com"}
 								,{"name":"expectedPureHit","value":"5267"}
 								,{"name":"TestCase","value":"3126"}
@@ -333,19 +333,19 @@
 								,{"name":"TestCase","value":"10570"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailCCNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailCCNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"sales@intcx.com \\(sales@intcx.com\\)\""}
 								,{"name":"expectedPureHit","value":"15"}
 								,{"name":"TestCase","value":"10571"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailBCCNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailBCCNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"webb \\(webb\\)\""}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10572"}
 							]
 							,[
-								{"name":"metaDataOption","value":"EmailToNameAndAddress"}
+								{"name":"metaDataOption","value":"EmailToNamesAndAddresses"}
 								,{"name":"metaDataValue","value":"\"terie hindsley \\(teriehindsley@hotmail.com\\)\""}
 								,{"name":"expectedPureHit","value":"1"}
 								,{"name":"TestCase","value":"10573"}
@@ -1130,12 +1130,12 @@
 							]
 							,[
 								{"name":"metaDataValue","value":"\"(natu* OR peo*) (fir* OR resour*)\"~5"}
-								,{"name":"expectedPureHit","value":"1079"}
+								,{"name":"expectedPureHit","value":"438"}
 								,{"name":"TestCase","value":"10222"}
 							]
 							,[
 								{"name":"metaDataValue","value":"\"(natu* OR peo*) (fire OR \"Resources Corp\")\"~3"}
-								,{"name":"expectedPureHit","value":"30"}
+								,{"name":"expectedPureHit","value":"25"}
 								,{"name":"TestCase","value":"10223"}
 							]
 							,[
@@ -1225,12 +1225,12 @@
 							]
 							,[
 								{"name":"metaDataValue","value":"\"(nat* OR fi*) (combustion OR \"turbine generator\")\"~3"}
-								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"expectedPureHit","value":"46"}
 								,{"name":"TestCase","value":"10449"}
 							]
 							,[
 								{"name":"metaDataValue","value":"\"(nat* fi*) (combustion OR \"turbine generator\")\"~3"}
-								,{"name":"expectedPureHit","value":"43"}
+								,{"name":"expectedPureHit","value":"46"}
 								,{"name":"TestCase","value":"10450"}
 							]
 							,[
