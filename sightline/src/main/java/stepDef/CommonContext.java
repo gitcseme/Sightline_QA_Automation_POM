@@ -21,6 +21,7 @@ import automationLibrary.Driver;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -322,17 +323,27 @@ public class CommonContext {
 	}
     
     public void pass(HashMap dataMap, String message) {
-    	log( dataMap,  true,  message);
+    	log( dataMap,  LogStatus.PASS,  message);
     }
     public void fail(HashMap dataMap, String message) {
-    	log( dataMap,  false,  message);
+    	log( dataMap,  LogStatus.FAIL,  message);
     }
-    public void log(HashMap dataMap, boolean result, String message) {
+    public void error(HashMap dataMap, String message) {
+    	log( dataMap,  LogStatus.ERROR,  message);
+    }
+    public void log(HashMap dataMap, LogStatus result, String message) {
     	ExtentTest test = (dataMap != null) ? (ExtentTest) dataMap.get("ExtentTest") : null;
     	if (test != null) {
-    		test.log((result ? LogStatus.PASS : LogStatus.FAIL), message);
+    		test.log(result, message);
     	}
-    	assert result;
+    	SoftAssert sa= new SoftAssert();
+    	sa.assertTrue(result == LogStatus.PASS);
+    	
+    	if (result == LogStatus.FAIL) assert false;
+    }
+    
+    public void log(HashMap dataMap, boolean result, String message) {
+    	log(dataMap,(result ? LogStatus.PASS : LogStatus.FAIL), message);
     }
     
     public void logTestResult(HashMap dataMap, String tid, String result, String description) {
