@@ -577,7 +577,7 @@ public class SearchContext extends CommonContext {
 				logTestResult(dataMap,testCaseNo,"pass",msg);
 	    		System.out.println(msg);
 	    	} else {
-	    		String msg = String.format("ERROR: Search is done for '%s' and PureHit is %s but expected %s.", searchString, pureHit, expectedPureHit);
+	    		String msg = String.format("ERROR: %s is done for '%s' and PureHit is %s but expected %s.", searchType, searchString, pureHit, expectedPureHit);
 				logTestResult(dataMap,testCaseNo,"fail",msg);
 				error(dataMap,msg);
 	    		System.out.println(msg);
