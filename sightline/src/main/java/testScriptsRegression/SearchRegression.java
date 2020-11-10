@@ -148,10 +148,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -852,7 +860,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Search", "Positive", "Smoke"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_with_proximity_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
