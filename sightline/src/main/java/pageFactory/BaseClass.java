@@ -37,6 +37,7 @@ public class BaseClass {
     public Element getBGnotificationCount1(){ return driver.FindElementByXPath("//b[@class='badge']"); }
     public Element getBGnotificationCount2(){ return driver.FindElementByXPath("//b[@class='badge bg-color-red bounceIn animated']"); }
     public Element getSignoutMenu(){ return driver.FindElementByXPath("//*[@id='user-selector']"); }
+    public Element getSignoutButton() { return driver.FindElementById("btnSignOut");}
     public Element getChangeRole(){ return driver.FindElementByXPath("//*[@id='utility-group']//a[text()='Change Role']"); }
     public Element getSelectRole(){ return driver.FindElementByXPath("//select[@name='Role']"); }
     public Element getSelectDomain(){ return driver.FindElementById("ddlAvailableDomains"); }

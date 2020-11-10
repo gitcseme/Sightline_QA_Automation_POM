@@ -2641,30 +2641,34 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke24"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_SGSame2_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_When_apply_rectangle_redaction_without_changing_tag_Then_verify_redaction_saved_with_last_applied_tag() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		//HashMap dataMap = new HashMap();
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
 
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction_{SGSame2} and log_out and login_to_saved_search_rmu and open_saved_doc_view When apply_rectangle_redaction_without_changing_tag Then verify_redaction_saved_with_last_applied_tag");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			//Return to these values once EG project reopens
+			/*
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG1");
 			dataMap.put("domain", "Not a Domain");
+			//dataMap.put("tag", "SGSame2");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
-			context.on_doc_with_redactions(true, dataMap);
-			dataMap.put("tag", "SGSame2");
+			//context.on_doc_with_redactions(true, dataMap);
 			context.apply_rectangle_redaction_(true, dataMap);
 			context.log_out(true, dataMap);
-			dataMap.put("project", "021320_EG");
-			dataMap.put("impersonate", "Review Manager");
-			dataMap.put("security_group", "SG1");
-			dataMap.put("domain", "Not a Domain");
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
 			context.apply_rectangle_redaction_without_changing_tag(true, dataMap);
@@ -2672,9 +2676,11 @@ public class DocViewRegression extends RegressionBase {
 			dataMap.put("TestCase", "11385|11386");
 			context.verify_redaction_saved_with_last_applied_tag(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -2685,30 +2691,33 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "smoke24"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_this_page_redaction_SGSame2_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_When_apply_this_page_redaction_without_changing_tag_Then_verify_redaction_saved_with_last_applied_tag() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		//HashMap dataMap = new HashMap();
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
 
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_this_page_redaction_{SGSame2} and log_out and login_to_saved_search_rmu and open_saved_doc_view When apply_this_page_redaction_without_changing_tag Then verify_redaction_saved_with_last_applied_tag");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			/*
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG1");
 			dataMap.put("domain", "Not a Domain");
+			dataMap.put("tag", "SGSame2");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
-			context.on_doc_with_redactions(true, dataMap);
-			dataMap.put("tag", "SGSame2");
+			//context.on_doc_with_redactions(true, dataMap);
 			context.apply_this_page_redaction_(true, dataMap);
 			context.log_out(true, dataMap);
-			dataMap.put("project", "021320_EG");
-			dataMap.put("impersonate", "Review Manager");
-			dataMap.put("security_group", "SG1");
-			dataMap.put("domain", "Not a Domain");
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
 			context.apply_this_page_redaction_without_changing_tag(true, dataMap);
@@ -2716,9 +2725,11 @@ public class DocViewRegression extends RegressionBase {
 			dataMap.put("TestCase", "11385|11386");
 			context.verify_redaction_saved_with_last_applied_tag(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

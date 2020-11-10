@@ -1,5 +1,7 @@
 package stepDef;
 
+import static org.testng.Assert.assertEquals;
+
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Robot;
@@ -37,9 +39,11 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import ch.qos.logback.core.Context;
+import ch.qos.logback.core.joran.conditional.ElseAction;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import cucumber.api.java.es.E;
 import cucumber.api.java.en.And;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
@@ -497,7 +501,7 @@ public class DocViewContext extends CommonContext {
 			//* Select 'SGSame1' redaction tag on Redaction Tag Save Confirmation popup
 
 			//Store default value of dropdown for later context's verifications
-			String tag = (String)dataMap.get("redactionTag");
+			String tag = (String)dataMap.get("tag");
 			if(tag == null) tag = "Default Automation Redaction";
 
 			//Using consilio's method, these parameters seem to work well
@@ -732,7 +736,7 @@ public class DocViewContext extends CommonContext {
 			docView.getDocView_SelectReductionLabel().click();
 			String defaultValue = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
 
-			String tag = (String)dataMap.get("redactionTag");
+			String tag = (String)dataMap.get("tag");
 			dataMap.put("defaultValue", defaultValue);
 			docView.getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(tag);
 			
@@ -1962,10 +1966,13 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonrectangle_redaction_applied_{SGSame2}click_grey_redact_tool
-			throw new ImplementationException("apply_rectangle_redaction_");
-		} else {
-			throw new ImplementationException("NOT apply_rectangle_redaction_");
+			click_grey_redact_tool(scriptState, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			rectangle_redaction_applied(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
+			pass(dataMap, "applied rectangle redaction");
 		}
+		else fail(dataMap, "failed to apply rectangle redaction");
 
 	}
 
@@ -1978,10 +1985,17 @@ public class DocViewContext extends CommonContext {
 			//* Click user account dropdown
 			//* Click 'Sign Out' button
 			//
-			throw new ImplementationException("log_out");
-		} else {
-			throw new ImplementationException("NOT log_out");
+			base = new BaseClass(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getSignoutMenu().Displayed()  ;}}), Input.wait30); 
+			base.getSignoutMenu().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getSignoutButton().Displayed()  ;}}), Input.wait30); 
+			base.getSignoutButton().click();
+			close_browser(scriptState, dataMap);
+			pass(dataMap, "successfully logged out ");
 		}
+		else fail(dataMap, "failed to log out");
 
 	}
 
@@ -1991,11 +2005,45 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonrectangle_redaction_applied_default_tagclick_grey_redact_tool
-			throw new ImplementationException("apply_rectangle_redaction_without_changing_tag");
-		} else {
-			throw new ImplementationException("NOT apply_rectangle_redaction_without_changing_tag");
+			
+			click_grey_redact_tool(scriptState, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			rectangle_redaction_applied(scriptState, dataMap);
+			pass(dataMap, "was able to apply rectangle without changing the tag");
 		}
+		else fail(dataMap, "failed to apply rectangle without changing the tag");
 
+	}
+	
+	
+	@And("^.*(\\[Not\\] )? rectangle_redaction_applied_default_tag$")
+	public void rectangle_redaction_applied_default_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception{
+		
+		if(scriptState) {
+			try {
+				Actions actions = new Actions(driver.getWebDriver());  
+				WebElement text = docView.getCorrectSurfaceLevel();
+				Random rand = new Random();
+				int x = rand.nextInt(99) + 1;
+				int y = rand.nextInt(9) + 1;
+				int off1 = rand.nextInt(99) + 1;
+				int off2 = rand.nextInt(9) + 1;
+				actions.moveToElement(text, off1,off2)
+				.clickAndHold()
+				.moveByOffset(x, y)
+				.release()
+				.perform();
+			}
+			catch (Exception e) { e.printStackTrace();}
+			dataMap.put("defaultValue", docView.PageViewTagString());
+
+			//* Click 'Save' button on Redaction Tag Save Confirmation popup
+			docView.getDocViewSaveRedactionButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			pass(dataMap, "successfully applied rectangle redaction with default tag");
+		}
+		else fail(dataMap, "failed rectangle_redaction_applied_default_tag");
 	}
 
 
@@ -2007,10 +2055,10 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Redaction saved with the last used tag on the document after logging in with a different user
 			//
-			throw new ImplementationException("verify_redaction_saved_with_last_applied_tag");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_saved_with_last_applied_tag");
+			Assert.assertEquals(((String)dataMap.get("defaultValue")), ((String)dataMap.get("tag")));
+			pass(dataMap, "redaction saved with last tag");
 		}
+		else fail(dataMap, "failed to verify redaction saved");
 
 	}
 
@@ -2020,10 +2068,13 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonthis_page_redaction_applied_{SGSame2}click_grey_redact_tool
-			throw new ImplementationException("apply_this_page_redaction_");
-		} else {
-			throw new ImplementationException("NOT apply_this_page_redaction_");
+			click_grey_redact_tool(true, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			click_this_page_redaction_button(scriptState, dataMap);
+			this_page_redaction_applied(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
 		}
+		else fail(dataMap, "failed to apply this page redaction");
 
 	}
 
@@ -2033,13 +2084,35 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonthis_page_redaction_applied_with_default_tagclick_grey_redact_tool
-			throw new ImplementationException("apply_this_page_redaction_without_changing_tag");
-		} else {
-			throw new ImplementationException("NOT apply_this_page_redaction_without_changing_tag");
+			click_grey_redact_tool(scriptState, dataMap);
+			click_this_page_redaction_button(scriptState, dataMap);
+			this_page_redaction_applied(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
+			
+			pass(dataMap, "passed this page redaction");
+			
+			
 		}
+		else fail(dataMap, "Failed to apply this page redaction");
 
 	}
 
+	public void this_page_redaction_applied_with_default_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception{
+		
+		if(scriptState) {
+			String defaultValue = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+			dataMap.put("defaultValue", defaultValue);
+
+			docView.getDocViewSaveRedactionButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getConfirmPopUp().Displayed()  ;}}), Input.wait30); 
+			pass(dataMap, "applied this page redaction");
+
+		}
+		else fail(dataMap,"failed to apply this page redaction with default tag");
+		
+	}
+	 
 
 	@When("^.*(\\[Not\\] )? apply_rectangle_redaction_with_default_tag$")
 	public void apply_rectangle_redaction_with_default_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
