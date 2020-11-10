@@ -579,7 +579,7 @@ public class SearchContext extends CommonContext {
 	    	} else {
 	    		String msg = String.format("ERROR: Search is done for '%s' and PureHit is %s but expected %s.", searchString, pureHit, expectedPureHit);
 				logTestResult(dataMap,testCaseNo,"fail",msg);
-				//fail(dataMap,msg);
+				error(dataMap,msg);
 	    		System.out.println(msg);
 	    	}
 
@@ -658,7 +658,7 @@ public class SearchContext extends CommonContext {
 		if (scriptState && !autoSuggestVisible) {
 			err = "No auto suggest caused as expected.";
 			logTestResult(dataMap,subTestCaseNo,"fail",err);
-			fail(dataMap,err);
+			error(dataMap,err);
 		} else if (!scriptState && !autoSuggestVisible) {
 			logTestResult(dataMap,"TBD","pass", "Auto suggest not found as expected.");
 		} else {  
@@ -729,7 +729,7 @@ public class SearchContext extends CommonContext {
 						if (!autoSuggested) {
 							err = String.format("Auto suggest with %s chars does not match search text.",searchText.length());
 							logTestResult(dataMap,"5768","fail",err);
-							//fail(dataMap,err);
+							error(dataMap,err);
 						} else {
 							logTestResult(dataMap,"5768","pass",String.format("Auto suggest with %s chars matched",searchText.length()));
 
@@ -738,7 +738,7 @@ public class SearchContext extends CommonContext {
 							} else {
 								err = String.format("Auto suggest should not have succeeded with '%s' text entered.",searchText);
 								logTestResult(dataMap,testCaseNo,"fail",err);
-								//fail(dataMap,err);
+								error(dataMap,err);
 								
 							}
 						}
@@ -796,14 +796,14 @@ public class SearchContext extends CommonContext {
 		if (scriptState) {
 			String searchName = (String) dataMap.get("searchName");
 			if (searchName == null) {
-				fail(dataMap,"Search Name not provided");
+				error(dataMap,"Search Name not provided");
 			} else {
 				Element savedSearch = sessionSearch.getSavedSearchName(searchName);
 				try {
 					String msg = String.format("Search saved as '%s' but not expected to saved as Search",searchName);
 					savedSearch.Exists();
 					logTestResult(dataMap,testCaseNo,"fail",msg);
-					fail(dataMap,msg);
+					error(dataMap,msg);
 				} catch (Exception e) {
 					String msg = String.format("Search Name '%s' not found as a 'Saved Search' as expected",searchName);
 					logTestResult(dataMap,testCaseNo,"pass",msg);

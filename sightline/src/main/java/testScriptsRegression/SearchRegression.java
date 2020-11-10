@@ -200,10 +200,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_advanced_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+			    try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -244,10 +252,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+			    try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -332,10 +348,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+			    try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 			
 		} catch (ImplementationException e) {
@@ -377,10 +401,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_advanced_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 			
 		} catch (ImplementationException e) {
@@ -427,10 +459,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -472,10 +512,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_advanced_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -520,10 +568,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -565,10 +621,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_advanced_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -657,9 +721,17 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.select_advanced_search(true, dataMap);
-				context.verify_autosuggest(false, dataMap);
-				context.cancel_metadata_insert(true,dataMap);
+		        try {
+					context.select_advanced_search(true, dataMap);
+					context.verify_autosuggest(false, dataMap);
+					context.cancel_metadata_insert(true,dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -700,9 +772,17 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.select_search(true, dataMap);
-				context.verify_autosuggest(true, dataMap);
-				context.cancel_metadata_insert(true,dataMap);
+		        try {
+					context.select_search(true, dataMap);
+					context.verify_autosuggest(true, dataMap);
+					context.cancel_metadata_insert(true,dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -743,9 +823,17 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.select_search(true, dataMap);
-				context.verify_autosuggest(false, dataMap);
-				context.cancel_metadata_insert(true,dataMap);
+		        try {
+					context.select_search(true, dataMap);
+					context.verify_autosuggest(false, dataMap);
+					context.cancel_metadata_insert(true,dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -842,10 +930,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -887,10 +983,18 @@ public class SearchRegression extends RegressionBase {
 		        	JSONObject data = iterator.next();
 		        	dataMap.put(data.get("name"), data.get("value"));
 		        }
-				context.create_advanced_search(true, dataMap);
-				context.click_search(true, dataMap);
-				context.verify_search_returned(true, dataMap);
-				context.remove_search_criteria(true, dataMap);
+		        try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+		        } catch (Exception e) {
+		        	e.printStackTrace();
+		        	
+		        	//try to recover by going back to Search page
+		        	// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+		        }
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
