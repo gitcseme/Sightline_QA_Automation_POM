@@ -122,7 +122,7 @@ public class SearchRegression extends RegressionBase {
 	/*
 	public void test_Given_verify_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	*/
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -166,7 +166,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchForEach_MetaData_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -210,7 +210,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchRegex_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -297,7 +297,7 @@ public class SearchRegression extends RegressionBase {
 	/*
 	public void test_Given_verify_is_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	*/
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchis_When_Then_verify_is_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -347,7 +347,7 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_verify_fulltext_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	*/
 	
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchfull_text_search_When_Then_verify_fulltext_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -392,7 +392,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchfull_text_search_When_Then_verify_fulltext_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -440,7 +440,7 @@ public class SearchRegression extends RegressionBase {
 	/*
 	public void test_Given_verify_range_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	*/
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -488,7 +488,7 @@ public class SearchRegression extends RegressionBase {
 	/*
 	public void test_Given_on_production_Search_Session_page_and_create_searchlong_search_When_Then_verify_long_search_criteria() throws Throwable
 	*/
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_verify_long_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -533,7 +533,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_select_advanced_search_with_CustodianName_When_Then_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -577,7 +577,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -620,7 +620,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_not_select_search_with_metaDataValue_causes_autosuggest_When_Then_not_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -718,7 +718,7 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_regex_When_Then_verify_search_returned() throws Throwable
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetaData_with_proximity_boolean_regex_combo_When_Then_verify_search_returned() throws Throwable {
 	*/
-	@Test(groups = {"Search", "Positive"})
+	@Test(groups = {"Search", "Positive", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_proximity_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
@@ -763,7 +763,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Search", "Positive", "Smoke"})
+	@Test(groups = {"Search", "Positive", "Smoke", "Regression"})
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_with_proximity_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
