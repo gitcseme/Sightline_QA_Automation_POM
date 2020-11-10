@@ -270,6 +270,7 @@ public class DocViewPage {
     public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
     public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
     public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
+    public ElementCollection getAmountOfRedactionTags() {return driver.FindElementsById("#dvCheckboxes");}
     
     //default constructor
     public DocViewPage(Driver driver, int i) {

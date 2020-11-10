@@ -2419,21 +2419,27 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke23"})
+	@Test(groups = {"DocView, Positive", "smoke33"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_this_page_redaction_Then_verify_redaction_applied() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
 
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions When apply_this_page_redaction Then verify_redaction_applied");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			/*
 			dataMap.put("project", "08122020_NV");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "Default Security Group");
 			dataMap.put("domain", "Not a Domain");
 			dataMap.put("redactionTag", "Default Automation Redaction");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
 			//context.on_doc_with_redactions(true, dataMap);
@@ -2457,32 +2463,41 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke24"})
+	@Test(groups = {"DocView, Positive", "smoke33"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_When_click_applied_redaction_Then_verify_1_redaction_tag_per_redaction() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		//HashMap dataMap = new HashMap();
 
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+		
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction When click_applied_redaction Then verify_1_redaction_tag_per_redaction");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			/*
 			dataMap.put("project", "021320_EG");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "SG1");
 			dataMap.put("domain", "Not a Domain");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
-			context.on_doc_with_redactions(true, dataMap);
+			//context.on_doc_with_redactions(true, dataMap);
 			context.apply_rectangle_redaction(true, dataMap);
 			context.click_applied_redaction(true, dataMap);
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "4684");
 			context.verify_1_redaction_tag_per_redaction(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -2493,21 +2508,27 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke23"})
+	@Test(groups = {"DocView, Positive", "smoke33"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_no_redactions_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_apply_rectangle_highlight_and_reload_the_page_and_rectangle_highlight_deleted_When_reload_the_page_Then_verify_redaction_highlight_deleted_in_doc_view() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
+
 
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_no_redactions and apply_rectangle_redaction and rectangle_redaction_deleted and apply_rectangle_highlight and reload_the_page and rectangle_highlight_deleted When reload_the_page Then verify_redaction_highlight_deleted_in_doc_view");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			/*
 			dataMap.put("project", "08122020_NV");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "Default Security Group");
 			dataMap.put("domain", "Not a Domain");
 			dataMap.put("redactionTag", "Redacted Privilege");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
 			//context.on_doc_with_no_redactions(true, dataMap);
@@ -2571,28 +2592,30 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive", "smoke23"})
+	@Test(groups = {"DocView, Positive", "smoke33"})
 	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_no_redactions_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_When_reload_the_page_Then_verify_redaction_deleted_in_doc_view() throws Throwable
 	{
 
 		HashMap dataMap = new HashMap();
-		/*
+		
 		String methodName = new Throwable() 
                 .getStackTrace()[0] 
                 .getMethodName(); 
 		getMethodData(dataMap,methodName);
-		*/
+		
 
 		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_no_redactions and apply_rectangle_redaction and rectangle_redaction_deleted When reload_the_page Then verify_redaction_deleted_in_doc_view");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			/*
 			dataMap.put("project", "08122020_NV");
 			dataMap.put("impersonate", "Review Manager");
 			dataMap.put("security_group", "Default Security Group");
 			dataMap.put("domain", "Not a Domain");
 			dataMap.put("redactionTag", "Redacted Privilege");
+			*/
 			context.login_to_saved_search_rmu(true, dataMap);
 			context.open_saved_doc_view(true, dataMap);
 			//context.on_doc_with_no_redactions(true, dataMap);

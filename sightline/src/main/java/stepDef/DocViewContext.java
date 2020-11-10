@@ -498,6 +498,7 @@ public class DocViewContext extends CommonContext {
 
 			//Store default value of dropdown for later context's verifications
 			String tag = (String)dataMap.get("redactionTag");
+			if(tag == null) tag = "Default Automation Redaction";
 
 			//Using consilio's method, these parameters seem to work well
 			docView.redactbyrectangle(100, 10, 0, tag);
@@ -776,8 +777,19 @@ public class DocViewContext extends CommonContext {
 				return;
 			}
 			Actions builder = new Actions(driver.getWebDriver());
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+
+			//Find our rectangle to delete based on dimensions of last placed highlight
+			for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+				if(Double.parseDouble(x.getAttribute("width")) != originalWidth && Double.parseDouble(x.getAttribute("height")) != originalHeight) continue;
+				builder.moveToElement(x).click().build().perform();
+				break;
+			}
+
 			//Get the last redaction added(last index in our list of redactions)
-			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			//builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+
 			//get rid of prior save popup
 			if(docView.getCloseButton().FindWebElements().size()!=0) {
 				docView.getCloseButton().FindWebElements().get(0).click();
@@ -1701,12 +1713,28 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click applied redaction
-			throw new ImplementationException("click_applied_redaction");
-		} else {
-			throw new ImplementationException("NOT click_applied_redaction");
-		}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(size == 0) {
+				fail(dataMap, "no redactions to click");
+				return;
+			}
+			Actions builder = new Actions(driver.getWebDriver());
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
 
+			//Find our rectangle to click based on dimensions of last placed redaction
+			for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+				if(Double.parseDouble(x.getAttribute("width")) != originalWidth && Double.parseDouble(x.getAttribute("height")) != originalHeight) continue;
+				builder.moveToElement(x).click().build().perform();
+				break;
+			}
+		}
+		else fail(dataMap, "failed to click the applied redaction");
 	}
+
+	
 
 
 	@Then("^.*(\\[Not\\] )? verify_1_redaction_tag_per_redaction$")
@@ -1715,12 +1743,17 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//TC4684 Verify one redaction tag for should be selected per redaction when redaction is done with all the available options for redactions
 			//
+
 			//* Only 1 redaction tag selected per redaction
-			//
-			throw new ImplementationException("verify_1_redaction_tag_per_redaction");
-		} else {
-			throw new ImplementationException("NOT verify_1_redaction_tag_per_redaction");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Redactedit_selectlabel().Displayed()  ;}}), Input.wait30); 
+			docView.getDocView_Redactedit_selectlabel().click();
+			String ourTag = (String)dataMap.get("redactionTag");
+			//Must be only 1 redaction tag that is our tag
+			Assert.assertEquals(docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title"),ourTag);
+			pass(dataMap, "verified that there is only one redaction tag");
 		}
+		else fail(dataMap, "failed to verify 1 redaction tag");
 
 	}
 
@@ -1915,8 +1948,7 @@ public class DocViewContext extends CommonContext {
 			for(WebElement x : docView.getExistingRectangleRedactions().FindWebElements()) {
 				double tempHeight = Double.parseDouble(x.getAttribute("height"));
 				double tempWidth = Double.parseDouble(x.getAttribute("width"));
-				Assert.assertTrue(originalHeight!=tempHeight);
-				Assert.assertTrue(originalWidth!=tempWidth);
+				Assert.assertTrue(originalHeight!=tempHeight || originalWidth!=tempWidth);
 			}
 			pass(dataMap, "redaction was verfiied to be delted in doc view");
 		}
