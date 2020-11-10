@@ -10246,4 +10246,1347 @@ public class ProductionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_on_the_native_pdf_mp3_project_and_begin_new_production_process_and_enabling_natively_producted_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_multimedia_file_group_with_native_files_generate_succesfully() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and on_the_native_pdf_mp3_project and begin_new_production_process and enabling_natively_producted_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_multimedia_file_group_with_native_files_generate_succesfully");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_production_home_page(true, dataMap);
+			context.on_the_native_pdf_mp3_project(true, dataMap);
+			context.begin_new_production_process(true, dataMap);
+			dataMap.put("tiff_file_type", "Multimedia");
+			context.enabling_natively_producted_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_multimedia_file_group_with_native_files_generate_succesfully(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("text", "true");
+			dataMap.put("pdf", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_bates_number_generated_should_be_in_sync_with_actual_documents_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_on_the_native_pdf_mp3_project_and_begin_new_production_process_and_enabling_natively_producted_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_file_based_placeholdering_for_multimedia_is_successful() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and on_the_native_pdf_mp3_project and begin_new_production_process and enabling_natively_producted_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_file_based_placeholdering_for_multimedia_is_successful");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("uid", "qapau4@consilio.com");
+			dataMap.put("pwd", "Q@test_10");
+			context.login_as_pau(true, dataMap);
+			context.on_production_home_page(true, dataMap);
+			context.on_the_native_pdf_mp3_project(true, dataMap);
+			context.begin_new_production_process(true, dataMap);
+			dataMap.put("tiff_file_type", "Multimedia");
+			context.enabling_natively_producted_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_file_based_placeholdering_for_multimedia_is_successful(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_the_default_dat_section_and_a_second_dat_field_is_added_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_native_path_are_populated_in_the_production() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_the_default_dat_section and a_second_dat_field_is_added and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_native_path_are_populated_in_the_production");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.complete_the_default_dat_section(true, dataMap);
+			dataMap.put("field_classification", "File Path");
+			dataMap.put("source_field", "NativePath");
+			dataMap.put("dat_field", "AutomatedNativePath");
+			context.a_second_dat_field_is_added(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_native_path_are_populated_in_the_production(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_adding_tags_to_native_component_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_production_was_generated_successfully_with_native_excluded() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and adding_tags_to_native_component and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_production_was_generated_successfully_with_native_excluded");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.adding_tags_to_native_component(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("text", "true");
+			dataMap.put("pdf", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_production_was_generated_successfully_with_native_excluded(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_the_default_dat_section_and_a_second_dat_field_is_added_and_the_production_is_generated_with_the_given_production_component_and_navigate_back_to_the_production_home_page_and_select_the_production_created_and_regenerate_the_in_progress_production_When_storing_the_new_bates_number_Then_verify_regenerating_an_existing_production_is_successful() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_the_default_dat_section and a_second_dat_field_is_added and the_production_is_generated_with_the_given_production_component and navigate_back_to_the_production_home_page and select_the_production_created and regenerate_the_in_progress_production When storing_the_new_bates_number Then verify_regenerating_an_existing_production_is_successful");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.complete_the_default_dat_section(true, dataMap);
+			dataMap.put("field_classification", "File Path");
+			dataMap.put("source_field", "NativePath");
+			dataMap.put("dat_field", "AutomatedNativePath");
+			context.a_second_dat_field_is_added(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigate_back_to_the_production_home_page(true, dataMap);
+			context.select_the_production_created(true, dataMap);
+			context.regenerate_the_in_progress_production(true, dataMap);
+			context.storing_the_new_bates_number(true, dataMap);
+			context.verify_regenerating_an_existing_production_is_successful(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_the_pdf_tiff_is_enabled_for_multi_page_and_complete_complex_production_component_and_the_numbering_is_set_to_page_level_and_the_production_is_generated_with_the_given_production_component_numbering_When_navigating_to_the_vm_production_location_Then_verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and the_pdf_tiff_is_enabled_for_multi_page and complete_complex_production_component and the_numbering_is_set_to_page_level and the_production_is_generated_with_the_given_production_component_numbering When navigating_to_the_vm_production_location Then verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.the_pdf_tiff_is_enabled_for_multi_page(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_numbering_is_set_to_page_level(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component_numbering(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_generated_production_has_bates_no_in_sync_with_the_document_page_number(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_progressed_through_priv_guard_and_the_production_location_is_completed_with_split_sub_folders_and_the_production_is_generated_with_the_given_production_through_production_location_When_navigating_to_the_vm_production_location_Then_verify_the_split_count_should_split_the_productions_folders_by_the_number_entered() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_progressed_through_priv_guard and the_production_location_is_completed_with_split_sub_folders and the_production_is_generated_with_the_given_production_through_production_location When navigating_to_the_vm_production_location Then verify_the_split_count_should_split_the_productions_folders_by_the_number_entered");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_progressed_through_priv_guard(true, dataMap);
+			context.the_production_location_is_completed_with_split_sub_folders(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_through_production_location(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_split_count_should_split_the_productions_folders_by_the_number_entered(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_tech_issue_docs_on_tiff_pdf_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_tech_issue_docs_on_tiff_pdf and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.enabling_tech_issue_docs_on_tiff_pdf(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_placeholder_text_is_available_in_the_generated_placeholder_pdfs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_natively_produced_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_placeholdering_is_enabled_for_non_priv_documents() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_natively_produced_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_placeholdering_is_enabled_for_non_priv_documents");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("file_type", "Word / Text Files (.doc, .txt, .rtf, etc.)");
+			context.enabling_natively_produced_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_placeholdering_is_enabled_for_non_priv_documents(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_the_default_dat_section_and_a_second_dat_field_is_added_and_a_third_dat_field_is_added_and_enabling_tech_issue_docs_on_tiff_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_the_document_selection_is_completed_and_the_production_is_generated_with_the_given_production_component_through_document_When_navigating_to_the_vm_production_location_Then_verify_tech_issue_docs_display_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_the_default_dat_section and a_second_dat_field_is_added and a_third_dat_field_is_added and enabling_tech_issue_docs_on_tiff and complete_complex_production_component and marking_complete_the_next_available_bates_number and the_document_selection_is_completed and the_production_is_generated_with_the_given_production_component_through_document When navigating_to_the_vm_production_location Then verify_tech_issue_docs_display_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.complete_the_default_dat_section(true, dataMap);
+			dataMap.put("field_classification", "Production");
+			dataMap.put("source_field", "TIFFPageCount");
+			dataMap.put("dat_field", "count");
+			context.a_second_dat_field_is_added(true, dataMap);
+			dataMap.put("field_classification", "Doc Basic");
+			dataMap.put("source_field", "DocID");
+			dataMap.put("dat_field", "doc");
+			context.a_third_dat_field_is_added(true, dataMap);
+			context.enabling_tech_issue_docs_on_tiff(true, dataMap);
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.marking_complete_the_next_available_bates_number(true, dataMap);
+			dataMap.put("doc_selection", "Techincal_Issue");
+			dataMap.put("doc_options", "Select Tags");
+			context.the_document_selection_is_completed(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component_through_document(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_tech_issue_docs_display_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_complete_document_tag_selection_with_family_and_mark_complete_default_priv_guard_and_complete_default_production_location_component_and_completed_summary_preview_component_and_starting_the_production_generation_and_waiting_for_production_to_be_complete_When_navigating_to_the_vm_production_location_Then_verify_the_production_was_generated_successfully_with_family_documents() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and marking_complete_the_next_available_bates_number and complete_document_tag_selection_with_family and mark_complete_default_priv_guard and complete_default_production_location_component and completed_summary_preview_component and starting_the_production_generation and waiting_for_production_to_be_complete When navigating_to_the_vm_production_location Then verify_the_production_was_generated_successfully_with_family_documents");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("text", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.marking_complete_the_next_available_bates_number(true, dataMap);
+			context.complete_document_tag_selection_with_family(true, dataMap);
+			context.mark_complete_default_priv_guard(true, dataMap);
+			context.complete_default_production_location_component(true, dataMap);
+			context.completed_summary_preview_component(true, dataMap);
+			context.starting_the_production_generation(true, dataMap);
+			context.waiting_for_production_to_be_complete(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_production_was_generated_successfully_with_family_documents(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_clicking_review_production_Then_verify_productions_generated_with_password_protexted_documents_are_successful() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When clicking_review_production Then verify_productions_generated_with_password_protexted_documents_are_successful");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.clicking_review_production(true, dataMap);
+			context.verify_productions_generated_with_password_protexted_documents_are_successful(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_multi_page_documents_are_generated_in_single_pages() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_multi_page_documents_are_generated_in_single_pages");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_multi_page_documents_are_generated_in_single_pages(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_Emailmsg_Notes_eml_etc_natively_produced_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_{Email(.msg,Notes,.eml,etc.)}_natively_produced_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("file_type", "Email (.msg, Notes, .eml, etc.)");
+			context.enabling_natively_produced_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_ArchiveFileszip_rar_etc_natively_produced_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_{ArchiveFiles(.zip,.rar,etc.)}_natively_produced_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("file_type", "Archive Files (.zip, .rar, etc.)");
+			context.enabling_natively_produced_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_AdobePortableDocumentFormatpdf_natively_produced_documents_in_the_tiff_section_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_{AdobePortableDocumentFormat(.pdf)}_natively_produced_documents_in_the_tiff_section and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("file_type", "Adobe Portable Document Format (.pdf)");
+			context.enabling_natively_produced_documents_in_the_tiff_section(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_placeholder_and_redaction_text_is_generated_for_selected_file_types_on_the_generated_production(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_with_document_level_numbering_and_complete_default_document_selection_and_the_production_is_generated_with_the_given_production_component_through_document_When_clicking_review_production_Then_verify_the_production_is_generated_successfully_without_any_errors() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and marking_complete_the_next_available_bates_number_with_document_level_numbering and complete_default_document_selection and the_production_is_generated_with_the_given_production_component_through_document When clicking_review_production Then verify_the_production_is_generated_successfully_without_any_errors");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.marking_complete_the_next_available_bates_number_with_document_level_numbering(true, dataMap);
+			context.complete_default_document_selection(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component_through_document(true, dataMap);
+			context.clicking_review_production(true, dataMap);
+			context.verify_the_production_is_generated_successfully_without_any_errors(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_production_generated_keeps_the_redaction_style_on_redacted_documents(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_entering_tiff_pdf_branding_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_the_production_generated_should_have_branding_wrap_across_the_document() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and entering_tiff_pdf_branding and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_the_production_generated_should_have_branding_wrap_across_the_document");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("branding_value", "A very long branding should be displayed here for test case purposes. We want this branding to wrap across the page and not go off the page. The branding should also be centered on the page instead of left aligned. This is the expected result and should be wrapping around the page when the production is generated successfully.");
+			context.entering_tiff_pdf_branding(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_production_generated_should_have_branding_wrap_across_the_document(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_enabling_slip_sheets_on_tiff_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_complete_document_tag_selection_with_family_and_the_production_is_generated_with_the_given_production_component_through_document_When_navigating_to_the_vm_production_location_Then_verify_the_production_bates_range_displays_on_the_production_slip_sheet() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and enabling_slip_sheets_on_tiff and complete_complex_production_component and marking_complete_the_next_available_bates_number and complete_document_tag_selection_with_family and the_production_is_generated_with_the_given_production_component_through_document When navigating_to_the_vm_production_location Then verify_the_production_bates_range_displays_on_the_production_slip_sheet");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("sheet_value", "ProductionBatesRange");
+			dataMap.put("sheet_tab", "Calculated");
+			context.enabling_slip_sheets_on_tiff(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.marking_complete_the_next_available_bates_number(true, dataMap);
+			context.complete_document_tag_selection_with_family(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component_through_document(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_the_production_bates_range_displays_on_the_production_slip_sheet(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_numbering_is_set_to_document_and_the_production_is_generated_with_the_given_production_component_through_document_When_clicking_review_production_Then_verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_numbering_is_set_to_document and the_production_is_generated_with_the_given_production_component_through_document When clicking_review_production Then verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("text", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("mp3", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_numbering_is_set_to_document(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component_through_document(true, dataMap);
+			context.clicking_review_production(true, dataMap);
+			context.verify_productions_are_generated_succesfully_for_mp3_files_using_document_numbering(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production, Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_the_production_is_generated_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_if_no_rotation_specified_generated_productions_retain_thieir_layout() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and the_production_is_generated_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_if_no_rotation_specified_generated_productions_retain_thieir_layout");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_is_generated_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_if_no_rotation_specified_generated_productions_retain_thieir_layout(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_branding_for_image_docs_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_branding_applied_for_image_docs_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_branding_for_image_docs and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_branding_applied_for_image_docs_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.select_tiff_branding_for_image_docs(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_branding_applied_for_image_docs_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_blank_page_removal_tiff_pdf_component_false_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_blank_page_removal_generated_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_blank_page_removal_tiff_pdf_component_{false} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_blank_page_removal_generated_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("blank_page_removal", "false");
+			context.select_blank_page_removal_tiff_pdf_component_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_blank_page_removal_generated_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_blank_page_removal_tiff_pdf_component_true_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_blank_page_removal_generated_correctly() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_blank_page_removal_tiff_pdf_component_{true} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_blank_page_removal_generated_correctly");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("blank_page_removal", "true");
+			context.select_blank_page_removal_tiff_pdf_component_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_blank_page_removal_generated_correctly(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_clockwise_rotation_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_rotate_90_degrees_clockwise_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_clockwise_rotation and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_rotate_90_degrees_clockwise_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.select_tiff_clockwise_rotation(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_rotate_90_degrees_clockwise_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_natively_produced_docs_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_production_generated_with_database_file_types() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_natively_produced_docs and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_production_generated_with_database_file_types");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("file_type", "Database Files (.mdb, .mdf, etc)");
+			context.select_tiff_natively_produced_docs(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_production_generated_with_database_file_types(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_branding_for_all_pages_of_redacted_image_docs_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_branding_applied_on_all_pages_for_redacted_image_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_branding_for_all_pages_of_redacted_image_docs and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_branding_applied_on_all_pages_for_redacted_image_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.select_branding_for_all_pages_of_redacted_image_docs(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "true");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_branding_applied_on_all_pages_for_redacted_image_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_native_file_types_component_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_production_generated_with_database_file_types() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_native_file_types_component and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_production_generated_with_database_file_types");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("file_type", "Database Files (.mdb, .mdf, etc)");
+			context.select_native_file_types_component(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_production_generated_with_database_file_types(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_pdf_branding_for_image_docs_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_branding_applied_for_image_docs_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_pdf_branding_for_image_docs and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_branding_applied_for_image_docs_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.select_pdf_branding_for_image_docs(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "false");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_branding_applied_for_image_docs_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_endingbates_dat_component_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_endingbates_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_endingbates_dat_component and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_endingbates_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			context.select_endingbates_dat_component(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_endingbates_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_dat_component_checkboxes_truetrue_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_redactions_and_privileged_checkboxes_in_generation() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_dat_component_checkboxes_{true}{true} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_redactions_and_privileged_checkboxes_in_generation");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat_redactions", "true");
+			dataMap.put("dat_privileged", "true");
+			context.select_dat_component_checkboxes_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_redactions_and_privileged_checkboxes_in_generation(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_placeholdering_WordTextFilesEmailDefaultAutomationTagAttorney_Client_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_placeholder_for_file_types_and_tags_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_placeholdering_{Word/TextFiles}{Email}{DefaultAutomationTag}{Attorney_Client} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_placeholder_for_file_types_and_tags_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("placeholder_tag2", "Attorney_Client");
+			dataMap.put("placeholder_file_type2", "Email");
+			dataMap.put("placeholder_file_type1", "Word/Text Files");
+			dataMap.put("placeholder_tag1", "Default Automation Tag");
+			context.select_tiff_placeholdering_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_placeholder_for_file_types_and_tags_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_placeholdering_DefaultAutomationTagAttorney_Client_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_placeholder_for_file_types_and_tags_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_placeholdering_{}{}{DefaultAutomationTag}{Attorney_Client} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_placeholder_for_file_types_and_tags_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("placeholder_tag2", "Attorney_Client");
+			dataMap.put("placeholder_file_type2", "");
+			dataMap.put("placeholder_file_type1", "");
+			dataMap.put("placeholder_tag1", "Default Automation Tag");
+			context.select_tiff_placeholdering_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_placeholder_for_file_types_and_tags_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_tiff_placeholdering_WordTextFilesEmail_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_placeholder_for_file_types_and_tags_generated() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_tiff_placeholdering_{Word/TextFiles}{Email}{}{} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_placeholder_for_file_types_and_tags_generated");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("placeholder_tag2", "");
+			dataMap.put("placeholder_file_type2", "Email");
+			dataMap.put("placeholder_file_type1", "Word/Text Files");
+			dataMap.put("placeholder_tag1", "");
+			context.select_tiff_placeholdering_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_placeholder_for_file_types_and_tags_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_complete_complex_production_component_and_marking_complete_the_next_available_bates_number_and_complete_pdf_with_comments_signature_document_selection_and_the_production_is_generated_from_document_selection_When_navigating_to_the_vm_production_location_Then_verify_production_generated_with_comments_signature() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and complete_complex_production_component and marking_complete_the_next_available_bates_number and complete_pdf_with_comments_signature_document_selection and the_production_is_generated_from_document_selection When navigating_to_the_vm_production_location Then verify_production_generated_with_comments_signature");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "true");
+			dataMap.put("tiff", "false");
+			context.complete_complex_production_component(true, dataMap);
+			context.marking_complete_the_next_available_bates_number(true, dataMap);
+			context.complete_pdf_with_comments_signature_document_selection(true, dataMap);
+			context.the_production_is_generated_from_document_selection(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_production_generated_with_comments_signature(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Production", "Positive"})
+	public void test_Given_login_to_new_production_and_select_dat_component_checkboxes_truefalse_and_complete_complex_production_component_and_the_production_generation_is_started_with_the_given_production_component_When_navigating_to_the_vm_production_location_Then_verify_redactions_and_privileged_checkboxes_in_generation() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_production and select_dat_component_checkboxes_{true}{false} and complete_complex_production_component and the_production_generation_is_started_with_the_given_production_component When navigating_to_the_vm_production_location Then verify_redactions_and_privileged_checkboxes_in_generation");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_production(true, dataMap);
+			dataMap.put("dat_redactions", "true");
+			dataMap.put("dat_privileged", "false");
+			context.select_dat_component_checkboxes_(true, dataMap);
+			dataMap.put("dat", "true");
+			dataMap.put("native", "false");
+			dataMap.put("pdf", "false");
+			dataMap.put("tiff", "true");
+			context.complete_complex_production_component(true, dataMap);
+			context.the_production_generation_is_started_with_the_given_production_component(true, dataMap);
+			context.navigating_to_the_vm_production_location(true, dataMap);
+			context.verify_redactions_and_privileged_checkboxes_in_generation(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 } //eof
