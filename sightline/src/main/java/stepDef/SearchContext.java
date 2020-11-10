@@ -509,7 +509,7 @@ public class SearchContext extends CommonContext {
 	public void verify_search_returned(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		String testCaseNo = (dataMap.get("TestCase")!=null) ? (String) dataMap.get("TestCase") : "TBD";
 		String searchType = (String) dataMap.get("searchType");
-		searchType = (searchType == null) ? "Search " : String.format("%s Search ",searchType);
+		searchType = (searchType == null) ? "Search " : (searchType.equalsIgnoreCase("MetaData")) ? String.format("%s '%s' search ",searchType,dataMap.get("metaDataOption")): String.format("%s search ",searchType);
 		String searchString = (String) dataMap.get("searchString");
 		if (scriptState) {
 	    	// while loading look for warnings, in case of proximity search
