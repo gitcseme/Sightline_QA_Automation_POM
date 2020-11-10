@@ -154,7 +154,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -206,7 +207,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -258,7 +260,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -354,7 +357,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -407,7 +411,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -465,7 +470,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -518,7 +524,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -574,7 +581,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -627,7 +635,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -726,7 +735,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_autosuggest(false, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -777,7 +787,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_autosuggest(true, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -828,7 +839,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_autosuggest(false, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -936,7 +948,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
@@ -989,7 +1002,8 @@ public class SearchRegression extends RegressionBase {
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
 		        } catch (Exception e) {
-		        	e.printStackTrace();
+		        	context.error(dataMap, e.getMessage());
+		        	//e.printStackTrace();
 		        	
 		        	//try to recover by going back to Search page
 		        	// continue with the next test case
