@@ -103,7 +103,7 @@ public class SavedSearch {
     public Element getSelectSearchWithID(String serachName){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[2]"); }
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
     public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'"+name+"')]"); }
-    
+    public Element getSharedDefaultSecurityGroup() {return driver.FindElementByXPath("//*[text()='Shared with Default Security Group']");}
     //quick batch
     public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
     

@@ -43,8 +43,8 @@ public class DocViewContext extends CommonContext {
 	public void on_production_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 	 */
-
-
+	
+	DocViewPage docView;
 
 	@And("^.*(\\[Not\\] )? open_saved_audio_doc_view$")
 	public void open_saved_audio_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -110,11 +110,12 @@ public class DocViewContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Click 'Saved with SG1' search group
-			SavedSearch savedSearch = new SavedSearch(driver);
-			savedSearch.getSavedSearchByGroupName("Saved with SG1");
-
+//			SavedSearch savedSearch = new SavedSearch(driver);
+//			savedSearch.getSavedSearchByGroupName("Saved with SG1").click();
+			savedSearch.getSharedDefaultSecurityGroup().click();
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchTableRadioButtons().getElementByIndex(0).click();
+			
 			//* Click 'Doc View' button at the top of the page
 			savedSearch.getToDocView().click();
 
@@ -881,9 +882,12 @@ public class DocViewContext extends CommonContext {
 			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
 			//* Saved Search page is displayed
 			//
-			throw new ImplementationException("on_saved_search_page");
+			String url = (String) dataMap.get("URL");
+    		webDriver.get(url+"/SavedSearch/SavedSearches");
+    		driver.waitForPageToBeReady();
+			pass(dataMap, "On Saved search Page");
 		} else {
-			throw new ImplementationException("NOT on_saved_search_page");
+			fail(dataMap,"Did not navigate to Saved search page");
 		}
 
 	}
@@ -1215,9 +1219,10 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Grey Redacte tool not displayed for Project Admin user
 			//
-			throw new ImplementationException("verify_redaction_icon_not_displayed_to_project_admin");
+			Assert.assertFalse(docView.getGreyRedactButton().Visible());
+			pass(dataMap, "Redaction icon is not displayed");
 		} else {
-			throw new ImplementationException("NOT verify_redaction_icon_not_displayed_to_project_admin");
+			fail(dataMap, "Redaction icon is displayed");
 		}
 
 	}

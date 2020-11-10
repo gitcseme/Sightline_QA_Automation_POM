@@ -241,7 +241,8 @@ public class DocViewPage {
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
     public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
-    
+    public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
+    public Element getSharedWithSG1Search() {return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//*[text()='Shared with SG1']");}
     
     //default constructor
     public DocViewPage(Driver driver, int i) {
