@@ -295,6 +295,8 @@ public class SessionSearch {
     //Similar to the overloaded Function of the same name
     //This one does not rely on the appropriate ListItem Index, instead deleting the first avaliable item
     public Element removeSearchQueryRemove(){ 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getActiveElementByXPath(SearchQueryTextXpath).Enabled()  ;}}), Input.wait30);
     	Element removeLineItem = getActiveElementByXPath(SearchQueryTextXpath); 
 		Actions builder=new Actions(driver.getWebDriver());
 		// Mouse hover to see X button
