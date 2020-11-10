@@ -1377,5 +1377,9 @@
 							]
 						]}
 					]
+					,"test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_search_page_When_open_saved_search_doc_view_Then_verify_redaction_icon_not_displayed_to_project_admin":
+					[
+						{"name": "security_group", "value": "Default Security Group"}
+					]
 				}
 }

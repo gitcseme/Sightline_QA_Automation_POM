@@ -108,16 +108,22 @@ public class DocViewContext extends CommonContext {
 	public void open_saved_search_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			//* Click 'Saved with SG1' search group
-//			SavedSearch savedSearch = new SavedSearch(driver);
-//			savedSearch.getSavedSearchByGroupName("Saved with SG1").click();
-			savedSearch.getSharedDefaultSecurityGroup().click();
+			System.out.println("on search page");
+			String securityGroup = (String)dataMap.get("security_group");
+			SavedSearch savedSearch = new SavedSearch(driver,0);
+			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
 			//* Click radio button for first saved search
-			savedSearch.getSavedSearchTableRadioButtons().getElementByIndex(0).click();
+			savedSearch.getSavedSearchRadioButtonRows().getElementByIndex(0).click();
 			
 			//* Click 'Doc View' button at the top of the page
-			savedSearch.getToDocView().click();
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(savedSearch.getToDocView().getWebElement()).perform();
+			savedSearch.getToDocView2().click();
+			driver.waitForPageToBeReady();
 
 			pass(dataMap, "Open saved search doc view");
 		} else {
