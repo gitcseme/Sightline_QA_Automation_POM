@@ -11644,4 +11644,138 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? complete_pdf_production_component$")
+	public void complete_pdf_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select the TIFF / PDF checkboxClick TIFF / PDF to expand itClick the Generate PDF radio buttonClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Click "+Specify Branding by Selecting Tags"Click Select TagsCheck off "Default Automation Tag"Click SelectEnter "Branding 1" in the first placeholder text for brandingEnter "Branding 2" in the second placeholder text for brandingClick the Mark Complete buttonClose the green success toast message that appears Click the Next button
+			throw new ImplementationException("complete_pdf_production_component");
+		} else {
+			throw new ImplementationException("NOT complete_pdf_production_component");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? custom_number_sorting_is_added_$")
+	public void custom_number_sorting_is_added_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Based on the parameters:1. The parameter for this will be the amount of digits we randomize for this field. If 4 is here, that means we randomize a 4 digit number and Type the number in "Beginning Bates #"2. Type the "Prefix:" letter3. Type the suffix letter.4. Type the Min Number LengthClick Mark CompletedClick Next
+			Random rnd = new Random();
+			String prefix = (String) dataMap.get("prefix");
+			int minLength = Integer.parseInt((String)dataMap.get("min_length"));
+			String minimumNumber = Integer.toString(minLength);
+			int beginningBates = Integer.parseInt((String)dataMap.get("beginning_bates"));
+			String suffix = (String) dataMap.get("suffix");
+
+			if(beginningBates == 1) {
+				int low = 0;
+				int high = 10;
+				int randSingleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randSingleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+
+			else if(beginningBates == 2) {
+				int low = 10;
+				int high = 100;
+				int randDoubleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randDoubleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+
+			else if(beginningBates == 3) {
+				int low = 100;
+				int high = 1000;
+				int randTripleDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randTripleDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+
+			else {
+				int low = 1000;
+				int high = 10000;
+				int randQuadDigit = rnd.nextInt(high-low) + low;
+				String randDigit = Integer.toString(randQuadDigit);
+				prod.getBeginningBates().click();
+				prod.getBeginningBates().SendKeys(Keys.chord(Keys.CONTROL, "a"));
+				prod.getBeginningBates().SendKeys(randDigit);
+			}
+
+
+			prod.gettxtBeginningBatesIDPrefix().click();
+			prod.gettxtBeginningBatesIDPrefix().SendKeys(prefix);
+
+			prod.gettxtBeginningBatesIDSuffix().click();
+			prod.gettxtBeginningBatesIDSuffix().SendKeys(suffix);
+
+			prod.gettxtBeginningBatesIDMinNumLength().click();
+			prod.gettxtBeginningBatesIDMinNumLength().SendKeys(minimumNumber);
+
+			prod.getMarkCompleteLink().click();
+			prod.getNextButton().click();
+
+		} else {
+			 fail(dataMap, "Custom number sorting is not added");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? wait_until_production_is_generated$")
+	public void wait_until_production_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* After clicking the Generate button, wait until the Status says "Post-Generation QC checks Complete" (you might want to add a loop that checks the status, if the status "Post-Generation QC checks Complete", exit the loop)
+			//* Once the Status is "Post-Generation QC checks Complete", it should automatically navigate you to the Quality Control & Confirmation section
+			//
+			throw new ImplementationException("wait_until_production_is_generated");
+		} else {
+			throw new ImplementationException("NOT wait_until_production_is_generated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_can_be_downloaded$")
+	public void verify_the_production_can_be_downloaded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7612: To Verify that in productions, the Bates Number field supports Bates Numbers as large as 1,000,000,000TC 10856: To verify that Production should generate successfully if Prefix and Suffix is less than 50 charactersTC 10852:To verify that Production using template should generate with Prefix and Suffix having 50 charactersTC 10857: To verify that Production should generate successfully if Suffix is upto 50 charactersTC 10860: To verify that Production should generate successfully if Prefix is upto 50 characters
+			//* Once Production has been generated you should be taken to the Quality Control & Confirmation step
+			//* Click the Download button on the Production section on the right
+			//* Verify the Production file can be downloaded
+			//
+			throw new ImplementationException("verify_the_production_can_be_downloaded");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_can_be_downloaded");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_creation_date_is_displayed$")
+	public void verify_production_creation_date_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7737: To verify that 'Production Creation Date' should displayed when it saved first time
+			//* On the Production home page, click on the Grid icon at the top right
+			//* For the Production that was just created, locate it by its Production name and verify that the Date Created field is populated
+			//
+			throw new ImplementationException("verify_production_creation_date_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_creation_date_is_displayed");
+		}
+
+	}
 }//EOF

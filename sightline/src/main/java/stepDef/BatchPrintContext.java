@@ -2101,4 +2101,201 @@ public class BatchPrintContext extends CommonContext {
 	       }
 	       else fail(dataMap, "failed to verify native pdf generated");
        }
+
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print_pau$")
+	public void login_to_new_batch_print_pau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print_pau");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print_pau");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_search_not_displayed$")
+	public void verify_deleted_search_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4443 Verify that if search result deleted from Save Search then it should not be displayed on Source Selection
+			//
+			//* Search 'Deleted Search' not displayed
+			//
+			throw new ImplementationException("verify_deleted_search_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_search_not_displayed");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print_rmu$")
+	public void login_to_new_batch_print_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print_rmu");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print_rmu");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_folder_radio_button$")
+	public void click_select_folder_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Select Folder' radio button on Source Selection tab
+			throw new ImplementationException("click_select_folder_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_folder_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_folder_only_in_security_group_displayed$")
+	public void verify_folder_only_in_security_group_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9718 Verify that for RMU, Tag/Folder should be displayed in that security
+			//
+			//* Folder 'TagForSG1Only' displayed
+			//
+			throw new ImplementationException("verify_folder_only_in_security_group_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_folder_only_in_security_group_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_folder_not_displayed$")
+	public void verify_deleted_folder_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9722 Verify that deleted Tag/Folder should not be displayed under source selection for batch print
+			//
+			//* Folder 'DeletedFolder' not displayed
+			//
+			throw new ImplementationException("verify_deleted_folder_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_folder_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_folder_in_multiple_security_groups_displayed$")
+	public void verify_folder_in_multiple_security_groups_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9719 Verify that for RMU, Tag/Folder should be displayed in that security group only when user/Tag/Folder is part of multiple security groupTC9720 Verify that for Project Admin, Tag/Folder should be displayed only once when Tag/Folder is mapped to multiple security groups
+			//
+			//* Folder 'FolderForSG1AndSG2' displayed
+			//
+			throw new ImplementationException("verify_folder_in_multiple_security_groups_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_folder_in_multiple_security_groups_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unmapped_folder_not_displayed$")
+	public void verify_unmapped_folder_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9721 Verify that for RMU, when Tag/Folder is unmapped should not be displayed under source selection for batch print
+			//
+			//* Folder 'UnmappedTag' not displayed
+			//
+			throw new ImplementationException("verify_unmapped_folder_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_unmapped_folder_not_displayed");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_tag_radio_button$")
+	public void click_select_tag_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_select_tag_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_tag_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tag_in_multiple_security_groups_displayed$")
+	public void verify_tag_in_multiple_security_groups_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9719 Verify that for RMU, Tag/Folder should be displayed in that security group only when user/Tag/Folder is part of multiple security groupTC9720 Verify that for Project Admin, Tag/Folder should be displayed only once when Tag/Folder is mapped to multiple security groups
+			//
+			//* Tag 'TagForSG1AndSG2' displayed
+			//
+			throw new ImplementationException("verify_tag_in_multiple_security_groups_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_tag_in_multiple_security_groups_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_tag_not_displayed$")
+	public void verify_deleted_tag_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9722 Verify that deleted Tag/Folder should not be displayed under source selection for batch print
+			//
+			//* Tag 'DeletedTag' not displayed
+			//
+			throw new ImplementationException("verify_deleted_tag_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_tag_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unmapped_tag_not_displayed$")
+	public void verify_unmapped_tag_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9721 Verify that for RMU, when Tag/Folder is unmapped should not be displayed under source selection for batch print
+			//
+			//* Tag 'UnmappedTag' not displayed
+			//
+			throw new ImplementationException("verify_unmapped_tag_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_unmapped_tag_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tag_only_in_security_group_displayed$")
+	public void verify_tag_only_in_security_group_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9718 Verify that for RMU, Tag/Folder should be displayed in that security
+			//
+			//* Tag 'TagForSG1Only' displayed
+			//
+			throw new ImplementationException("verify_tag_only_in_security_group_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_tag_only_in_security_group_displayed");
+		}
+
+	}
 }//eof

@@ -1624,4 +1624,153 @@ public class DocViewContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? place_rectangle_redaction_without_saving$")
+	public void place_rectangle_redaction_without_saving(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonPlace rectangle redaction without clicking Save on Redaction Tag Save Confirmation popup
+			throw new ImplementationException("place_rectangle_redaction_without_saving");
+		} else {
+			throw new ImplementationException("NOT place_rectangle_redaction_without_saving");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion$")
+	public void verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11438 Verify that last applied redaction tag should be displayed automatically for the propagated document
+			//
+			//* Default redaction tag applied by default redaction applied on the propagated document
+			//* Selected Redaction Tag is 'SGSame1' on Redaction Tag Save Confirmation popup
+			//* Delete applied redaction
+			//
+			throw new ImplementationException("verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion");
+		} else {
+			throw new ImplementationException("NOT verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_default_redaction_tag_selected_for_2nd_user$")
+	public void verify_default_redaction_tag_selected_for_2nd_user(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11436 Verify that when two different users applies redaction to same document then default selection of redaction tag should be as per users session
+			//
+			//* When user 1 places redaction with tag B then the default redaction tag will be placed when user 2 places a redaction tag on the same document
+			//* Select Redaction Tag is 'SGSame1' when 2nd user places a redaction
+			//* Delete applied redactions
+			//
+			throw new ImplementationException("verify_default_redaction_tag_selected_for_2nd_user");
+		} else {
+			throw new ImplementationException("NOT verify_default_redaction_tag_selected_for_2nd_user");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_temp_redaction_tag$")
+	public void add_temp_redaction_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click MANAGE > Redaction Tags navigation menu buttonClick 'All Redaction Tags' tag folderClick 'New' from Action dropdownEnter 'TempRedaction' tagClick Save
+			throw new ImplementationException("add_temp_redaction_tag");
+		} else {
+			throw new ImplementationException("NOT add_temp_redaction_tag");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? delete_temp_redaction_tag$")
+	public void delete_temp_redaction_tag(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click MANAGE > Redaction Tags navigation menu buttonClick 'TempRedaction' tagClick 'Delete' from Action dropdown
+			throw new ImplementationException("delete_temp_redaction_tag");
+		} else {
+			throw new ImplementationException("NOT delete_temp_redaction_tag");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_previously_placed_redaction$")
+	public void click_previously_placed_redaction(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_previously_placed_redaction");
+		} else {
+			throw new ImplementationException("NOT click_previously_placed_redaction");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion$")
+	public void verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11435 Verify that after deletion of the last saved redaction tag, 'Default Redaction Tag' should be selected automatically from redaction pop up
+			//
+			//* After redactions with Tag B and Tag C are applied, when Tag C is deleted from the Security Group then Tag A is automatically selected from the redaction popup for the redaction that formerly used Tag C
+			//
+			throw new ImplementationException("verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion");
+		} else {
+			throw new ImplementationException("NOT verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer$")
+	public void verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5753 Verify that after moving the redaction should be saved for the document when same annotation layer is mapped to different security groups
+			//
+			//* Edited redaction displayed for another user in a different Security Group with the same Annotation Layer
+			//
+			throw new ImplementationException("verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+		} else {
+			throw new ImplementationException("NOT verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_displayed_for_diff_sg_with_same_annotation_layer$")
+	public void verify_redaction_displayed_for_diff_sg_with_same_annotation_layer(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5746 Verify that redaction should be saved for the document when same annotation layer is mapped to different security groupsTC3203 Verify RMU/Reviewer can see the redaction, redaction tags of document on doc view page in different security group if the same annotation layer, redaction tag is mapped to different security groups
+			//
+			//* Redaction displayed for another user in a different Security Group with the same Annotation Layer
+			//
+			throw new ImplementationException("verify_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+		}
+
+	}
 }//eof
