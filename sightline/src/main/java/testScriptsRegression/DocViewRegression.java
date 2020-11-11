@@ -2311,7 +2311,7 @@ public class DocViewRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"DocView, Positive"})
+	@Test(groups = {"DocView, Positive", "Regression"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_search_page_When_open_saved_search_doc_view_Then_verify_redaction_icon_not_displayed_to_project_admin() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
