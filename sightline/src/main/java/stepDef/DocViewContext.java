@@ -109,15 +109,14 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//* Click 'Saved with SG1' search group
-			System.out.println("on search page");
 			String securityGroup = (String)dataMap.get("security_group");
 			SavedSearch savedSearch = new SavedSearch(driver,0);
-			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			savedSearch.getSavedSearchGroupName(securityGroup).click();	
 			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30);
 			//* Click radio button for first saved search
-			savedSearch.getSavedSearchRadioButtonRows().getElementByIndex(0).click();
+			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
 			
 			//* Click 'Doc View' button at the top of the page
 			Actions builder = new Actions(driver.getWebDriver());
@@ -1225,7 +1224,9 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Grey Redacte tool not displayed for Project Admin user
 			//
-			Assert.assertFalse(docView.getGreyRedactButton().Visible());
+//			Assert.assertFalse(docView.getGreyRedactButton().Visible());
+//			driver.FindElementsByXPath("//*[@id='SearchDataTable']/tbody/tr")
+			Assert.assertEquals(0, driver.FindElementsByXPath("gray-tab").size());
 			pass(dataMap, "Redaction icon is not displayed");
 		} else {
 			fail(dataMap, "Redaction icon is displayed");
