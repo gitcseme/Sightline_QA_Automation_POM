@@ -22,20 +22,20 @@ public class SearchRegression extends RegressionBase {
 
 	SearchContext context = new SearchContext();
 
-/*
+	/*
 	public void test_Given_sightline_is_launched_and_login_When_goto_search_session_page_Then_on_production_Search_Session_page() throws Throwable
-*/
+	 */
 
 	/* combined as part of this test case
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_previous_search_query_selection() throws Throwable
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_edit_previous_search_query() throws Throwable
-	*/
+	 */
 	@Test(groups = {"Search", "Positive", "WIP"})  // need to figure how to scroll save button on query save
 	public void test_Given_verify_searched_save_When_Then_verify_current_login_session_saved_search_SEARCH5() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -57,7 +57,7 @@ public class SearchRegression extends RegressionBase {
 				context.create_search(true, dataMap);
 				context.save_search(true, dataMap);
 				context.verify_searched_save(true, dataMap);
-				
+
 				String searchName = (String) dataMap.get("searchName");
 				HashMap search = new HashMap();
 				search.put("name", searchName);
@@ -85,8 +85,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_verify_searched_save_and_modify_search_criteria_When_Then_verify_user_modified_session_query_not_changed_saved_query() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -126,8 +126,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -140,27 +140,27 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -179,8 +179,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchForEach_MetaData_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -193,27 +193,81 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-			    try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_advanced_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchForEach_MetaData_and_select_advanced_search_options_When_Then_verify_advanced_search_options_notice() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+			JSONArray metaDataOptions = (JSONArray) dataMap.get("searchList");
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_advanced_search(true, dataMap);
+					context.select_advanced_search_options(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_advanced_search_options_notice(true, dataMap);
+					//context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -232,8 +286,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_searchRegex_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -246,27 +300,27 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-			    try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -319,7 +373,7 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 
-*/
+	 */
 
 	/*
 	public void test_Given_verify_is_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
@@ -328,8 +382,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_searchis_When_Then_verify_is_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -343,29 +397,29 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-			    try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
-			
+
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
@@ -382,8 +436,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchis_When_Then_verify_is_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -397,29 +451,29 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_advanced_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
-			
+
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
@@ -441,8 +495,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_searchfull_text_search_When_Then_verify_fulltext_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -454,29 +508,29 @@ public class SearchRegression extends RegressionBase {
 			context.select_project(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			
+
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -495,8 +549,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchfull_text_search_When_Then_verify_fulltext_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -508,29 +562,29 @@ public class SearchRegression extends RegressionBase {
 			context.select_project(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			
+
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_advanced_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -552,8 +606,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_searchrange_When_Then_verify_range_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -567,27 +621,27 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -606,8 +660,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchrange_When_Then_verify_range_search_criteria() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -621,27 +675,27 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("metaDataOptions");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_advanced_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -662,8 +716,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_verify_long_search_criteria_When_click_search_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -675,18 +729,18 @@ public class SearchRegression extends RegressionBase {
 			context.select_project(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			
-//			JSONArray metaDataOptions = (JSONArray) dataMap.get("longSearchList");
-//     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-//	        while (optionsList.hasNext()) {
-//	        	JSONArray option = optionsList.next();
-//	     	    Iterator<JSONObject> iterator = option.iterator();
-//		        while (iterator.hasNext()) {
-//		        	JSONObject data = iterator.next();
-//		        	dataMap.put(data.get("name"), data.get("value"));
-//		        }
-//			}
-			
+
+			//			JSONArray metaDataOptions = (JSONArray) dataMap.get("longSearchList");
+			//     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			//	        while (optionsList.hasNext()) {
+			//	        	JSONArray option = optionsList.next();
+			//	     	    Iterator<JSONObject> iterator = option.iterator();
+			//		        while (iterator.hasNext()) {
+			//		        	JSONObject data = iterator.next();
+			//		        	dataMap.put(data.get("name"), data.get("value"));
+			//		        }
+			//			}
+
 			context.create_search(true, dataMap);
 			context.click_search(true, dataMap);
 			context.verify_search_returned(true, dataMap);
@@ -707,8 +761,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_select_advanced_search_with_CustodianName_When_Then_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -722,26 +776,26 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("searchList");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.select_advanced_search(true, dataMap);
 					context.verify_autosuggest(false, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -760,8 +814,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_select_search_with_metaDataValue_causes_autosuggest_When_Then_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -774,26 +828,26 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("searchList");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.select_search(true, dataMap);
 					context.verify_autosuggest(true, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -812,8 +866,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_not_select_search_with_metaDataValue_causes_autosuggest_When_Then_not_verify_autosuggest() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -826,26 +880,26 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 			JSONArray metaDataOptions = (JSONArray) dataMap.get("searchList");
-     	    Iterator<JSONArray> optionsList = metaDataOptions.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = metaDataOptions.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.select_search(true, dataMap);
 					context.verify_autosuggest(false, dataMap);
 					context.cancel_metadata_insert(true,dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -864,8 +918,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_search_When_cancel_save_search_Then_verify_search_not_saved() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -877,7 +931,7 @@ public class SearchRegression extends RegressionBase {
 			context.select_project(true, dataMap);
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
-			
+
 			context.create_search(true, dataMap);
 			context.cancel_save_search(true, dataMap);
 			context.verify_search_not_saved(true, dataMap);
@@ -919,8 +973,8 @@ public class SearchRegression extends RegressionBase {
 	public void test_Given_on_production_Search_Session_page_and_create_search_with_proximity_When_Then_verify_search_returned() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -934,27 +988,240 @@ public class SearchRegression extends RegressionBase {
 			context.on_production_Search_Session_page(true, dataMap);
 
 			JSONArray proximitySearchList = (JSONArray) dataMap.get("proximitySearchList");
-     	    Iterator<JSONArray> optionsList = proximitySearchList.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_search(true, dataMap);
 					context.click_search(true, dataMap);
 					context.verify_search_returned(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive", "Regression"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_with_proximity_When_Then_verify_search_returned() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("proximitySearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_searchMetadata_When_Then_verify_error_message() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("invalidSearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_search(true, dataMap);
+					context.verify_error_message(true, dataMap);
+					context.cancel_metadata_insert(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_searchMetadata_When_Then_verify_error_message() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("invalidSearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_advanced_search(true, dataMap);
+					context.verify_error_message(true, dataMap);
+					context.cancel_metadata_insert(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_When_click_search_Then_verify_wrong_query_message() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("invalidSearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_wrong_query_message(true, dataMap);
+					context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
@@ -969,12 +1236,12 @@ public class SearchRegression extends RegressionBase {
 		report.endTest(test);
 	}
 	
-	@Test(groups = {"Search", "Positive", "Regression"})
-	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_with_proximity_When_Then_verify_search_returned() throws Throwable
+	@Test(groups = {"Search", "Positive", "Smoke"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_verify_wrong_query_message() throws Throwable
 	{
 		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
+				.getStackTrace()[0] 
+						.getMethodName(); 
 		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest(methodName);
@@ -987,28 +1254,193 @@ public class SearchRegression extends RegressionBase {
 			context.goto_search_session_page(true, dataMap);
 			context.on_production_Search_Session_page(true, dataMap);
 
-			JSONArray proximitySearchList = (JSONArray) dataMap.get("proximitySearchList");
-     	    Iterator<JSONArray> optionsList = proximitySearchList.iterator();
-	        while (optionsList.hasNext()) {
-	        	JSONArray option = optionsList.next();
-	     	    Iterator<JSONObject> iterator = option.iterator();
-		        while (iterator.hasNext()) {
-		        	JSONObject data = iterator.next();
-		        	dataMap.put(data.get("name"), data.get("value"));
-		        }
-		        try {
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("invalidSearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
 					context.create_advanced_search(true, dataMap);
 					context.click_search(true, dataMap);
-					context.verify_search_returned(true, dataMap);
+					context.verify_wrong_query_message(true, dataMap);
 					context.remove_search_criteria(true, dataMap);
-		        } catch (Exception e) {
-		        	context.error(dataMap, e.getMessage());
-		        	//e.printStackTrace();
-		        	
-		        	//try to recover by going back to Search page
-		        	// continue with the next test case
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
 					context.on_production_Search_Session_page(true, dataMap);	    
-		        }
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_verify_wrong_query_message_and_verify_pure_hit_results() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("invalidSearchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.verify_wrong_query_message(true, dataMap);
+					context.verify_search_returned(true, dataMap);
+					//context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_search_When_click_search_Then_not_verify_wrong_query_message() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("searchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.wait_for_loading(true, dataMap);
+					context.verify_wrong_query_message(false, dataMap);
+					context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
+			}
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"Search", "Positive"})
+	public void test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_not_verify_wrong_query_message() throws Throwable
+	{
+		String methodName = new Throwable() 
+				.getStackTrace()[0] 
+						.getMethodName(); 
+		getMethodData(dataMap,methodName);
+
+		ExtentTest test = report.startTest(methodName);
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			context.login(true, dataMap);
+			context.select_project(true, dataMap);
+			context.goto_search_session_page(true, dataMap);
+			context.on_production_Search_Session_page(true, dataMap);
+
+			JSONArray proximitySearchList = (JSONArray) dataMap.get("searchList");
+			Iterator<JSONArray> optionsList = proximitySearchList.iterator();
+			while (optionsList.hasNext()) {
+				JSONArray option = optionsList.next();
+				Iterator<JSONObject> iterator = option.iterator();
+				while (iterator.hasNext()) {
+					JSONObject data = iterator.next();
+					dataMap.put(data.get("name"), data.get("value"));
+				}
+				try {
+					context.create_advanced_search(true, dataMap);
+					context.click_search(true, dataMap);
+					context.wait_for_loading(true, dataMap);
+					context.verify_wrong_query_message(false, dataMap);
+					context.remove_search_criteria(true, dataMap);
+				} catch (Exception e) {
+					context.error(dataMap, e.getMessage());
+					//e.printStackTrace();
+
+					//try to recover by going back to Search page
+					// continue with the next test case
+					context.on_production_Search_Session_page(true, dataMap);	    
+				}
 			}
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
