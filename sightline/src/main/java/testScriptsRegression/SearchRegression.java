@@ -419,7 +419,6 @@ public class SearchRegression extends RegressionBase {
 					context.on_production_Search_Session_page(true, dataMap);	    
 				}
 			}
-
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
