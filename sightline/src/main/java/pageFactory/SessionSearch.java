@@ -41,6 +41,14 @@ public class SessionSearch {
     public Element getThreadedCount(){ return driver.FindElementByXPath(".//*[@id='002']/span/count"); }
     public Element getNearDupeCount(){ return driver.FindElementByXPath(".//*[@id='003']/span/count"); }
     public Element getFamilyCount(){ return driver.FindElementByXPath(".//*[@id='004']/span/count"); }
+    public String SearchPureHitsLabelXPath = "//*[@id='001']/label";
+    public Element getNewSearchPureHitsLabel(){ return driver.FindElementByXPath(SearchPureHitsLabelXPath); }
+    public String ThreadedLabelXPath = "//*[@id='002']/label";
+    public Element getThreadedLabel(){ return driver.FindElementByXPath(ThreadedLabelXPath); }
+    public String NearDupeLabelXPath = "//*[@id='003']/label";
+    public Element getNearDupeLabel(){ return driver.FindElementByXPath(NearDupeLabelXPath); }
+    public String FamilyLabelXPath = "//*[@id='004']/label";
+    public Element getFamilyLabel(){ return driver.FindElementByXPath(FamilyLabelXPath); }
     public Element getConceptualCount(){ return driver.FindElementByXPath(".//*[@id='005']/span/count"); }
     public Element getSaveSearchButton(){ return driver.FindElementByXPath("SaveSearch_Button"); }
     public Element getPureHitAddButton(){ return driver.FindElementByXPath(".//*[@id='001']/i[2]"); }
@@ -179,7 +187,9 @@ public class SessionSearch {
     //search query alerts
     public Element getQueryAlertGetText(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]"); } 
     public Element getQueryAlertGetTextSingleLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/p"); } 
+    public Element getQueryAlertGetTextMultiLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div"); } 
     public Element getQueryPossibleWrongAlertContinueButton() {return driver.FindElementById("bot1-Msg1");}
+    public Element getQueryPossibleWrongAlertNoContinueButton() {return driver.FindElementById("bot2-Msg1");}
     
   //shilpi
     public Element getSaveSearch_AdvButton(){ return driver.FindElementByXPath(".//*[@id='tabsResult-1']//a[@id='qSave']"); }
@@ -225,9 +235,12 @@ public class SessionSearch {
     public Element getQuickBatchAction(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
     
     //search options
-    public Element getadvoption_family(){ return driver.FindElementByXPath("//*[@id='chkIncludeFamilyMember']/following-sibling::i"); }
-    public Element getadvoption_near(){ return driver.FindElementByXPath("//*[@id='chkIncludeNearDuplicate']/following-sibling::i"); }
-    public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
+    public String AdvOption_familyXPath = "//*[@id='chkIncludeFamilyMember']/following-sibling::i";
+    public Element getadvoption_family(){ return driver.FindElementByXPath(AdvOption_familyXPath); }
+    public String AdvOption_nearXPath = "//*[@id='chkIncludeNearDuplicate']/following-sibling::i";
+    public Element getadvoption_near(){ return driver.FindElementByXPath(AdvOption_nearXPath); }
+    public String AdvOption_threadedXPath = "//*[@id='chkIncludeThreadedDocuments']/following-sibling::i";
+    public Element getadvoption_threaded(){ return driver.FindElementByXPath(AdvOption_threadedXPath); }
     
     //Assignment distribution list
     public ElementCollection getadwp_assgn_distributedto(){ return driver.FindElementsById("dist"); }
@@ -273,11 +286,14 @@ public class SessionSearch {
     public ElementCollection getSearchDocumentMatchNumber() { return driver.FindElementsByCssSelector("#gallery li count");}
     public ElementCollection getSearchResultsTableRows() {return driver.FindElementsByCssSelector("#taskbasic>tbody>tr");}
     
-
+    // Error Messages
+    public String DateValidationMsgXPath = "//span[@id='DateValidationMsg']";
+    
     // SavedSearchList
     public Element getSavedSearchList() { return driver.FindElementById("sessionSearchList"); }
     public String AutoSuggestXPath = "//li[@class='ui-menu-item']/div";
     public Element getAutoSuggest() { return driver.FindElementByCssSelector("ul.ui-ete li.ui-menu-item a"); }
+    public String SearchInProgressXPath = "//*[@id='imgLoadPM']";
     public Element isSearchInProgress() { return driver.FindElementById("imgLoadPM"); }
 
     public SessionSearch(Driver driver){
@@ -458,6 +474,17 @@ public class SessionSearch {
 		base.CloseSuccessMsgpopup();
     }
 
+    public void invalidMetaDataValueBasicSearch(String SearchString, int MessageNumber, String fielded, String fieldName) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getActiveElementByXPath(DateValidationMsgXPath).Visible()  ;}}), Input.wait30); 
+		try {
+			String errorMessage = getActiveElementByXPath(DateValidationMsgXPath).getText();
+		} catch (Exception e) {
+			
+		}
+   
+    }
+    
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
     	

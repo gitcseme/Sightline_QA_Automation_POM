@@ -2,6 +2,19 @@
 					[
 						{"name":"uid","value":"sqa.consilio11@sqapowered.com"}
 						,{"name":"pwd","value":"Q@test_10"}
+						,{"name":"ui_messages","value":
+							[
+							{"tag":"DateValidationMsg", "message":"Your date values cannot contain forward slash / and non date characters. Use the format YYYY-MM-DD."}
+							,{"tag":"TrailingOperatorMsg", "message":"There is a trailing operator not followed by an argument, please verify the search syntax."}
+							,{"tag":"MissingOperatorMsg", "message":"Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B)."}
+							,{"tag":"ParenthesesMissingMsg", "message":"Parentheses are missing in your search query. Please correct the query to include proper opening and closing parentheses."}
+							,{"tag":"LowerCaseConditionMsg", "message":"Your query contains at least one lowercase \"and\", \"or\" or \"not\" word. In Sightline, lowercase \"and\", \"or\" or \"not\" are treated as terms, whereas capitalized \"AND\", \"OR\" or \"NOT\" are treated as operators."}
+							,{"tag":"LooksLikeDateMsg", "message":"Your query contains an argument that may be intended to look for dates within any body content or metadata attribute. Please be advised that the search engine interprets dash - or slash / characters in non-fielded arguments as implied OR statement. For example, 1980/01/02 is treated by the search engine as 1980 OR 01 OR 02. The same is true of 1980-01-02. You can add quotation marks around a query to treat the dash or slash argument as a string. For example, \"1980/01/02\" is treated as is. The same is true of \"1980-01-02\"."}
+							,{"tag":"ThreadedTileLabel", "message":"Threaded\nDocuments\nin Combined\nYour Search Results"}
+							,{"tag":"FamilyTileLabel", "message":"Family Members\nin Combined\nYour Search Results"}
+							,{"tag":"NearTileLabel", "message":"Near Duplicates\nin Combined\nYour Search Results"}
+							]
+						}
 					]
 				,"test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned":
 					[
@@ -377,21 +390,21 @@
 							]
 							,[
 								{"name":"searchType","value":"metaData"}
-								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataOption","value":"EmailToAddresses"}
 								,{"name":"metaDataValue","value":"\"##[sl(e|a)4]@bakercapital.com\""}
 								,{"name":"expectedPureHit","value":"8795"}
 								,{"name":"TestCase","value":"10303"}
 							]
 							,[
 								{"name":"searchType","value":"metaData"}
-								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataOption","value":"EmailToAddresses"}
 								,{"name":"metaDataValue","value":"\"##maria.pavlou@enron.com\""}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10307"}
 							]
 							,[
 								{"name":"searchType","value":"metaData"}
-								,{"name":"metaDataOption","value":"EmailToAddress"}
+								,{"name":"metaDataOption","value":"EmailToAddresses"}
 								,{"name":"metaDataValue","value":"\"maria.pavlou@enron.com\""}
 								,{"name":"expectedPureHit","value":"2"}
 								,{"name":"TestCase","value":"10485"}
@@ -405,7 +418,7 @@
 							]
 							,[
 								{"name":"searchType","value":"metaData"}
-								,{"name":"metaDataOption","value":"EmailCCAddress"}
+								,{"name":"metaDataOption","value":"EmailCCAddresses"}
 								,{"name":"metaDataValue","value":"professional_email@yahoo.com"}
 								,{"name":"expectedPureHit","value":"6"}
 								,{"name":"TestCase","value":"10485"}
@@ -1638,6 +1651,654 @@
 								{"name":"searchValue","value":"\"when done\"~3"}
 								,{"name":"expectedPureHit","value":"97"}
 								,{"name":"TestCase","value":"11521"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_searchMetadata_When_Then_verify_error_message":
+					[
+						{"name":"invalidSearchList","value":[
+							[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"155"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019/06/11 01:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"158"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 abc"}
+								,{"name":"metaDataVal2","value":"2019-06-11 * 2)"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"2949"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 10:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8108"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 ab:cd"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8108"}
+							]
+							,[
+								{"name":"metaDataOption","value":"AppointmentStartDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 55:55:55"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8108"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDateDateOnly"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 10:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8160"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchMetadata_When_Then_verify_error_message":
+					[
+						{"name":"invalidSearchList","value":[
+							[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"2949"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CreateDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019/06/11 01:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"2948"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 10:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8147"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSentDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 ab:cd"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8147"}
+							]
+							,[
+								{"name":"metaDataOption","value":"AppointmentStartDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019/05/03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 55:55:55"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8147"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDateDateOnly"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 10:00:00"}
+								,{"name":"metaDataVal2","value":"2019-10-11 10:00:00"}
+								,{"name":"expectedErrorTag","value":"DateValidationMsg"}
+								,{"name":"TestCase","value":"8159"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_search_When_click_search_Then_verify_wrong_query_message":
+					[
+						{"name":"invalidSearchList","value":[
+							[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName: AND"}
+								,{"name":"expectedErrorTag","value":"TrailingOperatorMsg"}
+								,{"name":"TestCase","value":"161"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName: OR"}
+								,{"name":"expectedErrorTag","value":"TrailingOperatorMsg"}
+								,{"name":"TestCase","value":"161"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"(CustodianName"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"162"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName)"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"162"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"iterative (\"requirements evolve\"~5"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"10256"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"ProximitySearch (\"Truthful Recall\"~4\"~7"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"10257"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataValue","value":"john or smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5460"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataValue","value":"john and smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5461"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"searchType","value":"metadata"}
+								,{"name":"metaDataValue","value":"2019-10-10"}
+								,{"name":"expectedErrorTag","value":"LooksLikeDateMsg"}
+								,{"name":"TestCase","value":"5494"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_verify_wrong_query_message":
+					[
+						{"name":"invalidSearchList","value":[
+							[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataValue","value":"john or smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5471"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataValue","value":"john and smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5473"}
+							]
+							,[
+								{"name":"metaDataOption","value":"CustodianName"}
+								,{"name":"searchType","value":"metaData"}
+								,{"name":"metaDataValue","value":"john not smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5474"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"john or smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5475"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"john and smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5476"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"john not smith"}
+								,{"name":"expectedErrorTag","value":"LowerCaseConditionMsg"}
+								,{"name":"TestCase","value":"5477"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"iterative (\"requirements evolve\"~5"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"10252"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"ProximitySearch (\"Truthful Recall\"~4\"~7"}
+								,{"name":"expectedErrorTag","value":"ParenthesesMissingMsg"}
+								,{"name":"TestCase","value":"10253"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10404"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money Mobile"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10404"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CusodianName:(John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10405"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CusodianName:(John R. Shaw) OR Balance money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10405"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"Balance money\" OR CusodianName:(John R. Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10405"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CusodianName:(John R. Shaw) OR \"Balance money\""}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10405"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money OR EmailAuthorAddress:(John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10406"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money Mobile OR EmailAuthorAddress:(John R. Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10406"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorAddress:(John R. Shaw) OR Balance money Mobile"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10406"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money OR Mobile"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10407"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money Mobile OR Truthful Recall"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10407"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorAddress:(John Shaw) OR CustodianName:(John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10408"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorAddress:(John Shaw) OR CustodianName:(John R Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10408"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_verify_wrong_query_message_and_verify_pure_hit_results":
+					[
+						{"name":"continueSearch","value":"yes"}
+						,{"name":"invalidSearchList","value":[
+							[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"money money more money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10387"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailAuthorAddress"}
+								,{"name":"searchType","value":"metadata"}
+								,{"name":"metaDataValue","value":"John Shaw"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10388"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money OR CustodianName:(John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10389"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money Mobile OR CustodianName:(John R. Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10389"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName:(John R. Shaw) OR Balance money Mobile"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10389"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money OR Mobile"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10390"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Balance money Mobile OR Truthful Recall"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10390"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorName:(John Shaw) OR CustodianName:(John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10391"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorName:(John Shaw) OR CustodianName:(John R Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10391"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName: ( John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10392"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName: ( John R. Shaw) OR Insurance Agency"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10392"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"Insurance Agency\" OR  CustodianName: ( John R. Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10392"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"CustodianName: ( John R. Shaw) OR \"Insurance Agency\""}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10392"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorName: (John Shaw)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10393"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailAuthorName: (John R. Shaw)  OR Insurance Agency"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10393"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailBCCAddresses: (Jaddu Phillip)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10394"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailBCCNames: (Jaddu rebecca)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10395"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailCCAddresses:(Jaddu Phillip)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10396"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailCCNames:(Erika Kiran)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10397"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailCCNames:(Erika Kiran) OR balance money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10397"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"balance money OR EmailRecipientAddresses: (patti Mike)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10398"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailRecipientAddresses: (patti Mike)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10398"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailRecipientNames: (Erika Satish)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10399"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailRecipientNames: (Erika Satish)  OR balance Money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10399"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailSubject:(ticket Regarding)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10400"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailSubject:(ticket Regarding) OR balance money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10400"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailToAddresses:(satish.pawal@consilio.com guruprasad.subbaraya@consilio.com)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10401"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailToNames: (Erika Satish)"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10402"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"EmailToNames: (Erika Satish) OR balance Money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10402"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"DocFileName: (John R. Shaw) "}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10403"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"DocFileName:(Both Docs Agile Only) OR Balance Money"}
+								,{"name":"expectedErrorTag","value":"MissingOperatorMsg"}
+								,{"name":"TestCase","value":"10403"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_search_When_click_search_Then_not_verify_wrong_query_message":
+					[
+						{"name":"searchList","value":[
+							[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"bi-weekly\""}
+								,{"name":"TestCase","value":"5490"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"bi-weekly"}
+								,{"name":"TestCase","value":"5491"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"bi-weekly\""}
+								,{"name":"TestCase","value":"5492"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"TestCase","value":"5493"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"searchType","value":"metadata"}
+								,{"name":"metaDataValue","value":"\"2019-10-10\""}
+								,{"name":"TestCase","value":"5495"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"TestCase","value":"8054"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_When_click_search_Then_not_verify_wrong_query_message":
+					[
+						{"name":"advancedSearch","value":"yes"}
+						,{"name":"searchList","value":[
+							[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"bi-weekly\""}
+								,{"name":"TestCase","value":"5505"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"advancedSearch","value":"yes"}
+								,{"name":"metaDataValue","value":"bi-weekly"}
+								,{"name":"TestCase","value":"5506"}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"\"bi-weekly\""}
+								,{"name":"TestCase","value":"5507"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"TestCase","value":"5508"}
+							]
+							,[
+								{"name":"metaDataOption","value":"EmailSubject"}
+								,{"name":"searchType","value":"metadata"}
+								,{"name":"metaDataValue","value":"\"2019-10-10\""}
+								,{"name":"TestCase","value":"5510"}
+							]
+							,[
+								{"name":"metaDataOption","value":"MasterDate"}
+								,{"name":"searchType","value":"range"}
+								,{"name":"metaDataValue","value":"2019-05-03 23:59:59"}
+								,{"name":"metaDataVal2","value":"2019-06-11 01:00:00"}
+								,{"name":"TestCase","value":"8114"}
+							]
+						]}
+					]
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_searchForEach_MetaData_and_select_advanced_search_options_When_Then_verify_advanced_search_options_notice":
+					[
+						{"name":"advancedSearch","value":"yes"}
+						,{"name":"searchList","value":[
+							[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Irrelevant"}
+								,{"name":"TestCase","value":"8781"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"threaded"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Irrelevant"}
+								,{"name":"TestCase","value":"8784"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"family"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Irrelevant"}
+								,{"name":"TestCase","value":"8785"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"near"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"TestCase","value":"8786"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"threaded"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+										,{"name":"selectAdvancedOption","value":"family"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Irrelevant"}
+								,{"name":"TestCase","value":"8787"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"near"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+										,{"name":"selectAdvancedOption","value":"family"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
+							]
+							,[
+								{"name":"searchType","value":"content"}
+								,{"name":"metaDataValue","value":"Irrelevant"}
+								,{"name":"TestCase","value":"8788"}
+								,{"name":"advancedOptionList","value":
+									[
+										{"name":"selectAdvancedOption","value":"threaded"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+										,{"name":"selectAdvancedOption","value":"near"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+										,{"name":"selectAdvancedOption","value":"family"}										,{"name":"selectAdvancedOption","value":"AllThreaded"}
+									]}
 							]
 						]}
 					]

@@ -128,11 +128,245 @@ public class SearchContext extends CommonContext {
 			}
 
 		} else {
+			String searchType = (String) dataMap.get("searchType");
+			if (searchType==null) searchType = "metaData";
+
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
 			sessionSearch.getNewSearch().Click();
 		}
 
+	}
+
+		
+	@And("^.*(\\[Not\\] )? select_advanced_search_options$")
+	public void select_advanced_search_options(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			JSONArray advancedOptions = (JSONArray) dataMap.get("advancedOptionList");
+     	    Iterator<JSONObject> optionsList = advancedOptions.iterator();
+	        while (optionsList.hasNext()) {
+	        	JSONObject option = optionsList.next();
+	        	if (((String)option.get("value")).equalsIgnoreCase("threaded")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_threadedXPath).Enabled() ;}}), 10);
+					sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_threadedXPath).Click();
+	        	} else if (((String)option.get("value")).equalsIgnoreCase("family")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						    	sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_familyXPath).Enabled() ;}}), 10);
+						sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_familyXPath).Click();
+	        	} else if (((String)option.get("value")).equalsIgnoreCase("near")) {
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						    	sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_nearXPath).Enabled() ;}}), 10);
+						sessionSearch.getActiveElementByXPath(sessionSearch.AdvOption_nearXPath).Click();
+		        }
+	        }
+			
+		} else {
+			throw new ImplementationException("NOT verify_error_message");	
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? verify_advanced_search_options_notice$")
+	public void verify_advanced_search_options_notice(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String testCaseNo = (dataMap.get("TestCase")!=null) ? (String) dataMap.get("TestCase") : "TBD";
+
+		if (scriptState) {
+			wait_for_loading(scriptState, dataMap);
+	    	
+			JSONArray advancedOptions = (JSONArray) dataMap.get("advancedOptionList");
+     	    Iterator<JSONObject> optionsList = advancedOptions.iterator();
+	        while (optionsList.hasNext()) {
+	        	JSONObject option = optionsList.next();
+	        	if (((String)option.get("value")).equalsIgnoreCase("threaded")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	sessionSearch.getActiveElementByXPath(sessionSearch.ThreadedLabelXPath).Enabled() ;}}), 10);
+					String tileLabel = sessionSearch.getActiveElementByXPath(sessionSearch.ThreadedLabelXPath).getText();
+					if (validateMessage(dataMap,"ThreadedTileLabel",tileLabel)) {
+						String logMessage = "Found Threaded Tile label as expected.";
+						pass(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"pass",logMessage);
+						System.out.println(logMessage);
+					} else {
+						String logMessage = "Did not find Threaded Tile label as expected.";
+						error(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"fail",logMessage);
+						System.out.println(logMessage);
+					}
+	        	} else if (((String)option.get("value")).equalsIgnoreCase("family")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	sessionSearch.getActiveElementByXPath(sessionSearch.FamilyLabelXPath).Enabled() ;}}), 10);
+					String tileLabel = sessionSearch.getActiveElementByXPath(sessionSearch.FamilyLabelXPath).getText();
+					if (validateMessage(dataMap,"FamilyTileLabel",tileLabel)) {
+						String logMessage = "Found Family Tile label as expected.";
+						pass(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"pass",logMessage);
+						System.out.println(logMessage);
+					} else {
+						String logMessage = "Did not find Family Tile label as expected.";
+						error(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"fail",logMessage);
+						System.out.println(logMessage);
+					}
+	        	} else if (((String)option.get("value")).equalsIgnoreCase("near")) {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	sessionSearch.getActiveElementByXPath(sessionSearch.NearDupeLabelXPath).Enabled() ;}}), 10);
+					String tileLabel = sessionSearch.getActiveElementByXPath(sessionSearch.NearDupeLabelXPath).getText();
+					if (validateMessage(dataMap,"NearTileLabel",tileLabel)) {
+						String logMessage = "Found Near Tile label as expected.";
+						pass(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"pass",logMessage);
+						System.out.println(logMessage);
+					} else {
+						String logMessage = "Did not find Near Tile label as expected.";
+						error(dataMap,logMessage);
+						logTestResult(dataMap,testCaseNo,"fail",logMessage);
+						System.out.println(logMessage);
+					}
+		        }
+	        }
+			
+		} else {
+			throw new ImplementationException("NOT verify_error_message");	
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? verify_wrong_query_message$")
+	public void verify_wrong_query_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String testCaseNo = (String) dataMap.get("TestCase");
+
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    	sessionSearch.getQueryAlertGetTextSingleLine().Visible() ;}}), 10);
+			
+			String foundErrorMessage = null;
+			String expectedErrorTag = (String) dataMap.get("expectedErrorTag");
+			try {
+				foundErrorMessage = sessionSearch.getQueryAlertGetTextSingleLine().getText();
+				if (foundErrorMessage == null || foundErrorMessage.trim().length() == 0) {
+					foundErrorMessage = sessionSearch.getQueryAlertGetTextMultiLine().getText();
+				}
+				if (validateMessage(dataMap,expectedErrorTag,foundErrorMessage)) {
+					String logMessage = String.format("Expected '%s' error message found",expectedErrorTag);
+					pass(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"pass",logMessage);
+					System.out.println(logMessage);
+				} else {
+					String logMessage = String.format("Found '%s', but expected '%s' error message!",foundErrorMessage,expectedErrorTag);
+					error(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"fail",logMessage);
+					System.out.println(logMessage);
+				}
+				
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				    	sessionSearch.getQueryPossibleWrongAlertContinueButton().Visible() ;}}), 10);
+				boolean hitContinue = true;
+				try {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					    	sessionSearch.getQueryPossibleWrongAlertNoContinueButton().Visible() ;}}), 10);
+		
+					boolean continueSearch = (dataMap.get("continueSearch") == null) ? false : !((String)dataMap.get("continue")).equalsIgnoreCase("Yes") ? false : true; 
+					if (!continueSearch && sessionSearch.getQueryPossibleWrongAlertNoContinueButton().Visible()) {
+						sessionSearch.getQueryPossibleWrongAlertNoContinueButton().Click();
+						
+						// Verify warning message disappears
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						    	sessionSearch.getQueryAlertGetTextSingleLine().Visible() ;}}), 10);
+						
+						try {
+							// should not be able to still see alert
+							if (sessionSearch.getQueryAlertGetTextSingleLine().Visible()) {
+								String logMessage = String.format("Found '%s', but expected to have disappeared!",foundErrorMessage,expectedErrorTag);
+								error(dataMap,logMessage);
+								logTestResult(dataMap,testCaseNo,"fail",logMessage);
+								System.out.println(logMessage);
+							} else {
+								String logMessage = String.format("'%s' disappeared after click 'No'",expectedErrorTag);
+								pass(dataMap,logMessage);
+								logTestResult(dataMap,testCaseNo,"pass",logMessage);
+								System.out.println(logMessage);
+							}
+						} catch (Exception e) {
+							// alert is no longer visible
+							String logMessage = String.format("'%s' disappeared after click 'No'",expectedErrorTag);
+							pass(dataMap,logMessage);
+							logTestResult(dataMap,testCaseNo,"pass",logMessage);
+							System.out.println(logMessage);
+						}
+						
+						
+						hitContinue = false;
+					}			
+				} catch (Exception e) {
+					
+				}
+				if (hitContinue) sessionSearch.getQueryPossibleWrongAlertContinueButton().Click();
+			} catch (Exception e) {
+				String logMessage = String.format("Expected '%s' error message not found!",expectedErrorTag);
+				error(dataMap,logMessage);
+				logTestResult(dataMap,testCaseNo,"fail",logMessage);
+				System.out.println(logMessage);
+			}
+		 
+		} else {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    	sessionSearch.getQueryAlertGetTextSingleLine().Visible() ;}}), 10);
+			try {
+				String foundErrorMessage = null;
+				if (sessionSearch.getQueryAlertGetTextSingleLine().Visible()) {
+					foundErrorMessage = sessionSearch.getQueryAlertGetTextSingleLine().getText();
+					if (foundErrorMessage == null || foundErrorMessage.trim().length() == 0) {
+						foundErrorMessage = sessionSearch.getQueryAlertGetTextMultiLine().getText();
+					}
+					String logMessage = String.format("Unexpected '%s' error message found",foundErrorMessage);
+					fail(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"fail",logMessage);
+					System.out.println(logMessage);		
+				} else {
+					String logMessage = String.format("No Unexpected error message found");
+					pass(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"pass",logMessage);
+					System.out.println(logMessage);		
+				}
+			} catch (Exception e) {
+				String logMessage = String.format("No Unexpected error message found");
+				pass(dataMap,logMessage);
+				logTestResult(dataMap,testCaseNo,"pass",logMessage);
+				System.out.println(logMessage);		
+			}
+		}
+	}
+	
+	@And("^.*(\\[Not\\] )? verify_error_message$")
+	public void verify_error_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					sessionSearch.getActiveElementByXPath(sessionSearch.DateValidationMsgXPath).Visible()  ;}}), Input.wait30); 
+			String testCaseNo = (String) dataMap.get("TestCase");
+			String foundErrorMessage = null;
+			String expectedErrorTag = (String) dataMap.get("expectedErrorTag");
+			try {
+				foundErrorMessage = sessionSearch.getActiveElementByXPath(sessionSearch.DateValidationMsgXPath).getText();
+				if (validateMessage(dataMap,expectedErrorTag,foundErrorMessage)) {
+					String logMessage = String.format("Expected '%s' error message found",expectedErrorTag);
+					pass(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"pass",logMessage);
+					System.out.println(logMessage);
+				} else {
+					String logMessage = String.format("Found '%s', but expected '%s' error message!",foundErrorMessage,expectedErrorTag);
+					error(dataMap,logMessage);
+					logTestResult(dataMap,testCaseNo,"fail",logMessage);
+					System.out.println(logMessage);
+				}
+			} catch (Exception e) {
+				String logMessage = String.format("Expected '%s' error message not found!",expectedErrorTag);
+				error(dataMap,logMessage);
+				logTestResult(dataMap,testCaseNo,"fail",logMessage);
+				System.out.println(logMessage);
+			}
+		} else {
+			throw new ImplementationException("NOT verify_error_message");	
+		}
 	}
 
 	public void createSearch(HashMap dataMap) {
@@ -189,6 +423,7 @@ public class SearchContext extends CommonContext {
 		if (searchType.equalsIgnoreCase("content")) {
 			sessionSearch.getActiveElementByXPath(sessionSearch.AdvancedContentSearchInputXPath).SendKeys(searchString) ;
 		} else if (searchType.equalsIgnoreCase("metaData")) {
+			//todo: this need to be reviewed for multiple uses - find active
 			sessionSearch.selectMetaDataOption(option);
 			sessionSearch.setMetaDataValue( null,searchString,null);
 		} else if (searchType.equalsIgnoreCase("is")) {
@@ -505,6 +740,54 @@ public class SearchContext extends CommonContext {
 	}
 
 
+	@Then("^.*(\\[Not\\] )? wait_for_loading$")
+	public void wait_for_loading(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+    	// while loading look for warnings, in case of proximity search
+		String searchString = (String) dataMap.get("searchString");
+		try {
+
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			sessionSearch.getActiveElementByXPath(sessionSearch.SearchInProgressXPath).Visible() ;}}), 10);
+        	
+        	while (true) {
+        		// continue to check for in progress
+	        	while (sessionSearch.getActiveElementByXPath(sessionSearch.SearchInProgressXPath).Visible()) {  
+	        		try{
+	        			Thread.sleep(1000);
+	        		}catch (Exception e) {
+
+	        		}
+	        	}
+	        	
+	        	//check for alert
+	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	        			sessionSearch.getQueryAlertGetText().Visible() ;}}), 10);
+	        	try {
+	        		String alertText = sessionSearch.getQueryAlertGetText().getText();
+	        		if (alertText.contains("If you want to perform a stemming search")) {
+	        			if (searchString.contains("*")) {
+	        				logTestResult(dataMap,"10240","pass",String.format("Received '*' warning message as expected because search string '%s' contains '*'.",searchString));
+	        			} else {
+	        				logTestResult(dataMap,"9601","fail",String.format("Received '*' warning message though not expected. Search string '%s' does not contain an '*'.",searchString));
+	        			}
+		        		try{
+		        			Thread.sleep(1000);
+		        		}catch (Exception e) {
+	
+		        		}
+	        		}
+	    			sessionSearch.getTallyContinue().waitAndClick(5);
+	        	} catch (Exception e) {
+	        		// no alert - finished searching
+	        		break;
+	        	}
+        	}
+		} catch (Exception e) {
+			
+		}
+	
+	}
+	
 	@Then("^.*(\\[Not\\] )? verify_search_returned$")
 	public void verify_search_returned(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		String testCaseNo = (dataMap.get("TestCase")!=null) ? (String) dataMap.get("TestCase") : "TBD";
@@ -512,48 +795,7 @@ public class SearchContext extends CommonContext {
 		searchType = (searchType == null) ? "Search " : (searchType.equalsIgnoreCase("MetaData")) ? String.format("%s '%s' search ",searchType,dataMap.get("metaDataOption")): String.format("%s search ",searchType);
 		String searchString = (String) dataMap.get("searchString");
 		if (scriptState) {
-	    	// while loading look for warnings, in case of proximity search
-			try {
-
-	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        			sessionSearch.isSearchInProgress().Visible() ;}}), 10);
-	        	
-	        	while (true) {
-	        		// continue to check for in progress
-		        	while (sessionSearch.isSearchInProgress().Visible()) {  
-		        		try{
-		        			Thread.sleep(1000);
-		        		}catch (Exception e) {
-	
-		        		}
-		        	}
-		        	
-		        	//check for alert
-		        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		        			sessionSearch.getQueryAlertGetText().Visible() ;}}), 10);
-		        	try {
-		        		String alertText = sessionSearch.getQueryAlertGetText().getText();
-		        		if (alertText.contains("If you want to perform a stemming search")) {
-		        			if (searchString.contains("*")) {
-		        				logTestResult(dataMap,"10240","pass",String.format("Received '*' warning message as expected because search string '%s' contains '*'.",searchString));
-		        			} else {
-		        				logTestResult(dataMap,"9601","fail",String.format("Received '*' warning message though not expected. Search string '%s' does not contain an '*'.",searchString));
-		        			}
-			        		try{
-			        			Thread.sleep(1000);
-			        		}catch (Exception e) {
-		
-			        		}
-		        		}
-		    			sessionSearch.getTallyContinue().waitAndClick(5);
-		        	} catch (Exception e) {
-		        		// no alert - finished searching
-		        		break;
-		        	}
-	        	}
-			} catch (Exception e) {
-				
-			}
+			wait_for_loading(scriptState, dataMap);
 	    	
 	    	//verify counts for all the tiles
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -569,18 +811,42 @@ public class SearchContext extends CommonContext {
 	    		System.out.println("failed to parse: "+pureHitsCountElement.getText());
 	    		
 	    	}
-	    	int expectedPureHit = Integer.parseInt((String) dataMap.get("expectedPureHit"));
-	    	
-	    	if (expectedPureHit == pureHit) {
-	    		String msg = String.format("%s is done for '%s' and PureHit is %s as expected.", searchType, searchString, pureHit);
-				pass(dataMap,msg);
-				logTestResult(dataMap,testCaseNo,"pass",msg);
-	    		System.out.println(msg);
+	    	Integer expectedPureHit = null;
+	    	Boolean expectedAnyPureHit = false;
+	    	try {
+	    		expectedPureHit = new Integer((String)dataMap.get("expectedPureHit"));
+	    	} catch (Exception e) {
+	    		if (dataMap.get("continueSearch")!= null) {
+	    			expectedAnyPureHit = ((String)dataMap.get("continueSearch")).equalsIgnoreCase("Yes");
+	    		}
+	    	}
+	    		 
+	    	if (expectedPureHit != null) {
+		    	if (expectedPureHit == pureHit) {
+		    		String msg = String.format("%s is done for '%s' and PureHit is %s as expected.", searchType, searchString, pureHit);
+					pass(dataMap,msg);
+					logTestResult(dataMap,testCaseNo,"pass",msg);
+		    		System.out.println(msg);
+		    	} else {
+		    		String msg = String.format("ERROR: %s is done for '%s' and PureHit is %s but expected %s.", searchType, searchString, pureHit, expectedPureHit);
+					logTestResult(dataMap,testCaseNo,"fail",msg);
+					error(dataMap,msg);
+		    		System.out.println(msg);
+		    	}
 	    	} else {
-	    		String msg = String.format("ERROR: %s is done for '%s' and PureHit is %s but expected %s.", searchType, searchString, pureHit, expectedPureHit);
-				logTestResult(dataMap,testCaseNo,"fail",msg);
-				error(dataMap,msg);
-	    		System.out.println(msg);
+	    		if (expectedAnyPureHit) {
+			    	if (pureHit > 0) {
+			    		String msg = String.format("%s is done for '%s' and PureHit found '%s' matches as expected.", searchType, searchString, pureHit);
+						pass(dataMap,msg);
+						logTestResult(dataMap,testCaseNo,"pass",msg);
+			    		System.out.println(msg);
+			    	} else {
+			    		String msg = String.format("ERROR: %s is done for '%s' and no PureHit were found.", searchType, searchString);
+						logTestResult(dataMap,testCaseNo,"fail",msg);
+						error(dataMap,msg);
+			    		System.out.println(msg);
+			    	}
+	    		}
 	    	}
 
 		} else {
@@ -821,6 +1087,9 @@ public class SearchContext extends CommonContext {
 	public void create_advanced_search(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		String searchType = (String) dataMap.get("searchType");
 		if (searchType==null) searchType = "metaData";
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				sessionSearch.getNewSearch().Enabled()  ;}}), Input.wait30); 
+		sessionSearch.getNewSearch().Click();
 
 		if (scriptState) {
 			boolean alreadyAtAdvanced = false;
@@ -835,10 +1104,10 @@ public class SearchContext extends CommonContext {
 		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    			sessionSearch.getAdvancedSearchLink().Visible()  ;}}), Input.wait30); 
 		    	sessionSearch.getAdvancedSearchLink().Click();
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    			sessionSearch.getActiveElementByXPath(sessionSearch.ContentAndMetaDatabtnXPath).Visible()  ;}}), Input.wait30); 
-		    	sessionSearch.getActiveElementByXPath(sessionSearch.ContentAndMetaDatabtnXPath).Click();
 			}
+	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    			sessionSearch.getActiveElementByXPath(sessionSearch.ContentAndMetaDatabtnXPath).Visible()  ;}}), Input.wait30); 
+	    	sessionSearch.getActiveElementByXPath(sessionSearch.ContentAndMetaDatabtnXPath).Click();
 
 			String searchString = (String)dataMap.get("searchValue");
 			String metaDataOption = (String)dataMap.get("metaDataOption");

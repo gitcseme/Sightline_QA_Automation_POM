@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -20,6 +21,8 @@ import automationLibrary.Driver;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 
@@ -354,4 +357,20 @@ public class CommonContext {
 		testCaseResult.put("description", description);
 		testCaseResultList.add(testCaseResult);
     }
+    
+	public boolean validateMessage(HashMap dataMap, String expectedErrorTag, String foundMessage) {
+		boolean errorMatched = false;
+		JSONArray errorList = (JSONArray) dataMap.get("ui_messages");
+ 	    Iterator<JSONObject> errorsIterator = errorList.iterator();
+        while (errorsIterator.hasNext()) {
+        	JSONObject error = errorsIterator.next();
+        	if (((String)error.get("tag")).equalsIgnoreCase(expectedErrorTag)) {
+        		errorMatched = (foundMessage.startsWith((String)error.get("message")));
+        		break;
+        	}
+        }
+		
+        return errorMatched;
+	}
+
 }
