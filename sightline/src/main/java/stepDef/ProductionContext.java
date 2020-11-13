@@ -45,8 +45,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.gargoylesoftware.htmlunit.WebWindow;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Ordering;
+import com.sun.jna.platform.win32.OaIdl.CURRENCY;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -11811,10 +11813,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("expand_tiff_pdf_section");
-		} else {
-			throw new ImplementationException("NOT expand_tiff_pdf_section");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFTab().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFTab().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFBlankRemovalToggle().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "was able to expand tiff pdf section");
 		}
+		else fail(dataMap, "failed to expand tiff pdf section");
 
 	}
 
@@ -11823,11 +11831,104 @@ public class ProductionContext extends CommonContext {
 	public void verify_tiff_pdf_metadata_fields_sorted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8023: To verify that in Production-Export-Branding, Metadata Field drop down should be sorted by alpha ascendingTC 8036: To verify that in Production-Export-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8038: To verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8044: To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascendingTC 8040: To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTo verify 8023:Click the Insert Metadata Field link in the Branding section located underneath the Branding Text field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8036:Click the Insert Metadata Field link in the Placeholder section located underneath the Placerholder Text field for Privileged docs to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8038Click the Enable for Tech Issue docs toggle to enable itOnce you click it, a placeholder text field for placeholder text for Tech Issue docs appearsClick the Insert Metadata Field link undernearth this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8040:Click the "Enable for Natively Produced Documents" link, which will add a placeholder text field for the docs of selected file typesClick the Insert Metadata Field link underneath this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8044:Click the Advanced text which is located at the bottom of the TIFF/PDF section, which will show the Slip Sheets toggleClick the Slip Sheets toggle to show the Available Metadata fieldsVerify the options are sorted by alpha ascending
-			throw new ImplementationException("verify_tiff_pdf_metadata_fields_sorted");
-		} else {
-			throw new ImplementationException("NOT verify_tiff_pdf_metadata_fields_sorted");
+			//TC 8023: To verify that in Production-Export-Branding, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8036: To verify that in Production-Export-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8038: To verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8044: To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending
+			//TC 8040: To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+
+			//To verify 8023:Click the Insert Metadata Field link in the Branding section located underneath the Branding Text field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8036:Click the Insert Metadata Field link in the Placeholder section located underneath the Placerholder Text field for Privileged docs to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8038Click the Enable for Tech Issue docs toggle to enable itOnce you click it, a placeholder text field for placeholder text for Tech Issue docs appearsClick the Insert Metadata Field link undernearth this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8040:Click the "Enable for Natively Produced Documents" link, which will add a placeholder text field for the docs of selected file typesClick the Insert Metadata Field link underneath this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8044:Click the Advanced text which is located at the bottom of the TIFF/PDF section, which will show the Slip Sheets toggleClick the Slip Sheets toggle to show the Available Metadata fieldsVerify the options are sorted by alpha ascending
+			
+			/*Verify Branding Section MetaData*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFMetadataField().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFMetadataField().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFF_selectedMetadataField().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFF_selectedMetadataField().Click();
+
+			//Verify Branding MetaDataField dropdown is sorted in ascending
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			String prev = "";
+			for(WebElement curr: prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements()){
+				if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+				prev = curr.getText();
+			}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getNumBatesDialogCloseButton().Displayed()  ;}}), Input.wait30); 
+			prod.getNumBatesDialogCloseButton().click();
+			/*End of Branding Section MetaData*/
+			
+
+			/*Verify Placeholder, Tech Issue Doc and Natively Produced Documents
+			These all use the same insertMetaDataLink, so we can verify them all together in this chunk*/
+			
+			//Toggle Tech Issue 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFPlaceholderTechIssueToggle().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFPlaceholderTechIssueToggle().click();
+			
+			//Click Enable for Natively Produced Documents
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFComponentEnableNativelyProducedDocuments().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getInsertMetaDataFieldLinks().FindWebElements().size()>=3  ;}}), Input.wait30); 
+
+			Actions builder = new Actions(driver.getWebDriver());
+			//Go through each metadata link -> verify that the options are in ascending order
+			for(WebElement x: prod.getInsertMetaDataFieldLinks().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					builder.moveToElement(x).perform();
+					x.click();
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_selectedMetadataField().Displayed()  ;}}), Input.wait30); 
+					prod.getTIFF_selectedMetadataField().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+					prev = "";
+					for(WebElement curr: prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements()){
+						if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+						prev = curr.getText();
+					}
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumBatesDialogCloseButton().Displayed()  ;}}), Input.wait30); 
+					prod.getNumBatesDialogCloseButton().click();
+					driver.waitForPageToBeReady();
+				}
+			}
+			/* End of Placeholder/Tech Issue/Natively Produced*/
+			
+			
+			/*Finally Verify Slipsheet metadata in advanced options*/
+			//Toggle slipsheet in Advanced tag
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFAdvanced().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFSlipSheetsToggle().click();
+			
+			//Verify SlipSheet MetaDataField is sorted in asending 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSlipSheetMetaDataTextOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			prev = "";
+			for(WebElement curr: prod.getTIFFSlipSheetMetaDataTextOptions().FindWebElements()) {
+				if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+				prev = curr.getText();
+			}
+			
+			pass(dataMap, "verified tiff pdf metadata sorted fields");
 		}
+		else fail(dataMap, "failed to verify tiff pdf metadata fields");
 
 	}
 

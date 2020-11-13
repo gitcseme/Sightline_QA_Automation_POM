@@ -11751,7 +11751,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke8"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expand_tiff_pdf_section_Then_verify_tiff_pdf_metadata_fields_sorted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -11768,9 +11768,11 @@ public class ProductionRegression extends RegressionBase {
 			context.expand_tiff_pdf_section(true, dataMap);
 			context.verify_tiff_pdf_metadata_fields_sorted(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
