@@ -11778,4 +11778,319 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@When("^.*(\\[Not\\] )? expand_dat_section$")
+	public void expand_dat_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("expand_dat_section");
+		} else {
+			throw new ImplementationException("NOT expand_dat_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_source_field_options_available$")
+	public void verify_email_source_field_options_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7978: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category by default to select in the DAT for a Production-Export.In the DAT section, click the Field Classification dropdownSelect EmailAfter Email has been selected, verify the following fields are available in the Source Field dropdown menu: EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses
+			throw new ImplementationException("verify_email_source_field_options_available");
+		} else {
+			throw new ImplementationException("NOT verify_email_source_field_options_available");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? expand_tiff_pdf_section$")
+	public void expand_tiff_pdf_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("expand_tiff_pdf_section");
+		} else {
+			throw new ImplementationException("NOT expand_tiff_pdf_section");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tiff_pdf_metadata_fields_sorted$")
+	public void verify_tiff_pdf_metadata_fields_sorted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8023: To verify that in Production-Export-Branding, Metadata Field drop down should be sorted by alpha ascendingTC 8036: To verify that in Production-Export-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8038: To verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8044: To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascendingTC 8040: To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTo verify 8023:Click the Insert Metadata Field link in the Branding section located underneath the Branding Text field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8036:Click the Insert Metadata Field link in the Placeholder section located underneath the Placerholder Text field for Privileged docs to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8038Click the Enable for Tech Issue docs toggle to enable itOnce you click it, a placeholder text field for placeholder text for Tech Issue docs appearsClick the Insert Metadata Field link undernearth this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8040:Click the "Enable for Natively Produced Documents" link, which will add a placeholder text field for the docs of selected file typesClick the Insert Metadata Field link underneath this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8044:Click the Advanced text which is located at the bottom of the TIFF/PDF section, which will show the Slip Sheets toggleClick the Slip Sheets toggle to show the Available Metadata fieldsVerify the options are sorted by alpha ascending
+			throw new ImplementationException("verify_tiff_pdf_metadata_fields_sorted");
+		} else {
+			throw new ImplementationException("NOT verify_tiff_pdf_metadata_fields_sorted");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_add_new_production_link$")
+	public void click_add_new_production_link(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_add_new_production_link");
+		} else {
+			throw new ImplementationException("NOT click_add_new_production_link");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_validation_on_production_components$")
+	public void verify_validation_on_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4463: To verify Validation and Notification Message Issue in Various Section of ExportOn the Basic Info section, leave the Name field blankClick Mark CompleteVerify the following error message appears underneath the input field: It is mandatory to provide the production nameFill in a unique Name (use a timestamp) Click Mark Complete to go to the Production Components sectionMake sure none of the Components are selected, then click the Mark Complete buttonVerify a red toast message appears with the following text: Selection of the DAT component is mandatory for a production.Click the DAT checkboxExpand the DAT fieldSelect Bates from the Field Classification dropdownSelect BatesNumber from the Source FieldEnter "bates" in the DAT field Click Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Numbering & Sorting sectionClick Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Document Selection sectionMake sure nothing is selected, then click Mark CompleteVerify the following error message appears under Selected Documents: Select documents to be processedClick the Select Folders radio buttonClick the Default Automation Folder optionClick the Mark Complete buttonClose the Green Succcesful toast messageWait until Next button is enabledClick the Next button to go to the Priv Guard sectionClick the Mark Complete Click OK on the warning message popupWait until Next button is enabledClick the Next button to go to the Production Location sectionClick the Mark Complete buttonVerify the following message appears underneath the Production Directory input field: Please enter the Production Directory
+			throw new ImplementationException("verify_validation_on_production_components");
+		} else {
+			throw new ImplementationException("NOT verify_validation_on_production_components");
+		}
+
+	}
+
+
+
+	@When("^.*(\\[Not\\] )? click_add_a_new_production$")
+	public void click_add_a_new_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_add_a_new_production");
+		} else {
+			throw new ImplementationException("NOT click_add_a_new_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_basic_info_section$")
+	public void verify_basic_info_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4405: To Verify Changes in Basic Info Page ( for Export)TC 4406: To Verify Basic Info UI with Toggle option (For Export).Verifty the section title is "Basic Info & Select Template"Verify the Name field exists and is requiredVerify the Description field exisrts and text can be enteredVerify the Load Template dropdown exists and can be selectedVerify the Save button exists and is enabledVerify the Mark Complete button exists and is enabledVerify the Next button is disabled upon initial loadVerify the Next button is enlabed after clicking the Save button 
+			throw new ImplementationException("verify_basic_info_section");
+		} else {
+			throw new ImplementationException("NOT verify_basic_info_section");
+		}
+
+	}
+
+
+
+	@And("^.*(\\[Not\\] )? create_new_production_export_set$")
+	public void create_new_production_export_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the "Create a new production/export set" link to bring up the Add Set popupIn the Add Set popup, enter a unique Set NameSave this unique name in the dataMap. For example: dataMap.put("ProductionSetName", <enter String variable here>)Click Save
+			throw new ImplementationException("create_new_production_export_set");
+		} else {
+			throw new ImplementationException("NOT create_new_production_export_set");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? select_newly_created_production_set$")
+	public void select_newly_created_production_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("select_newly_created_production_set");
+		} else {
+			throw new ImplementationException("NOT select_newly_created_production_set");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_production_set_can_be_edited$")
+	public void verify_the_production_set_can_be_edited(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4424: To Verify Changes in Create / Edit Production Set- Add Export Set changesClick the Edit link once the Production Set has been selected from the dropdownClear the Set Name input fieldClick SaveVerify the following error message appears: The production set cannot be emptyEnter a new set name in the Set Name input fieldClick SaveVerify the new name is reflected correctly under the PRODUCTIONS SET area
+			throw new ImplementationException("verify_the_production_set_can_be_edited");
+		} else {
+			throw new ImplementationException("NOT verify_the_production_set_can_be_edited");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? save_production_as_custom_template$")
+	public void save_production_as_custom_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//While on the Production Home page, locate the newly created ProductionClick the action icon on the top right corner of the tileClick Save as TemplateIn the Save as Template popup screen, enter a unique name for the template (use a timestamp for uniqueness), and save the name into the dataMap using a custom key "customTemplateName"Click the Save button
+			throw new ImplementationException("save_production_as_custom_template");
+		} else {
+			throw new ImplementationException("NOT save_production_as_custom_template");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_can_be_saved_as_template$")
+	public void verify_production_can_be_saved_as_template(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4637: To Verify the Create/Display of Template with newly created Project and Production Set.TC 4638: To Verify the View of the Custom TemplateTC 7737: To Verify Selected Production is getting reflected in Export Basic info Page.For this outcome, you will need to save the values entered in the complete_complex_production_component context into the dataMap, such as the Field Classification, Source Field, and DAT Field for the DAT section.You will also need to save the values entered in the Numbering & Sorting section into the dataMap, such as the Beginning Bates #, Prefix, Suffix, and Min Number Length.You will also need to save the rules entered in the Priv Guard section into the dataMap.We will use these values to validate the Custom Template.While on the Manage Templates screen, in the Custom Templates table, locate the template we just saved. Verify there is a View and Delete button for that custom template.Click the View buttonVerify the values entered in the Priv Guard section while you were creating the Production are shown in the Priv Guard section of the Custom template popupClick the Next button to go to the Production Components sectionVerify the values entered in the Production Components section while you were creating the Production are shown in the Production Components section of the Custom template popupClick the Next button to go to the Numbering & Sorting sectionVerify the values entered in the Numbering & Sorting section while you were creating the Production are shown in the Numbering & Sorting section of the Custom template popup
+			throw new ImplementationException("verify_production_can_be_saved_as_template");
+		} else {
+			throw new ImplementationException("NOT verify_production_can_be_saved_as_template");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? download_the_production$")
+	public void download_the_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("download_the_production");
+		} else {
+			throw new ImplementationException("NOT download_the_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_dat_and_text_file_are_downloaded$")
+	public void verify_dat_and_text_file_are_downloaded(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7844: Production Export generation for DAT & Text componentOnce the Production zip file has been downloaded, verify that the zip contains a DAT file and a Text file.  The DAT file should end in something like "_DAT.dat" and the Text file should be "_Text.lst".
+			throw new ImplementationException("verify_dat_and_text_file_are_downloaded");
+		} else {
+			throw new ImplementationException("NOT verify_dat_and_text_file_are_downloaded");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_no_option_to_remove_documents$")
+	public void verify_no_option_to_remove_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7780: Verify Remove documents option is not getting displayed in Export.Click the Download button to show a list of optionsVerify there is no option to remove documents
+			throw new ImplementationException("verify_no_option_to_remove_documents");
+		} else {
+			throw new ImplementationException("NOT verify_no_option_to_remove_documents");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_tiff_component_with_file_type_only$")
+	public void add_tiff_component_with_file_type_only(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the TIFF/PDF checkboxClick TIFF/PDF to expand the sectionDisable "Enable for Privileged Docs" by clicking the green toggle. This should remove the text field right next to itClick the "Enable for Natively Produced Documents" link, which should add a Select File Types and/or Tags field, as well as a textboxSelect the file type based on the file_type parameterAdd the following text in the placeholder text field next to the Select File Types and/or Tags field: Automation Test File TypesSave the text to the dataMap so we can use it for validation later. Something like dataMap.put("placeholderTextForFileType", "Automation Test File Types")Click the Select Tags buttonWait until the Select Tags popup is visibleClick the Default Automation Tag optionClick Select
+			throw new ImplementationException("add_tiff_component_with_file_type_only");
+		} else {
+			throw new ImplementationException("NOT add_tiff_component_with_file_type_only");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_placeholder_text_for_file_types_in_tiff$")
+	public void verify_placeholder_text_for_file_types_in_tiff(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5365: To Verify "Enable Placeholders by Selecting File Types" for  (.mdb/.mdf) under TIFF /PDF should works for Export.Once the Production zip file has been downloaded, you will need to verify the value from the "placeholderTextForFileType" key in the dataMap exists in a tiff file.When the file is unzipped, there will be a VOL001 folder, which will have an Images folder, which will have a 0001 folder. You will need to iterate through each tiff file to locate the text that was saved into the dataMap from the add_tiff_component_with_file_type_only context.
+			throw new ImplementationException("verify_placeholder_text_for_file_types_in_tiff");
+		} else {
+			throw new ImplementationException("NOT verify_placeholder_text_for_file_types_in_tiff");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pdf_is_generated_on_completed_production$")
+	public void verify_pdf_is_generated_on_completed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_pdf_is_generated_on_completed_production");
+		} else {
+			throw new ImplementationException("NOT verify_pdf_is_generated_on_completed_production");
+		}
+
+	}
+
+
+
+	@When("^.*(\\[Not\\] )? on_manage_project_fields_page$")
+	public void on_manage_project_fields_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Navigate to the Mange Project Fields page: /ProjectFields/ProjectFieldsList
+			throw new ImplementationException("on_manage_project_fields_page");
+		} else {
+			throw new ImplementationException("NOT on_manage_project_fields_page");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_is_searchable_false_for_all_production_bates_ranges$")
+	public void verify_is_searchable_false_for_all_production_bates_ranges(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11538 - Verify that in new projects, AllProductionsBatesRange field should not be in Search list1. In the Manage Project fields screen, the AllProductionBatesRanges field name should have a "Is Searchable" value of "False"
+			throw new ImplementationException("verify_is_searchable_false_for_all_production_bates_ranges");
+		} else {
+			throw new ImplementationException("NOT verify_is_searchable_false_for_all_production_bates_ranges");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_edit_button_on_allproductionbatesranges$")
+	public void click_edit_button_on_allproductionbatesranges(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_edit_button_on_allproductionbatesranges");
+		} else {
+			throw new ImplementationException("NOT click_edit_button_on_allproductionbatesranges");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_help_text_for_allproductionbatesranges$")
+	public void verify_help_text_for_allproductionbatesranges(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11539 - Verify that help text should be displays as "This is not a searchable field." for 'AllProductionBatesRanges' metadataClick the ? icon next to Is Searchable:The text in the popup should read: "Due to the nature of the content, this field cannot be made searchable"
+			throw new ImplementationException("verify_help_text_for_allproductionbatesranges");
+		} else {
+			throw new ImplementationException("NOT verify_help_text_for_allproductionbatesranges");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_is_searchable_is_disabled$")
+	public void verify_is_searchable_is_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11538: Verify that for 'AllProductionsBatesRange' field 'isSearchable' option is disabledTC 11540: Verify that if 'AllProductionBatesRanges' is non-searchable for existing project, user cannot make it as Searchable fieldTC 11545: Verify if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable.TC 11546: Verify if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable.The Is Searchable checkbox should be disabled. You can verify this by looking for the "disabled" property in the IsSearchable input element
+			throw new ImplementationException("verify_is_searchable_is_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_is_searchable_is_disabled");
+		}
+
+	}
 }//EOF
