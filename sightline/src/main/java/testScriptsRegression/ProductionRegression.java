@@ -1,7 +1,11 @@
 package testScriptsRegression;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.ExtentTest;
@@ -11721,16 +11725,32 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke7"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expand_dat_section_Then_verify_email_source_field_options_available() throws Throwable
 	{
-		HashMap dataMap = new HashMap();
+		String methodName = new Throwable() 
+                .getStackTrace()[0] 
+                .getMethodName(); 
+		getMethodData(dataMap,methodName);
 
 		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_production_home_page and begin_new_production_process When expand_dat_section Then verify_email_source_field_options_available");
 
 		dataMap.put("ExtentTest",test);
 
 		try {
+			HashSet<String> sourceFieldSet = new HashSet<>();
+			JSONArray sourceFields = (JSONArray) dataMap.get("datSourceFieldsToVerify");
+     	    Iterator<JSONArray> optionsList = sourceFields.iterator();
+	        while (optionsList.hasNext()) {
+	        	JSONArray option = optionsList.next();
+	     	    Iterator<JSONObject> iterator = option.iterator();
+		        while (iterator.hasNext()) {
+		        	JSONObject data = iterator.next();
+		        	sourceFieldSet.add((String)data.get("value"));
+		        }
+	        }
+	        dataMap.put("sourceFieldsToVerify", sourceFieldSet);
+
 			context.sightline_is_launched(true, dataMap);
 			context.login_as_pau(true, dataMap);
 			context.on_production_home_page(true, dataMap);
@@ -11738,9 +11758,11 @@ public class ProductionRegression extends RegressionBase {
 			context.expand_dat_section(true, dataMap);
 			context.verify_email_source_field_options_available(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -11751,7 +11773,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive", "smoke8"})
+	@Test(groups = {"Production, Positive", "smoke7"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expand_tiff_pdf_section_Then_verify_tiff_pdf_metadata_fields_sorted() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -11783,7 +11805,7 @@ public class ProductionRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive", "smoke7"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_click_add_new_production_link_Then_verify_validation_on_production_components() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -11799,9 +11821,11 @@ public class ProductionRegression extends RegressionBase {
 			context.click_add_new_production_link(true, dataMap);
 			context.verify_validation_on_production_components(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

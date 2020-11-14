@@ -1377,5 +1377,22 @@
 							]
 						]}
 					]
+					,"test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_and_begin_new_production_process_When_expand_dat_section_Then_verify_email_source_field_options_available":
+					[
+						,{"name":"datSourceFieldsToVerify","value":[
+							[
+							 {"name":"sourceField","value": "EmailAuthorNameAndAddress"}
+							]
+							,[
+							 {"name":"sourceField","value": "EmailToNamesAndAddresses"}
+							]
+							,[
+							 {"name":"sourceField","value": "EmailCCNamesAndAddresses"}
+							]
+							,[
+							 {"name":"sourceField","value": "EmailBCCNamesAndAddresses"}
+							]
+						]}
+					]
 				}
 }

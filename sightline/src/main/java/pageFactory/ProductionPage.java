@@ -565,6 +565,7 @@ public class ProductionPage {
 
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
+    public ElementCollection getAllSourceFieldOptions() {return driver.FindElementsByCssSelector("#SF_0 option");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
     public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("(//a[text()='Default Automation Tag'])[1]");}
     public Element getDefaultAutomationFolderChechbox() { return driver.FindElementByXPath("//a[text()='Default Automation Folder']"); }
@@ -806,6 +807,9 @@ public class ProductionPage {
     public Element getTIFFSlipSheetMetaDataTab() {return driver.FindElementByXPath("//span[text() = 'METADATA']//..");}
     public ElementCollection getTIFFSlipSheetMetaDataTextOptions() {return driver.FindElementsByCssSelector("#tiffMetadataList li strong");}
     public ElementCollection getInsertMetaDataFieldLinks() {return driver.FindElementsByXPath("//a[@class = 'LaunchMetaDataPopup']");}
+    public Element getMandatoryNameErrorMessage() {return driver.FindElementById("ProductionName-error");}
+    public Element getMandotoryFoldererrorMessage() {return driver.FindElementById("ProductionDocumentsSelection.ContextType-error");}
+    public Element getMandatoryDirectoryErrorMessage() {return driver.FindElementById("ProductionOutputLocation_ProductionDirectory-error");}
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {

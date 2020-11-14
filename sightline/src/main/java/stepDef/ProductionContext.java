@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.security.auth.login.FailedLoginException;
+import javax.xml.stream.events.EndDocument;
 
 import java.util.List;
 import java.util.Random;
@@ -11787,10 +11788,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("expand_dat_section");
-		} else {
-			throw new ImplementationException("NOT expand_dat_section");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDATTab().Displayed()  ;}}), Input.wait30); 
+			prod.getDATTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDATAnsiType().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "Was able to expand the dat section");
 		}
+		else fail(dataMap, "Failed to expand the dat section");
 
 	}
 
@@ -11799,11 +11805,35 @@ public class ProductionContext extends CommonContext {
 	public void verify_email_source_field_options_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 7978: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category by default to select in the DAT for a Production-Export.In the DAT section, click the Field Classification dropdownSelect EmailAfter Email has been selected, verify the following fields are available in the Source Field dropdown menu: EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses
-			throw new ImplementationException("verify_email_source_field_options_available");
-		} else {
-			throw new ImplementationException("NOT verify_email_source_field_options_available");
+			//TC 7978: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category by default to select in the DAT for a Production-Export.In the DAT section, click the Field Classification dropdownSelect EmailAfter Email has been selected, verify the following fields are available in the Source Field dropdown menu: EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddressesl
+
+			HashSet<String> sourceFieldsToVerify = (HashSet<String>)dataMap.get("sourceFieldsToVerify");
+			int numOfMatches = 0;
+
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+			prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Email");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().selectFromDropdown().getFirstSelectedOption().getText().equals("Email")  ;}}), Input.wait30);
+			prod.getSourceField().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getAllSourceFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+
+			//Go through the dropdown
+			for(WebElement x: prod.getAllSourceFieldOptions().FindWebElements()) {
+				//Track the matching fields
+				if(sourceFieldsToVerify.contains(x.getText())) numOfMatches++;
+			}
+			
+			//Make sure we have found every field to verify in the dropdown
+			Assert.assertEquals(numOfMatches, sourceFieldsToVerify.size());
+			
+			pass(dataMap, "verfied email source field options");
 		}
+		else fail(dataMap, "was unable to verify emial source field options");
 
 	}
 
@@ -11938,10 +11968,9 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_add_new_production_link");
-		} else {
-			throw new ImplementationException("NOT click_add_new_production_link");
+			pass(dataMap, "successfully clicked add new production link");
 		}
+		else fail(dataMap, "failed to click add new production link");
 
 	}
 
@@ -11950,11 +11979,130 @@ public class ProductionContext extends CommonContext {
 	public void verify_validation_on_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4463: To verify Validation and Notification Message Issue in Various Section of ExportOn the Basic Info section, leave the Name field blankClick Mark CompleteVerify the following error message appears underneath the input field: It is mandatory to provide the production nameFill in a unique Name (use a timestamp) Click Mark Complete to go to the Production Components sectionMake sure none of the Components are selected, then click the Mark Complete buttonVerify a red toast message appears with the following text: Selection of the DAT component is mandatory for a production.Click the DAT checkboxExpand the DAT fieldSelect Bates from the Field Classification dropdownSelect BatesNumber from the Source FieldEnter "bates" in the DAT field Click Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Numbering & Sorting sectionClick Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Document Selection sectionMake sure nothing is selected, then click Mark CompleteVerify the following error message appears under Selected Documents: Select documents to be processedClick the Select Folders radio buttonClick the Default Automation Folder optionClick the Mark Complete buttonClose the Green Succcesful toast messageWait until Next button is enabledClick the Next button to go to the Priv Guard sectionClick the Mark Complete Click OK on the warning message popupWait until Next button is enabledClick the Next button to go to the Production Location sectionClick the Mark Complete buttonVerify the following message appears underneath the Production Directory input field: Please enter the Production Directory
-			throw new ImplementationException("verify_validation_on_production_components");
-		} else {
-			throw new ImplementationException("NOT verify_validation_on_production_components");
+			//TC 4463: To verify Validation and Notification Message Issue in Various Section of ExportOn the Basic Info section,
+			//leave the Name field blankClick Mark CompleteVerify the following error message appears underneath the input field: It is mandatory to provide the production name
+			//Fill in a unique Name (use a timestamp) Click Mark Complete to go to the Production Components section
+			//Make sure none of the Components are selected, then click the Mark Complete buttonVerify a red toast message appears with the following text: Selection of the DAT component is mandatory for a production.
+			//Click the DAT checkboxExpand the DAT fieldSelect Bates from the Field Classification dropdownSelect BatesNumber from the Source FieldEnter "bates" in the DAT field Click Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabled
+			//Click Next to go to the Numbering & Sorting sectionClick Mark CompleteClose the Green Succcesful toast message
+			//Wait until Next button is enabledClick Next to go to the Document Selection sectionMake sure nothing is selected, then click Mark CompleteVerify the following error message appears under Selected Documents: Select documents to be processed
+			//Click the Select Folders radio buttonClick the Default Automation Folder optionClick the Mark Complete buttonClose the Green Succcesful toast message
+			//Wait until Next button is enabledClick the Next button to go to the Priv Guard sectionClick the Mark Complete Click OK on the warning message popupWait until Next button is enabled
+			//Click the Next button to go to the Production Location sectionClick the Mark Complete buttonVerify the following message appears underneath the Production Directory input field: Please enter the Production Directory
+
+			/*Verify Basic Info Page*/
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String productionName = "AutoProduction" + dateTime;
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getBasicInfoCompleteButton().Displayed()  ;}}), Input.wait30); 
+			prod.getBasicInfoCompleteButton().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getMandatoryNameErrorMessage().Displayed()  ;}}), Input.wait30); 
+
+			System.out.println(prod.getMandatoryNameErrorMessage().getText());
+			//Verify Error Message when marking complete without adding a production name
+			Assert.assertEquals("It is mandatory to provide the production name", prod.getMandatoryNameErrorMessage().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+			prod.getProductionName().SendKeys(productionName);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
+			prod.getBasicInfoCompleteButton().Click();
+			driver.waitForPageToBeReady();
+			/*End of Verify Basic info Page*/
+
+			/*Verify Components Page*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getDATTab().Displayed()  ;}}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+			prod.getComponentsMarkComplete().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMessagePopup().Displayed()  ;}}), Input.wait30);
+			System.out.println(prod.getMessagePopup().getText());
+			//Verify Error Message when marking complete without Dat section 
+			Assert.assertEquals("No fields are added in the DAT section. Please complete before navigating to the next step.", prod.getMessagePopup().getText());
+			prod.getSuccessMessageCloseBtn().click();
+
+			prod.getDATChkBox().click();
+			prod.getDATTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().Visible()  ;}}), Input.wait30);
+			prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Bates");;
+			prod.getSourceField().selectFromDropdown().selectByVisibleText("BatesNumber");;
+			prod.getDatField().click();
+			prod.getDatField().SendKeys("Bates Number");
+
+			prod.getComponentsMarkComplete().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			// Close toast message
+			prod.getSuccessMessageCloseBtn().click();
+			//Click the next button
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/* End of Verify Components Page*/
+			
+			/*Numbering Section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			prod.getSuccessMessageCloseBtn().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/*End of numbering Section*/
+			
+			/*Document Selection*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMandotoryFoldererrorMessage().Displayed() ;}}), Input.wait30);
+			System.out.println(prod.getMandotoryFoldererrorMessage().getText());
+			//Verify Error message when marking complete without selecting a folder or tag
+			Assert.assertEquals("Select documents to be processed",prod.getMandotoryFoldererrorMessage().getText());
+			complete_default_document_selection(scriptState, dataMap);
+			/*End of Document Selection*/
+			
+			/*Priv Guard Section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getOkButton().Displayed() ;}}), Input.wait30);
+			prod.getOkButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/*End of Priv Guard Section*/
+			
+			/*Location section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMandatoryDirectoryErrorMessage().Displayed() ;}}), Input.wait30);
+			System.out.println(prod.getMandatoryDirectoryErrorMessage().getText());
+			//Verify Error message when marking complete with entering a directory
+			Assert.assertEquals("Please enter the Production Directory",prod.getMandatoryDirectoryErrorMessage().getText());
+			/* end of Location section*/
+
+			pass(dataMap, "Successfully verified validation on production components");
 		}
+		else fail(dataMap, "failed to verify validation on production components");
 
 	}
 
