@@ -1,6 +1,6 @@
 {"08122020_NV":{"variables":
 					[
-						{"name":"uid","value":"sqa.consilio4@sqapowered.com"}
+						{"name":"uid","value":"sqa.consilio2@sqapowered.com"}
 						,{"name":"pwd","value":"Q@test_10"}
 					]
 				,"test_Given_on_production_Search_Session_page_and_create_searchForEach_MetaData_When_Then_verify_search_returned":
@@ -1376,6 +1376,54 @@
 								,{"name":"TestCase","value":"11558"}
 							]
 						]}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_When_click_applied_redaction_Then_verify_1_redaction_tag_per_redaction":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "redactionTag", "value": "Default Automation Redaction"}
+						,{"name": "project", "value": "08122020_NV"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_no_redactions_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_apply_rectangle_highlight_and_reload_the_page_and_rectangle_highlight_deleted_When_reload_the_page_Then_verify_redaction_highlight_deleted_in_doc_view":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "redactionTag", "value": "Default Automation Redaction"}
+						,{"name": "project", "value": "08122020_NV"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_this_page_redaction_Then_verify_redaction_applied":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "redactionTag", "value": "Default Automation Redaction"}
+						,{"name": "project", "value": "08122020_NV"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_no_redactions_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_When_reload_the_page_Then_verify_redaction_deleted_in_doc_view":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "redactionTag", "value": "Default Automation Redaction"}
+						,{"name": "project", "value": "08122020_NV"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_SGSame2_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_When_apply_rectangle_redaction_without_changing_tag_Then_verify_redaction_saved_with_last_applied_tag":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "tag", "value": "Redacted Privacy"}
+						,{"name": "project", "value": "08122020_NV"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_this_page_redaction_SGSame2_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_When_apply_this_page_redaction_without_changing_tag_Then_verify_redaction_saved_with_last_applied_tag":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "tag", "value": "Redacted Privacy"}
+						,{"name": "project", "value": "08122020_NV"}
 					]
 				}
 }

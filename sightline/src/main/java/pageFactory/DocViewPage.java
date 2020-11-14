@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Alert;
@@ -32,6 +33,7 @@ public class DocViewPage {
     SessionSearch sp;
     SoftAssert softAssertion;
     Alert alert;
+    String defaultRedactionTagString;
     
     public Element getDocView_info(){ return driver.FindElementById("totalRecords"); }
     public Element getAddComment1(){ return driver.FindElementById("1_textarea"); }
@@ -44,6 +46,7 @@ public class DocViewPage {
     public Element getSaveRemark(){ return driver.FindElementByXPath("(//span[@id='remarksSaveCancelControls']/i[2])[1]"); }
     public Element getCompleteDocBtn(){ return driver.FindElementById("btnDocumentComplete"); }
     public ElementCollection getElements(){ return driver.FindElementsByXPath("//*[@class='a-menu']"); }
+    public String PageViewTagString() {return defaultRedactionTagString;}
    
 //Audio-----------------------------------------------------------
     public Element getDocView_IconFileType(){ return driver.FindElementById("icofiletype"); }
@@ -77,6 +80,7 @@ public class DocViewPage {
     public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
     public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
     public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
+    public Element getDocViewSaveRedactionButton() { return driver.FindElementById("btnSave");}
     
    //remaks objects
     public Element getAdvancedSearchAudioRemarkIcon(){ return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]"); }
@@ -124,6 +128,7 @@ public class DocViewPage {
     public Element getDocView_HdrCoddingForm(){ return driver.FindElementByXPath(".//*[@id='HdrCoddingForm']/div/div/i"); }
     public Element getDocView_HdrMetaData(){ return driver.FindElementByXPath(".//*[@id='HdrMetaData']/div/div/i"); }
     public Element getDocView_HdrAnalytics(){ return driver.FindElementByXPath(".//*[@id='HdrAnalytics']/div/div/i"); }
+    public Element getNearDupeDocID() {return driver.FindElementByXPath("(//table[@id = 'dtDocumentNearDuplicates']/tbody/tr/td)[2]");}
     
     //All Tabs-----------------------------------------------------------
     public Element getDocView_DefaultViewTab(){ return driver.FindElementById("aliDocumentDefaultView"); }
@@ -226,9 +231,12 @@ public class DocViewPage {
     public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
-    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
+    public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level0").getWebElement(); }
+    public ElementCollection getExistingRectangleRedactions() {return driver.FindElementsByCssSelector(".igViewerGraphics g rect[style = 'opacity: 0.5;']");}
+    public ElementCollection getExistingHighlightRedactions() {return driver.FindElementsByCssSelector(".igAnchor g[data-pcc-mark = 'textmark-1'] ~ rect");}
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
+    public Element getDocViewReactEditTagByName(String name) {return driver.FindElementByCssSelector(String.format("#ddlRedactionTags option[title = '%s']", name));}
     public Element getDocView_DocId(String docid){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//td[contains(text(),'"+docid+"')]"); }
     public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
     public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
@@ -239,9 +247,30 @@ public class DocViewPage {
     
     public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
+    public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
+    public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
+    public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
+    public ElementCollection getThisPageButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-file-text-o']");}
+    public Element getConfirmPopUp() {return driver.FindElementByCssSelector("#divbigBoxes p");}
+    public Element getRedactionDoubleClickMenu() {return driver.FindElementByXPath("//div[@class = 'pcc-tabset']");}
+    public ElementCollection getCloseButton() { return driver.FindElementsById("botClose1");}
+    public ElementCollection getDocViewNumOfPages() {return driver.FindElementsById("lblTotalPageCount_divDocViewer");}
+    public Element getDocViewTotalPages() {return driver.FindElementById("lblTotalPageCount_divDocViewer");}
+    public Element getBottomEditSideOfRedactionRectangle() {return driver.FindElementByCssSelector(".pccMarkHandleBottomLeft");}
+    public ElementCollection getAllEditSidesOfRedactionRectangle(String handleID) {return driver.FindElementsByCssSelector(String.format("div div[data-pcc-mark = '%s']",handleID));}
+    public Element getRedactionEditSaveBtn() {return driver.FindElementByXPath("//span[@class = 'fa fa-save']");}
+    public ElementCollection getRedactionTagOptions() {return driver.FindElementsByCssSelector("#ddlRedactionTags option");}
     public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
-    
+    public Element getMagnifyGlassSearchButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search']");}
+    public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
+    public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
+    public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
+    public Element getDocumentHistoryTab() {return driver.FindElementById("liDocumentHistory");}
+    public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
+    public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
+    public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
+    public ElementCollection getAmountOfRedactionTags() {return driver.FindElementsById("#dvCheckboxes");}
     
     //default constructor
     public DocViewPage(Driver driver, int i) {
@@ -257,6 +286,17 @@ public class DocViewPage {
         base = new BaseClass(driver);
         sp = new SessionSearch(driver);
         this.driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+    }
+    
+    public WebElement getCorrectSurfaceLevel() {
+    		for(int i =0; i<10; i++) {
+    			for(int j=0; j<10; j++) {
+    				if(driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().size()!=0) {
+    					return driver.FindElementsById(String.format("ig%slevel%s", i,j)).FindWebElements().get(0);
+    				}
+    			}
+    		}
+    		return null;
     }
     
     
@@ -1717,16 +1757,39 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 					
 			}
 	 
+	 public void highlightByRectangle(int off1, int off2, int coordinate) throws InterruptedException
+	 {
+		try {
+			Actions actions = new Actions(driver.getWebDriver());  
+             //WebElement text = getDocView_Redactrec_textarea();
+             WebElement text = getCorrectSurfaceLevel();
+             Random rand = new Random();
+             int x = rand.nextInt(99) + 1;
+             int y = rand.nextInt(9) + 1;
+             actions.moveToElement(text, off1,off2)
+             .clickAndHold()
+             .moveByOffset(x, y)
+             .release()
+             .perform();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	 }
+	 
 	 public void redactbyrectangle(int off1,int off2,int cordinate,String redactiontag) throws InterruptedException
 	 {
 		 try {
 			  System.out.println(off1+"...."+off2);
              Actions actions = new Actions(driver.getWebDriver());  
-             WebElement text = getDocView_Redactrec_textarea();
-             
+             //WebElement text = getDocView_Redactrec_textarea();
+             WebElement text = getCorrectSurfaceLevel();
+             Random rand = new Random();
+             int x = rand.nextInt(99) + 1;
+             int y = rand.nextInt(9) + 1;
              actions.moveToElement(text, off1,off2)
              .clickAndHold()
-             .moveByOffset(100, 10)
+             .moveByOffset(x, y)
              .release()
              .perform();
 		 }
@@ -1739,13 +1802,8 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		 
 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 		    getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+		    defaultRedactionTagString = getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
 		    getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
-		 
-	    	Thread.sleep(2000); 
-		   	getDocView_SaveReduction1(cordinate).waitAndClick(15);
-	    	Thread.sleep(2000);    	
-	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
-	    	Thread.sleep(2000);
      
 	 }
 	 
