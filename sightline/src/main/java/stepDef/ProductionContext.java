@@ -11968,6 +11968,11 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
 			pass(dataMap, "successfully clicked add new production link");
 		}
 		else fail(dataMap, "failed to click add new production link");
@@ -11994,10 +11999,6 @@ public class ProductionContext extends CommonContext {
 			String dateTime = new Long((new Date()).getTime()).toString();
 			String productionName = "AutoProduction" + dateTime;
 
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
-			prod.getAddNewProductionbutton().Click();
-			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				prod.getBasicInfoCompleteButton().Displayed()  ;}}), Input.wait30); 
 			prod.getBasicInfoCompleteButton().Click();
@@ -12113,10 +12114,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_add_a_new_production");
-		} else {
-			throw new ImplementationException("NOT click_add_a_new_production");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
 		}
+		else fail(dataMap, "Failed to click a new prodution");
 
 	}
 
@@ -12125,11 +12129,49 @@ public class ProductionContext extends CommonContext {
 	public void verify_basic_info_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4405: To Verify Changes in Basic Info Page ( for Export)TC 4406: To Verify Basic Info UI with Toggle option (For Export).Verifty the section title is "Basic Info & Select Template"Verify the Name field exists and is requiredVerify the Description field exisrts and text can be enteredVerify the Load Template dropdown exists and can be selectedVerify the Save button exists and is enabledVerify the Mark Complete button exists and is enabledVerify the Next button is disabled upon initial loadVerify the Next button is enlabed after clicking the Save button 
-			throw new ImplementationException("verify_basic_info_section");
-		} else {
-			throw new ImplementationException("NOT verify_basic_info_section");
+			//TC 4405: To Verify Changes in Basic Info Page ( for Export)TC 4406: To Verify Basic Info UI with Toggle option (For Export).
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String productionName = "AutoProduction" + dateTime;
+
+			//Verifty the section title is "Basic Info & Select Template"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getBasicInfoTitleHeader().Displayed() ;}}), Input.wait30);
+			Assert.assertEquals("Basic Info & Select Template",prod.getBasicInfoTitleHeader().getText());
+
+			//Verify the Name field exists and is required
+			Assert.assertEquals("Name :*",prod.getBasicInfoNameLabel().getText());
+
+			//Verify the Description field exisrts and text can be entered
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getProductionDesc().Enabled() ;}}), Input.wait30);
+			prod.getProductionDesc().click();
+			prod.getProductionDesc().SendKeys("Testing typing");
+			Assert.assertEquals("Testing typing", prod.getProductionDesc().GetAttribute("value"));
+			
+			
+			//Verify the Save button exists and is enabled
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getBasicInfoSave().Enabled()  ;}}), Input.wait30);
+			Assert.assertTrue(prod.getBasicInfoSave().Enabled() && prod.getBasicInfoSave().Displayed());
+			
+			//Verify the Load Template dropdown exists and can be selected
+			prod.getprod_LoadTemplate().click();
+			Assert.assertTrue(prod.getprod_LoadTemplate().Enabled() && prod.getprod_LoadTemplate().Displayed());
+
+			//Verify the Mark Complete button exists and is enabled
+			Assert.assertTrue(prod.getMarkCompleteButton().Enabled() && prod.getMarkCompleteButton().Displayed());
+			
+			//Verify the Next button is disabled upon initial load
+			Assert.assertFalse(prod.getNextButton().Enabled());
+
+			//Verify the Next button is enlabed after clicking the Save button 
+			prod.getProductionName().SendKeys(productionName);
+			prod.getBasicInfoSave().click();
+			driver.waitForPageToBeReady();
+			Assert.assertTrue(prod.getMarkCompleteButton().Displayed());
+			pass(dataMap, "was able to verify basic info section");
 		}
+		else fail(dataMap, "failed to verify basic info section");
 
 	}
 

@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
+import com.google.protobuf.Empty;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -11837,7 +11838,7 @@ public class ProductionRegression extends RegressionBase {
 
 
 
-	@Test(groups = {"Production, Positive"})
+	@Test(groups = {"Production, Positive","smoke6"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_production_home_page_When_click_add_a_new_production_Then_verify_basic_info_section() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -11853,9 +11854,11 @@ public class ProductionRegression extends RegressionBase {
 			context.click_add_a_new_production(true, dataMap);
 			context.verify_basic_info_section(true, dataMap);
 		} catch (ImplementationException e) {
+			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
+			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 

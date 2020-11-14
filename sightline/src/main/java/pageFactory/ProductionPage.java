@@ -810,6 +810,10 @@ public class ProductionPage {
     public Element getMandatoryNameErrorMessage() {return driver.FindElementById("ProductionName-error");}
     public Element getMandotoryFoldererrorMessage() {return driver.FindElementById("ProductionDocumentsSelection.ContextType-error");}
     public Element getMandatoryDirectoryErrorMessage() {return driver.FindElementById("ProductionOutputLocation_ProductionDirectory-error");}
+    public Element getBasicInfoTitleHeader() {return driver.FindElementByCssSelector("#divLoadView h2");}
+    public Element getBasicInfoNameLabel() {return driver.FindElementByXPath("//label[text() = 'Name :']");}
+    public Element getBasicInfoNameRequiredAsterick() {return driver.FindElementByXPath("//label[text() = 'Name :']//font");}
+
     
     //Click the desired production set option, in the dropdown menu by it's index
     public void clickProductionSetByIndex(int index) {
