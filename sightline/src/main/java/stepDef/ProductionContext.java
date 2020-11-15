@@ -12093,4 +12093,271 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_0_docs_with_multiple_branding_tags$")
+	public void verify_0_docs_with_multiple_branding_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7742: Verify in Productions, when there is no document with multiple tags it should provide the message that there is 0 "Documents with Multiple Branding Tags"TC 7747: Verify in Productions, when there is no document with multiple tags it should provide the message that there is 0 "Documents with Multiple Branding Tags"
+			//* Once Production has been generated you should be taken to the Quality Control & Confirmation step
+			//* Navigate back to the Generate section by clicking the Back link
+			//* The "Documents with Multiple Branding Tags" row should show 0 under the Status column
+			//
+			throw new ImplementationException("verify_0_docs_with_multiple_branding_tags");
+		} else {
+			throw new ImplementationException("NOT verify_0_docs_with_multiple_branding_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_end_date_is_displayed$")
+	public void verify_production_end_date_is_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7812: To verify that the 'Production End Date' should contain and present the date when the post-gen checks are completed
+			//* On the Production home page, click on the Grid icon at the top right
+			//* For the Production that was just created, locate it by its Production name and verify that the End Date field is populated
+			//
+			throw new ImplementationException("verify_production_end_date_is_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_end_date_is_displayed");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? commit_and_wait_for_uncommit_button_to_display$")
+	public void commit_and_wait_for_uncommit_button_to_display(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("commit_and_wait_for_uncommit_button_to_display");
+		} else {
+			throw new ImplementationException("NOT commit_and_wait_for_uncommit_button_to_display");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_uncommit_production_notification$")
+	public void verify_uncommit_production_notification(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8207: To verify that on Clicking on 'UnCommit', message should be displayed as ‘Uncommit action has been started as a background task. You will notified upon completion' <TBD>TC 8208: To verify that upon completion of uncommit, notification should be displayed on right top cornerBefore clicking the Uncommit button, click the bullhorn at the top right of the page to reset the notification countClick the Uncommit buttonVerify that after clicking the Uncommit button, the following message appears in the green successs toast message: "Uncommit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status."Verify that once the Uncommit is completed, a notification will appear on the bullhorn stating the Commit was successfully completed for that Production
+			throw new ImplementationException("verify_uncommit_production_notification");
+		} else {
+			throw new ImplementationException("NOT verify_uncommit_production_notification");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_completed_production_notification$")
+	public void verify_completed_production_notification(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7132: To verify that once export is completed notification should be displayed to the userOnce the Production has been generated, verify there is a notification in the bullhorn that says it is complete (No notification is shown as of 11/14. This is a possible defect. Please code the test as if the bullhorn will display 1 for the notification)
+			throw new ImplementationException("verify_completed_production_notification");
+		} else {
+			throw new ImplementationException("NOT verify_completed_production_notification");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_additional_documents_cannot_be_added_after_production_is_generated$")
+	public void verify_additional_documents_cannot_be_added_after_production_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7778: Verify Add documents option is not getting displayed in Export.Once the production has been generated, click the Back link until you get to the Document Selection sectionVerify the Mark Incomplete button is enabledVerify that you cannot select any other Document option
+			throw new ImplementationException("verify_additional_documents_cannot_be_added_after_production_is_generated");
+		} else {
+			throw new ImplementationException("NOT verify_additional_documents_cannot_be_added_after_production_is_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_tiff_component_with_log_file_type$")
+	public void add_tiff_component_with_log_file_type(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the TIFF/PDF checkboxExpand the TIFF/PDF checkboxIn the Placeholder section, click the Select Tags buttonWait for the Select Tags dialogClick the Privileged optionClick the Select buttonWait for the dialog to disappearAt the bottom of the TIFF/PDF section, click the Advanced text to expand that sectionIn the Load File Type dropdown, select LogScroll back to the top
+			throw new ImplementationException("add_tiff_component_with_log_file_type");
+		} else {
+			throw new ImplementationException("NOT add_tiff_component_with_log_file_type");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_log_file_is_generated$")
+	public void verify_production_log_file_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4408: To Verify Background process for Load file creation as part of the actual generation processOnce the file has been downloaded, verify the zip file contains a file with the .LOG extension
+			throw new ImplementationException("verify_production_log_file_is_generated");
+		} else {
+			throw new ImplementationException("NOT verify_production_log_file_is_generated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_location_toggle_buttons$")
+	public void verify_production_location_toggle_buttons(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4155: To Verify toggle control works for the Filepath and Volume under the Production Location.On the Production Location section, click the Load File Path toggle buttonVerify that the input field becomes disabledClick the button againVerify that the input field becomes enabledClick the Volume Included toggle buttonVerify that the input fields become disabledClick the button againVerify that the input fields become enabled
+			throw new ImplementationException("verify_production_location_toggle_buttons");
+		} else {
+			throw new ImplementationException("NOT verify_production_location_toggle_buttons");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_commit_production_notification$")
+	public void verify_commit_production_notification(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8157: To verify that on Clicking on 'Confirm Production and Commit', message should be displayed as ‘Commit action has been started as a background task. You will notified upon completion.’TC 8158: To verify that upon completion of commit, notification should be displayed on right top cornerBefore clicking the Commit button, click the bullhorn at the top right of the page to reset the notification countClick the Commit buttonVerify that after clicking the Commit button, the following message appears in the green successs toast message: "Commit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status."Verify that once the Commit is completed, a notification will appear on the bullhorn stating the Commit was successfully completed for that Production
+			throw new ImplementationException("verify_commit_production_notification");
+		} else {
+			throw new ImplementationException("NOT verify_commit_production_notification");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_text_component$")
+	public void add_text_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Production Components section, click the Text checkboxExpand the Text sectionSelect the format based on what is passed in the dataMap. Unicode UTF-16 is selected by default
+			throw new ImplementationException("add_text_component");
+		} else {
+			throw new ImplementationException("NOT add_text_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_text_file_is_generated$")
+	public void verify_text_file_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4419: To Verify the background process for Text (OCR) generation as part of the actual generation processOnce the production has been downloaded, verify the zip files contains a text file. The end of the filename should look something like, "_TEXT.lst". Verify that "_TEXT" exists in the file name
+			throw new ImplementationException("verify_text_file_is_generated");
+		} else {
+			throw new ImplementationException("NOT verify_text_file_is_generated");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? download_the_production_dat_file$")
+	public void download_the_production_dat_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Quality Control & Confirmation screen, click the Download button, which should show different download optionsClick the Download DAT file option
+			throw new ImplementationException("download_the_production_dat_file");
+		} else {
+			throw new ImplementationException("NOT download_the_production_dat_file");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_the_bates_in_production_dat_file$")
+	public void verify_the_bates_in_production_dat_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7224: To verify that exported CSV should be sorted by BegBatesTC 7138: Verify the exported CSV dataTC 7134: To verify that user can download the CSV file once Production-Generate-Export is completedOnce the DAT file has been downloaded, read the file - it should be sorted in ascending order by the Bates fieldVerify the first bate number and last bates number matches with the Bates Range from the Generate section. For example, if the Bates Range in the Generate section is 182-287, the first number in the DAT file should be 182, and the last number should be 287
+			throw new ImplementationException("verify_the_bates_in_production_dat_file");
+		} else {
+			throw new ImplementationException("NOT verify_the_bates_in_production_dat_file");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_native_component_with_specific_type$")
+	public void add_native_component_with_specific_type(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Native checkboxExpand the Native sectionSelect the file types based on the parameters passed in the dataMap. For example, if dataMap.put("images", "true") is in the regression test script, click the "Images (.jpg, .gif, .tiff, .cad, etc.)" checkbox option from the listClick the Select Tags buttonWait until the Select Tags dialog appearsSelect the tags based on the parameters passed in the dataMap. For example, if dataMap.put("tags", "Automation Image Tag|Automation Presentation Tag" )is in the regression test script, click the Automation Image Tag and Automation Presentation Tag checkbox options
+			throw new ImplementationException("add_native_component_with_specific_type");
+		} else {
+			throw new ImplementationException("NOT add_native_component_with_specific_type");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_selection_with_specific_tags$")
+	public void complete_document_selection_with_specific_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Select Tags checkboxWait for the selection of tags to appearSelect the tags based on the parameters passed in the dataMap. For example, if dataMap.put("tags", "Automation Image Tag|Automation Presentation Tag" )is in the regression test script, click the Automation Image Tag and Automation Presentation Tag checkbox optionsClick Mark CompleteClose the green success toast messageClick the Next button
+			throw new ImplementationException("complete_document_selection_with_specific_tags");
+		} else {
+			throw new ImplementationException("NOT complete_document_selection_with_specific_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_generation_with_jpg_and_ppt_file$")
+	public void verify_native_generation_with_jpg_and_ppt_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4471: To verify Native generation for JPEG and PPT file.TC 6681: To verify that Production Export only with Native should generate successfullyTC 6677: To verify that Export with DAT and Native should generate successfullyTC 9579: To verify that in Production , file extension should be used in the file name as Native , when file extension as non-blank value for Uploaded documentsOnce the Production has been downloaded, unzip the fileOnce it has been unzipped, the folder structure should be as follows: VOL0001 > Natives > 0001Verify that jpg and ppt files are in this folder
+			throw new ImplementationException("verify_native_generation_with_jpg_and_ppt_file");
+		} else {
+			throw new ImplementationException("NOT verify_native_generation_with_jpg_and_ppt_file");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_dat_file_is_generated$")
+	public void verify_dat_file_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6679: To verify that Production Export with  only DAT  should generate successfullyOnce the Production has been downloaded, verify the DAT file is in the zip file. The end of the filename should be something like "_DAT.dat". Verify that "_DAT" exists
+			throw new ImplementationException("verify_dat_file_is_generated");
+		} else {
+			throw new ImplementationException("NOT verify_dat_file_is_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_tiff_production_component$")
+	public void complete_tiff_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("complete_tiff_production_component");
+		} else {
+			throw new ImplementationException("NOT complete_tiff_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tiff_is_generated_on_completed_production$")
+	public void verify_tiff_is_generated_on_completed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("verify_tiff_is_generated_on_completed_production");
+		} else {
+			throw new ImplementationException("NOT verify_tiff_is_generated_on_completed_production");
+		}
+
+	}
 }//EOF
