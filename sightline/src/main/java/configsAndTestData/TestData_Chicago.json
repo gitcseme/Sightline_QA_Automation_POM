@@ -1,6 +1,6 @@
-{"08122020_NV":{"variables":
+{"021320_EG":{"variables":
 					[
-						{"name":"uid","value":"sqa.consilio11@sqapowered.com"}
+						{"name":"uid","value":"sqa.consilio4@sqapowered.com"}
 						,{"name":"pwd","value":"Q@test_10"}
 						,{"name":"ui_messages","value":
 							[
@@ -2944,118 +2944,19 @@
 							]
 						]}
 					]
-				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_and_plus_icon_add_to_shopping_cart_When_click_Then_verify_added_tiles_in_shopping_cart": 
+				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_and_plus_icon_add_to_shopping_cart_When_click_Then_verify_added_tiles_in_shopping_cart":
 					[
-						{"name":"searchList","value":[
+						{"name":"searchType","value":"content"}
+						,{"name":"metaDataValue","value":"testing"}
+						,{"name":"TestCase","value":"6476"}
+						,{"name":"tiles","value": [
 							[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"no"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"5107"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-							,[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"no"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"6476"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-							,[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"yes"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"5148"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-							,[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"yes"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"6490"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
+								{"tileLabel":"001"}
+								,{"tileLabel":"002"}
+								,{"tileLabel":"003"}
 							]
 						]}
-					]		
-				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_When_Then_verify_plus_icon_not_possible_while_search_loading": 
-					[
-						{"name":"searchList","value":[
-							[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"no"}
-								,{"name":"metaDataValue","value":"CustodianName: (\"Noe Villa\")"}
-								,{"name":"TestCase","value":"6478"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-							,[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"yes"}
-								,{"name":"metaDataValue","value":"CustodianName: (\"Noe Villa\")"}
-								,{"name":"TestCase","value":"6492"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-						]}
-					]		
-				,"test_Given_on_production_Search_Session_page_and_create_advanced_search_and_plus_icon_add_to_shopping_cart_When_unpin_tiles_in_shopping_cart_click_Then_verify_tiles_sequence_in_results": 
-					[
-						{"name":"searchList","value":[
-							[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"no"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"6708"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-								,{"name":"unpinTiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-								,{"name":"availableTiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-							,[
-								{"name":"searchType","value":"content"}
-								,{"name":"advancedSearch","value":"yes"}
-								,{"name":"metaDataValue","value":"testing"}
-								,{"name":"TestCase","value":"6718"}
-								,{"name":"tiles","value": [
-										{"tileLabel":"001"}
-										,{"tileLabel":"002"}
-										,{"tileLabel":"003"}
-								]}
-							]
-						]}
-					]		
+					]
+							
 				}
 }
