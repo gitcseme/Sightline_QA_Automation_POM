@@ -43,6 +43,7 @@ public class SavedSearch {
     public Element getSharedWithSG1() {return driver.FindElementByCssSelector("#jsTreeSavedSearch li a[data-content= 'Shared with SG1']");}
     public Element getShareSerachBtn(){ return driver.FindElementById("rbnShare"); }
     public ElementCollection getSavedSearchTableRadioButtons(){ return driver.FindElementsByCssSelector("#SavedSearchGrid>tbody>tr>td>label>i"); }
+    public ElementCollection getSavedSearchRadioButtonRows() {return driver.FindElementsByCssSelector(".radio i");}
     
     //public Element getSearchUserToShare(){ return driver.FindElementByXPath("//input[@id= 'kwd_search']"); }
     //public ElementCollection getUserPopUptoShare(){ return driver.FindElementsByXPath("(//div[@class='user-list-content clear'])[1]"); }
@@ -68,6 +69,7 @@ public class SavedSearch {
     public ElementCollection getCounts(){ return driver.FindElementsByXPath("//*[@id='SavedSearchGrid']/tbody/tr"); }
     public Element getToDocList(){ return driver.FindElementById("btnDocumentList"); }
     public Element getToDocView(){ return driver.FindElementById("document-btn"); }
+    public Element getToDocView2() {return driver.FindElementByCssSelector("#document-btn i");}
     public Element getCountofDocs(){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[4]"); }
     
     public Element getSavedSearchToBulkFolder(){ return driver.FindElementById("rbnFolder"); }
@@ -102,12 +104,17 @@ public class SavedSearch {
     public Element getShare_PA() { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'Project Admin')]/i"); }
     public Element getSelectSearchWithID(String serachName){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[2]"); }
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
-    public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//a[contains(.,'"+name+"')]"); }
+    public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath(String.format("//*[@id='jsTreeSavedSearch']//a[contains(., '%s')]", name)); }
     
     //quick batch
     public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
     
     
+    //Function constructor to just use the object without navigating to a different page
+    public SavedSearch(Driver driver, int i) {
+    		this.driver = driver;
+    }
+
     public SavedSearch(Driver driver){
 
         this.driver = driver;
