@@ -12360,4 +12360,49 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_delete_option_disabled$")
+	public void verify_production_delete_option_disabled(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4129 Verify In-Progress/Complete Production the availability of 'Delete' Option in drop down action menu should be disable
+			//
+			//* Production 'Delete' option disabled for In Progress/Completed Productions
+			//
+			throw new ImplementationException("verify_production_delete_option_disabled");
+		} else {
+			throw new ImplementationException("NOT verify_production_delete_option_disabled");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_productions_grid_view_button$")
+	public void click_productions_grid_view_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_productions_grid_view_button");
+		} else {
+			throw new ImplementationException("NOT click_productions_grid_view_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_pagination_displayed_for_productions_grid$")
+	public void verify_pagination_displayed_for_productions_grid(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC3713 Verify the pagination for multiple productions for grid view
+			//
+			//* 'Previous', 'Next' pagination buttons displayed at the bottom of the Productions grid
+			//
+			throw new ImplementationException("verify_pagination_displayed_for_productions_grid");
+		} else {
+			throw new ImplementationException("NOT verify_pagination_displayed_for_productions_grid");
+		}
+
+	}
 }//EOF

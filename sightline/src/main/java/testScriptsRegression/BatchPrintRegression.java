@@ -3927,4 +3927,109 @@ public class BatchPrintRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_rmu and on_batch_print_page and select_source_selection_500_plus_documents and select_basis_for_printing_{Natives} and select_analysis and select_exception_file_types_{false}{print}{false} and select_slip_sheets_{enabled_slip_sheets} and select_branding_redactions_{false} and select_export_format_{DocFileName}{DocID}{1PDFforalldocs} When click_download_file_link Then verify_generating_single_pdf_for_500_plus_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "08122020_NV");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "Default Security Group");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_rmu(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_500_plus_documents(true, dataMap);
+			dataMap.put("basis_for_printing", "Natives");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("other_exception_file_types", "false");
+			dataMap.put("excel_files", "print");
+			dataMap.put("media_files", "false");
+			context.select_exception_file_types_(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions_(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for all docs");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("export_by", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "7924|7925|7926");
+			context.verify_generating_single_pdf_for_500_plus_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection_500_plus_documents and select_basis_for_printing_{Natives} and select_analysis and select_exception_file_types_{false}{print}{false} and select_slip_sheets_{enabled_slip_sheets} and select_branding_redactions_{false} and select_export_format_{DocFileName}{DocID}{1PDFforalldocs} When click_download_file_link Then verify_generating_single_pdf_for_500_plus_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "08122020_NV");
+			dataMap.put("impersonate", "Project Administrator");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_500_plus_documents(true, dataMap);
+			dataMap.put("basis_for_printing", "Natives");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("other_exception_file_types", "false");
+			dataMap.put("excel_files", "print");
+			dataMap.put("media_files", "false");
+			context.select_exception_file_types_(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions_(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for all docs");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("export_by", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "7924|7925|7926");
+			context.verify_generating_single_pdf_for_500_plus_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//eof

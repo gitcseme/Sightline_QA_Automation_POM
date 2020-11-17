@@ -2460,4 +2460,349 @@ public class DocViewContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags$")
+	public void verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6594 Verify that when two different users under different security group with different annotation layer adds/edit/delete redactions to the same record successfully
+			//
+			//* Both users can Add/Edit/Delete a redaction on the same document
+			//* This message is NOT displayed for the 2nd user "Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in Doc View. You may not apply markup because that would overwrite the mark upwork done by the other user. Please reload the document."
+			//
+			throw new ImplementationException("verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags");
+		} else {
+			throw new ImplementationException("NOT verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_to_saved_search_rmu_private_browser$")
+	public void login_to_saved_search_rmu_private_browser(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Use a different userThis is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
+			throw new ImplementationException("login_to_saved_search_rmu_private_browser");
+		} else {
+			throw new ImplementationException("NOT login_to_saved_search_rmu_private_browser");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags$")
+	public void verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6591 Verify that when two different users under different security group sharing annotation layer adds/edit/delete redactions to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML
+			//
+			//* 1st user can Add/Edit/Delete a redaction
+			//* 2nd user Highlight submenu buttons are disabled
+			//* 2nd user receives the following error message "Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in Doc View. You may not apply markup because that would overwrite the mark upwork done by the other user. Please reload the document."
+			//
+			throw new ImplementationException("verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		} else {
+			throw new ImplementationException("NOT verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags$")
+	public void verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6591 Verify that when two different users under different security group sharing annotation layer adds/edit/delete redactions to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML
+			//
+			//* 1st user can Add/Edit/Delete a redaction
+			//* 2nd user Redaction submenu 'Rectangle', 'This Page', and 'Text Redaction' buttons are disabled
+			//* 2nd user receives the following error message "Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in Doc View. You may not apply markup because that would overwrite the mark upwork done by the other user. Please reload the document."
+			//
+			throw new ImplementationException("verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags$")
+	public void verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6591 Verify that when two different users under different security group sharing annotation layer adds/edit/delete redactions to the same record successfully, and confirm that the XML nodes are all properly created/reflected in the XML
+			//
+			//* Redaction from 1st user is displayed for the 2nd user after reloading the document
+			//
+			throw new ImplementationException("verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs$")
+	public void verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11440 Verify the automatically selected redaction tag when shared annotation layer with un-shared redaction tags in security groups and all documents are released to security groups
+			//
+			//* Automatically set Select Redaction Tag for 2nd user on propagated document is 'Default Redaction Tag' for different Security Group with same Annotation Layer different Redaction Tags and Released documents
+			//* Delete all applied redactions for this test
+			//
+			throw new ImplementationException("verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+		} else {
+			throw new ImplementationException("NOT verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? place_this_page_redaction_without_saving$")
+	public void place_this_page_redaction_without_saving(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("place_this_page_redaction_without_saving");
+		} else {
+			throw new ImplementationException("NOT place_this_page_redaction_without_saving");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs$")
+	public void verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11440 Verify the automatically selected redaction tag when shared annotation layer with un-shared redaction tags in security groups and all documents are released to security groups
+			//
+			//* Automatically set Select Redaction Tag for 2nd user is 'Default Redaction Tag' for different Security Group with same Annotation Layer different Redaction Tags and Released documents.
+			//* Delete all applied redactions for this test
+			//
+			throw new ImplementationException("verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+		} else {
+			throw new ImplementationException("NOT verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs$")
+	public void verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11439 Verify the automatically selected redaction tag when shared annotation layer with shared redaction tags in security groups and all documents are released to security groups
+			//
+			//* Automatically set Select Redaction Tag for 2nd user on propagated document matches the tag used by the 1st user in different Security Group with same Annotation Layer same Redaction Tags and Released documents.
+			//* 2nd Select Redaction Tag is 'SGSame1'
+			//
+			throw new ImplementationException("verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+		} else {
+			throw new ImplementationException("NOT verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs$")
+	public void verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC11439 Verify the automatically selected redaction tag when shared annotation layer with shared redaction tags in security groups and all documents are released to security groups
+			//
+			//* Automatically set Select Redaction Tag for 2nd user matches the tag used by the 1st user in different Security Group with same Annotation Layer same Redaction Tags and Released documents.
+			//* 2nd Select Redaction Tag is 'SGSame1'
+			//
+			throw new ImplementationException("verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+		} else {
+			throw new ImplementationException("NOT verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? on_audio_doc_with_redactions$")
+	public void on_audio_doc_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select Audio doc ID00000002
+			throw new ImplementationException("on_audio_doc_with_redactions");
+		} else {
+			throw new ImplementationException("NOT on_audio_doc_with_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_audio_redaction_not_displayed_from_different_security_group$")
+	public void verify_audio_redaction_not_displayed_from_different_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC3484 Verify user can not see the redactions of audio file on doc view page in different security group when different annotation layer is mapped to different security groups
+			//
+			//* SG2 user cannot see SG1 redactions on the same document
+			//
+			throw new ImplementationException("verify_audio_redaction_not_displayed_from_different_security_group");
+		} else {
+			throw new ImplementationException("NOT verify_audio_redaction_not_displayed_from_different_security_group");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_message_to_reload_same_document$")
+	public void verify_message_to_reload_same_document(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6687 Verify when two different users in the same project & Security Group, and are applying redactions to the same DocID at the same team
+			//
+			//* Message is displayed: "Another user has applied redactions, annotations, or Reviewer Remarks to this document since you presented it in DocView. You may not apply markup - because that would overwrite the work done by the other user. Please reload the document."
+			//* Redaction cannot be placed until the document is reloaded
+			//
+			throw new ImplementationException("verify_message_to_reload_same_document");
+		} else {
+			throw new ImplementationException("NOT verify_message_to_reload_same_document");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_view_analytics_panel_unchanged$")
+	public void verify_doc_view_analytics_panel_unchanged(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC5377 Verify that on Saving document or Redactions or Annotations or Reviewer Remarks should not affect the displayed tab of the Analytics Panel
+			//
+			//* Analytics Panel remains unchanged after a Redaction, Annotation, or Reviewer Remark is added
+			//* Delete Redaction, Annotation, or Reviewer Remark after verification
+			//
+			throw new ImplementationException("verify_doc_view_analytics_panel_unchanged");
+		} else {
+			throw new ImplementationException("NOT verify_doc_view_analytics_panel_unchanged");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? apply_reviewer_remark$")
+	public void apply_reviewer_remark(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("apply_reviewer_remark");
+		} else {
+			throw new ImplementationException("NOT apply_reviewer_remark");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? on_audio_doc_without_redactions$")
+	public void on_audio_doc_without_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select Audio doc ID00000001
+			throw new ImplementationException("on_audio_doc_without_redactions");
+		} else {
+			throw new ImplementationException("NOT on_audio_doc_without_redactions");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? apply_audio_redaction_$")
+	public void apply_audio_redaction_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Audio Redaction '+' buttonSet STARTTIME based on 'starttime' variableSet ENDTIME based on 'endtime' variableSet REDACTIONTAGS based on 'redactiontag' variableClick Save ACTIONS buttonIf variables not set, default to the following:starttime=0:00:00endtime=0:00:05redactiontag=Redaction Tag 1If starttime or endtime = 'empty' then delete the text in the STARTTIME and/or ENDTIME boxes
+			throw new ImplementationException("apply_audio_redaction_");
+		} else {
+			throw new ImplementationException("NOT apply_audio_redaction_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_no_audio_redaction_time_selected_error$")
+	public void verify_no_audio_redaction_time_selected_error(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4816 Verify warning message should be displayed when redaction tag is not selected for redaction for audio document
+			//
+			//* Redaction not saved
+			//* Error message displayed
+			//
+			throw new ImplementationException("verify_no_audio_redaction_time_selected_error");
+		} else {
+			throw new ImplementationException("NOT verify_no_audio_redaction_time_selected_error");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_audio_redaction_not_saved$")
+	public void verify_audio_redaction_not_saved(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6465 Verify that redaction should not be saved/updated when Start Time is greater than End Time
+			//TC6466 Verify that redaction should not be saved/updated when Start Time/End Time is greater than the media length
+			//
+			//* Redaction not saved
+			//* Error message displayed
+			//* Delete redactions if applied
+			//
+			//
+			throw new ImplementationException("verify_audio_redaction_not_saved");
+		} else {
+			throw new ImplementationException("NOT verify_audio_redaction_not_saved");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? edit_audio_redaction_$")
+	public void edit_audio_redaction_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("edit_audio_redaction_");
+		} else {
+			throw new ImplementationException("NOT edit_audio_redaction_");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? audio_redaction_attempted_save$")
+	public void audio_redaction_attempted_save(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("audio_redaction_attempted_save");
+		} else {
+			throw new ImplementationException("NOT audio_redaction_attempted_save");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_audio_redaction_time_format$")
+	public void verify_audio_redaction_time_format(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6464 Verify that redaction Start Time and End Time saved in HH:MM:SS format
+			//
+			//* Redaction STARTTIME and ENDTIME saved in HH:MM:SS format
+			//* Delete redaction after verification
+			//
+			throw new ImplementationException("verify_audio_redaction_time_format");
+		} else {
+			throw new ImplementationException("NOT verify_audio_redaction_time_format");
+		}
+
+	}
 }//eof

@@ -2298,4 +2298,69 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_source_selection_500_plus_documents$")
+	public void select_source_selection_500_plus_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Precondition: 500+ files exist
+			//* Select Folder: 500 Plus Files
+			//* Click Next button
+			//
+			throw new ImplementationException("select_source_selection_500_plus_documents");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_500_plus_documents");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_exception_file_types_$")
+	public void select_exception_file_types_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Exception File Types
+			//* Click Next button
+			//
+			throw new ImplementationException("select_exception_file_types_");
+		} else {
+			throw new ImplementationException("NOT select_exception_file_types_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generating_single_pdf_for_500_plus_docs$")
+	public void verify_generating_single_pdf_for_500_plus_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7924 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages)TC7925 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages) with last document having 250 pagesTC7926 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages) with first document having 250 pages
+			//
+			//* PDF files generated with 250 pages each
+			//* All documents should be considered for PDF generation
+			//* All pages of individual docs available in PDF
+			//* Documents/pages should not be repeated
+			//
+			throw new ImplementationException("verify_generating_single_pdf_for_500_plus_docs");
+		} else {
+			throw new ImplementationException("NOT verify_generating_single_pdf_for_500_plus_docs");
+		}
+
+	}
 }//eof

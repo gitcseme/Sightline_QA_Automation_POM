@@ -3483,4 +3483,1522 @@ public class DocViewRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_edit_redaction_trueSGSame2_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_When_edit_redaction_trueSGSame2_Then_verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction and edit_redaction_{true}{SGSame2} and log_out and login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction When edit_redaction_{true}{SGSame2} Then verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("tag", "SGSame2");
+			dataMap.put("dimensions", "true");
+			context.edit_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("tag", "SGSame2");
+			dataMap.put("dimensions", "true");
+			context.edit_redaction_(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6594");
+			context.verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_When_rectangle_redaction_deleted_Then_verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction and rectangle_redaction_deleted and log_out and login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction When rectangle_redaction_deleted Then verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6594");
+			context.verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_rectangle_redaction_Then_verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and apply_rectangle_redaction and log_out and login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions When apply_rectangle_redaction Then verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG5");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6594");
+			context.verify_redactions_with_diff_sg_diff_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_switch_to_user2_When_click_highlight_tool_Then_verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and rectangle_redaction_deleted and switch_to_user2 When click_highlight_tool Then verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_highlight_tool(true, dataMap);
+			dataMap.put("TestCase", "6591");
+			context.verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_switch_to_user2_When_click_grey_redact_tool_Then_verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and switch_to_user2 When click_grey_redact_tool Then verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_grey_redact_tool(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_edit_redaction_trueSGSame2_and_switch_to_user2_When_click_grey_redact_tool_Then_verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and edit_redaction_{true}{SGSame2} and switch_to_user2 When click_grey_redact_tool Then verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("tag", "SGSame2");
+			dataMap.put("dimensions", "true");
+			context.edit_redaction_(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_grey_redact_tool(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_switch_to_user2_When_click_grey_redact_tool_Then_verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and rectangle_redaction_deleted and switch_to_user2 When click_grey_redact_tool Then verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_grey_redact_tool(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_edit_redaction_trueSGSame2_and_switch_to_user2_When_click_highlight_tool_Then_verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and edit_redaction_{true}{SGSame2} and switch_to_user2 When click_highlight_tool Then verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("tag", "SGSame2");
+			dataMap.put("dimensions", "true");
+			context.edit_redaction_(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_highlight_tool(true, dataMap);
+			dataMap.put("TestCase", "6591");
+			context.verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_switch_to_user2_When_click_highlight_tool_Then_verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and switch_to_user2 When click_highlight_tool Then verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_highlight_tool(true, dataMap);
+			dataMap.put("TestCase", "6591");
+			context.verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_rectangle_redaction_deleted_and_switch_to_user2_When_on_doc_with_redactions_Then_verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and rectangle_redaction_deleted and switch_to_user2 When on_doc_with_redactions Then verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.rectangle_redaction_deleted(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_edit_redaction_trueSGSame2_and_switch_to_user2_When_on_doc_with_redactions_Then_verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and edit_redaction_{true}{SGSame2} and switch_to_user2 When on_doc_with_redactions Then verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("tag", "SGSame2");
+			dataMap.put("dimensions", "true");
+			context.edit_redaction_(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_switch_to_user2_When_on_doc_with_redactions_Then_verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and switch_to_user2 When on_doc_with_redactions Then verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6591");
+			context.verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_and_apply_rectangle_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_When_place_rectangle_redaction_without_saving_Then_verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} and apply_rectangle_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} When place_rectangle_redaction_without_saving Then verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_rectangle_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			context.place_rectangle_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11440");
+			context.verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_and_apply_this_page_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_When_place_this_page_redaction_without_saving_Then_verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} and apply_this_page_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} When place_this_page_redaction_without_saving Then verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_this_page_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			context.place_this_page_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11440");
+			context.verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_and_apply_this_page_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_When_place_this_page_redaction_without_saving_Then_verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} and apply_this_page_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} When place_this_page_redaction_without_saving Then verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_this_page_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			context.place_this_page_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11440");
+			context.verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_and_apply_rectangle_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_When_place_rectangle_redaction_without_saving_Then_verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} and apply_rectangle_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} When place_rectangle_redaction_without_saving Then verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_rectangle_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG7");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			context.place_rectangle_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11440");
+			context.verify_auto_selected_tag_with_diff_sg_same_annotation_layer_diff_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_and_apply_rectangle_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_When_place_rectangle_redaction_without_saving_Then_verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} and apply_rectangle_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} When place_rectangle_redaction_without_saving Then verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_rectangle_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			context.place_rectangle_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11439");
+			context.verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_and_apply_this_page_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_When_place_this_page_redaction_without_saving_Then_verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} and apply_this_page_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} When place_this_page_redaction_without_saving Then verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_this_page_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			context.place_this_page_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11439");
+			context.verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_and_apply_this_page_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000006_When_place_this_page_redaction_without_saving_Then_verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} and apply_this_page_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000006} When place_this_page_redaction_without_saving Then verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_this_page_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000006");
+			context.select_docview_doc_(true, dataMap);
+			context.place_this_page_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11439");
+			context.verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_and_apply_rectangle_redaction_SGSame1_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_select_docview_doc_ID00000004_When_place_rectangle_redaction_without_saving_Then_verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} and apply_rectangle_redaction_{SGSame1} and log_out and login_to_saved_search_rmu and open_saved_doc_view and select_docview_doc_{ID00000004} When place_rectangle_redaction_without_saving Then verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			dataMap.put("tag", "SGSame1");
+			context.apply_rectangle_redaction_(true, dataMap);
+			context.log_out(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG6");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			dataMap.put("docid", "ID00000004");
+			context.select_docview_doc_(true, dataMap);
+			context.place_rectangle_redaction_without_saving(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "11439");
+			context.verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_saved_search_page_and_open_saved_doc_view_When_on_audio_doc_with_redactions_Then_verify_audio_redaction_not_displayed_from_different_security_group() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_rmu and on_saved_search_page and open_saved_doc_view When on_audio_doc_with_redactions Then verify_audio_redaction_not_displayed_from_different_security_group");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG2");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_rmu(true, dataMap);
+			context.on_saved_search_page(true, dataMap);
+			dataMap.put("search_group", "Shared with SG2");
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_with_redactions(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "3484");
+			context.verify_audio_redaction_not_displayed_from_different_security_group(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_login_to_saved_search_rmu_private_browser_and_open_saved_doc_view_and_on_doc_with_redactions_and_switch_to_user1_and_apply_rectangle_redaction_and_switch_to_user2_When_click_grey_redact_tool_Then_verify_message_to_reload_same_document() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions and login_to_saved_search_rmu_private_browser and open_saved_doc_view and on_doc_with_redactions and switch_to_user1 and apply_rectangle_redaction and switch_to_user2 When click_grey_redact_tool Then verify_message_to_reload_same_document");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu_private_browser(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.switch_to_user1(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			context.switch_to_user2(true, dataMap);
+			context.click_grey_redact_tool(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6687");
+			context.verify_message_to_reload_same_document(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_rectangle_highlight_Then_verify_doc_view_analytics_panel_unchanged() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions When apply_rectangle_highlight Then verify_doc_view_analytics_panel_unchanged");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_highlight(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "5377");
+			context.verify_doc_view_analytics_panel_unchanged(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_reviewer_remark_Then_verify_doc_view_analytics_panel_unchanged() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions When apply_reviewer_remark Then verify_doc_view_analytics_panel_unchanged");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_reviewer_remark(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "5377");
+			context.verify_doc_view_analytics_panel_unchanged(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_apply_rectangle_redaction_Then_verify_doc_view_analytics_panel_unchanged() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_doc_with_redactions When apply_rectangle_redaction Then verify_doc_view_analytics_panel_unchanged");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "021320_EG");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_doc_with_redactions(true, dataMap);
+			context.apply_rectangle_redaction(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "5377");
+			context.verify_doc_view_analytics_panel_unchanged(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_When_apply_audio_redaction_emptyemptyRedactionTag1_Then_verify_no_audio_redaction_time_selected_error() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions When apply_audio_redaction_{empty}{empty}{RedactionTag1} Then verify_no_audio_redaction_time_selected_error");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "empty");
+			dataMap.put("starttime", "empty");
+			dataMap.put("A", "");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4816");
+			context.verify_no_audio_redaction_time_selected_error(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_When_apply_audio_redaction_000200000100RedactionTag1_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions When apply_audio_redaction_{000200}{000100}{RedactionTag1} Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000200");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_000000000100RedactionTag1_When_edit_audio_redaction_000200000100RedactionTag1_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{000000}{000100}{RedactionTag1} When edit_audio_redaction_{000200}{000100}{RedactionTag1} Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000200");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.edit_audio_redaction_(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_030000000100RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{030000}{000100}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "030000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_000000030000RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{000000}{030000}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "030000");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_030000033000RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{030000}{033000}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "033000");
+			dataMap.put("starttime", "030000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_000000000100RedactionTag1_and_edit_audio_redaction_030000000100RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{000000}{000100}{RedactionTag1} and edit_audio_redaction_{030000}{000100}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "030000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.edit_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_000000000100RedactionTag1_and_edit_audio_redaction_000000030000RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{000000}{000100}{RedactionTag1} and edit_audio_redaction_{000000}{030000}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("endtime", "030000");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.edit_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_and_apply_audio_redaction_000000000100RedactionTag1_and_edit_audio_redaction_030000033000RedactionTag1_When_audio_redaction_attempted_save_Then_verify_audio_redaction_not_saved() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions and apply_audio_redaction_{000000}{000100}{RedactionTag1} and edit_audio_redaction_{030000}{033000}{RedactionTag1} When audio_redaction_attempted_save Then verify_audio_redaction_not_saved");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			dataMap.put("endtime", "000100");
+			dataMap.put("starttime", "000000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.apply_audio_redaction_(true, dataMap);
+			dataMap.put("endtime", "033000");
+			dataMap.put("starttime", "030000");
+			dataMap.put("redactiontag", "Redaction Tag 1");
+			context.edit_audio_redaction_(true, dataMap);
+			context.audio_redaction_attempted_save(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6465|6466");
+			context.verify_audio_redaction_not_saved(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"DocView, Positive"})
+	public void test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_audio_doc_without_redactions_When_apply_audio_redaction_Then_verify_audio_redaction_time_format() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_saved_search_rmu and open_saved_doc_view and on_audio_doc_without_redactions When apply_audio_redaction Then verify_audio_redaction_time_format");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			dataMap.put("project", "Audio100");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "SG1");
+			dataMap.put("domain", "Not a Domain");
+			context.login_to_saved_search_rmu(true, dataMap);
+			context.open_saved_doc_view(true, dataMap);
+			context.on_audio_doc_without_redactions(true, dataMap);
+			context.apply_audio_redaction(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "6464");
+			context.verify_audio_redaction_time_format(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 }//eof
