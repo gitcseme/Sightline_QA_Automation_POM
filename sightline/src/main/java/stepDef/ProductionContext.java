@@ -12405,4 +12405,186 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? add_pdf_production_component_with_branding$")
+	public void add_pdf_production_component_with_branding(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select the TIFF / PDF checkboxClick TIFF / PDF to expand itClick the Generate PDF radio buttonClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Enter "Branding 1" in the first placeholder text for branding. Save "Branding 1" into the dataMap so we can use it for validation in a later step
+			throw new ImplementationException("add_pdf_production_component_with_branding");
+		} else {
+			throw new ImplementationException("NOT add_pdf_production_component_with_branding");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generated_pdf_has_branding_text$")
+	public void verify_generated_pdf_has_branding_text(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4999: To Verify in  production, the placeholders enabled for priv docs,Generated Priv Doc (PDF/TIFF/Text) should contain Placeholder with Branding.Once file has been downloaded, unzip the file. There should be PDF files located in the VOL0001 > PDF > 0001 directoryIterate through each file, and make sure the branding text entered in the add_pdf_production_component_with_branding context appears in the pdf.
+			throw new ImplementationException("verify_generated_pdf_has_branding_text");
+		} else {
+			throw new ImplementationException("NOT verify_generated_pdf_has_branding_text");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? save_data_from_dat_file_into_datamap$")
+	public void save_data_from_dat_file_into_datamap(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Once the Production DAT file has been downloaded, open the file and save the contents of the file into the dataMap to be used to validate against later
+			throw new ImplementationException("save_data_from_dat_file_into_datamap");
+		} else {
+			throw new ImplementationException("NOT save_data_from_dat_file_into_datamap");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? navigate_back_to_summary_and_mark_incomplete_complete$")
+	public void navigate_back_to_summary_and_mark_incomplete_complete(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//If you are on the Quality Control & Confirmation section, click the Back link to go back to the Generate sectionClick the Back link again to go back to the Summary & Preview sectionOn the Summary & Preview page, click Mark IncompleteWait until the Mark Complete button is visibleClick Mark CompleteClose the green success toast messageClick the Next button
+			throw new ImplementationException("navigate_back_to_summary_and_mark_incomplete_complete");
+		} else {
+			throw new ImplementationException("NOT navigate_back_to_summary_and_mark_incomplete_complete");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_regenerate_uses_same_bates_numbers$")
+	public void verify_regenerate_uses_same_bates_numbers(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4678: Verify the admin able to regenerate the already completed production.TC 4683: To verify regenerate of production,before comit and confirm bates number, overwrites any previously produced document(s).Verify that the DAT file contains the same bates numbers from the first time the production was generated
+			throw new ImplementationException("verify_regenerate_uses_same_bates_numbers");
+		} else {
+			throw new ImplementationException("NOT verify_regenerate_uses_same_bates_numbers");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_total_doc_count_is_shown_after_document_selection_completed$")
+	public void verify_total_doc_count_is_shown_after_document_selection_completed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 2910: To Verify ProjectAdmin will be able to enter document selection and output information on the self production wizardWhile on the Document Selection section, click Select Folders radio button if it is not already selectedClick the Default Automation Folder optionClick the Mark Complete buttonTowards the top of the section, where it says "Selected Documents (Total Docs Selected Incl. Familes: __) -- verify the number is greater than 0
+			throw new ImplementationException("verify_total_doc_count_is_shown_after_document_selection_completed");
+		} else {
+			throw new ImplementationException("NOT verify_total_doc_count_is_shown_after_document_selection_completed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_document_selection_with_search_default_security_group$")
+	public void complete_document_selection_with_search_default_security_group(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Document Selection section, click the Select Searches radio buttonOnce the options for the Select Searches has been loaded, click the "Shared with Default Security Group" optionClick the Mark Complete buttonClose the green success toast messageClick the Next button
+			throw new ImplementationException("complete_document_selection_with_search_default_security_group");
+		} else {
+			throw new ImplementationException("NOT complete_document_selection_with_search_default_security_group");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_all_components_can_be_selected$")
+	public void verify_all_components_can_be_selected(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3410: To Verify ProjectAdmin will be able to enter production components information on the self production wizardWhile on the Production Components page, verify you are able to click each checkbox for DAT, Native, TIFF/PDF, Text, MP3 Files, and Translations (for MP3 Files and Translations, you will need to expand the Advanced Production Components section)
+			throw new ImplementationException("verify_all_components_can_be_selected");
+		} else {
+			throw new ImplementationException("NOT verify_all_components_can_be_selected");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_bates_range_is_not_blank$")
+	public void verify_bates_range_is_not_blank(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 5079: To Verify In Production/Export Preview, the Bates number selected should not show blankOnce the Production has been generated and the user is navigated to the Quality Control & Confirmation screen, click the Back link to go back to the Generate sectionVerify the Bates Range field is not blank
+			throw new ImplementationException("verify_bates_range_is_not_blank");
+		} else {
+			throw new ImplementationException("NOT verify_bates_range_is_not_blank");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_different_documents_on_completed_production$")
+	public void select_different_documents_on_completed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click on the Back link until you are on the Document Selection screenClick the Mark Incomplete buttonIn addition to the Default Automation Folder option selected, click the Automation Multimedia Folder optionRepeat the following steps until you get to the Generate section:Click Mark CompleteClose the green success messageClick the Next button
+			throw new ImplementationException("select_different_documents_on_completed_production");
+		} else {
+			throw new ImplementationException("NOT select_different_documents_on_completed_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_new_documents_can_be_regenerated$")
+	public void verify_new_documents_can_be_regenerated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 4680: Verify the regeneration of Production with same configuration and some new documents;before commit and confirm bates number for that ProductionTC 8255: To verify that after uncommit,if user change the source in Document Selection tab, it should regenerate and commit Porduction successfullyVerify the production file can be downloaded
+			throw new ImplementationException("verify_new_documents_can_be_regenerated");
+		} else {
+			throw new ImplementationException("NOT verify_new_documents_can_be_regenerated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_TIFFPageCount_option_does_not_exist_for_doc_field_classification$")
+	public void verify_TIFFPageCount_option_does_not_exist_for_doc_field_classification(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8357: Verify that TIFFPageCount is no longer presented under "Doc Metadata"In the DAT component, select Doc Basic for Field ClassificationIn the Source Field dropdown, verify "TIFFPageCount" does not exist as an option
+			throw new ImplementationException("verify_TIFFPageCount_option_does_not_exist_for_doc_field_classification");
+		} else {
+			throw new ImplementationException("NOT verify_TIFFPageCount_option_does_not_exist_for_doc_field_classification");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_text_component_to_completed_production$")
+	public void add_text_component_to_completed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Quality Control & Confirmation section, click the Back link until you are on the Production Components sectionOnce on the Production Components section, click the Mark Incomplete buttonClick the Text checkboxClick the Mark Complete buttonClose the green success messageClick the Next buttonRepeat these steps until you reach the Generate screen:Click Mark CompleteClose the green success toast messageClick the Next button
+			throw new ImplementationException("add_text_component_to_completed_production");
+		} else {
+			throw new ImplementationException("NOT add_text_component_to_completed_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_new_production_components_can_be_regenerated$")
+	public void verify_new_production_components_can_be_regenerated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 8246: To verify that after uncommit, if user change any Production Components, it should regenerate and commit Porduction successfully
+			throw new ImplementationException("verify_new_production_components_can_be_regenerated");
+		} else {
+			throw new ImplementationException("NOT verify_new_production_components_can_be_regenerated");
+		}
+
+	}
 }//EOF
