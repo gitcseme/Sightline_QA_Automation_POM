@@ -1061,7 +1061,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke7"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_2_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1117,7 +1117,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke7"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_3_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1169,7 +1169,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke7"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_4_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -1741,7 +1741,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke7"})
+	@Test(groups = {"BatchPrint", "Positive", "Pending"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_Native_and_select_analysis_and_select_exception_file_types_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_1_When_click_download_file_link_Then_verify_pdf_file_sorted_correctly() throws Throwable
 	{
 		HashMap dataMap = new HashMap();

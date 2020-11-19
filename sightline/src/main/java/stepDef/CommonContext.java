@@ -59,9 +59,9 @@ public class CommonContext {
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 
-		//if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
-		//	driver.Manage().window().maximize();
-		//} else driver.Manage().window().fullscreen();
+		if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+			driver.Manage().window().maximize();
+		} else driver.Manage().window().fullscreen();
 
 		String url;
 		if (scriptState) {
