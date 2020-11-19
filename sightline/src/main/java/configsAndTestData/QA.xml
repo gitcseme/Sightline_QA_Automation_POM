@@ -8,17 +8,17 @@
         <projectName>08122020_NV</projectName>
         <!--  TD_24July -->
      
-    	<sa1userName>sqa.consilio4@sqapowered.com.</sa1userName> 
+    	<sa1userName>sqa.consilio9@sqapowered.com</sa1userName> 
    		<sa1password>Q@test_10</sa1password> 
    		
    		<!-- DA Admin  -->
    		
-        <da1userName>sqa.consilio4@sqapowered.com.</da1userName> 
-        <da1password>Q@test_105</da1password>
+        <da1userName>sqa.consilio9@sqapowered.com</da1userName> 
+        <da1password>Q@test_10</da1password>
      
         <!-- CPA -->
         <pa1FullName>Shilpi PA1</pa1FullName>
-        <pa1userName>sqa.consilio4@sqapowered.com.</pa1userName>
+        <pa1userName>sqa.consilio9@sqapowered.com</pa1userName>
         <pa1password>Q@test_10</pa1password>
 
         

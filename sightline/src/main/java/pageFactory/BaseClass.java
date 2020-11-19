@@ -37,10 +37,12 @@ public class BaseClass {
     public Element getBGnotificationCount1(){ return driver.FindElementByXPath("//b[@class='badge']"); }
     public Element getBGnotificationCount2(){ return driver.FindElementByXPath("//b[@class='badge bg-color-red bounceIn animated']"); }
     public Element getSignoutMenu(){ return driver.FindElementByXPath("//*[@id='user-selector']"); }
+    public Element getSignoutButton() { return driver.FindElementById("btnSignOut");}
     public Element getChangeRole(){ return driver.FindElementByXPath("//*[@id='utility-group']//a[text()='Change Role']"); }
     public Element getSelectRole(){ return driver.FindElementByXPath("//select[@name='Role']"); }
     public Element getSelectDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
     public Element getSelectProjectTo(){ return driver.FindElementById("ddlAvailableProjects"); }
+    public Element getCurrentRole() {return driver.FindElementByCssSelector("li span[class = 'badge bg-color-greenLight']");}
     
     public Element getSelectSecurityGroup(){ return driver.FindElementByXPath("//select[@name='SecurityGroupID']"); }
     public Element getSaveChangeRole(){ return driver.FindElementByXPath("//input[@type='submit']"); }
@@ -71,6 +73,7 @@ public class BaseClass {
     public Element getNOBtn(){ return driver.FindElementByXPath("//button[@id='bot2-Msg1']"); } 
     public Element getAvlDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
     public Element getAvlProject(){ return driver.FindElementById("ddlAvailableProjects"); }
+    public Element getAvlSecurity() {return driver.FindElementById("ddlAvailableSecGroup");}
   
     
     public BaseClass(Driver driver){

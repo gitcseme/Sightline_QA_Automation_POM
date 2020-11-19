@@ -120,7 +120,7 @@ public class BatchPrintPage {
     public Element getBrandingLocationTextField() { return driver.FindElementByCssSelector("div.redactor-editor"); }
 
     public Element getSharedWithSG1SearchParentGroup() { return driver.FindElementByXPath("//li[@id='2g']/i"); }
-    public Element getCustodianNameCheckbox() { return driver.FindElementById("236_anchor"); }
+    public Element getCustodianNameCheckbox() { return driver.FindElementById("120_anchor"); }
     public Element getBrandingAndRedactionNextButton() {  return driver.FindElementById("branding-and-redaction-next-button"); } 
     public Element getPDFCreationForAllDocs() { return driver.FindElementByXPath("//input[@id='onePDFForAllDocRadioButton']/following-sibling::i"); }
     public Element getBullHornNotificationNumber() { return driver.FindElementByXPath("//span[@id='activity']/b"); }

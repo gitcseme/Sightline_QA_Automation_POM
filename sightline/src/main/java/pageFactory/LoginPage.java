@@ -168,23 +168,24 @@ public class LoginPage {
 			test = (ExtentTest) databaseMap.get("ExtentText");
 		
   	
-    	driver.Navigate().refresh();
-    	 try {
-    		 try {
-				Thread.sleep(8000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	        Alert alert = driver.getWebDriver().switchTo().alert();
-    	        String alertText = alert.getText();
-    	        System.out.println("Alert data: " + alertText);
-    	        alert.accept();
-    	    } catch (NoAlertPresentException e) {
-    	        //e.printStackTrace();
-    	    }
-    	
-    	try {
+		driver.Navigate().refresh();
+		try {
+			//why do we need to sleep for 8 secs on shutdown?
+//			try {
+//				Thread.sleep(8000); 
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			//e.printStackTrace();
+		}
+
+		try {
 	    	driver.scrollPageToTop();
 	    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getSignoutMenu().Visible()  ;}}), 30000); */
