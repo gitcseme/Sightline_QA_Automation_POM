@@ -1648,6 +1648,11 @@
 							]
 						]}
 					]
+					,"test_Given_sightline_is_launched_and_login_as_pau_and_on_saved_search_page_When_open_saved_search_doc_view_Then_verify_redaction_icon_not_displayed_to_project_admin":
+					[
+						{"name": "impersonate", "value": "Project Administrator"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "security_group", "value": "Default Security Group"}
 				,"test_Given_on_production_Search_Session_page_and_create_search_When_click_search_Then_verify_wrong_query_message":
 					[
 						{"name":"invalidSearchList","value":[

@@ -63,8 +63,6 @@ public class DocViewContext extends CommonContext {
 	 */
 	DocViewPage docView;
 
-
-
 	@And("^.*(\\[Not\\] )? open_saved_audio_doc_view$")
 	public void open_saved_audio_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
@@ -141,19 +139,22 @@ public class DocViewContext extends CommonContext {
 	public void open_saved_search_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
 			//* Click 'Saved with SG1' search group
 			String securityGroup = (String)dataMap.get("security_group");
 			SavedSearch savedSearch = new SavedSearch(driver,0);
-			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			savedSearch.getSavedSearchGroupName(securityGroup).click();	
 			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
+				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30);
 			//* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
+			
 			//* Click 'Doc View' button at the top of the page
-			savedSearch.getToDocView().click();
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(savedSearch.getToDocView().getWebElement()).perform();
+			savedSearch.getToDocView2().click();
 			driver.waitForPageToBeReady();
+
 			pass(dataMap, "Open saved search doc view");
 		} else {
 			fail(dataMap,"Cannot open save search doc view");
@@ -1328,10 +1329,14 @@ public class DocViewContext extends CommonContext {
 			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
 			//* Saved Search page is displayed
 			//
-			savedSearch = new SavedSearch(driver);
-		}
-		else fail(dataMap, "failed to navigate to saved search page");
+			String url = (String) dataMap.get("URL");
+    		webDriver.get(url+"/SavedSearch/SavedSearches");
+    		driver.waitForPageToBeReady();
+			pass(dataMap, "On Saved search Page");
+		} else {
+			fail(dataMap,"Did not navigate to Saved search page");
 
+		}
 	}
 
 
@@ -1665,9 +1670,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Grey Redacte tool not displayed for Project Admin user
 			//
-			throw new ImplementationException("verify_redaction_icon_not_displayed_to_project_admin");
+//			Assert.assertFalse(docView.getGreyRedactButton().Visible());
+//			driver.FindElementsByXPath("//*[@id='SearchDataTable']/tbody/tr")
+			Assert.assertEquals(0, driver.FindElementsByXPath("gray-tab").size());
+			pass(dataMap, "Redaction icon is not displayed");
 		} else {
-			throw new ImplementationException("NOT verify_redaction_icon_not_displayed_to_project_admin");
+			fail(dataMap, "Redaction icon is displayed");
 		}
 
 	}

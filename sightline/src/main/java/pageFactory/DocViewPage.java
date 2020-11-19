@@ -262,6 +262,7 @@ public class DocViewPage {
     public ElementCollection getRedactionTagOptions() {return driver.FindElementsByCssSelector("#ddlRedactionTags option");}
     public ElementCollection getDocViewTotalImages() { return driver.FindElementsByCssSelector("#AvailableImagesDropDown li");}
     public Element getDocViewImagesDropDown() { return driver.FindElementById("AvailableImagesDropDown");}
+    public Element getSharedWithSG1Search() {return driver.FindElementByXPath("//*[@id='jsTreeSavedSearch']//*[text()='Shared with SG1']");}
     public Element getMagnifyGlassSearchButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search']");}
     public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
     public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
@@ -271,6 +272,7 @@ public class DocViewPage {
     public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
     public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
     public ElementCollection getAmountOfRedactionTags() {return driver.FindElementsById("#dvCheckboxes");}
+
     
     //default constructor
     public DocViewPage(Driver driver, int i) {

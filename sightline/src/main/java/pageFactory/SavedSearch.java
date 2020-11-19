@@ -104,11 +104,11 @@ public class SavedSearch {
     public Element getShare_PA() { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'Project Admin')]/i"); }
     public Element getSelectSearchWithID(String serachName){ return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='"+serachName+"']/td[2]"); }
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
+    public Element getSharedDefaultSecurityGroup() {return driver.FindElementByXPath("//*[text()='Shared with Default Security Group']");}
     public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath(String.format("//*[@id='jsTreeSavedSearch']//a[contains(., '%s')]", name)); }
     
     //quick batch
     public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
-    
     
     //Function constructor to just use the object without navigating to a different page
     public SavedSearch(Driver driver, int i) {
