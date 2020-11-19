@@ -227,9 +227,7 @@ public class BatchPrintContext extends CommonContext {
 							   batchPrint.getAnalysisnextbutton().Visible()  ;}}), Input.wait30);
 					
 					// waits until next page is shown
-					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-							   batchPrint.getCurrentBreadcrumb("Exception File Types").Visible()  ;}}), Input.wait30);
-				}
+									}
 				if (dataMap.containsKey("basis_for_production")) {
 					if (dataMap.get("basis_for_production").equals("Prior Production")) {
 						driver.FindElementByTagName("body").SendKeys(Keys.PAGE_DOWN.toString());
@@ -239,6 +237,9 @@ public class BatchPrintContext extends CommonContext {
 				}
 				
 			batchPrint.getAnalysisnextbutton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getCurrentBreadcrumb("Exception File Types").Visible()  ;}}), Input.wait30);
+
 			} catch (Exception e) {
 				e.printStackTrace();
 					batchPrint.getAnalysisnextbutton().click();
@@ -1119,22 +1120,27 @@ public class BatchPrintContext extends CommonContext {
 			String sortOrder = ((String)dataMap.get("sort_by_order")).toUpperCase();
 			String pdfCreation = (String)dataMap.get("pdf_creation");
 			
-
 			//
 			//* Select Export Format
 			//* Click Generate button
 			//Ignore the index parameter, it isnt going to be used.
 			
-			batchPrint.getSelectExportFileName().click();
-			batchPrint.getSelectExportDropDownByOption(fileName).click();
+			if(fileName!=null) {
+				batchPrint.getSelectExportFileName().click();
+				batchPrint.getSelectExportDropDownByOption(fileName).click();
+			}
 			
-			batchPrint.getSelectExportFileSortBy().click();
-			batchPrint.getSelectExportFileSortByOption(sortByOption);
+			if(sortByOption!=null) {
+				batchPrint.getSelectExportFileSortBy().click();
+				batchPrint.getSelectExportFileSortByOption(sortByOption);
+			}
 			
-			batchPrint.getSelectExportSortByOrder().click();
-			batchPrint.getSelectExportSortByOrderOption(sortOrder).click();;
+			if(sortOrder!=null) {
+				batchPrint.getSelectExportSortByOrder().click();
+				batchPrint.getSelectExportSortByOrderOption(sortOrder).click();;
+			}
 			
-			if(pdfCreation.equalsIgnoreCase("one pdf for all docs")) batchPrint.getPDFCreationforAllButton().click();
+			if(pdfCreation!= null && pdfCreation.equalsIgnoreCase("one pdf for all docs")) batchPrint.getPDFCreationforAllButton().click();
 		
 			batchPrint.getGenerateButton().click();
 		}
@@ -1149,25 +1155,147 @@ public class BatchPrintContext extends CommonContext {
 			//TC8103 Validate Batch Print Sorting docs by MasterDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
 			//TC8105 Validate Batch Print Sorting docs by CreatedDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
 			//TC8107 Validate Batch Print Sorting docs by SendDateTime [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
-			//TC8166 Validate Batch Print Sorting docs by LastSaveDate (Native) with one PDF for each doc in descending order
 			//TC8167 Validate Batch Print Sorting docs by LastSaveDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
 			//TC8169 Validate Batch Print Sorting docs by LastModifiedDate [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
-			//TC8170 Validate Batch Print Sorting docs by LastEditDate (Native) with one PDF for each doc in descending order
 			//TC8171 Validate Batch Print Sorting docs by LastEditDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
-			//TC8174 Validate Batch Print Sorting docs by DocDate (Native) with one PDF for each doc in descending order
 			//TC8175 Validate Batch Print Sorting docs by DocDate [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
 			//TC8177 Validate Batch Print Sorting docs by CustodianName [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
-			//TC8178 Validate Batch Print Sorting docs by DocFileName (Native) with one PDF for all docs in ascending order
 			//TC8179 Validate Batch Print Sorting docs by DocFileName [Prior Productions (TIFFs/PDFs)]with one PDF for each doc in descending order
 			//TC8181 Validate Batch Print Sorting docs by DocID [Prior Productions (TIFFs/PDFs)]with one PDF for all docs in ascending order
+
+			//TC8166 Validate Batch Print Sorting docs by LastSaveDate (Native) with one PDF for each doc in descending order
+			//TC8170 Validate Batch Print Sorting docs by LastEditDate (Native) with one PDF for each doc in descending order
+			//TC8174 Validate Batch Print Sorting docs by DocDate (Native) with one PDF for each doc in descending order
+			//TC8178 Validate Batch Print Sorting docs by DocFileName (Native) with one PDF for all docs in ascending order
 			//
 			//* Verify PDF exported according to Basis for Printing, and Export Format options
-			//
-			//
-			throw new ImplementationException("verify_pdf_file_sorted_correctly");
-		} else {
-			throw new ImplementationException("NOT verify_pdf_file_sorted_correctly");
+
+
+			
+			ArrayList<String> zipFiles = new ArrayList<>();
+			
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+				String temp;
+				
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to finish downloading
+				Thread.sleep(20000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				for (int i = 0; i < dirContents.length; i++) {
+					
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						System.out.println("Found file " + dirContents[i].getName() + "...");
+						@SuppressWarnings("resource")
+						ZipFile zipFile = new ZipFile(dirContents[i]);
+						
+						int numOfEntries = zipFile.size();
+						if(((String)dataMap.get("pdf_creation")).equalsIgnoreCase("one pdf for all docs")) {
+							if(numOfEntries == 1) pass(dataMap, "one pdf for all docs verfied to be 1");
+							else fail(dataMap, "not one pdf for all docs");
+							return;
+						}
+						
+						
+						//Grabbing all zip file entries for comparison later
+						for (Enumeration e = zipFile.entries(); e.hasMoreElements(); ) {
+							ZipEntry entry = (ZipEntry) e.nextElement();
+							System.out.println(entry.getName());
+							zipFiles.add(entry.getName());
+						}
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			}catch(Exception e) {
+				fail(dataMap, "Single pdf not generated!");
+				e.printStackTrace();
+			}
+			
+			
+			//Go To saved Search Page and find SG1 -> Ericka -> DocList
+			Actions builder = new Actions(driver.getWebDriver());
+			SavedSearch savedSearch = new SavedSearch(driver);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getToDocList().Displayed() && savedSearch.getToDocList().Enabled()  ;}}), Input.wait30);
+			for(WebElement t: driver.FindElementsByCssSelector("#jsTreeSavedSearch li").FindWebElements()) {
+				if(t.getText().equals("Shared with SG1")) t.click();
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getSavedSearchTableRadioButtons().FindWebElements().size()!=0  ;}}), Input.wait30);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  savedSearch.getSavedSearchTableRadioButtons().FindWebElements().get(1).isEnabled()  ;}}), Input.wait30);
+
+			savedSearch.getSavedSearchTableRadioButtons().FindWebElements().get(1).click();;
+			savedSearch.getToDocList().click();
+			DocListPage docList = new DocListPage(driver, 0);
+
+			String desiredColumn = (String)dataMap.get("sort_by");
+			if(!desiredColumn.equalsIgnoreCase("docid") || !desiredColumn.equalsIgnoreCase("docfilename")) {
+				//Add desired columns to doclist table
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					docList.getDocListSelectColumnButton().Displayed() && docList.getDocListSelectColumnButton().Enabled() ;}}), Input.wait30);
+				docList.getDocListSelectColumnButton().click();
+				docList.getDocListMetaDataColumnCheckBoxByName(desiredColumn).click();
+				docList.getDocListAddToSelectedButton().click();
+				docList.getDocListSelectColumnOkButton().click();
+				driver.waitForPageToBeReady();
+			}
+			
+			
+			//Display Max number of rows per page
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  docList.getDocList_SelectLenthtobeshown().Displayed()  ;}}), Input.wait30);
+			docList.getDocList_SelectLenthtobeshown().click();
+			docList.getDocListDropDownCountMax().click();
+			driver.waitForPageToBeReady();
+			
+			String sortOption = (String)dataMap.get("sort_by");
+			String sortOrder = (String)dataMap.get("sort_by_order");
+			ArrayList<String> expectedSort = new ArrayList<>();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			  docList.getDocList_SelectLenthtobeshown().Displayed()  ;}}), Input.wait30);
+
+			//Sort by either ASC or Desc order
+			docList.getDocListColumnHeaders().FindWebElements().get(7).click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){ return 
+				docList.getDocListColumnHeaders().FindWebElements().get(7).getAttribute("aria-sort").equals("ascending")  ;}}), Input.wait30);
+			if(sortOrder.equalsIgnoreCase("desc")){
+				docList.getDocListColumnHeaders().FindWebElements().get(7).click();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					docList.getDocListColumnHeaders().FindWebElements().get(7).getAttribute("aria-sort").equals("descending")  ;}}), Input.wait30);
+			}
+			//Add our docNames into a list for verification later
+			for(WebElement x: docList.getDocListRows().FindWebElements()){
+				expectedSort.add(x.findElements(By.tagName("td")).get(4).getText());
+			}
+
+			//Before we check the validity of the sort, at least the sizes of both document lists must be equal
+			Assert.assertEquals(zipFiles.size(), expectedSort.size());
+
+			for(int j=0; j<zipFiles.size(); j++) {
+				//Instead of seeing if they are equal we just need to make sure that the expectedSort(from docList) name is contained in the Zipfile name
+				//Zip File ex name: [001]  Your Bonus Target and Q1 Bonus.pdf.pdf
+				//DocList Name: Your Bonus Target and Q1 Bonus.pdf
+				Assert.assertTrue(zipFiles.get(j).contains(expectedSort.get(j)));
+			}
+		    pass(dataMap, "verified that native pdf was generated");
+
+
 		}
+		else fail(dataMap, "was not able to verify pdf file sorted correctly");
 
 	}
 
@@ -2101,4 +2229,266 @@ public class BatchPrintContext extends CommonContext {
 	       }
 	       else fail(dataMap, "failed to verify native pdf generated");
        }
+
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print_pau$")
+	public void login_to_new_batch_print_pau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print_pau");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print_pau");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_search_not_displayed$")
+	public void verify_deleted_search_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4443 Verify that if search result deleted from Save Search then it should not be displayed on Source Selection
+			//
+			//* Search 'Deleted Search' not displayed
+			//
+			throw new ImplementationException("verify_deleted_search_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_search_not_displayed");
+		}
+
+	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_new_batch_print_rmu$")
+	public void login_to_new_batch_print_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_batch_print_page
+			throw new ImplementationException("login_to_new_batch_print_rmu");
+		} else {
+			throw new ImplementationException("NOT login_to_new_batch_print_rmu");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_folder_radio_button$")
+	public void click_select_folder_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click 'Select Folder' radio button on Source Selection tab
+			throw new ImplementationException("click_select_folder_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_folder_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_folder_only_in_security_group_displayed$")
+	public void verify_folder_only_in_security_group_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9718 Verify that for RMU, Tag/Folder should be displayed in that security
+			//
+			//* Folder 'TagForSG1Only' displayed
+			//
+			throw new ImplementationException("verify_folder_only_in_security_group_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_folder_only_in_security_group_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_folder_not_displayed$")
+	public void verify_deleted_folder_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9722 Verify that deleted Tag/Folder should not be displayed under source selection for batch print
+			//
+			//* Folder 'DeletedFolder' not displayed
+			//
+			throw new ImplementationException("verify_deleted_folder_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_folder_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_folder_in_multiple_security_groups_displayed$")
+	public void verify_folder_in_multiple_security_groups_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9719 Verify that for RMU, Tag/Folder should be displayed in that security group only when user/Tag/Folder is part of multiple security groupTC9720 Verify that for Project Admin, Tag/Folder should be displayed only once when Tag/Folder is mapped to multiple security groups
+			//
+			//* Folder 'FolderForSG1AndSG2' displayed
+			//
+			throw new ImplementationException("verify_folder_in_multiple_security_groups_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_folder_in_multiple_security_groups_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unmapped_folder_not_displayed$")
+	public void verify_unmapped_folder_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9721 Verify that for RMU, when Tag/Folder is unmapped should not be displayed under source selection for batch print
+			//
+			//* Folder 'UnmappedTag' not displayed
+			//
+			throw new ImplementationException("verify_unmapped_folder_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_unmapped_folder_not_displayed");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_select_tag_radio_button$")
+	public void click_select_tag_radio_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("click_select_tag_radio_button");
+		} else {
+			throw new ImplementationException("NOT click_select_tag_radio_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tag_in_multiple_security_groups_displayed$")
+	public void verify_tag_in_multiple_security_groups_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9719 Verify that for RMU, Tag/Folder should be displayed in that security group only when user/Tag/Folder is part of multiple security groupTC9720 Verify that for Project Admin, Tag/Folder should be displayed only once when Tag/Folder is mapped to multiple security groups
+			//
+			//* Tag 'TagForSG1AndSG2' displayed
+			//
+			throw new ImplementationException("verify_tag_in_multiple_security_groups_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_tag_in_multiple_security_groups_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_deleted_tag_not_displayed$")
+	public void verify_deleted_tag_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9722 Verify that deleted Tag/Folder should not be displayed under source selection for batch print
+			//
+			//* Tag 'DeletedTag' not displayed
+			//
+			throw new ImplementationException("verify_deleted_tag_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_deleted_tag_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_unmapped_tag_not_displayed$")
+	public void verify_unmapped_tag_not_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9721 Verify that for RMU, when Tag/Folder is unmapped should not be displayed under source selection for batch print
+			//
+			//* Tag 'UnmappedTag' not displayed
+			//
+			throw new ImplementationException("verify_unmapped_tag_not_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_unmapped_tag_not_displayed");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_tag_only_in_security_group_displayed$")
+	public void verify_tag_only_in_security_group_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9718 Verify that for RMU, Tag/Folder should be displayed in that security
+			//
+			//* Tag 'TagForSG1Only' displayed
+			//
+			throw new ImplementationException("verify_tag_only_in_security_group_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_tag_only_in_security_group_displayed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? login_as_rmu$")
+	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("login_as_rmu");
+		} else {
+			throw new ImplementationException("NOT login_as_rmu");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_source_selection_500_plus_documents$")
+	public void select_source_selection_500_plus_documents(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Precondition: 500+ files exist
+			//* Select Folder: 500 Plus Files
+			//* Click Next button
+			//
+			throw new ImplementationException("select_source_selection_500_plus_documents");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_500_plus_documents");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_exception_file_types_$")
+	public void select_exception_file_types_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			//* Select Exception File Types
+			//* Click Next button
+			//
+			throw new ImplementationException("select_exception_file_types_");
+		} else {
+			throw new ImplementationException("NOT select_exception_file_types_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_generating_single_pdf_for_500_plus_docs$")
+	public void verify_generating_single_pdf_for_500_plus_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7924 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages)TC7925 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages) with last document having 250 pagesTC7926 Validate batch printing more than 500+ docs for generating single pdf(configured for 250 pages) with first document having 250 pages
+			//
+			//* PDF files generated with 250 pages each
+			//* All documents should be considered for PDF generation
+			//* All pages of individual docs available in PDF
+			//* Documents/pages should not be repeated
+			//
+			throw new ImplementationException("verify_generating_single_pdf_for_500_plus_docs");
+		} else {
+			throw new ImplementationException("NOT verify_generating_single_pdf_for_500_plus_docs");
+		}
+
+	}
 }//eof
