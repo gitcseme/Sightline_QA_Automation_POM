@@ -3296,7 +3296,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3350,7 +3350,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDAscOnePDFforalldocs_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3402,7 +3402,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocIDDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3454,7 +3454,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint, Positive", "Regression"}) //Fails with known issue with sorting 
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameAscOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3507,7 +3507,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smoke3"})
+	@Test(groups = {"BatchPrint", "Positive", "Regression"}) //Fails with known issue with sorting
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_and_select_basis_for_printing_and_select_analysis_and_select_slip_sheets_and_select_branding_redactions_and_select_export_format_DocFileNameDocFileNameDescOnePDFforeachdoc_When_click_download_file_link_Then_verify_native_pdf_generated() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -3548,6 +3548,484 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "4539|4540|4541|4543|4544|4506");
 			context.verify_native_pdf_generated(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_pau_When_click_select_search_radio_button_Then_verify_deleted_search_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_search_radio_button Then verify_deleted_search_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_pau(true, dataMap);
+			context.click_select_search_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "4443");
+			context.verify_deleted_search_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_only_in_security_group_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_folder_only_in_security_group_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9718");
+			context.verify_folder_only_in_security_group_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_pau_When_click_select_folder_radio_button_Then_verify_deleted_folder_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_folder_radio_button Then verify_deleted_folder_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_pau(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9722");
+			context.verify_deleted_folder_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_in_multiple_security_groups_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_folder_in_multiple_security_groups_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("TestCase", "9719|9720");
+			context.verify_folder_in_multiple_security_groups_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_pau_When_click_select_folder_radio_button_Then_verify_folder_in_multiple_security_groups_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_folder_radio_button Then verify_folder_in_multiple_security_groups_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_pau(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("TestCase", "9719|9720");
+			context.verify_folder_in_multiple_security_groups_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_unmapped_folder_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_unmapped_folder_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9721");
+			context.verify_unmapped_folder_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_deleted_folder_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_deleted_folder_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_folder_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9722");
+			context.verify_deleted_folder_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_tag_in_multiple_security_groups_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_tag_radio_button Then verify_tag_in_multiple_security_groups_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_pau(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9719|9720");
+			context.verify_tag_in_multiple_security_groups_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_deleted_tag_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_tag_radio_button Then verify_deleted_tag_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_pau(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("TestCase", "9722");
+			context.verify_deleted_tag_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_unmapped_tag_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_unmapped_tag_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9721");
+			context.verify_unmapped_tag_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_tag_only_in_security_group_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_tag_only_in_security_group_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9718");
+			context.verify_tag_only_in_security_group_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_deleted_tag_not_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_deleted_tag_not_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("TestCase", "9722");
+			context.verify_deleted_tag_not_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint", "Positive"})
+	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_tag_in_multiple_security_groups_displayed() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_tag_in_multiple_security_groups_displayed");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_new_batch_print_rmu(true, dataMap);
+			context.click_select_tag_radio_button(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "9719|9720");
+			context.verify_tag_in_multiple_security_groups_displayed(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_rmu and on_batch_print_page and select_source_selection_500_plus_documents and select_basis_for_printing_{Natives} and select_analysis and select_exception_file_types_{false}{print}{false} and select_slip_sheets_{enabled_slip_sheets} and select_branding_redactions_{false} and select_export_format_{DocFileName}{DocID}{1PDFforalldocs} When click_download_file_link Then verify_generating_single_pdf_for_500_plus_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "08122020_NV");
+			dataMap.put("impersonate", "Review Manager");
+			dataMap.put("security_group", "Default Security Group");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_rmu(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_500_plus_documents(true, dataMap);
+			dataMap.put("basis_for_printing", "Natives");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("other_exception_file_types", "false");
+			dataMap.put("excel_files", "print");
+			dataMap.put("media_files", "false");
+			context.select_exception_file_types_(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions_(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for all docs");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("export_by", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "7924|7925|7926");
+			context.verify_generating_single_pdf_for_500_plus_docs(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"BatchPrint, Positive"})
+	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given sightline_is_launched and login_as_pau and on_batch_print_page and select_source_selection_500_plus_documents and select_basis_for_printing_{Natives} and select_analysis and select_exception_file_types_{false}{print}{false} and select_slip_sheets_{enabled_slip_sheets} and select_branding_redactions_{false} and select_export_format_{DocFileName}{DocID}{1PDFforalldocs} When click_download_file_link Then verify_generating_single_pdf_for_500_plus_docs");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.sightline_is_launched(true, dataMap);
+			dataMap.put("project", "08122020_NV");
+			dataMap.put("impersonate", "Project Administrator");
+			dataMap.put("domain", "Not a Domain");
+			context.login_as_pau(true, dataMap);
+			context.on_batch_print_page(true, dataMap);
+			context.select_source_selection_500_plus_documents(true, dataMap);
+			dataMap.put("basis_for_printing", "Natives");
+			context.select_basis_for_printing_(true, dataMap);
+			context.select_analysis(true, dataMap);
+			dataMap.put("other_exception_file_types", "false");
+			dataMap.put("excel_files", "print");
+			dataMap.put("media_files", "false");
+			context.select_exception_file_types_(true, dataMap);
+			dataMap.put("enable_slip_sheets", "false");
+			context.select_slip_sheets_(true, dataMap);
+			dataMap.put("branding_location", "center");
+			dataMap.put("include_applied_redactions", "false");
+			dataMap.put("opaque_transparent", "opaque");
+			context.select_branding_redactions_(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for all docs");
+			dataMap.put("sort_by", "DocID");
+			dataMap.put("export_by", "DocFileName");
+			context.select_export_format_(true, dataMap);
+			context.click_download_file_link(true, dataMap);
+			dataMap.put("A", "");
+			dataMap.put("TestCase", "7924|7925|7926");
+			context.verify_generating_single_pdf_for_500_plus_docs(true, dataMap);
 		} catch (ImplementationException e) {
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;

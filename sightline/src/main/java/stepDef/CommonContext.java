@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -20,7 +21,10 @@ import automationLibrary.Driver;
 
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -49,26 +53,28 @@ public class CommonContext {
 	BaseClass base;
 	SavedSearch savedSearch;
 
-    @Given("^(\\[Not\\] )?sightline_is_launched$")
+	@Given("^(\\[Not\\] )?sightline_is_launched$")
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) {
 
 		driver = new Driver();
 		webDriver = driver.getWebDriver();
 
-		if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
-			driver.Manage().window().maximize();}
-		else driver.Manage().window().fullscreen();
+		//if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+		//	driver.Manage().window().maximize();
+		//} else driver.Manage().window().fullscreen();
 
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-        
 		String url;
 		if (scriptState) {
-			url = (String) dataMap.get("URL");
+			url = Input.url;
+			dataMap.put("URL",url);
+
 			webDriver.get(url);
 			driver.waitForPageToBeReady();
 			pass(dataMap,String.format("Opened page %s",url));
 		} else {
 			url = "http://www.sqasquared.com";
+			dataMap.put("URL",url);
+
 			webDriver.get(url);
 			pass(dataMap,String.format("Opened random page %s",url));
 		}
@@ -83,53 +89,67 @@ public class CommonContext {
 			lp.loginToSightLine(uid, pwd, true, dataMap);
 			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
 		} else {
+			// this approach allows the negative state to provide a specific uid 
+			// to test for specific negative tests
 			if (uid != null && uid.length() > 0) {
 				lp.loginToSightLine(uid, pwd, false, dataMap);
 			}
 		}
 	}
 
-    
-    @And("^(.*\\[Not\\] )?login_as_pau$")
-	public void login_as_pau(boolean scriptState, HashMap dataMap) {
-		lp = new LoginPage(driver);
-		if (scriptState) {
-			lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
-		} else {
-			String uid = (String) dataMap.get("uid");
-			String pwd = (String) dataMap.get("pwd");
-			
-			if (uid != null && uid.length() > 0) {
-				lp.loginToSightLine(uid, pwd, false, dataMap);
-			}
+	@And("^(.*\\[Not\\] )?login_as$")
+	public void login_as(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String loginAs = (String) dataMap.get("loginAs");
+		switch (loginAs.toLowerCase()) {
+		case "pau":
+			login_as_pau(scriptState, dataMap);
+			break;
+		case "sau":
+			login_as_sau(scriptState, dataMap);
+			break;
+		case "rmu":
+			login_as_rmu(scriptState, dataMap);
+			break;
+		case "rev":
+			login_as_rev(scriptState, dataMap);
+			break;
 		}
 	}
-    
-    @And("^(.*\\[Not\\] )?login_as_sau$")
-	public void login_as_sau(boolean scriptState, HashMap dataMap) {
-		lp = new LoginPage(driver);
-		
-		ingest = new IngestionPage(driver);
-		
-		if (scriptState) {
-			lp.loginToSightLine("juan.guzman@consilio.com","Q@test_10", true, dataMap);
-			//lp.loginToSightLine((String) dataMap.get("uid"), (String) dataMap.get("pwd"), true, dataMap);
-		} else {
-			String uid = (String) dataMap.get("uid");
-			String pwd = (String) dataMap.get("pwd");
-			
-			if (uid != null && uid.length() > 0) {
-				lp.loginToSightLine(uid, pwd, false, dataMap);
-			}
-		}
+
+
+	@And("^(.*\\[Not\\] )?login_as_pau$")
+	public void login_as_pau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String uid = Input.pa1userName;
+		String pwd = Input.pa1password;
+		dataMap.put("uid",uid);
+		dataMap.put("pwd",pwd);
+		login(scriptState, dataMap);
+	}
+
+	@And("^(.*\\[Not\\] )?login_as_sau$")
+	public void login_as_sau(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String uid = Input.sa1userName;
+		String pwd = Input.sa1password;
+		dataMap.put("uid",uid);
+		dataMap.put("pwd",pwd);
+		login(scriptState, dataMap);
+	}
+
+	@And("^(.*\\[Not\\] )?login_as_rev$")
+	public void login_as_rev(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		String uid = Input.rev1userName;
+		String pwd = Input.rev1password;
+		dataMap.put("uid",uid);
+		dataMap.put("pwd",pwd);
+		login(scriptState, dataMap);
 	}
 
 	@And("^.*(\\[Not\\] )? login_as_rmu$")
 	public void login_as_rmu(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-    	lp = new LoginPage(driver);
-    	base = new BaseClass(driver);
+		lp = new LoginPage(driver);
+		base = new BaseClass(driver);
 
-    	login_as_pau(scriptState, dataMap);
+		login_as_pau(scriptState, dataMap);
 
 		if (scriptState) {
 			//
@@ -175,48 +195,39 @@ public class CommonContext {
 		}
 
 	}
- 
+
 	@And("^.*(\\[Not\\] )? select_project$")
 	public void select_project(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				lp.getSelectProjectDD().Enabled()  ;}}), Input.wait30); 
-		
-		String project = (String) dataMap.get("project");
-		lp.getSelectProjectDD().Click();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				lp.getSelectProject(project).Visible()  ;}}), Input.wait30); 
-		lp.getSelectProject(project).Click();
-    	driver.waitForPageToBeReady();
-	}
-	
-    @When("^.*(\\[Not\\] )? on_production_home_page$")
-	public void on_production_home_page(boolean scriptState, HashMap dataMap)  throws ImplementationException, Exception {
-    	prod = new ProductionPage(driver);
 
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
+		String project = (String) dataMap.get("project");
+
+		if (!lp.getSelectProjectDD().getText().equals(project)) {
+			lp.getSelectProjectDD().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					lp.getSelectProject(project).Visible()  ;}}), Input.wait30); 
+			lp.getSelectProject(project).Click();
+			driver.waitForPageToBeReady();
+		}
+	}
+
+	@When("^.*(\\[Not\\] )? on_production_home_page$")
+	public void on_production_home_page(boolean scriptState, HashMap dataMap)  throws ImplementationException, Exception {
+		prod = new ProductionPage(driver);
+
 		//Used to create string to append to any folder/tag/etc names
 		dataMap.put("dateTime",new Long((new Date()).getTime()).toString());
-	    
 
 		if (scriptState) {
-			
-	        String url = (String) dataMap.get("URL");
+			String url = (String) dataMap.get("URL");
 			webDriver.get(url+"/Production/Home");
 			driver.waitForPageToBeReady();
-			
-			if (!prod.changeProjectSelector().getText().equals("021320_EG")) {
-				prod.changeProjectSelector().Click();
-			    prod.productionProjectSelector().Click();
-			}
 
-		    driver.waitForPageToBeReady();
-		    
-		 // switch to AutomationProductionSet
+			// switch to AutomationProductionSet
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					 prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+					prod.getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
 			prod.getProdExport_ProductionSets().SendKeys("DefaultProductionSet");
-			driver.waitForPageToBeReady();
-			
 		} else {
 			webDriver.get("http://www.google.com");
 		}
@@ -224,110 +235,90 @@ public class CommonContext {
 		driver.waitForPageToBeReady();
 
 	}
-    
-    @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
-    public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-	    ingest = new IngestionPage(driver);
-	    if (!ingest.changeProjectSelector().getText().equals("Auto_Smoke2901")) {
-	    	ingest.changeProjectSelector().Click();
-	    	ingest.ingestionProjectSelector().Click();
+
+	@And("^.*(\\[Not\\] )? on_ingestion_home_page$")
+	public void on_ingestion_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		ingest = new IngestionPage(driver);
+
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"Ingestion/Home");    		
+		} else {
+			webDriver.get("http://www.google.com");
 		}
 
-    	dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-	    
-	    if (scriptState) {
-	    	String url = (String) dataMap.get("URL");
-	    		webDriver.get(url+"Ingestion/Home");
-	    		
-	    } else {
-	    		webDriver.get("http://www.google.com");
-	    }
+		driver.waitForPageToBeReady();
 
-	    driver.waitForPageToBeReady();
-	    
-	    // save Ingestion count
-	    String totalIngestCountText = ingest.getTotalIngestCount().getText();
-	    dataMap.put("ingestion_count", totalIngestCountText);
+		// save Ingestion count
+		String totalIngestCountText = ingest.getTotalIngestCount().getText();
+		dataMap.put("ingestion_count", totalIngestCountText);
 
 	} 
-    
+
 	@And("^.*(\\[Not\\] )? on_saved_search_page$")
 	public void on_saved_search_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		savedSearch = new SavedSearch(driver);
 
 		if (scriptState) {
 			//
 			//* User navigates to Saved Search page (/SavedSearch/SavedSearches)
 			//* Saved Search page is displayed
 			//
-			savedSearch = new SavedSearch(driver);
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/SavedSearch/SavedSearches");
 		} else {
 			fail(dataMap, "Not on the saved search page");
 		}
 
 	}
-    
+
 	@And("^.*(\\[Not\\] )? on_batch_print_page$")
 	public void on_batch_print_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		batchPrint = new BatchPrintPage(driver);
 
 		if (scriptState) {
 			//
 			//* User navigates to Batch Print page (/BatchPrint)
 			//* Batch Print page is displayed
 			//
-			batchPrint = new BatchPrintPage(driver);
-			dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		    
-		    if (scriptState) {
-		    	String url = (String) dataMap.get("URL");
-		    		webDriver.get(url+"/BatchPrint/");
-		    		
-		    } else {
-		    		webDriver.get("http://www.google.com");
-		    }
-
-		    driver.waitForPageToBeReady();
-		} else {
-			throw new ImplementationException("NOT on_batch_print_page");
-		}
-
-	}
-    
-    @And("^.*(\\[Not\\] )? on_admin_home_page$")
-	public void on_admin_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
-
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		
-		if (scriptState) {
 			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"Project/Project");
+			webDriver.get(url+"/BatchPrint/");
+
 		} else {
 			webDriver.get("http://www.google.com");
 		}
-			driver.waitForPageToBeReady();
-								
-	}
-    
-    @And("^.*(\\[Not\\] )? on_ingestion_home_page$")
-	public void on_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
-		dataMap.put("URL","http://mtpvtsslwb01.consilio.com/");
-		
+	}
+
+	@And("^.*(\\[Not\\] )? on_admin_home_page$")
+	public void on_admin_home_page(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+		if (scriptState) {
+			String url = (String) dataMap.get("URL");
+			webDriver.get(url+"/Project/Project");
+		} else {
+			webDriver.get("http://www.google.com");
+		}
+
+		driver.waitForPageToBeReady();
+
+	}
+
+	@And("^.*(\\[Not\\] )? on_ingestion_home_page$")
+	public void on_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 		ingest = new IngestionPage(driver);
-		ingest.changeProjectSelector().Click();
-		ingest.changeProjectSelectorField().Click();
 
 		if (scriptState) {
 			String url = (String) dataMap.get("URL");
-			webDriver.get(url+"Ingestion/Home");
+			webDriver.get(url+"/Ingestion/Home");
 		} else {
 			webDriver.get("http://www.google.com");
 		}
 		driver.waitForPageToBeReady();
-								
+
 	}
-    
-    public String get_productions_drive_path() {
-    	String mountPath = "";
+
+	public String get_productions_drive_path() {
+		String mountPath = "";
 		if(SystemUtils.IS_OS_LINUX){
 			mountPath = "";
 		} else if(SystemUtils.IS_OS_WINDOWS){
@@ -335,53 +326,80 @@ public class CommonContext {
 		} else if(SystemUtils.IS_OS_MAC){
 			mountPath = File.separator + "Volumes" + File.separator + "Productions" + File.separator + "H021301" + File.separator;
 		}
-    	
+
 		return mountPath;
-    }
-    
-    public String get_ingestions_drive_path() {
-    	String mountPath = "";
-    	return mountPath;
-    }
-    
-   
-    public HashMap close_browser(boolean scriptState, HashMap dataMap) {
-		try{ 
-			if (lp !=null) lp.logout();
-		     //lp.quitBrowser();	
-			}finally {
-				if (lp !=null) lp.quitBrowser();
-			}
+	}
+
+	public String get_ingestions_drive_path() {
+		String mountPath = "";
+		return mountPath;
+	}
+
+	public void logoff(boolean scriptState, HashMap dataMap) {
+		if (lp !=null) lp.logout();
+
 		LoginPage.clearBrowserCache();
-		
+	}
+
+	public void close_browser(boolean scriptState, HashMap dataMap) {
+		try {
+			logoff(scriptState, dataMap);
+		}finally {
+			if (lp !=null) lp.quitBrowser();
+		}
 		try {
 			//final attempt to close any open browsers
 			driver.close();
 		} catch (Exception e) {
 		}
-		return dataMap;
 	}
-    
-    public void pass(HashMap dataMap, String message) {
-    	log( dataMap,  true,  message);
-    }
-    public void fail(HashMap dataMap, String message) {
-    	log( dataMap,  false,  message);
-    }
-    public void log(HashMap dataMap, boolean result, String message) {
-    	ExtentTest test = (dataMap != null) ? (ExtentTest) dataMap.get("ExtentTest") : null;
-    	if (test != null) {
-    		test.log((result ? LogStatus.PASS : LogStatus.FAIL), message);
-    	}
-    	assert result;
-    }
-    
-    public void logTestResult(HashMap dataMap, String tid, String result, String description) {
+
+	public void pass(HashMap dataMap, String message) {
+		log( dataMap,  LogStatus.PASS,  message);
+	}
+	public void fail(HashMap dataMap, String message) {
+		log( dataMap,  LogStatus.FAIL,  message);
+	}
+	public void error(HashMap dataMap, String message) {
+		log( dataMap,  LogStatus.ERROR,  message);
+	}
+	public void log(HashMap dataMap, LogStatus result, String message) {
+		ExtentTest test = (dataMap != null) ? (ExtentTest) dataMap.get("ExtentTest") : null;
+		if (test != null) {
+			test.log(result, message);
+		}
+		SoftAssert sa= new SoftAssert();
+		sa.assertTrue(result == LogStatus.PASS);
+
+		if (result == LogStatus.FAIL) assert false;
+	}
+
+	public void log(HashMap dataMap, boolean result, String message) {
+		log(dataMap,(result ? LogStatus.PASS : LogStatus.FAIL), message);
+	}
+
+	public void logTestResult(HashMap dataMap, String tid, String result, String description) {
 		ArrayList testCaseResultList = (ArrayList) dataMap.get("TestCaseResults");
 		HashMap testCaseResult = new HashMap();
 		testCaseResult.put("tid", tid);
 		testCaseResult.put("result", result);
 		testCaseResult.put("description", description);
 		testCaseResultList.add(testCaseResult);
-    }
+	}
+
+	public boolean validateMessage(HashMap dataMap, String expectedErrorTag, String foundMessage) {
+		boolean errorMatched = false;
+		JSONArray errorList = (JSONArray) dataMap.get("ui_messages");
+		Iterator<JSONObject> errorsIterator = errorList.iterator();
+		while (errorsIterator.hasNext()) {
+			JSONObject error = errorsIterator.next();
+			if (((String)error.get("tag")).equalsIgnoreCase(expectedErrorTag)) {
+				errorMatched = (foundMessage.startsWith((String)error.get("message")));
+				break;
+			}
+		}
+
+		return errorMatched;
+	}
+
 }
