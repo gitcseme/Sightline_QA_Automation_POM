@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.security.auth.login.FailedLoginException;
+import javax.xml.stream.events.EndDocument;
 
 import java.util.List;
 import java.util.Random;
@@ -45,8 +46,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
+import com.gargoylesoftware.htmlunit.WebWindow;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.Ordering;
+import com.sun.jna.platform.win32.OaIdl.CURRENCY;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -11785,10 +11788,15 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("expand_dat_section");
-		} else {
-			throw new ImplementationException("NOT expand_dat_section");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDATTab().Displayed()  ;}}), Input.wait30); 
+			prod.getDATTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getDATAnsiType().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "Was able to expand the dat section");
 		}
+		else fail(dataMap, "Failed to expand the dat section");
 
 	}
 
@@ -11797,11 +11805,35 @@ public class ProductionContext extends CommonContext {
 	public void verify_email_source_field_options_available(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 7978: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category by default to select in the DAT for a Production-Export.In the DAT section, click the Field Classification dropdownSelect EmailAfter Email has been selected, verify the following fields are available in the Source Field dropdown menu: EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses
-			throw new ImplementationException("verify_email_source_field_options_available");
-		} else {
-			throw new ImplementationException("NOT verify_email_source_field_options_available");
+			//TC 7978: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses should be available under the "Email" category by default to select in the DAT for a Production-Export.In the DAT section, click the Field Classification dropdownSelect EmailAfter Email has been selected, verify the following fields are available in the Source Field dropdown menu: EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddressesl
+
+			HashSet<String> sourceFieldsToVerify = (HashSet<String>)dataMap.get("sourceFieldsToVerify");
+			int numOfMatches = 0;
+
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().Displayed()  ;}}), Input.wait30);
+			prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Email");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().selectFromDropdown().getFirstSelectedOption().getText().equals("Email")  ;}}), Input.wait30);
+			prod.getSourceField().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getAllSourceFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+
+			//Go through the dropdown
+			for(WebElement x: prod.getAllSourceFieldOptions().FindWebElements()) {
+				//Track the matching fields
+				if(sourceFieldsToVerify.contains(x.getText())) numOfMatches++;
+			}
+			
+			//Make sure we have found every field to verify in the dropdown
+			Assert.assertEquals(numOfMatches, sourceFieldsToVerify.size());
+			
+			pass(dataMap, "verfied email source field options");
 		}
+		else fail(dataMap, "was unable to verify emial source field options");
 
 	}
 
@@ -11811,10 +11843,16 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("expand_tiff_pdf_section");
-		} else {
-			throw new ImplementationException("NOT expand_tiff_pdf_section");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFTab().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFTab().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFBlankRemovalToggle().Displayed()  ;}}), Input.wait30); 
+
+			pass(dataMap, "was able to expand tiff pdf section");
 		}
+		else fail(dataMap, "failed to expand tiff pdf section");
 
 	}
 
@@ -11823,11 +11861,104 @@ public class ProductionContext extends CommonContext {
 	public void verify_tiff_pdf_metadata_fields_sorted(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 8023: To verify that in Production-Export-Branding, Metadata Field drop down should be sorted by alpha ascendingTC 8036: To verify that in Production-Export-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8038: To verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTC 8044: To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascendingTC 8040: To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascendingTo verify 8023:Click the Insert Metadata Field link in the Branding section located underneath the Branding Text field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8036:Click the Insert Metadata Field link in the Placeholder section located underneath the Placerholder Text field for Privileged docs to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8038Click the Enable for Tech Issue docs toggle to enable itOnce you click it, a placeholder text field for placeholder text for Tech Issue docs appearsClick the Insert Metadata Field link undernearth this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8040:Click the "Enable for Natively Produced Documents" link, which will add a placeholder text field for the docs of selected file typesClick the Insert Metadata Field link underneath this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascendingTo verify 8044:Click the Advanced text which is located at the bottom of the TIFF/PDF section, which will show the Slip Sheets toggleClick the Slip Sheets toggle to show the Available Metadata fieldsVerify the options are sorted by alpha ascending
-			throw new ImplementationException("verify_tiff_pdf_metadata_fields_sorted");
-		} else {
-			throw new ImplementationException("NOT verify_tiff_pdf_metadata_fields_sorted");
+			//TC 8023: To verify that in Production-Export-Branding, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8036: To verify that in Production-Export-Privileged Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8038: To verify that in Production-Export-Exception Docs Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+			//TC 8044: To verify that in Production-Export-Slip Sheet, Metadata Field should be sorted by alpha ascending
+			//TC 8040: To verify that in Production-Export-File Type Group Placeholder section, Metadata Field drop down should be sorted by alpha ascending
+
+			//To verify 8023:Click the Insert Metadata Field link in the Branding section located underneath the Branding Text field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8036:Click the Insert Metadata Field link in the Placeholder section located underneath the Placerholder Text field for Privileged docs to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8038Click the Enable for Tech Issue docs toggle to enable itOnce you click it, a placeholder text field for placeholder text for Tech Issue docs appearsClick the Insert Metadata Field link undernearth this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8040:Click the "Enable for Natively Produced Documents" link, which will add a placeholder text field for the docs of selected file typesClick the Insert Metadata Field link underneath this field to bring up the Insert Metadata Field popupClick the Insert MetadataField dropdownVerify the options are sorted by alpha ascending
+			//To verify 8044:Click the Advanced text which is located at the bottom of the TIFF/PDF section, which will show the Slip Sheets toggleClick the Slip Sheets toggle to show the Available Metadata fieldsVerify the options are sorted by alpha ascending
+			
+			/*Verify Branding Section MetaData*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFMetadataField().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFMetadataField().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFF_selectedMetadataField().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFF_selectedMetadataField().Click();
+
+			//Verify Branding MetaDataField dropdown is sorted in ascending
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			String prev = "";
+			for(WebElement curr: prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements()){
+				if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+				prev = curr.getText();
+			}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getNumBatesDialogCloseButton().Displayed()  ;}}), Input.wait30); 
+			prod.getNumBatesDialogCloseButton().click();
+			/*End of Branding Section MetaData*/
+			
+
+			/*Verify Placeholder, Tech Issue Doc and Natively Produced Documents
+			These all use the same insertMetaDataLink, so we can verify them all together in this chunk*/
+			
+			//Toggle Tech Issue 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFPlaceholderTechIssueToggle().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFPlaceholderTechIssueToggle().click();
+			
+			//Click Enable for Natively Produced Documents
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFComponentEnableNativelyProducedDocuments().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFComponentEnableNativelyProducedDocuments().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getInsertMetaDataFieldLinks().FindWebElements().size()>=3  ;}}), Input.wait30); 
+
+			Actions builder = new Actions(driver.getWebDriver());
+			//Go through each metadata link -> verify that the options are in ascending order
+			for(WebElement x: prod.getInsertMetaDataFieldLinks().FindWebElements()) {
+				if(x.isDisplayed() && x.isEnabled()) {
+					builder.moveToElement(x).perform();
+					x.click();
+
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFF_selectedMetadataField().Displayed()  ;}}), Input.wait30); 
+					prod.getTIFF_selectedMetadataField().Click();
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+					prev = "";
+					for(WebElement curr: prod.getTIFFSelectedMetaDataFieldOptions().FindWebElements()){
+						if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+						prev = curr.getText();
+					}
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+						prod.getNumBatesDialogCloseButton().Displayed()  ;}}), Input.wait30); 
+					prod.getNumBatesDialogCloseButton().click();
+					driver.waitForPageToBeReady();
+				}
+			}
+			/* End of Placeholder/Tech Issue/Natively Produced*/
+			
+			
+			/*Finally Verify Slipsheet metadata in advanced options*/
+			//Toggle slipsheet in Advanced tag
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFAdvanced().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFAdvanced().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSlipSheetsToggle().Displayed()  ;}}), Input.wait30); 
+			prod.getTIFFSlipSheetsToggle().click();
+			
+			//Verify SlipSheet MetaDataField is sorted in asending 
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getTIFFSlipSheetMetaDataTextOptions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			prev = "";
+			for(WebElement curr: prod.getTIFFSlipSheetMetaDataTextOptions().FindWebElements()) {
+				if(prev.compareTo(curr.getText().toLowerCase()) > 0) fail(dataMap, "metadata not in ascending order");
+				prev = curr.getText();
+			}
+			
+			pass(dataMap, "verified tiff pdf metadata sorted fields");
 		}
+		else fail(dataMap, "failed to verify tiff pdf metadata fields");
 
 	}
 
@@ -11837,10 +11968,14 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_add_new_production_link");
-		} else {
-			throw new ImplementationException("NOT click_add_new_production_link");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
+			pass(dataMap, "successfully clicked add new production link");
 		}
+		else fail(dataMap, "failed to click add new production link");
 
 	}
 
@@ -11849,11 +11984,126 @@ public class ProductionContext extends CommonContext {
 	public void verify_validation_on_production_components(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4463: To verify Validation and Notification Message Issue in Various Section of ExportOn the Basic Info section, leave the Name field blankClick Mark CompleteVerify the following error message appears underneath the input field: It is mandatory to provide the production nameFill in a unique Name (use a timestamp) Click Mark Complete to go to the Production Components sectionMake sure none of the Components are selected, then click the Mark Complete buttonVerify a red toast message appears with the following text: Selection of the DAT component is mandatory for a production.Click the DAT checkboxExpand the DAT fieldSelect Bates from the Field Classification dropdownSelect BatesNumber from the Source FieldEnter "bates" in the DAT field Click Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Numbering & Sorting sectionClick Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabledClick Next to go to the Document Selection sectionMake sure nothing is selected, then click Mark CompleteVerify the following error message appears under Selected Documents: Select documents to be processedClick the Select Folders radio buttonClick the Default Automation Folder optionClick the Mark Complete buttonClose the Green Succcesful toast messageWait until Next button is enabledClick the Next button to go to the Priv Guard sectionClick the Mark Complete Click OK on the warning message popupWait until Next button is enabledClick the Next button to go to the Production Location sectionClick the Mark Complete buttonVerify the following message appears underneath the Production Directory input field: Please enter the Production Directory
-			throw new ImplementationException("verify_validation_on_production_components");
-		} else {
-			throw new ImplementationException("NOT verify_validation_on_production_components");
+			//TC 4463: To verify Validation and Notification Message Issue in Various Section of ExportOn the Basic Info section,
+			//leave the Name field blankClick Mark CompleteVerify the following error message appears underneath the input field: It is mandatory to provide the production name
+			//Fill in a unique Name (use a timestamp) Click Mark Complete to go to the Production Components section
+			//Make sure none of the Components are selected, then click the Mark Complete buttonVerify a red toast message appears with the following text: Selection of the DAT component is mandatory for a production.
+			//Click the DAT checkboxExpand the DAT fieldSelect Bates from the Field Classification dropdownSelect BatesNumber from the Source FieldEnter "bates" in the DAT field Click Mark CompleteClose the Green Succcesful toast messageWait until Next button is enabled
+			//Click Next to go to the Numbering & Sorting sectionClick Mark CompleteClose the Green Succcesful toast message
+			//Wait until Next button is enabledClick Next to go to the Document Selection sectionMake sure nothing is selected, then click Mark CompleteVerify the following error message appears under Selected Documents: Select documents to be processed
+			//Click the Select Folders radio buttonClick the Default Automation Folder optionClick the Mark Complete buttonClose the Green Succcesful toast message
+			//Wait until Next button is enabledClick the Next button to go to the Priv Guard sectionClick the Mark Complete Click OK on the warning message popupWait until Next button is enabled
+			//Click the Next button to go to the Production Location sectionClick the Mark Complete buttonVerify the following message appears underneath the Production Directory input field: Please enter the Production Directory
+
+			/*Verify Basic Info Page*/
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String productionName = "AutoProduction" + dateTime;
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getBasicInfoCompleteButton().Displayed()  ;}}), Input.wait30); 
+			prod.getBasicInfoCompleteButton().Click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getMandatoryNameErrorMessage().Displayed()  ;}}), Input.wait30); 
+
+			System.out.println(prod.getMandatoryNameErrorMessage().getText());
+			//Verify Error Message when marking complete without adding a production name
+			Assert.assertEquals("It is mandatory to provide the production name", prod.getMandatoryNameErrorMessage().getText());
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getProductionName().Displayed()  ;}}), Input.wait30); 
+			prod.getProductionName().SendKeys(productionName);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
+			prod.getBasicInfoCompleteButton().Click();
+			driver.waitForPageToBeReady();
+			/*End of Verify Basic info Page*/
+
+			/*Verify Components Page*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getDATTab().Displayed()  ;}}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getComponentsMarkComplete().Displayed()  ;}}), Input.wait30);
+			prod.getComponentsMarkComplete().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMessagePopup().Displayed()  ;}}), Input.wait30);
+			System.out.println(prod.getMessagePopup().getText());
+			//Verify Error Message when marking complete without Dat section 
+			Assert.assertEquals("No fields are added in the DAT section. Please complete before navigating to the next step.", prod.getMessagePopup().getText());
+			prod.getSuccessMessageCloseBtn().click();
+
+			prod.getDATChkBox().click();
+			prod.getDATTab().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getFieldClassification().Visible()  ;}}), Input.wait30);
+			prod.getFieldClassification().selectFromDropdown().selectByVisibleText("Bates");;
+			prod.getSourceField().selectFromDropdown().selectByVisibleText("BatesNumber");;
+			prod.getDatField().click();
+			prod.getDatField().SendKeys("Bates Number");
+
+			prod.getComponentsMarkComplete().Click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getConfirmCompletePopup().Displayed() ;}}), Input.wait30);
+			// Close toast message
+			prod.getSuccessMessageCloseBtn().click();
+			//Click the next button
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/* End of Verify Components Page*/
+			
+			/*Numbering Section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			prod.getSuccessMessageCloseBtn().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/*End of numbering Section*/
+			
+			/*Document Selection*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMandotoryFoldererrorMessage().Displayed() ;}}), Input.wait30);
+			System.out.println(prod.getMandotoryFoldererrorMessage().getText());
+			//Verify Error message when marking complete without selecting a folder or tag
+			Assert.assertEquals("Select documents to be processed",prod.getMandotoryFoldererrorMessage().getText());
+			complete_default_document_selection(scriptState, dataMap);
+			/*End of Document Selection*/
+			
+			/*Priv Guard Section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getOkButton().Displayed() ;}}), Input.wait30);
+			prod.getOkButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getNextButton().Enabled() ;}}), Input.wait30);
+			prod.getNextButton().click();
+			/*End of Priv Guard Section*/
+			
+			/*Location section*/
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMarkCompleteButton().Displayed() ;}}), Input.wait30);
+			prod.getMarkCompleteButton().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getMandatoryDirectoryErrorMessage().Displayed() ;}}), Input.wait30);
+			System.out.println(prod.getMandatoryDirectoryErrorMessage().getText());
+			//Verify Error message when marking complete with entering a directory
+			Assert.assertEquals("Please enter the Production Directory",prod.getMandatoryDirectoryErrorMessage().getText());
+			/* end of Location section*/
+
+			pass(dataMap, "Successfully verified validation on production components");
 		}
+		else fail(dataMap, "failed to verify validation on production components");
 
 	}
 
@@ -11864,10 +12114,13 @@ public class ProductionContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_add_a_new_production");
-		} else {
-			throw new ImplementationException("NOT click_add_a_new_production");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				prod.getAddNewProductionbutton().Displayed()  ;}}), Input.wait30); 
+			prod.getAddNewProductionbutton().Click();
+			driver.waitForPageToBeReady();
+
 		}
+		else fail(dataMap, "Failed to click a new prodution");
 
 	}
 
@@ -11876,11 +12129,51 @@ public class ProductionContext extends CommonContext {
 	public void verify_basic_info_section(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC 4405: To Verify Changes in Basic Info Page ( for Export)TC 4406: To Verify Basic Info UI with Toggle option (For Export).Verifty the section title is "Basic Info & Select Template"Verify the Name field exists and is requiredVerify the Description field exisrts and text can be enteredVerify the Load Template dropdown exists and can be selectedVerify the Save button exists and is enabledVerify the Mark Complete button exists and is enabledVerify the Next button is disabled upon initial loadVerify the Next button is enlabed after clicking the Save button 
-			throw new ImplementationException("verify_basic_info_section");
-		} else {
-			throw new ImplementationException("NOT verify_basic_info_section");
+			//TC 4405: To Verify Changes in Basic Info Page ( for Export)TC 4406: To Verify Basic Info UI with Toggle option (For Export).
+			String dateTime = new Long((new Date()).getTime()).toString();
+			String productionName = "AutoProduction" + dateTime;
+
+			//Verifty the section title is "Basic Info & Select Template"
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getBasicInfoTitleHeader().Displayed() ;}}), Input.wait30);
+			Assert.assertEquals("Basic Info & Select Template",prod.getBasicInfoTitleHeader().getText());
+
+			//Verify the Name field exists and is required
+			Assert.assertEquals("Name :*",prod.getBasicInfoNameLabel().getText());
+
+			//Verify the Description field exisrts and text can be entered
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getProductionDesc().Enabled() ;}}), Input.wait30);
+			prod.getProductionDesc().click();
+			prod.getProductionDesc().SendKeys("Testing typing");
+			Assert.assertEquals("Testing typing", prod.getProductionDesc().GetAttribute("value"));
+			
+			
+			//Verify the Save button exists and is enabled
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				prod.getBasicInfoSave().Enabled()  ;}}), Input.wait30);
+			Assert.assertTrue(prod.getBasicInfoSave().Enabled() && prod.getBasicInfoSave().Displayed());
+			
+			//Verify the Load Template dropdown exists and can be selected
+			prod.getprod_LoadTemplate().click();
+			Assert.assertTrue(prod.getprod_LoadTemplate().Enabled() && prod.getprod_LoadTemplate().Displayed());
+
+			//Verify the Mark Complete button exists and is enabled
+			Assert.assertTrue(prod.getMarkCompleteButton().Enabled() && prod.getMarkCompleteButton().Displayed());
+			
+			//Verify the Next button is disabled upon initial load
+			Assert.assertFalse(prod.getNextButton().Enabled());
+
+			//Verify the Next button is enlabed after clicking the Save button 
+			prod.getProductionName().SendKeys(productionName);
+			prod.getBasicInfoSave().click();
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					prod.getMarkCompleteButton().Enabled()  ;}}), Input.wait30); 
+			Assert.assertTrue(prod.getMarkCompleteButton().Displayed());
+			pass(dataMap, "was able to verify basic info section");
 		}
+		else fail(dataMap, "failed to verify basic info section");
 
 	}
 

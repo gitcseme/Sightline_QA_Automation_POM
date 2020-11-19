@@ -57,6 +57,7 @@ public class ProductionPage {
     public Element getTIFF_RightFooterBranding(){ return driver.FindElementById("RightFooterBranding"); }
     public Element getTIFF_InsertMetadataField(){ return driver.FindElementById("Launcheditor_0"); }
     public Element getTIFF_selectedMetadataField(){ return driver.FindElementById("selectedMetadataField"); }
+    public ElementCollection getTIFFSelectedMetaDataFieldOptions() {return driver.FindElementsByCssSelector("#selectedMetadataField option");}
     public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
     public Element getManageTemplateTab() { return driver.FindElementById("ui-id-2"); }
     public Element getManageTemplateDiv() { return driver.FindElementById("tabs-b"); }
@@ -564,6 +565,7 @@ public class ProductionPage {
 
     public Element getFieldClassification() {return driver.FindElementById("TY_0");}
     public Element getSourceField() {return driver.FindElementById("SF_0");}
+    public ElementCollection getAllSourceFieldOptions() {return driver.FindElementsByCssSelector("#SF_0 option");}
     public Element getDatField() {return driver.FindElementById("DATFL_0");}
     public Element getDefaultAutomationChkBox() {return driver.FindElementByXPath("(//a[text()='Default Automation Tag'])[1]");}
     public Element getDefaultAutomationFolderChechbox() { return driver.FindElementByXPath("//a[text()='Default Automation Folder']"); }
@@ -802,6 +804,15 @@ public class ProductionPage {
     public Element getSuccessMessageCloseBtn() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//i[contains(@id, 'botClose')]"); }
     public Element getTIFFRedactionStyleDropdown() { return driver.FindElementById("lstTIFFRedactionStyle"); }
     public Element getPDFRedactionStyleDropdown() { return driver.FindElementById("lstPDFRedactionStyle"); }
+    public Element getTIFFSlipSheetMetaDataTab() {return driver.FindElementByXPath("//span[text() = 'METADATA']//..");}
+    public ElementCollection getTIFFSlipSheetMetaDataTextOptions() {return driver.FindElementsByCssSelector("#tiffMetadataList li strong");}
+    public ElementCollection getInsertMetaDataFieldLinks() {return driver.FindElementsByXPath("//a[@class = 'LaunchMetaDataPopup']");}
+    public Element getMandatoryNameErrorMessage() {return driver.FindElementById("ProductionName-error");}
+    public Element getMandotoryFoldererrorMessage() {return driver.FindElementById("ProductionDocumentsSelection.ContextType-error");}
+    public Element getMandatoryDirectoryErrorMessage() {return driver.FindElementById("ProductionOutputLocation_ProductionDirectory-error");}
+    public Element getBasicInfoTitleHeader() {return driver.FindElementByCssSelector("#divLoadView h2");}
+    public Element getBasicInfoNameLabel() {return driver.FindElementByXPath("//label[text() = 'Name :']");}
+    public Element getBasicInfoNameRequiredAsterick() {return driver.FindElementByXPath("//label[text() = 'Name :']//font");}
 
     
     //Click the desired production set option, in the dropdown menu by it's index
@@ -888,21 +899,11 @@ public class ProductionPage {
 			//		getBasicInfoTemplate(String.format(" [value='%s']",template)).Visible()  ;}}), Input.wait30); 
 			//getBasicInfoTemplate(String.format(" [value='%s']",template)).Click();		
 		}
-
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoCompleteButton().Visible()  ;}}), Input.wait30); 
 		getBasicInfoCompleteButton().Click();
 
 		//Added to get rid of Toast message, which I think is effecting the rest of Script
-		closeSuccessToastMessage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSuccessMessageCloseButton().Visible()  ;}}), Input.wait30); 
-		getSuccessMessageCloseButton().click();
-
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoNextButton().Enabled()  ;}}), Input.wait30); 
-		getBasicInfoNextButton().Click();
 		driver.waitForPageToBeReady();
     	}
     	catch(Exception e){System.out.println("error occured");}
