@@ -5160,4 +5160,74 @@ public class IngestionContext extends CommonContext {
 		}
 
 	}
+
+
+	@Given("^.*(\\[Not\\] )? login_to_ingestion$")
+	public void login_to_ingestion(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_ingestion_home_page
+			throw new ImplementationException("login_to_ingestion");
+		} else {
+			throw new ImplementationException("NOT login_to_ingestion");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_recent_ingestion_in_grid$")
+	public void click_recent_ingestion_in_grid(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click most recent ingestion in Ingestion Homepage
+			throw new ImplementationException("click_recent_ingestion_in_grid");
+		} else {
+			throw new ImplementationException("NOT click_recent_ingestion_in_grid");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_intestion_execution_details_rollback_button$")
+	public void click_intestion_execution_details_rollback_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Ingestion Execution Details 'Action' dropdownClick 'Rollback' button
+			throw new ImplementationException("click_intestion_execution_details_rollback_button");
+		} else {
+			throw new ImplementationException("NOT click_intestion_execution_details_rollback_button");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_overlay_rollback_warning_message$")
+	public void verify_overlay_rollback_warning_message(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC7286 Validate warning message is prompted when overlay ingestion is rolled back after indexing step
+			//
+			//* Warning message is displayed: "As part of indexing step, index for metadata, text and audio have already been updated. The searches run in the project will reflect these changes. Rolling back will not roll back the updates to the index, so you MUST rerun indexing for the entire project. Do you want to continue with Rollback?"
+			//* Rollback the ingestion
+			//* Delete the ingestion
+			//
+			throw new ImplementationException("verify_overlay_rollback_warning_message");
+		} else {
+			throw new ImplementationException("NOT verify_overlay_rollback_warning_message");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? click_action_dropdown_rollback_button$")
+	public void click_action_dropdown_rollback_button(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click most recent ingestion action dropdown gearClick 'Rollback' button in the dropdown
+			throw new ImplementationException("click_action_dropdown_rollback_button");
+		} else {
+			throw new ImplementationException("NOT click_action_dropdown_rollback_button");
+		}
+
+	}
 } //eof

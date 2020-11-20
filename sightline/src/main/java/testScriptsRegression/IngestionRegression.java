@@ -10248,4 +10248,67 @@ public class IngestionRegression extends RegressionBase {
 
 		report.endTest(test);
 	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_login_to_ingestion_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_manually_execute_ingestion_and_click_recent_ingestion_in_grid_When_click_intestion_execution_details_rollback_button_Then_verify_overlay_rollback_warning_message() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_ingestion and new_ingestion_created and click_preview_run_button and click_run_ingest_button and manually_execute_ingestion and click_recent_ingestion_in_grid When click_intestion_execution_details_rollback_button Then verify_overlay_rollback_warning_message");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_ingestion(true, dataMap);
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.manually_execute_ingestion(true, dataMap);
+			context.click_recent_ingestion_in_grid(true, dataMap);
+			context.click_intestion_execution_details_rollback_button(true, dataMap);
+			context.verify_overlay_rollback_warning_message(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
+
+
+	@Test(groups = {"Ingestion", "Positive"})
+	public void test_Given_login_to_ingestion_and_new_ingestion_created_and_click_preview_run_button_and_click_run_ingest_button_and_manually_execute_ingestion_When_click_action_dropdown_rollback_button_Then_verify_overlay_rollback_warning_message() throws Throwable
+	{
+		HashMap dataMap = new HashMap();
+
+		ExtentTest test = report.startTest("Given login_to_ingestion and new_ingestion_created and click_preview_run_button and click_run_ingest_button and manually_execute_ingestion When click_action_dropdown_rollback_button Then verify_overlay_rollback_warning_message");
+
+		dataMap.put("ExtentTest",test);
+
+		try {
+			context.login_to_ingestion(true, dataMap);
+			context.new_ingestion_created(true, dataMap);
+			context.click_preview_run_button(true, dataMap);
+			context.click_run_ingest_button(true, dataMap);
+			context.manually_execute_ingestion(true, dataMap);
+			context.click_action_dropdown_rollback_button(true, dataMap);
+			context.verify_overlay_rollback_warning_message(true, dataMap);
+		} catch (ImplementationException e) {
+			test.log(LogStatus.SKIP, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} catch (Exception e) {
+			test.log(LogStatus.FATAL, e.getMessage());
+			Assert.assertTrue(e.getMessage(), false);;
+		} finally { 
+			context.close_browser(true, dataMap);
+		}
+
+		report.endTest(test);
+	}
 } //eof

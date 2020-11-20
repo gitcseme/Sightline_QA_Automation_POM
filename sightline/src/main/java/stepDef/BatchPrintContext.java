@@ -2491,4 +2491,99 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+
+	@When("^.*(\\[Not\\] )? select_production_set$")
+	public void select_production_set(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click Prior Productions radio buttonSelect Production Set: 'DefaultProductionSet'
+			throw new ImplementationException("select_production_set");
+		} else {
+			throw new ImplementationException("NOT select_production_set");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_set_displayed$")
+	public void verify_production_set_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC4385 Verify that user can select the Prior Production option and view the details
+			//
+			//* Select Productions populates with productions from DefaultProductionSet
+			//
+			throw new ImplementationException("verify_production_set_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_production_set_displayed");
+		}
+
+	}
 }//eof
+
+	@("^.*(\\[Not\\] )? select_source_selection_$")
+	public void select_source_selection_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("select_source_selection_");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_slip_sheets_email_values$")
+	public void select_slip_sheets_email_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Enable Slip SheetsSelect Email Metadata:
+			//
+			//* EmailAuthorAdress
+			//* EmailAuthorName
+			//* EmailAuthorNameAndAddress
+			//* EmailBBCAddresses
+			//* EmailBBCNames
+			//* EmailBCCNamesAndAddresses
+			//* EmailCCAddresses
+			//* EmailCCNames
+			//* EmailCCNamesAndAddresses
+			//* EmailToAddresses
+			//* EmailToNames
+			//* EmailToNamesAndAddresses
+			//
+			//Click Next button
+			throw new ImplementationException("select_slip_sheets_email_values");
+		} else {
+			throw new ImplementationException("NOT select_slip_sheets_email_values");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_branding_redactions$")
+	public void select_branding_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("select_branding_redactions");
+		} else {
+			throw new ImplementationException("NOT select_branding_redactions");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_values_displayed$")
+	public void verify_email_values_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10585 Verify concatenated email value should be displayed correctly on Slip Sheets in Batch Print
+			throw new ImplementationException("verify_email_values_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_email_values_displayed");
+		}
+
+	}
