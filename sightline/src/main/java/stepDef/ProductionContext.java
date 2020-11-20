@@ -12880,4 +12880,212 @@ public class ProductionContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? remove_pdf_tiff_component_from_completed_production$")
+	public void remove_pdf_tiff_component_from_completed_production(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//After produciton has been generated, click the Back link untii you are on the Production Components sectionClick the Mark Incomplete buttonDeselect the TIFF/PDF checkbox, so that only DAT is the selected CheckboxClick Mark CompleteClose the green success toast messageClick the Next button on each section until you are back on the Generate section
+			throw new ImplementationException("remove_pdf_tiff_component_from_completed_production");
+		} else {
+			throw new ImplementationException("NOT remove_pdf_tiff_component_from_completed_production");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_only_dat_component_is_generated$")
+	public void verify_only_dat_component_is_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 3401: To Verify ProjectAdmin will be able to edit configuration of a production that hasn’t yet been locked and bates number has not been committedAfter the file has been downloaded and unzipped, verify only the _DAT file exists (there shouldn't be a _TIFF or _PDF file since that component was removed in a previous step)
+			throw new ImplementationException("verify_only_dat_component_is_generated");
+		} else {
+			throw new ImplementationException("NOT verify_only_dat_component_is_generated");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_doc_order_in_dat_match$")
+	public void verify_doc_order_in_dat_match(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6398: To verify that the order of docs in "Text, Native, MP3, PDF" LST is matching the order of docs in DAT.TC 6393: To verify that the order of docs in OPT is matching the order of docs in DAT.Once the production is downloaded, there should be a _TEXT.lst and a _DAT.dat file. The first field in the _TEXT.lst file is the bates number. Verify the ordering of the bates numbers in the _TEXT.lst file match with the ordering of the bates numbers in the _DAT.dat file
+			throw new ImplementationException("verify_doc_order_in_dat_match");
+		} else {
+			throw new ImplementationException("NOT verify_doc_order_in_dat_match");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_dat_and_tiff_enabled_tech_issue_docs_placeholder$")
+	public void add_dat_and_tiff_enabled_tech_issue_docs_placeholder(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Production Components section, click the DAT checkbox to Expand the DAT sectionSelect Bates as the Field ClassificationSelect Bates Number as teh Source FieldInput "bates" in the DAT fieldClick the TIFF/PDF checkboxClick TIFF/PDF to expand that sectionIn the Placeholder section, click the Select Tags button to the right of the Enable for Privileged Docs toggleWait for the popup to appearClick the Privileged optionClick the Select buttonClick the toggle for "Enable for Tech Issue" Click the Select Tags button that appears after clicking the toggleWait for the popup to appearClick the Technical_Issue optionClick the Select buttonScroll to the topClick Save
+			throw new ImplementationException("add_dat_and_tiff_enabled_tech_issue_docs_placeholder");
+		} else {
+			throw new ImplementationException("NOT add_dat_and_tiff_enabled_tech_issue_docs_placeholder");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? click_mark_complete_next_button_on_production_component$")
+	public void click_mark_complete_next_button_on_production_component(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Mark Complete buttonClose the green sucess message Click the Next button
+			throw new ImplementationException("click_mark_complete_next_button_on_production_component");
+		} else {
+			throw new ImplementationException("NOT click_mark_complete_next_button_on_production_component");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_is_generated_successfully$")
+	public void verify_production_is_generated_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6439: To verify that Production should generated successfully with LST which is enabled by defaultTC 5175: To Verify Production generation for PDF and Excel DocsTC 9194: To verify that Enabled 'Tech Issue Docs' placeholder should be saved as Template and new production should be generated successfully with the saved templateOn the Quality Control & Confirmation screen, verify the "Success" status under the Production name
+			throw new ImplementationException("verify_production_is_generated_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_production_is_generated_successfully");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_dat_component_with_email_metadata$")
+	public void complete_dat_component_with_email_metadata(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the DAT checkboxClick DAT to expand the DAT sectionIn the Specify DAT FIeld Mapping, select Bates as the Field ClassificationSelect BatesNumber as the Source FieldInput "bates" in the DAT fieldClick the Add Field buttonSelect Email as the Field ClassificationSelect EmailCCNamesAndAddresses as the Source FieldInput EmailCCNamesAndAddresses as the DAT fieldClick the Add Field buttonSelect Email as the Field ClassificationSelect EmailToNamesAndAddresses as the Source FieldInput EmailToNamesAndAddresses as the DAT fieldClick the Add Field buttonSelect Email as the Field ClassificationSelect EmailAuthorNameAndAddresses as the Source FieldInput EmailAuthorNameAndAddresses as the DAT fieldClick the Add Field buttonSelect Email as the Field ClassificationSelect EmailBCCNamesAndAddresses as the Source FieldInput EmailBCCNamesAndAddresses as the DAT fieldScroll to the topClick Mark CompleteClose the green success toast messageClick the Next button
+			throw new ImplementationException("complete_dat_component_with_email_metadata");
+		} else {
+			throw new ImplementationException("NOT complete_dat_component_with_email_metadata");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_metadata_fields_in_dat_file$")
+	public void verify_email_metadata_fields_in_dat_file(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7976: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.After the DAT file has been downloaded, open the DAT file and verify the EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields display correctly.
+			throw new ImplementationException("verify_email_metadata_fields_in_dat_file");
+		} else {
+			throw new ImplementationException("NOT verify_email_metadata_fields_in_dat_file");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_pdf_production_component_with_slip_sheets$")
+	public void complete_pdf_production_component_with_slip_sheets(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select the TIFF / PDF checkboxClick TIFF / PDF to expand itClick the Generate PDF radio buttonClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Scroll to the bottom of the section and click the > Advanced text to expand it In the Advanced section, click the Slip Sheets toggle to enable itClick on the metadata options based on the values passed in the dataMap for slip_sheets_metadata. For example, if DocFileSize|DocFileType|DocFileExtension are passed as a parameter, click those 3 optionsClick the Add to Selected button
+			throw new ImplementationException("complete_pdf_production_component_with_slip_sheets");
+		} else {
+			throw new ImplementationException("NOT complete_pdf_production_component_with_slip_sheets");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_slip_sheet_fields_are_included_in_pdf$")
+	public void verify_slip_sheet_fields_are_included_in_pdf(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 7976: To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields should be display properly in the correct format in the DAT.Once the production files have been downloaded and unzipped, locate the PDF files in VOL0001 > PDF > 0001The metadata fields selected in the complete_pdf_production_component_with_slip_sheets context should appear on the first page of each PDF. The metadata field values can be retrieved from the dataMap using dataMap.get("slip_sheets_metadata").toString(). It is pipe ( | ) deliminated, so you need to separate each value by the pipe |
+			throw new ImplementationException("verify_slip_sheet_fields_are_included_in_pdf");
+		} else {
+			throw new ImplementationException("NOT verify_slip_sheet_fields_are_included_in_pdf");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_native_file_is_not_generated$")
+	public void verify_native_file_is_not_generated(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6499: To verify that If user select RedactionTag and if non-audio document is associated to the selected Redaction Tag then Native should not producedTC 6807: To verify that if annotation layer option is selected and document is redacted then native should not copiedTC 6808: To verify that If user select PrivTag and if Audio document is associated to that tag then Native should not producedAfter the file is downloaded, unzip and verify that a file with "_NATIVE" in the file name does not exist - only "_DAT" and "_TIFF".
+			throw new ImplementationException("verify_native_file_is_not_generated");
+		} else {
+			throw new ImplementationException("NOT verify_native_file_is_not_generated");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? complete_pdf_component_with_natively_produced_docs$")
+	public void complete_pdf_component_with_natively_produced_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Select the TIFF / PDF checkboxClick TIFF / PDF to expand itClick the Generate PDF radio buttonClick Select Tags in the "Placeholders" section.Click the "Privileged" folderClick SelectType in "Automated Placeholder" in "Enter placeholder text for the privileged docs".Click the "Enable for Natively Produced Documents:" linkClick the file type option ased on the value passed in the native_file_type dataMap parameterIn the text field to the right, enter "Automation Native Test". Save this in the dataMap so we can use it for validation later. Something like: dataMap.put("native_docs_placeholder_text", "Automation Native Test")
+			throw new ImplementationException("complete_pdf_component_with_natively_produced_docs");
+		} else {
+			throw new ImplementationException("NOT complete_pdf_component_with_natively_produced_docs");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_placeholder_for_pdf_with_native_docs$")
+	public void verify_placeholder_for_pdf_with_native_docs(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 6461: To verify that Tiff/PDF should generate with Natively Produced Documents/tag based placeholderingOnce the production files have been downloaded and unzipped, locate the PDF files in VOL0001 > PDF > 0001Iterate through the files and verify the value saved in the dataMap for key "native_docs_placeholder_text" appear in the PDF files
+			throw new ImplementationException("verify_placeholder_for_pdf_with_native_docs");
+		} else {
+			throw new ImplementationException("NOT verify_placeholder_for_pdf_with_native_docs");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? add_tiff_component_with_parameters$")
+	public void add_tiff_component_with_parameters(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//On the Productions Component page, click the TIFF/PDF checkboxClick the TIFF/PDF text to expand that sectionIf enable_for_privileged_docs is set to "true":The toggle should already be enabled by defaultClick the Select Tags button by the Enabled for Privileged Docs toggleWait for the popup to openClick the Privileged optionInput "Automation Placeholder" in the text fieldIf burn_redactions is set to "true":Click the Burn Redactions toggle to enable itIn the Specify Redactions section, click the radio button based on what is passed in the specify_redactions parameter
+			throw new ImplementationException("add_tiff_component_with_parameters");
+		} else {
+			throw new ImplementationException("NOT add_tiff_component_with_parameters");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? regenerate_the_production_from_$")
+	public void regenerate_the_production_from_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Click the Back link to go to the Generate screenWhile on the Generate section, click the Mark Incomplete buttonWait until the Regenerate button is enabledClick the Regenerate buttonClick the radio button based on what is passed in the regenerate_from parameterClick the Continue buttonWait until the green successful toast message appears
+			throw new ImplementationException("regenerate_the_production_from_");
+		} else {
+			throw new ImplementationException("NOT regenerate_the_production_from_");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_production_is_regenerated_successfully$")
+	public void verify_production_is_regenerated_successfully(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC 11645: Verify that production should regenerate if user select option as Restart the production from where it left off (Keeps any previously successfully generated files)TC 11646: Verify that production should regenerate if user select option as Restart the Production From the Beginning (Removes all previoulsy generated files)On the Quality Control & Confirmation screen, verify the "Success" status under the Production name
+			throw new ImplementationException("verify_production_is_regenerated_successfully");
+		} else {
+			throw new ImplementationException("NOT verify_production_is_regenerated_successfully");
+		}
+
+	}
 }//EOF

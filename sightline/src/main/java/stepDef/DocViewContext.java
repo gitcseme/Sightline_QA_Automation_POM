@@ -2813,4 +2813,49 @@ public class DocViewContext extends CommonContext {
 		}
 
 	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_user1_redaction_change_displayed_after_user2_reload$")
+	public void verify_user1_redaction_change_displayed_after_user2_reload(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6442 Verify that when two different users add redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XMLTC6443 Verify that when two different users edits redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XMLTC6444 Verify that when two different users deletes redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XML
+			//
+			//* Redaction apply/edit/deletion displayed after user 2 reloads the document
+			//
+			throw new ImplementationException("verify_user1_redaction_change_displayed_after_user2_reload");
+		} else {
+			throw new ImplementationException("NOT verify_user1_redaction_change_displayed_after_user2_reload");
+		}
+
+	}
+
+
+	@When("^.*(\\[Not\\] )? query_annotation_layer_in_db$")
+	public void query_annotation_layer_in_db(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("query_annotation_layer_in_db");
+		} else {
+			throw new ImplementationException("NOT query_annotation_layer_in_db");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_redaction_username_in_db$")
+	public void verify_redaction_username_in_db(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC6442 Verify that when two different users add redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XMLTC6443 Verify that when two different users edits redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XMLTC6444 Verify that when two different users deletes redactions to the same record successfully, and confirm that the UserNames are all properly appears in the XML
+			//
+			//* 'userName' value in the most recent Annotation Layer column value matches the user that applied the redaction/annotation/reviewer remark
+			//
+			throw new ImplementationException("verify_redaction_username_in_db");
+		} else {
+			throw new ImplementationException("NOT verify_redaction_username_in_db");
+		}
+
+	}
 }//eof
