@@ -3128,5 +3128,113 @@
 						,{"name": "tag", "value": "Redacted Privacy"}
 						,{"name": "project", "value": "08122020_NV"}
 					]
+					,"test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_tag_only_in_security_group_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityTag", "value": "TagForSG1Only"}
+					]
+					,"test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_only_in_security_group_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityFolder", "value": "FolderForSG1Only"}
+					]
+					,"test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_unmapped_tag_not_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityTag", "value": "UnmappedTag"}
+					]
+					,"test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_only_in_security_group_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityFolder", "value": "UnmappedFolder"}
+					]
+					,"test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_deleted_tag_not_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityTag", "value": "DeletedTag"}
+					]
+					,"test_Given_login_to_new_batch_print_pau_When_click_select_folder_radio_button_Then_verify_deleted_folder_not_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityFolder", "value": "DeletedFolder"}
+					]
+					,"test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_tag_in_multiple_security_groups_displayed":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityTag", "value": "TagForSG1AndSG2"}
+					]
+					,"test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_in_multiple_security_groups_displayed":[]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_edit_redaction_trueSGSame2_When_apply_rectangle_redaction_with_default_tag_Then_verify_edited_redaction_tag_is_latest_redaction_tag":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "tag", "value": "Redacted Privacy"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "docid", "value": "ID00000009"}
+					]
+					,"test_Given_sightline_is_launched_and_login_as_rmu_and_add_temp_redaction_tag_and_on_saved_search_page_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_TempRedaction_and_apply_rectangle_redaction_TempRedaction_and_delete_temp_redaction_tag_and_on_saved_search_page_and_open_saved_doc_view_When_place_rectangle_redaction_without_saving_Then_verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "tag", "value": "TempRedaction"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "docid", "value": "ID00000009"}
+					]
+					,"test_Given_sightline_is_launched_and_login_as_rmu_and_add_temp_redaction_tag_and_on_saved_search_page_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_TempRedaction_and_apply_rectangle_redaction_TempRedaction_and_delete_temp_redaction_tag_and_on_saved_search_page_and_open_saved_doc_view_When_click_previously_placed_redaction_Then_verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "Default Security Group"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "tag", "value": "TempRedaction"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "docid", "value": "ID00000009"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_When_on_doc_with_redactions_Then_verify_redaction_displayed_for_diff_sg_with_same_annotation_layer":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "securityFolder", "value": "FolderForSG1AndSG2"}
+					]
+					,"test_Given_login_to_new_batch_print_pau_When_click_select_search_radio_button_Then_verify_deleted_search_not_displayed":
+						[{"name": "tag", "value": "SGSame1"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "docid", "value": "ID00000009"}
+					]
+					,"test_Given_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_and_apply_rectangle_redaction_and_log_out_and_login_to_saved_search_rmu_and_open_saved_doc_view_and_on_doc_with_redactions_When_edit_redaction_truetag_Then_verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer":
+					[
+						{"name": "impersonate", "value": "Review Manager"}
+						,{"name": "security_group", "value": "SG1"}
+						,{"name": "domain", "value": "Not a Domain"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "savedSearch", "value": "Deleted Search"}
+						,{"name": "tag", "value": "SGSame1"}
+						,{"name": "project", "value": "08122020_NV"}
+						,{"name": "docid", "value": "ID00000009"}
+					]
 				}
 }

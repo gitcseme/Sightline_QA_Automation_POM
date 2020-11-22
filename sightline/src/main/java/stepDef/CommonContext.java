@@ -44,6 +44,7 @@ import testScriptsSmoke.Input;
 @SuppressWarnings({"rawtypes", "unchecked" })
 public class CommonContext {
 	Driver driver;
+	ArrayList<Driver> drivers;
 	WebDriver webDriver;
 	LoginPage lp;
 
@@ -53,10 +54,17 @@ public class CommonContext {
 	BaseClass base;
 	SavedSearch savedSearch;
 
+	public CommonContext() {
+		//Track all drivers created during test run
+		drivers = new ArrayList<>();
+	}
+
 	@Given("^(\\[Not\\] )?sightline_is_launched$")
 	public void sightline_is_launched(boolean scriptState, HashMap dataMap) {
 
 		driver = new Driver();
+		//Adding drivers to drivers list
+		drivers.add(driver);
 		webDriver = driver.getWebDriver();
 
 		if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
@@ -335,7 +343,7 @@ public class CommonContext {
 		return mountPath;
 	}
 
-	public void logoff(boolean scriptState, HashMap dataMap) {
+	public void logoff(boolean scriptState, HashMap dataMap) throws Exception{
 		if (lp !=null) lp.logout();
 
 		LoginPage.clearBrowserCache();
@@ -344,13 +352,24 @@ public class CommonContext {
 	public void close_browser(boolean scriptState, HashMap dataMap) {
 		try {
 			logoff(scriptState, dataMap);
+		}catch(Exception e) {
 		}finally {
 			if (lp !=null) lp.quitBrowser();
+			close_drivers();
 		}
+	}
+
+	public void close_drivers() {
 		try {
 			//final attempt to close any open browsers
-			driver.close();
-		} catch (Exception e) {
+			//driver.close();
+			//close all drivers created during test run
+			for (Driver driver : drivers) {
+				driver.close();
+			}
+			drivers.clear();
+		} catch (Exception e){
+			System.out.println(e.toString());
 		}
 	}
 

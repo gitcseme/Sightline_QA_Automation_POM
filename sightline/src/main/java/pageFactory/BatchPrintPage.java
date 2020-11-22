@@ -39,6 +39,7 @@ public class BatchPrintPage {
     public Element getMySavedSearchArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[1]"); }
     public Element getAllTagsArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[2]"); }
     public Element getAllFoldersArrow(){ return driver.FindElementByXPath("(//*[@id='-1g']/i)[3]"); }
+    public Element getSearchSharedWithSecurityGroupArrow() {return driver.FindElementByXPath("(//*[@id='2g']/i)[1]");}
     public ElementCollection getSelectSavedSearchRows() {return driver.FindElementsByXPath("@data-content='My Saved Search']/following-sibling::ul/li");}
     public Element getSelectSavedSearch(String searchname){ return driver.FindElementByXPath(".//*[@id='searchTree']/ul/li[1]//a[contains(text(),'"+searchname+"')]"); }
     public Element getSelectTag(String tagName){ return driver.FindElementByXPath("//a[starts-with(text(),'"+tagName+"')]"); }
@@ -150,6 +151,7 @@ public class BatchPrintPage {
     public ElementCollection getBatchPrintAnalysisDocumentText() {return driver.FindElementsByCssSelector("#noIssuesDocDiv ul li");}
     public ElementCollection getBatchPrintAnalysisColumnHeaders() {return driver.FindElementsByCssSelector("#issueDocGrid thead th");}
     public ElementCollection getBtachPrintAnalysisFolderTree() {return driver.FindElementsById("folderTree");}
+    public ElementCollection getBatchPrintFolderOptions() {return driver.FindElementsByCssSelector("#folderTree a");}
     public Element getGreenPopUpMessage() {return driver.FindElementByCssSelector("#divbigBoxes p");}
     public Element getBackGroundTasksApplyButton() {return driver.FindElementById("btnAppyFilter");}
     public ElementCollection getBackGroundTasksTableRows() {return driver.FindElementsByCssSelector("#dt_basic tbody tr ");}
@@ -176,7 +178,9 @@ public class BatchPrintPage {
     public Element getSlipSheetsAllRedactionTagsToggle() { return driver.FindElementByXPath("//a[text()='All Redaction Tags']/preceding-sibling::i"); }
     public Element getSlipSheetsAllRedactionTagsList() { return driver.FindElementByXPath("//a[text()='All Redaction Tags']/preceding-sibling::i/parent::li[contains(@class, 'open')]"); }
     public ElementCollection getSlipSheetsAllTagsOptions() { return driver.FindElementsByXPath("//a[text()='All Tags']/parent::li/ul[@class='jstree-children']//a"); }
+    public ElementCollection getAllFolderOptions() { return driver.FindElementsByXPath("//a[text()='All Folders']/parent::li/ul[@class='jstree-children']//a"); }
     public ElementCollection getSlipSheetsAllRedactionTagsOptions() { return driver.FindElementsByXPath("//a[text()='All Redaction Tags']/parent::li/ul[@class='jstree-children']//a"); }
+    public ElementCollection getAllSearchesOptionsBySearchName(String sg) {return driver.FindElementsByXPath(String.format("//a[text()='%s']/parent::li/ul[@class='jstree-children']//a", sg));}
 
     public Element getSearchRadioButton(){ return driver.FindElementByXPath(".//*[@id='selectSearchRadioButton']/following-sibling::i"); }
     public Element getSearchSG1ExpandFolderIcon(){ return driver.FindElementByXPath("//*[@id='searchTree']/ul/li[7]/i"); }
@@ -199,9 +203,12 @@ public class BatchPrintPage {
     public Element getFirstBackgroundTaskCompleted() {return driver.FindElementByXPath("//*[@id='dt_basic']/tbody/tr[1]/td[.='COMPLETED']");}
     public Element changeProjectSelector() {return driver.FindElementById("project-selector");}
     public Element changeProjectSelectorField() {return driver.FindElementByCssSelector("#ddlProject11 > li:nth-child(1) > a:nth-child(1)");}
+    public Element changeProjectSelectorFieldByProjectName(String name) {return driver.FindElementByCssSelector(String.format("#ddlProject11 li a[title = '%s']", name));}
     public Element getSlipSheetsMetaDataCheckBoxByName(String name) {return driver.FindElementByCssSelector(String.format("#tab1 li input[data-friendlbl='%s'] + i",name));}
     public Element getAllFoldersExpandArrow() {return driver.FindElementByXPath("(//a[@data-content = 'All Folders']//preceding-sibling::i)[1]");}
     public Element getWorkProductFolderCheckBoxByName(String name) {return driver.FindElementByXPath(String.format("(//a[@data-content = '%s']/i)[1]",name));}
+    public Element getExceptionTypeMediaToggle() { return driver.FindElementByCssSelector("#includeMediaFileCheckBox + i");}
+    public Element getExceptionTypeOtherToggle() {return driver.FindElementByCssSelector("#includeOtherExceptionFileTypesCheckBox + i");}
     
     public BatchPrintPage(Driver driver, int i) {
     		this.driver = driver;

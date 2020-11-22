@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
@@ -25,6 +26,7 @@ import java.util.Random;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.springframework.core.PrioritizedParameterNameDiscoverer;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -1115,6 +1117,7 @@ public class BatchPrintContext extends CommonContext {
 	public void select_export_format_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
+			
 			String fileName = (String)dataMap.get("export_file_name");
 			String sortByOption = (String)dataMap.get("sort_by");
 			String sortOrder = ((String)dataMap.get("sort_by_order")).toUpperCase();
@@ -1540,9 +1543,17 @@ public class BatchPrintContext extends CommonContext {
 			//
 
 			batchPrint = new BatchPrintPage(driver, 0);
-			//Select EG Project
-			batchPrint.changeProjectSelector().click();
-			batchPrint.changeProjectSelectorField().click();
+			//Legacy code for old environment 
+			if((String)dataMap.get("project") == null) {
+				//Select EG Project
+				batchPrint.changeProjectSelector().click();
+				batchPrint.changeProjectSelectorField().click();
+			}
+			else if(!batchPrint.changeProjectSelector().GetAttribute("title").equals((String)dataMap.get("project"))){
+				batchPrint.changeProjectSelector().click();
+				batchPrint.changeProjectSelectorFieldByProjectName((String)dataMap.get("project")).click();
+			}
+			
 			
 			
 			//Navigate to Batch Print Page
@@ -1906,6 +1917,9 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Select Search' radio button on Source Selection tab
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getSourceSelectionSelectFolderRadioButton().Displayed()  ;}}), Input.wait30);
+
 			batchPrint.getSourceSelectionSelectFolderRadioButton().click();
 			pass(dataMap, "clicked select search radio button");
 		}
@@ -2237,10 +2251,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_pauon_batch_print_page
-			throw new ImplementationException("login_to_new_batch_print_pau");
-		} else {
-			throw new ImplementationException("NOT login_to_new_batch_print_pau");
+			sightline_is_launched(scriptState, dataMap);
+			login_as_pau(scriptState, dataMap);
+			on_batch_print_page(scriptState, dataMap);
+			pass(dataMap, "successfully logged in as pau");
 		}
+		else fail(dataMap, "Failed to login as pau");
 
 	}
 
@@ -2253,10 +2269,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Search 'Deleted Search' not displayed
 			//
-			throw new ImplementationException("verify_deleted_search_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_deleted_search_not_displayed");
+			String targetSearch = (String)dataMap.get("savedSearch");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getMySavedSearchArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getMySavedSearchArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllSearchesOptionsBySearchName("My Saved Search").FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getAllSearchesOptionsBySearchName("My Saved Search").FindWebElements()) {
+				if(x.getText().equals(targetSearch)) {
+					fail(dataMap, "found a search that should not be displayed");
+					return;
+				}
+				
+			}
+			pass(dataMap, "was not able to find a search that shouldn't be displayed");
+
 		}
+		else fail(dataMap, "was unable to verify deleted search not displayed");
 
 	}
 
@@ -2266,10 +2298,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_batch_print_page
-			throw new ImplementationException("login_to_new_batch_print_rmu");
-		} else {
-			throw new ImplementationException("NOT login_to_new_batch_print_rmu");
+			sightline_is_launched(scriptState, dataMap);
+			login_as_rmu(scriptState, dataMap);
+			on_batch_print_page(scriptState, dataMap);
+			pass(dataMap, "was able to login to new batch print as rmu");
 		}
+		else fail(dataMap, "Failed to login to new batch print as rmu");
 
 	}
 
@@ -2279,10 +2313,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//Click 'Select Folder' radio button on Source Selection tab
-			throw new ImplementationException("click_select_folder_radio_button");
-		} else {
-			throw new ImplementationException("NOT click_select_folder_radio_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getSelectFolderRadioButtonIcon().Displayed()  ;}}), Input.wait30);
+			batchPrint.getSelectFolderRadioButtonIcon().click();
+			pass(dataMap, "successfully clicked select folder radio button");
 		}
+		else fail(dataMap, "Failed to select folder radio button");
 
 	}
 
@@ -2293,12 +2329,29 @@ public class BatchPrintContext extends CommonContext {
 		if (scriptState) {
 			//TC9718 Verify that for RMU, Tag/Folder should be displayed in that security
 			//
-			//* Folder 'TagForSG1Only' displayed
+			//* Folder 'FolderForSG1Only' displayed
 			//
-			throw new ImplementationException("verify_folder_only_in_security_group_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_folder_only_in_security_group_displayed");
+			
+			String targetFolder = (String)dataMap.get("securityFolder");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFoldersArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllFoldersArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFolderOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals(targetFolder)) {
+					pass(dataMap, "was able to find the target tag in all tags SG");
+					return;
+				}
+				
+			}
+			fail(dataMap, "Was unable to find the target tag in all tags SG");
+
 		}
+		else fail(dataMap, "Failed to verify folder only in security group");
 
 	}
 
@@ -2311,10 +2364,27 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Folder 'DeletedFolder' not displayed
 			//
-			throw new ImplementationException("verify_deleted_folder_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_deleted_folder_not_displayed");
+			String targetFolder = (String)dataMap.get("securityFolder");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFoldersArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllFoldersArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFolderOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals(targetFolder)) {
+					fail(dataMap, "found a folder that should not be displayed");
+					return;
+				}
+				
+			}
+			pass(dataMap, "was not able to find a folder that shouldn't be displayed");
+
+
 		}
+		else fail(dataMap, "failed to verify deletedFolder not displayed");
 
 	}
 
@@ -2327,10 +2397,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Folder 'FolderForSG1AndSG2' displayed
 			//
-			throw new ImplementationException("verify_folder_in_multiple_security_groups_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_folder_in_multiple_security_groups_displayed");
+			String targetFolder = (String)dataMap.get("securityFolder");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFoldersArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllFoldersArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFolderOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals(targetFolder)) {
+					pass(dataMap, "was able to find the target tag in all tags SG");
+					return;
+				}
+				
+			}
+			fail(dataMap, "Was unable to find the target tag in all tags SG");
+
 		}
+		else fail(dataMap, "failed to verify folder in multiple security groups");
 
 	}
 
@@ -2343,10 +2429,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Folder 'UnmappedTag' not displayed
 			//
-			throw new ImplementationException("verify_unmapped_folder_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_unmapped_folder_not_displayed");
+			String targetFolder = (String)dataMap.get("securityFolder");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFoldersArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllFoldersArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllFolderOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals(targetFolder)) {
+					fail(dataMap, "found a folder that should not be displayed");
+					return;
+				}
+				
+			}
+			pass(dataMap, "was not able to find a folder that shouldn't be displayed");
+
 		}
+		else fail(dataMap, "failed to verify unmapped folder not displayed");
 
 	}
 
@@ -2356,10 +2458,12 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("click_select_tag_radio_button");
-		} else {
-			throw new ImplementationException("NOT click_select_tag_radio_button");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getTagsRadioButton().Displayed()  ;}}), Input.wait30);
+			batchPrint.getTagsRadioButton().click();
+			pass(dataMap, "was able to select tag radio button");
 		}
+		else fail(dataMap, "Failed to click select tag radio button");
 
 	}
 
@@ -2372,10 +2476,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Tag 'TagForSG1AndSG2' displayed
 			//
-			throw new ImplementationException("verify_tag_in_multiple_security_groups_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_tag_in_multiple_security_groups_displayed");
+			String targetTag = (String)dataMap.get("securityTag");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllTagsArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllTagsArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getSlipSheetsAllTagsOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getSlipSheetsAllTagsOptions().FindWebElements()) {
+				if(x.getText().equals(targetTag)) {
+					pass(dataMap, "was able to find the target tag in all tags SG");
+					return;
+				}
+				
+			}
+			fail(dataMap, "Was unable to find the target tag in all tags SG");
+
 		}
+		else fail(dataMap, "failed to verify tag in multiple security groups");
 
 	}
 
@@ -2388,10 +2508,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Tag 'DeletedTag' not displayed
 			//
-			throw new ImplementationException("verify_deleted_tag_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_deleted_tag_not_displayed");
+			String targetTag = (String)dataMap.get("securityTag");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllTagsArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllTagsArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getSlipSheetsAllTagsOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getSlipSheetsAllTagsOptions().FindWebElements()) {
+				if(x.getText().equals(targetTag)) {
+					fail(dataMap, "found a tag that should not be displayed");
+					return;
+				}
+				
+			}
+			pass(dataMap, "did not find a tag that should not of been displayed");
+
 		}
+		else fail(dataMap, "failed to verify deleted tag not displayed");
 
 	}
 
@@ -2404,10 +2540,26 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Tag 'UnmappedTag' not displayed
 			//
-			throw new ImplementationException("verify_unmapped_tag_not_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_unmapped_tag_not_displayed");
+			String targetTag = (String)dataMap.get("securityTag");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllTagsArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllTagsArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getSlipSheetsAllTagsOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getSlipSheetsAllTagsOptions().FindWebElements()) {
+				if(x.getText().equals(targetTag)) {
+					fail(dataMap, "found a tag that should not be displayed");
+					return;
+				}
+				
+			}
+			pass(dataMap, "did not find a tag that should not of been displayed");
+
 		}
+		else fail(dataMap, "failed to verify unmapped tag not displayed");
 
 	}
 
@@ -2420,10 +2572,29 @@ public class BatchPrintContext extends CommonContext {
 			//
 			//* Tag 'TagForSG1Only' displayed
 			//
-			throw new ImplementationException("verify_tag_only_in_security_group_displayed");
-		} else {
-			throw new ImplementationException("NOT verify_tag_only_in_security_group_displayed");
+
+			String targetTag = (String)dataMap.get("securityTag");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getAllTagsArrow().Displayed()  ;}}), Input.wait30);
+			batchPrint.getAllTagsArrow().click();
+			driver.waitForPageToBeReady();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			   batchPrint.getSlipSheetsAllTagsOptions().FindWebElements().size()!=0  ;}}), Input.wait30);
+			
+			for(WebElement x: batchPrint.getSlipSheetsAllTagsOptions().FindWebElements()) {
+				if(x.getText().equals(targetTag)) {
+					pass(dataMap, "was able to find the target tag in all tags SG");
+					return;
+				}
+				
+			}
+			fail(dataMap, "Was unable to find the target tag in all tags SG");
+
+
+
 		}
+		else fail(dataMap, "Failed to verify 'TagForSG1Only");
 
 	}
 
@@ -2450,10 +2621,26 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Folder: 500 Plus Files
 			//* Click Next button
 			//
-			throw new ImplementationException("select_source_selection_500_plus_documents");
-		} else {
-			throw new ImplementationException("NOT select_source_selection_500_plus_documents");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getFolderRadioButton().Displayed() ;}}), Input.wait30);
+			batchPrint.getFolderRadioButton().click();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getFolderAllTagsExpandFolder().Displayed() ;}}), Input.wait30);
+			batchPrint.getFolderAllTagsExpandFolder().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getAllFolderOptions().FindWebElements().size()!=0 ;}}), Input.wait30);
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals("500 Plus Files")) x.click();
+			}
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getSourcenextbutton().Enabled() ;}}), Input.wait30);
+			batchPrint.getSourcenextbutton().click();
+
+			pass(dataMap, "Was able to select source selection 500 plus documents");
 		}
+		else fail(dataMap, "Failed to select source selection 500 plus documents");
 
 	}
 
@@ -2466,10 +2653,17 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Exception File Types
 			//* Click Next button
 			//
-			throw new ImplementationException("select_exception_file_types_");
-		} else {
-			throw new ImplementationException("NOT select_exception_file_types_");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getExceptionTypeMediaToggle().Displayed() ;}}), Input.wait30);
+			if(((String)dataMap.get("media_files")).equalsIgnoreCase("false")) batchPrint.getExceptionTypeMediaToggle().click();
+			if(((String)dataMap.get("other_exception_file_types")).equalsIgnoreCase("false")) batchPrint.getExceptionTypeOtherToggle().click();
+			if(((String)dataMap.get("excel_files")).equalsIgnoreCase("skip")) batchPrint.getAnalysis_SkipExcelFiles_RadioButton().click();
+			batchPrint.getExceptionFileTypesNextButton().click();
+
+			pass(dataMap, "was able to select exception file types");
 		}
+		else fail(dataMap, "failed to select exception file types");
 
 	}
 
@@ -2485,10 +2679,59 @@ public class BatchPrintContext extends CommonContext {
 			//* All pages of individual docs available in PDF
 			//* Documents/pages should not be repeated
 			//
-			throw new ImplementationException("verify_generating_single_pdf_for_500_plus_docs");
-		} else {
-			throw new ImplementationException("NOT verify_generating_single_pdf_for_500_plus_docs");
+			try {
+				String home = System.getProperty("user.home");
+				String downloadPath;
+			
+				if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+					downloadPath = home + "/Downloads/";}
+				else downloadPath = home + "\\Download\\";
+				
+				// Adding to sleep to wait for file to finish downloading
+				//Thread.sleep(30000);
+
+				File dir = new File(downloadPath);
+				File[] dirContents = dir.listFiles();
+				
+				int count = 0;
+				for (int i = 0; i < dirContents.length; i++) {
+					if (dirContents[i].getName().contains("BatchPrint_")) {
+						ZipFile zipFile = new ZipFile(downloadPath+dirContents[i].getName());
+
+						Enumeration<? extends ZipEntry> entries = zipFile.entries();
+						int j = 0;
+						while(entries.hasMoreElements()) {
+							ZipEntry entry = entries.nextElement();
+							count++;
+						}
+						entries = zipFile.entries();
+						HashSet<String> pdfSet  = new HashSet<>();
+						while(entries.hasMoreElements()){
+							ZipEntry entry = entries.nextElement();
+							InputStream stream = zipFile.getInputStream(entry);
+							byte[] bytes = IOUtils.toByteArray(stream);
+							PDDocument document = new PDDocument();
+							document = document.load(bytes);
+							if(++j!=count) Assert.assertEquals(250, document.getNumberOfPages());
+							Assert.assertTrue(entry.getName().contains(".pdf"));
+							pdfSet.add(entry.getName());
+						}						
+						assertTrue(pdfSet.size() == count);
+						pass(dataMap, "Found file!");
+						
+						// delete file after verification
+						System.out.println("Deleting file...");
+						dirContents[i].delete();
+						break;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				fail(dataMap, "Single pdf not generated!");
+			}
+			pass(dataMap, "was able to verify generating single pdf for 500 plus docs");
 		}
+		else fail(dataMap, "failed to verify generating single mpdf for 500 plus docs");
 
 	}
 
