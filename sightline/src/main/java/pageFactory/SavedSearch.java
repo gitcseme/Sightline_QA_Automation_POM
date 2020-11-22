@@ -106,9 +106,16 @@ public class SavedSearch {
     public Element getShare_SecurityGroup(String securitygroup) { return driver.FindElementByXPath("//*[@id='s1']//label[contains(.,'"+securitygroup+"')]/i"); }
     public Element getSharedDefaultSecurityGroup() {return driver.FindElementByXPath("//*[text()='Shared with Default Security Group']");}
     public Element getSavedSearchGroupName(String name) { return driver.FindElementByXPath(String.format("//*[@id='jsTreeSavedSearch']//a[contains(., '%s')]", name)); }
-    
+    public Element getSavedSearchGroupNameArrowDown(String name) { return driver.FindElementByXPath(String.format("//*[@id='jsTreeSavedSearch']//a[contains(., '%s')]//..//i", name)); }
     //quick batch
     public Element getSavedSearchQuickBatchButton(){ return driver.FindElementById("rbnQuickAssign"); }
+
+    public void clickSG3Nested() {
+    			getSavedSearchGroupNameArrowDown("Shared with MySecurityGroup").click();
+    			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSavedSearchGroupName("MyFolder").Displayed()  ;}}), Input.wait30); 
+    			getSavedSearchGroupName("MyFolder").click();
+    }
     
     //Function constructor to just use the object without navigating to a different page
     public SavedSearch(Driver driver, int i) {
@@ -219,6 +226,8 @@ public class SavedSearch {
 	    //Assert.assertTrue(expectCounts.equals(actualCounts));
 	    	
 	}
+    
+    
 
    public void savedSearchToDocList(final String searchName) {
 	   driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");

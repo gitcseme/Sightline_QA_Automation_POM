@@ -8,6 +8,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.DriverAction;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.plaf.basic.BasicSliderUI.ActionScroller;
 import javax.swing.text.ChangedCharSetException;
 
 import java.util.List;
@@ -30,6 +32,7 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.hssf.record.formula.functions.Count;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 import com.beust.jcommander.JCommander.Builder;
@@ -47,6 +50,7 @@ import cucumber.api.java.es.E;
 import cucumber.api.java.en.And;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
+import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import testScriptsSmoke.Input;
 
@@ -62,6 +66,7 @@ public class DocViewContext extends CommonContext {
 
 	 */
 	DocViewPage docView;
+
 
 	@And("^.*(\\[Not\\] )? open_saved_audio_doc_view$")
 	public void open_saved_audio_doc_view(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
@@ -91,7 +96,7 @@ public class DocViewContext extends CommonContext {
 			Actions builder = new Actions(driver.getWebDriver());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				docView.getGreyRedactButton().Displayed()  ;}}), Input.wait30); 
-			
+
 			//Move to grey button and click
 			builder.moveToElement(docView.getGreyRedactButton().getWebElement()).perform();;
 			Thread.sleep(2000);
@@ -247,10 +252,10 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Switch to user 1
 			//
-			throw new ImplementationException("switch_to_user1");
-		} else {
-			throw new ImplementationException("NOT switch_to_user1");
+			driver = (Driver)dataMap.get("originalDriver");
+			driver.switchTo().window((String)dataMap.get("originalWindow"));
 		}
+		else fail(dataMap, "failed to switch to user1");
 
 	}
 
@@ -277,10 +282,11 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Switch to user 2
 			//
-			throw new ImplementationException("switch_to_user2");
-		} else {
-			throw new ImplementationException("NOT switch_to_user2");
+			driver = (Driver)dataMap.get("secondDriver");
+			driver.switchTo().window((String)dataMap.get("secondWindow"));
+			driver.waitForPageToBeReady();
 		}
+		else fail(dataMap, "Failed to switch to user2");
 
 	}
 
@@ -932,16 +938,18 @@ public class DocViewContext extends CommonContext {
 			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
 			
 			for(int j=0; j<totalPages; j++) {
-				docView.getNextRedactionPage().click();
 				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
+				docView.getNextRedactionPage().click();
+				Thread.sleep(3000);
 			}
 			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
-
+			dataMap.put("existingRedactions", size);
+			
 			//get original dimension
 			double originalDimension = Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("width"))
 					* Double.parseDouble(docView.getExistingRectangleRedactions().FindWebElements().get(size-1).getAttribute("height"));
 
-
+			
 			//* Click existing rectangle redaction
 			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
 
@@ -975,7 +983,14 @@ public class DocViewContext extends CommonContext {
             	 	x.click();
             	 	break;
              }
-             String afterTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getText();
+             String afterTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title");
+             //Wait for edited tag to update
+             driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title").equals(afterTag) ;}}), Input.wait30); 
+             //Save our edit
+              driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getRedactionEditSaveBtn().Displayed() ;}}), Input.wait30); 
+              docView.getRedactionEditSaveBtn().click();
 
              dataMap.put("beforeTag", beforeTag);
              dataMap.put("afterTag", afterTag);
@@ -1031,10 +1046,8 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
-			//dataMap.put("uid", "qapau2@consilio.com");
-			//dataMap.put("pwd", "Q@test_10");
 			sightline_is_launched(scriptState, dataMap);
-			login_as_rmu(scriptState, dataMap);
+			super.login_as_rmu(scriptState, dataMap);
 			on_saved_search_page(scriptState, dataMap);
 			
 			pass(dataMap, "successfully logged into saved search as RMU");
@@ -1051,17 +1064,20 @@ public class DocViewContext extends CommonContext {
 			//* Click 'Saved with SG1' search group
 			String securityGroup = (String)dataMap.get("security_group");
 			SavedSearch savedSearch = new SavedSearch(driver,0);
-			savedSearch.getSavedSearchGroupName(securityGroup).click();
+			if(securityGroup.equals("SG3")) savedSearch.clickSG3Nested();
+			else savedSearch.getSavedSearchGroupName(securityGroup).click();
 			driver.waitForPageToBeReady();
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				savedSearch.getSavedSearchRadioButtonRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
-			//* Click radio button for first saved search
+//			* Click radio button for first saved search
 			savedSearch.getSavedSearchRadioButtonRows().FindWebElements().get(0).click();
+
 			//* Click 'Doc View' button at the top of the page
 			Actions builder = new Actions(driver.getWebDriver());
 			builder.moveToElement(savedSearch.getToDocView().getWebElement()).perform();
 			//savedSearch.getToDocView().click();
 			savedSearch.getToDocView2().click();
+
 			driver.waitForPageToBeReady();
 			pass(dataMap, "Open saved search doc view");
 
@@ -1295,18 +1311,21 @@ public class DocViewContext extends CommonContext {
 
 			//Change domain
 			base.getAvlDomain().click();
+			Thread.sleep(800);
 			base.getAvlDomain().selectFromDropdown().selectByVisibleText(desiredDomain);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				base.getAvlDomain().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredDomain)  ;}}), Input.wait30); 
 
 			//Change Project
 			base.getAvlProject().click();
+			Thread.sleep(800);
 			base.getAvlProject().selectFromDropdown().selectByVisibleText(desiredProject);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				base.getAvlProject().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredProject)  ;}}), Input.wait30); 
 					
 			//Change Security
 			base.getAvlSecurity().click();
+			Thread.sleep(800);
 			base.getAvlSecurity().selectFromDropdown().selectByVisibleText(desiredSG);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				base.getAvlSecurity().selectFromDropdown().getFirstSelectedOption().getText().equalsIgnoreCase(desiredSG)  ;}}), Input.wait30); 
@@ -1372,9 +1391,11 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click Highlight tool button
+			docView = new DocViewPage(driver,0);
+			Actions builder = new Actions(driver.getWebDriver());
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				docView.getDocView_AnnotateIcon().Displayed()  ;}}), Input.wait30); 
-			docView.getDocView_AnnotateIcon().click();
+				docView.getYellowAnnotateButton().Displayed()  ;}}), Input.wait30); 
+			docView.getYellowAnnotateButton().click();
 			pass(dataMap, "successfully clicked highlight tool button");
 		}
 		else fail(dataMap, "failed to click highlight tool button");
@@ -1534,8 +1555,17 @@ public class DocViewContext extends CommonContext {
 	public void on_doc_with_redactions(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//Select document with DOCID ID00000009If 'redaction_type' is rectangleClick redaction toolClick 'Rectangle' redaction buttonPlace redaction on documentIf 'redaction_type' is multipageClick redaction toolClick 'Rectangle' redaction buttonPlace redactions on pages 1 and 2 of the documentIf 'redaction_type' is currentClick redaction toolClick 'This Page' redaction buttonPlace redaction on current page documentIf 'redaction_type' is allClick redaction toolClick 'This Page' redaction buttonPlace redaction on all pages of the document
-			throw new ImplementationException("on_doc_with_redactions");
+			//Click doc with matcahing docid on Doc View page
+			docView = new DocViewPage(driver, 0);
+			String target = (String)dataMap.get("docid");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocViewTableRows().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			for(WebElement x: docView.getDocViewTableRows().FindWebElements()) {
+				if ( (x.findElements(By.cssSelector(" td")).get(1).getText().equals(target)) ) {
+					x.click();
+				}
+			}
+
 		} else {
 			throw new ImplementationException("NOT on_doc_with_redactions");
 		}
@@ -2043,7 +2073,11 @@ public class DocViewContext extends CommonContext {
 				.perform();
 			}
 			catch (Exception e) { e.printStackTrace();}
-			dataMap.put("defaultValue", docView.PageViewTagString());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				docView.getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+		    String defaultRedactionTagString = docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText();
+
+			dataMap.put("defaultValue", defaultRedactionTagString);
 
 			//* Click 'Save' button on Redaction Tag Save Confirmation popup
 			docView.getDocViewSaveRedactionButton().click();
@@ -2127,7 +2161,10 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonrectangle_redaction_applied_with_default_tagclick_grey_redact_tool
-			throw new ImplementationException("apply_rectangle_redaction_with_default_tag");
+			click_grey_redact_tool(scriptState, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			rectangle_redaction_applied_default_tag(scriptState, dataMap);
+			click_grey_redact_tool(scriptState, dataMap);
 		} else {
 			throw new ImplementationException("NOT apply_rectangle_redaction_with_default_tag");
 		}
@@ -2143,10 +2180,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Edited redaction tag is considered the latest redaction tag when adding a new redaction
 			//
-			throw new ImplementationException("verify_edited_redaction_tag_is_latest_redaction_tag");
-		} else {
-			throw new ImplementationException("NOT verify_edited_redaction_tag_is_latest_redaction_tag");
+			String editedTag = (String)dataMap.get("afterTag"); 
+			String thisTag = (String)dataMap.get("defaultValue");
+			Assert.assertEquals(editedTag, thisTag);
+			pass(dataMap, "edited redaction tag is latest redaction tag");
 		}
+		else fail(dataMap, "failed to verify edited redaction tag is latest redaction_tag");
 
 	}
 
@@ -2339,10 +2378,30 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//This is a collection of the following steps:click_grey_redact_toolclick_rectangle_redaction_buttonPlace rectangle redaction without clicking Save on Redaction Tag Save Confirmation popup
-			throw new ImplementationException("place_rectangle_redaction_without_saving");
-		} else {
-			throw new ImplementationException("NOT place_rectangle_redaction_without_saving");
+			Random rand = new Random();
+			int off1 = rand.nextInt(99) + 1;
+			int off2 = rand.nextInt(9) + 1;
+			click_grey_redact_tool(scriptState, dataMap);
+			click_rectangle_redaction_button(scriptState, dataMap);
+			try {
+				Actions actions = new Actions(driver.getWebDriver());  
+				WebElement text = docView.getCorrectSurfaceLevel();
+				int x = rand.nextInt(99) + 1;
+				int y = rand.nextInt(9) + 1;
+				actions.moveToElement(text, off1,off2)
+				.clickAndHold()
+				.moveByOffset(x, y)
+				.release()
+				.perform();
+			}
+			catch (Exception e) {}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				docView.getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+
+//			docView.redactbyrectangle(x, y, 0, (String)dataMap.get("tag"));
+			pass(dataMap, "was able to add redation without saving ");
 		}
+		else fail(dataMap, "failed to add redaction without saving");
 
 	}
 
@@ -2357,10 +2416,11 @@ public class DocViewContext extends CommonContext {
 			//* Selected Redaction Tag is 'SGSame1' on Redaction Tag Save Confirmation popup
 			//* Delete applied redaction
 			//
-			throw new ImplementationException("verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion");
-		} else {
-			throw new ImplementationException("NOT verify_last_saved_tag_used_for_new_redaction_after_redaction_tag_deletion");
+			Assert.assertEquals((String)dataMap.get("firstTag"), docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText());
+			
+			pass(dataMap, "verified last saved tag");
 		}
+		else fail(dataMap, "failed to verify last saved tag");
 
 	}
 
@@ -2388,10 +2448,46 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click MANAGE > Redaction Tags navigation menu buttonClick 'All Redaction Tags' tag folderClick 'New' from Action dropdownEnter 'TempRedaction' tagClick Save
-			throw new ImplementationException("add_temp_redaction_tag");
-		} else {
-			throw new ImplementationException("NOT add_temp_redaction_tag");
+			
+			BaseClass base = new BaseClass(driver);
+			RedactionPage redact = new RedactionPage(driver, 0);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getManageMenuButton().Displayed()  ;}}), Input.wait30); 
+			base.getManageMenuButton().click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getManageRedactionButton().Displayed()  ;}}), Input.wait30); 
+			base.getManageRedactionButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getAllRedactionRootNode().Displayed()  ;}}), Input.wait30); 
+			redact.getAllRedactionRootNode().click();
+			
+			String defaultRedactionTag = redact.getredactiontags().FindWebElements().get(1).getAttribute("data-content");
+			dataMap.put("defaultRedactionTag", defaultRedactionTag);
+
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getactionDropDown().Displayed()  ;}}), Input.wait30); 
+			redact.getactionDropDown().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getAddRedactionTag().Displayed()  ;}}), Input.wait30); 
+			redact.getAddRedactionTag().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getRedactionEnterNewName().Displayed()  ;}}), Input.wait30); 
+			redact.getRedactionEnterNewName().click();
+			redact.getRedactionEnterNewName().SendKeys((String)dataMap.get("tag"));
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getSaveBtn().Displayed()  ;}}), Input.wait30); 
+			redact.getSaveBtn().click();
+
+
+			pass(dataMap, "succesfully added a temp redaction tag");
 		}
+		else fail(dataMap, "failed to add temp redaction tag");
 
 	}
 
@@ -2401,10 +2497,44 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Click MANAGE > Redaction Tags navigation menu buttonClick 'TempRedaction' tagClick 'Delete' from Action dropdown
-			throw new ImplementationException("delete_temp_redaction_tag");
-		} else {
-			throw new ImplementationException("NOT delete_temp_redaction_tag");
+			BaseClass base = new BaseClass(driver);
+			RedactionPage redact = new RedactionPage(driver, 0);
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getManageMenuButton().Displayed()  ;}}), Input.wait30); 
+			base.getManageMenuButton().click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				base.getManageRedactionButton().Displayed()  ;}}), Input.wait30); 
+			base.getManageRedactionButton().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getAllRedactionRootNode().Displayed()  ;}}), Input.wait30); 
+
+			redact.getAllRedactionRootNode().click();
+
+			Actions builder = new Actions(driver.getWebDriver());
+			builder.moveToElement(redact.getRedactionTagByName((String)dataMap.get("tag")).getWebElement()).click().build().perform();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getactionDropDown().Displayed()  ;}}), Input.wait30); 
+			redact.getactionDropDown().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getRedactionDelete().Displayed()  ;}}), Input.wait30); 
+			redact.getRedactionDelete().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				redact.getConfirmDeleteRedactionYesButton().Displayed()  ;}}), Input.wait30); 
+			redact.getConfirmDeleteRedactionYesButton().click();
+			
+			driver.waitForPageToBeReady();
+
+			
+			pass(dataMap, "temp redaction was deleted");
+
 		}
+		else fail(dataMap, "failed to delete temp redaction");
+			
 
 	}
 
@@ -2413,11 +2543,15 @@ public class DocViewContext extends CommonContext {
 	public void click_previously_placed_redaction(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//
-			throw new ImplementationException("click_previously_placed_redaction");
-		} else {
-			throw new ImplementationException("NOT click_previously_placed_redaction");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			
+			Actions builder = new Actions(driver.driver);
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			pass(dataMap, "clicked previous redaction");
 		}
+		else fail(dataMap, "Failed to click previous redaction");
 
 	}
 
@@ -2430,10 +2564,13 @@ public class DocViewContext extends CommonContext {
 			//
 			//* After redactions with Tag B and Tag C are applied, when Tag C is deleted from the Security Group then Tag A is automatically selected from the redaction popup for the redaction that formerly used Tag C
 			//
-			throw new ImplementationException("verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion");
-		} else {
-			throw new ImplementationException("NOT verify_default_tag_selected_for_existing_redaction_after_redaction_tag_deletion");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Redactedit_selectlabel().Displayed()  ;}}), Input.wait30); 
+
+			Assert.assertEquals((String)dataMap.get("defaultRedactionTag"), docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title"));
+			pass(dataMap, "verified default tag exists");
 		}
+		else fail(dataMap, "Failed to verify default tag selected");
 
 	}
 
@@ -2446,10 +2583,12 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Edited redaction displayed for another user in a different Security Group with the same Annotation Layer
 			//
-			throw new ImplementationException("verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer");
-		} else {
-			throw new ImplementationException("NOT verify_edited_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+			System.out.println((String)dataMap.get("tag"));
+			System.out.println((String)dataMap.get("beforeTag"));
+			Assert.assertEquals((String)dataMap.get("tag"), (String)dataMap.get("beforeTag"));
+			pass(dataMap, "verified edited redaction for diff sg with same annotation layer");
 		}
+		else fail(dataMap, "could not verify edited redation for diff sg with same annotation layer");
 
 	}
 
@@ -2462,10 +2601,35 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Redaction displayed for another user in a different Security Group with the same Annotation Layer
 			//
-			throw new ImplementationException("verify_redaction_displayed_for_diff_sg_with_same_annotation_layer");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_displayed_for_diff_sg_with_same_annotation_layer");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0 ;}}), Input.wait30); 
+
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			if(size == 0) {
+				fail(dataMap, "no redactions to delete");
+				return;
+			}
+			Actions builder = new Actions(driver.getWebDriver());
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+
+			//Find our rectangle to delete based on dimensions of last placed highlight
+			for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+				if(Double.parseDouble(x.getAttribute("width")) != originalWidth && Double.parseDouble(x.getAttribute("height")) != originalHeight) continue;
+				builder.moveToElement(x).click().build().perform();
+				break;
+			}
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDocView_Redactedit_selectlabel().Displayed() ;}}), Input.wait30); 
+			
+			//Make sure our OG tag has persisted after we've changed SG's
+			Assert.assertEquals((String)dataMap.get("tag"), docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title"));
+			
+			pass(dataMap, "was able to verify redaction for diff sg with same annotation layer");
+
 		}
+		else fail(dataMap, "Failed to verify_redaction displayed for diff sg with same annotation layer");
 
 	}
 
@@ -2492,9 +2656,16 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//Use a different userThis is a collection of the following steps:sightline_is_launchedlogin_as_rmuon_saved_search_page
-			throw new ImplementationException("login_to_saved_search_rmu_private_browser");
-		} else {
-			throw new ImplementationException("NOT login_to_saved_search_rmu_private_browser");
+			dataMap.put("originalWindow", driver.CurrentWindowHandle());
+			dataMap.put("originalDriver", driver);
+
+			sightline_is_launched(scriptState, dataMap);
+			login(scriptState, dataMap);
+			change_role_to_(scriptState, dataMap);
+			on_saved_search_page(scriptState, dataMap);
+
+			dataMap.put("secondWindow", driver.CurrentWindowHandle());
+			dataMap.put("secondDriver", driver);
 		}
 
 	}
@@ -2510,10 +2681,23 @@ public class DocViewContext extends CommonContext {
 			//* 2nd user Highlight submenu buttons are disabled
 			//* 2nd user receives the following error message "Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in Doc View. You may not apply markup because that would overwrite the mark upwork done by the other user. Please reload the document."
 			//
-			throw new ImplementationException("verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
-		} else {
-			throw new ImplementationException("NOT verify_highlight_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getDuplicateHighlightWarning().Displayed() ;}}), Input.wait30); 
+			Assert.assertEquals("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.",
+					docView.getDuplicateHighlightWarning().getText());
+					
+			docView.getDocView_Annotate_Rectangle().click();
+			driver.waitForPageToBeReady();
+			Assert.assertFalse(docView.getDocView_Annotate_Rectangle().GetCssValue("color").equals("rgb(230, 70, 52)"));
+			
+			docView.getDocView_Annotate_ThisPage().click();
+			driver.waitForPageToBeReady();
+			Assert.assertFalse(docView.getDocView_Annotate_ThisPage().GetCssValue("color").equals("rgb(230, 70, 52)"));
+			
+			pass(dataMap, "Was able to verify highlight error with diff sg and same annotation layer");
 		}
+		else fail(dataMap, "failed to verify highlight error with diff sg");
 
 	}
 
@@ -2528,11 +2712,36 @@ public class DocViewContext extends CommonContext {
 			//* 2nd user Redaction submenu 'Rectangle', 'This Page', and 'Text Redaction' buttons are disabled
 			//* 2nd user receives the following error message "Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in Doc View. You may not apply markup because that would overwrite the mark upwork done by the other user. Please reload the document."
 			//
-			throw new ImplementationException("verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_error_with_diff_sg_same_annotation_layer_same_redaction_tags");
-		}
+			Assert.assertEquals("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.",
+					docView.getDuplicateRedactionWarning().getText());
 
+			docView.getRectangleRedactionButton().click();
+			driver.waitForPageToBeReady();
+			Assert.assertFalse(docView.getRectangleRedactionButton().GetCssValue("color").equals("rgb(230, 70, 52)"));
+			
+			docView.getThisPageRedactionButton().click();
+			driver.waitForPageToBeReady();
+			Assert.assertFalse(docView.getThisPageRedactionButton().GetCssValue("color").equals("rgb(230, 70, 52)"));
+			
+			docView.getTextRedactionButton().click();
+			driver.waitForPageToBeReady();
+			Assert.assertFalse(docView.getTextRedactionButton().GetCssValue("color").equals("rgb(230, 70, 52)"));
+
+			pass(dataMap, "Verified error with diff sg same annotation layer");
+		}
+		else fail(dataMap, "failed to verify redaction error with diff sg same annotation layer");
+
+	}
+	
+	public void verify_remarks_error_with_diff_sg_same_annotation_layer_same_redaction_tags(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception{
+		if(scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getRemarksWarning().Displayed()	;}}), Input.wait30); 
+			Assert.assertFalse(docView.getAddRemarkbtn().GetCssValue("color").equals("rgb(230, 70, 52)"));
+			Assert.assertTrue(docView.getRemarksWarning().getText().contains("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView."));
+			pass(dataMap, "verfied remarks error with diff sg same annotation layer");
+		}
+		else fail(dataMap, "was unable to verify remarks error with diff sg same annotation layer");
 	}
 
 
@@ -2544,10 +2753,69 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Redaction from 1st user is displayed for the 2nd user after reloading the document
 			//
-			throw new ImplementationException("verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
-		} else {
-			throw new ImplementationException("NOT verify_redaction_displayed_after_reload_with_diff_sg_same_annotation_layer_same_redaction_tags");
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!docView.getDocViewTotalPages().getText().equals("")  ;}}), Input.wait30); 
+			String pageNumString = docView.getDocViewTotalPages().getText();
+			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+
+			//Process of zooming out and scrolling through pages until we get into the view of a redaction to edit
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getMagnifyGlassZoomOutButton().Displayed()	;}}), Input.wait30); 
+			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
+			
+			for(int j=0; j<totalPages; j++) {
+				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
+				docView.getNextRedactionPage().click();
+				Thread.sleep(3000);
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			double originalx = (double)dataMap.get("originalx");
+			double originaly = (double)dataMap.get("originaly");
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			
+			boolean passed;
+			if(dataMap.get("delete")!=null && (boolean)dataMap.get("delete") == true){
+				passed = true;
+				for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+					//Out of all redactions, we shouldnt find a perfect match if we've deletd
+					if(Double.parseDouble(x.getAttribute("width")) != originalWidth || Double.parseDouble(x.getAttribute("height")) != originalHeight
+							|| Double.parseDouble(x.getAttribute("x"))!= originalx || Double.parseDouble(x.getAttribute("y")) !=originaly) continue;
+					else passed = false;
+				}
+			}
+			else {
+				passed = false;
+				for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+
+					if(Double.parseDouble(x.getAttribute("width")) != originalWidth && Double.parseDouble(x.getAttribute("height")) != originalHeight
+							&& Double.parseDouble(x.getAttribute("x"))!=originalx && Double.parseDouble(x.getAttribute("y"))!=originaly ) continue;
+					else {
+						builder.moveToElement(x).click().build().perform();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								docView.getDocView_Redactedit_selectlabel().Displayed()	;}}), Input.wait30); 
+						//Assert Tags here
+						String currTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title");
+						String tag2Compare = "";
+						if((String)dataMap.get("afterTag") == null) tag2Compare = (String)dataMap.get("tag");
+						else tag2Compare = (String)dataMap.get("afterTag");
+						Assert.assertEquals(currTag, tag2Compare);
+						passed = true;
+					}
+				}
+			}
+			if(passed) pass(dataMap, "was able to find/not find a redaction");
+			else fail(dataMap, "failed to find/not find a redaction");
+
 		}
+		else fail(dataMap, "failed to verify the last redaction");
 
 	}
 
@@ -2574,10 +2842,11 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("place_this_page_redaction_without_saving");
-		} else {
-			throw new ImplementationException("NOT place_this_page_redaction_without_saving");
+			click_grey_redact_tool(true, dataMap);
+			click_this_page_redaction_button(scriptState, dataMap);
+			pass(dataMap, "was able to place this page redaction without saving");
 		}
+		else fail(dataMap, "failed to place this page redaction without saving");
 
 	}
 
@@ -2608,9 +2877,10 @@ public class DocViewContext extends CommonContext {
 			//* Automatically set Select Redaction Tag for 2nd user on propagated document matches the tag used by the 1st user in different Security Group with same Annotation Layer same Redaction Tags and Released documents.
 			//* 2nd Select Redaction Tag is 'SGSame1'
 			//
-			throw new ImplementationException("verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
-		} else {
-			throw new ImplementationException("NOT verify_auto_selected_tag_on_propagated_doc_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				docView.getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+			Assert.assertEquals(docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText(), (String)dataMap.get("tag"));
+
 		}
 
 	}
@@ -2625,9 +2895,9 @@ public class DocViewContext extends CommonContext {
 			//* Automatically set Select Redaction Tag for 2nd user matches the tag used by the 1st user in different Security Group with same Annotation Layer same Redaction Tags and Released documents.
 			//* 2nd Select Redaction Tag is 'SGSame1'
 			//
-			throw new ImplementationException("verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
-		} else {
-			throw new ImplementationException("NOT verify_auto_selected_tag_with_diff_sg_same_annotation_layer_same_redaction_tags_released_docs");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+				docView.getDocView_SelectReductionLabel().Displayed() ;}}), Input.wait30);
+			Assert.assertEquals(docView.getDocView_SelectReductionLabel().selectFromDropdown().getFirstSelectedOption().getText(), (String)dataMap.get("tag"));
 		}
 
 	}
@@ -2671,10 +2941,18 @@ public class DocViewContext extends CommonContext {
 			//* Message is displayed: "Another user has applied redactions, annotations, or Reviewer Remarks to this document since you presented it in DocView. You may not apply markup - because that would overwrite the work done by the other user. Please reload the document."
 			//* Redaction cannot be placed until the document is reloaded
 			//
-			throw new ImplementationException("verify_message_to_reload_same_document");
-		} else {
-			throw new ImplementationException("NOT verify_message_to_reload_same_document");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getGeneralDuplicateWarning().FindWebElements().size()!=0 ;}}), Input.wait30); 
+			for(WebElement x: docView.getGeneralDuplicateWarning().FindWebElements()) {
+				if(x.isDisplayed()) {
+					Assert.assertEquals("Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.  You may not apply markup – because that would overwrite the work done by the other user.  Please reload the document.",
+							x.getText());
+				}
+			}
+			pass(dataMap, "was able to verify errorMessage"); 
+
 		}
+		else fail(dataMap, "failed to verify error message");
 
 	}
 
@@ -2688,10 +2966,58 @@ public class DocViewContext extends CommonContext {
 			//* Analytics Panel remains unchanged after a Redaction, Annotation, or Reviewer Remark is added
 			//* Delete Redaction, Annotation, or Reviewer Remark after verification
 			//
-			throw new ImplementationException("verify_doc_view_analytics_panel_unchanged");
-		} else {
-			throw new ImplementationException("NOT verify_doc_view_analytics_panel_unchanged");
+			ArrayList<String> threadedColumns = (ArrayList<String>)dataMap.get("threadedColumns");
+			ArrayList<String> familyRows = (ArrayList<String>)dataMap.get("familyRows");
+			ArrayList<String> nearDupeRows = (ArrayList<String>)dataMap.get("nearDupeRows");
+			ArrayList<String> conceptuallySimilarRows = (ArrayList<String>)dataMap.get("conceptuallySimilarRows");
+			int i =0;
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			docView.getThreadDocumentsTab().Displayed()  ;}}), Input.wait30); 
+			docView.getThreadDocumentsTab().click();
+			driver.waitForPageToBeReady();
+			Assert.assertEquals(threadedColumns.size(), docView.getThreadedDocumentsColumnHeaders().FindWebElements().size());
+			for(WebElement x: docView.getThreadedDocumentsColumnHeaders().FindWebElements()) Assert.assertEquals(x.getText(), threadedColumns.get(i++));
+		
+			i =0;
+			docView.getDocView_Analytics_FamilyTab().click();
+			driver.waitForPageToBeReady();
+			Assert.assertEquals(familyRows.size(), docView.getFamilyTabTableRows().FindWebElements().size());
+			for(WebElement x: docView.getFamilyTabTableRows().FindWebElements()) {
+				if(x.findElements(By.tagName("td")).size()<2) {
+					Assert.assertEquals(familyRows.get(i), x.findElements(By.tagName("td")).get(0).getText());
+					break;
+				}
+				Assert.assertEquals(x.findElements(By.tagName("td")).get(1).getText(), familyRows.get(i++));
+			}
+		
+			i = 0;
+			docView.getDocView_Analytics_NearDupeTab().click();
+			driver.waitForPageToBeReady();
+			Assert.assertEquals(nearDupeRows.size(), docView.getNearDupeRows().FindWebElements().size());
+			for(WebElement x: docView.getNearDupeRows().FindWebElements()) {
+				if(x.findElements(By.tagName("td")).size()<2) {
+					Assert.assertEquals(nearDupeRows.get(i), x.findElements(By.tagName("td")).get(0).getText());
+					break;
+				}
+				Assert.assertEquals(x.findElements(By.tagName("td")).get(1).getText(), nearDupeRows.get(i++));
+			}
+
+			i = 0;
+			docView.getDocView_Analytics_liDocumentConceptualSimilarab().click();
+			driver.waitForPageToBeReady();
+			Assert.assertEquals(conceptuallySimilarRows.size(), docView.getConceptuallySimilarRows().FindWebElements().size());
+			for(WebElement x: docView.getConceptuallySimilarRows().FindWebElements()) {
+				if(x.findElements(By.tagName("td")).size()<2) {
+					Assert.assertEquals(conceptuallySimilarRows.get(i), x.findElements(By.tagName("td")).get(0).getText());
+					break;
+				}
+				Assert.assertEquals(x.findElements(By.tagName("td")).get(1).getText(), conceptuallySimilarRows.get(i++));
+			}
+
+			pass(dataMap, "was able to verify doc view analytics panel unchanged");
 		}
+		else fail(dataMap, "was unable to verify doc view anlytics panel unchanged");
 
 	}
 
@@ -2701,10 +3027,32 @@ public class DocViewContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("apply_reviewer_remark");
-		} else {
-			throw new ImplementationException("NOT apply_reviewer_remark");
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getNonAudioRemarkBtn().Displayed()  ;}}), Input.wait30); 
+			docView.getNonAudioRemarkBtn().click();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			builder.moveToElement(docView.getExistingRectangleRedactions().FindWebElements().get(size-1)).click().build().perform();
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getAddRemarkbtn().Enabled()  ;}}), Input.wait30); 
+			docView.getAddRemarkbtn().click();
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getRemarkTextArea().Enabled()  ;}}), Input.wait30); 
+			docView.getRemarkTextArea().click();
+			docView.getRemarkTextArea().SendKeys("TestRemark!");
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getSaveRemark().Enabled()  ;}}), Input.wait30); 
+			docView.getSaveRemark().click();
+			driver.waitForPageToBeReady();
+			pass(dataMap, "applied reviewer remark");
 		}
+		else fail(dataMap, "Failed to apply reviewer remark");
 
 	}
 
@@ -2823,10 +3171,91 @@ public class DocViewContext extends CommonContext {
 			//
 			//* Redaction apply/edit/deletion displayed after user 2 reloads the document
 			//
-			throw new ImplementationException("verify_user1_redaction_change_displayed_after_user2_reload");
-		} else {
-			throw new ImplementationException("NOT verify_user1_redaction_change_displayed_after_user2_reload");
+			driver.getWebDriver().navigate().refresh();
+			driver.waitForPageToBeReady();
+			Actions builder = new Actions(driver.getWebDriver());
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				!docView.getDocViewTotalPages().getText().equals("")  ;}}), Input.wait30); 
+			String pageNumString = docView.getDocViewTotalPages().getText();
+			System.out.println("Page Number string: " + pageNumString);
+			int totalPages = Integer.parseInt((pageNumString.split("of "))[1].split(" pages")[0]);
+			System.out.println(totalPages);
+
+			//Process of zooming out and scrolling through pages until we get into the view of a redaction to edit
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getMagnifyGlassZoomOutButton().Displayed()	;}}), Input.wait30); 
+			for(int i =0; i<5;i++) docView.getMagnifyGlassZoomOutButton().click();
+			
+			for(int j=0; j<totalPages; j++) {
+				if(docView.getExistingRectangleRedactions().FindWebElements().size()>0) break;
+				docView.getNextRedactionPage().click();
+				driver.waitForPageToBeReady();
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getExistingRectangleRedactions().FindWebElements().size()!=0  ;}}), Input.wait30); 
+
+			double originalx = (double)dataMap.get("originalx");
+			double originaly = (double)dataMap.get("originaly");
+			double originalHeight = (double)dataMap.get("height");
+			double originalWidth = (double)dataMap.get("width");
+			int size = docView.getExistingRectangleRedactions().FindWebElements().size();
+			
+			boolean passed;
+			if(dataMap.get("delete")!=null && (boolean)dataMap.get("delete") == true){
+				passed = true;
+				for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+					//Out of all redactions, we shouldnt find a perfect match if we've deletd
+					if(Double.parseDouble(x.getAttribute("width")) != originalWidth || Double.parseDouble(x.getAttribute("height")) != originalHeight
+							|| Double.parseDouble(x.getAttribute("x"))!= originalx || Double.parseDouble(x.getAttribute("y")) !=originaly) continue;
+					else passed = false;
+				}
+			}
+			else {
+				passed = false;
+				for(WebElement x: docView.getExistingRectangleRedactions().FindWebElements()) {
+					if(x.isDisplayed()) {
+					double currDimension = Double.parseDouble(x.getAttribute("width"))
+								* Double.parseDouble(x.getAttribute("height"));
+					
+					if((Double)dataMap.get("afterEditDimension")!=null && currDimension== (Double)dataMap.get("afterEditDimension")) {
+						builder.moveToElement(x).click().build().perform();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								docView.getDocView_Redactedit_selectlabel().Displayed()	;}}), Input.wait30); 
+						//Assert Tags here
+						String currTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title");
+						String tag2Compare = "";
+						if((String)dataMap.get("afterTag") == null) tag2Compare = (String)dataMap.get("tag");
+						else tag2Compare = (String)dataMap.get("afterTag");
+						Assert.assertEquals(currTag, tag2Compare);
+						passed = true;
+						break;
+
+					}
+					else if(Double.parseDouble(x.getAttribute("width")) != originalWidth || Double.parseDouble(x.getAttribute("height")) != originalHeight
+							|| Double.parseDouble(x.getAttribute("x"))!=originalx || Double.parseDouble(x.getAttribute("y"))!=originaly ) continue;
+					else {
+						builder.moveToElement(x).click().build().perform();
+						driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+								docView.getDocView_Redactedit_selectlabel().Displayed()	;}}), Input.wait30); 
+						//Assert Tags here
+						String currTag = docView.getDocView_Redactedit_selectlabel().selectFromDropdown().getFirstSelectedOption().getAttribute("title");
+						String tag2Compare = "";
+						if((String)dataMap.get("afterTag") == null) tag2Compare = (String)dataMap.get("tag");
+						else tag2Compare = (String)dataMap.get("afterTag");
+						Assert.assertEquals(currTag, tag2Compare);
+						passed = true;
+						break;
+					}
+				}
+				}
+			}
+			if(passed) pass(dataMap, "was able to find/not find a redaction");
+			else fail(dataMap, "failed to find/not find a redaction");
+
+			pass(dataMap, "was able to verify user1 redaciton change displayed after user2 reload");
 		}
+		else fail(dataMap, "failed to verify user1 redaction change displayed after user2");
 
 	}
 
@@ -2856,6 +3285,65 @@ public class DocViewContext extends CommonContext {
 		} else {
 			throw new ImplementationException("NOT verify_redaction_username_in_db");
 		}
+	}
 
+	public void click_remark_button(boolean scriptState, HashMap dataMap) {
+		
+		if(scriptState) {
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				docView.getNonAudioRemarkBtn().Displayed()  ;}}), Input.wait30); 
+			docView.getNonAudioRemarkBtn().click();
+		}
+	}
+
+
+	public void get_analytics_data_prestate(boolean b, HashMap dataMap) {
+
+		ArrayList<String> threadedColumns = new ArrayList<>();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			docView.getThreadDocumentsTab().Displayed()  ;}}), Input.wait30); 
+		docView.getThreadDocumentsTab().click();
+		driver.waitForPageToBeReady();
+		for(WebElement x: docView.getThreadedDocumentsColumnHeaders().FindWebElements()) threadedColumns.add(x.getText());
+		
+		ArrayList<String> familyRows = new ArrayList<>();
+		docView.getDocView_Analytics_FamilyTab().click();
+		driver.waitForPageToBeReady();
+		for(WebElement x: docView.getFamilyTabTableRows().FindWebElements()) {
+			if(x.findElements(By.tagName("td")).size()<2) {
+				familyRows.add(x.findElements(By.tagName("td")).get(0).getText());
+				break;
+			}
+			familyRows.add(x.findElements(By.tagName("td")).get(1).getText());
+		}
+		
+		ArrayList<String> nearDupeRows = new ArrayList<>();
+		docView.getDocView_Analytics_NearDupeTab().click();
+		driver.waitForPageToBeReady();
+		for(WebElement x: docView.getNearDupeRows().FindWebElements()) {
+			if(x.findElements(By.tagName("td")).size()<2) {
+				nearDupeRows.add(x.findElements(By.tagName("td")).get(0).getText());
+				break;
+			}
+			nearDupeRows.add(x.findElements(By.tagName("td")).get(1).getText());
+		}
+
+		ArrayList<String> conceptuallySimilarRows = new ArrayList<>();
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().click();
+		driver.waitForPageToBeReady();
+		for(WebElement x: docView.getConceptuallySimilarRows().FindWebElements()) {
+			if(x.findElements(By.tagName("td")).size()<2) {
+				conceptuallySimilarRows.add(x.findElements(By.tagName("td")).get(0).getText());
+				break;
+			}
+			conceptuallySimilarRows.add(x.findElements(By.tagName("td")).get(1).getText());
+		}
+		
+		dataMap.put("threadedColumns", threadedColumns);
+		dataMap.put("familyRows", familyRows);
+		dataMap.put("nearDupeRows", nearDupeRows);
+		dataMap.put("conceptuallySimilarRows", conceptuallySimilarRows);
+
+		
 	}
 }//eof
