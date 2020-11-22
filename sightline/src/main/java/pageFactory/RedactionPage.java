@@ -24,22 +24,14 @@ public class RedactionPage {
     public Element getRedactionEdit(){ return driver.FindElementById("aEditRedactionTag"); }
     public Element getRedactionDelete(){ return driver.FindElementById("aDeleteRedactionTag"); }
     public Element getRedactionEditTagName(){ return driver.FindElementById("txtRedactionTagName"); }
-    public Element getRedactionEnterNewName() {return driver.FindElementById("txtRedactionNew");}
     public Element getSaveBtn(){ return driver.FindElementById("btnSaveRedactionTag"); }
     public Element getEditSaveBtn(){ return driver.FindElementById("btnModifySecurityGroup"); }
     public Element getactionDropDown(){ return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']"); }
     public Element getSelectredaction(String redactname){ return driver.FindElementByXPath("//a[contains(text(),'"+redactname+"')]"); }
     public Element getSecurityGrp(){ return driver.FindElementById("ddlSecurityGroupRedaction"); }
     public ElementCollection getredactiontags(){ return driver.FindElementsByXPath("//*[@id='tagsJSTree']//a"); }
-    public Element getRedactionTagByName(String name) {return driver.FindElementByCssSelector(String.format(".jstree-children li a[data-content = '%s']", name));}
-    public Element getConfirmDeleteRedactionYesButton() {return driver.FindElementById("bot1-Msg1");}
     
-    //Added 11/10/20
-    public Element getDocId9(){ return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]//td[contains(text(), \"ID00000009\")]"); }
     
-    public RedactionPage(Driver driver, int i){
-    		this.driver = driver;
-    }
 
     public RedactionPage(Driver driver){
 

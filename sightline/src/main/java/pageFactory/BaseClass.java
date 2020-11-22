@@ -74,9 +74,6 @@ public class BaseClass {
     public Element getAvlDomain(){ return driver.FindElementById("ddlAvailableDomains"); }
     public Element getAvlProject(){ return driver.FindElementById("ddlAvailableProjects"); }
     public Element getAvlSecurity() {return driver.FindElementById("ddlAvailableSecGroup");}
-    public Element getManageMenuButton() {return driver.FindElementById("2");}
-    public Element getManageRedactionButton() {return driver.FindElementByCssSelector("#LeftMenu a +ul li a[name = 'Redaction']");}
-
   
     
     public BaseClass(Driver driver){

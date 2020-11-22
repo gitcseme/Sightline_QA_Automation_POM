@@ -150,9 +150,7 @@ public class DocViewPage {
     public Element getDocView_ChildWindow_ActionButton(){ return driver.FindElementById("btnAnalyticAction"); }
     public Element getDocView_Analytics_NearDupeTab(){ return driver.FindElementById("liDocumentNearDupe"); }
     public Element getDocView_Analytics_liDocumentConceptualSimilarab(){ return driver.FindElementById("liDocumentConceptualSimilar"); }
-    public ElementCollection getConceptuallySimilarRows() {return driver.FindElementsByCssSelector("#dtDocumentConceptuallySimilar tbody tr");}
     public Element getDocView_Analytics_FamilyTab(){ return driver.FindElementById("liDocumentFamilyMember"); }
-    public ElementCollection getFamilyTabTableRows() {return driver.FindElementsByCssSelector("#dtDocumentFamilyMembers tbody tr");}
     public Element getDocView_MiniDoc_ChildWindow_Selectdoc(int rowno){ return driver.FindElementByXPath("//*[@id='SearchDataTable']//tr["+rowno+"]/td[1]/label"); }
     public Element getDocView__ChildWindow_Mini_FolderAction(){ return driver.FindElementById("liMiniDocListBulkFolder"); }
     public Element getDocView_Analytics_Thread_ViewDocument(){ return driver.FindElementById("liViewDocumentTHREADEDDOCUMENTS"); }
@@ -214,7 +212,6 @@ public class DocViewPage {
     public Element getDocView_Analytics_Collapsebutton(){ return driver.FindElementByXPath("//*[@class='fa fa-minus']"); }
     public Element getDocView_NearDupe_Selectdoc(){ return driver.FindElementByXPath(".//*[@id='dtDocumentNearDuplicates']/tbody//td[1]//input/following-sibling::i"); }
     public Element getDocView_NearViewInDoclist(){ return driver.FindElementById("liViewInDocListNearDupe"); }
-    public ElementCollection getNearDupeRows() {return driver.FindElementsByCssSelector("#dtDocumentNearDuplicates tbody tr");}
     public ElementCollection getDocView_ConceptualDocs(){ return driver.FindElementsByXPath(".//*[@id='dtDocumentConceptuallySimilar']//tr"); }
     
     
@@ -236,7 +233,7 @@ public class DocViewPage {
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
     public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level0").getWebElement(); }
     public ElementCollection getExistingRectangleRedactions() {return driver.FindElementsByCssSelector(".igViewerGraphics g rect[style = 'opacity: 0.5;']");}
-    public ElementCollection getExistingHighlightRedactions() {return driver.FindElementsByXPath("//*[contains(@style, '0.419608;')]");}
+    public ElementCollection getExistingHighlightRedactions() {return driver.FindElementsByCssSelector(".igAnchor g[data-pcc-mark = 'textmark-1'] ~ rect");}
     public Element getDocView_Redactedit_save(){ return driver.FindElementById("btnRedactionTag"); }
     public Element getDocView_Redactedit_selectlabel(){ return driver.FindElementById("ddlRedactionTags"); }
     public Element getDocViewReactEditTagByName(String name) {return driver.FindElementByCssSelector(String.format("#ddlRedactionTags option[title = '%s']", name));}
@@ -251,7 +248,6 @@ public class DocViewPage {
     public Element getDocViewTableRow(String docID) { return driver.FindElementByXPath("//table[@id='SearchDataTable']//td[text()='"+docID+"']"); }
     public Element getDocPrimaryLanguageValue() { return driver.FindElementByXPath("//table[@id='MetaDataDT']//td[text()='DocPrimaryLanguage']/following-sibling::td"); }
     public Element getGreyRedactButton() {return driver.FindElementById("gray-tab");}
-    public Element getYellowAnnotateButton() {return driver.FindElementById("yellow-tab");}
     public Element getGreyRedactButtoni() {return driver.FindElementByCssSelector("gray-tab i");}
     public ElementCollection getRectangleButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-pencil-square-o']");}
     public ElementCollection getThisPageButton() {return driver.FindElementsByXPath("//i[@class = 'fa fa-file-text-o']");}
@@ -270,25 +266,14 @@ public class DocViewPage {
     public Element getMagnifyGlassSearchButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search']");}
     public Element getMagnifyGlassZoomOutButton() {return driver.FindElementByXPath("//i[@class = 'fa fa-search-minus']");}
     public Element getGeneralViewingArea() {return driver.FindElementById("igViewerGraphics");}
-    public Element getNextRedactionPage() {return driver.FindElementByXPath("//*[@id=\"nextPage_divDocViewer\"]/a/i");}
+    public Element getNextRedactionPage() {return driver.FindElementByCssSelector("#nextPage_divDocViewer i");}
     public Element getDocumentHistoryTab() {return driver.FindElementById("liDocumentHistory");}
     public Element getViewAllHistoryButton() {return driver.FindElementById("btnViewAllHistory");}
     public ElementCollection getViewAllHistoryColumnHeaders() {return driver.FindElementsByCssSelector("#dtDocumentAllHistory_wrapper thead th");}
     public ElementCollection getViewAllHistoryRows() { return driver.FindElementsByCssSelector("#dtDocumentAllHistory tbody tr ");}
     public ElementCollection getAmountOfRedactionTags() {return driver.FindElementsById("#dvCheckboxes");}
 
-    public Element getDuplicateRedactionWarning() {return driver.FindElementById("divDuplicateRedactionWarning");}
-    public Element getDuplicateHighlightWarning() {return driver.FindElementById("divDuplicateAnnotationWarning");}
-    public Element getRemarksWarning() {return driver.FindElementById("disableRedactionWarningForRemarks");}
-    public Element getRectangleRedactionButton() {return driver.FindElementById("blackRectRedact_divDocViewer") ;}
-    public Element getThisPageRedactionButton() {return driver.FindElementById("redactCurrentPage_divDocViewer");}
-    public Element getTextRedactionButton() {return driver.FindElementById("textSelectionRedaction_divDocViewer");}
-    public Element getThreadDocumentsTab() {return driver.FindElementById("liDocumentThreadedMap");}
-    public ElementCollection getThreadedDocumentsColumnHeaders() {return driver.FindElementsByCssSelector("#threadedDocumentIdRow th");}
-    public ElementCollection getGeneralDuplicateWarning() {return driver.FindElementsByXPath("//*[contains(@id, 'Warning')]");}
-    		
     
-
     //default constructor
     public DocViewPage(Driver driver, int i) {
     		this.driver = driver;

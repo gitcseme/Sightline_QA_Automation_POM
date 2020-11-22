@@ -3562,14 +3562,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_pau_When_click_select_search_radio_button_Then_verify_deleted_search_not_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
-
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_search_radio_button Then verify_deleted_search_not_displayed");
 
@@ -3595,14 +3591,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_only_in_security_group_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
-
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_folder_only_in_security_group_displayed");
 
@@ -3628,13 +3620,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_pau_When_click_select_folder_radio_button_Then_verify_deleted_folder_not_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_folder_radio_button Then verify_deleted_folder_not_displayed");
 
@@ -3660,14 +3649,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_folder_in_multiple_security_groups_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
-
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_folder_in_multiple_security_groups_displayed");
 
@@ -3720,14 +3705,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_rmu_When_click_select_folder_radio_button_Then_verify_unmapped_folder_not_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
-
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_folder_radio_button Then verify_unmapped_folder_not_displayed");
 
@@ -3782,14 +3763,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_tag_in_multiple_security_groups_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
-
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_tag_radio_button Then verify_tag_in_multiple_security_groups_displayed");
 
@@ -3815,13 +3792,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_pau_When_click_select_tag_radio_button_Then_verify_deleted_tag_not_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_pau When click_select_tag_radio_button Then verify_deleted_tag_not_displayed");
 
@@ -3846,13 +3820,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_unmapped_tag_not_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_unmapped_tag_not_displayed");
 
@@ -3878,13 +3849,10 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive", "smoke36"})
+	@Test(groups = {"BatchPrint", "Positive"})
 	public void test_Given_login_to_new_batch_print_rmu_When_click_select_tag_radio_button_Then_verify_tag_only_in_security_group_displayed() throws Throwable
 	{
-		String methodName = new Throwable() 
-                .getStackTrace()[0] 
-                .getMethodName(); 
-		getMethodData(dataMap,methodName);
+		HashMap dataMap = new HashMap();
 
 		ExtentTest test = report.startTest("Given login_to_new_batch_print_rmu When click_select_tag_radio_button Then verify_tag_only_in_security_group_displayed");
 
@@ -3897,11 +3865,9 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("TestCase", "9718");
 			context.verify_tag_only_in_security_group_displayed(true, dataMap);
 		} catch (ImplementationException e) {
-			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
-			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
@@ -3969,7 +3935,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smokey22"})
+	@Test(groups = {"BatchPrint, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_rmu_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4000,9 +3966,9 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("include_applied_redactions", "false");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions_(true, dataMap);
-			dataMap.put("pdf_creation", "One PDF for all docs");
+			dataMap.put("pdf_creation", "1 PDF for all docs");
 			dataMap.put("sort_by", "DocID");
-			dataMap.put("export_file_name", "DocFileName");
+			dataMap.put("export_by", "DocFileName");
 			context.select_export_format_(true, dataMap);
 			context.click_download_file_link(true, dataMap);
 			dataMap.put("A", "");
@@ -4022,7 +3988,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint, Positive", "smokey22"})
+	@Test(groups = {"BatchPrint, Positive"})
 	public void test_Given_sightline_is_launched_and_login_as_pau_and_on_batch_print_page_and_select_source_selection_500_plus_documents_and_select_basis_for_printing_Natives_and_select_analysis_and_select_exception_file_types_falseprintfalse_and_select_slip_sheets_enabled_slip_sheets_and_select_branding_redactions_false_and_select_export_format_DocFileNameDocID1PDFforalldocs_When_click_download_file_link_Then_verify_generating_single_pdf_for_500_plus_docs() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4032,7 +3998,6 @@ public class BatchPrintRegression extends RegressionBase {
 		dataMap.put("ExtentTest",test);
 
 		try {
-			
 			context.sightline_is_launched(true, dataMap);
 			dataMap.put("project", "08122020_NV");
 			dataMap.put("impersonate", "Project Administrator");
@@ -4040,36 +4005,31 @@ public class BatchPrintRegression extends RegressionBase {
 			context.login_as_pau(true, dataMap);
 			context.on_batch_print_page(true, dataMap);
 			context.select_source_selection_500_plus_documents(true, dataMap);
-			dataMap.put("basis_for_printing", "Native");
-			context.select_basis_for_printing(true, dataMap);
+			dataMap.put("basis_for_printing", "Natives");
+			context.select_basis_for_printing_(true, dataMap);
 			context.select_analysis(true, dataMap);
 			dataMap.put("other_exception_file_types", "false");
 			dataMap.put("excel_files", "print");
 			dataMap.put("media_files", "false");
 			context.select_exception_file_types_(true, dataMap);
 			dataMap.put("enable_slip_sheets", "false");
-			context.select_slip_sheets(true, dataMap);
+			context.select_slip_sheets_(true, dataMap);
 			dataMap.put("branding_location", "center");
 			dataMap.put("include_applied_redactions", "false");
 			dataMap.put("opaque_transparent", "opaque");
-			context.select_branding_redactions(true, dataMap);
-			dataMap.put("pdf_creation", "One PDF for all docs");
+			context.select_branding_redactions_(true, dataMap);
+			dataMap.put("pdf_creation", "1 PDF for all docs");
 			dataMap.put("sort_by", "DocID");
-			dataMap.put("sort_by_order", "asc");
-
 			dataMap.put("export_by", "DocFileName");
 			context.select_export_format_(true, dataMap);
 			context.click_download_file_link(true, dataMap);
-			
 			dataMap.put("A", "");
 			dataMap.put("TestCase", "7924|7925|7926");
 			context.verify_generating_single_pdf_for_500_plus_docs(true, dataMap);
 		} catch (ImplementationException e) {
-			e.printStackTrace();
 			test.log(LogStatus.SKIP, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} catch (Exception e) {
-			e.printStackTrace();
 			test.log(LogStatus.FATAL, e.getMessage());
 			Assert.assertTrue(e.getMessage(), false);;
 		} finally { 
