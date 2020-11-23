@@ -2763,4 +2763,71 @@ public class BatchPrintContext extends CommonContext {
 		}
 
 	}
+
+
+	@And("^.*(\\[Not\\] )? select_source_selection_$")
+	public void select_source_selection_(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//
+			throw new ImplementationException("select_source_selection_");
+		} else {
+			throw new ImplementationException("NOT select_source_selection_");
+		}
+
+	}
+	
+
+	@Then("^.*(\\[Not\\] )? verify_exception_file_types_placeholders_printed$")
+	public void verify_exception_file_types_placeholders_printed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC9708 Verify that placeholder should be printed for the exception file types when folder is selected for batch printTC9709 Verify that placeholder should be printed for the exception file types when tag is selected for batch print
+			throw new ImplementationException("verify_exception_file_types_placeholders_printed");
+		} else {
+			throw new ImplementationException("NOT verify_exception_file_types_placeholders_printed");
+		}
+
+	}
+
+
+	@And("^.*(\\[Not\\] )? select_slip_sheets_email_values$")
+	public void select_slip_sheets_email_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//Enable Slip SheetsSelect Email Metadata:
+			//
+			//* EmailAuthorAdress
+			//* EmailAuthorName
+			//* EmailAuthorNameAndAddress
+			//* EmailBBCAddresses
+			//* EmailBBCNames
+			//* EmailBCCNamesAndAddresses
+			//* EmailCCAddresses
+			//* EmailCCNames
+			//* EmailCCNamesAndAddresses
+			//* EmailToAddresses
+			//* EmailToNames
+			//* EmailToNamesAndAddresses
+			//
+			//Click Next button
+			throw new ImplementationException("select_slip_sheets_email_values");
+		} else {
+			throw new ImplementationException("NOT select_slip_sheets_email_values");
+		}
+
+	}
+
+
+	@Then("^.*(\\[Not\\] )? verify_email_values_displayed$")
+	public void verify_email_values_displayed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
+
+		if (scriptState) {
+			//TC10585 Verify concatenated email value should be displayed correctly on Slip Sheets in Batch Print
+			throw new ImplementationException("verify_email_values_displayed");
+		} else {
+			throw new ImplementationException("NOT verify_email_values_displayed");
+		}
+
+	}
 }//eof
