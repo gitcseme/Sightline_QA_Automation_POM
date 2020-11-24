@@ -36,6 +36,7 @@ import org.openqa.selenium.Keys;
 import org.testng.Assert;
 
 import com.beust.jcommander.JCommander.Builder;
+import com.gargoylesoftware.htmlunit.javascript.host.Symbol;
 import com.sun.jna.platform.unix.X11;
 
 import automationLibrary.Driver;
@@ -372,7 +373,6 @@ public class BatchPrintContext extends CommonContext {
 				if (dataMap.get("include_applied_redactions").toString().equalsIgnoreCase("false")) {
 					
 				}
-				
 
 				if (dataMap.get("opaque_transparent").toString().equalsIgnoreCase("transparent")) {
 					
@@ -468,8 +468,8 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
 					batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
-					//wait for download to be ready
-					Thread.sleep(60000);
+					//wait 2 min for download to be ready
+					Thread.sleep(120000);
 					driver.waitForPageToBeReady();
 				} else {
 					fail(dataMap, "Refreshed page 1000 times and is still in progress!");
@@ -2810,27 +2810,25 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			String folder = (String) dataMap.get("select_folder");
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				batchPrint.getFolderRadioButton().Displayed() ;}}), Input.wait30);
-			batchPrint.getFolderRadioButton().click();
-		
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				batchPrint.getFolderAllTagsExpandFolder().Displayed() ;}}), Input.wait30);
-			batchPrint.getFolderAllTagsExpandFolder().click();
-				
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				batchPrint.getAllFolderOptions().FindWebElements().size()!=0 ;}}), Input.wait30);
-		
-			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
-				if(x.getText().equals(folder)) x.click();
+			if(dataMap.containsKey("select_tag")){
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	                       batchPrint.getTagsRadioButton().Displayed()  ;}}), Input.wait30);
+	            batchPrint.getTagsRadioButton().click();
+
+	            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	                       batchPrint.getSlipSheetsAllTagsToggle().Displayed()  ;}}), Input.wait30);
+	            batchPrint.getSlipSheetsAllTagsToggle().click();
+
+	            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	                       batchPrint.get500PlusFiles().Displayed()  ;}}), Input.wait30);
+	            batchPrint.get500PlusFiles().click();
+	            
+
+				driver.waitForPageToBeReady();
+				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					batchPrint.getSourcenextbutton().Enabled() ;}}), Input.wait30);
+				batchPrint.getSourcenextbutton().click();
 			}
-			
-			driver.waitForPageToBeReady();
-		
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				batchPrint.getSourcenextbutton().Enabled() ;}}), Input.wait30);	
-			batchPrint.getSourcenextbutton().click();
 			pass(dataMap,"select_source_selection_");
 		} else {
 			fail(dataMap,"NOT select_source_selection_");
@@ -2843,14 +2841,54 @@ public class BatchPrintContext extends CommonContext {
 	public void verify_exception_file_types_placeholders_printed(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {
 
 		if (scriptState) {
-			//TC9708 Verify that placeholder should be printed for the exception file types when folder is selected for batch printTC9709 Verify that placeholder should be printed for the exception file types when tag is selected for batch print
-			throw new ImplementationException("verify_exception_file_types_placeholders_printed");
+			//TC9708 Verify that placeholder should be printed for the exception file types when folder is selected for batch print
+			//TC9709 Verify that placeholder should be printed for the exception file types when tag is selected for batch print
+			String home = System.getProperty("user.home");
+			String downloadPath;
+			if(SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC){
+				downloadPath = home + "/Downloads/";}
+			else downloadPath = home + "\\Download\\";
+			
+			File dir = new File(downloadPath);
+			File[] dirContents = dir.listFiles();
+
+			int brandingCount = 0;
+			String AllProductionBatesRanges  = "AllProductionBatesRanges:";
+			for (int i = 0; i < dirContents.length; i++) {
+				if (dirContents[i].getName().contains("BatchPrint_")) {
+					System.out.println(downloadPath+dirContents[i].getName());
+					ZipFile zipFile = new ZipFile(downloadPath+dirContents[i].getName());
+					Enumeration<? extends ZipEntry> entries = zipFile.entries();
+					entries = zipFile.entries();
+					while(entries.hasMoreElements()){
+						ZipEntry entry = entries.nextElement();
+						if(!entry.isDirectory()&& entry.getName().contains(".pdf")) {
+							InputStream stream = zipFile.getInputStream(entry);
+							byte[] bytes = IOUtils.toByteArray(stream);
+							PDDocument document = new PDDocument();
+							document = document.load(bytes);
+						
+							PDFTextStripper pdfTextStripper = new PDFTextStripper();
+							String text = pdfTextStripper.getText(document);
+							document.close();
+							Assert.assertTrue(text.contains(AllProductionBatesRanges));
+							Assert.assertTrue(text.contains("Folders:"));
+
+						}						
+					}
+					// delete file after verification
+					System.out.println("Deleting file...");
+					dirContents[i].delete();
+					break;
+				}
+			}
+			
+			pass(dataMap,"verify_exception_file_types_placeholders_printed");
 		} else {
-			throw new ImplementationException("NOT verify_exception_file_types_placeholders_printed");
+			fail(dataMap, "NOT verify_exception_file_types_placeholders_printed");
 		}
 
 	}
-
 
 	@And("^.*(\\[Not\\] )? select_slip_sheets_email_values$")
 	public void select_slip_sheets_email_values(boolean scriptState, HashMap dataMap) throws ImplementationException, Exception {

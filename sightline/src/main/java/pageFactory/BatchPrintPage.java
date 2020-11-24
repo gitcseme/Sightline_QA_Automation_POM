@@ -218,6 +218,8 @@ public class BatchPrintPage {
     public Element getInsertMetadataExceptionFile() {return driver.FindElementById("otherExceptionFileTypesInsertMetadataLinkButton");}
     public Element getInsertMetadataExceptionFile_OKbutton() { return driver.FindElementById("otherExceptionFileTypesOk");}
 
+    public Element get500PlusFiles() { return driver.FindElementByXPath("/html/body/div[3]/div/div[2]/div[2]/div[3]/div/div/div/div/div[2]/div/div/div/div/div/ul/li/ul/li[1]/a/i[1]");}
+
     
     
     

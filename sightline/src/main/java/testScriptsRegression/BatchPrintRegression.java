@@ -4110,7 +4110,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke48302"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_500PlusFolder_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_meda_filesskiptrue_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_exception_file_types_placeholders_printed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4167,7 +4167,7 @@ public class BatchPrintRegression extends RegressionBase {
 	}
 
 
-	@Test(groups = {"BatchPrint", "Positive"})
+	@Test(groups = {"BatchPrint", "Positive", "smoke48302"})
 	public void test_Given_login_to_new_batch_print_and_select_source_selection_500PlusFiles_and_select_basis_for_printing_and_select_analysis_and_select_exception_file_types_meda_filesskiptrue_and_select_slip_sheets_truefalse_and_select_branding_redactions_and_select_export_format_When_click_download_file_link_Then_verify_exception_file_types_placeholders_printed() throws Throwable
 	{
 		HashMap dataMap = new HashMap();
@@ -4190,17 +4190,21 @@ public class BatchPrintRegression extends RegressionBase {
 			dataMap.put("other_exception_file_types", "true");
 			dataMap.put("excel_files", "skip");
 			dataMap.put("media_files", "true");
+			dataMap.put("media_files_placeholder", "default");
+			dataMap.put("excel_files_placeholder", "default");
+			dataMap.put("other_exception_file_types_placeholder", "default");
 			context.select_exception_file_types_(true, dataMap);
 			dataMap.put("enable_slip_sheets", "true");
 			dataMap.put("workproduct_for_slipsheets", "Default Automation Folder");
 			dataMap.put("use_prior_production", "false");
 			dataMap.put("field_for_slip_sheets", "AllProductionBatesRanges");
-			context.select_slip_sheets_(true, dataMap);
+			context.select_slip_sheets(true, dataMap);
 			dataMap.put("branding_location", "center");
 			dataMap.put("include_applied_redactions", "true");
 			dataMap.put("opaque_transparent", "opaque");
 			context.select_branding_redactions(true, dataMap);
 			dataMap.put("export_file_name", "DocFileName");
+			dataMap.put("default_export_format", "true");
 			context.select_export_format(true, dataMap);
 			context.click_download_file_link(true, dataMap);
 			dataMap.put("A", "");
