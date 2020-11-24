@@ -209,6 +209,17 @@ public class BatchPrintPage {
     public Element getWorkProductFolderCheckBoxByName(String name) {return driver.FindElementByXPath(String.format("(//a[@data-content = '%s']/i)[1]",name));}
     public Element getExceptionTypeMediaToggle() { return driver.FindElementByCssSelector("#includeMediaFileCheckBox + i");}
     public Element getExceptionTypeOtherToggle() {return driver.FindElementByCssSelector("#includeOtherExceptionFileTypesCheckBox + i");}
+    public Element getInsertMetadataMedia() { return driver.FindElementById("mediaFileInsertMetadataLinkButton");}
+    public Element getInsertMetadataMedia_OKbutton() { return driver.FindElementById("mediaFileOk");}
+    
+    public Element getInsertMetadataExcel() { return driver.FindElementById("excelFileInsertMetadataLinkButton");}
+    public Element getInsertMetadataExcel_OKbutton() { return driver.FindElementById("excelFileOk");}
+
+    public Element getInsertMetadataExceptionFile() {return driver.FindElementById("otherExceptionFileTypesInsertMetadataLinkButton");}
+    public Element getInsertMetadataExceptionFile_OKbutton() { return driver.FindElementById("otherExceptionFileTypesOk");}
+
+    
+    
     
     public BatchPrintPage(Driver driver, int i) {
     		this.driver = driver;

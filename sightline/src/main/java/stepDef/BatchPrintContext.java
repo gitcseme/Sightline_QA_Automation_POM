@@ -404,31 +404,26 @@ public class BatchPrintContext extends CommonContext {
 			//* Select Export Format
 			//* Click Generate button
 			//
-
-
-
-
 			try {
-				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
-
-
-				if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
-
-					batchPrint.getOnePDFForAllDocsRadioButton().Click();
+				if(dataMap.get("default_export_format").toString().equalsIgnoreCase("true")) {
+					batchPrint.getGenerateButton().click();
 				}
-				
-
-				if (dataMap.containsKey("sort_by")) {
-					//TODO: Remove sendKeys and use a select function
-					String option = (String)dataMap.get("sort_by");
-					batchPrint.getSelectExportFileSortBy().click();
-					batchPrint.getSelectExportDropDownByOption(option).click();
+				else {
+					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+							   batchPrint.getSelectExportFileSortBy().Visible()  ;}}), Input.wait30);
+	
+					if (dataMap.get("pdf_creation").toString().equalsIgnoreCase("One PDF for all documents")) {
+						batchPrint.getOnePDFForAllDocsRadioButton().Click();
+					}
+					
+					if (dataMap.containsKey("sort_by")) {
+						//TODO: Remove sendKeys and use a select function
+						String option = (String)dataMap.get("sort_by");
+						batchPrint.getSelectExportFileSortBy().click();
+						batchPrint.getSelectExportDropDownByOption(option).click();
+					}
+					batchPrint.getGenerateButton().click();
 				}
-				
-
-				batchPrint.getGenerateButton().click();
-
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -464,6 +459,7 @@ public class BatchPrintContext extends CommonContext {
 					i++;
 					driver.getWebDriver().navigate().refresh();
 					driver.waitForPageToBeReady();
+					Thread.sleep(60000);
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							batchPrint.getBackgroundTaskFirstRowStatus().Displayed() ;}}), Input.wait30);
 				}
@@ -472,10 +468,13 @@ public class BatchPrintContext extends CommonContext {
 					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							batchPrint.getBackgroundTaskFirstRowDownloadLink().Displayed() ;}}), Input.wait30);
 					batchPrint.getBackgroundTaskFirstRowDownloadLink().click();
+					//wait for download to be ready
+					Thread.sleep(60000);
 					driver.waitForPageToBeReady();
 				} else {
 					fail(dataMap, "Refreshed page 1000 times and is still in progress!");
 				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 
@@ -2651,14 +2650,55 @@ public class BatchPrintContext extends CommonContext {
 		if (scriptState) {
 			//
 			//* Select Exception File Types
+			//			Enable Media Files placeholder based on 'media_files'
+			//			Click 'Insert Metadata Field' button
+			//			If 'media_files_placeholder' set, use that Metadata field
+			//			If 'media_files_placeholder' not set, default to 'AllProductionBatesRange' field
+			//
+			//			Choose print/skip based on 'excel_files' variable
+			//			Enable Excel Files placeholder based on 'excel_files_enabled'
+			//			If 'excel_files_placeholder' set, use that Metadata field
+			//			If 'excel_files_placeholder' not set, default to 'AllProductionBatesRange' field
+			//
+			//			Enable Other Exception File Types placeholder based on 'other_exception_file_types'
+			//			Click 'Insert Metadata Field' button
+			//			If 'other_exception_file_types_placeholder' set, use that Metadata field
+			//			If 'other_exception_file_types_placeholder' not set, default to 'AllProductionBatesRange' field
+			
 			//* Click Next button
 			//
 
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				batchPrint.getExceptionTypeMediaToggle().Displayed() ;}}), Input.wait30);
-			if(((String)dataMap.get("media_files")).equalsIgnoreCase("false")) batchPrint.getExceptionTypeMediaToggle().click();
-			if(((String)dataMap.get("other_exception_file_types")).equalsIgnoreCase("false")) batchPrint.getExceptionTypeOtherToggle().click();
-			if(((String)dataMap.get("excel_files")).equalsIgnoreCase("skip")) batchPrint.getAnalysis_SkipExcelFiles_RadioButton().click();
+			
+			if(((String)dataMap.get("media_files")).equalsIgnoreCase("true")) {
+				batchPrint.getInsertMetadataMedia().click();
+				if(((String)dataMap.get("media_files_placeholder")).equalsIgnoreCase("default")) {
+					batchPrint.getInsertMetadataMedia_OKbutton().click();
+				}
+			}
+			else {
+				batchPrint.getExceptionTypeMediaToggle().click(); }
+
+			
+			if(((String)dataMap.get("other_exception_file_types")).equalsIgnoreCase("true")) {
+				batchPrint.getInsertMetadataExceptionFile().click();
+				if(((String)dataMap.get("other_exception_file_types_placeholder")).equalsIgnoreCase("default")) {
+					batchPrint.getInsertMetadataExceptionFile_OKbutton().click();
+				}
+			}
+			else {
+				batchPrint.getExceptionTypeOtherToggle().click(); }
+
+			
+			if(((String)dataMap.get("excel_files")).equalsIgnoreCase("skip")) {
+				batchPrint.getAnalysis_SkipExcelFiles_RadioButton().click();
+				batchPrint.getInsertMetadataExcel().click();
+				if(((String)dataMap.get("excel_files_placeholder")).equalsIgnoreCase("default")) {
+					batchPrint.getInsertMetadataExcel_OKbutton().click();
+				}
+			}
+			
 			batchPrint.getExceptionFileTypesNextButton().click();
 
 			pass(dataMap, "was able to select exception file types");
@@ -2770,9 +2810,30 @@ public class BatchPrintContext extends CommonContext {
 
 		if (scriptState) {
 			//
-			throw new ImplementationException("select_source_selection_");
+			String folder = (String) dataMap.get("select_folder");
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getFolderRadioButton().Displayed() ;}}), Input.wait30);
+			batchPrint.getFolderRadioButton().click();
+		
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getFolderAllTagsExpandFolder().Displayed() ;}}), Input.wait30);
+			batchPrint.getFolderAllTagsExpandFolder().click();
+				
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getAllFolderOptions().FindWebElements().size()!=0 ;}}), Input.wait30);
+		
+			for(WebElement x: batchPrint.getAllFolderOptions().FindWebElements()) {
+				if(x.getText().equals(folder)) x.click();
+			}
+			
+			driver.waitForPageToBeReady();
+		
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				batchPrint.getSourcenextbutton().Enabled() ;}}), Input.wait30);	
+			batchPrint.getSourcenextbutton().click();
+			pass(dataMap,"select_source_selection_");
 		} else {
-			throw new ImplementationException("NOT select_source_selection_");
+			fail(dataMap,"NOT select_source_selection_");
 		}
 
 	}
