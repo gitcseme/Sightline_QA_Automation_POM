@@ -2823,7 +2823,6 @@ public class BatchPrintContext extends CommonContext {
 	                       batchPrint.get500PlusFiles().Displayed()  ;}}), Input.wait30);
 	            batchPrint.get500PlusFiles().click();
 	            
-
 				driver.waitForPageToBeReady();
 				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					batchPrint.getSourcenextbutton().Enabled() ;}}), Input.wait30);
