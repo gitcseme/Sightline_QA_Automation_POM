@@ -1,5 +1,6 @@
 package pageFactory;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
@@ -18,27 +19,66 @@ public class SessionSearch {
     BaseClass base;
   
     public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
-    public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
+    public String EnterSearchStringLocator = ".//*[@id='xEdit']/li/input";
+    public Element getEnterSearchString(){ return driver.FindElementByXPath(EnterSearchStringLocator); }
+    public Element getEditSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]/li[2]",index)); }
+    public Element getSearchString(int index){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit'])[%s]",index)); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
+    public String QuerySearchButton = "//*[@id='qSearch']";
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
     public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
    
     //Hits
-    public Element getPureHitsCount(){ return driver.FindElementByXPath(".//*[@id='001']/span/count"); }
-    public Element getPureHitsCountwithOptions(){ return driver.FindElementByXPath(".//*[@id='001']/count"); } 
+    public static final String PureHitTileLabel     = "001";
+    public static final String ThreadedTileLabel    = "002";
+    public static final String FamilyTileLabel      = "003";
+    public static final String NearDupesTileLabel   = "004";
+    public static final String ConseptualTileLabel  = "005";
+    public String getCountLocator(String label) {return String.format(".//*[@id='%s']/span/count", label); }
+    public String getCountWithOptionsLocator(String label) {return String.format(".//*[@id='%s']/count", label); }
+    public String PureHitsCountLocator = getCountLocator(PureHitTileLabel);
+    public Element getPureHitsCount(){ return driver.FindElementByXPath(PureHitsCountLocator); }
+    public Element getPureHitsCountwithOptions(){ return driver.FindElementByXPath(getCountWithOptionsLocator(PureHitTileLabel)); } 
     public Element getPureHitsCount2ndSearch(){ return driver.FindElementByXPath("(//*[@id='001']/span/count)[2]"); }
-    public Element getTDHitsCount(){ return driver.FindElementByXPath(".//*[@id='002']/span/count"); }
-    public Element getNDHitsCount(){ return driver.FindElementByXPath(".//*[@id='003']/span/count"); }
-    public Element getFMHitsCount(){ return driver.FindElementByXPath(".//*[@id='004']/span/count"); }
-    public Element getCSHitsCount(){ return driver.FindElementByXPath(".//*[@id='005']/span/count"); }
+    public String TDCountLocator = getCountLocator(ThreadedTileLabel);
+    public Element getTDHitsCount(){ return driver.FindElementByXPath(TDCountLocator); }
+    public Element getTDCountwithOptions(){ return driver.FindElementByXPath(getCountWithOptionsLocator(ThreadedTileLabel)); } 
+    public String NDCountLocator = getCountLocator(FamilyTileLabel);
+    public Element getNDHitsCount(){ return driver.FindElementByXPath(NDCountLocator); }
+    public Element getNDCountwithOptions(){ return driver.FindElementByXPath(getCountWithOptionsLocator(FamilyTileLabel)); } 
+    public String FMCountLocator = getCountLocator(NearDupesTileLabel);
+    public Element getFMHitsCount(){ return driver.FindElementByXPath(FMCountLocator); }
+    public Element getFMCountwithOptions(){ return driver.FindElementByXPath(getCountWithOptionsLocator(NearDupesTileLabel)); } 
+    public String CSCountLocator = getCountLocator(ConseptualTileLabel);
+    public Element getCSHitsCount(){ return driver.FindElementByXPath(CSCountLocator); }
+    public Element getCSCountwithOptions(){ return driver.FindElementByXPath(getCountWithOptionsLocator(ConseptualTileLabel)); } 
     
     public Element getNewSearchPureHitsCount(int num){ return driver.FindElementByXPath("(//*[@id='001']/span/count)["+num+"]"); }
-    public Element getThreadedCount(){ return driver.FindElementByXPath(".//*[@id='002']/span/count"); }
-    public Element getNearDupeCount(){ return driver.FindElementByXPath(".//*[@id='003']/span/count"); }
-    public Element getFamilyCount(){ return driver.FindElementByXPath(".//*[@id='004']/span/count"); }
-    public Element getConceptualCount(){ return driver.FindElementByXPath(".//*[@id='005']/span/count"); }
+    public Element getThreadedCount(){ return driver.FindElementByXPath(getCountLocator(ThreadedTileLabel)); }
+    public Element getNearDupesCount(){ return driver.FindElementByXPath(getCountLocator(NearDupesTileLabel)); }
+    public Element getFamilyCount(){ return driver.FindElementByXPath(getCountLocator(FamilyTileLabel)); }
+    public Element getConceptualCount(){ return driver.FindElementByXPath(getCountLocator(ConseptualTileLabel)); }
+    
+    public String getTileLabelLocator(String label) {return String.format(".//*[@id='%s']/label", label); }
+    public String SearchPureHitsLabelXPath = getTileLabelLocator(PureHitTileLabel);
+    public Element getNewSearchPureHitsLabel(){ return driver.FindElementByXPath(SearchPureHitsLabelXPath); }
+    public String ThreadedLabelXPath = getTileLabelLocator(ThreadedTileLabel);
+    public Element getThreadedLabel(){ return driver.FindElementByXPath(ThreadedLabelXPath); }
+    public String NearDupeLabelXPath = getTileLabelLocator(NearDupesTileLabel);
+    public Element getNearDupesLabel(){ return driver.FindElementByXPath(NearDupeLabelXPath); }
+    public String FamilyLabelXPath = getTileLabelLocator(FamilyTileLabel);
+    public Element getFamilyLabel(){ return driver.FindElementByXPath(FamilyLabelXPath); }
+    public String ConceptualLabelXPath = getTileLabelLocator(ConseptualTileLabel);
+    public Element getConceptualLabel(){ return driver.FindElementByXPath(ConceptualLabelXPath); }
+
     public Element getSaveSearchButton(){ return driver.FindElementByXPath("SaveSearch_Button"); }
-    public Element getPureHitAddButton(){ return driver.FindElementByXPath(".//*[@id='001']/i[2]"); }
+    public String getTileAddButtonLocator(String label)  {return String.format("//*[@id='001']/i[2]", label); }
+    public Element getPureHitAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(PureHitTileLabel)); }
+    public Element getThreadedAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(ThreadedTileLabel)); }
+    public Element getNearDupesAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(NearDupesTileLabel)); }
+    public Element getFamilyAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(FamilyTileLabel)); }
+    public Element getConceptualAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(ConseptualTileLabel)); }
+    public Element getConceptAddButton(){ return driver.FindElementByXPath(getTileAddButtonLocator(ConseptualTileLabel)); }
   
     //Bulk tag and folder
     public Element getBulkActionButton(){ return driver.FindElementById("idAction"); }
@@ -63,8 +103,8 @@ public class SessionSearch {
   
     //Actions
     public Element getas_Action_Exportdata(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[text()='Export Data']"); }
-    public Element getDocListAction(){ return driver.FindElementByXPath("//a[contains(text(),'View In DocList')]"); }
-    public Element getDocViewAction(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'View In DocView')]"); }
+    public Element getDocListAction(){ return driver.FindElementByCssSelector("[id=DoclistOpt] a"); }
+    public Element getDocViewAction(){ return driver.FindElementByCssSelector("[id=DocviewOpt] a"); }
     public Element getDocViewActionDL(){ return driver.FindElementByXPath("//a[contains(.,'View in DocView')]"); }
     
     public Element getTallyResults(){ return driver.FindElementByXPath("//*[@id='ddlbulkactions']//a[contains(.,'Tally Results')]"); }
@@ -74,35 +114,52 @@ public class SessionSearch {
         
     //save search    
     public Element getSaveSearch_Button(){ return driver.FindElementById("btnSaveSearch"); }
+    public Element getSaveSearch_Button(int index){ return driver.FindElementByXPath(String.format("(//*[@id='btnSaveSearch'])[%s]",index)); }
+    public ElementCollection getAllSaveSearch_Button(){ return driver.FindElementsByXPath(String.format("(//*[@id='btnSaveSearch'])")); }
     public Element getAdvanceS_SaveSearch_Button(){ return driver.FindElementByXPath("//div[@class='searchInput smart-accordion-default']//div[@class='row']//*[@id='qSave']"); }
     
     public Element getSavedSearch_MySearchesTab(){ return driver.FindElementById("-1_anchor"); }
     public Element getSaveSearch_Name(){ return driver.FindElementById("txtSaveSearchName"); }
     public Element getSaveSearch_SaveButton(){ return driver.FindElementById("btnEdit"); }
+    public Element getSaveSearch_CancelButton(){ return driver.FindElementByXPath("//button[contains(text(),'Cancel')]"); }
     public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
+    public Element getBulkRelease_ButtonUnrelease() {return driver.FindElementById("btnUnrelease");}
     
     //Metadata
     public Element getBasicSearch_MetadataBtn(){ return driver.FindElementById("metadataHelper"); }
+    public Element getBasicSearch_MetadataBtn(int index){ return driver.FindElementByXPath(String.format("(//*[@id='metadataHelper'])[%s]",index)); }
+    public ElementCollection getAllBasicSearch_MetadataBtn(){ return driver.FindElementsByXPath("(//*[@id='metadataHelper'])"); }
     public Element getAdvanceSearch_MetadataBtn(){ return driver.FindElementByXPath("(//*[@id='metadataHelper'])[2]"); }
     public Element getSelectMetaData(){ return driver.FindElementById("metatagSelect"); }
     public Element getMetaOption(){ return driver.FindElementById("selectOp"); }
     public Element getMetaDataSearchText1(){ return driver.FindElementById("val1"); }
     public Element getMetaDataSearchText2(){ return driver.FindElementById("val2"); }
+    public Element getMetaDataEditSearchBtn(){ return driver.FindElementByXPath("//*[@id='val1']/../../../../div[2]/button"); }
     public Element getMetaDataInserQuery(){ return driver.FindElementById("insertQueryBtn"); }
+    public String MetaDataCancelButtonXPath = "//*[@id='insertmetadataPop']//a[@id='close']";
    
     //Advance Search
-    public Element getAdvancedSearchLink(){ return driver.FindElementByXPath("//*[@id='advancedswitch']"); }
-    public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath("//button[@id='contentmetadata']"); }
-    public Element getWorkproductBtn(){ return driver.FindElementByXPath("//button[@id='workproduct']"); }
+    public String AdvanceLabelXPath = "//*[@id='Adv']//span[contains(text(),'Advanced')]";
+    public Element getAdvancedLabel() { return driver.FindElementByXPath(AdvanceLabelXPath); }
+    public String AdvancedSearchLinkXPath = "//*[@id='advancedswitch']";
+    public Element getAdvancedSearchLink(){ return driver.FindElementByXPath(AdvancedSearchLinkXPath); }
+    public String ContentAndMetaDatabtnXPath = "//button[@id='contentmetadata']";
+    public Element getContentAndMetaDatabtn(){ return driver.FindElementByXPath(ContentAndMetaDatabtnXPath); }
+    public String getWorkproductBtnXPath = "//button[@id='workproduct']";
+    public Element getWorkproductBtn(){ return driver.FindElementByXPath(getWorkproductBtnXPath); }
     public Element getSavedSearchBtn(){ return driver.FindElementById("savedSearchesHelper"); }
-    public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+savedSearchName+"')]"); }
-    public ElementCollection getTree(){ return driver.FindElementsByXPath("//a[@class='jstree-anchor'][contains(text(),'')]"); }
+    //public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+savedSearchName+"')]"); }
+    public Element getSavedSearchName(String savedSearchName){ return driver.FindElementByXPath(String.format("//span[@data-savedname='%s']/..",savedSearchName)); }
+    public String TreeXPath = "//a[@class='jstree-anchor'][contains(text(),'')]";
+    public ElementCollection getTree(){ return driver.FindElementsByXPath(TreeXPath); }
     public ElementCollection getSecurityNamesTree(){ return driver.FindElementsByXPath("//*[@id='JSTree']/div/label"); }
     
     //advanced Content search
-    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath("//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']"); }
+    //  public String AdvancedContentSearchInputXPath = "//*[@id='c-1']//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+    public String AdvancedContentSearchInputXPath = "//*[@id='contentmetadata']//*[@id='xEdit']/li/input[@autocomplete='on']";
+    public Element getAdvancedContentSearchInput(){ return driver.FindElementByXPath(AdvancedContentSearchInputXPath); }
     
     //Audio Search
     public Element getAs_Audio(){ return driver.FindElementById("audio"); }
@@ -121,23 +178,31 @@ public class SessionSearch {
     public Element getBulkUntagbutton(){ return driver.FindElementByXPath("//*[@id='toUnassign']/following-sibling::i"); }
     public Element getSelectTagExisting(String tagName){ return driver.FindElementByXPath("//*[@id='divBulkTagJSTree']//a[contains(.,'"+tagName+"')]"); }
     public Element getBulkUnFolderbutton(){ return driver.FindElementByXPath("//*[@id='toUnfolder']/following-sibling::i"); }
+    public String FolderBtnXPath = "//*[@id='foldersHelper']";
     public Element getWP_FolderBtn(){ return driver.FindElementById("foldersHelper"); }
     public Element getWP_TagBtn(){ return driver.FindElementById("tagsHelper"); }
     public Element getWP_assignmentsBtn(){ return driver.FindElementById("assignmentsHelper"); }
-   
     public Element getWP_SelectFolderName(String FolderName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+FolderName+"')]"); }
     public Element getWP_SelectTagName(String TagName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+TagName+"')]"); }
     public Element getWP_SelectRedactionName(String redactName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+redactName+"')]"); }
     public Element getWP_SelectSGName(String sgName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+sgName+"')]"); }
     public Element getWP_SelectProductionName(String productionName){ return driver.FindElementByXPath("//a[@class='jstree-anchor'][contains(text(),'"+productionName+"')]"); }
-    public Element getRedactionBtn(){ return driver.FindElementById("redactionsHelper"); }
+    public String RedactionBtnXPath = "//*[@id='redactionsHelper']";
+    public Element getRedactionBtn(){ return driver.FindElementByXPath(RedactionBtnXPath); }
     public Element getProductionBtn(){ return driver.FindElementById("productionsHelper"); }
     public Element getSecurityGrpBtn(){ return driver.FindElementById("SecurityGroupsHelper"); }
     public Element getOperatorDD(){ return driver.FindElementByXPath("(//*[@id='Tabs']//button[contains(text(),'Operator')])[2]"); }
+    public Element getOperatorDD(int index){ return driver.FindElementByXPath(String.format("(//*[@id='Tabs']//button[contains(text(),'Operator')])[%s]",index)); }
     public Element getOperatorAND(){ return driver.FindElementByXPath("(//*[@id='opAND'])[2]"); }
+    public Element getOperatorAND(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opAND'])[%s]",index)); }
     public Element getOperatorOR(){ return driver.FindElementByXPath("(//*[@id='opOR'])[2]"); }
+    public Element getOperatorOR(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opOR'])[%s]",index)); }
     public Element getOperatorNOT(){ return driver.FindElementByXPath("(//*[@id='opNOT'])[2]"); }
-    
+    public Element getOperatorNOT(int index){ return driver.FindElementByXPath(String.format("(//*[@id='opNOT'])[%s]",index)); }
+    public String RedactionPopUpCloseBtnXPath = "//*[@id='insertredactionsPop']/div/h3/div/a[@id='close']";
+    public Element getRedactionPopUpClose() { return driver.FindElementByXPath(RedactionPopUpCloseBtnXPath); }
+    public String FolderPopUpCloseBtnXPath = "//*[@id='insertfoldersPop']/div/h3/div/a[@id='close']";
+    public Element getFolderPopUpClose() { return driver.FindElementByXPath(FolderPopUpCloseBtnXPath); }
     //Conceptual Search right, left and mid
     public Element getConceptualRight(){ return driver.FindElementByXPath("//span[@class='irs-line-right']"); }
     public Element getConceptualLeft(){ return driver.FindElementByXPath("//span[@class='irs-line-left']"); }
@@ -156,20 +221,21 @@ public class SessionSearch {
     //search query alerts
     public Element getQueryAlertGetText(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]"); } 
     public Element getQueryAlertGetTextSingleLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/p"); } 
+    public Element getQueryAlertGetTextMultiLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div"); } 
+    public Element getQueryPossibleWrongAlertContinueButton() {return driver.FindElementById("bot1-Msg1");}
+    public Element getQueryPossibleWrongAlertNoContinueButton() {return driver.FindElementById("bot2-Msg1");}
     
   //shilpi
     public Element getSaveSearch_AdvButton(){ return driver.FindElementByXPath(".//*[@id='tabsResult-1']//a[@id='qSave']"); }
     
     //conceptually playBtn
-    public Element getConceptuallyPlayButton(){ return driver.FindElementByXPath("//*[contains(@id,'playButton')]"); }
-    
+    public String ConceptuallyPlayButton = "//*[contains(@id,'playButton')]";
+    public Element getConceptuallyPlayButton(){ return driver.FindElementByXPath(ConceptuallyPlayButton); }
+    public String ConceptuallySearchInProgressXPath = "(//*[@id='spinwheel-1982-005'])";
     //modify advanced search
-    public Element getModifyASearch(){ return driver.FindElementById("qModifySearch"); }
+    public String ModifySearchLocator = "(.//*[@id='qModifySearch'])";
+    public Element getModifyASearch(){ return driver.FindElementById(ModifySearchLocator); }
   //added by shilpi
-    public Element getThreadedAddButton(){ return driver.FindElementByXPath(".//*[@id='002']/i[2]"); }
-    public Element getNearDupesAddButton(){ return driver.FindElementByXPath(".//*[@id='003']/i[2]"); }
-    public Element getFamilyAddButton(){ return driver.FindElementByXPath(".//*[@id='004']/i[2]"); }
-    public Element getConceptAddButton(){ return driver.FindElementByXPath(".//*[@id='005']/i[2]"); }
 
   //added by shilpi on 17-07
     public Element getRemovedocsfromresult(){ return driver.FindElementByXPath("//*[@class='fa fa-times-circle ui-removeTile']"); }
@@ -200,9 +266,12 @@ public class SessionSearch {
     public Element getQuickBatchAction(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
     
     //search options
-    public Element getadvoption_family(){ return driver.FindElementByXPath("//*[@id='chkIncludeFamilyMember']/following-sibling::i"); }
-    public Element getadvoption_near(){ return driver.FindElementByXPath("//*[@id='chkIncludeNearDuplicate']/following-sibling::i"); }
-    public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
+    public String AdvOption_familyXPath = "//*[@id='chkIncludeFamilyMember']/following-sibling::i";
+    public Element getadvoption_family(){ return driver.FindElementByXPath(AdvOption_familyXPath); }
+    public String AdvOption_nearXPath = "//*[@id='chkIncludeNearDuplicate']/following-sibling::i";
+    public Element getadvoption_near(){ return driver.FindElementByXPath(AdvOption_nearXPath); }
+    public String AdvOption_threadedXPath = "//*[@id='chkIncludeThreadedDocuments']/following-sibling::i";
+    public Element getadvoption_threaded(){ return driver.FindElementByXPath(AdvOption_threadedXPath); }
     
     //Assignment distribution list
     public ElementCollection getadwp_assgn_distributedto(){ return driver.FindElementsById("dist"); }
@@ -213,29 +282,129 @@ public class SessionSearch {
     public Element getPageTitle() {return driver.FindElementByCssSelector("h1.page-title"); }
     public Element getHelpTip() {return driver.FindElementByCssSelector("a.helptip[data-original-title='Searching Help']"); }
     public Element getUniqueCount(){ return driver.FindElementByCssSelector("h1.page-title span label"); }
+    public String SearchQueryTextXpath = "//*[@id='xEdit']/li";
     public Element getSearchQueryText(int listItem){ return driver.FindElementByXPath(String.format("(//*[@id='xEdit']/li)[%s]",listItem+1)); }
     public Element getSearchQueryText(){ return driver.FindElementByCssSelector("#xEdit li"); }
-    public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector("#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']"); }
+    public String RemoveSearchQueryXPath = "(//*[@id='xEdit']//a[@href='#'])";
+    public String RemoveSearchQueryLocator = "#xEdit li.textboxlist-bit a.textboxlist-bit-box-deletebutton[href='#']";
+    public Element getRemoveSearchQuery() { return driver.FindElementByCssSelector(RemoveSearchQueryLocator); }
+    
+    public Element getSearchTable() {return driver.FindElementById("sessionSearchList");}
+    public ElementCollection getSearchTabName() { return driver.FindElementsByXPath("//span[@class = 'SrchText']");}
+    public ElementCollection getMetaDataSearchButtons() {return driver.FindElementsById("metadataHelper");}
+    public ElementCollection getSaveSearchButtons() {return driver.FindElementsById("btnSaveSearch");}
+    public ElementCollection getSearchButtons() {return driver.FindElementsById("btnBasicSearch");}
+    public ElementCollection getSavedQueryButtons() {return driver.FindElementsByXPath("//a[contains(@class,  'liClick ui-tabs-anchor')]");}
+    public Element getQueryText2(int i) {return driver.FindElementByXPath(String.format("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)[%d]",i+1));}
+    public ElementCollection getQueryTextBoxes() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit-box-deletable')]/span)");}
+    public ElementCollection setQueryText() {return driver.FindElementsByXPath("(//li[contains(@class, 'textboxlist-bit textboxlist-bit-editable')])/input");}
+    public Element getSearchTableResults() {return driver.FindElementById("taskbasic");}
+    public ElementCollection getAllSearchTableResults() {return driver.FindElementsById("taskbasic");}
 
+    public Element getMessageBoxButtonSection() { return driver.FindElementById("MessageBoxButtonSection");}
+    public Element getOperatorDropDown() {return driver.FindElementByXPath("//button[@class = 'btn btn-default dropdown-toggle insertOpHelper']");}
+    public ElementCollection getOperatorDropdown() {return driver.FindElementsByXPath("//button[text()='Operator']");}
+    public ElementCollection getOperatorDropDownOP(String op) {return driver.FindElementsByXPath(String.format("//a[@id='op%s']", op));}
+    public Element getResultsTab() {return driver.FindElementById("resultsTabs");}
+    public Element getSaveSearchPopup() {return driver.FindElementById("ui-id-1");}
+    public Element getSearchAutoCompletePopup() {return driver.FindElementById("ui-id-2");}
+    public Element getDocsThatMetCriteriaAddBtn() { return driver.FindElementByXPath("//a[@id='001']//i[@class='fa fa-plus-circle ui-addTile addTile']"); }
+    public String ResultCartXPath = "//div[@id='resultsCart']";
+    public Element getResultCart() { return driver.FindElementByXPath(ResultCartXPath); }
+    public String ResultTileXPath(String searchId, String tileId) { return String.format("//div[@id='resultsCart']//li[@id='resultsCartli-%s-%s']",searchId,tileId);}
+    public String ResultTilesXPath = "//div[@id='resultsCart']//li[contains(@id, 'results')]";
+    public ElementCollection getResultTiles() { return driver.FindElementsByXPath(ResultTilesXPath); }
+    public Element getResultTile() { return driver.FindElementByXPath("//div[@id='resultsCart']//li[contains(@id, 'results')]"); }
+    public String getTileThatMetCriteriaAddBtn(String id) { return String.format("//a[@id='%s']//i[@class='fa fa-plus-circle ui-addTile addTile']",id); }
+    public String getTileThatMetCriteriaAddBtnAfterUnpinned(String id) { return String.format("//a[@id='%s']/../i[@class='fa fa-plus-circle ui-addTile addTile']",id); }
+    public Element getTileThatMetCriteriaAddBtn() { return driver.FindElementByXPath("//a[@id='001']//i[@class='fa fa-plus-circle ui-addTile addTile']"); }
+
+    public Element getSearchDocsResults() { return driver.FindElementById("countCount-2871-001");}
+    
+    public ElementCollection getSearchResultDocsMetCriteriaPlusButton() { return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title='Docs That Met Your Criteria'] i.fa-plus-circle");}
+    public ElementCollection getSearchResultDocsmetCriteriaCount() {return driver.FindElementsByCssSelector("[id=gallery] li [data-original-title='Docs That Met Your Criteria'] count");}
+    public ElementCollection getSearchDocumentMatchNumber() { return driver.FindElementsByCssSelector("#gallery li count");}
+    public ElementCollection getSearchResultsTableRows() {return driver.FindElementsByCssSelector("#taskbasic>tbody>tr");}
+    
+    // Error Messages
+    public String DateValidationMsgXPath = "//span[@id='DateValidationMsg']";
+    
+    // SavedSearchList
+    public Element getSavedSearchList() { return driver.FindElementById("sessionSearchList"); }
+    public String AutoSuggestXPath = "//li[@class='ui-menu-item']/div";
+    public Element getAutoSuggest() { return driver.FindElementByCssSelector("ul.ui-ete li.ui-menu-item a"); }
+    public String SearchInProgressXPath = "//*[@id='imgLoadPM']";
+    public Element isSearchInProgress() { return driver.FindElementById("imgLoadPM"); }
+    public String uri = "Search/Searches";
+    
+    // message popups
+    public Element getMessagePopupCloseBtn() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//i[contains(@id, 'botClose')]"); }
+    public Element getMessagePopup() { return driver.FindElementByXPath("//div[@id='divbigBoxes']//p"); }
+    
+    // Comment Searches
+    public String CommentsbtnXPath = "//button[@id='commentsHelper']";
+    public Element getCommentsbtnbtn(){ return driver.FindElementByXPath(CommentsbtnXPath); }
+    public Element getSelectCommentField() { return driver.FindElementByXPath("//*[@id='fieldSelect']"); }
+    public Element getCommentInsertQuery(){ return driver.FindElementById("insertQueryBtn"); }
+
+    // searches 
+    public String UnsavedSearchItemXPath = "//span[@id='SearchCnt' and text()='%s']";
+    public Element getUnsavedSearchItem(int i) { return driver.FindElementByXPath(String.format(UnsavedSearchItemXPath,i)); }
+    public String UnsavedSearchItemPinXPath = UnsavedSearchItemXPath+"/../span/button";
+    public Element getUnsavedSearchItemPin(int i) { return driver.FindElementByXPath(String.format(UnsavedSearchItemPinXPath,i)); }
+    public String UnsavedSearchItemPinnedXPath = UnsavedSearchItemXPath+"/./span[@class='pin-search pinned']";
+    public Element getUnsavedSearchItemPinned(int i) { return driver.FindElementByXPath(String.format(UnsavedSearchItemXPath,i)); }
+    
+    public void selectCommentFieldOption(String commentField) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSelectCommentField().Enabled()  ;}}), Input.wait30); 
+		
+		getSelectCommentField().selectFromDropdown().selectByVisibleText(commentField);
+    }
+
+    public void setCommentValue(String val1) {
+
+    	driver.waitForPageToBeReady();
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+
+		getCommentInsertQuery().Click();    	
+    }
+ 
     public SessionSearch(Driver driver){
     	this(Input.url, driver);
     }
     public SessionSearch(String url, Driver driver){
 
     	this.driver = driver;
-        this.driver.getWebDriver().get(url+ "Search/Searches");
-        //base = new BaseClass(driver);
+        this.driver.getWebDriver().get(url+ uri);
+        base = new BaseClass(driver);
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
-    
-    public Element removeSearchQueryRemove(int listItem){ 
-    	Element removeLineItem = getSearchQueryText(listItem); 
+    //Similar to the overloaded Function of the same name
+    //This one does not rely on the appropriate ListItem Index, instead deleting the first avaliable item
+    public Element removeSearchQueryRemove(){ 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getActiveElementByXPath(SearchQueryTextXpath).Enabled()  ;}}), Input.wait30);
+    	Element removeLineItem = getActiveElementByXPath(SearchQueryTextXpath); 
 		Actions builder=new Actions(driver.getWebDriver());
 		// Mouse hover to see X button
 		builder.moveToElement(removeLineItem.getWebElement()).perform();
-		return getRemoveSearchQuery();		
+		Element removeSearchQuery = getActiveElementByXPath(RemoveSearchQueryXPath);
+		return removeSearchQuery;		
+//		return getRemoveSearchQuery();		
+    }
+
+    public Element hoverOverTileCount(String tileElementXpath){ 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getActiveElementByXPath(tileElementXpath).Enabled()  ;}}), Input.wait30);
+    	Element tileItem = getActiveElementByXPath(tileElementXpath); 
+		Actions builder=new Actions(driver.getWebDriver());
+		// Mouse hover to see X button
+		builder.moveToElement(tileItem.getWebElement()).perform();
+
+		return tileItem;		
     }
 
     public String getToolTipMsgBS(String isOrRange, String metaDataField) {
@@ -320,9 +489,89 @@ public class SessionSearch {
 		
 		return null;
 	}
-    public void saveSearch(String searchName) {
+
+    public String getToolTipText(Element toolTipIcon,Element toolTipText) {
+		Actions builder=new Actions(driver.getWebDriver());
+		toolTipIcon.waitAndClick(10);
+		
+		builder.moveToElement(toolTipText.getWebElement()).perform();
+		String toolTip = toolTipText.getText();
+		
+		return toolTip;
+    }
+    
+    public Element getActiveButtonById(String id) {
+    	return getActiveElementByXPath(String.format("//*[@id='%s']",id));
+    }
+    
+    public Element getActiveElementByXPath(String xPath) {
+    	Element activeElement = null;
+    	ElementCollection coll = driver.FindElementsByXPath(String.format("(%s)",xPath));;
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element e = driver.FindElementByXPath(String.format("(%s)[%s]",xPath,c));
+			if (e.Visible()) {
+				activeElement = e;
+				break;
+			}
+    	}
+
+    	return activeElement;
+    }
+    
+    public ElementCollection getVisibleElementsByXPath(String xPath) {
+    	ElementCollection coll = driver.FindElementsByXPath(String.format("(%s)",xPath));
+  
+    	Iterator<Element> i = coll.iterator();
+    	 
+    	while(i.hasNext()) {
+    	    Element e = i.next();
+    	    try {
+	    	    if (!e.Visible()) {
+	    	        i.remove();
+	    	    }
+    	    } catch (Exception ex) {
+    	    	// not visible or valid 
+    	    	i.remove();
+    	    }
+    	}
+
+    	return coll;
+    }
+    
+    public Element getActiveElementFromCollectionByXPath(String xPath) {
+    	Element activeElement = null;
+    	ElementCollection coll = driver.FindElementsByXPath(String.format("(%s)",xPath));;
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element e = driver.FindElementByXPath(String.format("(%s)[%s]",xPath,c));
+			if (e.Visible()) {
+				activeElement = e;
+				break;
+			}
+    	}
+
+    	return activeElement;
+    }
+    public Element getActiveSaveSearch_Button() {
+    	Element activeBtn = null;
+    	ElementCollection coll = getAllSaveSearch_Button();
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element btn = getSaveSearch_Button(c);
+			if (btn.Visible()) {
+				activeBtn = btn;
+				break;
+			}
+    	}
+
+    	return activeBtn;
+    }
+    
+    public void initiateSaveSearch(String searchName) {
     	try{
-    	getSaveSearch_Button().waitAndClick(5);
+    		getActiveSaveSearch_Button().waitAndClick(5);
+    		//getSaveSearch_Button().waitAndClick(5);
     	}catch (Exception e) {
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
@@ -337,10 +586,35 @@ public class SessionSearch {
     			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
     	getSavedSearch_MySearchesTab().Click();
     	getSaveSearch_Name().SendKeys(searchName);
+    	
+    }
+    public void cancelSaveSearch(String searchName) {
+    	initiateSaveSearch(searchName);
+    	getSaveSearch_CancelButton().Click();
+    	System.out.println("Cancelled search save with name - "+searchName);
+    }  
+    public void saveSearch(String searchName) {
+    	initiateSaveSearch(searchName);
     	getSaveSearch_SaveButton().Click();
-    	base.VerifySuccessMessage("Saved search saved successfully");
+    	VerifySuccessMessage("Saved search saved successfully");
     	System.out.println("Saved search with name - "+searchName);
 	}
+    public void VerifySuccessMessage(String msg) {
+		base.VerifySuccessMessage(msg);
+		base.CloseSuccessMsgpopup();
+    }
+
+    public void invalidMetaDataValueBasicSearch(String SearchString, int MessageNumber, String fielded, String fieldName) {
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getActiveElementByXPath(DateValidationMsgXPath).Visible()  ;}}), Input.wait30); 
+		try {
+			String errorMessage = getActiveElementByXPath(DateValidationMsgXPath).getText();
+		} catch (Exception e) {
+			
+		}
+   
+    }
+    
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
     	
@@ -531,17 +805,22 @@ public class SessionSearch {
     	
 
 	}
+    
+    public void enterBasicContentSearchString(String SearchString) {
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getActiveElementByXPath(EnterSearchStringLocator).Visible()  ;}}), Input.wait30); 
+    	getActiveElementByXPath(EnterSearchStringLocator).SendKeys(SearchString) ;
+    }
+    
     //Function to perform content search for a given search string
     public int basicContentSearch(String SearchString){
 
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
-        //Enter seatch string
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
-    	getEnterSearchString().SendKeys(SearchString) ;
-
+        //Enter search string
+    	enterBasicContentSearchString(SearchString);
+    	
         //Click on Search button
     	getSearchButton().Click();
     	
@@ -593,26 +872,38 @@ public class SessionSearch {
    }
     
     public void selectMetaDataOption(String metaDataField) {
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicSearch_MetadataBtn().Enabled()  ;}}), Input.wait30); 
-		getBasicSearch_MetadataBtn().Click();
+    	Element activeBtn = null;
+    	ElementCollection coll = getAllBasicSearch_MetadataBtn();
+    	
+    	for (int c=1; c<coll.size()+1;c++) {
+    		Element btn = getBasicSearch_MetadataBtn(c);
+			if (btn.Visible()) {
+				activeBtn = btn;
+				break;
+			}
+    	}
+		activeBtn.Click();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectMetaData().Visible()  ;}}), Input.wait30); 
 		
-	    try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			
-			e.printStackTrace();
-		}
+		//changed this approach from a sleep to waiting for value to appear in dropdown
+//	    try {
+//			Thread.sleep(4000);
+//		} catch (InterruptedException e) {
+//			
+//			e.printStackTrace();
+//		}
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getSelectMetaData().selectFromDropdownLoaded() ;}}), Input.wait30); 
 		getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
     	
     }
     
     public void setMetaDataValue(String option, String val1, String val2) {
+
+    	driver.waitForPageToBeReady();
 		if(option == null){
-			
 			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
 		}
 		else if(option.equalsIgnoreCase("IS")){
@@ -625,7 +916,32 @@ public class SessionSearch {
 			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
 			
 		}
+
+//	    try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			
+//			e.printStackTrace();
+//		}
 		getMetaDataInserQuery().Click();    	
+    }
+    
+    public void setMetaDataValueNoEnter(String option, String val1, String val2) {
+
+    	driver.waitForPageToBeReady();
+
+		if(option == null){
+			getMetaDataSearchText1().SendKeys(val1);
+		}
+		else if(option.equalsIgnoreCase("IS")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+		}
+		else if(option.equalsIgnoreCase("RANGE")){
+			getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+			getMetaDataSearchText1().SendKeys(val1+Keys.TAB);
+			getMetaDataSearchText2().SendKeys(val2+Keys.TAB);
+		}
     }
     
     public int basicMetaDataSearch(String metaDataField, String option, String val1, String val2) {
@@ -877,7 +1193,7 @@ public class SessionSearch {
 		  //Click on Search button
     	driver.scrollPageToTop();
     	
-}
+    }
     
      //Function to fetch pure hit count 
      public String verifyPureHitsCount() {
@@ -897,8 +1213,8 @@ public class SessionSearch {
     public String verifyNearDupeCount() {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getNearDupeCount().Visible()  ;}}), Input.wait60);
-    	return getNearDupeCount().getText();
+    			getNearDupesCount().Visible()  ;}}), Input.wait60);
+    	return getNearDupesCount().getText();
    
     }
     //Function to fetch Familymembers hit count 
@@ -1412,21 +1728,23 @@ public void selectSecurityGinWPS(String sgname) {
 
 public void selectOperator(String operator) {
 	driver.scrollPageToTop();
-	getOperatorDD().Click();
+	// not sure why this had a index of 2 ([2]) in the locator
+	// kept that the same for backwards compatability, but updated to select the 1st DD by passing index of 1
+	getOperatorDD(1).Click();
 	if(operator.equalsIgnoreCase("and")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait30); 
-		getOperatorAND().Click();	
+				getOperatorAND(1).Visible()  ;}}), Input.wait30); 
+		getOperatorAND(1).Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorOR().Visible()  ;}}), Input.wait30); 
-		getOperatorOR().waitAndClick(5);	
+				getOperatorOR(1).Visible()  ;}}), Input.wait30); 
+		getOperatorOR(1).waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorNOT().Visible()  ;}}), Input.wait30); 
-		getOperatorNOT().Click();	
+				getOperatorNOT(1).Visible()  ;}}), Input.wait30); 
+		getOperatorNOT(1).Click();	
 	}
 
 
@@ -1434,34 +1752,101 @@ public void selectOperator(String operator) {
 
 //Function to perform redaction name search 
 public void  selectRedactioninWPS(final String redactName) throws InterruptedException{
-	 
+	canSetRedactioninWPS(redactName);
+}
+
+public boolean  canSetRedactioninWPS(final String redactName) throws InterruptedException{
+	boolean set = false;
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getRedactionBtn().Visible()  ;}}), Input.wait30); 
-	getRedactionBtn().Click();
+			getActiveElementByXPath(RedactionBtnXPath).Visible()  ;}}), Input.wait30); 
+	getActiveElementByXPath(RedactionBtnXPath).Click();
 	
 	//
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getTree().Visible()  ;}}), Input.wait30);
-	System.out.println(getTree().FindWebElements().size());
+			getActiveElementByXPath(TreeXPath).Visible()  ;}}), Input.wait30);
+	//System.out.println(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
-		//System.out.println(iterable_element.getText());
+		System.out.println(iterable_element.getText());
 		if(iterable_element.getText().contains(redactName)){
 			
 			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 			driver.scrollingToBottomofAPage();
 			System.out.println(iterable_element.getText());
 			iterable_element.click();
+			
+			set = true;
 		}
 	}
 	//
 	//driver.scrollingToBottomofAPage();
 	 
+	if (set) {
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getMetaDataInserQuery().Visible()  ;}}), Input.wait60); 
 	 getMetaDataInserQuery().Click();
+	} else {
+		// nothing set, probably not found, close redaction selection
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getActiveElementByXPath(RedactionPopUpCloseBtnXPath).Visible()  ;}}), Input.wait60); 
+		 getActiveElementByXPath(RedactionPopUpCloseBtnXPath).Click();				
+	}
 	 
 	 driver.scrollPageToTop();
 	
+	 return set;
+}
+
+public boolean  canSetFolderinWPS(final String folderName) throws InterruptedException{
+	boolean set = false;
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getActiveElementByXPath(FolderBtnXPath).Visible()  ;}}), Input.wait30); 
+	getActiveElementByXPath(FolderBtnXPath).Click();
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getActiveElementByXPath(TreeXPath).Visible()  ;}}), Input.wait30);
+	//System.out.println(getTree().FindWebElements().size());
+	for (WebElement iterable_element : getTree().FindWebElements()) {
+		System.out.println(iterable_element.getText());
+		if(iterable_element.getText().contains(folderName)){
+			
+			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
+			driver.scrollingToBottomofAPage();
+			System.out.println(iterable_element.getText());
+			iterable_element.click();
+			
+			set = true;
+		}
+	}
+	//
+//	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			getSelectFolderExisting(folderName).Visible()  ;}}), 10);
+//	
+//	Element f = getSelectFolderExisting(folderName);
+//	try {
+//		f.click();
+//		set = true;
+//		System.out.println(f.getText());
+//	} catch (Exception e) {
+//		System.out.println(String.format("Unable to find folder '%s'.",folderName));
+//		
+//	}
+	//
+	//driver.scrollingToBottomofAPage();
+	 
+	if (set) {
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMetaDataInserQuery().Visible()  ;}}), Input.wait60); 
+		 getMetaDataInserQuery().Click();
+	} else {
+		// nothing set, probably not found, close redaction selection
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getActiveElementByXPath(FolderPopUpCloseBtnXPath).Visible()  ;}}), Input.wait60); 
+		 getActiveElementByXPath(FolderPopUpCloseBtnXPath).Click();				
+	}
+	 
+	 driver.scrollPageToTop();
+	
+	 return set;
 }
 
 //Function to perform assignment name search in work product
@@ -1607,6 +1992,7 @@ public void saveSearchAdvanced(String searchName) {
 	   	getSaveSearch_Name().SendKeys(searchName);
 	   	getSaveSearch_SaveButton().Click();
 	   	base.VerifySuccessMessage("Saved search saved successfully");
+	   	base.CloseSuccessMsgpopup();
 	   	System.out.println("Saved search with name - "+searchName);
 		}
 
@@ -1755,5 +2141,59 @@ public void Removedocsfromresults() {
 			
 
 	}
+  
+   //Insert Directly into Search Query -> inserts into the current selected query
+   public void insertFullText(String searchQuery) {
+	   for(WebElement j: setQueryText().FindWebElements()) {
+		   if(j.isDisplayed()) {
+			   j.click();
+			   j.sendKeys(searchQuery);
+			   j.sendKeys(Keys.ENTER);
+		   }
+	  }
+   }	   
 
- }
+   //Insert Two MetaData Values/Fields with a Condition Operator Between Them
+   public void insertLongText(String metaData1, String metaData2, String condition, String metaVal1, String metaVal2) {
+
+	   if(metaData2 == null){
+		  insertFullText(metaVal1); 
+	   }
+	   else{
+	   //Enter First Field MetaData and Value
+	   	selectMetaDataOption(metaData1);   
+	   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	   	     	getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+	   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	   	     	getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+           	setMetaDataValue(null,metaVal1,null);
+       } 
+       //Insert Condition Operator
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		getOperatorDropdown().FindWebElements().get(0).isEnabled()  ;}}), Input.wait30); 
+       for(WebElement x: getOperatorDropdown().FindWebElements()) {
+    	   if(x.isDisplayed() && x.isEnabled()) {
+    		   x.click();
+    		   for(WebElement y: getOperatorDropDownOP(condition).FindWebElements()) {
+    			   if(y.isDisplayed() && y.isEnabled())
+    				   y.click();
+    		   }
+    	   }
+       }
+       if(metaData2 == null){
+		  insertFullText(metaVal2); 
+	   }
+       else
+       {
+       		//Enter Second Field MetaData and Value
+       		selectMetaDataOption(metaData2);   
+       		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       		 		getMetaDataSearchText1().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       		 		getMetaDataInserQuery().Enabled() && getMetaDataSearchText1().Displayed()  ;}}), Input.wait30); 
+       		setMetaDataValue(null,metaVal2,null);
+	   }
+	   
+   }
+
+}

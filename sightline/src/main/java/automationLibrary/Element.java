@@ -12,6 +12,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
@@ -224,6 +225,15 @@ private  Driver driver;
          AssertExists();
          element.click();
      }
+     
+     public void click() {
+    	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by)).click();
+     }
+     
+     public void sendKeys(String text) {
+    	 driver.wait.until(ExpectedConditions.elementToBeClickable(this.by)).sendKeys(text);
+     }
+     
      public void waitAndClick(int waitTime) {
     	 boolean clicked = false;
 	  for(int i = 1; i<waitTime;i++){
@@ -671,6 +681,15 @@ private  Driver driver;
      public Select selectFromDropdown() {
     	 AssertExists(); //this updates element !
     	 return new Select(element);
+     }
+     
+     public boolean selectFromDropdownLoaded() {
+    	 AssertExists(); //this updates element !
+    	 Select select = new Select(element);
+    	 
+    	 boolean loaded = (select.getOptions().size() > 0);
+    	 
+    	 return loaded;
      }
      /* static ExpectedCondition<?> visibilityOfElementLocated = null;
      	public static Element waitUntilVisibility(By by, int time) throws InterruptedException {

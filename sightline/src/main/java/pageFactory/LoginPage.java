@@ -46,6 +46,9 @@ public class LoginPage {
     public Element getSelectLanguage(){ return driver.FindElementById("select-1"); }
     public Element getEditprofilesave(){ return driver.FindElementById("btnSaveEditProfile"); }
 
+    public Element getSelectProjectDD() { return driver.FindElementById("project-selector"); }
+    public Element getSelectProject(String project) {return driver.FindElementByXPath(String.format("//a[contains(text(),'%s')]",project)); }
+
 	static ExtentReports report;
 	static ExtentTest test;
    
@@ -165,23 +168,24 @@ public class LoginPage {
 			test = (ExtentTest) databaseMap.get("ExtentText");
 		
   	
-    	driver.Navigate().refresh();
-    	 try {
-    		 try {
-				Thread.sleep(8000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    	        Alert alert = driver.getWebDriver().switchTo().alert();
-    	        String alertText = alert.getText();
-    	        System.out.println("Alert data: " + alertText);
-    	        alert.accept();
-    	    } catch (NoAlertPresentException e) {
-    	        //e.printStackTrace();
-    	    }
-    	
-    	try {
+		driver.Navigate().refresh();
+		try {
+			//why do we need to sleep for 8 secs on shutdown?
+//			try {
+//				Thread.sleep(8000); 
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			Alert alert = driver.getWebDriver().switchTo().alert();
+			String alertText = alert.getText();
+			System.out.println("Alert data: " + alertText);
+			alert.accept();
+		} catch (NoAlertPresentException e) {
+			//e.printStackTrace();
+		}
+
+		try {
 	    	driver.scrollPageToTop();
 	    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getSignoutMenu().Visible()  ;}}), 30000); */

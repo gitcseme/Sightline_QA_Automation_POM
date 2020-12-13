@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <QA>
-  		<url>http://mtpvtsslwb01.consilio.com/</url>
+  		<url>https://sightlinept.consilio.com/</url>
        	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
        	<domainName>AutoDomain</domainName>
-        <projectName>TD_24July</projectName>
+        <projectName>08122020_NV</projectName>
         <!--  TD_24July -->
      
-    	<sa1userName>smangal@consilio.com</sa1userName> 
-   		<sa1password>sightline@12345</sa1password> 
+    	<sa1userName>sqa.consilio2@sqapowered.com</sa1userName> 
+   		<sa1password>Q@test_10</sa1password> 
    		
    		<!-- DA Admin  -->
    		
-        <da1userName>automation.consilio@gmail.com</da1userName> 
-        <da1password>sightline@12345</da1password>
+        <da1userName>sqa.consilio2@sqapowered.com</da1userName> 
+        <da1password>Q@test_10</da1password>
      
         <!-- CPA -->
         <pa1FullName>Shilpi PA1</pa1FullName>
-        <pa1userName>qapau2@consilio.com</pa1userName>
+        <pa1userName>sqa.consilio2@sqapowered.com</pa1userName>
         <pa1password>Q@test_10</pa1password>
 
         
@@ -34,4 +34,6 @@
         <rev1password>sightline@123</rev1password>
         <shareTo>CPA2 PA2</shareTo>
        
+
 </QA>
+
