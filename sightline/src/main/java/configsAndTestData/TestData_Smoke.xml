@@ -11,10 +11,10 @@
     <searchString1NOTsearchString2>8</searchString1NOTsearchString2>
     <searchString2NOTsearchString1>1</searchString2NOTsearchString1>
     <audioSearchString1>right</audioSearchString1>
-    <audioSearchString1pureHit>6</audioSearchString1pureHit>
+    <audioSearchString1pureHit>1</audioSearchString1pureHit>
     <conceptualSearchString1>community</conceptualSearchString1>
     <conceptualSearchString1PureHit>5</conceptualSearchString1PureHit>
     <metaDataCN>P Allen</metaDataCN>
-    <metaDataCNcount>121</metaDataCNcount>
+    <metaDataCNcount>120</metaDataCNcount>
     <totalNumberOfDocs>125</totalNumberOfDocs>
 </TestData>

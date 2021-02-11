@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <QA>
-  		<url>http://172.22.155.2/</url>
-       	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
-       	<SourceLocation>IngestionTestData\Automation</SourceLocation>
-       	<domainName>AutoDomain</domainName>
-        <projectName>TD_24July</projectName>
-        <!--  TD_24July -->
-     
-    	<sa1userName>smangal@consilio.com</sa1userName> 
-   		<sa1password>sightline@12345</sa1password> 
-   		
-   		<!-- DA Admin  -->
-   		
-        <da1userName>automation.consilio@gmail.com</da1userName> 
-        <da1password>sightline@12345</da1password>
-     
-        <!-- CPA -->
-        <pa1FullName>Shilpi PA1</pa1FullName>
-        <pa1userName>rm.user.consilio@gmail.com</pa1userName>
-        <pa1password>sightline@321</pa1password>
+	<url>https://sightlineqa.consiliotest.com/</url>
+	<prodpath>\\MTPVTSSLWB01\Productions\Automation</prodpath>
+	<SourceLocation>IngestionTestData\Automation</SourceLocation>
+	<domainName>QADomain</domainName>
+	<projectName>BatchRedactionTest</projectName>
 
-        
-              
-        <!--CRMU  -->
-        <rmu1FullName>Shilpi RMU</rmu1FullName>
-        <rmu1userName>rm.user.c.onsilio@gmail.com</rmu1userName>
-        <rmu1password>sightline@123</rmu1password>
-                
-        <!-- CRev -->
-        <rev1FullName>Shilpi REV1</rev1FullName>
-        <rev1userName>r.m.user.consilio@gmail.com</rev1userName>
-        <rev1password>sightline@123</rev1password>
+	<!-- TD_24July -->
 
-        <shareTo>CPA2 PA2</shareTo>
-       
+	<sa1userName>ferhat.tarannum@consilio.com</sa1userName>
+	<sa1password>Dec2020@3112</sa1password>
+
+
+	<!-- DA Admin -->
+
+	
+	<da1userName>sight.line.consilio.qa@gmail.com</da1userName>
+	<da1password>Dec2020@3112</da1password>
+
+
+	<!-- CPA -->
+	<pa1FullName>PA1 QA</pa1FullName>
+	<pa1userName>sightlineconsilio.qa@gmail.com</pa1userName>
+	<pa1password>Dec2020@3112</pa1password>
+
+	<pa2FullName>PA2 QA</pa2FullName>
+	<pa2userName>sight.line.consili.oqa@gmail.com</pa2userName>
+	<pa2password>Dec2020@3112</pa2password>
+
+
+	<!--CRMU -->
+	<rmu1FullName>QA RMU1</rmu1FullName>
+	<rmu1userName>r.m.userconsilio@gmail.com</rmu1userName>
+	<rmu1password>Dec2020@3112</rmu1password>
+
+	<rmu2FullName>RMU2 QA</rmu2FullName>
+	<rmu2userName>sight.line.consil.ioqa@gmail.com</rmu2userName>
+	<rmu2password>Dec2020@3112</rmu2password>
+
+
+	<!-- CRev -->
+	<rev1FullName>QA REV1</rev1FullName>
+	<rev1userName>r.m.u.serconsilio@gmail.com</rev1userName>
+	<rev1password>Dec2020@3112</rev1password>
+
+	<rev2FullName>REV2 QA</rev2FullName>
+	<rev2userName>sight.line.consi.lioqa@gmail.com</rev2userName>
+	<rev2password>Dec2020@3112</rev2password>
+
+	<shareTo>CPA2 PA2</shareTo>
+
 </QA>

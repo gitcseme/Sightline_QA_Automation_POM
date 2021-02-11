@@ -72,7 +72,7 @@ public class TS_005_ValidateCategorization {
 	   public void validateCategorization() throws InterruptedException {
 		  
 		  Categorization cat = new Categorization(driver);
-		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)>0);
+		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)==2);
 		  System.out.println("Expected documents count shown in categorization result");
 	   }
 	

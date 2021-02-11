@@ -1,92 +1,86 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TestNG Report</title><style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}</style></head><body><table><tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr><tr><th colspan="7">Regression Suite</th></tr><tr><td><a href="#t0">Input</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">8</td><td></td><td></td></tr><tr class="stripe"><td><a href="#t1">DocView regression</a></td><td class="num">5</td><td class="num">0</td><td class="num attn">14</td><td class="num">1,272,029</td><td>regression</td><td></td></tr><tr><th>Total</th><th class="num">5</th><th class="num">0</th><th class="num attn">14</th><th class="num">1,272,037</th><th colspan="2"></th></tr></table><table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Regression Suite</th></tr></tbody><tbody id="t0"></tbody><tbody id="t1"><tr><th colspan="4">DocView regression &#8212; failed</th></tr><tr class="failedeven"><td rowspan="14">testScriptsRegression.DocView_Regression</td><td><a href="#m0">NonAudioAnnotation</a></td><td rowspan="1">1597132185267</td><td rowspan="1">8494</td></tr><tr class="failedeven"><td><a href="#m1">NonAudioRemarkAddEditDeletebyReviewer</a></td><td rowspan="1">1597132456198</td><td rowspan="1">19586</td></tr><tr class="failedeven"><td><a href="#m2">VerifyAnalyticsChildWinodw</a></td><td rowspan="1">1597132271525</td><td rowspan="1">15037</td></tr><tr class="failedeven"><td><a href="#m3">VerifyAnalyticsConceptual</a></td><td rowspan="1">1597133061270</td><td rowspan="1">37117</td></tr><tr class="failedeven"><td><a href="#m4">VerifyAnalyticsforPA</a></td><td rowspan="1">1597132918869</td><td rowspan="1">101719</td></tr><tr class="failedeven"><td><a href="#m5">VerifyAnalyticsthrAssignment</a></td><td rowspan="1">1597132772159</td><td rowspan="1">118269</td></tr><tr class="failedeven"><td><a href="#m6">VerifyFoldertab</a></td><td rowspan="1">1597132179300</td><td rowspan="1">4613</td></tr><tr class="failedeven"><td><a href="#m7">VerifyMiniDoclistConifgSortOrder</a></td><td rowspan="1">1597133021018</td><td rowspan="1">39777</td></tr><tr class="failedeven"><td><a href="#m8">VerifyMiniDoclistFolderAction</a></td><td rowspan="1">1597132567342</td><td rowspan="1">60771</td></tr><tr class="failedeven"><td><a href="#m9">VerifyPersistentHit</a></td><td rowspan="1">1597132094362</td><td rowspan="1">83894</td></tr><tr class="failedeven"><td><a href="#m10">VerifyTabswhenAllprefDisabled</a></td><td rowspan="1">1597132890731</td><td rowspan="1">27823</td></tr><tr class="failedeven"><td><a href="#m11">VerifyTabswhenAllprefEnabled</a></td><td rowspan="1">1597132628562</td><td rowspan="1">58000</td></tr><tr class="failedeven"><td><a href="#m12">VerifyThreadedChildWinodw</a></td><td rowspan="1">1597132358494</td><td rowspan="1">97222</td></tr><tr class="failedeven"><td><a href="#m13">getPersistentHit</a></td><td rowspan="1">1597132687027</td><td rowspan="1">84599</td></tr><tr><th colspan="4">DocView regression &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">testScriptsRegression.DocView_Regression</td><td><a href="#m14">VerifyAnalyticsEmailInclusive</a></td><td rowspan="1">1597132194272</td><td rowspan="1">34272</td></tr><tr class="passedeven"><td><a href="#m15">VerifyAnalyticsThreaded</a></td><td rowspan="1">1597132228547</td><td rowspan="1">42976</td></tr><tr class="passedeven"><td><a href="#m16">VerifyAnalytics_FamilyActions</a></td><td rowspan="1">1597132476237</td><td rowspan="1">91104</td></tr><tr class="passedeven"><td><a href="#m17">VerifyNearDupesCompwinodw</a></td><td rowspan="1">1597132287359</td><td rowspan="1">71133</td></tr><tr class="passedeven"><td><a href="#m18">VerifyTextTab</a></td><td rowspan="1">1597132184496</td><td rowspan="1">768</td></tr></tbody></table><h2>Input</h2><h2>DocView regression</h2><h3 id="m0">testScriptsRegression.DocView_Regression#NonAudioAnnotation</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;rect[style*=&apos;#FFFF00&apos;]&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>TestNG Report</title><style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}</style></head><body><table><tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr><tr><th colspan="7">RPMX V1.0 Test Suite - Sanity</th></tr><tr><th colspan="7">Smoke Suite</th></tr><tr><td><a href="#t0">Input</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">23</td><td></td><td></td></tr><tr class="stripe"><td><a href="#t1">Categorization</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">258,582</td><td>smoke</td><td></td></tr><tr><td><a href="#t2">AllManageModules</a></td><td class="num">8</td><td class="num">0</td><td class="num attn">2</td><td class="num">838,545</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t3">BasicAndAdvancedSearchOperations</a></td><td class="num">5</td><td class="num">0</td><td class="num attn">1</td><td class="num">1,599,021</td><td>smoke</td><td></td></tr><tr><td><a href="#t4">TS_017_DocList</a></td><td class="num">1</td><td class="num">0</td><td class="num attn">2</td><td class="num">758,514</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t5">BulkActionsFromSessionSearch</a></td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num">180,876</td><td>smoke</td><td></td></tr><tr><td><a href="#t6">AdvancedSearchBulkActions</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">113,460</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t7">SavedSearchShareSchedule</a></td><td class="num">3</td><td class="num">0</td><td class="num attn">1</td><td class="num">455,643</td><td>smoke</td><td></td></tr><tr><td><a href="#t8">ValidateAssignmentFunctionality</a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">404,993</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t9">Workflow</a></td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">67,710</td><td>smoke</td><td></td></tr><tr><td><a href="#t10">DocView - Non Audio</a></td><td class="num">0</td><td class="num attn">3</td><td class="num">0</td><td class="num">151,708</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t11">Reports</a></td><td class="num">0</td><td class="num attn">3</td><td class="num">0</td><td class="num">92,632</td><td>smoke</td><td></td></tr><tr><td><a href="#t12">BatchUpload</a></td><td class="num">0</td><td class="num attn">1</td><td class="num attn">2</td><td class="num">276,622</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t13">DocViewAudio</a></td><td class="num">0</td><td class="num attn">5</td><td class="num">0</td><td class="num">235,493</td><td>smoke</td><td></td></tr><tr><td><a href="#t14">Production</a></td><td class="num">0</td><td class="num attn">1</td><td class="num">0</td><td class="num">162,982</td><td>smoke</td><td></td></tr><tr class="stripe"><td><a href="#t15">BatchPrint</a></td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">173,282</td><td>smoke</td><td></td></tr><tr><th>Total</th><th class="num">27</th><th class="num attn">13</th><th class="num attn">10</th><th class="num">5,770,086</th><th colspan="2"></th></tr></table><table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">RPMX V1.0 Test Suite - Sanity</th></tr></tbody><tbody><tr><th colspan="4">Smoke Suite</th></tr></tbody><tbody id="t0"></tbody><tbody id="t1"><tr><th colspan="4">Categorization &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">testScriptsSmoke.TS_005_ValidateCategorization</td><td><a href="#m0">validateCategorization</a></td><td rowspan="1">1613039172608</td><td rowspan="1">129568</td></tr></tbody><tbody id="t2"><tr><th colspan="4">AllManageModules &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">testScriptsSmoke.TS_008_AllManageModules</td><td><a href="#m1">CreateCodingform</a></td><td rowspan="1">1613039969002</td><td rowspan="1">51777</td></tr><tr class="failedeven"><td><a href="#m2">CreateSecurityGroup</a></td><td rowspan="1">1613039533924</td><td rowspan="1">46674</td></tr><tr><th colspan="4">AllManageModules &#8212; passed</th></tr><tr class="passedeven"><td rowspan="8">testScriptsSmoke.TS_008_AllManageModules</td><td><a href="#m3">CreateAnnotationLayer</a></td><td rowspan="1">1613039515435</td><td rowspan="1">18487</td></tr><tr class="passedeven"><td><a href="#m4">CreateFolderField</a></td><td rowspan="1">1613039475153</td><td rowspan="1">40278</td></tr><tr class="passedeven"><td><a href="#m5">CreateTagField</a></td><td rowspan="1">1613039444325</td><td rowspan="1">30826</td></tr><tr class="passedeven"><td><a href="#m6">DeleteFolderField</a></td><td rowspan="1">1613039933060</td><td rowspan="1">35937</td></tr><tr class="passedeven"><td><a href="#m7">DeleteTagField</a></td><td rowspan="1">1613039921904</td><td rowspan="1">11151</td></tr><tr class="passedeven"><td><a href="#m8">createCommentField</a></td><td rowspan="1">1613039378520</td><td rowspan="1">13482</td></tr><tr class="passedeven"><td><a href="#m9">createKeywordField</a></td><td rowspan="1">1613039392005</td><td rowspan="1">15890</td></tr><tr class="passedeven"><td><a href="#m10">createRedaction</a></td><td rowspan="1">1613039407897</td><td rowspan="1">36424</td></tr></tbody><tbody id="t3"><tr><th colspan="4">BasicAndAdvancedSearchOperations &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations</td><td><a href="#m11">metaDataSearch</a></td><td rowspan="1">1613040613660</td><td rowspan="1">420745</td></tr><tr><th colspan="4">BasicAndAdvancedSearchOperations &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations</td><td><a href="#m12">ConceptualSearch</a></td><td rowspan="1">1613040199328</td><td rowspan="1">24750</td></tr><tr class="passedeven"><td><a href="#m13">audioSearch</a></td><td rowspan="1">1613040224079</td><td rowspan="1">19148</td></tr><tr class="passedeven"><td><a href="#m14">contentSearchWithOperatorsInAS</a></td><td rowspan="1">1613040243228</td><td rowspan="1">139061</td></tr><tr class="passedeven"><td><a href="#m15">contentSearchWithOperatorsInBS</a></td><td rowspan="1">1613040382290</td><td rowspan="1">231367</td></tr><tr class="passedeven"><td><a href="#m16">searchsavedSearch</a></td><td rowspan="1">1613041688321</td><td rowspan="1">61056</td></tr></tbody><tbody id="t4"><tr><th colspan="4">TS_017_DocList &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">testScriptsSmoke.TS_017_DocList</td><td><a href="#m17">doclistBulkRelease</a></td><td rowspan="1">1613041817418</td><td rowspan="1">48304</td></tr><tr class="failedeven"><td><a href="#m18">doclistToDocView</a></td><td rowspan="1">1613042202948</td><td rowspan="1">19911</td></tr><tr><th colspan="4">TS_017_DocList &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">testScriptsSmoke.TS_017_DocList</td><td><a href="#m19">bulkTagAndBulkFolder</a></td><td rowspan="1">1613042223551</td><td rowspan="1">273511</td></tr></tbody><tbody id="t5"><tr><th colspan="4">BulkActionsFromSessionSearch &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch</td><td><a href="#m20">bulkFolderInBasicSearch</a></td><td rowspan="1">1613042563589</td><td rowspan="1">18582</td></tr><tr class="passedeven"><td><a href="#m21">bulkTagInBasicSearch</a></td><td rowspan="1">1613042582174</td><td rowspan="1">32546</td></tr><tr class="passedeven"><td><a href="#m22">viewInDocViewInBasicSearch</a></td><td rowspan="1">1613042614721</td><td rowspan="1">25509</td></tr><tr class="passedeven"><td><a href="#m23">viewInDoclistInBasicSearch</a></td><td rowspan="1">1613042640231</td><td rowspan="1">35751</td></tr><tr class="passedeven"><td><a href="#m24">viewInTallyResultsInBasicSearch</a></td><td rowspan="1">1613042675983</td><td rowspan="1">13033</td></tr></tbody><tbody id="t6"><tr><th colspan="4">AdvancedSearchBulkActions &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">testScriptsSmoke.TS_003_AdvancedSearchBulkActions</td><td><a href="#m25">bulkFolderInAdvancedSearch</a></td><td rowspan="1">1613042743045</td><td rowspan="1">25756</td></tr><tr class="passedeven"><td><a href="#m26">bulkTagInAdvancedSearch</a></td><td rowspan="1">1613042768802</td><td rowspan="1">25138</td></tr></tbody><tbody id="t7"><tr><th colspan="4">SavedSearchShareSchedule &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_007_SavedSearchShareSchedule</td><td><a href="#m27">shareSavedSearch</a></td><td rowspan="1">1613043130220</td><td rowspan="1">127396</td></tr><tr><th colspan="4">SavedSearchShareSchedule &#8212; passed</th></tr><tr class="passedeven"><td rowspan="3">testScriptsSmoke.TS_007_SavedSearchShareSchedule</td><td><a href="#m28">saveSearchToDocList</a></td><td rowspan="1">1613042942419</td><td rowspan="1">38881</td></tr><tr class="passedeven"><td><a href="#m29">saveSearchToDocView</a></td><td rowspan="1">1613042981301</td><td rowspan="1">36167</td></tr><tr class="passedeven"><td><a href="#m30">scheduleSavedSearch</a></td><td rowspan="1">1613043017470</td><td rowspan="1">112749</td></tr></tbody><tbody id="t8"><tr><th colspan="4">ValidateAssignmentFunctionality &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">testScriptsSmoke.TS_009_ValidateAssignmentFunctionality</td><td><a href="#m31">CreateAssignmentDistributeToReviwer</a></td><td rowspan="1">1613043523522</td><td rowspan="1">129765</td></tr><tr class="passedeven"><td><a href="#m32">CreateQuickBatch</a></td><td rowspan="1">1613043412459</td><td rowspan="1">111062</td></tr></tbody><tbody id="t9"><tr><th colspan="4">Workflow &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_010_Workflow</td><td><a href="#m33">Test</a></td><td rowspan="1">1613043678302</td><td rowspan="1">43359</td></tr></tbody><tbody id="t10"><tr><th colspan="4">DocView - Non Audio &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_011_DocViewNonAudioReviewer</td><td><a href="#m34">preCondition</a></td><td rowspan="1">1613043746029</td><td rowspan="1">151688</td></tr><tr><th colspan="4">DocView - Non Audio &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="3">testScriptsSmoke.TS_011_DocViewNonAudioReviewer</td><td><a href="#m35">addCommentandcompleteDoc</a></td><td rowspan="1">1613043897732</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m36">addRemarkToFirstDoc</a></td><td rowspan="1">1613043897733</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m37">addredaction</a></td><td rowspan="1">1613043897735</td><td rowspan="1">0</td></tr></tbody><tbody id="t11"><tr><th colspan="4">Reports &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="2">testScriptsSmoke.TS_012_ValidateReportsFunctionality</td><td><a href="#m38">beforeClass</a></td><td rowspan="1">1613043897790</td><td rowspan="1">76195</td></tr><tr class="failedeven"><td><a href="#m39">close</a></td><td rowspan="1">1613043973992</td><td rowspan="1">16426</td></tr><tr><th colspan="4">Reports &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="3">testScriptsSmoke.TS_012_ValidateReportsFunctionality</td><td><a href="#m40">conceptExplorer</a></td><td rowspan="1">1613043973987</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m41">reviewProgressByRevReport</a></td><td rowspan="1">1613043973989</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m42">tallySubTally</a></td><td rowspan="1">1613043973991</td><td rowspan="1">0</td></tr></tbody><tbody id="t12"><tr><th colspan="4">BatchUpload &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_013_ValidateBatchUpload</td><td><a href="#m43">user</a></td><td rowspan="1">1613044248115</td><td rowspan="1">15297</td></tr><tr><th colspan="4">BatchUpload &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">testScriptsSmoke.TS_013_ValidateBatchUpload</td><td><a href="#m44">batchUploadByPA</a></td><td rowspan="1">1613044000655</td><td rowspan="1">59378</td></tr><tr class="failedeven"><td><a href="#m45">batchUploadByRMU</a></td><td rowspan="1">1613044190671</td><td rowspan="1">56584</td></tr><tr><th colspan="4">BatchUpload &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="1">testScriptsSmoke.TS_013_ValidateBatchUpload</td><td><a href="#m46">batchUploadByReviewer</a></td><td rowspan="1">1613044263419</td><td rowspan="1">0</td></tr></tbody><tbody id="t13"><tr><th colspan="4">DocViewAudio &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="2">testScriptsSmoke.TS_018_DocViewAudio</td><td><a href="#m47">before</a></td><td rowspan="1">1613044267163</td><td rowspan="1">182666</td></tr><tr class="failedeven"><td><a href="#m48">close</a></td><td rowspan="1">1613044449851</td><td rowspan="1">52799</td></tr><tr><th colspan="4">DocViewAudio &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="5">testScriptsSmoke.TS_018_DocViewAudio</td><td><a href="#m49">AudioDownload</a></td><td rowspan="1">1613044449835</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m50">addComment</a></td><td rowspan="1">1613044449838</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m51">addPlay</a></td><td rowspan="1">1613044449841</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m52">addRemark</a></td><td rowspan="1">1613044449844</td><td rowspan="1">0</td></tr><tr class="skippedeven"><td><a href="#m53">addreduction</a></td><td rowspan="1">1613044449847</td><td rowspan="1">0</td></tr></tbody><tbody id="t14"><tr><th colspan="4">Production &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_006_Production</td><td><a href="#m54">preCondition</a></td><td rowspan="1">1613044502722</td><td rowspan="1">109341</td></tr><tr><th colspan="4">Production &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="1">testScriptsSmoke.TS_006_Production</td><td><a href="#m55">AddNewProduction</a></td><td rowspan="1">1613044612067</td><td rowspan="1">0</td></tr></tbody><tbody id="t15"><tr><th colspan="4">BatchPrint &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_006_ValidateBatchPrint</td><td><a href="#m56">close</a></td><td rowspan="1">1613044822542</td><td rowspan="1">16497</td></tr><tr><th colspan="4">BatchPrint &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">testScriptsSmoke.TS_006_ValidateBatchPrint</td><td><a href="#m57">BatchPrintWithNative</a></td><td rowspan="1">1613044665760</td><td rowspan="1">81506</td></tr></tbody></table><h2>Input</h2><h2>Categorization</h2><h3 id="m0">testScriptsSmoke.TS_005_ValidateCategorization#validateCategorization</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>AllManageModules</h2><h3 id="m1">testScriptsSmoke.TS_008_AllManageModules#CreateCodingform</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 11 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir8864_18519}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: bb1dd1befee07c4a024911e3c83d1d5b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_008_AllManageModules.CreateCodingform(TS_008_AllManageModules.java:200)
+... Removed 30 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m2">testScriptsSmoke.TS_008_AllManageModules#CreateSecurityGroup</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot; id=&quot;btnNewSecurityGroup&quot; onclick=&quot;AddSecurityGroup();&quot;&gt;...&lt;/button&gt; is not clickable at point (1373, 54). Other element would receive the click: &lt;header id=&quot;header&quot;&gt;...&lt;/header&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 26 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir8864_18519}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: bb1dd1befee07c4a024911e3c83d1d5b
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.SecurityGroupsPage.AddSecurityGroup(SecurityGroupsPage.java:44)
+	at testScriptsSmoke.TS_008_AllManageModules.CreateSecurityGroup(TS_008_AllManageModules.java:155)
+... Removed 30 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m3">testScriptsSmoke.TS_008_AllManageModules#CreateAnnotationLayer</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m4">testScriptsSmoke.TS_008_AllManageModules#CreateFolderField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m5">testScriptsSmoke.TS_008_AllManageModules#CreateTagField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m6">testScriptsSmoke.TS_008_AllManageModules#DeleteFolderField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m7">testScriptsSmoke.TS_008_AllManageModules#DeleteTagField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m8">testScriptsSmoke.TS_008_AllManageModules#createCommentField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m9">testScriptsSmoke.TS_008_AllManageModules#createKeywordField</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m10">testScriptsSmoke.TS_008_AllManageModules#createRedaction</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>BasicAndAdvancedSearchOperations</h2><h3 id="m11">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#metaDataSearch</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: The following asserts failed:
+	expected [true] but found [false]
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch(TS_004_BasicAndAdvancedSearchOperations.java:210)
+... Removed 27 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m12">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#ConceptualSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m13">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#audioSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m14">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#contentSearchWithOperatorsInAS</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m15">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#contentSearchWithOperatorsInBS</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m16">testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations#searchsavedSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>TS_017_DocList</h2><h3 id="m17">testScriptsSmoke.TS_017_DocList#doclistBulkRelease</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
 Command duration or timeout: 14 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=css selector, value=rect[style*=&apos;#FFFF00&apos;]}
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:501)
-	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:430)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.GetCssValue(Element.java:416)
-	at pageFactory.DocViewPage.NonAudioAnnotation(DocViewPage.java:754)
-	at testScriptsRegression.DocView_Regression.NonAudioAnnotation(DocView_Regression.java:143)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m1">testScriptsRegression.DocView_Regression#NonAudioRemarkAddEditDeletebyReviewer</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;SearchDataTable&apos;]//td[contains(text(),&apos;ID00000125&apos;)]&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 12 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;SearchDataTable&apos;]//td[contains(text(),&apos;ID00000125&apos;)]}
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.addRemarkNonAudioDoc(DocViewPage.java:324)
-	at testScriptsRegression.DocView_Regression.NonAudioRemarkAddEditDeletebyReviewer(DocView_Regression.java:236)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m2">testScriptsRegression.DocView_Regression#VerifyAnalyticsChildWinodw</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;span id=&quot;project-selector&quot; class=&quot;popover-trigger-element dropdown-toggle left&quot; data-toggle=&quot;dropdown&quot; style=&quot;padding-bottom:8px;&quot; title=&quot;...&quot;&gt;TD_24July&lt;/span&gt; is not clickable at point (273, 36). Other element would receive the click: &lt;div id=&quot;processingPopupDiv&quot; class=&quot;ui-widget-overlay&quot; style=&quot;&quot;&gt;...&lt;/div&gt;
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 69 milliseconds
-Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir27116_24185}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: e52a4d1582f48dd92b204ee5f7ebed6f
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
 	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
 	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
 	at automationLibrary.Element.waitAndClick(Element.java:257)
-	at pageFactory.BaseClass.selectproject(BaseClass.java:196)
-	at testScriptsRegression.DocView_Regression.VerifyAnalyticsChildWinodw(DocView_Regression.java:186)
-... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m3">testScriptsRegression.DocView_Regression#VerifyAnalyticsConceptual</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button id=&quot;idAction&quot; class=&quot;btn btn-primary dropdown-toggle disabled&quot; data-toggle=&quot;dropdown&quot;&gt;...&lt;/button&gt; is not clickable at point (1872, 134). Other element would receive the click: &lt;div id=&quot;ddlbulkactions&quot; class=&quot;btn-group dd-menu custom-action-btn&quot; style=&quot;padding-right: 0;&quot;&gt;...&lt;/div&gt;
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 26 milliseconds
+	at pageFactory.BaseClass.selectproject(BaseClass.java:200)
+	at testScriptsSmoke.TS_017_DocList.doclistBulkRelease(TS_017_DocList.java:156)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m18">testScriptsSmoke.TS_017_DocList#doclistToDocView</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 29 milliseconds
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir27116_24185}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: e52a4d1582f48dd92b204ee5f7ebed6f
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
 	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
 	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
 	at automationLibrary.Element.waitAndClick(Element.java:257)
-	at testScriptsRegression.DocView_Regression.VerifyAnalyticsConceptual(DocView_Regression.java:413)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m4">testScriptsRegression.DocView_Regression#VerifyAnalyticsforPA</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;SearchDataTable&apos;]//td[contains(text(),&apos;ID00001059&apos;)]&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 11 milliseconds
+	at pageFactory.BaseClass.selectproject(BaseClass.java:200)
+	at testScriptsSmoke.TS_017_DocList.doclistToDocView(TS_017_DocList.java:115)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m19">testScriptsSmoke.TS_017_DocList#bulkTagAndBulkFolder</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>BulkActionsFromSessionSearch</h2><h3 id="m20">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch#bulkFolderInBasicSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m21">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch#bulkTagInBasicSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m22">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch#viewInDocViewInBasicSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m23">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch#viewInDoclistInBasicSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m24">testScriptsSmoke.TS_003_BulkActionsFromBasicSearch#viewInTallyResultsInBasicSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>AdvancedSearchBulkActions</h2><h3 id="m25">testScriptsSmoke.TS_003_AdvancedSearchBulkActions#bulkFolderInAdvancedSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m26">testScriptsSmoke.TS_003_AdvancedSearchBulkActions#bulkTagInAdvancedSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>SavedSearchShareSchedule</h2><h3 id="m27">testScriptsSmoke.TS_007_SavedSearchShareSchedule#shareSavedSearch</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot; //div[starts-with(@id,&apos;bigBoxColor&apos;)]//span&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;SearchDataTable&apos;]//td[contains(text(),&apos;ID00001059&apos;)]}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir7080_20266}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 5af52a62859741c579afdc37afa7b691
+*** Element info: {Using=xpath, value= //div[starts-with(@id,&apos;bigBoxColor&apos;)]//span}
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
@@ -95,117 +89,106 @@ Session ID: bb0596fc5f15d213be5875b04ee601ee
 	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
 	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.AnalyticsThreaded_Actions(DocViewPage.java:1271)
-	at testScriptsRegression.DocView_Regression.VerifyAnalyticsforPA(DocView_Regression.java:392)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m5">testScriptsRegression.DocView_Regression#VerifyAnalyticsthrAssignment</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;dtDocumentFamilyMembers&apos;]//tr[1]//input[starts-with(@id,&apos;chkDocFamily&apos;)]/following-sibling::i&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 13 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+	at automationLibrary.Element.getText(Element.java:520)
+	at pageFactory.BaseClass.VerifySuccessMessage(BaseClass.java:244)
+	at pageFactory.SavedSearch.shareSavedSearchRMU(SavedSearch.java:424)
+	at testScriptsSmoke.TS_007_SavedSearchShareSchedule.shareSavedSearch(TS_007_SavedSearchShareSchedule.java:128)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m28">testScriptsSmoke.TS_007_SavedSearchShareSchedule#saveSearchToDocList</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m29">testScriptsSmoke.TS_007_SavedSearchShareSchedule#saveSearchToDocView</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m30">testScriptsSmoke.TS_007_SavedSearchShareSchedule#scheduleSavedSearch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>ValidateAssignmentFunctionality</h2><h3 id="m31">testScriptsSmoke.TS_009_ValidateAssignmentFunctionality#CreateAssignmentDistributeToReviwer</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m32">testScriptsSmoke.TS_009_ValidateAssignmentFunctionality#CreateQuickBatch</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h2>Workflow</h2><h3 id="m33">testScriptsSmoke.TS_010_Workflow#Test</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;a id=&quot;aAddFolder&quot; href=&quot;#&quot; onclick=&quot;AddFolder();&quot;&gt;...&lt;/a&gt; is not clickable at point (1452, 296). Other element would receive the click: &lt;a id=&quot;aAddFolderGroup&quot; href=&quot;#&quot; onclick=&quot;AddFolderGroup();&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 34 milliseconds
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;dtDocumentFamilyMembers&apos;]//tr[1]//input[starts-with(@id,&apos;chkDocFamily&apos;)]/following-sibling::i}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir14500_7208}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 6d60cec768c3609e58e79b0d7e5f0156
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.Click(Element.java:224)
-	at pageFactory.DocViewPage.AnalyticsCodeSameAs(DocViewPage.java:1019)
-	at testScriptsRegression.DocView_Regression.VerifyAnalyticsthrAssignment(DocView_Regression.java:368)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m6">testScriptsRegression.DocView_Regression#VerifyFoldertab</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.AssertionError: expected [Redaction Removed successfully.] but found [Records saved successfully]
-	at pageFactory.BaseClass.VerifySuccessMessage(BaseClass.java:245)
-	at pageFactory.DocViewPage.VerifyFolderTab(DocViewPage.java:646)
-	at testScriptsRegression.DocView_Regression.VerifyFoldertab(DocView_Regression.java:130)
-... Removed 31 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m7">testScriptsRegression.DocView_Regression#VerifyMiniDoclistConifgSortOrder</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;id&quot;,&quot;selector&quot;:&quot;wEdit&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 10 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:225)
+	at pageFactory.TagsAndFoldersPage.CreateFolder(TagsAndFoldersPage.java:186)
+	at testScriptsSmoke.TS_010_Workflow.Test(TS_010_Workflow.java:41)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>DocView - Non Audio</h2><h3 id="m34">testScriptsSmoke.TS_011_DocViewNonAudioReviewer#preCondition</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button type=&quot;button&quot; value=&quot;submit&quot; name=&quot;submit&quot; class=&quot;btn btn-primary btn-sm disabled&quot; onclick=&quot;return AssignDocuments(&apos;BulkAssign&apos;);&quot; id=&quot;btnAssignComplete&quot;&gt;...&lt;/button&gt; is not clickable at point (1100, 722). Other element would receive the click: &lt;footer style=&quot;background:#fff;&quot;&gt;...&lt;/footer&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 21 milliseconds
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=id, value=wEdit}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir13228_19926}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d7d66d610ce2112b0c05b014b9d26c3a
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:453)
-	at org.openqa.selenium.By$ById.findElement(By.java:218)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.MiniDoclistConifgSortOrder(DocViewPage.java:1577)
-	at testScriptsRegression.DocView_Regression.VerifyMiniDoclistConifgSortOrder(DocView_Regression.java:400)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m8">testScriptsRegression.DocView_Regression#VerifyMiniDoclistFolderAction</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;id&quot;,&quot;selector&quot;:&quot;wEdit&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 23 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.AssignmentsPage.assignDocstoExisting(AssignmentsPage.java:225)
+	at testScriptsSmoke.TS_011_DocViewNonAudioReviewer.preCondition(TS_011_DocViewNonAudioReviewer.java:91)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m35">testScriptsSmoke.TS_011_DocViewNonAudioReviewer#addCommentandcompleteDoc</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button type=&quot;button&quot; value=&quot;submit&quot; name=&quot;submit&quot; class=&quot;btn btn-primary btn-sm disabled&quot; onclick=&quot;return AssignDocuments(&apos;BulkAssign&apos;);&quot; id=&quot;btnAssignComplete&quot;&gt;...&lt;/button&gt; is not clickable at point (1100, 722). Other element would receive the click: &lt;footer style=&quot;background:#fff;&quot;&gt;...&lt;/footer&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 21 milliseconds
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=id, value=wEdit}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir13228_19926}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d7d66d610ce2112b0c05b014b9d26c3a
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:453)
-	at org.openqa.selenium.By$ById.findElement(By.java:218)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.MiniDoclistFolderAction(DocViewPage.java:1201)
-	at testScriptsRegression.DocView_Regression.VerifyMiniDoclistFolderAction(DocView_Regression.java:286)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m9">testScriptsRegression.DocView_Regression#VerifyPersistentHit</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;search-btn-audio-view&apos;]//a&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 26 milliseconds
-For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.AssignmentsPage.assignDocstoExisting(AssignmentsPage.java:225)
+	at testScriptsSmoke.TS_011_DocViewNonAudioReviewer.preCondition(TS_011_DocViewNonAudioReviewer.java:91)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m36">testScriptsSmoke.TS_011_DocViewNonAudioReviewer#addRemarkToFirstDoc</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button type=&quot;button&quot; value=&quot;submit&quot; name=&quot;submit&quot; class=&quot;btn btn-primary btn-sm disabled&quot; onclick=&quot;return AssignDocuments(&apos;BulkAssign&apos;);&quot; id=&quot;btnAssignComplete&quot;&gt;...&lt;/button&gt; is not clickable at point (1100, 722). Other element would receive the click: &lt;footer style=&quot;background:#fff;&quot;&gt;...&lt;/footer&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 21 milliseconds
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;search-btn-audio-view&apos;]//a}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir13228_19926}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d7d66d610ce2112b0c05b014b9d26c3a
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
-	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
-	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
-	at automationLibrary.Element.AssertExists(Element.java:501)
-	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.getAudioPersistentHit(DocViewPage.java:287)
-	at pageFactory.DocViewPage.VerifyPersistentHit(DocViewPage.java:671)
-	at testScriptsRegression.DocView_Regression.VerifyPersistentHit(DocView_Regression.java:123)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m10">testScriptsRegression.DocView_Regression#VerifyTabswhenAllprefDisabled</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException
-	at automationLibrary.ElementCollection.Displayed(ElementCollection.java:147)
-	at pageFactory.DocViewPage.VerifyTabswhenAllprefDisabled(DocViewPage.java:945)
-	at testScriptsRegression.DocView_Regression.VerifyTabswhenAllprefDisabled(DocView_Regression.java:378)
-... Removed 25 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m11">testScriptsRegression.DocView_Regression#VerifyTabswhenAllprefEnabled</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;gray-tab&apos;]//a&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 11 milliseconds
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.AssignmentsPage.assignDocstoExisting(AssignmentsPage.java:225)
+	at testScriptsSmoke.TS_011_DocViewNonAudioReviewer.preCondition(TS_011_DocViewNonAudioReviewer.java:91)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m37">testScriptsSmoke.TS_011_DocViewNonAudioReviewer#addredaction</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;button type=&quot;button&quot; value=&quot;submit&quot; name=&quot;submit&quot; class=&quot;btn btn-primary btn-sm disabled&quot; onclick=&quot;return AssignDocuments(&apos;BulkAssign&apos;);&quot; id=&quot;btnAssignComplete&quot;&gt;...&lt;/button&gt; is not clickable at point (1100, 722). Other element would receive the click: &lt;footer style=&quot;background:#fff;&quot;&gt;...&lt;/footer&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 21 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir13228_19926}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: d7d66d610ce2112b0c05b014b9d26c3a
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.AssignmentsPage.assignDocstoExisting(AssignmentsPage.java:225)
+	at testScriptsSmoke.TS_011_DocViewNonAudioReviewer.preCondition(TS_011_DocViewNonAudioReviewer.java:91)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>Reports</h2><h3 id="m38">testScriptsSmoke.TS_012_ValidateReportsFunctionality#beforeClass</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;gray-tab&apos;]//a}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22828_31904}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8527cd2a950884dda00bf84dbb23477f
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
@@ -215,19 +198,20 @@ Session ID: bb0596fc5f15d213be5875b04ee601ee
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
 	at automationLibrary.Element.AssertExists(Element.java:501)
 	at automationLibrary.Element.Displayed(Element.java:116)
-	at pageFactory.DocViewPage.VerifyTabswhenAllprefEnabled(DocViewPage.java:847)
-	at testScriptsRegression.DocView_Regression.VerifyTabswhenAllprefEnabled(DocView_Regression.java:302)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m12">testScriptsRegression.DocView_Regression#VerifyThreadedChildWinodw</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;threadedCheckBoxRow&apos;]//th[2]//input[contains(@id,&apos;threadedDocumentCheckboxHeader&apos;)]/following-sibling::i&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 12 milliseconds
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_012_ValidateReportsFunctionality.beforeClass(TS_012_ValidateReportsFunctionality.java:47)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m39">testScriptsSmoke.TS_012_ValidateReportsFunctionality#close</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 31 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;threadedCheckBoxRow&apos;]//th[2]//input[contains(@id,&apos;threadedDocumentCheckboxHeader&apos;)]/following-sibling::i}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22828_31904}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8527cd2a950884dda00bf84dbb23477f
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
@@ -237,19 +221,88 @@ Session ID: bb0596fc5f15d213be5875b04ee601ee
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
 	at automationLibrary.Element.AssertExists(Element.java:501)
 	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.AnalyticsActions(DocViewPage.java:1087)
-	at testScriptsRegression.DocView_Regression.VerifyThreadedChildWinodw(DocView_Regression.java:229)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m13">testScriptsRegression.DocView_Regression#getPersistentHit</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;search-btn-audio-view&apos;]//a&quot;}
-  (Session info: chrome=84.0.4147.105)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 41 milliseconds
+	at pageFactory.LoginPage.logout(LoginPage.java:136)
+	at testScriptsSmoke.TS_012_ValidateReportsFunctionality.close(TS_012_ValidateReportsFunctionality.java:170)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m40">testScriptsSmoke.TS_012_ValidateReportsFunctionality#conceptExplorer</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
-System info: host: &apos;INLTP-SHILPIM&apos;, ip: &apos;10.224.55.48&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_181&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\smangal\AppData\Local\Temp\scoped_dir67396_15604}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=84.0.4147.105, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: bb0596fc5f15d213be5875b04ee601ee
-*** Element info: {Using=xpath, value=//*[@id=&apos;search-btn-audio-view&apos;]//a}
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22828_31904}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8527cd2a950884dda00bf84dbb23477f
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Displayed(Element.java:116)
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_012_ValidateReportsFunctionality.beforeClass(TS_012_ValidateReportsFunctionality.java:47)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m41">testScriptsSmoke.TS_012_ValidateReportsFunctionality#reviewProgressByRevReport</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22828_31904}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8527cd2a950884dda00bf84dbb23477f
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Displayed(Element.java:116)
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_012_ValidateReportsFunctionality.beforeClass(TS_012_ValidateReportsFunctionality.java:47)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m42">testScriptsSmoke.TS_012_ValidateReportsFunctionality#tallySubTally</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 8 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22828_31904}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 8527cd2a950884dda00bf84dbb23477f
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Displayed(Element.java:116)
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_012_ValidateReportsFunctionality.beforeClass(TS_012_ValidateReportsFunctionality.java:47)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>BatchUpload</h2><h3 id="m43">testScriptsSmoke.TS_013_ValidateBatchUpload#user</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 23 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir18072_30400}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a36b392375e86254154b6db0106127bd
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
 	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
 	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
 	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
@@ -259,7 +312,271 @@ Session ID: bb0596fc5f15d213be5875b04ee601ee
 	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
 	at automationLibrary.Element.AssertExists(Element.java:501)
 	at automationLibrary.Element.waitAndClick(Element.java:256)
-	at pageFactory.DocViewPage.getAudioPersistentHit(DocViewPage.java:287)
-	at pageFactory.DocViewPage.VerifyPersistentHit(DocViewPage.java:671)
-	at testScriptsRegression.DocView_Regression.getPersistentHit(DocView_Regression.java:312)
-... Removed 28 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m14">testScriptsRegression.DocView_Regression#VerifyAnalyticsEmailInclusive</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m15">testScriptsRegression.DocView_Regression#VerifyAnalyticsThreaded</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m16">testScriptsRegression.DocView_Regression#VerifyAnalytics_FamilyActions</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m17">testScriptsRegression.DocView_Regression#VerifyNearDupesCompwinodw</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m18">testScriptsRegression.DocView_Regression#VerifyTextTab</h3><table class="result"></table><p class="totop"><a href="#summary">back to summary</a></p></body></html>
+	at pageFactory.LoginPage.logout(LoginPage.java:136)
+	at testScriptsSmoke.TS_013_ValidateBatchUpload.user(TS_013_ValidateBatchUpload.java:39)
+... Removed 31 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m44">testScriptsSmoke.TS_013_ValidateBatchUpload#batchUploadByPA</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;id&quot;,&quot;selector&quot;:&quot;rbnBatchSearchUpload&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 23 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir18072_30400}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a36b392375e86254154b6db0106127bd
+*** Element info: {Using=id, value=rbnBatchSearchUpload}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementById(RemoteWebDriver.java:453)
+	at org.openqa.selenium.By$ById.findElement(By.java:218)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Click(Element.java:224)
+	at pageFactory.SavedSearch.uploadBatchFile(SavedSearch.java:151)
+	at testScriptsSmoke.TS_013_ValidateBatchUpload.batchUploadByPA(TS_013_ValidateBatchUpload.java:48)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m45">testScriptsSmoke.TS_013_ValidateBatchUpload#batchUploadByRMU</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 22 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir18072_30400}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a36b392375e86254154b6db0106127bd
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Displayed(Element.java:116)
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_013_ValidateBatchUpload.batchUploadByRMU(TS_013_ValidateBatchUpload.java:55)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m46">testScriptsSmoke.TS_013_ValidateBatchUpload#batchUploadByReviewer</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 23 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir18072_30400}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: a36b392375e86254154b6db0106127bd
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.waitAndClick(Element.java:256)
+	at pageFactory.LoginPage.logout(LoginPage.java:136)
+	at testScriptsSmoke.TS_013_ValidateBatchUpload.user(TS_013_ValidateBatchUpload.java:39)
+... Removed 31 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>DocViewAudio</h2><h3 id="m47">testScriptsSmoke.TS_018_DocViewAudio#before</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m48">testScriptsSmoke.TS_018_DocViewAudio#close</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 18 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.close(TS_018_DocViewAudio.java:113)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m49">testScriptsSmoke.TS_018_DocViewAudio#AudioDownload</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m50">testScriptsSmoke.TS_018_DocViewAudio#addComment</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m51">testScriptsSmoke.TS_018_DocViewAudio#addPlay</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m52">testScriptsSmoke.TS_018_DocViewAudio#addRemark</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m53">testScriptsSmoke.TS_018_DocViewAudio#addreduction</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 28 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir16208_14084}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: f57d0c92c211065dac5cc7f855fde028
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.LoginPage.logout(LoginPage.java:139)
+	at testScriptsSmoke.TS_018_DocViewAudio.before(TS_018_DocViewAudio.java:52)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>Production</h2><h3 id="m54">testScriptsSmoke.TS_006_Production#preCondition</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;a id=&quot;aAddFolder&quot; href=&quot;#&quot; onclick=&quot;AddFolder();&quot;&gt;...&lt;/a&gt; is not clickable at point (1452, 381). Other element would receive the click: &lt;div id=&quot;main&quot; role=&quot;main&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 46 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24788_9087}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 2831fce0b18a42f1f630a2956d91f634
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:225)
+	at pageFactory.TagsAndFoldersPage.CreateFolder(TagsAndFoldersPage.java:186)
+	at testScriptsSmoke.TS_006_Production.preCondition(TS_006_Production.java:49)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m55">testScriptsSmoke.TS_006_Production#AddNewProduction</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: unknown error: Element &lt;a id=&quot;aAddFolder&quot; href=&quot;#&quot; onclick=&quot;AddFolder();&quot;&gt;...&lt;/a&gt; is not clickable at point (1452, 381). Other element would receive the click: &lt;div id=&quot;main&quot; role=&quot;main&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 46 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24788_9087}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 2831fce0b18a42f1f630a2956d91f634
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:225)
+	at pageFactory.TagsAndFoldersPage.CreateFolder(TagsAndFoldersPage.java:186)
+	at testScriptsSmoke.TS_006_Production.preCondition(TS_006_Production.java:49)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h2>BatchPrint</h2><h3 id="m56">testScriptsSmoke.TS_006_ValidateBatchPrint#close</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 26 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir23548_30681}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: e9e07b396926084c9e2db5c56f935ea9
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.waitAndClick(Element.java:256)
+	at pageFactory.LoginPage.logout(LoginPage.java:136)
+	at testScriptsSmoke.TS_006_ValidateBatchPrint.close(TS_006_ValidateBatchPrint.java:84)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p><h3 id="m57">testScriptsSmoke.TS_006_ValidateBatchPrint#BatchPrintWithNative</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;//*[@id=&apos;user-selector&apos;]&quot;}
+  (Session info: chrome=88.0.4324.104)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 27 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;INLTP-FERHAT&apos;, ip: &apos;10.12.50.219&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_241&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir23548_30681}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.104, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: e9e07b396926084c9e2db5c56f935ea9
+*** Element info: {Using=xpath, value=//*[@id=&apos;user-selector&apos;]}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByXPath(RemoteWebDriver.java:509)
+	at org.openqa.selenium.By$ByXPath.findElement(By.java:361)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at automationLibrary.Element.AssertExists(Element.java:501)
+	at automationLibrary.Element.Displayed(Element.java:116)
+	at automationLibrary.Element.Visible(Element.java:123)
+	at pageFactory.LoginPage.loginToSightLine(LoginPage.java:110)
+	at testScriptsSmoke.TS_006_ValidateBatchPrint.BatchPrintWithNative(TS_006_ValidateBatchPrint.java:59)
+... Removed 29 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p></body></html>

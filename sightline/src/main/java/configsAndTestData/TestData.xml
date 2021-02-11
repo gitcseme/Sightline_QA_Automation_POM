@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- REGRESSION TEST DATA -->
+<!-- SMOKE TEST DATA -->
  <TestData>
  <!-- Serach strings and expected pure hit counts -->
-    <searchString1>test</searchString1>
-    <searchString2>comments</searchString2>
-    <pureHitSeachString1>48</pureHitSeachString1>
-    <pureHitSeachString2>52</pureHitSeachString2>
-    <searchString1ANDsearchString2>16</searchString1ANDsearchString2>
-    <searchString1ORsearchString2>85</searchString1ORsearchString2>
-    <searchString1NOTsearchString2>33</searchString1NOTsearchString2>
-    <searchString2NOTsearchString1>37</searchString2NOTsearchString1>
+    <searchString1>comments</searchString1>
+    <searchString2>test</searchString2>
+    <pureHitSeachString1>9</pureHitSeachString1>
+    <pureHitSeachString2>2</pureHitSeachString2>
+    <searchString1ANDsearchString2>1</searchString1ANDsearchString2>
+    <searchString1ORsearchString2>10</searchString1ORsearchString2>
+    <searchString1NOTsearchString2>8</searchString1NOTsearchString2>
+    <searchString2NOTsearchString1>1</searchString2NOTsearchString1>
     <audioSearchString1>right</audioSearchString1>
-    <audioSearchString1pureHit>3</audioSearchString1pureHit>
-    <conceptualSearchString1>field report</conceptualSearchString1>
-    <conceptualSearchString1PureHit>2</conceptualSearchString1PureHit>
+    <audioSearchString1pureHit>1</audioSearchString1pureHit>
+    <conceptualSearchString1>community</conceptualSearchString1>
+    <conceptualSearchString1PureHit>5</conceptualSearchString1PureHit>
     <metaDataCN>P Allen</metaDataCN>
-    <metaDataCNcount>1135</metaDataCNcount>
-    <totalNumberOfDocs>1202</totalNumberOfDocs>
-    <totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
-    
-    <!-- Production path for redaction master doc -->
-    <MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
-    <MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
-    
-    
-  
-    
+    <metaDataCNcount>120</metaDataCNcount>
+    <totalNumberOfDocs>125</totalNumberOfDocs>
 </TestData>

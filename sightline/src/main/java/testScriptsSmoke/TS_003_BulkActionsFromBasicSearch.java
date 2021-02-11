@@ -29,7 +29,7 @@ public class TS_003_BulkActionsFromBasicSearch {
 	Driver driver;
 	LoginPage lp;
 	SessionSearch sessionSearch;	
-	int pureHit;
+	static int pureHit;
 	String searchText ="test";
 	SoftAssert softAssertion;
 	TagsAndFoldersPage tf;
