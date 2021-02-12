@@ -52,7 +52,6 @@ public class TS_005_ValidateCategorization {
     	sessionSearch.basicContentSearch(serachString);
     	System.out.println(serachString);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
- 
     	
     	//Create Bulk Tag   
 		sessionSearch.bulkTag(tagName);

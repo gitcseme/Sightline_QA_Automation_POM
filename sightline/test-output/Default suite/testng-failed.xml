@@ -3,21 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsRegression.DocView_Redactions">
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="ModifyRedaction"/>
-          <include name="PDFComparision"/>
-          <include name="AddRedaction"/>
-          <include name="AddRedaction1"/>
-          <include name="DatabaseValidation"/>
-          <include name="DeleteRedaction"/>
           <include name="preCondition"/>
           <include name="close"/>
-          <include name="ProductionSomeRedaction"/>
-          <include name="takeScreenShot"/>
-          <include name="AddRedactionnextpage"/>
+          <include name="proximityAndRegExInBS"/>
         </methods>
-      </class> <!-- testScriptsRegression.DocView_Redactions -->
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

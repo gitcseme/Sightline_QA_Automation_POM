@@ -209,6 +209,9 @@ public class SessionSearch {
     public Element getadwp_assgn_status(){ return driver.FindElementById("statusSel"); }
    // public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
     
+    //Query alert for proximity and regex search
+    public Element getYesQueryAlert(){ return driver.FindElementByCssSelector("#bot1-Msg1"); }
+    
     
     public SessionSearch(Driver driver){
 
@@ -525,6 +528,13 @@ public class SessionSearch {
 
         //Click on Search button
     	getSearchButton().Click();
+    	
+    	//handle pop confirmation for regex and proximity queries
+    	try {
+    		getYesQueryAlert().waitAndClick(8);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
     	
     	//verify counts for all the tiles
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

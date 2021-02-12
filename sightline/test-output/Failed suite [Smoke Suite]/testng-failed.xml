@@ -8,38 +8,179 @@
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
         <methods>
-          <include name="ConceptualSearch"/>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
           <include name="preCondition"/>
           <include name="close"/>
-          <include name="searchsavedSearch"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
           <include name="takeScreenShot"/>
-          <include name="contentSearchWithOperatorsInBS"/>
+          <include name="preCondition"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
           <include name="metaDataSearch"/>
-          <include name="contentSearchWithOperatorsInAS"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- BasicAndAdvancedSearchOperations(failed)(failed) -->
-  <test name="BulkActionsFromSessionSearch(failed)(failed)">
+  <test name="TS_017_DocList(failed)(failed)">
     <groups>
       <run>
         <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch">
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
         <methods>
           <include name="takeScreenShot"/>
           <include name="preCondition"/>
-          <include name="close"/>
-          <include name="viewInDocViewInBasicSearch"/>
-          <include name="viewInDoclistInBasicSearch"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_003_BulkActionsFromBasicSearch -->
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="doclistToDocView"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
-  </test> <!-- BulkActionsFromSessionSearch(failed)(failed) -->
+  </test> <!-- TS_017_DocList(failed)(failed) -->
   <test name="SavedSearchShareSchedule(failed)(failed)">
     <groups>
       <run>
@@ -47,16 +188,87 @@
       </run>
     </groups>
     <classes>
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="preCondition"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
       <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
         <methods>
           <include name="preCondition"/>
           <include name="close"/>
           <include name="shareSavedSearch"/>
-          <include name="saveSearchToDocView"/>
-          <include name="saveSearchToDocList"/>
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- SavedSearchShareSchedule(failed)(failed) -->
   <test name="DocView - Non Audio(failed)(failed)">
@@ -66,15 +278,89 @@
       </run>
     </groups>
     <classes>
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
       <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
         <methods>
-          <include name="addCommentToFirstDoc"/>
+          <include name="addredaction"/>
           <include name="takeScreenShot"/>
+          <include name="addCommentandcompleteDoc"/>
           <include name="preCondition"/>
           <include name="addRemarkToFirstDoc"/>
-          <include name="completeDoc"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- DocView - Non Audio(failed)(failed) -->
   <test name="Reports(failed)(failed)">
@@ -84,14 +370,88 @@
       </run>
     </groups>
     <classes>
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="preCondition"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
       <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
         <methods>
+          <include name="conceptExplorer"/>
           <include name="beforeClass"/>
           <include name="close"/>
           <include name="reviewProgressByRevReport"/>
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- Reports(failed)(failed) -->
   <test name="BatchUpload(failed)(failed)">
@@ -105,11 +465,85 @@
         <methods>
           <include name="takeScreenShot"/>
           <include name="user"/>
+          <include name="batchUploadByPA"/>
           <include name="preCondition"/>
           <include name="close"/>
           <include name="batchUploadByReviewer"/>
+          <include name="batchUploadByRMU"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="preCondition"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.TS_006_Production">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- BatchUpload(failed)(failed) -->
   <test name="Production(failed)(failed)">
@@ -119,6 +553,53 @@
       </run>
     </groups>
     <classes>
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="user"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="preCondition"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      <class name="testScriptsSmoke.TS_010_Workflow">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
+      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
+        <methods>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
+      <class name="testScriptsSmoke.TS_017_DocList">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
+      <class name="testScriptsSmoke.TS_008_AllManageModules">
+        <methods>
+          <include name="takeScreenShot"/>
+          <include name="close"/>
+          <include name="before"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
       <class name="testScriptsSmoke.TS_006_Production">
         <methods>
           <include name="AddNewProduction"/>
@@ -127,6 +608,32 @@
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_006_Production -->
+      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+        <methods>
+          <include name="before"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+        <methods>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
+        <methods>
+          <include name="beforeClass"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- Production(failed)(failed) -->
 </suite> <!-- Failed suite [Failed suite [Smoke Suite]] -->

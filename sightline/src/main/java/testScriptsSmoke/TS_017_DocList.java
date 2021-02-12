@@ -44,6 +44,8 @@ public class TS_017_DocList {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 		//Open browser
+		/*Input in = new Input();
+		in.loadEnvConfig();*/
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
@@ -62,7 +64,7 @@ public class TS_017_DocList {
 		
 		bc.selectproject();
 		//search for string
-		int ph= ss.basicContentSearch(Input.searchString1);
+		ss.basicContentSearch(Input.searchString1);
     	
     	//view in doclist
     	ss.ViewInDocList();
@@ -95,21 +97,21 @@ public class TS_017_DocList {
     	ss.switchToWorkproduct();
     	ss.selectTagInASwp(bulkTagName);
 		//Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
-    	Assert.assertTrue(ss.serarchWP()>=1);
+    	Assert.assertTrue(ss.serarchWP()==Input.pureHitSeachString1);
 
     	
     	bc.selectproject();
     	ss.switchToWorkproduct();
     	ss.selectFolderInASwp(bulkFolderName);
 		//Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
-    	Assert.assertTrue(ss.serarchWP()>=1);
+    	Assert.assertTrue(ss.serarchWP()==Input.pureHitSeachString1);
    }
 	
 	
 	/*
 	To verify navigation from doclist to docview
 	*/
-	@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"},priority=2)
 	public void doclistToDocView() throws InterruptedException {
 		//search for string
 		bc.selectproject();

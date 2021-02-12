@@ -29,6 +29,8 @@ public class TS_013_ValidateBatchUpload {
 			
 		
 		//Open browser
+		/*Input in = new Input();
+		in.loadEnvConfig();*/
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		lp=new LoginPage(driver);
@@ -81,7 +83,7 @@ public class TS_013_ValidateBatchUpload {
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	
      }
-	   @AfterClass(alwaysRun = true)
+	   //@AfterClass(alwaysRun = true)
 		public void close(){
 			
 		   try{ 
@@ -90,7 +92,7 @@ public class TS_013_ValidateBatchUpload {
 			     //lp.quitBrowser();	
 				}finally {
 					lp.quitBrowser();
-					LoginPage.clearBrowserCache();
+					//LoginPage.clearBrowserCache();
 				}
 		}
 }

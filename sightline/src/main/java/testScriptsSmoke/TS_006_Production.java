@@ -69,7 +69,7 @@ public class TS_006_Production {
 		System.out.println("------------------------------------------");
 	    System.out.println("Executing method : " + testMethod.getName());       
 	 }
-     @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
  	 if(ITestResult.FAILURE==result.getStatus()){
  		Utility bc = new Utility(driver);

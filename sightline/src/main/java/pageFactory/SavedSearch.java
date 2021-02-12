@@ -121,9 +121,11 @@ public class SavedSearch {
     
     
     
-    @SuppressWarnings("static-access")
+    //@SuppressWarnings("static-access")
 	public void uploadBatchFile(final String batchFile) {
+		driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
     	driver.waitForPageToBeReady();
+    	final BaseClass bc = new BaseClass(driver);
     	
     	ArrayList<Integer> expectCounts= new ArrayList<Integer>();
     	if((Input.suite.equalsIgnoreCase("regression") && Input.numberOfDataSets == 3) 
@@ -143,10 +145,10 @@ public class SavedSearch {
     	
     	ArrayList<Integer> actualCounts= new ArrayList<Integer>();
     	
-    	final BaseClass bc = new BaseClass(driver);
+    	
         final int Bgcount = bc.initialBgCount();
         
-    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getBatchUploadButton().Visible()  ;}}),Input.wait30);
     	getBatchUploadButton().Click();
     	
@@ -205,8 +207,8 @@ public class SavedSearch {
 		   
 		   base.VerifySuccessMessage("Save search tree node successfully deleted.");
     	
-		 //uncomment below assert after data set is fix
-	    //Assert.assertTrue(expectCounts.equals(actualCounts));
+		//uncomment below assert after data set is fix
+	    Assert.assertTrue(expectCounts.equals(actualCounts));
 	    	
 	}
 
@@ -321,8 +323,8 @@ public class SavedSearch {
 		
 	   base.getSelectProject();
 	   
-	   Dimension dim = new Dimension(1600,900);
-	   driver.getWebDriver().manage().window().setSize(dim);
+	  /* Dimension dim = new Dimension(1600,900);
+	   driver.getWebDriver().manage().window().setSize(dim);*/
 	   
 	 //  driver.getWebDriver().manage().window().setSize(800);
 	   savedSearch_Searchandclick(searchName);
@@ -418,7 +420,7 @@ public class SavedSearch {
 	   
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
-	   getShareSaveBtn().javascriptclick();
+	   getShareSaveBtn().Click();
 	  
 	//   getShareSaveBtn().waitAndClick(10);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
+  <listeners>
+    <listener class-name="executionMaintenance.AnnotationTransformer"/>
+  </listeners>
   <test name="AllManageModules(failed)">
     <groups>
       <run>
@@ -11,191 +14,17 @@
       <class name="testScriptsSmoke.TS_008_AllManageModules">
         <methods>
           <include name="takeScreenShot"/>
+          <include name="createKeywordField"/>
           <include name="close"/>
-          <include name="CreateSecurityGroup"/>
           <include name="before"/>
-          <include name="CreateCodingform"/>
+          <include name="DeleteTagField"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      <class name="testScriptsSmoke.Input">
+        <methods>
+          <include name="loadEnvConfig"/>
+        </methods>
+      </class> <!-- testScriptsSmoke.Input -->
     </classes>
   </test> <!-- AllManageModules(failed) -->
-  <test name="BasicAndAdvancedSearchOperations(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-          <include name="metaDataSearch"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
-    </classes>
-  </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
-  <test name="TS_017_DocList(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_017_DocList">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="doclistToDocView"/>
-          <include name="takeScreenShot"/>
-          <include name="doclistBulkRelease"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_017_DocList -->
-    </classes>
-  </test> <!-- TS_017_DocList(failed) -->
-  <test name="SavedSearchShareSchedule(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="shareSavedSearch"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
-    </classes>
-  </test> <!-- SavedSearchShareSchedule(failed) -->
-  <test name="Workflow(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_010_Workflow">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="Test"/>
-          <include name="close"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
-    </classes>
-  </test> <!-- Workflow(failed) -->
-  <test name="DocView - Non Audio(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
-        <methods>
-          <include name="addredaction"/>
-          <include name="takeScreenShot"/>
-          <include name="addCommentandcompleteDoc"/>
-          <include name="preCondition"/>
-          <include name="addRemarkToFirstDoc"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
-    </classes>
-  </test> <!-- DocView - Non Audio(failed) -->
-  <test name="Reports(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
-        <methods>
-          <include name="conceptExplorer"/>
-          <include name="beforeClass"/>
-          <include name="close"/>
-          <include name="reviewProgressByRevReport"/>
-          <include name="tallySubTally"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
-    </classes>
-  </test> <!-- Reports(failed) -->
-  <test name="BatchUpload(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="user"/>
-          <include name="batchUploadByPA"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="batchUploadByReviewer"/>
-          <include name="batchUploadByRMU"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
-    </classes>
-  </test> <!-- BatchUpload(failed) -->
-  <test name="DocViewAudio(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_018_DocViewAudio">
-        <methods>
-          <include name="addRemark"/>
-          <include name="before"/>
-          <include name="AudioDownload"/>
-          <include name="addreduction"/>
-          <include name="addComment"/>
-          <include name="close"/>
-          <include name="addPlay"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
-    </classes>
-  </test> <!-- DocViewAudio(failed) -->
-  <test name="Production(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_006_Production">
-        <methods>
-          <include name="AddNewProduction"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_006_Production -->
-    </classes>
-  </test> <!-- Production(failed) -->
-  <test name="BatchPrint(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
-        <methods>
-          <include name="BatchPrintWithNative"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
-    </classes>
-  </test> <!-- BatchPrint(failed) -->
 </suite> <!-- Failed suite [Smoke Suite] -->

@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.AssertJUnit;
 import org.testng.ITestResult;
 
@@ -51,13 +52,32 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		
 		
     	//Open browser
+		/*Input in = new Input();
+		in.loadEnvConfig();*/
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
 		//Login as a PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2021
+	 * Modified date: 
+	 * Modified by:
+	 * Description : As a PA user validate proximity search, regex with special chars in Basic search 
+	 */	
+	@Test(dataProvider =  "ProxAndRegx", groups={"smoke","regression"})
+	public void proximityAndRegExInBS(String searchString, int expectedCount) {
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	bc.selectproject();
+    	Assert.assertEquals(ss.basicContentSearch(searchString),expectedCount);
+    	
+	}
+	
 	
 	/*
 	 * Author : Suresh Bavihalli
@@ -118,44 +138,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		softAssertion.assertAll();
 	}
 	
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: Feb 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : RPMXCON_37690 is scripted  
-	 */
-	////@Test(groups={"regression"})
-	public void Search_RPMXCON_37690() throws InterruptedException {
-		SoftAssert softAssertion= new SoftAssert();
-		String saveSearch = "01Test"+Utility.dynamicNameAppender();
-		bc.selectproject();
-		ss.basicContentSearch("MasterDate: [1980-01-01 TO 2018-01-01]"+Keys.ENTER+"AND"+Keys.ENTER+
-				"("+Keys.ENTER+"\"Test\""+Keys.ENTER+"OR"+Keys.ENTER+"\"Commit\""+Keys.ENTER+")"
-				+Keys.ENTER+"AND"+Keys.ENTER+"("+Keys.ENTER+"\"Test\""+Keys.ENTER+"OR"+Keys.ENTER+"\"Commit\""+Keys.ENTER+")");	
 
-		//Save the search
-		ss.saveSearch(saveSearch);
-		
-		//View docs from session search
-		ss.ViewInDocView();
-		DocViewPage dv= new DocViewPage(driver);
-		softAssertion.assertTrue(dv.getPersistentHit("Test").equals("Test- 1 Hit"));
-		softAssertion.assertTrue(dv.getPersistentHit("Commit").equals("Commit- 1 Hit"));
-		softAssertion.assertTrue(dv.getPersistentHit("MasterDat").equals("NULL"));
-		
-		//View docs from saved search
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	
-		SavedSearch svdSe= new SavedSearch(driver);
-		svdSe.savedSearchToDocView(saveSearch);
-		softAssertion.assertTrue(dv.getPersistentHit("Test").equals("Test- 1 Hit"));
-		softAssertion.assertTrue(dv.getPersistentHit("Commit").equals("Commit- 1 Hit"));
-		softAssertion.assertTrue(dv.getPersistentHit("MasterDat").equals("NULL"));
-
-		softAssertion.assertAll();
-		
-	}
 	
 	/*
 	 * Author : Suresh Bavihalli
@@ -267,6 +250,45 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 		softAssertion.assertAll();
 	}
+	
+	/*
+	 * Author : Suresh Bavihalli
+	 * Created date: Feb 2019
+	 * Modified date: 
+	 * Modified by:
+	 * Description : RPMXCON_37690 is scripted  
+	 */
+	////@Test(groups={"regression"})
+	public void Search_RPMXCON_37690() throws InterruptedException {
+		SoftAssert softAssertion= new SoftAssert();
+		String saveSearch = "01Test"+Utility.dynamicNameAppender();
+		bc.selectproject();
+		ss.basicContentSearch("MasterDate: [1980-01-01 TO 2018-01-01]"+Keys.ENTER+"AND"+Keys.ENTER+
+				"("+Keys.ENTER+"\"Test\""+Keys.ENTER+"OR"+Keys.ENTER+"\"Commit\""+Keys.ENTER+")"
+				+Keys.ENTER+"AND"+Keys.ENTER+"("+Keys.ENTER+"\"Test\""+Keys.ENTER+"OR"+Keys.ENTER+"\"Commit\""+Keys.ENTER+")");	
+
+		//Save the search
+		ss.saveSearch(saveSearch);
+		
+		//View docs from session search
+		ss.ViewInDocView();
+		DocViewPage dv= new DocViewPage(driver);
+		softAssertion.assertTrue(dv.getPersistentHit("Test").equals("Test- 1 Hit"));
+		softAssertion.assertTrue(dv.getPersistentHit("Commit").equals("Commit- 1 Hit"));
+		softAssertion.assertTrue(dv.getPersistentHit("MasterDat").equals("NULL"));
+		
+		//View docs from saved search
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	
+		SavedSearch svdSe= new SavedSearch(driver);
+		svdSe.savedSearchToDocView(saveSearch);
+		softAssertion.assertTrue(dv.getPersistentHit("Test").equals("Test- 1 Hit"));
+		softAssertion.assertTrue(dv.getPersistentHit("Commit").equals("Commit- 1 Hit"));
+		softAssertion.assertTrue(dv.getPersistentHit("MasterDat").equals("NULL"));
+
+		softAssertion.assertAll();
+		
+	}
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
@@ -291,4 +313,15 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 				lp.clearBrowserCache();
 			}	
 	}
+	@DataProvider(name = "ProxAndRegx")
+    public Object[][] dataProviderMethod() {
+		 return new Object[][] { {"\"illustratin* since Q499\"~20",1},
+	        	{"\"**elief that the rights\"",1},
+	        	{"\"quarterly bas**\"",1},
+	        	{"\"quarterly *\"",4},
+	        	{"\"discrepancy *n\"",0},
+	        	{"\"**elief *hat the right?\"",1},
+	        	
+	        };
+    }
 }
