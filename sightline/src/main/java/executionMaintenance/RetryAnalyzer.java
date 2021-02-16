@@ -22,7 +22,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 
 	@Override
 	public boolean retry(ITestResult result) {
-
+System.out.println(result);
 		if(counter < retryLimit)
 		{
 			counter++;

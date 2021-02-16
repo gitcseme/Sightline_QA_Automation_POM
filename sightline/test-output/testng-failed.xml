@@ -1,30 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
-  <listeners>
-    <listener class-name="executionMaintenance.AnnotationTransformer"/>
-  </listeners>
-  <test name="AllManageModules(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_008_AllManageModules">
+      <class name="testScriptsSmoke.TS_005_ValidateCategorization">
         <methods>
+          <include name="preConditions"/>
           <include name="takeScreenShot"/>
-          <include name="createKeywordField"/>
           <include name="close"/>
-          <include name="before"/>
-          <include name="DeleteTagField"/>
+          <include name="validateCategorization"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
-      <class name="testScriptsSmoke.Input">
-        <methods>
-          <include name="loadEnvConfig"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.Input -->
+      </class> <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
     </classes>
-  </test> <!-- AllManageModules(failed) -->
-</suite> <!-- Failed suite [Smoke Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

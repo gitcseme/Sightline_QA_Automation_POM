@@ -2,10 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Smoke Suite">
 	
-	 <listeners>
-        <listener class-name="executionMaintenance.AnnotationTransformer"/>
-  	</listeners>
-	
     <test name="Input"> 
     <classes>
         <class name="testScriptsSmoke.Input" ></class>  
@@ -13,19 +9,21 @@
 	</test> 
 	 
  	
-  <!--  <test name="Categorization">
+    <test name="Categorization">
 	 <groups><run><include name="smoke" /></run></groups>
 	    <classes>
         	<class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
     	</classes>
-	</test>   --> 
+	</test>   
+	
 	<!--  	
-  <test name="2FAValidation">
+  	<test name="2FAValidation">
     <classes>
         <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
     </classes>
 	</test>    
 	-->
+	
 	 <test name="AllManageModules">
 	 <groups><run><include name="smoke" /></run></groups>
     	<classes>
@@ -33,12 +31,13 @@
     	</classes>
 	</test>  
 	
- 	<!-- <test name="BasicAndAdvancedSearchOperations">
+    <test name="BasicAndAdvancedSearchOperations">
  	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
     </classes>
 	</test>   
+	
 	<test name="TS_017_DocList">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
@@ -52,32 +51,36 @@
         <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch" ></class>  
     </classes>
 	</test> 
+	
 	<test name="AdvancedSearchBulkActions">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_003_AdvancedSearchBulkActions" ></class>  
     </classes>
 	</test> 
+	
 	<test name="SavedSearchShareSchedule">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule" ></class>  
     </classes>
 	</test> 
+	
 	<test name="ValidateAssignmentFunctionality">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality" ></class>  
     </classes>
 	</test> 
-  	 <test name="Workflow">
+  	
+  	<test name="Workflow">
   	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_010_Workflow" ></class>  
     </classes> 
 	</test>    
 	
-	<test name="UserManagement">
+	<!-- <test name="UserManagement">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes> 
     
@@ -91,7 +94,8 @@
 	    <class name="testScriptsSmoke.TS_016_DomainDashboard" ></class>  
 	    </classes>
     </test> 
-   
+    -->
+    
 	 <test name="DocView - Non Audio">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
@@ -130,7 +134,7 @@
     <classes>
         <class name="testScriptsSmoke.TS_006_ValidateBatchPrint" ></class>  
     </classes>
-	</test>       -->
+	</test>       
  	 
  	
 </suite> <!-- Suite -->
