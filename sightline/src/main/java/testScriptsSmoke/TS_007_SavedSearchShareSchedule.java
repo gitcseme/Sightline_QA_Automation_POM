@@ -41,14 +41,14 @@ public class TS_007_SavedSearchShareSchedule {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	    //Open browser
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
+	    
+		Input in = new Input();
+		in.loadEnvConfig();
+		//Open browser
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc = new BaseClass(driver);
 		//Search and save it
 		ss= new SavedSearch(driver);		
 		
@@ -57,9 +57,9 @@ public class TS_007_SavedSearchShareSchedule {
 		search.saveSearch(saveSearchName);
 		search.saveSearch(SearchNamePA);
 		
-		
+		bc = new BaseClass(driver);
 	}
-	@Test(groups={"smoke","regression"}, priority = 1)
+	//@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -77,7 +77,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	@Test(groups={"smoke","regression"},priority = 2)
+	//@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -91,7 +91,7 @@ public class TS_007_SavedSearchShareSchedule {
 	    System.out.println("Expected docs("+purehits+") are shown in docView");
 	}
 	
-	@Test(groups={"smoke","regression"},priority = 3)
+	//@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
@@ -109,7 +109,7 @@ public class TS_007_SavedSearchShareSchedule {
 	 * Description : Verify sharing of saved searches is working correctly
 	 */
 	
-	 @Test(groups={"smoke","regression"},priority = 4)
+	 @Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 
 	  	//Share the saved search

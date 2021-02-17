@@ -42,7 +42,10 @@ public class TS_008_AllManageModules {
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		driver = new Driver();
+		
+//	Input in = new Input();
+//	in.loadEnvConfig();
+	driver = new Driver();
 	lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
@@ -194,7 +197,7 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add coding form is working correctly
 	 */	
-	@Test(priority =10,groups={"smoke","regression"})
+@Test(priority =10,groups={"smoke","regression"})
 	public void CreateCodingform() throws ParseException, InterruptedException {
 		
 		lp.logout();

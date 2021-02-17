@@ -9,9 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.interactions.Actions;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -47,13 +46,14 @@ public class SavedSearch {
     public ElementCollection getUserInShareList(){ return driver.FindElementsByXPath("//*[@id='my-table']/tbody/tr/td[2]/label[1]"); }
     public Element getSharecheckBoxofUser(int num){ return driver.FindElementByXPath("(//*[@id='my-table']/tbody/tr/td[1]/label/i)["+num+"]"); }
    
-    public Element getShareSaveBtn(){ return driver.FindElementById("btnShareSave"); }
+    public Element getShareSaveBtn(){ return driver.FindElementByXPath("(//button[text()='Save'])[1]"); }
   
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
     
     //batch upload
     public Element getBatchUploadButton(){ return driver.FindElementById("rbnBatchSearchUpload"); }
+   
     public Element getSelectFile(){ return driver.FindElementByXPath("//*[@id='fileupload']"); }
     public Element getSubmitToUpload(){ return driver.FindElementByXPath("//button[contains(text(),'Ok')]"); }
 
@@ -112,7 +112,7 @@ public class SavedSearch {
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         softAssertion= new SoftAssert(); 
-        search = new SessionSearch(driver);
+//        search = new SessionSearch(driver);
         
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this); 
@@ -121,11 +121,9 @@ public class SavedSearch {
     
     
     
-    //@SuppressWarnings("static-access")
+    @SuppressWarnings("static-access")
 	public void uploadBatchFile(final String batchFile) {
-		driver.getWebDriver().get(Input.url+ "SavedSearch/SavedSearches");
     	driver.waitForPageToBeReady();
-    	final BaseClass bc = new BaseClass(driver);
     	
     	ArrayList<Integer> expectCounts= new ArrayList<Integer>();
     	if((Input.suite.equalsIgnoreCase("regression") && Input.numberOfDataSets == 3) 
@@ -137,21 +135,24 @@ public class SavedSearch {
     	}
 	    else if(Input.suite.equalsIgnoreCase("smoke") && Input.numberOfDataSets == 1){
 			
-			expectCounts.add(27);expectCounts.add(27);expectCounts.add(11);
-	    	expectCounts.add(8);expectCounts.add(121);expectCounts.add(1);
-	    	expectCounts.add(17);expectCounts.add(3);expectCounts.add(2);
+			expectCounts.add(28);expectCounts.add(28);expectCounts.add(11);
+	    	expectCounts.add(8);expectCounts.add(0);expectCounts.add(1);
+	    	expectCounts.add(0);expectCounts.add(3);expectCounts.add(2);
 	    	expectCounts.add(0);expectCounts.add(0);expectCounts.add(0);
 		}
     	
     	ArrayList<Integer> actualCounts= new ArrayList<Integer>();
     	
-    	
+    	final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
         
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getBatchUploadButton().Visible()  ;}}),Input.wait30);
     	getBatchUploadButton().Click();
+    	System.out.println("Clicked on Upload button..");
     	
+    	System.out.println("Clicked on Batch Upload Button.........");
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getSelectFile().Visible()  ;}}),Input.wait30);
     	 
@@ -207,7 +208,7 @@ public class SavedSearch {
 		   
 		   base.VerifySuccessMessage("Save search tree node successfully deleted.");
     	
-		//uncomment below assert after data set is fix
+		 //uncomment below assert after data set is fix
 	    Assert.assertTrue(expectCounts.equals(actualCounts));
 	    	
 	}
@@ -323,8 +324,8 @@ public class SavedSearch {
 		
 	   base.getSelectProject();
 	   
-	  /* Dimension dim = new Dimension(1600,900);
-	   driver.getWebDriver().manage().window().setSize(dim);*/
+	   Dimension dim = new Dimension(1600,900);
+	   driver.getWebDriver().manage().window().setSize(dim);
 	   
 	 //  driver.getWebDriver().manage().window().setSize(800);
 	   savedSearch_Searchandclick(searchName);
@@ -418,9 +419,12 @@ public class SavedSearch {
 			   getShare_SecurityGroup(securitygroupname).Visible()  ;}}), Input.wait30);
 	   getShare_SecurityGroup(securitygroupname).waitAndClick(10);  
 	   
-	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
-	   getShareSaveBtn().Click();
+//	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			   getShareSaveBtn().Visible()  ;}}), Input.wait30);
+//	   getShareSaveBtn().javascriptclick();
+	   
+	   Actions action = new Actions((WebDriver) driver);
+	   action.moveToElement((WebElement) getShareSaveBtn()).click().perform();
 	  
 	//   getShareSaveBtn().waitAndClick(10);
 	   base.VerifySuccessMessage("Share saved search operation successfully done.");
@@ -516,7 +520,7 @@ public class SavedSearch {
 		getSavedSearch_ApplyFilterButton().Click();
 			
 	 	}
-	public static String renameFile() {
+	public String renameFile() {
 		String FileName = null;
 	    //back up TCs zip file for later verification
 	    File destinationFolder = new File(System.getProperty("user.dir")+Input.batchFilesPath);
@@ -541,7 +545,7 @@ public class SavedSearch {
 	                {
 	                   if(child.isFile()){ //rename only files not folders
 	                	// Move files to destination folder
-	                	FileName= "Batch"+Utility.dynamicNameAppender()+".xlsx";
+	                	FileName= "BatchUpload"+Utility.dynamicNameAppender()+".xlsx";
 	                    child.renameTo(new File(destinationFolder + "\\"+FileName));
 	                   }
 	                }
