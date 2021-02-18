@@ -25,8 +25,8 @@ public class TS_010_Workflow {
 	@Test(groups={"smoke","regression"})
 	public void Test() throws ParseException, InterruptedException, Exception {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input in = new Input();
-		in.loadEnvConfig();
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		
 		driver = new Driver();
 		String codingfrom = "CF"+Utility.dynamicNameAppender();

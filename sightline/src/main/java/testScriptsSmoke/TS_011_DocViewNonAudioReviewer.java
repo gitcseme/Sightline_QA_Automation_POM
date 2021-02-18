@@ -61,8 +61,8 @@ public class TS_011_DocViewNonAudioReviewer {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 		//Open browser
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		//Login as PA
@@ -174,7 +174,7 @@ public class TS_011_DocViewNonAudioReviewer {
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	
      }
- //    @AfterClass(alwaysRun=true)
+     @AfterClass(alwaysRun=true)
 		public void close(){
 			try{ 
 				lp.logout();

@@ -42,8 +42,8 @@ public class TS_012_ValidateReportsFunctionality {
    public void beforeClass() throws InterruptedException, ParseException, IOException{
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-	Input in = new Input();
-	in.loadEnvConfig();
+//	Input in = new Input();
+//	in.loadEnvConfig();
 	
 	driver = new Driver();
     lp = new LoginPage(driver);
@@ -60,7 +60,7 @@ public class TS_012_ValidateReportsFunctionality {
 	 * Description : Login as rmu user run tally and sub tally report, validate the count in doclist!
 	 *   
 	 */
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void tallySubTally() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		report.TallyReportButton();
@@ -77,7 +77,7 @@ public class TS_012_ValidateReportsFunctionality {
 	 * Description : Login as rmu user run communication explorer report, validate the count in doclist!
 	 *   
 	 */
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void communicationExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		CommunicationExplorerPage commreport = new CommunicationExplorerPage(driver);
@@ -93,7 +93,7 @@ public class TS_012_ValidateReportsFunctionality {
 	 * Description : Login as rmu user run concept explorer report, validate the count in doclist!
 	 *   
 	 */
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void conceptExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
 		ConceptExplorerPage conceptreport = new ConceptExplorerPage(driver);
@@ -119,7 +119,7 @@ public class TS_012_ValidateReportsFunctionality {
 	}
 	   
 
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void customDDRExportAfterSwap() throws InterruptedException, ParseException, IOException {
     	//Columns to be selected
 		String[] metaDataFields = {"AllCustodians","CreateDate","DocDate","EmailAllDomains","FamilyID"

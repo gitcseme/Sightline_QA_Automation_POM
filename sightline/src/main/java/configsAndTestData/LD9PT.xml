@@ -3,8 +3,8 @@
   		<url>https://sightlinept.consilio.com/</url>
        	<prodpath>Productions PT WorkSpace\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation</SourceLocation>
-       	<domainName>QADomain5Jan</domainName>
-        <projectName>Smoke1102</projectName>
+       	<domainName>Master_Client</domainName>
+        <projectName>TesdtAudioSuresh</projectName>
      
     	<sa1userName>ferhat.tarannum@harman.com</sa1userName> 
    		<sa1password>Feb2021@3112</sa1password> 
