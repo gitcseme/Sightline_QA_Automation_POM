@@ -42,9 +42,12 @@ public class TS_012_ValidateReportsFunctionality {
    public void beforeClass() throws InterruptedException, ParseException, IOException{
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
+//	Input in = new Input();
+//	in.loadEnvConfig();
+	
 	driver = new Driver();
     lp = new LoginPage(driver);
-	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
 	report = new ReportsPage(driver);
 	
 	}
@@ -116,7 +119,7 @@ public class TS_012_ValidateReportsFunctionality {
 	}
 	   
 
-	//@Test(groups={"regression"})
+	@Test(groups={"regression"})
 	public void customDDRExportAfterSwap() throws InterruptedException, ParseException, IOException {
     	//Columns to be selected
 		String[] metaDataFields = {"AllCustodians","CreateDate","DocDate","EmailAllDomains","FamilyID"

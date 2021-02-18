@@ -27,10 +27,10 @@ public class TS_013_ValidateBatchUpload {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 			
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		
 		//Open browser
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		lp=new LoginPage(driver);
@@ -48,24 +48,27 @@ public class TS_013_ValidateBatchUpload {
 		saveSearch = new SavedSearch(driver);
 		
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
+		System.out.println("Successfully ran for PA user...");
 	
 		
 	}
 	@Test(groups={"smoke","regression"})
 	   public void batchUploadByRMU() throws InterruptedException {
-		//Login as a PA
+		//Login as a Review manager
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		saveSearch = new SavedSearch(driver);
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
+		System.out.println("Successfully ran for RMU user...");
 	
 		
 	}
 	@Test(groups={"smoke","regression"})
 	   public void batchUploadByReviewer() throws InterruptedException {
-		//Login as a PA
+		//Login as a Reviewer
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		saveSearch = new SavedSearch(driver);
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
+		System.out.println("Successfully ran for REV user...");
 	
 		
 	}
@@ -83,7 +86,7 @@ public class TS_013_ValidateBatchUpload {
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	
      }
-	   //@AfterClass(alwaysRun = true)
+	   @AfterClass(alwaysRun = true)
 		public void close(){
 			
 		   try{ 
@@ -92,7 +95,7 @@ public class TS_013_ValidateBatchUpload {
 			     //lp.quitBrowser();	
 				}finally {
 					lp.quitBrowser();
-					//LoginPage.clearBrowserCache();
+					LoginPage.clearBrowserCache();
 				}
 		}
 }

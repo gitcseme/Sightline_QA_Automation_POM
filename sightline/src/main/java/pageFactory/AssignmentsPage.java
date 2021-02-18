@@ -281,7 +281,7 @@ public class AssignmentsPage {
 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAssignment_ManageReviewersTab().Visible()  ;}}), Input.wait60);
-    	getAssignment_ManageReviewersTab().waitAndClick(10);
+    	getAssignment_ManageReviewersTab().waitAndClick(30);
     	
     	getAddReviewersBtn().waitAndClick(10);
     	

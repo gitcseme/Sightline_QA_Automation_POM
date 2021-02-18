@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -17,7 +19,7 @@ public class SecurityGroupsPage {
     Driver driver;
     BaseClass bc;
     
-    public Element getSecurityGroupCreateButton(){ return driver.FindElementById("btnNewSecurityGroup"); }
+    public Element getSecurityGroupCreateButton(){ return driver.FindElementByXPath("//button[text()='Create']");}
     public Element getSecurityGroupName(){ return driver.FindElementById("txtSecurityGroupName"); }
     public Element getSecurityGroupList(){ return driver.FindElementById("ddlSecurityGroupsList"); }
     public Element getSecurityGroupSaveButton(){ return driver.FindElementById("btnSaveSecurityGroup"); }
@@ -42,6 +44,9 @@ public class SecurityGroupsPage {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSecurityGroupCreateButton().Visible()  ;}}), Input.wait60); 
     	getSecurityGroupCreateButton().waitAndClick(5);
+    	
+    	Actions action = new Actions((WebDriver) driver);
+    	action.moveToElement((WebElement) getSecurityGroupCreateButton()).click().perform();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSecurityGroupName().Visible()  ;}}), Input.wait30); 

@@ -335,7 +335,7 @@ public class DocViewPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSelectRemarkDocArea().Visible()  ;}}), Input.wait30); 
-    	System.out.println(getSelectRemarkDocArea().getText());
+//    	System.out.println(getSelectRemarkDocArea().getText());
     try {
 		Thread.sleep(4000);
 	} catch (InterruptedException e) {

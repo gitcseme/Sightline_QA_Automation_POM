@@ -183,7 +183,7 @@ public class TagsAndFoldersPage {
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAddFolder().Visible()  ;}}), Input.wait30); 
-         getAddFolder().Click();
+         getAddFolder().javascriptclick();
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 

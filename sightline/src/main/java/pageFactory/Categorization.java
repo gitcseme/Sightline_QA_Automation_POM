@@ -124,7 +124,10 @@ public class Categorization {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  	 			bc.initialBgCount() == Bgcount+1  ;}}),Input.wait60);  
+    	
     	return Integer.parseInt(getResults().getText());
+    	
+    	
     	
     	
     }

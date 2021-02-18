@@ -39,8 +39,8 @@ public class TS_005_ValidateCategorization {
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		
 		String serachString = Input.searchString2;
 		//Open browser
@@ -73,7 +73,7 @@ public class TS_005_ValidateCategorization {
 	   public void validateCategorization() throws InterruptedException {
 		  
 		  Categorization cat = new Categorization(driver);
-		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)==2);
+		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)==3);
 		  System.out.println("Expected documents count shown in categorization result");
 	   }
 	

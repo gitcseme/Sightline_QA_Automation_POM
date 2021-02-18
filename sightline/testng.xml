@@ -5,9 +5,7 @@
 <suite name="RPMX V1.0 Test Suite - Sanity">
 
 <suite-files>
-	<listeners>
-        <listener class-name="executionMaintenance.AnnotationTransformer"/>
-  	</listeners>
+	
     <suite-file path="./smokeSuite.xml"/> 
 
   	<!--<suite-file path="./failed.xml"/>  

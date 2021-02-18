@@ -1,5 +1,6 @@
 package testScriptsSmoke;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
@@ -22,8 +23,11 @@ public class TS_010_Workflow {
 	Driver driver;
 	LoginPage lp;
 	@Test(groups={"smoke","regression"})
-	public void Test() throws ParseException, InterruptedException {
+	public void Test() throws ParseException, InterruptedException, Exception {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+//		Input in = new Input();
+//		in.loadEnvConfig();
+		
 		driver = new Driver();
 		String codingfrom = "CF"+Utility.dynamicNameAppender();
 		String SearchName = "WF"+Utility.dynamicNameAppender();
@@ -32,6 +36,7 @@ public class TS_010_Workflow {
 		String assignmentName = "assg"+Utility.dynamicNameAppender();
 		String workflowName = "WF"+Utility.dynamicNameAppender();
 		int Id;
+		
 		
 		lp = new LoginPage(driver);	
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);	

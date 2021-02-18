@@ -3,13 +3,15 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
         <methods>
+          <include name="addredaction"/>
+          <include name="beforeTestMethod"/>
+          <include name="takeScreenShot"/>
           <include name="preCondition"/>
-          <include name="close"/>
-          <include name="proximityAndRegExInBS"/>
+          <include name="addRemarkToFirstDoc"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
