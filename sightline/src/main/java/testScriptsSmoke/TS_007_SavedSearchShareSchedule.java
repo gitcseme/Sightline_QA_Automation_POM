@@ -1,6 +1,7 @@
 package testScriptsSmoke;
 
 import org.testng.annotations.Test;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -14,6 +15,7 @@ import java.text.ParseException;
 import java.util.concurrent.Callable;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -30,6 +32,7 @@ public class TS_007_SavedSearchShareSchedule {
 	SessionSearch search;
 	BaseClass bc;
 	public static int purehits;
+	Logger log;
 	
 	//String searchText = "test";
 	String saveSearchName = "test013"+Utility.dynamicNameAppender();
@@ -39,6 +42,7 @@ public class TS_007_SavedSearchShareSchedule {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 	
+		log = Logger.getLogger("devpinoyLogger");
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	    
@@ -59,7 +63,7 @@ public class TS_007_SavedSearchShareSchedule {
 		
 		bc = new BaseClass(driver);
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -70,14 +74,16 @@ public class TS_007_SavedSearchShareSchedule {
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
+	    log.info("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
 	  // Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(purehits));
 	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
 	    Assert.assertTrue(dp.getDocList_info().Displayed());
 	    System.out.println("Expected docs("+purehits+") are shown in doclist");
+	    log.info("Expected docs("+purehits+") are shown in doclist");
 
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -89,9 +95,11 @@ public class TS_007_SavedSearchShareSchedule {
 	
 	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
 	    System.out.println("Expected docs("+purehits+") are shown in docView");
+	    log.info("Expected docs("+purehits+") are shown in docView");
+
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
@@ -134,14 +142,15 @@ public class TS_007_SavedSearchShareSchedule {
 
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
+		 UtilityLog.logBefore(testMethod.getName());      
 	 }
      @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
+	 public void takeScreenShot(ITestResult result, Method testMethod) {
+    	 UtilityLog.logafter(testMethod.getName());
  	 if(ITestResult.FAILURE==result.getStatus()){
  		Utility bc = new Utility(driver);
  		bc.screenShot(result);
+ 		
  	 }
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	

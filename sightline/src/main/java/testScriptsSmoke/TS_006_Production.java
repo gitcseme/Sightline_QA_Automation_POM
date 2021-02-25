@@ -40,8 +40,8 @@ public class TS_006_Production {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);

@@ -3,15 +3,22 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="addredaction"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
+          <include name="ConceptualSearch"/>
           <include name="preCondition"/>
-          <include name="addRemarkToFirstDoc"/>
+          <include name="close"/>
+          <include name="searchsavedSearch"/>
+          <include name="takeScreenShot"/>
+          <include name="contentSearchWithOperatorsInBS"/>
+          <include name="metaDataSearch"/>
+          <include name="contentSearchWithOperatorsInAS"/>
+          <include name="audioSearch"/>
+          <include name="proximityAndRegExInBS" invocation-numbers="0 1 2 3 4 5"/>
+          <include name="Search_RPMXCON_37690"/>
+          <include name="beforeTestMethod"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

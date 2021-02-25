@@ -15,6 +15,7 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 
@@ -26,6 +27,7 @@ import testScriptsSmoke.Input;
 public class LoginPage {
 
     Driver driver;
+    Logger log;
     
     public Element getEuserName(){ return driver.FindElementById("txtBxUserID"); }
     public Element getEpassword(){ return driver.FindElementById("txtBxUserPass"); }
@@ -46,6 +48,7 @@ public class LoginPage {
     public LoginPage(Driver driver){
 
         this.driver = driver;
+        log = Logger.getLogger("devpinoyLogger");
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -109,6 +112,7 @@ public class LoginPage {
 		}
     	Assert.assertTrue(getSignoutMenu().Visible());
     	System.out.println("Login success!");
+    	log.info("Login success!");
 
     }
     public void logout(){
@@ -140,6 +144,7 @@ public class LoginPage {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEuserName().Visible()  ;}}), 30000); 
     	Assert.assertTrue(getEuserName().Visible());
+    	log.info("Logged out successfully!");
     }
 
  public void logOutWithConfirmation(){

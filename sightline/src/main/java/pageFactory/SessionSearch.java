@@ -8,6 +8,7 @@ import org.openqa.selenium.interactions.Actions;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.Log;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -324,6 +325,7 @@ public class SessionSearch {
     	getSaveSearch_SaveButton().Click();
     	base.VerifySuccessMessage("Saved search saved successfully");
     	System.out.println("Saved search with name - "+searchName);
+    	Log.info("Saved search with name - "+searchName);
 	}
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
@@ -542,6 +544,7 @@ public class SessionSearch {
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
     	System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	Log.info("Search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
    }

@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.Log;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -245,6 +246,7 @@ public class SavedSearch {
 	   catch(Exception e)
 	   {
 		   System.out.println("Pop up message does not appear");
+		   Log.info("Pop up message does not appear");
 	   }
 	   
    }
@@ -276,6 +278,7 @@ public class SavedSearch {
 	   catch(Exception e)
 	   {
 		   System.out.println("Pop up message does not appear");
+		   Log.info("Pop up message does not appear");
 	   }
 	   
    }
@@ -318,6 +321,7 @@ public class SavedSearch {
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		bc.initialBgCount() == Bgcount+1  ;}}),Input.wait60); 
 	   System.out.println("Saved search "+searchName+" is scheduled to run in 5 secs!");
+	   Log.info("Saved search "+searchName+" is scheduled to run in 5 secs!");
     }
    
    public void shareSavedSearchPA(final String searchName,String securitygroupname) throws ParseException, InterruptedException{
@@ -435,7 +439,7 @@ public class SavedSearch {
 	   //get Search ID 
 	   String SearchID= getSelectSearchWithID(searchName).getText();
 	   System.out.println(SearchID);
-	   
+	   Log.info("Search ID: "+SearchID);
 	   //click on share with security group tab
 	   getSavedSearchGroupName(securitygroupname).waitAndClick(10);
 	   Thread.sleep(5000);
@@ -443,6 +447,8 @@ public class SavedSearch {
 	   //verify id should get changed
 	   String newSearchID1 = getSelectSearchWithID(searchName).getText();
 	   System.out.println(newSearchID1);
+	   Log.info("Search ID: "+newSearchID1);
+	   
 	   Assert.assertNotSame(SearchID, newSearchID1);
 	   
 	   Assert.assertTrue(getSearchName(searchName).Displayed());

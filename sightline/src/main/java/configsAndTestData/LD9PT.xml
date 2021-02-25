@@ -6,35 +6,35 @@
        	<domainName>Master_Client</domainName>
         <projectName>TesdtAudioSuresh</projectName>
      
-    	<sa1userName>ferhat.tarannum@harman.com</sa1userName> 
-   		<sa1password>Feb2021@3112</sa1password> 
+    	<sa1userName>sightlineqa.test@gmail.com</sa1userName> 
+   		<sa1password>Sightline@123</sa1password> 
      
         <!-- PTPA1 PA1 -->
-        <pa1FullName>PA1 PT</pa1FullName>
-        <pa1userName>sightlineconsilio.qa@gmail.com</pa1userName>
-        <pa1password>Feb2021@3112</pa1password> 
+        <pa1FullName>PAU1 PT</pa1FullName>
+        <pa1userName>s.ightlineqa.test@gmail.com</pa1userName>
+        <pa1password>Sightline@123</pa1password> 
         
-        <pa2FullName>PA2 PT</pa2FullName>
-        <pa2userName>si.ghtlineconsilioqa@gmail.com</pa2userName>
-        <pa2password>Feb2021@3112</pa2password>
+        <pa2FullName>PAU2 PT</pa2FullName>
+        <pa2userName>si.ghtlineqa.test@gmail.com</pa2userName>
+        <pa2password>Sightline@123</pa2password>
         
         <!--PTRMU  -->
         <rmu1FullName>RMU1 PT</rmu1FullName>
-        <rmu1userName>sight.lineconsilio.qa@gmail.com</rmu1userName>
-        <rmu1password>Feb2021@3112</rmu1password>
+        <rmu1userName>sig.htlineqa.test@gmail.com</rmu1userName>
+        <rmu1password>Sightline@123</rmu1password>
         
         <rmu2FullName>RMU2 PT</rmu2FullName>
-        <rmu2userName>sight.line.consilio.qa@gmail.com</rmu2userName>
-        <rmu2password>Feb2021@3112</rmu2password>
+        <rmu2userName>sigh.tlineqa.test@gmail.com</rmu2userName>
+        <rmu2password>Sightline@123</rmu2password>
         
         <!-- PTRev -->
         <rev1FullName>REV1 PT</rev1FullName>
-        <rev1userName>sight.line.consilioqa@gmail.com</rev1userName>
-        <rev1password>Feb2021@3112</rev1password>
+        <rev1userName>sight.lineqa.test@gmail.com</rev1userName>
+        <rev1password>Sightline@123</rev1password>
         
         <rev2FullName>REV2 PT</rev2FullName>
-        <rev2userName>sightline.consilioqa@gmail.com</rev2userName>
-        <rev2password>Feb2021@3112</rev2password>
+        <rev2userName>sightl.ineqa.test@gmail.com</rev2userName>
+        <rev2password>Sightline@123</rev2password>
         
         <shareTo>PTPA2 PA2</shareTo>
        
