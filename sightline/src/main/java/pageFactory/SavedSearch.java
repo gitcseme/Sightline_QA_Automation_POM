@@ -17,6 +17,7 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -278,7 +279,7 @@ public class SavedSearch {
 	   catch(Exception e)
 	   {
 		   System.out.println("Pop up message does not appear");
-		   Log.info("Pop up message does not appear");
+		  UtilityLog.info("Pop up message does not appear");
 	   }
 	   
    }

@@ -21,6 +21,7 @@ import org.openqa.selenium.NoAlertPresentException;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -128,6 +129,7 @@ public class LoginPage {
     	        Alert alert = driver.getWebDriver().switchTo().alert();
     	        String alertText = alert.getText();
     	        System.out.println("Alert data: " + alertText);
+    	        UtilityLog.info("Alert data: " + alertText);
     	        alert.accept();
     	    } catch (NoAlertPresentException e) {
     	        //e.printStackTrace();

@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
@@ -61,6 +62,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		// Login as a PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as PA user");
 
 		
 
@@ -298,23 +300,25 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
-	}
-
+	 public void takeScreenShot(ITestResult result, Method testMethod) {
+   	 UtilityLog.logafter(testMethod.getName());
+	 if(ITestResult.FAILURE==result.getStatus()){
+		Utility bc = new Utility(driver);
+		bc.screenShot(result);
+		
+	 }
+	 System.out.println("Executed :" + result.getMethod().getMethodName());
+	
+    }
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
 			lp.logout();
-			// lp.quitBrowser();
+				// lp.quitBrowser();
 		} finally {
 			lp.quitBrowser();
 			lp.clearBrowserCache();

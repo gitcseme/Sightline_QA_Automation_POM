@@ -83,7 +83,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -99,7 +99,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	@Test(groups={"smoke","regression"})
+	//@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
@@ -117,7 +117,7 @@ public class TS_007_SavedSearchShareSchedule {
 	 * Description : Verify sharing of saved searches is working correctly
 	 */
 	
-	 @Test(groups={"smoke","regression"},priority=13)
+	// @Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 
 	  	//Share the saved search

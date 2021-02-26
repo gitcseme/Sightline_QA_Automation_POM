@@ -9,6 +9,7 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -325,7 +326,7 @@ public class SessionSearch {
     	getSaveSearch_SaveButton().Click();
     	base.VerifySuccessMessage("Saved search saved successfully");
     	System.out.println("Saved search with name - "+searchName);
-    	Log.info("Saved search with name - "+searchName);
+    	UtilityLog.info("Saved search with name - "+searchName);
 	}
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
@@ -544,7 +545,7 @@ public class SessionSearch {
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
     	System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
-    	Log.info("Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
    }
@@ -582,6 +583,7 @@ public class SessionSearch {
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
     	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
    }
@@ -640,7 +642,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	System.out.println("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	
     	return pureHit;
 
 
@@ -702,7 +706,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	System.out.println("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	
     	return pureHit;
 
 
@@ -733,7 +739,8 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Audio Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	System.out.println("Audio Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Audio Search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
 
@@ -825,7 +832,8 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Conceptual serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	System.out.println("Conceptual search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Conceptual search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
 
@@ -1159,6 +1167,7 @@ public void ViewInDocView() throws InterruptedException{
 			 getDocViewActionDL().Click();
 		}
 	 System.out.println("Navigated to docView to view docs");
+	 UtilityLog.info("Navigated to docView to view docs");
 	
 }
 
@@ -1168,6 +1177,7 @@ public void tallyResults() throws InterruptedException {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().Click();
@@ -1177,6 +1187,7 @@ public void tallyResults() throws InterruptedException {
 	 getTallyResults().waitAndClick(10);
 	 Thread.sleep(3000);
 	 System.out.println("Navigated to Tally  to view docs");
+	 UtilityLog.info("Navigated to Tally  to view docs");
 }
 public void bulkAssign() {
 	driver.getWebDriver().get(Input.url+"Search/Searches");
@@ -1184,6 +1195,7 @@ public void bulkAssign() {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
@@ -1195,7 +1207,7 @@ public void bulkAssign() {
 	 getBulkAssignAction().waitAndClick(10);
 	 
 	 System.out.println("performing bulk assign");
-	 
+	 UtilityLog.info("performing bulk assign");
 	
 	
 }

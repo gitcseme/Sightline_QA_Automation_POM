@@ -14,6 +14,8 @@ import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
 import configsAndTestData.Environment;
 import configsAndTestData.TestData;
+import executionMaintenance.Log;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
@@ -116,10 +118,12 @@ public class Input {
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
 	
 		System.out.println("*****************************************************");
+		UtilityLog.info("*****************************************************");
 		//Common Data-------------------------------------------------------------
 		config = (ConfigMain) new ConfigLoader().load("ConfigMain");
 		envConfig = (Environment) new ConfigLoader().load(config.env);
 		System.out.println("Running scripts on "+config.env+" Environment");
+		UtilityLog.info("Running scripts on "+config.env+" Environment");
 		
 		newProject = config.newProject;
 		ingestion = config.ingestion;
@@ -204,6 +208,7 @@ public class Input {
 		MasterPDF2location = testData.MasterPDF2location;
 		
 		System.out.println("*****************************************************");
+		UtilityLog.info("*****************************************************");
 		
 		//createproject if configured
 		projectCreationAndUserAssignment();
@@ -223,8 +228,10 @@ public class Input {
 		if(newProject.equalsIgnoreCase("yes")){
 				
 				System.out.println("******Creating new project********");
+				UtilityLog.info("******Creating new project********");
 				//clean browsers---------------------------------------------------------
 				System.out.println("Clearing browser cache, Please wait.......");
+				UtilityLog.info("Clearing browser cache, Please wait.......");
 				LoginPage.clearBrowserCache();
 					
 				
@@ -246,9 +253,11 @@ public class Input {
 				lp.logout();
 				
 				System.out.println("******Project creation and user assignment is done********\n");
+				UtilityLog.info("******Project creation and user assignment is done********\n");
 				
 		}else {
 			System.out.println("Running on exsiting project : "+Input.projectName);
+			UtilityLog.info("Running on exsiting project : "+Input.projectName);
 		}
 	}
 
@@ -291,6 +300,7 @@ public class Input {
 				System.out.println("******Ingestion Completed********");
 		}else{
 			System.out.println("Choosen not to perform any ingestion");
+			UtilityLog.info("Choosen not to perform any ingestion");
 		}
 		
 }
@@ -312,6 +322,7 @@ public void loadSuiteTestData() throws IOException {
       Fwrite.close(); 
 	
    System.out.println("Test data is copied to TestData.xml");
+   UtilityLog.info("Test data is copied to TestData.xml");
 }
 
 //to make sure all docs released to default SG -helpful when ingestion done manually!
@@ -322,6 +333,7 @@ public void releaseDocs() {
 	  search.basicContentSearch("*");
 	  search.bulkRelease("Default Security Group");  
 	  System.out.println("Docs released to default security group!");
+	  UtilityLog.info("Docs released to default security group!");
 	  lp.logout();
 }
 	
