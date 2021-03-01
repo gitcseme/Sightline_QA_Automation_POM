@@ -5,17 +5,11 @@
     <classes>
       <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="ConceptualSearch"/>
           <include name="preCondition"/>
           <include name="close"/>
-          <include name="searchsavedSearch"/>
           <include name="takeScreenShot"/>
           <include name="contentSearchWithOperatorsInBS"/>
-          <include name="metaDataSearch"/>
-          <include name="contentSearchWithOperatorsInAS"/>
-          <include name="audioSearch"/>
           <include name="proximityAndRegExInBS" invocation-numbers="0 1 2 3 4 5"/>
-          <include name="Search_RPMXCON_37690"/>
           <include name="beforeTestMethod"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
