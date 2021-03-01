@@ -141,7 +141,7 @@ public class TS_007_SavedSearchShareSchedule {
 	  	}
 
 	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+	 public void beforeTestMethod(Method testMethod) throws IOException{
 		 UtilityLog.logBefore(testMethod.getName());      
 	 }
      @AfterMethod(alwaysRun = true)

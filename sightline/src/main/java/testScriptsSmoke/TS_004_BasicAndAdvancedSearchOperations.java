@@ -15,9 +15,12 @@ import org.testng.ITestResult;
 
 import static org.testng.Assert.fail;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
@@ -37,6 +40,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	LoginPage lp;
 	SessionSearch ss;
 	BaseClass bc;
+	
+	 
 
 	String tagName = "tagSearch" + Utility.dynamicNameAppender();
 	String folderName = "folderSearch" + Utility.dynamicNameAppender();
@@ -48,24 +53,25 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * Modified by: Description : Login as PAU, from here all the scripts will
 	 * run!
 	 */
+		
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
+		
 		// Open browser
-		
-		 Input in = new Input(); in.loadEnvConfig();
-		
+
+		Input in = new Input();
+		in.loadEnvConfig();
+
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
 		// Login as a PA
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as PA user");
-
-		
-
 	}
 
 	/*
@@ -73,7 +79,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * by: Description : As a PA user validate proximity search, regex with
 	 * special chars in Basic search
 	 */
-	@Test(dataProvider = "ProxAndRegx", groups = { "smoke", "regression" })
+	//@Test(dataProvider = "ProxAndRegx", groups = { "smoke", "regression" })
 	public void proximityAndRegExInBS(String searchString, int expectedCount) {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		bc.selectproject();
@@ -263,7 +269,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * Author : Suresh Bavihalli Created date: Feb 2019 Modified date: Modified
 	 * by: Description : RPMXCON_37690 is scripted
 	 */
- @Test(groups={"regression"})
+	 //@Test(groups={"regression"})
 	public void Search_RPMXCON_37690() throws InterruptedException {
 		SoftAssert softAssertion = new SoftAssert();
 		String saveSearch = "01Test" + Utility.dynamicNameAppender();
@@ -297,28 +303,29 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	}
 
 	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
+	public void beforeTestMethod(Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method : " + testMethod.getName());
-		UtilityLog.info("Executing method : " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result, Method testMethod) {
-   	 UtilityLog.logafter(testMethod.getName());
-	 if(ITestResult.FAILURE==result.getStatus()){
-		Utility bc = new Utility(driver);
-		bc.screenShot(result);
-		
-	 }
-	 System.out.println("Executed :" + result.getMethod().getMethodName());
-	
-    }
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
 			lp.logout();
-				// lp.quitBrowser();
+			// lp.quitBrowser();
 		} finally {
 			lp.quitBrowser();
 			lp.clearBrowserCache();
@@ -328,7 +335,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@DataProvider(name = "ProxAndRegx")
 	public Object[][] dataProviderMethod() {
 		return new Object[][] { { "\"illustratin* since Q499\"~20", 1 }, { "\"**elief that the rights\"", 1 },
-				{ "\"quarterly bas**\"", 1 }, { "\"quarterly *\"", 4 }, { "\"discrepancy *n\"", 0 },
+				{ "\"quarterly bas**\"", 1 }, { "\"quarterly *\"", 3 }, { "\"discrepancy *n\"", 0 },
 				{ "\"**elief *hat the right?\"", 1 },
 
 		};

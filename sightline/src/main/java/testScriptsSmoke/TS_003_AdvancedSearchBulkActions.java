@@ -117,7 +117,7 @@ public class TS_003_AdvancedSearchBulkActions {
 			}	
 	}
 	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+	 public void beforeTestMethod(Method testMethod) throws IOException{
 		 UtilityLog.logBefore(testMethod.getName());    
 	    
 	 }

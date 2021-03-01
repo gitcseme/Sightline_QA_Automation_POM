@@ -1,57 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="7" ignored="0" total="7" passed="0">
+<testng-results skipped="0" failed="3" ignored="0" total="6" passed="3">
   <reporter-output>
+    <line>
+      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png' height='100' width='100'/> </a>]]>
+    </line>
+    <line>
+      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInAS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInAS.png' height='100' width='100'/> </a>]]>
+    </line>
     <line>
       <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInBS.png' height='100' width='100'/> </a>]]>
     </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
-    <line>
-      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-    </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="686998" started-at="2021-02-26T09:23:25Z" finished-at="2021-02-26T09:34:52Z">
+  <suite name="Default suite" duration-ms="682749" started-at="2021-03-01T13:54:49Z" finished-at="2021-03-01T14:06:11Z">
     <groups>
       <group name="regression">
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
         <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
       </group> <!-- regression -->
       <group name="smoke">
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
         <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
       </group> <!-- smoke -->
     </groups>
-    <test name="Default test" duration-ms="686998" started-at="2021-02-26T09:23:25Z" finished-at="2021-02-26T09:34:52Z">
+    <test name="Default test" duration-ms="682749" started-at="2021-03-01T13:54:49Z" finished-at="2021-03-01T14:06:11Z">
       <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
-        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="preCondition" is-config="true" duration-ms="44853" started-at="2021-02-26T14:53:25Z" finished-at="2021-02-26T14:54:10Z">
+        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="preCondition" is-config="true" duration-ms="50670" started-at="2021-03-01T19:24:49Z" finished-at="2021-03-01T19:25:39Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preCondition -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-02-26T14:54:10Z" finished-at="2021-02-26T14:54:10Z">
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="5" started-at="2021-03-01T19:25:39Z" finished-at="2021-03-01T19:25:39Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()]]>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" duration-ms="164093" started-at="2021-02-26T14:54:10Z" finished-at="2021-02-26T14:56:54Z">
+        <test-method status="PASS" signature="ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" duration-ms="20619" started-at="2021-03-01T19:25:39Z" finished-at="2021-03-01T19:26:00Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- ConceptualSearch -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=ConceptualSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="2" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTestMethod -->
+        <test-method status="FAIL" signature="audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" duration-ms="22327" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:22Z">
+          <exception class="junit.framework.AssertionFailedError">
+            <full-stacktrace>
+              <![CDATA[junit.framework.AssertionFailedError
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.assertTrue(Assert.java:20)
+	at junit.framework.Assert.assertTrue(Assert.java:27)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch(TS_004_BasicAndAdvancedSearchOperations.java:238)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+]]>
+            </full-stacktrace>
+          </exception> <!-- junit.framework.AssertionFailedError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- audioSearch -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="422" started-at="2021-03-01T19:26:22Z" finished-at="2021-03-01T19:26:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=audioSearch status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:26:23Z" finished-at="2021-03-01T19:26:23Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTestMethod -->
+        <test-method status="FAIL" signature="contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" duration-ms="143341" started-at="2021-03-01T19:26:23Z" finished-at="2021-03-01T19:28:46Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The following asserts failed:
@@ -65,7 +161,83 @@
 	expected [true] but found [false],
 	expected [true] but found [false]
 	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS(TS_004_BasicAndAdvancedSearchOperations.java:118)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS(TS_004_BasicAndAdvancedSearchOperations.java:153)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- contentSearchWithOperatorsInAS -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="367" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:28:46Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=contentSearchWithOperatorsInAS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInAS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInAS.png' height='100' width='100'/> </a>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- takeScreenShot -->
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:28:46Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTestMethod -->
+        <test-method status="FAIL" signature="contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" duration-ms="174542" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:31:41Z">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[The following asserts failed:
+	expected [true] but found [false],
+	expected [true] but found [false],
+	expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: The following asserts failed:
+	expected [true] but found [false],
+	expected [true] but found [false],
+	expected [true] but found [false]
+	at org.testng.asserts.SoftAssert.assertAll(SoftAssert.java:43)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS(TS_004_BasicAndAdvancedSearchOperations.java:122)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
@@ -97,7 +269,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- contentSearchWithOperatorsInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="404" started-at="2021-02-26T14:56:54Z" finished-at="2021-02-26T14:56:55Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="327" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:31:41Z">
           <params>
             <param index="0">
               <value>
@@ -116,655 +288,69 @@
             </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-02-26T14:56:55Z" finished-at="2021-02-26T14:56:55Z">
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:31:41Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="55203" started-at="2021-02-26T14:56:55Z" data-provider="ProxAndRegx" finished-at="2021-02-26T14:57:50Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["illustratin* since Q499"~20]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 20 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 20 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
+        <test-method status="PASS" signature="metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" duration-ms="195858" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:34:57Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="334" started-at="2021-02-26T14:57:50Z" finished-at="2021-02-26T14:57:50Z">
+        </test-method> <!-- metaDataSearch -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:34:57Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=metaDataSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()]]>
               </value>
             </param>
           </params>
           <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-02-26T14:57:50Z" finished-at="2021-02-26T14:57:50Z">
+        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="6" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:34:57Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="53471" started-at="2021-02-26T14:57:50Z" data-provider="ProxAndRegx" finished-at="2021-02-26T14:58:44Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["**elief that the rights"]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 18 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 18 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
+        <test-method status="PASS" signature="searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" duration-ms="60353" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:35:57Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="327" started-at="2021-02-26T14:58:44Z" finished-at="2021-02-26T14:58:44Z">
+        </test-method> <!-- searchsavedSearch -->
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:35:57Z" finished-at="2021-03-01T19:35:57Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=searchsavedSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
+                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()]]>
               </value>
             </param>
           </params>
           <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2021-02-26T14:58:44Z" finished-at="2021-02-26T14:58:44Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="54880" started-at="2021-02-26T14:58:44Z" data-provider="ProxAndRegx" finished-at="2021-02-26T14:59:39Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["quarterly bas**"]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 34 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 34 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="133945" started-at="2021-02-26T14:59:39Z" finished-at="2021-02-26T15:01:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- takeScreenShot -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="54474" started-at="2021-02-26T15:01:53Z" data-provider="ProxAndRegx" finished-at="2021-02-26T15:02:47Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["quarterly *"]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[4]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 18 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 18 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2021-02-26T15:01:53Z" finished-at="2021-02-26T15:01:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="332" started-at="2021-02-26T15:02:47Z" finished-at="2021-02-26T15:02:48Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2021-02-26T15:02:48Z" finished-at="2021-02-26T15:02:48Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="55422" started-at="2021-02-26T15:02:48Z" data-provider="ProxAndRegx" finished-at="2021-02-26T15:03:43Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["discrepancy *n"]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[0]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 19 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 19 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="326" started-at="2021-02-26T15:03:43Z" finished-at="2021-02-26T15:03:44Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="0" started-at="2021-02-26T15:03:44Z" finished-at="2021-02-26T15:03:44Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="proximityAndRegExInBS" duration-ms="54121" started-at="2021-02-26T15:03:44Z" data-provider="ProxAndRegx" finished-at="2021-02-26T15:04:38Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA["**elief *hat the right?"]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[1]]>
-              </value>
-            </param>
-          </params>
-          <exception class="org.openqa.selenium.InvalidElementStateException">
-            <message>
-              <![CDATA[invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 21 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[org.openqa.selenium.InvalidElementStateException: invalid element state: Element is not currently interactable and may not be manipulated
-  (Session info: chrome=88.0.4324.150)
-  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 21 milliseconds
-Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
-System info: host: 'INLTP-FERHAT', ip: '10.12.50.165', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
-Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir24200_13576}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
-Session ID: a9a0ec39d3450f5cef76b0ba91316fb3
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
-	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
-	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
-	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
-	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
-	at org.openqa.selenium.remote.RemoteWebElement.clear(RemoteWebElement.java:114)
-	at automationLibrary.Element.SendKeys(Element.java:433)
-	at pageFactory.SessionSearch.basicContentSearch(SessionSearch.java:529)
-	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(TS_004_BasicAndAdvancedSearchOperations.java:82)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:744)
-	at org.testng.TestRunner.run(TestRunner.java:602)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
-	at org.testng.TestNG.runSuites(TestNG.java:1144)
-	at org.testng.TestNG.run(TestNG.java:1115)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
-]]>
-            </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.InvalidElementStateException -->
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- proximityAndRegExInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="368" started-at="2021-02-26T15:04:38Z" finished-at="2021-02-26T15:04:38Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=proximityAndRegExInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String, int)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS(java.lang.String,int)]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-            <line>
-              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--proximityAndRegExInBS.png' height='100' width='100'/> </a>]]>
-            </line>
-          </reporter-output>
-        </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="close()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="close" is-config="true" duration-ms="14379" started-at="2021-02-26T15:04:38Z" finished-at="2021-02-26T15:04:52Z">
+        <test-method status="PASS" signature="close()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="close" is-config="true" duration-ms="13862" started-at="2021-03-01T19:35:57Z" finished-at="2021-03-01T19:36:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
