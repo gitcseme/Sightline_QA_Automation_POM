@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="3" ignored="0" total="6" passed="3">
+<testng-results skipped="0" failed="4" ignored="0" total="6" passed="2">
   <reporter-output>
+    <line>
+      <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch.png' height='100' width='100'/> </a>]]>
+    </line>
     <line>
       <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--audioSearch.png' height='100' width='100'/> </a>]]>
     </line>
@@ -11,51 +14,115 @@
       <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInBS.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--contentSearchWithOperatorsInBS.png' height='100' width='100'/> </a>]]>
     </line>
   </reporter-output>
-  <suite name="Default suite" duration-ms="682749" started-at="2021-03-01T13:54:49Z" finished-at="2021-03-01T14:06:11Z">
+  <suite name="RPMX V1.0 Test Suite - Sanity" duration-ms="0" started-at="2021-03-02T07:12:15Z" finished-at="2021-03-02T07:12:15Z">
+    <groups>
+    </groups>
+  </suite> <!-- RPMX V1.0 Test Suite - Sanity -->
+  <suite name="Smoke Suite" duration-ms="4244420" started-at="2021-03-02T06:01:31Z" finished-at="2021-03-02T07:12:15Z">
     <groups>
       <group name="regression">
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
       </group> <!-- regression -->
       <group name="smoke">
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
-        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="ConceptualSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="audioSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInAS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInBS" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="metaDataSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
+        <method signature="TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="searchsavedSearch" class="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations"/>
       </group> <!-- smoke -->
     </groups>
-    <test name="Default test" duration-ms="682749" started-at="2021-03-01T13:54:49Z" finished-at="2021-03-01T14:06:11Z">
+    <test name="Input" duration-ms="31" started-at="2021-03-02T06:01:31Z" finished-at="2021-03-02T06:01:31Z">
+    </test> <!-- Input -->
+    <test name="BasicAndAdvancedSearchOperations" duration-ms="4244308" started-at="2021-03-02T06:01:31Z" finished-at="2021-03-02T07:12:15Z">
+      <class name="testScriptsSmoke.Input">
+        <test-method status="PASS" signature="loadEnvConfig()[pri:0, instance:testScriptsSmoke.Input@31a5c39e]" name="loadEnvConfig" is-config="true" duration-ms="35910" started-at="2021-03-02T11:30:55Z" finished-at="2021-03-02T11:31:31Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- loadEnvConfig -->
+      </class> <!-- testScriptsSmoke.Input -->
       <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
-        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="preCondition" is-config="true" duration-ms="50670" started-at="2021-03-01T19:24:49Z" finished-at="2021-03-01T19:25:39Z">
+        <test-method status="PASS" signature="preCondition()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="preCondition" is-config="true" duration-ms="66917" started-at="2021-03-02T11:31:31Z" finished-at="2021-03-02T11:32:38Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preCondition -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="5" started-at="2021-03-01T19:25:39Z" finished-at="2021-03-01T19:25:39Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="PASS" signature="ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="ConceptualSearch" duration-ms="20619" started-at="2021-03-01T19:25:39Z" finished-at="2021-03-01T19:26:00Z">
+        <test-method status="FAIL" signature="ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="ConceptualSearch" duration-ms="25332" started-at="2021-03-02T11:32:38Z" finished-at="2021-03-02T11:33:03Z">
+          <exception class="org.openqa.selenium.ElementNotVisibleException">
+            <message>
+              <![CDATA[element not visible
+  (Session info: chrome=88.0.4324.150)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 31 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-FERHAT', ip: '10.12.51.190', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22660_12642}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 5f4f64623a60f34e25d7cdec06300ce7]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.openqa.selenium.ElementNotVisibleException: element not visible
+  (Session info: chrome=88.0.4324.150)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.17763 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 31 milliseconds
+Build info: version: '3.4.0', revision: 'unknown', time: 'unknown'
+System info: host: 'INLTP-FERHAT', ip: '10.12.51.190', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_241'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\FTARAN~1\AppData\Local\Temp\scoped_dir22660_12642}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=88.0.4324.150, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 5f4f64623a60f34e25d7cdec06300ce7
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.waitAndClick(Element.java:257)
+	at pageFactory.BaseClass.selectproject(BaseClass.java:325)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch(TS_004_BasicAndAdvancedSearchOperations.java:251)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:108)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:661)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:869)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1193)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:126)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:744)
+	at org.testng.TestRunner.run(TestRunner.java:602)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:380)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:375)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:340)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1297)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
+	at org.testng.TestNG.runSuites(TestNG.java:1144)
+	at org.testng.TestNG.run(TestNG.java:1115)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.openqa.selenium.ElementNotVisibleException -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- ConceptualSearch -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:00Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="525317" started-at="2021-03-02T11:33:03Z" finished-at="2021-03-02T11:41:48Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=ConceptualSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=ConceptualSearch status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -65,20 +132,12 @@
             </param>
           </params>
           <reporter-output>
+            <line>
+              <![CDATA[<a href='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch.png'> <img src='C:\Users\ftarannum\git\Sightline_QA_Automation_POM3\sightline/Screenshots/TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch.png' height='100' width='100'/> </a>]]>
+            </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="2" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:00Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="audioSearch" duration-ms="22327" started-at="2021-03-01T19:26:00Z" finished-at="2021-03-01T19:26:22Z">
+        <test-method status="FAIL" signature="audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="audioSearch" duration-ms="38584" started-at="2021-03-02T11:41:48Z" finished-at="2021-03-02T11:42:27Z">
           <exception class="junit.framework.AssertionFailedError">
             <full-stacktrace>
               <![CDATA[junit.framework.AssertionFailedError
@@ -105,6 +164,7 @@
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
 	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1297)
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
@@ -117,11 +177,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- audioSearch -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="422" started-at="2021-03-01T19:26:22Z" finished-at="2021-03-01T19:26:23Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="749" started-at="2021-03-02T11:42:27Z" finished-at="2021-03-02T11:42:28Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=audioSearch status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=audioSearch status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.audioSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -136,18 +196,7 @@
             </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:26:23Z" finished-at="2021-03-01T19:26:23Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInAS" duration-ms="143341" started-at="2021-03-01T19:26:23Z" finished-at="2021-03-01T19:28:46Z">
+        <test-method status="FAIL" signature="contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInAS" duration-ms="141846" started-at="2021-03-02T11:42:28Z" finished-at="2021-03-02T11:44:50Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The following asserts failed:
@@ -181,6 +230,7 @@
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
 	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1297)
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
@@ -193,11 +243,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- contentSearchWithOperatorsInAS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="367" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:28:46Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="368" started-at="2021-03-02T11:44:50Z" finished-at="2021-03-02T11:44:50Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=contentSearchWithOperatorsInAS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=contentSearchWithOperatorsInAS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -212,18 +262,7 @@
             </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:28:46Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="FAIL" signature="contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="contentSearchWithOperatorsInBS" duration-ms="174542" started-at="2021-03-01T19:28:46Z" finished-at="2021-03-01T19:31:41Z">
+        <test-method status="FAIL" signature="contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="contentSearchWithOperatorsInBS" duration-ms="277650" started-at="2021-03-02T11:44:50Z" finished-at="2021-03-02T11:49:28Z">
           <exception class="java.lang.AssertionError">
             <message>
               <![CDATA[The following asserts failed:
@@ -257,6 +296,7 @@
 	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
 	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
 	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1301)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1297)
 	at org.testng.TestNG.runSuitesLocally(TestNG.java:1226)
 	at org.testng.TestNG.runSuites(TestNG.java:1144)
 	at org.testng.TestNG.run(TestNG.java:1115)
@@ -269,11 +309,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- contentSearchWithOperatorsInBS -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="327" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:31:41Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="2629452" started-at="2021-03-02T11:49:28Z" finished-at="2021-03-02T12:33:17Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=contentSearchWithOperatorsInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=contentSearchWithOperatorsInBS status=FAILURE method=TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -288,26 +328,15 @@
             </line>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="1" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:31:41Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="PASS" signature="metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="metaDataSearch" duration-ms="195858" started-at="2021-03-01T19:31:41Z" finished-at="2021-03-01T19:34:57Z">
+        <test-method status="PASS" signature="metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="metaDataSearch" duration-ms="378513" started-at="2021-03-02T12:33:17Z" finished-at="2021-03-02T12:39:36Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- metaDataSearch -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:34:57Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-02T12:39:36Z" finished-at="2021-03-02T12:39:36Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=metaDataSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=metaDataSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -319,26 +348,15 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="beforeTestMethod(java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="beforeTestMethod" is-config="true" duration-ms="6" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:34:57Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[public void testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- beforeTestMethod -->
-        <test-method status="PASS" signature="searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="searchsavedSearch" duration-ms="60353" started-at="2021-03-01T19:34:57Z" finished-at="2021-03-01T19:35:57Z">
+        <test-method status="PASS" signature="searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="searchsavedSearch" duration-ms="132879" started-at="2021-03-02T12:39:36Z" finished-at="2021-03-02T12:41:49Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- searchsavedSearch -->
-        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-01T19:35:57Z" finished-at="2021-03-01T19:35:57Z">
+        <test-method status="PASS" signature="takeScreenShot(org.testng.ITestResult, java.lang.reflect.Method)[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="takeScreenShot" is-config="true" duration-ms="1" started-at="2021-03-02T12:41:49Z" finished-at="2021-03-02T12:41:49Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=searchsavedSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538] output={null}]]]>
+                <![CDATA[[TestResult name=searchsavedSearch status=SUCCESS method=TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23] output={null}]]]>
               </value>
             </param>
             <param index="1">
@@ -350,11 +368,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- takeScreenShot -->
-        <test-method status="PASS" signature="close()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@27c20538]" name="close" is-config="true" duration-ms="13862" started-at="2021-03-01T19:35:57Z" finished-at="2021-03-01T19:36:11Z">
+        <test-method status="PASS" signature="close()[pri:0, instance:testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@3327bd23]" name="close" is-config="true" duration-ms="26623" started-at="2021-03-02T12:41:49Z" finished-at="2021-03-02T12:42:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
       </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+    </test> <!-- BasicAndAdvancedSearchOperations -->
+  </suite> <!-- Smoke Suite -->
 </testng-results>

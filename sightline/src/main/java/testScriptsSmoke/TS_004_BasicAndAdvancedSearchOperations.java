@@ -305,7 +305,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
+		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
 	}
 
