@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -59,13 +60,15 @@ public class RedactionPage {
     	for(int i=1;i<sgnames.size();i++)
     	{
   		  System.out.println(allsg.add(sgnames.get(i).getText()));
+  		  UtilityLog.info(allsg.add(sgnames.get(i).getText()));
   		  System.out.println(allsg);
-    	}
+      	}
      	
     	Assert.assertEquals(allsg, expvalue);
     	}
     	else if(usertype.equalsIgnoreCase("RMU")){
     		System.out.println("User is not PA");
+    		UtilityLog.info("User is not PA");
     	}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

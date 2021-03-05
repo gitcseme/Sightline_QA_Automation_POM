@@ -1,6 +1,7 @@
 package testScriptsSmoke;
 
 import org.testng.annotations.Test;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -14,6 +15,7 @@ import java.text.ParseException;
 import java.util.concurrent.Callable;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
@@ -38,10 +40,11 @@ public class TS_007_SavedSearchShareSchedule {
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
-	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	    
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		
 		Input in = new Input();
 		in.loadEnvConfig();
 		//Open browser
@@ -59,7 +62,7 @@ public class TS_007_SavedSearchShareSchedule {
 		
 		bc = new BaseClass(driver);
 	}
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocList() throws ParseException, InterruptedException {
 		
 		
@@ -70,10 +73,12 @@ public class TS_007_SavedSearchShareSchedule {
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
+	    UtilityLog.info("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
 	  // Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(purehits));
 	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
 	    Assert.assertTrue(dp.getDocList_info().Displayed());
 	    System.out.println("Expected docs("+purehits+") are shown in doclist");
+	    UtilityLog.info("Expected docs("+purehits+") are shown in doclist");
 
 	}
 	
@@ -89,6 +94,8 @@ public class TS_007_SavedSearchShareSchedule {
 	
 	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
 	    System.out.println("Expected docs("+purehits+") are shown in docView");
+	    UtilityLog.info("Expected docs("+purehits+") are shown in docView");
+
 	}
 	
 	//@Test(groups={"smoke","regression"})
@@ -109,7 +116,7 @@ public class TS_007_SavedSearchShareSchedule {
 	 * Description : Verify sharing of saved searches is working correctly
 	 */
 	
-	 @Test(groups={"smoke","regression"},priority=13)
+	// @Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 
 	  	//Share the saved search
@@ -132,20 +139,25 @@ public class TS_007_SavedSearchShareSchedule {
 	  	
 	  	}
 
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+	  @BeforeMethod
+		public void beforeTestMethod(Method testMethod) throws IOException {
+			System.out.println("------------------------------------------");
+			System.out.println("Executing method :  " + testMethod.getName());
+			UtilityLog.logBefore(testMethod.getName());
+		}
+
+		@AfterMethod(alwaysRun = true)
+		public void takeScreenShot(ITestResult result, Method testMethod) {
+			UtilityLog.logafter(testMethod.getName());
+			if (ITestResult.FAILURE == result.getStatus()) {
+				Utility bc = new Utility(driver);
+				bc.screenShot(result);
+
+			}
+			System.out.println("Executed :" + result.getMethod().getMethodName());
+
+		}
+
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -52,7 +53,7 @@ public class CommentsPage {
     	
       base.VerifySuccessMessage("Comment Field added successfully");
       base.CloseSuccessMsgpopup();
-	}
+     	}
     
    public void DeleteComments(String ComentName) {
 	   
@@ -63,6 +64,7 @@ public class CommentsPage {
     	getPopupYesBtn().Click();
        base.VerifySuccessMessage("Comment Field deleted successfully.");
        base.CloseSuccessMsgpopup();
+      
 	}
    
      public boolean FindComment(final String Commentname) {
@@ -72,17 +74,20 @@ public class CommentsPage {
    	   boolean nextPage= true;
    	   boolean found= false;
    	  System.out.println(getCommentnames().size());
+   	  UtilityLog.info(getCommentnames().size());
    	   while(nextPage){
    		   int row = 1;
    		   
    		   for (WebElement ele : getCommentnames().FindWebElements()) {
    			  System.out.println(ele.getText().trim());
+   			  UtilityLog.info(ele.getText().trim());
    				if(ele.getText().trim().equals(Commentname)){
    					nextPage = false;
    					found=true;
    					//System.out.println(row);
    					getCommentname(Commentname).waitAndClick(10);
    					System.out.println(Commentname +" is selected");
+   					UtilityLog.info(Commentname +" is selected");
    					return true;
    					
    				}

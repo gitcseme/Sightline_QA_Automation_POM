@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -14,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import executionMaintenance.Log;
+import executionMaintenance.UtilityLog;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -25,6 +28,8 @@ public class TS_003_AdvancedSearchBulkActions {
 	SessionSearch sessionSearch;	
 	int pureHit;
 	String searchText ="test";
+	Logger log;
+	
 	
 	String tagName = "tagName"+Utility.dynamicNameAppender();
 	String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -40,18 +45,26 @@ public class TS_003_AdvancedSearchBulkActions {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    	
-		//Open browser
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
 		
+		//Open browser
+		log = Logger.getLogger("devpinoyLogger");
+
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		//Login as PA
+		
 		lp=new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+    	
     	   		
     	//Search for any content on basic search screen
      	sessionSearch.advancedContentSearch(searchText);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
+    	
     	        
 
 	}
@@ -65,7 +78,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	@Test(groups={"smoke","regression"})
 	   public void bulkTagInAdvancedSearch() throws InterruptedException {
 		
-		//Create Bulk Tag   
+	//Create Bulk Tag   
 		   sessionSearch.bulkTag(tagName);
 	       final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -76,6 +89,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	       Thread.sleep(3000);
 	       Assert.assertTrue(tf.getTagandCount(tagName, pureHit).Displayed());
 	       System.out.println(tagName+" could be seen under tags and folder page");
+	       log.info(tagName+" could be seen under tags and folder page");
 	   
 	}
 	/*
@@ -105,15 +119,17 @@ public class TS_003_AdvancedSearchBulkActions {
 			}	
 	}
 	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
+	 public void beforeTestMethod(Method testMethod) throws IOException{
+		 UtilityLog.logBefore(testMethod.getName());    
+	    
 	 }
      @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
+	 public void takeScreenShot(ITestResult result, Method testMethod) {
+    	 UtilityLog.logafter(testMethod.getName()); 
  	 if(ITestResult.FAILURE==result.getStatus()){
  		Utility bc = new Utility(driver);
  		bc.screenShot(result);
+ 		
  	 }
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
  	

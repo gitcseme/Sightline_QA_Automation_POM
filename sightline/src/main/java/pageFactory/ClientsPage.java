@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -134,6 +135,7 @@ public class ClientsPage {
 			e.printStackTrace();
 		}
     	System.out.println(getFiler_Clientname().getText());
+    	UtilityLog.info(getFiler_Clientname().getText());
     	
     	Assert.assertEquals(getFiler_Clientname().getText(), Clientnamedomain);
      	    	

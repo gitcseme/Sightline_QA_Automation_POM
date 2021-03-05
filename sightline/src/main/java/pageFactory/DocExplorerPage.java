@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
@@ -88,6 +89,7 @@ public class DocExplorerPage {
         			getDocExp_DocID().Visible() ;}}), Input.wait30);
         	String DocId = getDocExp_DocID().getText();
         	System.out.println(DocId);
+        	UtilityLog.info(DocId);
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_DocIDSearchName().Visible() ;}}), Input.wait30);
@@ -103,6 +105,7 @@ public class DocExplorerPage {
         			getDocExp_CusName().Visible() ;}}), Input.wait30);
         	String Cusname = getDocExp_CusName().getText();
         	System.out.println(Cusname);
+        	UtilityLog.info(Cusname);
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_CustodianSearchName().Visible() ;}}), Input.wait30);
@@ -121,6 +124,7 @@ public class DocExplorerPage {
         	Date date1 = dateformat.parse(date);
         	String expdate = dateformat.format(date1);
         	System.out.println(expdate);
+        	UtilityLog.info(expdate);
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_MasterDateSearchName().Visible() ;}}), Input.wait30);
@@ -517,6 +521,7 @@ public class DocExplorerPage {
 			// TODO: handle exception
 		}
 	 System.out.println("Navigated to doclist, to view docslist");
+	 UtilityLog.info("Navigated to doclist, to view docslist");
 	
   }
 

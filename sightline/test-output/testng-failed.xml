@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test name="Default test(failed)">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
+  <test name="BasicAndAdvancedSearchOperations(failed)">
+    <groups>
+      <run>
+        <include name="smoke"/>
+      </run>
+    </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="addredaction"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
+          <include name="ConceptualSearch"/>
           <include name="preCondition"/>
-          <include name="addRemarkToFirstDoc"/>
+          <include name="close"/>
+          <include name="takeScreenShot"/>
+          <include name="contentSearchWithOperatorsInBS"/>
+          <include name="contentSearchWithOperatorsInAS"/>
+          <include name="audioSearch"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
+</suite> <!-- Failed suite [Smoke Suite] -->

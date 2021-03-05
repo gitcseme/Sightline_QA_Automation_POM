@@ -1,0 +1,57 @@
+02/03/2021 11:30:55 devpinoyLogger *****************************************************
+02/03/2021 11:30:55 devpinoyLogger Running scripts on LD9PT Environment
+02/03/2021 11:30:55 devpinoyLogger Test data is copied to TestData.xml
+02/03/2021 11:30:55 devpinoyLogger *****************************************************
+02/03/2021 11:31:31 devpinoyLogger Running on exsiting project : Smoke1102
+02/03/2021 11:31:31 devpinoyLogger Choosen not to perform any ingestion
+02/03/2021 11:31:31 devpinoyLogger *****************************************************
+02/03/2021 11:31:31 devpinoyLogger Running scripts on LD9PT Environment
+02/03/2021 11:31:31 devpinoyLogger Test data is copied to TestData.xml
+02/03/2021 11:31:31 devpinoyLogger *****************************************************
+02/03/2021 11:31:43 devpinoyLogger Running on exsiting project : Smoke1102
+02/03/2021 11:31:43 devpinoyLogger Choosen not to perform any ingestion
+02/03/2021 11:31:56 devpinoyLogger ******Execution started for TS_004_BasicAndAdvancedSearchOperations********
+02/03/2021 11:31:56 devpinoyLogger Started Execution for prerequisite
+02/03/2021 11:32:38 devpinoyLogger Login success!
+02/03/2021 11:32:38 devpinoyLogger Logged in as PA user
+02/03/2021 11:33:03 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  ConceptualSearch            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 11:33:03 devpinoyLogger X
+02/03/2021 11:42:27 devpinoyLogger Audio Search is done for right and PureHit is : 0
+02/03/2021 11:42:27 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  audioSearch            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 11:42:27 devpinoyLogger X
+02/03/2021 11:42:55 devpinoyLogger Serach is done for comments and PureHit is : 9
+02/03/2021 11:43:14 devpinoyLogger Serach is done for test and PureHit is : 3
+02/03/2021 11:43:33 devpinoyLogger Serach is done for comments?AND?test and PureHit is : 1
+02/03/2021 11:43:52 devpinoyLogger Serach is done for test?AND?comments and PureHit is : 1
+02/03/2021 11:44:12 devpinoyLogger Serach is done for comments?OR?test and PureHit is : 11
+02/03/2021 11:44:30 devpinoyLogger Serach is done for comments?NOT?test and PureHit is : 8
+02/03/2021 11:44:50 devpinoyLogger Serach is done for test?NOT?comments and PureHit is : 2
+02/03/2021 11:44:50 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  contentSearchWithOperatorsInAS            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 11:44:50 devpinoyLogger X
+02/03/2021 11:45:14 devpinoyLogger Search is done for comments and PureHit is : 9
+02/03/2021 11:45:46 devpinoyLogger Search is done for test and PureHit is : 3
+02/03/2021 11:46:22 devpinoyLogger Search is done for comments?AND?test and PureHit is : 1
+02/03/2021 11:47:00 devpinoyLogger Search is done for test?AND?comments and PureHit is : 1
+02/03/2021 11:47:37 devpinoyLogger Search is done for comments?OR?test and PureHit is : 11
+02/03/2021 11:48:14 devpinoyLogger Search is done for comments?NOT?test and PureHit is : 8
+02/03/2021 11:48:51 devpinoyLogger Search is done for test?NOT?comments and PureHit is : 2
+02/03/2021 11:49:28 devpinoyLogger Search is done for "very long" and PureHit is : 1
+02/03/2021 11:49:28 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  contentSearchWithOperatorsInBS            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 11:49:28 devpinoyLogger X
+02/03/2021 12:33:55 devpinoyLogger Search is done for CustodianName with value P Allen - null purehit is : 121
+02/03/2021 12:34:47 devpinoyLogger Search is done for DateCreatedDateOnly with value 1990-05-05 - 2018-05-05 purehit is : 85
+02/03/2021 12:35:37 devpinoyLogger Search is done for MasterDate with value 2010-04-06 - null purehit is : 1
+02/03/2021 12:36:21 devpinoyLogger Search is done for MasterDate with value 2010-04-06 22:18:00 - null purehit is : 1
+02/03/2021 12:37:01 devpinoyLogger Search is done for MasterDate with value 1986-04-06 - 2010-04-06 purehit is : 116
+02/03/2021 12:37:39 devpinoyLogger Search is done for CreateDate with value 2010-10-18 - null purehit is : 85
+02/03/2021 12:38:35 devpinoyLogger Search is done for CreateDate with value 2000-10-18 - 2010-10-18 purehit is : 85
+02/03/2021 12:39:36 devpinoyLogger Search is done for CreateDate with value 1960-10-18 12:01:12 - 2010-10-18 06:12:12 purehit is : 85
+02/03/2021 12:39:36 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  metaDataSearch            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 12:39:36 devpinoyLogger X
+02/03/2021 12:40:14 devpinoyLogger Search is done for comments and PureHit is : 9
+02/03/2021 12:40:37 devpinoyLogger Expected Success message: Saved search saved successfully
+02/03/2021 12:40:37 devpinoyLogger Actual Success message: Saved search saved successfully
+02/03/2021 12:40:37 devpinoyLogger Saved search with name - savedSearch136617
+02/03/2021 12:41:49 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  searchsavedSearch            XXXXXXXXXXXXXXXXXXXXXX
+02/03/2021 12:41:49 devpinoyLogger X
+02/03/2021 12:42:14 devpinoyLogger Logged out successfully!

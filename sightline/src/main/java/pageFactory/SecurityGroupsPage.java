@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -58,6 +59,7 @@ public class SecurityGroupsPage {
     	
     	bc.VerifySuccessMessage("Security group added successfully");
     	System.out.println("Security Group created :-"+ securitygroupname);
+    	UtilityLog.info("Security Group created :-"+ securitygroupname);
     	
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -103,6 +105,7 @@ public class SecurityGroupsPage {
     	   catch(Exception e)
     	   {
     		   System.out.println("Annotation layer already added");
+    		   UtilityLog.info("Annotation layer already added");
     	   }
          	
        }

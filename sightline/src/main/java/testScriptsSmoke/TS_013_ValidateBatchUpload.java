@@ -11,91 +11,96 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.Utility;
-
 
 public class TS_013_ValidateBatchUpload {
 	Driver driver;
 	LoginPage lp;
 	SavedSearch saveSearch;
 	BaseClass bc;
-	
+
 	@BeforeClass(alwaysRun = true)
-	public void preCondition() throws ParseException, InterruptedException, IOException{
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-			
-//		Input in = new Input();
-//		in.loadEnvConfig();
-		
-		//Open browser
+	public void preCondition() throws ParseException, InterruptedException, IOException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		// Input in = new Input();
+		// in.loadEnvConfig();
+
+		// Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
-		lp=new LoginPage(driver);
-		
-	}
-	@AfterMethod(alwaysRun = true)
-	private void user() {
-		 lp.logout();
+		lp = new LoginPage(driver);
 
 	}
-	@Test(groups={"smoke","regression"})
-	   public void batchUploadByPA() throws InterruptedException {
-		//Login as a PA
+
+	@Test(groups = { "smoke", "regression" })
+	public void batchUploadByPA() throws InterruptedException {
+		// Login as a PA
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		saveSearch = new SavedSearch(driver);
-		
+
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for PA user...");
-	
-		
+		UtilityLog.info("Successfully ran for PA user...");
+
 	}
-	@Test(groups={"smoke","regression"})
-	   public void batchUploadByRMU() throws InterruptedException {
-		//Login as a Review manager
+
+	@Test(groups = { "smoke", "regression" })
+	public void batchUploadByRMU() throws InterruptedException {
+		// Login as a Review manager
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		saveSearch = new SavedSearch(driver);
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for RMU user...");
-	
-		
+		UtilityLog.info("Successfully ran for RMU user...");
+
 	}
-	@Test(groups={"smoke","regression"})
-	   public void batchUploadByReviewer() throws InterruptedException {
-		//Login as a Reviewer
+
+	@Test(groups = { "smoke", "regression" })
+	public void batchUploadByReviewer() throws InterruptedException {
+		// Login as a Reviewer
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		saveSearch = new SavedSearch(driver);
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for REV user...");
-	
-		
+		UtilityLog.info("Successfully ran for REV user...");
+
 	}
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
-	   @AfterClass(alwaysRun = true)
-		public void close(){
-			
-		   try{ 
-			   driver.scrollPageToTop();
-			
-			     //lp.quitBrowser();	
-				}finally {
-					lp.quitBrowser();
-					LoginPage.clearBrowserCache();
-				}
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
 		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
+
+	@AfterClass(alwaysRun = true)
+	public void close() {
+
+		try {
+			driver.scrollPageToTop();
+
+			// lp.quitBrowser();
+		} finally {
+			lp.quitBrowser();
+			LoginPage.clearBrowserCache();
+		}
+	}
 }

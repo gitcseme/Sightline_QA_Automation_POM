@@ -6,6 +6,7 @@ import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class ReviewProgressByReviewerReportPage {
@@ -122,6 +123,7 @@ public class ReviewProgressByReviewerReportPage {
 		  
 		 String projectAdminName = getReviewerProgressReport_LoggedUserName().getText();
 		 System.out.println(projectAdminName);
+		 UtilityLog.info(projectAdminName);
 		 
 		 p1.getSignoutMenu().Click();
 		  

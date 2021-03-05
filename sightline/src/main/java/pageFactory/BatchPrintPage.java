@@ -18,6 +18,7 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.openqa.selenium.interactions.Actions;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -241,6 +242,7 @@ public class BatchPrintPage {
 		{
 			driver.Navigate().refresh();
 			System.out.println("Refresh");
+			UtilityLog.info("Refresh");
 		}
 		}	
 		
@@ -320,7 +322,9 @@ public class BatchPrintPage {
                                                                   if(!line.substring(line.indexOf("Date:")+5).toString().isEmpty()&&!line.substring(line.indexOf("Date:")+5).equalsIgnoreCase(" ")){
                                                                         //System.out.println("---"+line.substring(line.indexOf("Date:")+5).toString());
                                                                         System.out.println(f.getAbsoluteFile().toString());
+                                                                        UtilityLog.info(f.getAbsoluteFile().toString());
                                                                         System.out.println(line.substring(line.indexOf("Date:")+5).toString().trim());
+                                                                        UtilityLog.info(line.substring(line.indexOf("Date:")+5).toString().trim());
                                                                         orderInFiles.add(line.substring(line.indexOf("Date:")+5).toString().trim());
                                                                        
                                                                   }
@@ -334,7 +338,9 @@ public class BatchPrintPage {
                                                                   if(!line.substring(line.indexOf("Name:")+5).toString().isEmpty()&&!line.substring(line.indexOf("Name:")+5).equalsIgnoreCase(" ")){
                                                                         //System.out.println("---"+line.substring(line.indexOf("Date:")+5).toString());
                                                                         System.out.println(f.getAbsoluteFile().toString());
+                                                                        UtilityLog.info(f.getAbsoluteFile().toString());
                                                                         System.out.println(line.substring(line.indexOf("Name:")+5).toString().trim());
+                                                                        UtilityLog.info(line.substring(line.indexOf("Name:")+5).toString().trim());
                                                                         orderInFiles.add(line.substring(line.indexOf("Name:")+5).toString().trim());
                                                                        
                                                                   }

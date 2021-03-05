@@ -1,5 +1,6 @@
 package testScriptsSmoke;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
@@ -10,6 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.ProjectPage;
 import pageFactory.Utility;
 import pageFactory.LoginPage;
@@ -46,21 +48,24 @@ public class TS_001_AddProjectandUserManagement {
 		
 		
 	}
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
-	
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BatchPrintPage;
 import pageFactory.LoginPage;
@@ -28,13 +29,6 @@ public class TS_006_ValidateBatchPrint {
 	Driver driver;
 	LoginPage lp;
 	
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod) throws ParseException, InterruptedException, IOException{
-		
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-	 
 	 
 	 /*
 	 * Author : Suresh Bavihalli
@@ -48,6 +42,7 @@ public class TS_006_ValidateBatchPrint {
 	@Test(groups={"smoke","regression"})
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		UtilityLog.info("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
 		driver = new Driver();
 		
@@ -69,15 +64,25 @@ public class TS_006_ValidateBatchPrint {
 		
 }
 	
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws IOException {
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
