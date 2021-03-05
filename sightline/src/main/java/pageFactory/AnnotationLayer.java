@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -47,6 +48,7 @@ public class AnnotationLayer {
     	catch (Exception e)
     	{
     	System.out.println("Annotation layer already exist");
+    	UtilityLog.info("Annotation layer already exist");
     	}
     	 
          base.CloseSuccessMsgpopup();

@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -376,6 +377,7 @@ public class CodingForm {
 	   getCodingForm_Validation_ButtonYes().Click();
 	   
 	   System.out.println("Coding form "+cfName+" created");
+	   UtilityLog.info("Coding form "+cfName+" created");
 	   
 	   base.VerifySuccessMessage("Coding Form Saved successfully");
 	 //  base.CloseSuccessMsgpopup();

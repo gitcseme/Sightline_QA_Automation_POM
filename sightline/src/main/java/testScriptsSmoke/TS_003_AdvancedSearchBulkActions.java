@@ -45,6 +45,8 @@ public class TS_003_AdvancedSearchBulkActions {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
 		
 		//Open browser
 		log = Logger.getLogger("devpinoyLogger");

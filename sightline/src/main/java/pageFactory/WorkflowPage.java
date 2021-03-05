@@ -18,6 +18,7 @@ import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class WorkflowPage {
@@ -179,9 +180,11 @@ public class WorkflowPage {
         //Local time zone   
         SimpleDateFormat dateFormatLocal = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         System.out.println(dateFormatLocal.parse( dateFormatGmt.format(new Date())));
+        UtilityLog.info(dateFormatLocal.parse( dateFormatGmt.format(new Date())));
         
         String Time = dateFormatGmt.format(new Date()).toString();
         System.out.println(Time);
+        UtilityLog.info(Time);
         
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         Date d = df.parse(Time); 
@@ -194,14 +197,18 @@ public class WorkflowPage {
    	 	int day = cal.get(Calendar.DAY_OF_WEEK);
    	 	String nameOfDay = weekdays[day];
    	 	System.out.println(nameOfDay);
+   	 	UtilityLog.info(nameOfDay);
    	 
    	 	//get next day date
         cal.add(Calendar.DATE, 1);
         String newTime = df.format(cal.getTime());
         System.out.println(newTime);
+        UtilityLog.info(newTime);
         String s[] = newTime.split(" ");
         System.out.println(s[0]); //next day date
+        UtilityLog.info(s[0]);
         System.out.println(s[1]); //current time + 1 min
+        UtilityLog.info(s[01]);
         System.out.println();
     	
        	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

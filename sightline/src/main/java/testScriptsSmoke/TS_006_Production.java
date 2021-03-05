@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
@@ -39,6 +40,8 @@ public class TS_006_Production {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
 		
 		Input in = new Input();
 		in.loadEnvConfig();
@@ -60,26 +63,32 @@ public class TS_006_Production {
 	public void  AddNewProduction() throws Exception {
 		
 		System.out.println(Input.prodPath);
+		UtilityLog.info(Input.prodPath);
 		ProductionPage page1 = new ProductionPage(driver);
 		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 		//page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 	}
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) throws IOException {
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-    @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

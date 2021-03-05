@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class ProjectPage {
@@ -83,6 +84,7 @@ public class ProjectPage {
     	final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
         System.out.println(Bgcount);
+        UtilityLog.info(Bgcount);
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getButtonSaveProject().Visible()  ;}}), Input.wait30); 
         driver.scrollingToBottomofAPage();
@@ -93,6 +95,7 @@ public class ProjectPage {
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120+Input.wait60);  
  	   System.out.println(bc.initialBgCount());
+ 	   UtilityLog.info(bc.initialBgCount());
  	   
  	       
 	}
@@ -156,6 +159,7 @@ public class ProjectPage {
     	final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
         System.out.println(Bgcount);
+        UtilityLog.info(Bgcount);
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getButtonSaveProject().Visible()  ;}}), Input.wait30); 
         driver.scrollingToBottomofAPage();
@@ -166,6 +170,7 @@ public class ProjectPage {
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120+Input.wait60);  
  	   System.out.println(bc.initialBgCount());
+ 	   UtilityLog.info(bc.initialBgCount());
  	   
  	  /* this.driver.getWebDriver().get(Input.url+"Project/Project");
  	  

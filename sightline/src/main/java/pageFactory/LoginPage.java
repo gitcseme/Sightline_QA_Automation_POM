@@ -28,8 +28,7 @@ import testScriptsSmoke.Input;
 public class LoginPage {
 
     Driver driver;
-    Logger log;
-    
+      
     public Element getEuserName(){ return driver.FindElementById("txtBxUserID"); }
     public Element getEpassword(){ return driver.FindElementById("txtBxUserPass"); }
     public Element getEloginButton(){ return driver.FindElementByName("submit"); }
@@ -49,7 +48,6 @@ public class LoginPage {
     public LoginPage(Driver driver){
 
         this.driver = driver;
-        log = Logger.getLogger("devpinoyLogger");
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -113,7 +111,7 @@ public class LoginPage {
 		}
     	Assert.assertTrue(getSignoutMenu().Visible());
     	System.out.println("Login success!");
-    	log.info("Login success!");
+    	UtilityLog.info("Login success!");
 
     }
     public void logout(){
@@ -146,7 +144,7 @@ public class LoginPage {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEuserName().Visible()  ;}}), 30000); 
     	Assert.assertTrue(getEuserName().Visible());
-    	log.info("Logged out successfully!");
+    	UtilityLog.info("Logged out successfully!");
     }
 
  public void logOutWithConfirmation(){
@@ -161,8 +159,10 @@ public class LoginPage {
     		BaseClass bc = new BaseClass(driver);
     		bc.getPopupYesBtn().waitAndClick(10);
 			System.out.println("For DocView - Pop up confirmation dialog is shown and clicked on yes button");
+			UtilityLog.info("For DocView - Pop up confirmation dialog is shown and clicked on yes button");
 		}catch(Exception e1){
 			System.out.println("For Doc View - Pop up confirmation dialog is not appeared");
+			UtilityLog.info("For Doc View - Pop up confirmation dialog is not appeared");
 		}
 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -202,6 +202,7 @@ public class LoginPage {
     @SuppressWarnings("null")
 	public static String readGmailMail(String SujjectLine, String userName,String OTPorURL,String userID, String userPwd) {
 	  System.out.println("passed : "+SujjectLine+userName);
+	  UtilityLog.info("passed : "+SujjectLine+userName);
       Properties props = new Properties();
       String url = null;
       String otp = null;
@@ -231,6 +232,7 @@ public class LoginPage {
 	            	if(messages[i].getSubject().trim().startsWith(SujjectLine+userName)){
 	            		mailReceived=true;
 		                System.out.println("e-mail Subject:- " + messages[i].getSubject());
+		                UtilityLog.info("e-mail Subject:- " + messages[i].getSubject());
 		                Object msgContent = messages[i].getContent();
 		
 		                String content = ""; 
@@ -287,9 +289,11 @@ public class LoginPage {
           	else{
           		if(wait >= waitForMail){
           			System.out.println("no mail, waited for given time..");
+          			UtilityLog.info("no mail, waited for given time..");
           		}
           		Thread.sleep(5000);
           		System.out.println("Waiting for mail!");
+          		UtilityLog.info("Waiting for mail!");
           	}
           	 inbox.close(true);
            	store.close();

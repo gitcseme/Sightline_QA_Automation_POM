@@ -6,6 +6,7 @@ import org.openqa.selenium.Keys;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -179,6 +180,7 @@ public class ManageUsersPage {
     	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
     	Assert.assertEquals(msg, getSuccessMsg().getText().toString());
     	System.out.println("Success msg passed");
+    	UtilityLog.info("Success msg passed");
 	}
    
  

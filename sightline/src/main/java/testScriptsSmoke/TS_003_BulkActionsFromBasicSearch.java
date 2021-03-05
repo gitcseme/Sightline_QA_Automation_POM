@@ -15,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import configsAndTestData.ConfigLoader;
+import executionMaintenance.UtilityLog;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
@@ -46,7 +47,9 @@ public class TS_003_BulkActionsFromBasicSearch {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		
 		//bt = new BaseTest();
 		//Open browser
 		softAssertion= new SoftAssert();

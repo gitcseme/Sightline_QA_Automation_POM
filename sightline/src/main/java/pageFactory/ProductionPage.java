@@ -10,6 +10,7 @@ import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class ProductionPage {
@@ -284,6 +285,7 @@ public class ProductionPage {
 		driver.scrollPageToTop();
 		
 		System.out.println(getNative_text().getText());
+		UtilityLog.info(getNative_text().getText());
 		
 		//work on this assert..issue with text format!
 		/*Assert.assertEquals(getNative_text().getText(),"To produce specific docs"
@@ -352,6 +354,7 @@ public class ProductionPage {
 		
 		String expplaceholdertexttiff = getTiff_placeholdertext().getText();
 		System.out.println(expplaceholdertexttiff);
+		UtilityLog.info(expplaceholdertexttiff);
 		Assert.assertEquals(expplaceholdertexttiff, "TIFF / PDFs are generated and exported "
 				+ "for all documents by default. To export placeholders for docs "
 				+ "that are Privileged Withhold, Tech Issue or Produced Natively,"
@@ -387,6 +390,7 @@ public class ProductionPage {
 	
 		String exptext= getTextcomponent_text().getText();
 		System.out.println(exptext);
+		UtilityLog.info(exptext);
 		Assert.assertEquals(exptext, "Redacted documents are automatically OCRed"
 			+ " to export the text. Original extracted text is exported for natively "
 			+ "produced documents (file based placeholdering). "
@@ -582,6 +586,7 @@ public class ProductionPage {
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
 		getbtnProductionGenerate().Click();
 		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
 				
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDocumentGeneratetext().Visible()  ;}}), Input.wait120); 
@@ -597,6 +602,7 @@ public class ProductionPage {
 				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
 		String batesno = getProd_BatesRange().getText();
 		System.out.println(batesno);
+		UtilityLog.info(batesno);
 		
 		/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
@@ -621,6 +627,7 @@ public class ProductionPage {
 		 String PDocCount = getProductionDocCount().getText();
          int Doc = Integer.parseInt(PDocCount);
          System.out.println(Doc); 
+         UtilityLog.info(Doc);
 		
 		
     	}

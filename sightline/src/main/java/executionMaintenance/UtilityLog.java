@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -115,5 +116,12 @@ public class UtilityLog {
 		// TODO Auto-generated method stub
 		log.info(length);
 	}
- 
+	public static void info(ArrayList<String> dataset) {
+
+		log.info(dataset);
+
+		}
+	
+	
+
 }

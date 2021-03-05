@@ -69,6 +69,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as PA user");
@@ -318,7 +319,6 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

@@ -275,7 +275,9 @@ public class Input {
 					dataset.add("Automation_AllSources");
 				}
 				System.out.println(dataset);
+				UtilityLog.info(dataset);
 				System.out.println("******Ingestion will start for "+dataset+"********");
+				UtilityLog.info("******Ingestion will start for "+dataset+"********");
 				lp.loginToSightLine(Input.pa1userName,Input.pa1password);
 				for (int i = 0; i < dataset.size(); i++) {
 					bc = new BaseClass(driver);
@@ -298,6 +300,7 @@ public class Input {
 			     	lp.logout();
 				}
 				System.out.println("******Ingestion Completed********");
+				UtilityLog.info("******Ingestion Completed********");
 		}else{
 			System.out.println("Choosen not to perform any ingestion");
 			UtilityLog.info("Choosen not to perform any ingestion");

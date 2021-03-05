@@ -9,6 +9,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -382,7 +383,9 @@ public void setPassword(String pwd) {
 				   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						   getNumberofUsers().Visible()  ;}}),Input.wait30);
 				   System.out.println("Number of records in a current page : "+getNumberofUsers().size());
+				   UtilityLog.info("Number of records in a current page : "+getNumberofUsers().size());
 				   System.out.println("Validation started..please wait");
+				   UtilityLog.info("Validation started..please wait");
 					
 				   for (int i = 1; i<getNumberofUsers().size();i++) {
 					  if (userSate.endsWith("active")) {
@@ -391,6 +394,7 @@ public void setPassword(String pwd) {
 						  if(getIsLock().GetAttribute("checked") != null)
 						  {
 							  System.out.println("Already Cheacked"); 
+							  UtilityLog.info("Already Cheacked");
 							  getCancel().waitAndClick(10);
 						  }
 						  else
@@ -402,6 +406,7 @@ public void setPassword(String pwd) {
 					}else if (userSate.equalsIgnoreCase("inactive")) {
 						
 							System.out.println("Users are Inactive");	
+							UtilityLog.info("Users are Inactive");
 					
 					}
 						
