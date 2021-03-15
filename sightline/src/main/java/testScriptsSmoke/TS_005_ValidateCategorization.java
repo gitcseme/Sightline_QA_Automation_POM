@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -42,8 +43,8 @@ public class TS_005_ValidateCategorization {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-//		Input in = new Input();
-//		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		
 		String searchString = Input.searchString2;
 		//Open browser
@@ -53,15 +54,12 @@ public class TS_005_ValidateCategorization {
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);   		
     	//Search for any content on basic search screen
 		sessionSearch =new SessionSearch(driver);
-		System.out.println(searchString);
+		//System.out.println(searchString);
     	sessionSearch.basicContentSearch(searchString);
-    	System.out.println(searchString);
+    	//System.out.println(searchString);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
     	
-    	//Create Bulk Tag   
-		sessionSearch.bulkTag(tagName);
-	    //Create bulk folder
-	    sessionSearch.bulkFolder(folderName);
+    	
 	
 	}
 	
@@ -74,15 +72,24 @@ public class TS_005_ValidateCategorization {
 	 */	
 	@Test(groups={"smoke","regression"})
 	   public void validateCategorization() throws InterruptedException {
-		  
+		//Create Bulk Tag   
+		sessionSearch.bulkTag(tagName);
+		//Create bulk folder
+		sessionSearch.bulkFolder(folderName);
+		
 		  Categorization cat = new Categorization(driver);
-		  Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)==3);
-		  System.out.println("Expected documents count shown in categorization result");
+		  if(Input.numberOfDataSets == 1){
+			 Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)==3);
+		  }else{
+			 Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)>=8);
+		  }
+		  Reporter.log("Expected documents count shown in categorization result",true);
 		  UtilityLog.info("Expected documents count shown in categorization result");
 	   }
 	
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -90,6 +97,7 @@ public class TS_005_ValidateCategorization {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -97,7 +105,6 @@ public class TS_005_ValidateCategorization {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 	@AfterClass(alwaysRun = true)
 	public void close(){

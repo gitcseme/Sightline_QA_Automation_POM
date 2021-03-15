@@ -187,8 +187,13 @@ public class AssignmentsPage {
     		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
     	} 
     	
-    	 	//permissions
+    	//permissions
     	driver.scrollingToBottomofAPage();
+    	driver.scrollingToBottomofAPage();
+    	Thread.sleep(2000);
+    	//give redaction permission to reviewers
+    	driver.getWebDriver().findElement(By.xpath("(//div[@class = 'smart-form'])[25]")).click();
+    	Thread.sleep(2000);
     	getSelectSavePermission().ScrollTo();
     	getSelectSavePermission().waitAndClick(5);
     	driver.scrollPageToTop();
@@ -225,7 +230,7 @@ public class AssignmentsPage {
 				iterable_element.click();
 			}
 		}
-    	getContinueBulkAssign().waitAndClick(5);
+    	getContinueBulkAssign().waitAndClick(10);
     
        	final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
@@ -256,7 +261,7 @@ public class AssignmentsPage {
     	UtilityLog.info("Docs assigned to  "+assignmentName);
 	}
     
-    public void editAssignment(final String assignmentName) {
+    public void editAssignment(final String assignmentName) throws InterruptedException {
     	driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -277,7 +282,7 @@ public class AssignmentsPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
-    
+        Thread.sleep(2000);
     	getAssignmentAction_EditAssignment().waitAndClick(3);
     	
 	}

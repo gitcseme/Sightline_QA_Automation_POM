@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ISelect;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -380,6 +381,8 @@ public class CodingForm {
 	   UtilityLog.info("Coding form "+cfName+" created");
 	   
 	   base.VerifySuccessMessage("Coding Form Saved successfully");
+	   Reporter.log(cfName +"coding Form Successful", true);
+   	   UtilityLog.info("Coding Form Successful");
 	 //  base.CloseSuccessMsgpopup();
 }
    

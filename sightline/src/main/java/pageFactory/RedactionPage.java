@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -59,9 +60,9 @@ public class RedactionPage {
     	
     	for(int i=1;i<sgnames.size();i++)
     	{
-  		  System.out.println(allsg.add(sgnames.get(i).getText()));
+  		  //System.out.println(allsg.add(sgnames.get(i).getText()));
   		  UtilityLog.info(allsg.add(sgnames.get(i).getText()));
-  		  System.out.println(allsg);
+  		  
       	}
      	
     	Assert.assertEquals(allsg, expvalue);
@@ -92,6 +93,9 @@ public class RedactionPage {
     	getSaveBtn().Click();
     	
     	bc.VerifySuccessMessage("Redaction label added successfully");
+    	//System.out.println("Redaction Successful");
+    	Reporter.log("Redaction "+RedactName+" added successfully",true);
+		UtilityLog.info("Redaction Successful");
     	bc.CloseSuccessMsgpopup();
      }
   

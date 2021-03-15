@@ -77,6 +77,7 @@ public class DocViewPage {
     public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
     public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
     public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
+    public Element getDocView_SaveReductionNew(){ return driver.FindElementByXPath("//*[@id='btnSave']"); }
     
    //remaks objects
     public Element getAdvancedSearchAudioRemarkIcon(){ return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]"); }
@@ -233,6 +234,8 @@ public class DocViewPage {
     public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
     public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
     
+    //Doc view page redaction
+    public Element getPreRedaction(){ return driver.FindElementByCssSelector("#PrevAllRedaction");}
     
     
     public DocViewPage(Driver driver){
@@ -807,11 +810,11 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		
 }
 		
-		public void NonAudioRedaction(String redactiontag) throws InterruptedException {
+		public void nonAudioPageRedaction(String redactiontag) throws InterruptedException {
 		   	
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getDocView_RedactIcon().Displayed()  ;}}), Input.wait30);   
-			getDocView_RedactIcon().Click();
+			getDocView_RedactIcon().waitAndClick(5);
 			Thread.sleep(3000);
 	   	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -823,7 +826,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	    			getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
 	    	getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
 	    	
-	    	getDocView_SaveReduction().waitAndClick(5);
+	    	getDocView_SaveReductionNew().waitAndClick(5);
 	    	
 	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
 	    	
@@ -836,15 +839,10 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			UtilityLog.info(HighlightedColor);
 			
 			Assert.assertEquals(HighlightedColor, "rgba(230, 70, 52, 1)");
- 	
-	    	SessionSearch search = new SessionSearch(driver);
-	    	//Validate in advance sreach under work product search
-			search.switchToWorkproduct();
-			
-		    search.selectRedactioninWPS(redactiontag);
-		    Assert.assertEquals(search.serarchWP(), 1);
-
 		}
+	    	
+
+		
 		
  public void NonAudioRedactionDelete(String redactiontag) throws InterruptedException {
  	

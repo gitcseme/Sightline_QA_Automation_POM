@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -47,7 +48,7 @@ public class TS_012_ValidateReportsFunctionality {
 
 		driver = new Driver();
 		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.rmu2userName, Input.rmu2password);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		report = new ReportsPage(driver);
 
 	}
@@ -154,8 +155,9 @@ public class TS_012_ValidateReportsFunctionality {
 
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -163,6 +165,7 @@ public class TS_012_ValidateReportsFunctionality {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -170,7 +173,6 @@ public class TS_012_ValidateReportsFunctionality {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

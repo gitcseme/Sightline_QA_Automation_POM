@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -45,8 +46,8 @@ public class TS_007_SavedSearchShareSchedule {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		//Open browser
 		driver = new Driver();
 		//Login as a PA
@@ -82,7 +83,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		
 		
@@ -98,7 +99,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 	}
 	
-	//@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"})
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
@@ -116,7 +117,7 @@ public class TS_007_SavedSearchShareSchedule {
 	 * Description : Verify sharing of saved searches is working correctly
 	 */
 	
-	// @Test(groups={"smoke","regression"},priority=13)
+	 @Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 
 	  	//Share the saved search
@@ -139,8 +140,9 @@ public class TS_007_SavedSearchShareSchedule {
 	  	
 	  	}
 
-	  @BeforeMethod
-		public void beforeTestMethod(Method testMethod) throws IOException {
+	  @BeforeMethod(alwaysRun = true)
+		public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+			Reporter.setCurrentTestResult(result);
 			System.out.println("------------------------------------------");
 			System.out.println("Executing method :  " + testMethod.getName());
 			UtilityLog.logBefore(testMethod.getName());
@@ -148,6 +150,7 @@ public class TS_007_SavedSearchShareSchedule {
 
 		@AfterMethod(alwaysRun = true)
 		public void takeScreenShot(ITestResult result, Method testMethod) {
+			Reporter.setCurrentTestResult(result);
 			UtilityLog.logafter(testMethod.getName());
 			if (ITestResult.FAILURE == result.getStatus()) {
 				Utility bc = new Utility(driver);
@@ -155,9 +158,8 @@ public class TS_007_SavedSearchShareSchedule {
 
 			}
 			System.out.println("Executed :" + result.getMethod().getMethodName());
-
 		}
-
+		
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

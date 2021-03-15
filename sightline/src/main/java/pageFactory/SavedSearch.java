@@ -86,6 +86,10 @@ public class SavedSearch {
 	public Element getShareSaveBtn() {
 		return driver.FindElementByXPath("(//button[text()='Save'])[1]");
 	}
+	
+	public Element getShareSaveBtnNew() {
+		return driver.FindElementByCssSelector("#btnShareSave");
+	}
 
 	public Element getSuccessMsgHeader() {
 		return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span");
@@ -289,34 +293,21 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 
 		ArrayList<Integer> expectCounts = new ArrayList<Integer>();
-		if ((Input.suite.equalsIgnoreCase("regression") && Input.numberOfDataSets == 3)
-				|| (Input.suite.equalsIgnoreCase("smoke") && Input.numberOfDataSets == 3)) {
-			expectCounts.add(240);
-			expectCounts.add(283);
-			expectCounts.add(104);
-			expectCounts.add(64);
-			expectCounts.add(1198);
-			expectCounts.add(1);
-			expectCounts.add(27);
-			expectCounts.add(13);
-			expectCounts.add(2);
-			expectCounts.add(1);
-			expectCounts.add(0);
-			expectCounts.add(0);
-		} else if (Input.suite.equalsIgnoreCase("smoke") && Input.numberOfDataSets == 1) {
+		if (Input.numberOfDataSets == 3) {
+			expectCounts.add(240);expectCounts.add(283);
+			expectCounts.add(104);expectCounts.add(64);
+			expectCounts.add(1198);expectCounts.add(1);
+			expectCounts.add(27);expectCounts.add(13);
+			expectCounts.add(2);expectCounts.add(1);
+			expectCounts.add(0);expectCounts.add(0);
+		} else if (Input.numberOfDataSets == 1) {
 
-			expectCounts.add(28);
-			expectCounts.add(28);
-			expectCounts.add(11);
-			expectCounts.add(8);
-			expectCounts.add(0);
-			expectCounts.add(1);
-			expectCounts.add(0);
-			expectCounts.add(3);
-			expectCounts.add(2);
-			expectCounts.add(0);
-			expectCounts.add(0);
-			expectCounts.add(0);
+			expectCounts.add(28);expectCounts.add(28);
+			expectCounts.add(11);expectCounts.add(8);
+			expectCounts.add(0);expectCounts.add(1);
+			expectCounts.add(0);expectCounts.add(3);
+			expectCounts.add(2);expectCounts.add(0);
+			expectCounts.add(0);expectCounts.add(0);
 		}
 
 		ArrayList<Integer> actualCounts = new ArrayList<Integer>();
@@ -409,15 +400,10 @@ public class SavedSearch {
 		getSavedSearchDeleteButton().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSubmitToUpload().Visible();
-			}
-		}), Input.wait60);
+			public Boolean call() {return getSubmitToUpload().Visible();}}), Input.wait60);
 		getSubmitToUpload().Click();
 
-		base.VerifySuccessMessage("Save search tree node successfully deleted.");
-
-		// uncomment below assert after data set is fix
+		base.VerifySuccessMessage("Save search tree node successfully deleted.");		
 		Assert.assertTrue(expectCounts.equals(actualCounts));
 
 	}
@@ -555,12 +541,13 @@ public class SavedSearch {
 	public void shareSavedSearchPA(final String searchName, String securitygroupname)
 			throws ParseException, InterruptedException {
 
-		base.getSelectProject();
+		//base.getSelectProject();
 
 		Dimension dim = new Dimension(1600, 900);
 		driver.getWebDriver().manage().window().setSize(dim);
 
 		// driver.getWebDriver().manage().window().setSize(800);
+		
 		savedSearch_Searchandclick(searchName);
 		getShareSerachBtn().Click();
 		Thread.sleep(2000);
@@ -577,7 +564,8 @@ public class SavedSearch {
 				return getShareSaveBtn().Visible();
 			}
 		}), Input.wait30);
-		getShareSaveBtn().waitAndClick(10);
+		getShareSaveBtnNew().waitAndClick(10);
+		driver.getWebDriver().manage().window().maximize();
 
 		// getShareSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
@@ -610,7 +598,7 @@ public class SavedSearch {
 		}), Input.wait30);
 		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
 
-		getShareSaveBtn().waitAndClick(5);
+		getShareSaveBtnNew().waitAndClick(5);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
 		Thread.sleep(2000);
 
@@ -677,8 +665,7 @@ public class SavedSearch {
 		// getShareSaveBtn().Visible() ;}}), Input.wait30);
 		// getShareSaveBtn().javascriptclick();
 
-		Actions action = new Actions((WebDriver) driver);
-		action.moveToElement((WebElement) getShareSaveBtn()).click().perform();
+		getShareSaveBtnNew().waitAndClick(10);
 
 		// getShareSaveBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
@@ -834,7 +821,8 @@ public class SavedSearch {
 			public Boolean call() {
 				return getSavedSearch_SearchName().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
+		
 		getSavedSearch_SearchName().SendKeys(searchName);
 
 		try {

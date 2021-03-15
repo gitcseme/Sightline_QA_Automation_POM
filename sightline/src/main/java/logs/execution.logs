@@ -1,57 +1,706 @@
-02/03/2021 11:30:55 devpinoyLogger *****************************************************
-02/03/2021 11:30:55 devpinoyLogger Running scripts on LD9PT Environment
-02/03/2021 11:30:55 devpinoyLogger Test data is copied to TestData.xml
-02/03/2021 11:30:55 devpinoyLogger *****************************************************
-02/03/2021 11:31:31 devpinoyLogger Running on exsiting project : Smoke1102
-02/03/2021 11:31:31 devpinoyLogger Choosen not to perform any ingestion
-02/03/2021 11:31:31 devpinoyLogger *****************************************************
-02/03/2021 11:31:31 devpinoyLogger Running scripts on LD9PT Environment
-02/03/2021 11:31:31 devpinoyLogger Test data is copied to TestData.xml
-02/03/2021 11:31:31 devpinoyLogger *****************************************************
-02/03/2021 11:31:43 devpinoyLogger Running on exsiting project : Smoke1102
-02/03/2021 11:31:43 devpinoyLogger Choosen not to perform any ingestion
-02/03/2021 11:31:56 devpinoyLogger ******Execution started for TS_004_BasicAndAdvancedSearchOperations********
-02/03/2021 11:31:56 devpinoyLogger Started Execution for prerequisite
-02/03/2021 11:32:38 devpinoyLogger Login success!
-02/03/2021 11:32:38 devpinoyLogger Logged in as PA user
-02/03/2021 11:33:03 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  ConceptualSearch            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 11:33:03 devpinoyLogger X
-02/03/2021 11:42:27 devpinoyLogger Audio Search is done for right and PureHit is : 0
-02/03/2021 11:42:27 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  audioSearch            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 11:42:27 devpinoyLogger X
-02/03/2021 11:42:55 devpinoyLogger Serach is done for comments and PureHit is : 9
-02/03/2021 11:43:14 devpinoyLogger Serach is done for test and PureHit is : 3
-02/03/2021 11:43:33 devpinoyLogger Serach is done for comments?AND?test and PureHit is : 1
-02/03/2021 11:43:52 devpinoyLogger Serach is done for test?AND?comments and PureHit is : 1
-02/03/2021 11:44:12 devpinoyLogger Serach is done for comments?OR?test and PureHit is : 11
-02/03/2021 11:44:30 devpinoyLogger Serach is done for comments?NOT?test and PureHit is : 8
-02/03/2021 11:44:50 devpinoyLogger Serach is done for test?NOT?comments and PureHit is : 2
-02/03/2021 11:44:50 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  contentSearchWithOperatorsInAS            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 11:44:50 devpinoyLogger X
-02/03/2021 11:45:14 devpinoyLogger Search is done for comments and PureHit is : 9
-02/03/2021 11:45:46 devpinoyLogger Search is done for test and PureHit is : 3
-02/03/2021 11:46:22 devpinoyLogger Search is done for comments?AND?test and PureHit is : 1
-02/03/2021 11:47:00 devpinoyLogger Search is done for test?AND?comments and PureHit is : 1
-02/03/2021 11:47:37 devpinoyLogger Search is done for comments?OR?test and PureHit is : 11
-02/03/2021 11:48:14 devpinoyLogger Search is done for comments?NOT?test and PureHit is : 8
-02/03/2021 11:48:51 devpinoyLogger Search is done for test?NOT?comments and PureHit is : 2
-02/03/2021 11:49:28 devpinoyLogger Search is done for "very long" and PureHit is : 1
-02/03/2021 11:49:28 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  contentSearchWithOperatorsInBS            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 11:49:28 devpinoyLogger X
-02/03/2021 12:33:55 devpinoyLogger Search is done for CustodianName with value P Allen - null purehit is : 121
-02/03/2021 12:34:47 devpinoyLogger Search is done for DateCreatedDateOnly with value 1990-05-05 - 2018-05-05 purehit is : 85
-02/03/2021 12:35:37 devpinoyLogger Search is done for MasterDate with value 2010-04-06 - null purehit is : 1
-02/03/2021 12:36:21 devpinoyLogger Search is done for MasterDate with value 2010-04-06 22:18:00 - null purehit is : 1
-02/03/2021 12:37:01 devpinoyLogger Search is done for MasterDate with value 1986-04-06 - 2010-04-06 purehit is : 116
-02/03/2021 12:37:39 devpinoyLogger Search is done for CreateDate with value 2010-10-18 - null purehit is : 85
-02/03/2021 12:38:35 devpinoyLogger Search is done for CreateDate with value 2000-10-18 - 2010-10-18 purehit is : 85
-02/03/2021 12:39:36 devpinoyLogger Search is done for CreateDate with value 1960-10-18 12:01:12 - 2010-10-18 06:12:12 purehit is : 85
-02/03/2021 12:39:36 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  metaDataSearch            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 12:39:36 devpinoyLogger X
-02/03/2021 12:40:14 devpinoyLogger Search is done for comments and PureHit is : 9
-02/03/2021 12:40:37 devpinoyLogger Expected Success message: Saved search saved successfully
-02/03/2021 12:40:37 devpinoyLogger Actual Success message: Saved search saved successfully
-02/03/2021 12:40:37 devpinoyLogger Saved search with name - savedSearch136617
-02/03/2021 12:41:49 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX             -E---N---D-  searchsavedSearch            XXXXXXXXXXXXXXXXXXXXXX
-02/03/2021 12:41:49 devpinoyLogger X
-02/03/2021 12:42:14 devpinoyLogger Logged out successfully!
+14/03/2021 14:03:11 devpinoyLogger *****************************************************
+14/03/2021 14:03:11 devpinoyLogger Running scripts on LD9PT Environment
+14/03/2021 14:03:11 devpinoyLogger Test data is copied to TestData.xml
+14/03/2021 14:03:11 devpinoyLogger *****************************************************
+14/03/2021 14:03:20 devpinoyLogger Running on exsiting project : 125DocsDND
+14/03/2021 14:03:20 devpinoyLogger Choosen not to perform any ingestion
+14/03/2021 14:03:20 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
+14/03/2021 14:03:20 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:03:41 devpinoyLogger Login success!
+14/03/2021 14:03:50 devpinoyLogger Search is done for test and PureHit is : 3
+14/03/2021 14:03:50 devpinoyLogger ****************************************************************************************
+14/03/2021 14:03:50 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - validateCategorization  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:03:50 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:04:01 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:04:06 devpinoyLogger Bulk Tag is done, Tag is : CatTag243316
+14/03/2021 14:04:07 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:04:12 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:04:14 devpinoyLogger Bulk folder is done, folder is : CatFolder2464832
+14/03/2021 14:06:27 devpinoyLogger Expected documents count shown in categorization result
+14/03/2021 14:06:27 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  validateCategorization  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:06:38 devpinoyLogger Logged out successfully!
+14/03/2021 14:06:40 devpinoyLogger ******Execution started for TS_008_AllManageModules********
+14/03/2021 14:07:00 devpinoyLogger Login success!
+14/03/2021 14:07:00 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:00 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createCommentField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:00 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:06 devpinoyLogger Expected message - Comment Field added successfully
+14/03/2021 14:07:06 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:06 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createCommentField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:06 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:06 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createKeywordField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:06 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:12 devpinoyLogger Expected message - Keyword Highlighting Group added successfully
+14/03/2021 14:07:12 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:12 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createKeywordField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:12 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:12 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createRedactionLabel  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:12 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:19 devpinoyLogger true
+14/03/2021 14:07:19 devpinoyLogger true
+14/03/2021 14:07:19 devpinoyLogger true
+14/03/2021 14:07:19 devpinoyLogger true
+14/03/2021 14:07:21 devpinoyLogger Expected message - Redaction label added successfully
+14/03/2021 14:07:21 devpinoyLogger Redaction Successful
+14/03/2021 14:07:22 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:22 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createRedactionLabel  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:22 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:22 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateTagField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:22 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:28 devpinoyLogger Expected message - Tag added successfully
+14/03/2021 14:07:28 devpinoyLogger Tag Successful
+14/03/2021 14:07:29 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:29 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateTagField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:29 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:29 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateFolderField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:29 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:37 devpinoyLogger Expected message - Folder added successfully
+14/03/2021 14:07:37 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:37 devpinoyLogger Folder Successful
+14/03/2021 14:07:37 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateFolderField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:37 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:37 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateAnnotationLayer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:37 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:43 devpinoyLogger Expected message - Annotation Layer added successfully
+14/03/2021 14:07:43 devpinoyLogger Closed Success message popup
+14/03/2021 14:07:43 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateAnnotationLayer  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:07:43 devpinoyLogger ****************************************************************************************
+14/03/2021 14:07:43 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateSecurityGroup  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:07:43 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:07:46 devpinoyLogger Expected message - Cannot add more than one security group. A security group can have only one annotation layer at a time.
+14/03/2021 14:07:58 devpinoyLogger Expected message - Your selections were saved successfully
+14/03/2021 14:07:58 devpinoyLogger Closed Success message popup
+14/03/2021 14:08:01 devpinoyLogger Expected message - Security group added successfully
+14/03/2021 14:08:01 devpinoyLogger Security Group created :-securitygroupname308705
+14/03/2021 14:08:01 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateSecurityGroup  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:08:01 devpinoyLogger ****************************************************************************************
+14/03/2021 14:08:01 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - DeleteTagField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:08:01 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:08:04 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  DeleteTagField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:08:04 devpinoyLogger ****************************************************************************************
+14/03/2021 14:08:04 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - DeleteTagField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:08:04 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:08:06 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  DeleteTagField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:08:07 devpinoyLogger ****************************************************************************************
+14/03/2021 14:08:07 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - DeleteFolderField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:08:07 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:08:11 devpinoyLogger Expected message - Folder deleted successfully
+14/03/2021 14:08:11 devpinoyLogger Closed Success message popup
+14/03/2021 14:08:11 devpinoyLogger Folder delete Successful
+14/03/2021 14:08:11 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  DeleteFolderField  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:08:11 devpinoyLogger ****************************************************************************************
+14/03/2021 14:08:11 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateCodingform  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:08:11 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:08:22 devpinoyLogger Logged out successfully!
+14/03/2021 14:08:35 devpinoyLogger Login success!
+14/03/2021 14:08:42 devpinoyLogger Coding form CF550417 created
+14/03/2021 14:08:44 devpinoyLogger Expected message - Coding Form Saved successfully
+14/03/2021 14:08:44 devpinoyLogger Coding Form Successful
+14/03/2021 14:08:44 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateCodingform  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:08:55 devpinoyLogger Logged out successfully!
+14/03/2021 14:09:04 devpinoyLogger ******Execution started for TS_004_BasicAndAdvancedSearchOperations********
+14/03/2021 14:09:04 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:09:24 devpinoyLogger Login success!
+14/03/2021 14:09:24 devpinoyLogger Logged in as PA user
+14/03/2021 14:09:24 devpinoyLogger ****************************************************************************************
+14/03/2021 14:09:24 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - ConceptualSearch  ,  MTM TC IDs:  3739,3740,3741       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:09:24 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:11:35 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  ConceptualSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:11:35 devpinoyLogger ****************************************************************************************
+14/03/2021 14:11:35 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - ConceptualSearch  ,  MTM TC IDs:  3739,3740,3741       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:11:35 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:13:46 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  ConceptualSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:13:47 devpinoyLogger ****************************************************************************************
+14/03/2021 14:13:47 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - audioSearch  ,  MTM TC IDs:  3739       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:13:47 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:14:04 devpinoyLogger Audio Search is done for right and PureHit is : 4
+14/03/2021 14:14:04 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  audioSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:14:04 devpinoyLogger ****************************************************************************************
+14/03/2021 14:14:04 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - audioSearch  ,  MTM TC IDs:  3739       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:14:04 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:14:21 devpinoyLogger Audio Search is done for right and PureHit is : 4
+14/03/2021 14:14:21 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  audioSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:14:22 devpinoyLogger ****************************************************************************************
+14/03/2021 14:14:22 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:14:22 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:14:45 devpinoyLogger Serach is done for comments?AND?test and PureHit is : 1
+14/03/2021 14:14:45 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:14:45 devpinoyLogger ****************************************************************************************
+14/03/2021 14:14:45 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:14:45 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:15:09 devpinoyLogger Serach is done for test?AND?comments and PureHit is : 1
+14/03/2021 14:15:09 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:15:09 devpinoyLogger ****************************************************************************************
+14/03/2021 14:15:09 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:15:09 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:15:22 devpinoyLogger Serach is done for comments?OR?test and PureHit is : 11
+14/03/2021 14:15:22 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:15:22 devpinoyLogger ****************************************************************************************
+14/03/2021 14:15:22 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:15:22 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:15:37 devpinoyLogger Serach is done for comments?NOT?test and PureHit is : 8
+14/03/2021 14:15:37 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:15:37 devpinoyLogger ****************************************************************************************
+14/03/2021 14:15:37 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:15:37 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:15:51 devpinoyLogger Serach is done for test?NOT?comments and PureHit is : 2
+14/03/2021 14:15:51 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:15:51 devpinoyLogger ****************************************************************************************
+14/03/2021 14:15:51 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:15:51 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:16:07 devpinoyLogger Search is done for comments?AND?test and PureHit is : 1
+14/03/2021 14:16:07 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:16:07 devpinoyLogger ****************************************************************************************
+14/03/2021 14:16:07 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:16:07 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:16:23 devpinoyLogger Search is done for test?AND?comments and PureHit is : 1
+14/03/2021 14:16:23 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:16:23 devpinoyLogger ****************************************************************************************
+14/03/2021 14:16:23 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:16:23 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:16:58 devpinoyLogger Search is done for comments?OR?test and PureHit is : 11
+14/03/2021 14:16:58 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:16:58 devpinoyLogger ****************************************************************************************
+14/03/2021 14:16:58 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:16:58 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:17:28 devpinoyLogger Search is done for comments?NOT?test and PureHit is : 8
+14/03/2021 14:17:28 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:17:28 devpinoyLogger ****************************************************************************************
+14/03/2021 14:17:28 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:17:28 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:17:59 devpinoyLogger Search is done for test?NOT?comments and PureHit is : 2
+14/03/2021 14:17:59 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:17:59 devpinoyLogger ****************************************************************************************
+14/03/2021 14:17:59 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:17:59 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:18:47 devpinoyLogger Search is done for CustodianName with value P Allen - null purehit is : 121
+14/03/2021 14:18:47 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:18:47 devpinoyLogger ****************************************************************************************
+14/03/2021 14:18:47 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:18:47 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:19:29 devpinoyLogger Search is done for MasterDate with value 2010-04-06 22:18:00 - null purehit is : 1
+14/03/2021 14:19:29 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:19:29 devpinoyLogger ****************************************************************************************
+14/03/2021 14:19:29 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:19:29 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:20:10 devpinoyLogger Search is done for MasterDate with value 1986-04-06 - 2010-04-06 purehit is : 116
+14/03/2021 14:20:10 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:20:10 devpinoyLogger ****************************************************************************************
+14/03/2021 14:20:10 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:20:10 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:20:54 devpinoyLogger Search is done for CreateDate with value 2010-10-18 - null purehit is : 85
+14/03/2021 14:20:54 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:20:54 devpinoyLogger ****************************************************************************************
+14/03/2021 14:20:54 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:20:54 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:21:36 devpinoyLogger Search is done for CreateDate with value 2000-10-18 - 2010-10-18 purehit is : 85
+14/03/2021 14:21:36 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:21:36 devpinoyLogger ****************************************************************************************
+14/03/2021 14:21:36 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:21:36 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:22:12 devpinoyLogger Search is done for "illustratin* since Q499"~20 and PureHit is : 1
+14/03/2021 14:22:12 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:22:12 devpinoyLogger ****************************************************************************************
+14/03/2021 14:22:12 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:22:12 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:22:44 devpinoyLogger Search is done for "**elief that the rights" and PureHit is : 1
+14/03/2021 14:22:44 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:22:44 devpinoyLogger ****************************************************************************************
+14/03/2021 14:22:44 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:22:44 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:23:14 devpinoyLogger Search is done for "very long" and PureHit is : 1
+14/03/2021 14:23:14 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:23:14 devpinoyLogger ****************************************************************************************
+14/03/2021 14:23:14 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - searchsavedSearch  ,  MTM TC IDs:  3739       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:23:14 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:23:48 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:24:09 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 14:24:09 devpinoyLogger Saved search with name - savedSearch416465
+14/03/2021 14:25:15 devpinoyLogger Search is done and PureHit is : 9
+14/03/2021 14:25:15 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  searchsavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:25:38 devpinoyLogger Logged out successfully!
+14/03/2021 14:25:39 devpinoyLogger ******Execution started for TS_017_DocList********
+14/03/2021 14:25:39 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:26:01 devpinoyLogger Login success!
+14/03/2021 14:26:01 devpinoyLogger ****************************************************************************************
+14/03/2021 14:26:01 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - doclistBulkRelease  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:26:01 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:26:06 devpinoyLogger Expected message - Security group added successfully
+14/03/2021 14:26:06 devpinoyLogger Security Group created :-SG447804
+14/03/2021 14:26:06 devpinoyLogger Security Group Successful
+14/03/2021 14:26:24 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:26:37 devpinoyLogger Navigated to doclist, to view docslist
+14/03/2021 14:26:38 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:26:52 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:26:52 devpinoyLogger performing bulk release
+14/03/2021 14:26:52 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  doclistBulkRelease  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:26:52 devpinoyLogger ****************************************************************************************
+14/03/2021 14:26:52 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagAndBulkFolder  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:26:52 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:27:11 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:27:24 devpinoyLogger Navigated to doclist, to view docslist
+14/03/2021 14:27:25 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:27:34 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:27:40 devpinoyLogger Bulk Tag is done, Tag is : A_DocListBulkTag17203
+14/03/2021 14:27:41 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:27:49 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:27:52 devpinoyLogger Bulk folder is done, folder is : A_DocListBulkFolder219603
+14/03/2021 14:28:31 devpinoyLogger 66
+14/03/2021 14:28:50 devpinoyLogger Search is done and PureHit is : 9
+14/03/2021 14:29:29 devpinoyLogger 28
+14/03/2021 14:32:39 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagAndBulkFolder  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:32:40 devpinoyLogger ****************************************************************************************
+14/03/2021 14:32:40 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagAndBulkFolder  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:32:40 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:32:59 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:33:13 devpinoyLogger Navigated to doclist, to view docslist
+14/03/2021 14:34:32 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:34:40 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:34:46 devpinoyLogger Bulk Tag is done, Tag is : A_DocListBulkTag180264
+14/03/2021 14:34:46 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:34:56 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:34:57 devpinoyLogger Bulk folder is done, folder is : A_DocListBulkFolder283457
+14/03/2021 14:35:36 devpinoyLogger 67
+14/03/2021 14:35:57 devpinoyLogger Search is done and PureHit is : 9
+14/03/2021 14:36:36 devpinoyLogger 29
+14/03/2021 14:36:52 devpinoyLogger Search is done and PureHit is : 9
+14/03/2021 14:36:52 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagAndBulkFolder  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:36:52 devpinoyLogger ****************************************************************************************
+14/03/2021 14:36:52 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - doclistToDocView  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:36:52 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:37:08 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:37:21 devpinoyLogger Navigated to doclist, to view docslist
+14/03/2021 14:37:32 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:37:45 devpinoyLogger Navigated to docView to view docs
+14/03/2021 14:37:49 devpinoyLogger Expected docs(9) are shown in docView
+14/03/2021 14:37:49 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  doclistToDocView  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:37:53 devpinoyLogger ******Execution started for TS_003_BulkActionsFromBasicSearch********
+14/03/2021 14:37:53 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:38:16 devpinoyLogger Login success!
+14/03/2021 14:38:26 devpinoyLogger Search is done for test and PureHit is : 3
+14/03/2021 14:38:26 devpinoyLogger ****************************************************************************************
+14/03/2021 14:38:26 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkFolderInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:38:26 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:38:35 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:38:42 devpinoyLogger Bulk folder is done, folder is : folderName1823852
+14/03/2021 14:38:43 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkFolderInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:38:43 devpinoyLogger ****************************************************************************************
+14/03/2021 14:38:43 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:38:43 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:38:44 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:38:57 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:39:05 devpinoyLogger Bulk Tag is done, Tag is : tagName859381
+14/03/2021 14:39:12 devpinoyLogger tagName859381 could be seen under tags and folder page
+14/03/2021 14:39:12 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:39:12 devpinoyLogger ****************************************************************************************
+14/03/2021 14:39:12 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInDocViewInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:39:12 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:39:22 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:39:26 devpinoyLogger Navigated to docView to view docs
+14/03/2021 14:39:30 devpinoyLogger Expected docs(3) are shown in docView
+14/03/2021 14:39:30 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInDocViewInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:39:30 devpinoyLogger ****************************************************************************************
+14/03/2021 14:39:30 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInDoclistInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:39:30 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:39:41 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:39:53 devpinoyLogger Navigated to doclist, to view docslist
+14/03/2021 14:39:55 devpinoyLogger Expected docs(3) are shown in doclist
+14/03/2021 14:39:55 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInDoclistInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:39:55 devpinoyLogger ****************************************************************************************
+14/03/2021 14:39:55 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInTallyResultsInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:39:55 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:39:58 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:40:02 devpinoyLogger Navigated to Tally  to view docs
+14/03/2021 14:40:02 devpinoyLogger Expected docs(3) are shown in tally
+14/03/2021 14:40:02 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInTallyResultsInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:40:16 devpinoyLogger Logged out successfully!
+14/03/2021 14:40:18 devpinoyLogger ******Execution started for TS_003_AdvancedSearchBulkActions********
+14/03/2021 14:40:18 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:40:39 devpinoyLogger Login success!
+14/03/2021 14:40:45 devpinoyLogger Serach is done for test and PureHit is : 3
+14/03/2021 14:40:45 devpinoyLogger ****************************************************************************************
+14/03/2021 14:40:45 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkFolderInAdvancedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:40:45 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:40:53 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:40:59 devpinoyLogger Bulk folder is done, folder is : folderName1332835
+14/03/2021 14:40:59 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkFolderInAdvancedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:40:59 devpinoyLogger ****************************************************************************************
+14/03/2021 14:40:59 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagInAdvancedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:40:59 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:41:00 devpinoyLogger Pure hit block already moved to action panel
+14/03/2021 14:41:07 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 14:41:14 devpinoyLogger Bulk Tag is done, Tag is : tagName97459
+14/03/2021 14:41:20 devpinoyLogger tagName97459 could be seen under tags and folder page
+14/03/2021 14:41:20 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagInAdvancedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:41:32 devpinoyLogger Logged out successfully!
+14/03/2021 14:41:33 devpinoyLogger ******Execution started for TS_007_SavedSearchShareSchedule********
+14/03/2021 14:41:33 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:41:55 devpinoyLogger Login success!
+14/03/2021 14:42:07 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:42:09 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 14:42:09 devpinoyLogger Saved search with name - test013219136
+14/03/2021 14:42:10 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 14:42:10 devpinoyLogger Saved search with name - PA182041
+14/03/2021 14:42:10 devpinoyLogger ****************************************************************************************
+14/03/2021 14:42:10 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - saveSearchToDocList  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:42:10 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:42:31 devpinoyLogger Found Showing 1 to 9 of 9 entries docs in doclist
+14/03/2021 14:42:31 devpinoyLogger Expected docs(9) are shown in doclist
+14/03/2021 14:42:31 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  saveSearchToDocList  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:42:31 devpinoyLogger ****************************************************************************************
+14/03/2021 14:42:31 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - saveSearchToDocView  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:42:31 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:42:54 devpinoyLogger Pop up message does not appear
+14/03/2021 14:42:59 devpinoyLogger Expected docs(9) are shown in docView
+14/03/2021 14:42:59 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  saveSearchToDocView  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:42:59 devpinoyLogger ****************************************************************************************
+14/03/2021 14:42:59 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - scheduleSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:42:59 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:44:10 devpinoyLogger Saved search test013219136 is scheduled to run in 5 secs!
+14/03/2021 14:44:43 devpinoyLogger test013219136 Scheduled run is completed with the status 'COMPLETE'!
+14/03/2021 14:44:43 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  scheduleSavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:44:43 devpinoyLogger ****************************************************************************************
+14/03/2021 14:44:43 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - shareSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:44:43 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:45:23 devpinoyLogger Expected message - Share saved search operation successfully done.
+14/03/2021 14:45:26 devpinoyLogger 24
+14/03/2021 14:45:28 devpinoyLogger Expected message - Share saved search operation successfully done.
+14/03/2021 14:45:32 devpinoyLogger 24
+14/03/2021 14:45:34 devpinoyLogger 37
+14/03/2021 14:45:46 devpinoyLogger Impersnated from PA to RMU
+14/03/2021 14:45:51 devpinoyLogger 37
+14/03/2021 14:46:02 devpinoyLogger Logged out successfully!
+14/03/2021 14:46:15 devpinoyLogger Login success!
+14/03/2021 14:46:22 devpinoyLogger Security Group Selected: Default Security Group
+14/03/2021 14:46:31 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:46:33 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 14:46:33 devpinoyLogger Saved search with name - RMU909902
+14/03/2021 14:46:48 devpinoyLogger Expected message - Share saved search operation successfully done.
+14/03/2021 14:46:50 devpinoyLogger 38
+14/03/2021 14:46:55 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  shareSavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:46:56 devpinoyLogger ****************************************************************************************
+14/03/2021 14:46:56 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - shareSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:46:56 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:47:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  shareSavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:47:53 devpinoyLogger Logged out successfully!
+14/03/2021 14:47:54 devpinoyLogger ******Execution started for TS_009_ValidateAssignmentFunctionality********
+14/03/2021 14:47:54 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:48:17 devpinoyLogger Login success!
+14/03/2021 14:48:25 devpinoyLogger Expected message - Tag added successfully
+14/03/2021 14:48:25 devpinoyLogger Tag Successful
+14/03/2021 14:48:25 devpinoyLogger Closed Success message popup
+14/03/2021 14:48:29 devpinoyLogger Expected message - Comment Field added successfully
+14/03/2021 14:48:29 devpinoyLogger Closed Success message popup
+14/03/2021 14:48:34 devpinoyLogger Coding form cfC1392738 created
+14/03/2021 14:48:35 devpinoyLogger Expected message - Coding Form Saved successfully
+14/03/2021 14:48:35 devpinoyLogger Coding Form Successful
+14/03/2021 14:48:41 devpinoyLogger ****************************************************************************************
+14/03/2021 14:48:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateQuickBatch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:48:41 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:48:50 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:48:51 devpinoyLogger performing quick batch
+14/03/2021 14:48:52 devpinoyLogger 
+14/03/2021 14:49:15 devpinoyLogger Doc Count:-9
+14/03/2021 14:49:16 devpinoyLogger Expected message - Quick Batch Assign has been added to background process. You will get notification on completion.
+14/03/2021 14:49:16 devpinoyLogger Assignment assignmentQB1979071 created with CF cfC1392738
+14/03/2021 14:49:23 devpinoyLogger Docs assigned to  assignmentQB1979071
+14/03/2021 14:49:24 devpinoyLogger Your QuickBatch-Assign with QuickBatch-Assign Id 10084 is COMPLETED
+14/03/2021 14:49:24 devpinoyLogger Message verified
+14/03/2021 14:49:27 devpinoyLogger 9
+14/03/2021 14:49:31 devpinoyLogger true
+14/03/2021 14:49:31 devpinoyLogger 100
+14/03/2021 14:49:31 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateQuickBatch  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:49:31 devpinoyLogger ****************************************************************************************
+14/03/2021 14:49:31 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateAssignmentDistributeToReviwer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:49:31 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:49:46 devpinoyLogger Assignment assignmentA1519860 created with CF cfC1392738
+14/03/2021 14:50:03 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:50:05 devpinoyLogger performing bulk assign
+14/03/2021 14:50:10 devpinoyLogger 19
+14/03/2021 14:50:22 devpinoyLogger Action Like Documents
+14/03/2021 14:50:23 devpinoyLogger Expected message - Bulk Assign has been added to background process. You will get notification on completion.
+14/03/2021 14:50:24 devpinoyLogger Docs assigned to  assignmentA1519860
+14/03/2021 14:50:36 devpinoyLogger Expected message - Record saved successfully
+14/03/2021 14:50:42 devpinoyLogger 9
+14/03/2021 14:50:42 devpinoyLogger 9
+14/03/2021 14:50:54 devpinoyLogger Logged out successfully!
+14/03/2021 14:51:06 devpinoyLogger Login success!
+14/03/2021 14:51:06 devpinoyLogger assignmentA1519860is assigned to reviewer successfully
+14/03/2021 14:51:06 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateAssignmentDistributeToReviwer  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:51:18 devpinoyLogger Logged out successfully!
+14/03/2021 14:51:19 devpinoyLogger ****************************************************************************************
+14/03/2021 14:51:19 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - Test  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:51:19 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:51:19 devpinoyLogger ******Execution started for TS_010_Workflow********
+14/03/2021 14:51:41 devpinoyLogger Login success!
+14/03/2021 14:51:48 devpinoyLogger Expected message - Tag added successfully
+14/03/2021 14:51:48 devpinoyLogger Tag Successful
+14/03/2021 14:51:48 devpinoyLogger Closed Success message popup
+14/03/2021 14:51:54 devpinoyLogger Expected message - Folder added successfully
+14/03/2021 14:51:54 devpinoyLogger Closed Success message popup
+14/03/2021 14:51:54 devpinoyLogger Folder Successful
+14/03/2021 14:52:03 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:52:05 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 14:52:05 devpinoyLogger Saved search with name - WF63454
+14/03/2021 14:52:10 devpinoyLogger 51
+14/03/2021 14:52:28 devpinoyLogger Assignment assg752126 created with CF CF887391
+14/03/2021 14:52:28 devpinoyLogger Workflow Name : WF196521
+14/03/2021 14:53:22 devpinoyLogger Sun Mar 14 13:53:00 CET 2021
+14/03/2021 14:53:22 devpinoyLogger 2021/03/14 13:53
+14/03/2021 14:53:22 devpinoyLogger Sunday
+14/03/2021 14:53:22 devpinoyLogger 2021/03/15 13:54
+14/03/2021 14:53:22 devpinoyLogger 2021/03/15
+14/03/2021 14:53:22 devpinoyLogger 13:54
+14/03/2021 14:53:28 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  Test  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:53:40 devpinoyLogger Logged out successfully!
+14/03/2021 14:53:41 devpinoyLogger ******Execution started for TS_011_DocViewNonAudioReviewer********
+14/03/2021 14:53:41 devpinoyLogger Started Execution for prerequisite
+14/03/2021 14:54:04 devpinoyLogger Login success!
+14/03/2021 14:54:11 devpinoyLogger Expected message - Tag added successfully
+14/03/2021 14:54:11 devpinoyLogger Tag Successful
+14/03/2021 14:54:11 devpinoyLogger Closed Success message popup
+14/03/2021 14:54:17 devpinoyLogger Expected message - Comment Field added successfully
+14/03/2021 14:54:17 devpinoyLogger Closed Success message popup
+14/03/2021 14:54:24 devpinoyLogger Coding form CF729584 created
+14/03/2021 14:54:25 devpinoyLogger Expected message - Coding Form Saved successfully
+14/03/2021 14:54:25 devpinoyLogger Coding Form Successful
+14/03/2021 14:54:45 devpinoyLogger Assignment assi941739 created with CF CF729584
+14/03/2021 14:54:57 devpinoyLogger Search is done for comments and PureHit is : 9
+14/03/2021 14:54:58 devpinoyLogger performing bulk assign
+14/03/2021 14:55:04 devpinoyLogger 21
+14/03/2021 14:55:15 devpinoyLogger Action Like Documents
+14/03/2021 14:55:17 devpinoyLogger Expected message - Bulk Assign has been added to background process. You will get notification on completion.
+14/03/2021 14:55:26 devpinoyLogger Docs assigned to  assi941739
+14/03/2021 14:55:38 devpinoyLogger Expected message - Record saved successfully
+14/03/2021 14:55:45 devpinoyLogger 9
+14/03/2021 14:55:45 devpinoyLogger 9
+14/03/2021 14:55:57 devpinoyLogger Logged out successfully!
+14/03/2021 14:56:10 devpinoyLogger Login success!
+14/03/2021 14:56:10 devpinoyLogger assi941739is assigned to reviewer successfully
+14/03/2021 14:56:15 devpinoyLogger ****************************************************************************************
+14/03/2021 14:56:15 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addCommentandcompleteDoc  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:56:15 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:56:18 devpinoyLogger Expected message - Document completed successfully
+14/03/2021 14:56:18 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addCommentandcompleteDoc  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:56:18 devpinoyLogger ****************************************************************************************
+14/03/2021 14:56:18 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addRemarkToFirstDoc  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:56:18 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:57:04 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addRemarkToFirstDoc  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:57:04 devpinoyLogger ****************************************************************************************
+14/03/2021 14:57:04 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addRemarkToFirstDoc  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:57:04 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:57:49 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addRemarkToFirstDoc  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:57:49 devpinoyLogger ****************************************************************************************
+14/03/2021 14:57:49 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addredaction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:57:49 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:57:57 devpinoyLogger Expected message - Redaction tags saved successfully.
+14/03/2021 14:57:57 devpinoyLogger rgba(230, 70, 52, 1)
+14/03/2021 14:58:29 devpinoyLogger 7
+14/03/2021 14:58:47 devpinoyLogger Search is done and PureHit is : 7
+14/03/2021 14:58:51 devpinoyLogger Navigated to docView to view docs
+14/03/2021 14:58:58 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addredaction  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:58:58 devpinoyLogger ****************************************************************************************
+14/03/2021 14:58:58 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addredaction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 14:58:58 devpinoyLogger ****************************************************************************************
+
+14/03/2021 14:59:32 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addredaction  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 14:59:43 devpinoyLogger Logged out successfully!
+14/03/2021 14:59:45 devpinoyLogger ******Execution started for TS_012_ValidateReportsFunctionality********
+14/03/2021 15:00:07 devpinoyLogger Login success!
+14/03/2021 15:00:08 devpinoyLogger ****************************************************************************************
+14/03/2021 15:00:08 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - conceptExplorer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:00:08 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:00:16 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  conceptExplorer  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:00:16 devpinoyLogger ****************************************************************************************
+14/03/2021 15:00:16 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - reviewProgressByRevReport  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:00:16 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:00:16 devpinoyLogger Sharing with sight.lineqa.test@gmail.com
+14/03/2021 15:01:03 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  reviewProgressByRevReport  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:01:03 devpinoyLogger ****************************************************************************************
+14/03/2021 15:01:03 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - reviewProgressByRevReport  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:01:03 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:01:04 devpinoyLogger Sharing with sight.lineqa.test@gmail.com
+14/03/2021 15:01:05 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  reviewProgressByRevReport  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:01:05 devpinoyLogger ****************************************************************************************
+14/03/2021 15:01:05 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - tallySubTally  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:01:05 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:02:31 devpinoyLogger Navigated to Doclist page
+14/03/2021 15:02:31 devpinoyLogger Docs are shown in doclist
+14/03/2021 15:02:31 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  tallySubTally  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:02:42 devpinoyLogger Logged out successfully!
+14/03/2021 15:02:43 devpinoyLogger ******Execution started for TS_013_ValidateBatchUpload********
+14/03/2021 15:02:43 devpinoyLogger Started Execution for prerequisite
+14/03/2021 15:02:52 devpinoyLogger ****************************************************************************************
+14/03/2021 15:02:52 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - batchUploadByPA  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:02:52 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:03:10 devpinoyLogger Login success!
+14/03/2021 15:03:13 devpinoyLogger Clicked on Upload button..
+14/03/2021 15:03:13 devpinoyLogger Clicked on Batch Upload Button.........
+14/03/2021 15:03:43 devpinoyLogger C:\Users\suresh.bavihalli\git\Sightline_QA_Automation_POM\sightline\Misc\BatchUpload175225.xlsx
+14/03/2021 15:03:46 devpinoyLogger Expected message - File uploaded successfully
+14/03/2021 15:04:59 devpinoyLogger ExpectCounts [28, 28, 11, 8, 0, 1, 0, 3, 2, 0, 0, 0]
+14/03/2021 15:04:59 devpinoyLogger ActualCounts :[28, 28, 11, 8, 0, 1, 0, 3, 2, 0, 0, 0]
+14/03/2021 15:05:03 devpinoyLogger Expected message - Save search tree node successfully deleted.
+14/03/2021 15:05:03 devpinoyLogger Successfully ran for PA user...
+14/03/2021 15:05:17 devpinoyLogger Logged out successfully!
+14/03/2021 15:05:17 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  batchUploadByPA  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:05:21 devpinoyLogger ******Execution started for TS_018_DocViewAudio********
+14/03/2021 15:05:21 devpinoyLogger Started Execution for prerequisite
+14/03/2021 15:05:42 devpinoyLogger Login success!
+14/03/2021 15:05:46 devpinoyLogger Expected message - Comment Field added successfully
+14/03/2021 15:05:46 devpinoyLogger Closed Success message popup
+14/03/2021 15:05:50 devpinoyLogger Coding form Audio CF837264 created
+14/03/2021 15:05:51 devpinoyLogger Expected message - Coding Form Saved successfully
+14/03/2021 15:05:51 devpinoyLogger Coding Form Successful
+14/03/2021 15:05:58 devpinoyLogger User is not PA
+14/03/2021 15:06:01 devpinoyLogger Expected message - Redaction label added successfully
+14/03/2021 15:06:01 devpinoyLogger Redaction Successful
+14/03/2021 15:06:01 devpinoyLogger Closed Success message popup
+14/03/2021 15:06:13 devpinoyLogger Logged out successfully!
+14/03/2021 15:06:25 devpinoyLogger Login success!
+14/03/2021 15:06:34 devpinoyLogger Audio Search is done for morning and PureHit is : 2
+14/03/2021 15:06:38 devpinoyLogger Navigated to docView to view docs
+14/03/2021 15:06:41 devpinoyLogger ****************************************************************************************
+14/03/2021 15:06:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - AudioDownload  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:06:41 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:06:47 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  AudioDownload  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:06:47 devpinoyLogger ****************************************************************************************
+14/03/2021 15:06:47 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addComment  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:06:47 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:06:47 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addComment  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:06:47 devpinoyLogger ****************************************************************************************
+14/03/2021 15:06:47 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addPlay  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:06:47 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:06:51 devpinoyLogger The total time for audio played is not displayed correctly
+14/03/2021 15:06:51 devpinoyLogger The total time for audio played is greater than 5 i.e. :00
+14/03/2021 15:06:51 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addPlay  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:06:51 devpinoyLogger ****************************************************************************************
+14/03/2021 15:06:51 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addRemark  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:06:51 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:07:22 devpinoyLogger No Remarks exist'
+14/03/2021 15:07:22 devpinoyLogger 0:00:00
+14/03/2021 15:07:22 devpinoyLogger 00:00:00
+14/03/2021 15:07:22 devpinoyLogger 00:02
+14/03/2021 15:07:24 devpinoyLogger Expected message - Record added Successfully
+14/03/2021 15:07:24 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addRemark  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:07:24 devpinoyLogger ****************************************************************************************
+14/03/2021 15:07:24 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addreduction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:07:24 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:07:55 devpinoyLogger No Redactions exist'
+14/03/2021 15:07:55 devpinoyLogger 00:00:00
+14/03/2021 15:07:55 devpinoyLogger 00:07:28
+14/03/2021 15:07:55 devpinoyLogger 00:02
+14/03/2021 15:07:55 devpinoyLogger 00:03
+14/03/2021 15:07:59 devpinoyLogger Expected message - Record added Successfully
+14/03/2021 15:08:06 devpinoyLogger Redaction added successfully
+14/03/2021 15:08:06 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addreduction  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:08:18 devpinoyLogger Logged out successfully!
+14/03/2021 15:08:19 devpinoyLogger ******Execution started for TS_006_Production********
+14/03/2021 15:08:19 devpinoyLogger Started Execution for prerequisite
+14/03/2021 15:08:42 devpinoyLogger Login success!
+14/03/2021 15:08:42 devpinoyLogger ****************************************************************************************
+14/03/2021 15:08:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - AddNewProduction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:08:42 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:08:50 devpinoyLogger Expected message - Folder added successfully
+14/03/2021 15:08:50 devpinoyLogger Closed Success message popup
+14/03/2021 15:08:50 devpinoyLogger Folder Successful
+14/03/2021 15:09:04 devpinoyLogger Search is done for crammer and PureHit is : 3
+14/03/2021 15:09:11 devpinoyLogger Expected message - Records saved successfully
+14/03/2021 15:09:19 devpinoyLogger Bulk folder is done, folder is : FolderProd657440
+14/03/2021 15:09:23 devpinoyLogger Expected message - Tag added successfully
+14/03/2021 15:09:23 devpinoyLogger Closed Success message popup
+14/03/2021 15:09:23 devpinoyLogger Productions PT WorkSpace\Automation
+14/03/2021 15:09:34 devpinoyLogger To produce specific docs natively, please select file types and/or tags below. In addition, to export placeholders for these docs, configure placeholder in the TIFF/PDF section for the same selected file types and/or tags.
+
+For native only productions, please make sure to exclude the Privileged documents from the selected production corpus, in order to avoid the Privileged natives from being exported.
+14/03/2021 15:09:50 devpinoyLogger TIFF / PDFs are generated and exported for all documents by default. To export placeholders for docs that are Privileged Withhold, Tech Issue or Produced Natively, please configure the placeholder section below.
+14/03/2021 15:09:51 devpinoyLogger Redacted documents are automatically OCRed to export the text. Original extracted text is exported for natively produced documents (file based placeholdering). For exception and privileged placeholdered docs, the placeholder text is exported. The configured format is applicable only to OCRed text and production generated text, and not to ingested text.
+14/03/2021 15:10:22 devpinoyLogger Wait for generate to complete
+14/03/2021 15:12:22 devpinoyLogger A_2830320000000100_P227330 - A_2830320000000105_P227330
+14/03/2021 15:12:49 devpinoyLogger Expected message - Your Production Archive download will get started shortly
+14/03/2021 15:12:49 devpinoyLogger 3
+14/03/2021 15:12:49 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  AddNewProduction  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:13:03 devpinoyLogger Logged out successfully!
+14/03/2021 15:13:04 devpinoyLogger ****************************************************************************************
+14/03/2021 15:13:04 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - BatchPrintWithNative  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+14/03/2021 15:13:04 devpinoyLogger ****************************************************************************************
+
+14/03/2021 15:13:04 devpinoyLogger ******Execution started for TS_006_ValidateBatchPrint********
+14/03/2021 15:13:28 devpinoyLogger Login success!
+14/03/2021 15:13:39 devpinoyLogger Search is done for morning?AND?test and PureHit is : 1
+14/03/2021 15:13:41 devpinoyLogger Expected message - Saved search saved successfully
+14/03/2021 15:13:41 devpinoyLogger Saved search with name - BP943046
+14/03/2021 15:14:04 devpinoyLogger Expected message - Successfully initiated the batch print. You will be prompted with notification once completed.
+14/03/2021 15:14:06 devpinoyLogger Batch Print with saved search BP943046 with order DocID and order type Asc is completed!
+14/03/2021 15:14:21 devpinoyLogger DocID: is in requested order! -->PASS
+14/03/2021 15:14:21 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  BatchPrintWithNative  XXXXXXXXXXXXXXXXXXXXXX
+14/03/2021 15:14:33 devpinoyLogger Logged out successfully!

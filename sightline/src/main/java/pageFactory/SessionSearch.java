@@ -5,6 +5,8 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -326,7 +328,7 @@ public class SessionSearch {
     	getSaveSearch_Name().SendKeys(searchName);
     	getSaveSearch_SaveButton().Click();
     	base.VerifySuccessMessage("Saved search saved successfully");
-    	System.out.println("Saved search with name - "+searchName);
+    	Reporter.log("Saved the search with name '"+searchName+"'", true);
     	UtilityLog.info("Saved search with name - "+searchName);
 	}
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
@@ -545,9 +547,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait120);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	//System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
     	UtilityLog.info("Search is done for "+SearchString+" and PureHit is : "+pureHit);
-    	
+    	Reporter.log("Search is done for "+SearchString+" and PureHit is : "+pureHit,true);
     	return pureHit;
    }
     //Function to perform content search for a given search string
@@ -583,7 +585,7 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	Reporter.log("Serach is done for '"+SearchString+"' and PureHit is : "+pureHit, true);
     	UtilityLog.info("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
@@ -914,10 +916,10 @@ public class SessionSearch {
    	 
    	 getBulkActionButton().waitAndClick(20);
    	
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
+   	/* driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); */
    	 
-   	 getBulkFolderAction().Click();
+   	 getBulkFolderAction().waitAndClick(10);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -948,9 +950,9 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk folder is done, folder is : "+folderName);
+   	 //System.out.println("Bulk folder is done, folder is : "+folderName);
    	 UtilityLog.info("Bulk folder is done, folder is : "+folderName);
-   	
+   	 Reporter.log("Bulk folder is done, folder is : "+folderName,true);
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
@@ -962,11 +964,12 @@ public class SessionSearch {
    	 try{
    		 getPureHitAddButton().Click();
    		}catch (Exception e) {
-   			System.out.println("Pure hit block already moved to action panel");
+   			//System.out.println("Pure hit block already moved to action panel");
    			UtilityLog.info("Pure hit block already moved to action panel");
+   			Reporter.log("Pure hit block already moved to action panel",true);
    		}
    	 
-   	 getBulkActionButton().Click();
+   	 getBulkActionButton().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
@@ -981,22 +984,22 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-   	 getContinueButton().Click();
+   	 getContinueButton().waitAndClick(10);
    	 
    	 final BaseClass bc = new BaseClass(driver);
        final int Bgcount = bc.initialBgCount();
        
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		    	getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-   	 getFinalizeButton().Click();
+   	 getFinalizeButton().waitAndClick(10);
    	 
    	 base.VerifySuccessMessage("Records saved successfully");
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk folder is done, folder is : "+folderName);
+   	 //System.out.println("Bulk folder is done, folder is : "+folderName);
    	 UtilityLog.info("Bulk folder is done, folder is : "+folderName);
-   	 
+   	 Reporter.log("Bulk folder is done, folder is : "+folderName,true);
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
@@ -1063,8 +1066,8 @@ public class SessionSearch {
    	 
    	 getBulkActionButton().waitAndClick(20);
    	
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkTagAction().Visible()  ;}}), Input.wait60); 
+   	 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkTagAction().Visible()  ;}}), Input.wait60); */
    	 
    	 getBulkTagAction().waitAndClick(10);
    	 
@@ -1102,9 +1105,10 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk Tag is done, Tag is : "+TagName); 
+   	 //System.out.println("Bulk Tag is done, Tag is : "+TagName); 
    	 UtilityLog.info("Bulk Tag is done, Tag is : "+TagName);
-   	 
+   	 Reporter.log("Bulk Tag is done, Tag is : "+TagName, true);
+	 
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }

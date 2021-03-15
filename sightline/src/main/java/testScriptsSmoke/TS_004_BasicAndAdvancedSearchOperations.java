@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.AssertJUnit;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 
 import static org.testng.Assert.fail;
 
@@ -41,16 +42,17 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	SessionSearch ss;
 	BaseClass bc;
 	
-	 
-
 	String tagName = "tagSearch" + Utility.dynamicNameAppender();
 	String folderName = "folderSearch" + Utility.dynamicNameAppender();
 	String saveSearchName = "savedSearch" + Utility.dynamicNameAppender();
 	String assignmentName = "assignmentSearch" + Utility.dynamicNameAppender();
 
 	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : Login as PAU, from here all the scripts will
+	 * Author : Suresh Bavihalli 
+	 * Created date: April 2019 
+	 * Modified date:
+	 * Modified by: 
+	 * Description : Login as PAU, from here all the scripts will
 	 * run!
 	 */
 		
@@ -59,8 +61,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		
 		// Open browser
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -69,208 +71,183 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		UtilityLog.info("Logged in as PA user");
+		Reporter.log("Logged in as PA user");
 	}
 
 	/*
-	 * Author : Suresh Bavihalli Created date: Feb 2021 Modified date: Modified
-	 * by: Description : As a PA user validate proximity search, regex with
+	 * Author : Suresh Bavihalli 
+	 * Created date: Feb 2021 
+	 * Modified date: 
+	 * Modified by: 
+	 * Description : As a PA user validate proximity search, regex with
 	 * special chars in Basic search
 	 */
-	//@Test(dataProvider = "ProxAndRegx", groups = { "smoke", "regression" })
-	public void proximityAndRegExInBS(String searchString, int expectedCount) {
-		driver.getWebDriver().get(Input.url + "Search/Searches");
+	@Test(dataProvider = "ProxAndRegx", groups = { "smoke", "regression" })
+	public void proximityAndRegExInBS(String searchString, int smokeExpectedCount,int regressionExpectedCount) {
 		bc.selectproject();
-		Assert.assertEquals(ss.basicContentSearch(searchString), expectedCount);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		int actualCount = ss.basicContentSearch(searchString);
+		if(Input.numberOfDataSets ==1){
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are - "+smokeExpectedCount+" : "+ actualCount);
+			Assert.assertEquals(smokeExpectedCount,actualCount);
+		}else{
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are - "+regressionExpectedCount+" : "+ actualCount);
+			Assert.assertEquals(regressionExpectedCount,actualCount);
+		}
 
 	}
 
 	/*
-	 * Author : Suresh Bavihalli Created date: Feb 2019 Modified date: Modified
-	 * by: Description : As a PA user validate content search in Basic search
+	 * Author : Suresh Bavihalli 
+	 * Created date: Feb 2019 
+	 * Modified date: 
+	 * Modified by: 
+	 * Description : As a PA user validate content search in Basic search
 	 * with operators
 	 */
-	@Test(groups = { "smoke", "regression" })
-	public void contentSearchWithOperatorsInBS() {
-		SoftAssert softAssertion = new SoftAssert();
+	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke", "regression" })
+	public void contentSearchWithOperatorsInBS(String searchString, int expectedCount) {
+
+		
+		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1) == Input.pureHitSeachString1);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2) == Input.pureHitSeachString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1ANDsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER
-				+ Input.searchString1) == Input.searchString1ANDsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1ORsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1NOTsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch(Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER
-				+ Input.searchString1) == Input.searchString2NOTsearchString1);
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicContentSearch("\"very long\"") == 1);
-
-		softAssertion.assertAll();
+		int actualCount = ss.basicContentSearch(searchString);
+		Reporter.log("Searched '"+searchString+"' expected and actual counts are  "+expectedCount+" and "+ actualCount);
+		Assert.assertEquals(expectedCount,actualCount);
+	
+	
 	}
-
+	
+	
+	
 	/*
-	 * Author : Suresh Bavihalli Created date: Feb 2019 Modified date: Modified
-	 * by: Description : As a PA user validate content search in advanced search
+	 * Author : Suresh Bavihalli 
+	 * Created date: Feb 2019 
+	 * Modified date: 
+	 * Modified by: 
+	 * Description : As a PA user validate content search in advanced search
 	 * with operators
 	 */
-	@Test(groups = { "smoke", "regression" })
-	public void contentSearchWithOperatorsInAS() {
-		SoftAssert softAssertion = new SoftAssert();
+	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke", "regression" })
+	public void contentSearchWithOperatorsInAS(String searchString, int expectedCount) {
+		
+		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1) == Input.pureHitSeachString1);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2) == Input.pureHitSeachString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1ANDsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER
-				+ Input.searchString1) == Input.searchString1ANDsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1ORsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER
-				+ Input.searchString2) == Input.searchString1NOTsearchString2);
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedContentSearch(Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER
-				+ Input.searchString1) == Input.searchString2NOTsearchString1);
-		softAssertion.assertAll();
+		int actualCount = ss.advancedContentSearch(searchString);
+		Reporter.log("Searched '"+searchString+"' expected and actual counts are - "+expectedCount+" : "+ actualCount);
+		Assert.assertEquals(expectedCount,actualCount);
+		
+		
 	}
 
 	/*
-	 * Author : Suresh Bavihalli Created date: Feb 2019 Modified date: Modified
-	 * by: Description : As a PA user validate meta data searches in both basic
+	 * Author : Suresh Bavihalli 
+	 * Created date: Feb 2019 
+	 * Modified date: 
+	 * Modified by: 
+	 * Description : As a PA user validate meta data searches in both basic
 	 * and advance searches
 	 */
-	@Test(groups = { "smoke", "regression" })
-	public void metaDataSearch() {
+	@Test(dataProvider = "metaDataSearch", groups = { "smoke", "regression" })
+	public void metaDataSearch(String metaDataName, String IS_or_Range, String first_input, String second_input, int smokeExpectedCount,
+			int regressionExpectedCount) {
 
-		SoftAssert softAssertion = new SoftAssert();
-		// Check in basic search---------------------------------------
+		
+		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		bc.selectproject();
-		softAssertion.assertTrue(
-				ss.basicMetaDataSearch("CustodianName", null, Input.metaDataCN, null) == Input.metaDataCNcount);
+		int actualCount =ss.basicMetaDataSearch(metaDataName,IS_or_Range,first_input,second_input);
+		if(Input.numberOfDataSets==1){
+			Reporter.log("Searched '"+metaDataName+"' expected and actual counts are  "+smokeExpectedCount+" and "+ actualCount);
+			Assert.assertEquals(smokeExpectedCount, actualCount);
+		}else{
+			Reporter.log("Searched '"+metaDataName+"' expected and actual counts are  "+regressionExpectedCount+" and "+ actualCount);
+			Assert.assertEquals(regressionExpectedCount, actualCount);
+		}
 
-		bc.selectproject();
-		if (Input.suite.equalsIgnoreCase("smoke"))
-			softAssertion.assertTrue(
-					ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05") == 85);
-		else
-			softAssertion.assertTrue(
-					ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2018-05-05") == 85);
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06", null) == 1);
-
-		// with time in IS
-		bc.selectproject();
-		softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "IS", "2010-04-06 22:18:00", null) == 1);
-
-		bc.selectproject();
-		if (Input.suite.equalsIgnoreCase("smoke"))
-			softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06") == 116);
-		else
-			softAssertion.assertTrue(ss.basicMetaDataSearch("MasterDate", "RANGE", "1986-04-06", "2010-04-06") == 116);
-
-		// Check in Advance Search---------------------------------------------
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "IS", "2010-10-18", null) == 85);
-
-		bc.selectproject();
-		softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "2000-10-18", "2010-10-18") == 85);
-
-		// with time in Range
-		bc.selectproject();
-		if (Input.suite.equalsIgnoreCase("smoke"))
-			softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12",
-					"2010-10-18 06:12:12") == 85);
-		else
-			softAssertion.assertTrue(ss.advancedMetaDataSearch("CreateDate", "RANGE", "1960-10-18 12:01:12",
-					"2010-10-18 06:12:12") == 85);
-
-		softAssertion.assertAll();
 	}
-
+	
+	
 	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : save the search and validate in workproduct
+	 * Author : Suresh Bavihalli 
+	 * Created date: April 2019 
+	 * Modified date:
+	 * Modified by: 
+	 * Description : save the search and validate in workproduct
 	 */
 	@Test(groups = { "smoke", "regression" })
 	public void searchsavedSearch() {
-		driver.getWebDriver().get(Input.url + "Search/Searches");
+		
 		bc.selectproject();
-		int ph = ss.basicContentSearch(Input.searchString1);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		ss.basicContentSearch(Input.searchString1);
 		ss.saveSearch(saveSearchName);
 
 		bc.selectproject();
 		ss.switchToWorkproduct();
 		ss.searchSavedSearch(saveSearchName);
-
-		Assert.assertEquals(ph, ss.serarchWP());
+		int actual = ss.serarchWP();
+		Reporter.log("Searched '"+saveSearchName+"' expected and actual counts are  "+Input.pureHitSeachString1+" : "+ actual);
+		Assert.assertEquals(Input.pureHitSeachString1,actual);
+		
 
 	}
 
 	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : Search audio files and validate the count
+	 * Author : Suresh Bavihalli 
+	 * Created date: April 2019 
+	 * Modified date:
+	 * Modified by: 
+	 * Description : Search audio files and validate the count
 	 */
 	@Test(groups = { "smoke", "regression" })
 	public void audioSearch() {
+		
 		bc.selectproject();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		Assert.assertTrue(
-				ss.audioSearch(Input.audioSearchString1, "North American English") == Input.audioSearchString1pureHit);
+		int actualCount =ss.audioSearch(Input.audioSearchString1, "North American English");
+		Reporter.log("Searched '"+Input.audioSearchString1+"' expected and actual counts are - "+Input.audioSearchString1pureHit+" : "+ actualCount);
+		Assert.assertEquals(Input.audioSearchString1pureHit,actualCount);
 
 	}
 
 	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : validate conceptual Search in advance search
+	 * Author : Suresh Bavihalli 
+	 * Created date: April 2019 
+	 * Modified date:
+	 * Modified by: 
+	 * Description : validate conceptual Search in advance search
 	 * with the low mid and high range options
 	 */
 	@Test(groups = { "smoke", "regression" })
 	public void ConceptualSearch() {
-		SoftAssert softAssertion = new SoftAssert();
+		
 		bc.selectproject();
 		/*
 		 * softAssertion.assertTrue(ss.conceptualSearch(Input.
 		 * conceptualSearchString1,"right")>=0); bc.selectproject();
 		 */
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		softAssertion.assertTrue(
-				ss.conceptualSearch(Input.conceptualSearchString1, "mid") == Input.conceptualSearchString1PureHit);
+		int actualCount =ss.conceptualSearch(Input.conceptualSearchString1, "mid");
+		Reporter.log("Searched '"+Input.conceptualSearchString1+"' expected and actual counts are - "+Input.conceptualSearchString1PureHit+" : "+ actualCount);
+		Assert.assertEquals(Input.conceptualSearchString1PureHit,actualCount);
+		
 		/*
 		 * bc.selectproject();
 		 * softAssertion.assertTrue(ss.conceptualSearch(Input.
 		 * conceptualSearchString1,"left")>=2);
 		 */
 
-		softAssertion.assertAll();
+		
 	}
 
 	/*
 	 * Author : Suresh Bavihalli Created date: Feb 2019 Modified date: Modified
 	 * by: Description : RPMXCON_37690 is scripted
 	 */
-	 //@Test(groups={"regression"})
+	//@Test(groups={"regression"})
 	public void Search_RPMXCON_37690() throws InterruptedException {
 		SoftAssert softAssertion = new SoftAssert();
 		String saveSearch = "01Test" + Utility.dynamicNameAppender();
@@ -303,8 +280,9 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -312,6 +290,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -332,12 +311,42 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		}
 	}
 
+	//Search string, smoke expected count, regression expected count
 	@DataProvider(name = "ProxAndRegx")
-	public Object[][] dataProviderMethod() {
-		return new Object[][] { { "\"illustratin* since Q499\"~20", 1 }, { "\"**elief that the rights\"", 1 },
-				{ "\"quarterly bas**\"", 1 }, { "\"quarterly *\"", 3 }, { "\"discrepancy *n\"", 0 },
-				{ "\"**elief *hat the right?\"", 1 },
+	public Object[][] proximityAndRegex() {
+		return new Object[][] { 
+			{ "\"illustratin* since Q499\"~20", 1,1 }, 
+			{ "\"**elief that the rights\"", 1,1 },
+			{ "\"very long\"", 1,1}
 
 		};
 	}
+	
+	//Search string and expected count
+	@DataProvider(name = "contentSearchwithOperators")
+	public Object[][] contentWithOps() {
+		return new Object[][] { 
+			
+			{ Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString2, Input.searchString1ANDsearchString2},
+			{ Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString1, Input.searchString1ANDsearchString2}, 
+			{ Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER+ Input.searchString2, Input.searchString1ORsearchString2}, 
+			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2}, 
+			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1}, 
+			
+
+		};
+	}
+	//Meta data name, option IS or Range, first input, second input, smoke expected pure hit, regression expected pure hit
+	@DataProvider(name = "metaDataSearch")
+	public Object[][] metaData() {
+		return new Object[][] { 
+				{ "CustodianName", null,Input.metaDataCN,null,Input.metaDataCNcount,Input.metaDataCNcount}, 
+				{"MasterDate", "IS", "2010-04-06 22:18:00", null,1,1},
+				{"MasterDate", "RANGE", "1986-04-06", "2010-04-06",116,116},
+				{"CreateDate", "IS", "2010-10-18", null,85,85},
+				{"CreateDate", "RANGE", "2000-10-18", "2010-10-18",85,85},
+
+			};
+		}
+
 }

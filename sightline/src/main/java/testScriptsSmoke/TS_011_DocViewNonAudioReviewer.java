@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -28,6 +29,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
+import pageFactory.RedactionPage;
 import pageFactory.Utility;
 
 public class TS_011_DocViewNonAudioReviewer {
@@ -44,7 +46,7 @@ public class TS_011_DocViewNonAudioReviewer {
 	String newTag = "newtag" + Utility.dynamicNameAppender();
 	String codingfrom = "CF" + Utility.dynamicNameAppender();
 	String assignmentName = "assi" + Utility.dynamicNameAppender();;
-
+	String RedactionLabel = "Default Redaction Tag";
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
 	 * Modified by: Description : to assign docs to reviewer, create assignment
@@ -58,12 +60,13 @@ public class TS_011_DocViewNonAudioReviewer {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		// Login as PA
 		lp = new LoginPage(driver);
+		
 
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
@@ -85,7 +88,7 @@ public class TS_011_DocViewNonAudioReviewer {
 
 		// Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
-		purehits = search.basicContentSearch("*");
+		purehits = search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
 
@@ -139,20 +142,39 @@ public class TS_011_DocViewNonAudioReviewer {
 
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : As a reviewer mark the document as complete
+	 * Modified by: Description : As a reviewer redact the page, search for it and delete the redaction
 	 * 
 	 */
 	@Test(groups = { "smoke", "regression" })
 	public void addredaction() throws InterruptedException {
 		{
-
-			docView.NonAudioRedaction("Default Redaction Tag");
+           
+			docView.nonAudioPageRedaction(RedactionLabel);
+			SessionSearch search = new SessionSearch(driver);
+	    	
+			//Validate in advance sreach under work product search
+			search.switchToWorkproduct();
+		    search.selectRedactioninWPS(RedactionLabel);	    
+		    //One page should be redacted
+		    Assert.assertTrue(search.serarchWP()>=1);
+		    
+		    //Delete page redaction
+		    search.ViewInDocView();
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    		docView.getDocView_RedactIcon().Displayed()  ;}}), Input.wait30);   
+		    docView.getDocView_RedactIcon().waitAndClick(5);
+		    docView.getPreRedaction().waitAndClick(10);
+		    docView.getDocView_Annotate_DeleteIcon().waitAndClick(10);
+		    bc.VerifySuccessMessage("Redaction Removed successfully.");
+		    
+		    
 		}
 
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -160,6 +182,7 @@ public class TS_011_DocViewNonAudioReviewer {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -167,7 +190,6 @@ public class TS_011_DocViewNonAudioReviewer {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

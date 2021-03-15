@@ -18,6 +18,7 @@ import javax.mail.search.FlagTerm;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -110,8 +111,9 @@ public class LoginPage {
 			// TODO: handle exception
 		}
     	Assert.assertTrue(getSignoutMenu().Visible());
-    	System.out.println("Login success!");
+    	//System.out.println("Login success!");
     	UtilityLog.info("Login success!");
+    	Reporter.log("Login success!", true);
 
     }
     public void logout(){
@@ -135,8 +137,8 @@ public class LoginPage {
     	
     	
     	driver.scrollPageToTop();
-    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSignoutMenu().Visible()  ;}}), 30000); */
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSignoutMenu().Visible()  ;}}), Input.wait30); 
     	getSignoutMenu().waitAndClick(5);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getLogoutOption().Visible()  ;}}), 30000); 

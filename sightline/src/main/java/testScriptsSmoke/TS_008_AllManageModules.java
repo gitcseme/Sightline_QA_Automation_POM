@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
@@ -48,8 +49,8 @@ public class TS_008_AllManageModules {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	UtilityLog.info("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-//	Input in = new Input();
-//	in.loadEnvConfig();
+	//Input in = new Input();
+	//in.loadEnvConfig();
 	driver = new Driver();
 	lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -68,9 +69,7 @@ public class TS_008_AllManageModules {
 		//add comment field
     	CommentsPage comments = new CommentsPage(driver);
     	comments.AddComments(Comment);
-    	System.out.println("Comment Successful");
-    	UtilityLog.info("Comment Successful");
-	}
+    }
 	
 	/*
 	 * Author : Shilpi M.
@@ -84,8 +83,7 @@ public class TS_008_AllManageModules {
 		
 		KeywordPage page2= new KeywordPage(driver);
 		page2.AddKeyword(keywordname, keywords);
-		System.out.println("Keyword Successful");
-		UtilityLog.info("Keyword Successful");
+		
 	}
 	
 	/*
@@ -96,12 +94,11 @@ public class TS_008_AllManageModules {
 	 * Description : Validate if add redaction is working correctly
 	 */
 	@Test(priority =3,groups={"smoke","regression"})
-	public void createRedaction() throws ParseException, InterruptedException {
+	public void createRedactionLabel() throws ParseException, InterruptedException {
 		
 		RedactionPage page3 = new RedactionPage(driver);
 		page3.AddRedaction(Redaction,"PA");
-		System.out.println("Redaction Successful");
-		UtilityLog.info("Redaction Successful");
+		
 	}
 		
 	/*
@@ -116,9 +113,7 @@ public class TS_008_AllManageModules {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
     	page.CreateTag(Tag,"Default Security Group");
-    	System.out.println("Tag Successful");
-    	UtilityLog.info("Tag Successful");
-	}	
+    }	
 	
 	/*
 	 * Author : Shilpi M.
@@ -132,8 +127,7 @@ public class TS_008_AllManageModules {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 		page.CreateFolder(Folder,"Default Security Group");
-    	System.out.println("Folder Successful");
-    	UtilityLog.info("Folder Successful");
+    	
 	}	
 	
 	/*
@@ -148,8 +142,7 @@ public class TS_008_AllManageModules {
 		
 		AnnotationLayer alayer = new AnnotationLayer(driver);
     	alayer.AddAnnotation(annotationname);
-    	System.out.println("Annotation Successful");
-    	UtilityLog.info("Annotation Successful");
+    	
 	}	
 	
 	
@@ -167,8 +160,7 @@ public class TS_008_AllManageModules {
 		SecurityGroupsPage scpage = new SecurityGroupsPage(driver);
 		scpage.addlayertosg();
     	scpage.AddSecurityGroup(securitygroupname);
-    	System.out.println("Security Group Successful");  
-    	UtilityLog.info("Security Group Successful");
+    	
    }	
 	
 
@@ -184,8 +176,7 @@ public class TS_008_AllManageModules {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
     	page.DeleteTag(Tag,"Default Security Group");
-    	System.out.println("Tag delete Successful");
-    	UtilityLog.info("Tag delete Successful");
+    	
 	}	
 		
 	/*
@@ -200,8 +191,7 @@ public class TS_008_AllManageModules {
 		
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 		page.DeleteFolder(Folder,"Default Security Group");
-    	System.out.println("Folder delete Successful");
-    	UtilityLog.info("Folder delete Successful");
+    	
 	}
 	
 	/*
@@ -211,38 +201,37 @@ public class TS_008_AllManageModules {
 	 * Modified by:
 	 * Description : Validate if add coding form is working correctly
 	 */	
-@Test(priority =10,groups={"smoke","regression"})
+    @Test(priority =10,groups={"smoke","regression"})
 	public void CreateCodingform() throws ParseException, InterruptedException {
 		
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		CodingForm cf = new CodingForm(driver);
     	cf.createCodingform(cfName);
-    	System.out.println("Coding Form Successful");
-    	UtilityLog.info("Coding Form Successful");
+    	
     	
 	}	
 	
 	
-@BeforeMethod
-public void beforeTestMethod(Method testMethod) throws IOException {
-	System.out.println("------------------------------------------");
-	System.out.println("Executing method :  " + testMethod.getName());
-	UtilityLog.logBefore(testMethod.getName());
-}
-
-@AfterMethod(alwaysRun = true)
-public void takeScreenShot(ITestResult result, Method testMethod) {
-	UtilityLog.logafter(testMethod.getName());
-	if (ITestResult.FAILURE == result.getStatus()) {
-		Utility bc = new Utility(driver);
-		bc.screenShot(result);
-
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
 	}
-	System.out.println("Executed :" + result.getMethod().getMethodName());
-
-}
-
+	
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+	
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+	}
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

@@ -4,6 +4,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -52,6 +53,7 @@ public class CommentsPage {
     	getSaveBtn().Click();
     	
       base.VerifySuccessMessage("Comment Field added successfully");
+      Reporter.log("Comment '"+ComentName+"' added successfully",true);
       base.CloseSuccessMsgpopup();
      	}
     

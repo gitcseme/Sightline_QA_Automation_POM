@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -238,7 +239,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-		getAddNewProductionbutton().Click();
+		getAddNewProductionbutton().waitAndClick(10);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionName().Visible()  ;}}), Input.wait30); 
@@ -250,7 +251,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkComplete().Click();
+		getBasicInfoMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATChkBox().Enabled()  ;}}), Input.wait30); 
@@ -258,7 +259,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATTab().Visible()  ;}}), Input.wait30); 
-		getDATTab().Click();
+		getDATTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
@@ -276,15 +277,16 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-		getNativeChkBox().Click();
+		getNativeChkBox().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeTab().Enabled()  ;}}), Input.wait30); 
-		getNativeTab().Click();
+		getNativeTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
-		System.out.println(getNative_text().getText());
+		Reporter.log(getNative_text().getText(),true);
+		//System.out.println(getNative_text().getText());
 		UtilityLog.info(getNative_text().getText());
 		
 		//work on this assert..issue with text format!
@@ -297,33 +299,33 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-		getNative_SelectAllCheck().Click();
+		getNative_SelectAllCheck().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-		getNative_AdvToggle().Click();
+		getNative_AdvToggle().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-		getNative_GenerateLoadFileLST().Click();
+		getNative_GenerateLoadFileLST().waitAndClick(10);
 		Thread.sleep(2000);
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().Click();		
+		getTIFFChkBox().waitAndClick(10);		
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFTab().Enabled()  ;}}), Input.wait30); 
-		getTIFFTab().Click();
+		getTIFFTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
-		getTIFF_CenterHeaderBranding().Click();
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
@@ -331,7 +333,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_selectedMetadataField_Ok().Visible()  ;}}), Input.wait30); 
-		getTIFF_selectedMetadataField_Ok().Click();
+		getTIFF_selectedMetadataField_Ok().waitAndClick(10);
 		
     	Thread.sleep(2000);
     	
@@ -379,11 +381,11 @@ public class ProductionPage {
 				
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTextChkBox().Enabled()  ;}}), Input.wait30); 
-		getTextChkBox().Click();
+		getTextChkBox().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTextTab().Enabled()  ;}}), Input.wait30); 
-		getTextTab().Click();
+		getTextTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTextcomponent_text().Displayed()  ;}}), Input.wait30); 
@@ -401,23 +403,23 @@ public class ProductionPage {
 				
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDFChkBox().Enabled() ;}}), Input.wait30); 
-//		getPDFChkBox().Click();		
+//		getPDFChkBox().waitAndClick(10);		
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDFTab().Enabled()  ;}}), Input.wait30); 
-//		getPDFTab().Click();
+//		getPDFTab().waitAndClick(10);
 //		
 //		driver.scrollPageToTop();
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
 //		getPDF_CenterHeaderBranding().ScrollTo();
-//		getPDF_CenterHeaderBranding().Click();
+//		getPDF_CenterHeaderBranding().waitAndClick(10);
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
 //	
-//		new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).click();
+//		new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).waitAndClick(10);
 //		getPDF_EnterBranding().SendKeys("Test");
 //    	Thread.sleep(2000);
 //    	
@@ -434,7 +436,7 @@ public class ProductionPage {
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
-//		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).click();
+//		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).waitAndClick(10);
 //		
 //		getPriveldge_PDFTextArea().SendKeys("testing");
 //		
@@ -458,7 +460,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getComponentsMarkComplete().Click();
+		getComponentsMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
@@ -501,17 +503,17 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-		getKeepFamiliesTogether().Click();
+		getKeepFamiliesTogether().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getNumAndSortMarkComplete().Click();
+		getNumAndSortMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-		getNumAndSortNext().Click();
+		getNumAndSortNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getFolderRadioButton().Visible() ;}}), Input.wait30); 
@@ -526,7 +528,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-		getIncludeFamilies().Click();
+		getIncludeFamilies().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
@@ -544,7 +546,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getOkButton().Visible()  ;}}), Input.wait30); 
-		getOkButton().Click();
+		getOkButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -563,29 +565,31 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionLocationMarkComplete().Click();
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionLocationNext().Click();
+		getbtnProductionLocationNext().waitAndClick(10);
 		
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().Click();
+		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
 		 */
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionSummaryMarkComplete().Click();
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionSummaryNext().Click();
+		getbtnProductionSummaryNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-		getbtnProductionGenerate().Click();
-		System.out.println("Wait for generate to complete");
+		getbtnProductionGenerate().waitAndClick(10);
+		
+		Reporter.log("Wait for generate to complete",true);
+		//System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
 				
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -601,17 +605,19 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
 		String batesno = getProd_BatesRange().getText();
-		System.out.println(batesno);
+		
+		Reporter.log("Bate number "+batesno,true);
+		//System.out.println(batesno);
 		UtilityLog.info(batesno);
 		
 		/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().Click();*/
+		getbtnSummaryNext().waitAndClick(10);*/
 		
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getCopyPath().Visible()  ;}}), Input.wait30); 
-		getCopyPath().Click();
+		getCopyPath().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getQC_Download().Enabled()  ;}}), Input.wait30); 
@@ -626,7 +632,9 @@ public class ProductionPage {
 		
 		 String PDocCount = getProductionDocCount().getText();
          int Doc = Integer.parseInt(PDocCount);
-         System.out.println(Doc); 
+         
+         Reporter.log("Doc - "+Doc,true);
+         //System.out.println(Doc); 
          UtilityLog.info(Doc);
 		
 		
@@ -637,7 +645,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExportSet().Visible()  ;}}), Input.wait30); 
-		getProdExportSet().Click();
+		getProdExportSet().waitAndClick(10);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionSettxt().Visible()  ;}}), Input.wait30); 
@@ -645,11 +653,11 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExportSetRadioButton().Visible()  ;}}), Input.wait30); 
-		getProdExportSetRadioButton().Click();
+		getProdExportSetRadioButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_SaveButton().Visible()  ;}}), Input.wait30); 
-		getProdExport_SaveButton().Click();
+		getProdExport_SaveButton().waitAndClick(10);
 		
 		base.VerifySuccessMessage("Export Set Added Successfully");
 		
@@ -659,7 +667,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_AddaNewExportSet().Visible()  ;}}), Input.wait30); 
-		getProdExport_AddaNewExportSet().Click();
+		getProdExport_AddaNewExportSet().waitAndClick(10);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionName().Visible()  ;}}), Input.wait30); 
@@ -671,7 +679,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_Priorprodtoggle().Visible()  ;}}), Input.wait30); 
-		getProdExport_Priorprodtoggle().Click();
+		getProdExport_Priorprodtoggle().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_SelectProductionSet().Visible()  ;}}), Input.wait30); 
@@ -680,15 +688,15 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkComplete().Click();
+		getBasicInfoMarkComplete().waitAndClick(10);
 				
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getBasicInfoNext().Enabled() ;}}), Input.wait30); 
-//		getBasicInfoNext().Click();
+//		getBasicInfoNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATTab().Visible()  ;}}), Input.wait30); 
-		getDATTab().Click();
+		getDATTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
@@ -704,11 +712,11 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getNumAndSortMarkComplete().Click();
+		getNumAndSortMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-		getNumAndSortNext().Click();
+		getNumAndSortNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getFolderRadioButton().Visible() ;}}), Input.wait30); 
@@ -729,7 +737,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getOkButton().Visible()  ;}}), Input.wait30); 
-		getOkButton().Click();
+		getOkButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
@@ -743,23 +751,23 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionLocationMarkComplete().Click();
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionLocationNext().Click();
+		getbtnProductionLocationNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionSummaryMarkComplete().Click();
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionSummaryNext().Click();
+		getbtnProductionSummaryNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-		getbtnProductionGenerate().Click();
+		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
 	
 		for (int i = 0; i < 120; i++)
@@ -793,12 +801,12 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().Click();
+		getbtnSummaryNext().waitAndClick(10);
 		//Thread.sleep(10000);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().Click();
+		getReviewproductionButton().waitAndClick(10);
 		
 		String location = getDestinationPathText().getText();
         System.out.println(location);
@@ -816,7 +824,7 @@ public class ProductionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-		getAddNewProductionbutton().Click();
+		getAddNewProductionbutton().waitAndClick(10);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionName().Visible()  ;}}), Input.wait30); 
@@ -828,7 +836,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkComplete().Click();
+		getBasicInfoMarkComplete().waitAndClick(10);
 						
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATChkBox().Enabled()  ;}}), Input.wait30); 
@@ -836,7 +844,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATTab().Visible()  ;}}), Input.wait30); 
-		getDATTab().Click();
+		getDATTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
@@ -878,48 +886,48 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-		getNativeChkBox().Click();
+		getNativeChkBox().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeTab().Enabled()  ;}}), Input.wait30); 
-		getNativeTab().Click();
+		getNativeTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-		getNative_SelectAllCheck().Click();
+		getNative_SelectAllCheck().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-		getNative_AdvToggle().Click();
+		getNative_AdvToggle().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-		getNative_GenerateLoadFileLST().Click();
+		getNative_GenerateLoadFileLST().waitAndClick(10);
 		Thread.sleep(2000);
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().Click();		
+		getTIFFChkBox().waitAndClick(10);		
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFTab().Enabled()  ;}}), Input.wait30); 
-		getTIFFTab().Click();
+		getTIFFTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
-		getTIFF_CenterHeaderBranding().Click();
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_EnterBranding().Enabled()  ;}}), Input.wait30); 
 	
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-		//getTIFF_EnterBranding().Click();
+		//getTIFF_EnterBranding().waitAndClick(10);
     	getTIFF_EnterBranding().SendKeys("Test");
     	Thread.sleep(2000);
     	
@@ -966,29 +974,29 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTextChkBox().Enabled()  ;}}), Input.wait30); 
-		getTextChkBox().Click();
+		getTextChkBox().waitAndClick(10);
 		
 //		driver.scrollingToBottomofAPage();
 //				
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDFChkBox().Enabled() ;}}), Input.wait30); 
-//		getPDFChkBox().Click();		
+//		getPDFChkBox().waitAndClick(10);		
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDFTab().Enabled()  ;}}), Input.wait30); 
-//		getPDFTab().Click();
+//		getPDFTab().waitAndClick(10);
 //		
 //		driver.scrollPageToTop();
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
 //		getPDF_CenterHeaderBranding().ScrollTo();
-//		getPDF_CenterHeaderBranding().Click();
+//		getPDF_CenterHeaderBranding().waitAndClick(10);
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
 //	
-//		new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).click();
+//		new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).waitAndClick(10);
 //		getPDF_EnterBranding().SendKeys("Test");
 //    	Thread.sleep(2000);
 //    	
@@ -1005,7 +1013,7 @@ public class ProductionPage {
 //		
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
-//		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).click();
+//		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).waitAndClick(10);
 //		
 //		getPriveldge_PDFTextArea().SendKeys("testing");
 //		
@@ -1028,7 +1036,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getComponentsMarkComplete().Click();
+		getComponentsMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
@@ -1071,17 +1079,17 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-		getKeepFamiliesTogether().Click();
+		getKeepFamiliesTogether().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getNumAndSortMarkComplete().Click();
+		getNumAndSortMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-		getNumAndSortNext().Click();
+		getNumAndSortNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getFolderRadioButton().Visible() ;}}), Input.wait30); 
@@ -1096,7 +1104,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-		getIncludeFamilies().Click();
+		getIncludeFamilies().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
@@ -1114,7 +1122,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getOkButton().Visible()  ;}}), Input.wait30); 
-		getOkButton().Click();
+		getOkButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -1133,27 +1141,27 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionLocationMarkComplete().Click();
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionLocationNext().Click();
+		getbtnProductionLocationNext().waitAndClick(10);
 		
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().Click();
+		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
 		 */
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionSummaryMarkComplete().Click();
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionSummaryNext().Click();
+		getbtnProductionSummaryNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-		getbtnProductionGenerate().Click();
+		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
 		for (int i = 0; i < 120; i++)
 		{
@@ -1186,7 +1194,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().Click();
+		getbtnSummaryNext().waitAndClick(10);
 		//Thread.sleep(10000);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1199,7 +1207,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().Click();
+		getReviewproductionButton().waitAndClick(10);
 		
 		String location = getDestinationPathText().getText();
         System.out.println(location);
@@ -1229,7 +1237,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-		getAddNewProductionbutton().Click();
+		getAddNewProductionbutton().waitAndClick(10);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionName().Visible()  ;}}), Input.wait30); 
@@ -1241,7 +1249,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkComplete().Click();
+		getBasicInfoMarkComplete().waitAndClick(10);
 		
 		getBasicInfoNext().waitAndClick(10);
 				
@@ -1251,7 +1259,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDATTab().Visible()  ;}}), Input.wait30); 
-		getDATTab().Click();
+		getDATTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
@@ -1283,48 +1291,48 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-		getNativeChkBox().Click();
+		getNativeChkBox().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNativeTab().Enabled()  ;}}), Input.wait30); 
-		getNativeTab().Click();
+		getNativeTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-		getNative_SelectAllCheck().Click();
+		getNative_SelectAllCheck().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-		getNative_AdvToggle().Click();
+		getNative_AdvToggle().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-		getNative_GenerateLoadFileLST().Click();
+		getNative_GenerateLoadFileLST().waitAndClick(10);
 		Thread.sleep(2000);
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().Click();		
+		getTIFFChkBox().waitAndClick(10);		
 		
 		driver.scrollingToBottomofAPage();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFFTab().Enabled()  ;}}), Input.wait30); 
-		getTIFFTab().Click();
+		getTIFFTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
-		getTIFF_CenterHeaderBranding().Click();
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTIFF_EnterBranding().Enabled()  ;}}), Input.wait30); 
 	
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-		//getTIFF_EnterBranding().Click();
+		//getTIFF_EnterBranding().waitAndClick(10);
     	getTIFF_EnterBranding().SendKeys("Test");
     	Thread.sleep(2000);
     	
@@ -1372,24 +1380,24 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTextChkBox().Enabled()  ;}}), Input.wait30); 
-		getTextChkBox().Click();
+		getTextChkBox().waitAndClick(10);
 		
 		driver.scrollingToBottomofAPage();
 				
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getPDFChkBox().Enabled() ;}}), Input.wait30); 
-		getPDFChkBox().Click();		
+		getPDFChkBox().waitAndClick(10);		
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getPDFTab().Enabled()  ;}}), Input.wait30); 
-		getPDFTab().Click();
+		getPDFTab().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
 		getPDF_CenterHeaderBranding().ScrollTo();
-		getPDF_CenterHeaderBranding().Click();
+		getPDF_CenterHeaderBranding().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
@@ -1434,7 +1442,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getComponentsMarkComplete().Click();
+		getComponentsMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
@@ -1477,17 +1485,17 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-		getKeepFamiliesTogether().Click();
+		getKeepFamiliesTogether().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getNumAndSortMarkComplete().Click();
+		getNumAndSortMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-		getNumAndSortNext().Click();
+		getNumAndSortNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getFolderRadioButton().Visible() ;}}), Input.wait30); 
@@ -1502,7 +1510,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-		getIncludeFamilies().Click();
+		getIncludeFamilies().waitAndClick(10);
 		
 		driver.scrollPageToTop();
 		
@@ -1520,7 +1528,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getOkButton().Visible()  ;}}), Input.wait30); 
-		getOkButton().Click();
+		getOkButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -1539,27 +1547,27 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionLocationMarkComplete().Click();
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionLocationNext().Click();
+		getbtnProductionLocationNext().waitAndClick(10);
 		
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().Click();
+		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
 		 */
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionSummaryMarkComplete().Click();
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionSummaryNext().Click();
+		getbtnProductionSummaryNext().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-		getbtnProductionGenerate().Click();
+		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
 		for (int i = 0; i < 120; i++)
 		{
@@ -1595,7 +1603,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().Click();
+		getbtnSummaryNext().waitAndClick(10);
 		//Thread.sleep(10000);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1608,7 +1616,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().Click();
+		getReviewproductionButton().waitAndClick(10);
 		
 		String location = getDestinationPathText().getText();
         System.out.println(location);
@@ -1626,7 +1634,7 @@ public class ProductionPage {
     	
   		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-  		getAddNewProductionbutton().Click();
+  		getAddNewProductionbutton().waitAndClick(10);
 
   		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   				getProductionName().Visible()  ;}}), Input.wait30); 
@@ -1638,17 +1646,17 @@ public class ProductionPage {
   		
   		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-  		getBasicInfoMarkComplete().Click();
+  		getBasicInfoMarkComplete().waitAndClick(10);
   	    }
   	    
   	    public void fillingDATSection() {
 
   			driver.WaitUntil((new Callable<Boolean>() {
   			public Boolean call() {return getDATChkBox().Enabled();}}), Input.wait30);
-  			getDATChkBox().Click();
+  			getDATChkBox().waitAndClick(10);
 
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return getDATTab().Visible();}}), Input.wait30);
-  			getDATTab().Click();
+  			getDATTab().waitAndClick(10);
 
   			driver.WaitUntil((new Callable<Boolean>() {
   			public Boolean call() {return getDAT_FieldClassification1().Visible();}}), Input.wait30);
@@ -1667,11 +1675,11 @@ public class ProductionPage {
 
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-  			getNativeChkBox().Click();
+  			getNativeChkBox().waitAndClick(10);
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getNativeTab().Enabled()  ;}}), Input.wait30); 
-  			getNativeTab().Click();
+  			getNativeTab().waitAndClick(10);
   			
   			driver.scrollPageToTop();
   			
@@ -1685,15 +1693,15 @@ public class ProductionPage {
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-  			getNative_SelectAllCheck().Click();
+  			getNative_SelectAllCheck().waitAndClick(10);
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-  			getNative_AdvToggle().Click();
+  			getNative_AdvToggle().waitAndClick(10);
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-  			getNative_GenerateLoadFileLST().Click();
+  			getNative_GenerateLoadFileLST().waitAndClick(10);
   			Thread.sleep(2000);
 
   			 
@@ -1702,14 +1710,14 @@ public class ProductionPage {
   			public void fillingTIFFSection(String tagnameprev,String tagnametech) throws InterruptedException{
 
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFFChkBox().Enabled() ;}}), Input.wait30);
-  			getTIFFChkBox().Click();
+  			getTIFFChkBox().waitAndClick(10);
   						
  		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFFTab().Enabled() ;}}), Input.wait30);
-  		    getTIFFTab().Click();
+  		    getTIFFTab().waitAndClick(10);
   			
   		    driver.scrollPageToTop();
   		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30);
-  		    getTIFF_CenterHeaderBranding().Click();
+  		    getTIFF_CenterHeaderBranding().waitAndClick(10);
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFF_EnterBranding().Enabled() ;}}), Input.wait30);
   				
@@ -1734,14 +1742,14 @@ public class ProductionPage {
   			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
   			
   		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getPriveldge_TextArea().Enabled() ;}}), Input.wait30);
-  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();	
+  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
   	    	getPriveldge_TextArea().SendKeys("testing");
   	    	
             driver.scrollingToBottomofAPage();
             
             driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
             {return getTechissue_toggle().Visible() ;}}), Input.wait30);
-            getTechissue_toggle().Click();
+            getTechissue_toggle().waitAndClick(10);
     		  
   			getTechissue_SelectTagButton().waitAndClick(10);
   			Thread.sleep(2000);
@@ -1758,7 +1766,7 @@ public class ProductionPage {
   			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
   			
   		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getPriveldge_TextArea().Enabled() ;}}), Input.wait30);
-  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();	
+  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
   	    	getPriveldge_TextArea().SendKeys("testing");
   			
   			}
@@ -1767,22 +1775,22 @@ public class ProductionPage {
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getTextChkBox().Enabled()  ;}}), Input.wait30); 
-  				getTextChkBox().Click();
+  				getTextChkBox().waitAndClick(10);
   						
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getPDFChkBox().Enabled() ;}}), Input.wait30); 
-  				getPDFChkBox().Click();		
+  				getPDFChkBox().waitAndClick(10);		
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getPDFTab().Enabled()  ;}}), Input.wait30); 
-  				getPDFTab().Click();
+  				getPDFTab().waitAndClick(10);
   				
   				driver.scrollPageToTop();
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
   				getPDF_CenterHeaderBranding().ScrollTo();
-  				getPDF_CenterHeaderBranding().Click();
+  				getPDF_CenterHeaderBranding().waitAndClick(10);
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
@@ -1813,7 +1821,7 @@ public class ProductionPage {
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-  				getComponentsMarkComplete().Click();
+  				getComponentsMarkComplete().waitAndClick(10);
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
@@ -1856,7 +1864,7 @@ public class ProductionPage {
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-  				getKeepFamiliesTogether().Click();
+  				getKeepFamiliesTogether().waitAndClick(10);
 
   			}
   			
@@ -1865,7 +1873,7 @@ public class ProductionPage {
   				driver.scrollPageToTop();
   				
   				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getMarkCompleteLink().Enabled() ;}}), Input.wait30);
-  				getMarkCompleteLink().Click();
+  				getMarkCompleteLink().waitAndClick(10);
   				
   				System.out.println("Clicked on Mark Complete Button..");
   				
@@ -1888,7 +1896,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-  					getIncludeFamilies().Click();
+  					getIncludeFamilies().waitAndClick(10);
   					
   					driver.scrollPageToTop();
   					
@@ -1906,7 +1914,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getOkButton().Visible()  ;}}), Input.wait30); 
-  					getOkButton().Click();
+  					getOkButton().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -1925,26 +1933,26 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionLocationMarkComplete().Click();
+  					getbtnProductionLocationMarkComplete().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionLocationNext().Click();
+  					getbtnProductionLocationNext().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getPreviewprod().Enabled()  ;}}), Input.wait30); 
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryMarkComplete().Click();
+  					getbtnProductionSummaryMarkComplete().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryNext().Click();
+  					getbtnProductionSummaryNext().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGenerate().Click();
+  					getbtnProductionGenerate().waitAndClick(10);
   					
   					
   					
@@ -1977,7 +1985,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnSummaryNext().Click();
+  					getbtnSummaryNext().waitAndClick(10);
   					//Thread.sleep(10000);
   				
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1990,7 +1998,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-  					getReviewproductionButton().Click();
+  					getReviewproductionButton().waitAndClick(10);
   					
   					String location = getDestinationPathText().getText();
   			        System.out.println(location);
@@ -2003,7 +2011,7 @@ public class ProductionPage {
   					
 				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  							getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-				  	getComponentsMarkComplete().Click();
+				  	getComponentsMarkComplete().waitAndClick(10);
 				  					
 				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
@@ -2046,17 +2054,17 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-  					getKeepFamiliesTogether().Click();
+  					getKeepFamiliesTogether().waitAndClick(10);
   					
   					driver.scrollPageToTop();
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-  					getNumAndSortMarkComplete().Click();
+  					getNumAndSortMarkComplete().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-  					getNumAndSortNext().Click();
+  					getNumAndSortNext().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getFolderRadioButton().Visible() ;}}), Input.wait30); 
@@ -2071,7 +2079,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-  					getIncludeFamilies().Click();
+  					getIncludeFamilies().waitAndClick(10);
   					
   					driver.scrollPageToTop();
   					
@@ -2089,7 +2097,7 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getOkButton().Visible()  ;}}), Input.wait30); 
-  					getOkButton().Click();
+  					getOkButton().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
@@ -2108,27 +2116,27 @@ public class ProductionPage {
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionLocationMarkComplete().Click();
+  					getbtnProductionLocationMarkComplete().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionLocationNext().Click();
+  					getbtnProductionLocationNext().waitAndClick(10);
   					
 //  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //  							getPreviewprod().Enabled()  ;}}), Input.wait30); 
-//  					getPreviewprod().Click();
+//  					getPreviewprod().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryMarkComplete().Click();
+  					getbtnProductionSummaryMarkComplete().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryNext().Click();
+  					getbtnProductionSummaryNext().waitAndClick(10);
   					
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGenerate().Click();
+  					getbtnProductionGenerate().waitAndClick(10);
   					System.out.println("Wait until regenerate is enabled");
 //  					for (int i = 0; i < 120; i++)
 //  					{
@@ -2153,7 +2161,7 @@ public class ProductionPage {
 //  					
 //  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //  							getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-//  					getbtnSummaryNext().Click();
+//  					getbtnSummaryNext().waitAndClick(10);
 //  			
 //  				
 //  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2166,7 +2174,7 @@ public class ProductionPage {
 //  					
 //  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //  							getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-//  					getReviewproductionButton().Click();
+//  					getReviewproductionButton().waitAndClick(10);
 //  					
 //  					String location = getDestinationPathText().getText();
 //  			        System.out.println(location);
@@ -2205,7 +2213,7 @@ public class ProductionPage {
   			System.out.println("....hsyudhus......");
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	  				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-  	  		getAddNewProductionbutton().Click();
+  	  		getAddNewProductionbutton().waitAndClick(10);
   	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	  				getProductionName().Visible()  ;}}), Input.wait30); 
   	  		getProductionName().SendKeys(productionname);
@@ -2215,10 +2223,10 @@ public class ProductionPage {
   	  	  getprod_LoadTemplate().selectFromDropdown().selectByVisibleText("Template (Production)");
   	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	  				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-  	  		getBasicInfoMarkComplete().Click();
+  	  		getBasicInfoMarkComplete().waitAndClick(10);
   	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-       getComponentsMarkComplete().Click();
+       getComponentsMarkComplete().waitAndClick(10);
   	  	    }
 		
   		public void ProductionwithTechIssuetags(String productionname,String PrefixID,
@@ -2234,7 +2242,7 @@ public class ProductionPage {
   			 driver.scrollingToBottomofAPage();
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getTextChkBox().Enabled()  ;}}), Input.wait30); 
-  			getTextChkBox().Click();
+  			getTextChkBox().waitAndClick(10);
   			 driver.scrollPageToTop();
   			 FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
   				
@@ -2322,7 +2330,7 @@ public class ProductionPage {
   	        System.out.println(tileitems);
   	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	    			getGridView().Visible()  ;}}), Input.wait30);
-  	    	getGridView().Click();
+  	    	getGridView().waitAndClick(10);
   	    	getRefreshButton().waitAndClick(10);
   	    	Thread.sleep(3000);
   	    	String griditems = getProductionItemsGridItems().getText();
@@ -2644,7 +2652,7 @@ public class ProductionPage {
 	      	
 	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	    			getGridView().Visible()  ;}}), Input.wait30);
-  	    	getGridView().Click();
+  	    	getGridView().waitAndClick(10);
   	    	
   	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
@@ -2684,23 +2692,23 @@ public class ProductionPage {
 	  		
 	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-			getBasicInfoMarkComplete().Click();
+			getBasicInfoMarkComplete().waitAndClick(10);
 			
 			Thread.sleep(5000);
 	  		
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-			getTIFFChkBox().Click();
+			getTIFFChkBox().waitAndClick(10);
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getTIFFTab().Enabled()  ;}}), Input.wait30); 
-			getTIFFTab().Click();
+			getTIFFTab().waitAndClick(10);
 			
 			driver.scrollingToBottomofAPage();
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getadvance().Visible()  ;}}), Input.wait30); 
-			getadvance().Click();
+			getadvance().waitAndClick(10);
 			
 			driver.scrollingToBottomofAPage();
 			
@@ -2710,21 +2718,21 @@ public class ProductionPage {
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getGenerateLoadFile().Enabled() ;}}), Input.wait30); 
-			getGenerateLoadFile().Click();
+			getGenerateLoadFile().waitAndClick(10);
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getGenerateLoadFile().Visible() ;}}), Input.wait30); 
-			getGenerateLoadFile().Click();
+			getGenerateLoadFile().waitAndClick(10);
 	  		
 			System.out.println("Verified Generate Load File (LST) with Toggle button");
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getSlipSheets().Visible() ;}}), Input.wait30); 
-			getSlipSheets().Click();
+			getSlipSheets().waitAndClick(10);
 			
 			for(int i=1;i<=3;i++)
 			{
-			getAvailableFields(i).Click();
+			getAvailableFields(i).waitAndClick(10);
 			}
 	  			  	
 	  		System.out.println("Verified METADATA/WORKPRODUCT & CALCULATED Tabs");

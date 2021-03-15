@@ -16,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
 import com.google.common.io.Files;
@@ -385,10 +386,9 @@ public class BaseClass {
 			}
 		}), Input.wait30);
 		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-		UtilityLog.info("Expected Success message: " + ExpectedMsg);
-		UtilityLog.info("Actual Success message: " + getSuccessMsg().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
-
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
 	}
 
 	public void VerifyWarningMessage(String ExpectedMsg) {
@@ -398,9 +398,9 @@ public class BaseClass {
 			}
 		}), Input.wait30);
 		Assert.assertEquals("Warning !", getSuccessMsgHeader().getText().toString());
-		UtilityLog.info("Expected Warning message " + ExpectedMsg);
-		UtilityLog.info("Actual Warning message " + getSuccessMsg().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
 	}
 
 	public void VerifyErrorMessage(String ExpectedMsg) {
@@ -410,9 +410,9 @@ public class BaseClass {
 			}
 		}), Input.wait30);
 		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
-		UtilityLog.info("Expected Error message " + ExpectedMsg);
-		UtilityLog.info("Actual Error message " + getSuccessMsg().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
 	}
 
 	public void SelectCurrentdatfromDatePicker(Element DateFrom, Element dateWidget) {

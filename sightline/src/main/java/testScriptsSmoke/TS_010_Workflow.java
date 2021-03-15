@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -70,20 +71,24 @@ public class TS_010_Workflow {
 
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

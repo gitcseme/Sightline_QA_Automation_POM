@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -51,8 +52,8 @@ public class TS_003_AdvancedSearchBulkActions {
 		//Open browser
 		log = Logger.getLogger("devpinoyLogger");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		//Login as PA
 		
@@ -88,8 +89,9 @@ public class TS_003_AdvancedSearchBulkActions {
 	       //tf.getTagandCount(tagName, pureHit).WaitUntilPresent();
 	       Thread.sleep(3000);
 	       Assert.assertTrue(tf.getTagandCount(tagName, pureHit).Displayed());
-	       System.out.println(tagName+" could be seen under tags and folder page");
+	       //System.out.println(tagName+" could be seen under tags and folder page");
 	       log.info(tagName+" could be seen under tags and folder page");
+	       Reporter.log(tagName+" could be seen under tags and folder page",true);
 	   
 	}
 	/*
@@ -103,9 +105,7 @@ public class TS_003_AdvancedSearchBulkActions {
     public void bulkFolderInAdvancedSearch() throws InterruptedException {
 		
 		//Create Bulk Folder   
-		
 		sessionSearch.bulkFolder(folderName);
-        //home.exportData();
         
 	}
 	@AfterClass(alwaysRun = true)
@@ -118,21 +118,23 @@ public class TS_003_AdvancedSearchBulkActions {
 				lp.clearBrowserCache();
 			}	
 	}
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod) throws IOException{
-		 UtilityLog.logBefore(testMethod.getName());    
-	    
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result, Method testMethod) {
-    	 UtilityLog.logafter(testMethod.getName()); 
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
-     
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+	}     
 }

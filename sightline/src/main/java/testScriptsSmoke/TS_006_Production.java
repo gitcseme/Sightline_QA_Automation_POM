@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,13 +44,19 @@ public class TS_006_Production {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	
+	
+	}
+		
+	@Test(groups={"smoke","regression"})
+	public void  AddNewProduction() throws Exception {
+		//Pre-requisites
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);
@@ -57,21 +64,19 @@ public class TS_006_Production {
 		ss.bulkFolderExisting(foldername);
 		
 		tp.CreateTagwithClassification(Tagname,"Privileged"); 
-	}
 		
-	@Test(groups={"smoke","regression"})
-	public void  AddNewProduction() throws Exception {
-		
-		System.out.println(Input.prodPath);
+		//System.out.println(Input.prodPath);
+		Reporter.log("Production path is "+Input.prodPath,true);
 		UtilityLog.info(Input.prodPath);
-		ProductionPage page1 = new ProductionPage(driver);
-		page1.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
+		ProductionPage page = new ProductionPage(driver);
+		page.CreateProduction(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 		//page1.Productionwithallredactions(productionname, PrefixID, SuffixID, foldername,Tagnameprev);
 
 	}
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -79,6 +84,7 @@ public class TS_006_Production {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -86,7 +92,6 @@ public class TS_006_Production {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

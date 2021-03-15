@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -149,6 +152,9 @@ public class TagsAndFoldersPage {
     		 getSaveTag().Visible()  ;}}), Input.wait30); 
      getSaveTag().Click();
      base.VerifySuccessMessage("Tag added successfully");
+ 	 Reporter.log("Tag '"+strtag+"' is added successfully to security group "+securityGroup ,true);
+	 UtilityLog.info("Tag Successful");
+ 
      base.CloseSuccessMsgpopup();
    	
     }
@@ -183,7 +189,7 @@ public class TagsAndFoldersPage {
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAddFolder().Visible()  ;}}), Input.wait30); 
-         getAddFolder().javascriptclick();
+         getAddFolder().waitAndClick(10);
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 
@@ -195,7 +201,8 @@ public class TagsAndFoldersPage {
      
      base.VerifySuccessMessage("Folder added successfully");
      base.CloseSuccessMsgpopup();
-     
+     Reporter.log("Folder "+strFolder+" added to security group -"+securityGroup,true);
+ 	 UtilityLog.info("Folder Successful");
     }
     
     public void DeleteTag(final String strtag,String securityGroup) 
@@ -229,6 +236,9 @@ public class TagsAndFoldersPage {
      
         base.VerifySuccessMessage("Tag deleted successfully");
         base.CloseSuccessMsgpopup();
+        
+        Reporter.log(strtag +"tag delete Successful",true);
+    	UtilityLog.info("Tag delete Successful");
      
       }
     
@@ -266,6 +276,8 @@ public class TagsAndFoldersPage {
          
             base.VerifySuccessMessage("Folder deleted successfully");
             base.CloseSuccessMsgpopup();
+            Reporter.log(strFolder +" Folder delete Successful", true);
+        	UtilityLog.info("Folder delete Successful");
      
     }
     
@@ -302,6 +314,7 @@ public class TagsAndFoldersPage {
        getSaveTag().Click();
      
       base.VerifySuccessMessage("Tag added successfully");
+      Reporter.log("Tag "+strtag+" is as/under "+classificationname,true);
       base.CloseSuccessMsgpopup();
      
     }

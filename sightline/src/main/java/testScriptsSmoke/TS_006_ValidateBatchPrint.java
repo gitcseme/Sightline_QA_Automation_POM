@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -64,8 +65,9 @@ public class TS_006_ValidateBatchPrint {
 		
 }
 	
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -73,6 +75,7 @@ public class TS_006_ValidateBatchPrint {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -80,7 +83,6 @@ public class TS_006_ValidateBatchPrint {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

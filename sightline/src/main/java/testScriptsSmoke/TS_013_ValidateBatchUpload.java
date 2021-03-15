@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -28,7 +29,7 @@ public class TS_013_ValidateBatchUpload {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-		// Input in = new Input();
+		//Input in = new Input();
 		// in.loadEnvConfig();
 
 		// Open browser
@@ -47,10 +48,11 @@ public class TS_013_ValidateBatchUpload {
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for PA user...");
 		UtilityLog.info("Successfully ran for PA user...");
+		lp.logout();
 
 	}
 
-	@Test(groups = { "smoke", "regression" })
+	@Test(groups = { "regression" })
 	public void batchUploadByRMU() throws InterruptedException {
 		// Login as a Review manager
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -58,10 +60,10 @@ public class TS_013_ValidateBatchUpload {
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for RMU user...");
 		UtilityLog.info("Successfully ran for RMU user...");
-
+		lp.logout();
 	}
 
-	@Test(groups = { "smoke", "regression" })
+	@Test(groups = { "regression" })
 	public void batchUploadByReviewer() throws InterruptedException {
 		// Login as a Reviewer
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
@@ -69,11 +71,12 @@ public class TS_013_ValidateBatchUpload {
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for REV user...");
 		UtilityLog.info("Successfully ran for REV user...");
-
+		lp.logout();
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -81,6 +84,7 @@ public class TS_013_ValidateBatchUpload {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -88,7 +92,6 @@ public class TS_013_ValidateBatchUpload {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-
 	}
 
 	@AfterClass(alwaysRun = true)

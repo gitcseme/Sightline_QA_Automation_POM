@@ -33,12 +33,14 @@ public class Utility {
    		 File src=screenshot.getScreenshotAs(OutputType.FILE);
    		 String name[] = result.getMethod().toString().replace(".", "--").split("\\(");
    		
-   		String path=System.getProperty("user.dir")+"/Screenshots/"+name[0]+".png";
+   		File destFile =new File(System.getProperty("user.dir")+"/Screenshots/"+name[0]+Utility.dynamicNameAppender()+".png");
    		 
    		 // result.getName() will return name of test case so that screenshot name will be same as test case name
-   		 FileUtils.copyFile(src, new File(path));
+   		 FileUtils.copyFile(src, destFile);
    		 System.out.println("Successfully captured a screenshot");
-   		Reporter.log("<a href='"+ path + "'> <img src='"+ path + "' height='100' width='100'/> </a>");
+   		//Reporter.log(path);
+   		 Reporter.log("<a href='"+ destFile.getAbsolutePath() + "'> <img src='"+ destFile.getAbsolutePath() + "' height='50' width='50'/> </a>");
+   		 //Reporter.log("<br><img src='"+path+"'height='300' width=’300’/><br>");
    		 }catch (Exception e){
    			 e.printStackTrace();
    		 System.out.println("Exception while taking screenshot "+e.getMessage());

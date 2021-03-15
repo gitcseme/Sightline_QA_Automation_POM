@@ -5,9 +5,8 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
-import org.omg.PortableInterceptor.AdapterNameHelper;
-import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -45,9 +44,9 @@ public class TS_017_DocList {
 		UtilityLog.info("Started Execution for prerequisite");
 
 		// Open browser
-		/*
-		 * Input in = new Input(); in.loadEnvConfig();
-		 */
+		
+		// Input in = new Input(); in.loadEnvConfig();
+		 
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		ss = new SessionSearch(driver);
@@ -73,11 +72,8 @@ public class TS_017_DocList {
 		final DocListPage dl = new DocListPage(driver);
 
 		// Select all docs and perform bulk tag and bulk folder
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dl.getSelectAll().Visible();
-			}
-		}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {
+				return dl.getSelectAll().Visible();}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
 
 		// dl.getYesAllPageDocs().waitAndClick(10);
@@ -87,10 +83,7 @@ public class TS_017_DocList {
 
 		// Select all docs and perform bulk tag and bulk folder
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dl.getSelectAll().Visible();
-			}
-		}), Input.wait30);
+			public Boolean call() {return dl.getSelectAll().Visible();}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
 
 		dl.getPopUpOkBtn().waitAndClick(10);
@@ -125,11 +118,7 @@ public class TS_017_DocList {
 		final DocListPage dl = new DocListPage(driver);
 
 		// Select all docs and view in docView
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dl.getSelectAll().Visible();
-			}
-		}), Input.wait30);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return dl.getSelectAll().Visible();}}), Input.wait30);
 		dl.getSelectAll().waitAndClick(10);
 
 		dl.getPopUpOkBtn().waitAndClick(10);
@@ -139,11 +128,7 @@ public class TS_017_DocList {
 		// validate count
 		DocViewPage dv = new DocViewPage(driver);
 		// Select all docs and view in docView
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dv.getDocView_info().Visible();
-			}
-		}), Input.wait60);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return dv.getDocView_info().Visible();}}), Input.wait60);
 
 		Assert.assertTrue(dv.getDocView_info().Displayed());
 		System.out.println("Expected docs(" + purehits + ") are shown in docView");
@@ -188,8 +173,9 @@ public class TS_017_DocList {
 
 	}
 
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) throws IOException {
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
@@ -197,6 +183,7 @@ public class TS_017_DocList {
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
@@ -204,6 +191,17 @@ public class TS_017_DocList {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+	}
+	@AfterClass(alwaysRun = true)
+	public void close() {
 
+		try {
+			driver.scrollPageToTop();
+
+			// lp.quitBrowser();
+		} finally {
+			lp.quitBrowser();
+			LoginPage.clearBrowserCache();
+		}
 	}
 }
