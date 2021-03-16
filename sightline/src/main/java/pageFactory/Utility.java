@@ -20,7 +20,7 @@ public class Utility {
     
 	public static int dynamicNameAppender() {
 		 Random random = new Random();
-			return random.nextInt(1000000);
+			return random.nextInt(10000000);
 		
 	}
 

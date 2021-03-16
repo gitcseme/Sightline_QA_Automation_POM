@@ -543,13 +543,13 @@ public class SavedSearch {
 
 		//base.getSelectProject();
 
-		Dimension dim = new Dimension(1600, 900);
+		/*Dimension dim = new Dimension(1600, 900);
 		driver.getWebDriver().manage().window().setSize(dim);
-
+*/
 		// driver.getWebDriver().manage().window().setSize(800);
 		
 		savedSearch_Searchandclick(searchName);
-		getShareSerachBtn().Click();
+		getShareSerachBtn().waitAndClick(5);
 		Thread.sleep(2000);
 
 		driver.WaitUntil((new Callable<Boolean>() {

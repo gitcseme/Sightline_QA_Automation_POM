@@ -114,7 +114,7 @@ public class TagsAndFoldersPage {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagsTab().Visible()  ;}}), Input.wait30); 
          try{
-    	 getTagsTab().Click();	
+    	 getTagsTab().waitAndClick(10);	
          }catch (Exception e) {
 			//may be in tag already
 		}
@@ -134,7 +134,7 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-        getTagActionDropDownArrow().Click();
+        getTagActionDropDownArrow().waitAndClick(10);
         
         Thread.sleep(1000);
         
@@ -150,7 +150,7 @@ public class TagsAndFoldersPage {
      Thread.sleep(1000);
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveTag().Visible()  ;}}), Input.wait30); 
-     getSaveTag().Click();
+     getSaveTag().waitAndClick(10);
      base.VerifySuccessMessage("Tag added successfully");
  	 Reporter.log("Tag '"+strtag+"' is added successfully to security group "+securityGroup ,true);
 	 UtilityLog.info("Tag Successful");
@@ -197,7 +197,7 @@ public class TagsAndFoldersPage {
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveFolder().Visible()  ;}}), Input.wait30); 
-     getSaveFolder().Click();
+     getSaveFolder().waitAndClick(10);
      
      base.VerifySuccessMessage("Folder added successfully");
      base.CloseSuccessMsgpopup();
@@ -222,15 +222,15 @@ public class TagsAndFoldersPage {
         driver.scrollingToBottomofAPage();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagName(strtag).Visible()  ;}}), Input.wait30); 
-    	 getTagName(strtag).Click();
+    	 getTagName(strtag).waitAndClick(10);
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getTagActionDropDownArrow().Click();
+         getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getDeleteTag().Visible()  ;}}), Input.wait30); 
-        getDeleteTag().Click();
+        getDeleteTag().waitAndClick(10);
    
        base.getYesBtn().waitAndClick(10);
      
@@ -268,7 +268,7 @@ public class TagsAndFoldersPage {
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getDeleteFolder().Visible()  ;}}), Input.wait30); 
-         getDeleteFolder().Click();
+         getDeleteFolder().waitAndClick(10);
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 base.getYesBtn().Visible()  ;}}), Input.wait30); 
@@ -295,11 +295,11 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-        getTagActionDropDownArrow().Click();
+        getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getAddTag().Visible()  ;}}), Input.wait30); 
-        getAddTag().Click();
+        getAddTag().waitAndClick(10);
    
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getTagName().Visible()  ;}}), Input.wait30); 
@@ -311,7 +311,7 @@ public class TagsAndFoldersPage {
      
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveTag().Visible()  ;}}), Input.wait30); 
-       getSaveTag().Click();
+       getSaveTag().waitAndClick(10);
      
       base.VerifySuccessMessage("Tag added successfully");
       Reporter.log("Tag "+strtag+" is as/under "+classificationname,true);
@@ -335,11 +335,11 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getTagActionDropDownArrow().Click();
+         getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getTagViewDocView().Visible()  ;}}), Input.wait30); 
-        getTagViewDocView().Click();
+        getTagViewDocView().waitAndClick(10);
    
              }
      
@@ -352,11 +352,11 @@ public class TagsAndFoldersPage {
      	
      	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-          getTagActionDropDownArrow().Click();
+          getTagActionDropDownArrow().waitAndClick(10);
       
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getTagViewDoclist().Visible()  ;}}), Input.wait30); 
-         getTagViewDoclist().Click();
+         getTagViewDoclist().waitAndClick(10);
     
        }
   
@@ -385,7 +385,7 @@ public class TagsAndFoldersPage {
       
           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		  getFolderViewDoclist().Visible()  ;}}), Input.wait30); 
-         getFolderViewDoclist().Click();
+         getFolderViewDoclist().waitAndClick(10);
   }  	
      
      public void ViewinDocViewthrFolder(final String strFolder) 
@@ -413,7 +413,7 @@ public class TagsAndFoldersPage {
       
           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		  getFolderViewDoclist().Visible()  ;}}), Input.wait30); 
-         getFolderViewDocView().Click();
+         getFolderViewDocView().waitAndClick(10);
   }  	
     
     //Code added by Narendra
@@ -481,7 +481,7 @@ public class TagsAndFoldersPage {
 		        	 Thread.sleep(1000);
 		        	 driver.scrollPageToTop();
 			          new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-			         //rightarrow().Click();
+			         //rightarrow().waitAndClick(10);
 			         rightarrow().waitAndClick(10);
 			         Thread.sleep(1000);
 			         getEditClick().waitAndClick(10);
@@ -506,7 +506,7 @@ public class TagsAndFoldersPage {
 			    	 Thread.sleep(1000);
 			    	 driver.scrollPageToTop();
 			         new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-				     //rightarrow().Click();
+				     //rightarrow().waitAndClick(10);
 				     rightarrow().waitAndClick(10);
 				     Thread.sleep(1000);
 				     getEditClick().waitAndClick(10);
@@ -537,7 +537,7 @@ public class TagsAndFoldersPage {
 			       	Thread.sleep(1000);
 			       	driver.scrollPageToTop();
 			        new Actions(driver.getWebDriver()).moveToElement(rightarrow().getWebElement()).click();
-			        //rightarrow().Click();
+			        //rightarrow().waitAndClick(10);
 			        rightarrow().waitAndClick(10);
 			        Thread.sleep(1000);
 			        getEditClick().waitAndClick(10);
@@ -696,7 +696,7 @@ public class TagsAndFoldersPage {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagsTab().Visible()  ;}}), Input.wait30); 
          try{
-    	 getTagsTab().Click();	
+    	 getTagsTab().waitAndClick(10);	
          }catch (Exception e) {
 			//may be in tag already
 		}
@@ -716,7 +716,7 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-        getTagActionDropDownArrow().Click();
+        getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getAddTag().Visible()  ;}}), Input.wait30); 
@@ -729,7 +729,7 @@ public class TagsAndFoldersPage {
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getCancelTag().Visible()  ;}}), Input.wait30); 
-	     getCancelTag().Click();
+	     getCancelTag().waitAndClick(10);
 	     System.out.println("Tag addition cancel successfully");
 	     
         //Select root all
@@ -740,7 +740,7 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-        getTagActionDropDownArrow().Click();
+        getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getAddTag().Visible()  ;}}), Input.wait30); 
@@ -753,7 +753,7 @@ public class TagsAndFoldersPage {
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getCancelTag().Visible()  ;}}), Input.wait30); 
-	     getSaveTag().Click();
+	     getSaveTag().waitAndClick(10);
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getErrorMsg().Visible()  ;}}), Input.wait30);
@@ -764,7 +764,7 @@ public class TagsAndFoldersPage {
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getCancelTag().Visible()  ;}}), Input.wait30); 
-	     getCancelTag().Click();
+	     getCancelTag().waitAndClick(10);
 	     
 	     base.CloseSuccessMsgpopup();
    	
@@ -777,7 +777,7 @@ public class TagsAndFoldersPage {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagsTab().Visible()  ;}}), Input.wait30); 
          try{
-    	 getTagsTab().Click();	
+    	 getTagsTab().waitAndClick(10);	
          }catch (Exception e) {
 			//may be in tag already
 		}
@@ -806,7 +806,7 @@ public class TagsAndFoldersPage {
       			element.click();
       			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       	    			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-      	        getTagActionDropDownArrow().Click();
+      	        getTagActionDropDownArrow().waitAndClick(10);
       	     
       	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       	        		getEditTag().Visible()  ;}}), Input.wait30); 

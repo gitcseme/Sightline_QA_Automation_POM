@@ -58,6 +58,7 @@ public class LoginPage {
 	public void loginToSightLine(String strUserName,String strPasword){
     	driver.waitForPageToBeReady();
         //Fill user name
+    	getEuserName().waitAndClick(10); // to adjust with app!
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getEuserName().Visible()  ;}}), Input.wait30); 
     	getEuserName().SendKeys(strUserName);

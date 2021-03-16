@@ -925,7 +925,7 @@ public class SessionSearch {
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().Click();
+   	 getBulkNewTab().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterFolderName().Visible()  ;}}), Input.wait60); 
@@ -1068,14 +1068,14 @@ public class SessionSearch {
    	
    	 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkTagAction().Visible()  ;}}), Input.wait60); */
-   	 
+   	 Thread.sleep(2000); // synch with app!
    	 getBulkTagAction().waitAndClick(10);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().Click();
+   	 getBulkNewTab().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterTagName().Visible()  ;}}), Input.wait60); 
