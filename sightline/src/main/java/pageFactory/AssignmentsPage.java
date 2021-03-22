@@ -11,6 +11,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -186,14 +187,20 @@ public class AssignmentsPage {
     		getAssignmentCodingFormDropDown().selectFromDropdown().selectByIndex(1);
     	} 
     	
-    	 	//permissions
+    	//permissions
     	driver.scrollingToBottomofAPage();
+    	driver.scrollingToBottomofAPage();
+    	Thread.sleep(2000);
+    	//give redaction permission to reviewers
+    	driver.getWebDriver().findElement(By.xpath("(//div[@class = 'smart-form'])[25]")).click();
+    	Thread.sleep(2000);
     	getSelectSavePermission().ScrollTo();
     	getSelectSavePermission().waitAndClick(5);
     	driver.scrollPageToTop();
     	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
     	getAssignmentSaveButton().waitAndClick(5);
     	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+    	UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
     	 
 	}
     
@@ -207,6 +214,7 @@ public class AssignmentsPage {
     			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
        	
     	System.out.println(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
+    	UtilityLog.info(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
 		for (WebElement iterable_element : getSelectcopyAssgnmToBulkAssign().FindWebElements()) {
 			
 			if(iterable_element.getText().contains(assignmentName)){
@@ -222,7 +230,7 @@ public class AssignmentsPage {
 				iterable_element.click();
 			}
 		}
-    	getContinueBulkAssign().waitAndClick(5);
+    	getContinueBulkAssign().waitAndClick(10);
     
        	final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
@@ -235,6 +243,7 @@ public class AssignmentsPage {
        	
        	String assignpop = getAssignment_Actionlikepopup().getText();
        	System.out.println(assignpop);
+       	UtilityLog.info(assignpop);
        	Assert.assertEquals("Action Like Documents" , assignpop);
        	
        	getAssgn_LikeDoc_Family().Displayed();
@@ -249,9 +258,10 @@ public class AssignmentsPage {
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
     	
     	System.out.println("Docs assigned to  "+assignmentName);
+    	UtilityLog.info("Docs assigned to  "+assignmentName);
 	}
     
-    public void editAssignment(final String assignmentName) {
+    public void editAssignment(final String assignmentName) throws InterruptedException {
     	driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -272,7 +282,7 @@ public class AssignmentsPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAssignmentAction_EditAssignment().Visible()  ;}}), Input.wait60);
-    
+        Thread.sleep(2000);
     	getAssignmentAction_EditAssignment().waitAndClick(3);
     	
 	}
@@ -313,11 +323,13 @@ public class AssignmentsPage {
     	//verify total docs count
     	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
+    	UtilityLog.info(acttotalcount);
     	//assertion.assertEquals(docCount, Integer.parseInt(acttotalcount));
     	
     	//verify distributed docs count
     	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(actdistributedcount));
+    	UtilityLog.info(Integer.parseInt(actdistributedcount));
     //	assertion.assertEquals(docCount, Integer.parseInt(actdistributedcount));
     //	assertion.assertAll();
      	
@@ -1203,6 +1215,7 @@ public class AssignmentsPage {
             }
              final String doccount = getQuickBatch_Doccount().getText();
              System.out.println(doccount);
+             UtilityLog.info(doccount);
              
              getContinueBulkAssign().waitAndClick(Input.wait30);
              
@@ -1216,6 +1229,7 @@ public class AssignmentsPage {
            String totaldoccount = getFinalCount().getText();
            Integer.parseInt(totaldoccount);
            System.out.println("Doc Count:-"+  totaldoccount);
+           UtilityLog.info("Doc Count:-"+  totaldoccount);
            
            final BaseClass bc = new BaseClass(driver);
            final int Bgcount = bc.initialBgCount();
@@ -1224,11 +1238,13 @@ public class AssignmentsPage {
            
            bc.VerifySuccessMessage("Quick Batch Assign has been added to background process. You will get notification on completion.");
            System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
+           UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
               
            driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60);
           	
           	System.out.println("Docs assigned to  "+assignmentName);
+          	UtilityLog.info("Docs assigned to  "+assignmentName);
           	
           	bc.BckTaskMessageverify("QuickBatch");
           	
@@ -1247,6 +1263,7 @@ public class AssignmentsPage {
         	getSelectAssignment(assignmentName).waitAndClick(15);
         	
         	System.out.println(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()));
+        	UtilityLog.info(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()));
 
         	assertion.assertEquals(Integer.parseInt(getSelectAssignmentDocCount(assignmentName).getText().toString()),totaldoccount);
         	
@@ -1262,7 +1279,9 @@ public class AssignmentsPage {
         	
         	Assert.assertEquals(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"),"true");
         	System.out.println(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"));
+        	UtilityLog.info(getAssgnGrp_Create_DrawPooltoggle().GetAttribute("class"));
         	System.out.println(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value"));
+        	UtilityLog.info(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value"));
         	
         	Assert.assertEquals(getAssgnGrp_Create_DrawPoolCount().GetAttribute("value"),"100");
         	//assertion.assertAll();

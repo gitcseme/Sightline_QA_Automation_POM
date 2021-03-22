@@ -8,6 +8,7 @@ import java.text.ParseException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -15,6 +16,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
@@ -46,7 +48,11 @@ public class TS_009_ValidateAssignmentFunctionality {
 	
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-			//Open browser
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("Started Execution for prerequisite");
+		//Open browser
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
@@ -55,25 +61,23 @@ public class TS_009_ValidateAssignmentFunctionality {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		//add tag
-				TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-				page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
-				    	
-				//add comment field
-				CommentsPage comments = new CommentsPage(driver);
-				comments.AddComments("Comment"+Utility.dynamicNameAppender());
-						
-				//Create coding for for assignment
-				 cf = new CodingForm(driver);
-				cf.createCodingform(codingfrom);
-				agnmt = new AssignmentsPage(driver);
-				search = new SessionSearch(driver);
+		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
+		    	
+		//add comment field
+		CommentsPage comments = new CommentsPage(driver);
+		comments.AddComments("Comment"+Utility.dynamicNameAppender());
+				
+		//Create coding for for assignment
+		cf = new CodingForm(driver);
+		cf.createCodingform(codingfrom);
+		agnmt = new AssignmentsPage(driver);
+		search = new SessionSearch(driver);
 				
 	}
 	
-	  @Test(groups={"smoke","regression"},priority=1)
+	 @Test(groups={"smoke","regression"},priority=1)
 	   public void CreateQuickBatch() throws InterruptedException, ParseException, IOException {
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
 	
 		search.basicContentSearch(Input.searchString1);
 		search.quickbatch();
@@ -83,8 +87,6 @@ public class TS_009_ValidateAssignmentFunctionality {
 	
 	  @Test(groups={"smoke","regression"},priority=2)
 	   public void CreateAssignmentDistributeToReviwer() throws InterruptedException, ParseException, IOException {
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
 		
 		//Create assignment with newly created coding form
 		
@@ -109,6 +111,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 			if(element.getText().equalsIgnoreCase(assignmentName)){
 				found = true;
 				System.out.println(assignmentName +"is assigned to reviewer successfully");
+				UtilityLog.info(assignmentName +"is assigned to reviewer successfully");
 				break;
 			}
 		}	
@@ -118,22 +121,26 @@ public class TS_009_ValidateAssignmentFunctionality {
 	
 	   
 	  
-	  
-	  
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
+		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+		System.out.println("Executing method :  " + testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

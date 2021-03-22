@@ -22,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class DocViewPage {
@@ -76,6 +77,7 @@ public class DocViewPage {
     public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
     public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
     public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
+    public Element getDocView_SaveReductionNew(){ return driver.FindElementByXPath("//*[@id='btnSave']"); }
     
    //remaks objects
     public Element getAdvancedSearchAudioRemarkIcon(){ return driver.FindElementByXPath("//*[@id='remarks-btn-audio-view']/a/span/i[2]"); }
@@ -232,6 +234,8 @@ public class DocViewPage {
     public Element getAudioPersistantHitEyeIcon(){ return driver.FindElementByXPath("//*[@id='search-btn-audio-view']//a");}
     public Element getDocView_Audio_Hit(){ return driver.FindElementByXPath("//*[@id='divAudioPersistentSearch']/div/p[1]"); }
     
+    //Doc view page redaction
+    public Element getPreRedaction(){ return driver.FindElementByCssSelector("#PrevAllRedaction");}
     
     
     public DocViewPage(Driver driver){
@@ -408,8 +412,10 @@ public class DocViewPage {
 		
     	if(Integer.parseInt(runningTime.substring(6, 8))>=5){
 			System.out.println("The total time for audio played is greater than 5 i.e. :" + runningTime.substring(6, 8));
-		}else{
+		UtilityLog.info("The total time for audio played is greater than 5 i.e. :" + runningTime.substring(6, 8));
+    	}else{
 			System.out.println("The total time for audio played is not displayed correctly");
+			UtilityLog.info("The total time for audio played is not displayed correctly");
 		}
 	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -418,8 +424,10 @@ public class DocViewPage {
     	String runningTime1 = getDocView_RunningTime().getText();
 		if(Integer.parseInt(runningTime1.substring(6, 8))==0){
 			System.out.println("The total time for audio played is greater than 5 i.e. :" + runningTime.substring(6, 8));
+		UtilityLog.info("The total time for audio played is greater than 5 i.e. :" + runningTime.substring(6, 8));
 		}else{
 			System.out.println("The total time for audio played is not displayed correctly");
+			UtilityLog.info("The total time for audio played is not displayed correctly");
 		}
 
 	}
@@ -449,6 +457,7 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
          catch (Exception e)
          {
         	 System.out.println("No Remarks exist'");
+        	 UtilityLog.info("No Remarks exist'");
          }
 			
 		//click on + icon to add remarks
@@ -457,10 +466,12 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
          //Get Audio duration start and End time first
         String Audiostarttimeremark=  getAdvancedSearchAudioRemarkTime().GetAttribute("value");
         System.out.println(Audiostarttimeremark);
+        UtilityLog.info(Audiostarttimeremark);
         DateFormat df = new SimpleDateFormat("HH:mm");
         //Get Audio duration start and End time first
         String Audiostarttime=getDocview_Audio_StartTime().getText();
         System.out.println(Audiostarttime);
+        UtilityLog.info(Audiostarttime);
       
 	     Date d = df.parse(Audiostarttime); 
 	     Calendar cal = Calendar.getInstance();
@@ -469,6 +480,7 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
          cal.add(Calendar.MINUTE, 2);
          String newTime2 = df.format(cal.getTime());
          System.out.println(newTime2); 
+         UtilityLog.info(newTime2);
          
          //Enter time in remarks field
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -516,6 +528,7 @@ public void audioReduction() throws InterruptedException, ParseException {
      catch (Exception e)
      {
     	 System.out.println("No Redactions exist'");
+    	 UtilityLog.info("No Redactions exist'");
      }
 	 
 	//click on + icon to add redactions
@@ -526,8 +539,10 @@ public void audioReduction() throws InterruptedException, ParseException {
      //Get Audio duration start and End time first
      String Audiostarttime=getDocview_Audio_StartTime().getText();
      System.out.println(Audiostarttime);
+     UtilityLog.info(Audiostarttime);
      String Audioendtime= getDocview_Audio_EndTime().getText();
      System.out.println(Audioendtime);
+     UtilityLog.info(Audioendtime);
      
      DateFormat df = new SimpleDateFormat("HH:mm");
 	     Date d = df.parse(Audiostarttime); 
@@ -535,11 +550,13 @@ public void audioReduction() throws InterruptedException, ParseException {
      cal.setTime(d);
      cal.add(Calendar.MINUTE, 2);
      String newTime = df.format(cal.getTime());
-     System.out.println(newTime); 
+     System.out.println(newTime);
+     UtilityLog.info(newTime);
      
      cal.add(Calendar.MINUTE, 1);
      String newTime1 = df.format(cal.getTime());
      System.out.println(newTime1); 
+     UtilityLog.info(newTime1);
      
      //Enter time in start field
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -568,6 +585,7 @@ public void audioReduction() throws InterruptedException, ParseException {
      base.VerifySuccessMessage("Record added Successfully");
 	 Thread.sleep(7000);
 	 System.out.println("Redaction added successfully");
+	 UtilityLog.info("Redaction added successfully");
 }
 
 public void audioComment(String comments) {
@@ -792,11 +810,11 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		
 }
 		
-		public void NonAudioRedaction(String redactiontag) throws InterruptedException {
+		public void nonAudioPageRedaction(String redactiontag) throws InterruptedException {
 		   	
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getDocView_RedactIcon().Displayed()  ;}}), Input.wait30);   
-			getDocView_RedactIcon().Click();
+			getDocView_RedactIcon().waitAndClick(5);
 			Thread.sleep(3000);
 	   	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -808,7 +826,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	    			getDocView_SelectReductionLabel().Displayed()  ;}}), Input.wait30); 
 	    	getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(redactiontag);
 	    	
-	    	getDocView_SaveReduction().waitAndClick(5);
+	    	getDocView_SaveReductionNew().waitAndClick(5);
 	    	
 	    	base.VerifySuccessMessage("Redaction tags saved successfully.");
 	    	
@@ -818,17 +836,13 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	    	
 	    	String HighlightedColor = getDocView_Redact_ThisPage().GetCssValue("color");
 			System.out.println(HighlightedColor);
+			UtilityLog.info(HighlightedColor);
 			
 			Assert.assertEquals(HighlightedColor, "rgba(230, 70, 52, 1)");
- 	
-	    	SessionSearch search = new SessionSearch(driver);
-	    	//Validate in advance sreach under work product search
-			search.switchToWorkproduct();
-			
-		    search.selectRedactioninWPS(redactiontag);
-		    Assert.assertEquals(search.serarchWP(), 1);
-
 		}
+	    	
+
+		
 		
  public void NonAudioRedactionDelete(String redactiontag) throws InterruptedException {
  	

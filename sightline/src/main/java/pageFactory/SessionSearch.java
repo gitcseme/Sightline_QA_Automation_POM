@@ -5,9 +5,13 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.Log;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -315,6 +319,7 @@ public class SessionSearch {
     		getSaveAsNewSearchRadioButton().waitAndClick(5);
         	}catch (Exception e) {
         		System.out.println("Radio button already selected");
+        		UtilityLog.info("Radio button already selected");
     		}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -323,7 +328,8 @@ public class SessionSearch {
     	getSaveSearch_Name().SendKeys(searchName);
     	getSaveSearch_SaveButton().Click();
     	base.VerifySuccessMessage("Saved search saved successfully");
-    	System.out.println("Saved search with name - "+searchName);
+    	Reporter.log("Saved the search with name '"+searchName+"'", true);
+    	UtilityLog.info("Saved search with name - "+searchName);
 	}
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
@@ -541,8 +547,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait120);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
-    	
+    	//System.out.println("Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	Reporter.log("Search is done for "+SearchString+" and PureHit is : "+pureHit,true);
     	return pureHit;
    }
     //Function to perform content search for a given search string
@@ -578,7 +585,8 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	Reporter.log("Serach is done for '"+SearchString+"' and PureHit is : "+pureHit, true);
+    	UtilityLog.info("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
    }
@@ -637,7 +645,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	System.out.println("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	
     	return pureHit;
 
 
@@ -699,7 +709,9 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Serach is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	System.out.println("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	UtilityLog.info("Search is done for "+metaDataField+" with value "+val1+" - "+val2+" purehit is : "+pureHit);
+    	
     	return pureHit;
 
 
@@ -730,7 +742,8 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Audio Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	System.out.println("Audio Search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Audio Search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
 
@@ -822,7 +835,8 @@ public class SessionSearch {
     	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
-    	System.out.println("Conceptual serach is done for "+SearchString+" and PureHit is : "+pureHit);
+    	System.out.println("Conceptual search is done for "+SearchString+" and PureHit is : "+pureHit);
+    	UtilityLog.info("Conceptual search is done for "+SearchString+" and PureHit is : "+pureHit);
     	
     	return pureHit;
 
@@ -895,22 +909,23 @@ public class SessionSearch {
    		 getPureHitAddButton().Click();
    		}catch (Exception e) {
    			System.out.println("Pure hit block already moved to action panel");
+   			UtilityLog.info("Pure hit block already moved to action panel");
    		}
    		 
    	
    	 
    	 getBulkActionButton().waitAndClick(20);
    	
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
+   	/* driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); */
    	 
-   	 getBulkFolderAction().Click();
+   	 getBulkFolderAction().waitAndClick(10);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().Click();
+   	 getBulkNewTab().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterFolderName().Visible()  ;}}), Input.wait60); 
@@ -935,8 +950,9 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk folder is done, folder is : "+folderName);
-   	
+   	 //System.out.println("Bulk folder is done, folder is : "+folderName);
+   	 UtilityLog.info("Bulk folder is done, folder is : "+folderName);
+   	 Reporter.log("Bulk folder is done, folder is : "+folderName,true);
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
@@ -948,10 +964,12 @@ public class SessionSearch {
    	 try{
    		 getPureHitAddButton().Click();
    		}catch (Exception e) {
-   			System.out.println("Pure hit block already moved to action panel");
+   			//System.out.println("Pure hit block already moved to action panel");
+   			UtilityLog.info("Pure hit block already moved to action panel");
+   			Reporter.log("Pure hit block already moved to action panel",true);
    		}
    	 
-   	 getBulkActionButton().Click();
+   	 getBulkActionButton().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
@@ -966,21 +984,22 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-   	 getContinueButton().Click();
+   	 getContinueButton().waitAndClick(10);
    	 
    	 final BaseClass bc = new BaseClass(driver);
        final int Bgcount = bc.initialBgCount();
        
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		    	getFinalCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-   	 getFinalizeButton().Click();
+   	 getFinalizeButton().waitAndClick(10);
    	 
    	 base.VerifySuccessMessage("Records saved successfully");
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk folder is done, folder is : "+folderName);
-   	 
+   	 //System.out.println("Bulk folder is done, folder is : "+folderName);
+   	 UtilityLog.info("Bulk folder is done, folder is : "+folderName);
+   	 Reporter.log("Bulk folder is done, folder is : "+folderName,true);
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
@@ -993,6 +1012,7 @@ public class SessionSearch {
    		 getPureHitAddButton().Click();
    		}catch (Exception e) {
    			System.out.println("Pure hit block already moved to action panel");
+   			UtilityLog.info("Pure hit block already moved to action panel");
    		}
    	 
    	 getBulkActionButton().Click();
@@ -1028,6 +1048,7 @@ public class SessionSearch {
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
    	 System.out.println("Bulk Tag is done, Tag is : "+tagName);
+   	 UtilityLog.info("Bulk Tag is done, Tag is : "+tagName);
    	 
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
@@ -1040,20 +1061,21 @@ public class SessionSearch {
    	 getPureHitAddButton().Click();
    	}catch (Exception e) {
    		System.out.println("Pure hit block already moved to action panel");
+   		UtilityLog.info("Pure hit block already moved to action panel");
    	}
    	 
    	 getBulkActionButton().waitAndClick(20);
    	
-   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkTagAction().Visible()  ;}}), Input.wait60); 
-   	 
+   	 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkTagAction().Visible()  ;}}), Input.wait60); */
+   	 Thread.sleep(2000); // synch with app!
    	 getBulkTagAction().waitAndClick(10);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().Click();
+   	 getBulkNewTab().waitAndClick(10);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterTagName().Visible()  ;}}), Input.wait60); 
@@ -1083,8 +1105,10 @@ public class SessionSearch {
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   	 System.out.println("Bulk Tag is done, Tag is : "+TagName); 
-   	 
+   	 //System.out.println("Bulk Tag is done, Tag is : "+TagName); 
+   	 UtilityLog.info("Bulk Tag is done, Tag is : "+TagName);
+   	 Reporter.log("Bulk Tag is done, Tag is : "+TagName, true);
+	 
    	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
    	 driver.getWebDriver().navigate().refresh();
    }
@@ -1117,6 +1141,7 @@ public void ViewInDocList() throws InterruptedException{
 		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 		 
 	 
@@ -1132,6 +1157,7 @@ public void ViewInDocList() throws InterruptedException{
 		}catch (Exception e) {
 					}
 	 System.out.println("Navigated to doclist, to view docslist");
+	 UtilityLog.info("Navigated to doclist, to view docslist");
 	
 }
 
@@ -1142,6 +1168,7 @@ public void ViewInDocView() throws InterruptedException{
 		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 		 
 	 driver.scrollPageToTop();
@@ -1156,6 +1183,7 @@ public void ViewInDocView() throws InterruptedException{
 			 getDocViewActionDL().Click();
 		}
 	 System.out.println("Navigated to docView to view docs");
+	 UtilityLog.info("Navigated to docView to view docs");
 	
 }
 
@@ -1165,6 +1193,7 @@ public void tallyResults() throws InterruptedException {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().Click();
@@ -1174,6 +1203,7 @@ public void tallyResults() throws InterruptedException {
 	 getTallyResults().waitAndClick(10);
 	 Thread.sleep(3000);
 	 System.out.println("Navigated to Tally  to view docs");
+	 UtilityLog.info("Navigated to Tally  to view docs");
 }
 public void bulkAssign() {
 	driver.getWebDriver().get(Input.url+"Search/Searches");
@@ -1181,6 +1211,7 @@ public void bulkAssign() {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
@@ -1192,7 +1223,7 @@ public void bulkAssign() {
 	 getBulkAssignAction().waitAndClick(10);
 	 
 	 System.out.println("performing bulk assign");
-	 
+	 UtilityLog.info("performing bulk assign");
 	
 	
 }
@@ -1207,6 +1238,7 @@ public void bulkRelease(final String SecGroup) {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
@@ -1231,8 +1263,7 @@ public void bulkRelease(final String SecGroup) {
 	 base.VerifySuccessMessage("Records saved successfully");
 	 
 	 System.out.println("performing bulk release");
-	 
-	
+	 UtilityLog.info("performing bulk release");
 	
 }
 //Function to perform bulk untag
@@ -1265,6 +1296,7 @@ public void bulkUnTag(final String TagName) throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	 System.out.println("Bulk Untag is done, Tag is : "+TagName); 
+	 UtilityLog.info("Bulk Untag is done, Tag is : "+TagName);
 	 
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
@@ -1300,6 +1332,7 @@ public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	 System.out.println("Bulk Unfolder is done, folder is : "+folderName);
+	 UtilityLog.info("Bulk Unfolder is done, folder is : "+folderName);
 	 
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
@@ -1315,6 +1348,7 @@ public void selectTagInASwp(String tagName) {
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getTree().Visible()  ;}}), Input.wait30); 
 	 System.out.println(getTree().FindWebElements().size());
+	 UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
 			//System.out.println(iterable_element.getText());
 			if(iterable_element.getText().contains(tagName)){
@@ -1342,6 +1376,7 @@ public void selectFolderInASwp(String folderName) {
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getTree().Visible()  ;}}), Input.wait30);
 	System.out.println(getTree().FindWebElements().size());
+	UtilityLog.info(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
 		//System.out.println(iterable_element.getText());
 		if(iterable_element.getText().contains(folderName)){
@@ -1368,6 +1403,7 @@ public void selectSecurityGinWPS(String sgname) {
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getTree().Visible()  ;}}), Input.wait30); 
 	 System.out.println(getSecurityNamesTree().FindWebElements().size());
+	 UtilityLog.info(getSecurityNamesTree().FindWebElements().size());
 		for (WebElement iterable_element : getSecurityNamesTree().FindWebElements()) {
 			//System.out.println(iterable_element.getText());
 			if(iterable_element.getText().contains(sgname)){
@@ -1422,6 +1458,7 @@ public void  selectRedactioninWPS(final String redactName) throws InterruptedExc
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getTree().Visible()  ;}}), Input.wait30);
 	System.out.println(getTree().FindWebElements().size());
+	UtilityLog.info(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
 		//System.out.println(iterable_element.getText());
 		if(iterable_element.getText().contains(redactName)){
@@ -1454,6 +1491,7 @@ public void  selectAssignmentInWPS(final String assignMentName) throws Interrupt
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getTree().Visible()  ;}}), Input.wait30);
 	System.out.println(getTree().FindWebElements().size());
+	UtilityLog.info(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
 		//System.out.println(iterable_element.getText());
 		if(iterable_element.getText().contains(assignMentName)){
@@ -1461,6 +1499,7 @@ public void  selectAssignmentInWPS(final String assignMentName) throws Interrupt
 			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 			driver.scrollingToBottomofAPage();
 			System.out.println(iterable_element.getText());
+			UtilityLog.info(iterable_element.getText());
 			iterable_element.click();
 		}
 	}
@@ -1498,6 +1537,7 @@ public int serarchWP() {
 		
 		int pureHit = Integer.parseInt(getPureHitsCount().getText());
 		System.out.println("Search is done and PureHit is : "+pureHit);
+		UtilityLog.info("Search is done and PureHit is : "+pureHit);
 	 	return pureHit; 
 
 }
@@ -1538,6 +1578,7 @@ public void BulkActions_Folder(String folderName) throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	 System.out.println("Bulk folder is done, folder is : "+folderName);
+	 UtilityLog.info("Bulk folder is done, folder is : "+folderName);
 }
 //Function to perform bulk tag from any page
 public void BulkActions_Tag(String TagName) throws InterruptedException{
@@ -1574,6 +1615,7 @@ public void BulkActions_Tag(String TagName) throws InterruptedException{
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
 	 System.out.println("Bulk Tag is done, Tag is : "+TagName); 
+	 UtilityLog.info("Bulk Tag is done, Tag is : "+TagName);
 }
 public void saveSearchAdvanced(String searchName) {
    	
@@ -1587,6 +1629,7 @@ public void saveSearchAdvanced(String searchName) {
 	   	getSaveSearch_SaveButton().Click();
 	   	base.VerifySuccessMessage("Saved search saved successfully");
 	   	System.out.println("Saved search with name - "+searchName);
+	   	UtilityLog.info("Saved search with name - "+searchName);
 		}
 
 public void Removedocsfromresults() {
@@ -1597,6 +1640,7 @@ public void Removedocsfromresults() {
 	catch(Exception e)
 	{
 		System.out.println("No docs present in cart");
+		UtilityLog.info("No docs present in cart");
 	}
 	
 }
@@ -1608,6 +1652,7 @@ public void Removedocsfromresults() {
 		 getPureHitAddButton().Click();
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
@@ -1619,6 +1664,7 @@ public void Removedocsfromresults() {
 	 getQuickBatchAction().Click();
 	 
 	 System.out.println("performing quick batch");
+	 UtilityLog.info("performing quick batch");
 	
 }
   
@@ -1653,6 +1699,7 @@ public void Removedocsfromresults() {
   		getTallyContinue().waitAndClick(5);
   	}catch (Exception e) {
 		System.out.println("NO pop up appears");
+		UtilityLog.info("NO pop up appears");
 		}
   	
   	//verify counts for all the tiles
@@ -1661,9 +1708,11 @@ public void Removedocsfromresults() {
   	
   	int pureHit = Integer.parseInt(getPureHitsCountwithOptions().getText());
   	System.out.println("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
+  	UtilityLog.info("Serach is done for "+SearchString+" and PureHit is : "+pureHit);
   	
   	String backgroundColorthread = driver.FindElementByXPath(".//*[@id='002']").GetCssValue("background-color");
 	System.out.println(backgroundColorthread);
+	UtilityLog.info(backgroundColorthread);
 	
 	Assert.assertEquals(backgroundColorthread, "rgba(218, 218, 218, 1)");
 
@@ -1681,6 +1730,7 @@ public void Removedocsfromresults() {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getTree().Visible()  ;}}), Input.wait30); 
 		 System.out.println(getTree().FindWebElements().size());
+		 UtilityLog.info(getTree().FindWebElements().size());
 			for (WebElement iterable_element : getTree().FindWebElements()) {
 				//System.out.println(iterable_element.getText());
 				if(iterable_element.getText().contains(AssgnName)){
@@ -1702,10 +1752,12 @@ public void Removedocsfromresults() {
 			List<WebElement> alloptions = getadwp_assgn_distributedto().FindWebElements();
 			
 			System.out.println(alloptions.size());
+			UtilityLog.info(alloptions.size());
 			
 			for (WebElement options : getadwp_assgn_distributedto().FindWebElements())
 			{
 				System.out.println(options.getText());
+				UtilityLog.info(options.getText());
 				Assert.assertTrue(options.getText().contains(Input.rmu1userName));
 				Assert.assertTrue(options.getText().contains(Input.rmu2userName));
 				Assert.assertTrue(options.getText().contains(Input.pa1userName));
@@ -1730,6 +1782,7 @@ public void Removedocsfromresults() {
 				
 				int pureHit = Integer.parseInt(getPureHitsCount().getText());
 				System.out.println("Search is done and PureHit is : "+pureHit);
+				UtilityLog.info("Search is done and PureHit is : "+pureHit);
 			 			
 			
 

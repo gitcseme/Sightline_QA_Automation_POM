@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
-  <listeners>
-    <listener class-name="executionMaintenance.AnnotationTransformer"/>
-  </listeners>
-  <test name="AllManageModules(failed)">
+  <test name="BasicAndAdvancedSearchOperations(failed)">
     <groups>
       <run>
         <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_008_AllManageModules">
+      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
         <methods>
-          <include name="takeScreenShot"/>
-          <include name="createKeywordField"/>
+          <include name="ConceptualSearch"/>
+          <include name="preCondition"/>
           <include name="close"/>
-          <include name="before"/>
-          <include name="DeleteTagField"/>
+          <include name="takeScreenShot"/>
+          <include name="contentSearchWithOperatorsInBS"/>
+          <include name="contentSearchWithOperatorsInAS"/>
+          <include name="audioSearch"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
-      <class name="testScriptsSmoke.Input">
-        <methods>
-          <include name="loadEnvConfig"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.Input -->
+      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
     </classes>
-  </test> <!-- AllManageModules(failed) -->
+  </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
 </suite> <!-- Failed suite [Smoke Suite] -->

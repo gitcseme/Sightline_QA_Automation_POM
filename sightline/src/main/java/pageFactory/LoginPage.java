@@ -15,18 +15,21 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class LoginPage {
 
     Driver driver;
-    
+      
     public Element getEuserName(){ return driver.FindElementById("txtBxUserID"); }
     public Element getEpassword(){ return driver.FindElementById("txtBxUserPass"); }
     public Element getEloginButton(){ return driver.FindElementByName("submit"); }
@@ -55,6 +58,7 @@ public class LoginPage {
 	public void loginToSightLine(String strUserName,String strPasword){
     	driver.waitForPageToBeReady();
         //Fill user name
+    	getEuserName().waitAndClick(10); // to adjust with app!
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getEuserName().Visible()  ;}}), Input.wait30); 
     	getEuserName().SendKeys(strUserName);
@@ -108,7 +112,9 @@ public class LoginPage {
 			// TODO: handle exception
 		}
     	Assert.assertTrue(getSignoutMenu().Visible());
-    	System.out.println("Login success!");
+    	//System.out.println("Login success!");
+    	UtilityLog.info("Login success!");
+    	Reporter.log("Login success!", true);
 
     }
     public void logout(){
@@ -124,6 +130,7 @@ public class LoginPage {
     	        Alert alert = driver.getWebDriver().switchTo().alert();
     	        String alertText = alert.getText();
     	        System.out.println("Alert data: " + alertText);
+    	        UtilityLog.info("Alert data: " + alertText);
     	        alert.accept();
     	    } catch (NoAlertPresentException e) {
     	        //e.printStackTrace();
@@ -131,8 +138,8 @@ public class LoginPage {
     	
     	
     	driver.scrollPageToTop();
-    	/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSignoutMenu().Visible()  ;}}), 30000); */
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSignoutMenu().Visible()  ;}}), Input.wait30); 
     	getSignoutMenu().waitAndClick(5);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getLogoutOption().Visible()  ;}}), 30000); 
@@ -140,6 +147,7 @@ public class LoginPage {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEuserName().Visible()  ;}}), 30000); 
     	Assert.assertTrue(getEuserName().Visible());
+    	UtilityLog.info("Logged out successfully!");
     }
 
  public void logOutWithConfirmation(){
@@ -154,8 +162,10 @@ public class LoginPage {
     		BaseClass bc = new BaseClass(driver);
     		bc.getPopupYesBtn().waitAndClick(10);
 			System.out.println("For DocView - Pop up confirmation dialog is shown and clicked on yes button");
+			UtilityLog.info("For DocView - Pop up confirmation dialog is shown and clicked on yes button");
 		}catch(Exception e1){
 			System.out.println("For Doc View - Pop up confirmation dialog is not appeared");
+			UtilityLog.info("For Doc View - Pop up confirmation dialog is not appeared");
 		}
 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -195,6 +205,7 @@ public class LoginPage {
     @SuppressWarnings("null")
 	public static String readGmailMail(String SujjectLine, String userName,String OTPorURL,String userID, String userPwd) {
 	  System.out.println("passed : "+SujjectLine+userName);
+	  UtilityLog.info("passed : "+SujjectLine+userName);
       Properties props = new Properties();
       String url = null;
       String otp = null;
@@ -224,6 +235,7 @@ public class LoginPage {
 	            	if(messages[i].getSubject().trim().startsWith(SujjectLine+userName)){
 	            		mailReceived=true;
 		                System.out.println("e-mail Subject:- " + messages[i].getSubject());
+		                UtilityLog.info("e-mail Subject:- " + messages[i].getSubject());
 		                Object msgContent = messages[i].getContent();
 		
 		                String content = ""; 
@@ -280,9 +292,11 @@ public class LoginPage {
           	else{
           		if(wait >= waitForMail){
           			System.out.println("no mail, waited for given time..");
+          			UtilityLog.info("no mail, waited for given time..");
           		}
           		Thread.sleep(5000);
           		System.out.println("Waiting for mail!");
+          		UtilityLog.info("Waiting for mail!");
           	}
           	 inbox.close(true);
            	store.close();

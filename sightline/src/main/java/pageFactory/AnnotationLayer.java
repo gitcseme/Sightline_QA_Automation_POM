@@ -2,8 +2,11 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -46,7 +49,8 @@ public class AnnotationLayer {
     	}
     	catch (Exception e)
     	{
-    	System.out.println("Annotation layer already exist");
+    	Reporter.log("Annotation layer "+name+" added!",true);
+    	UtilityLog.info("Annotation layer already exist");
     	}
     	 
          base.CloseSuccessMsgpopup();

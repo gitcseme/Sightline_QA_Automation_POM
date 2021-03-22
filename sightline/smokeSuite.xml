@@ -14,9 +14,9 @@
 	    <classes>
         	<class name="testScriptsSmoke.TS_005_ValidateCategorization" ></class>  
     	</classes>
-	</test>   
+	</test>    
 	
-	<!--  	
+ 	<!--  	
   	<test name="2FAValidation">
     <classes>
         <class name="testScriptsSmoke.TS_014_2FAValidation" ></class>  
@@ -24,7 +24,7 @@
 	</test>    
 	-->
 	
-	 <test name="AllManageModules">
+	<test name="AllManageModules">
 	 <groups><run><include name="smoke" /></run></groups>
     	<classes>
        	 <class name="testScriptsSmoke.TS_008_AllManageModules" ></class>  
@@ -135,6 +135,6 @@
         <class name="testScriptsSmoke.TS_006_ValidateBatchPrint" ></class>  
     </classes>
 	</test>       
- 	 
+ 	  
  	
 </suite> <!-- Suite -->

@@ -2,6 +2,8 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import junit.framework.Assert;
@@ -60,7 +62,7 @@ public class KeywordPage {
     	getYesButton().Click();
     	
     	base.VerifySuccessMessage("Keyword Highlighting Group added successfully");
-    	
+    	Reporter.log("Keyword '"+keywordname+" with keywords "+keywords+"' added successfully",true);
         base.CloseSuccessMsgpopup();
       }
     

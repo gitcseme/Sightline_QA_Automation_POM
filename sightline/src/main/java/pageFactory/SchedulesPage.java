@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 
@@ -55,6 +56,7 @@ public class SchedulesPage {
 					found=true;
 					assertTrue(getStatusCheck(row).getText().trim().equalsIgnoreCase("COMPLETE") );
 					System.out.println(taskName +" Scheduled run is completed with the status 'COMPLETE'!");
+					UtilityLog.info(taskName +" Scheduled run is completed with the status 'COMPLETE'!");
 					return;
 				}
 				
@@ -66,6 +68,7 @@ public class SchedulesPage {
 			   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
 			   nextPage = false;
 			   System.out.println("Not found!!!!!!");
+			   UtilityLog.info("Not found!!!!!!");
 		   }
 		   catch (Exception e) {
 			   driver.getWebDriver().findElement(By.linkText("Next")).click(); 

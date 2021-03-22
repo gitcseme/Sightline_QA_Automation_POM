@@ -19,6 +19,7 @@ import com.opencsv.CSVReader;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -113,6 +114,7 @@ public class CustomDocumentDataReport {
 	    	  File root = new File(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/downloads/");
 	          File[] list = root.listFiles();
 	    	  System.out.println(list.length);
+	    	  UtilityLog.info(list.length);
 	    	// Create an object of filereader 
 	          // class with CSV file as a parameter. 
 	          FileReader filereader = new FileReader(list[0]); 
@@ -137,7 +139,9 @@ public class CustomDocumentDataReport {
       	    
 	  	
 	    	  System.out.println("Selected columns order : "+expected );
+	    	  UtilityLog.info("Selected columns order : "+expected );
 	    	  System.out.println("Columns order in export  : "+actual );
+	    	  UtilityLog.info("Columns order in export  : "+actual );
 	    	  for (int i = 0; i < expected.size(); i++) {
 	    		  Assert.assertTrue(expected.get(i).equals(actual.get(i)));	
 	    	}

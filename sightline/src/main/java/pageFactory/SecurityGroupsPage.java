@@ -8,9 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Reporter;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -45,8 +47,8 @@ public class SecurityGroupsPage {
     			getSecurityGroupCreateButton().Visible()  ;}}), Input.wait60); 
     	getSecurityGroupCreateButton().waitAndClick(5);
     	
-    	Actions action = new Actions((WebDriver) driver);
-    	action.moveToElement((WebElement) getSecurityGroupCreateButton()).click().perform();
+    	Actions action = new Actions(driver.getWebDriver());
+    	action.moveToElement(driver.getWebDriver().findElement(By.xpath("//button[text()='Create']"))).click().perform();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSecurityGroupName().Visible()  ;}}), Input.wait30); 
@@ -57,7 +59,8 @@ public class SecurityGroupsPage {
     	getSecurityGroupSaveButton().Click();
     	
     	bc.VerifySuccessMessage("Security group added successfully");
-    	System.out.println("Security Group created :-"+ securitygroupname);
+    	Reporter.log("Security Group created :"+ securitygroupname, true);
+    	UtilityLog.info("Security Group created :-"+ securitygroupname);
     	
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -74,8 +77,8 @@ public class SecurityGroupsPage {
     	List<String> all = new ArrayList<String>();
 		for(int j=0;j<allvalues.size();j++)
 		   {
-			  System.out.println(all.add(allvalues.get(j).getText()));
-			  System.out.println(all);
+			  all.add(allvalues.get(j).getText());
+			 
 		   }
 		return all;
 		
@@ -103,6 +106,7 @@ public class SecurityGroupsPage {
     	   catch(Exception e)
     	   {
     		   System.out.println("Annotation layer already added");
+    		   UtilityLog.info("Annotation layer already added");
     	   }
          	
        }

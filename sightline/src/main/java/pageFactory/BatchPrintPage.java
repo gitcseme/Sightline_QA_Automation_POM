@@ -16,8 +16,11 @@ import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Reporter;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
@@ -241,6 +244,7 @@ public class BatchPrintPage {
 		{
 			driver.Navigate().refresh();
 			System.out.println("Refresh");
+			UtilityLog.info("Refresh");
 		}
 		}	
 		
@@ -248,6 +252,10 @@ public class BatchPrintPage {
 				getTaskType().Displayed() ;}}), Input.wait30); 
 		String status = getBatchPrintStatus().getText();
 		Assert.assertEquals("COMPLETED", status);
+		Reporter.log("Batch Print with saved search "+name+" with order "+orderCriteria+" "
+				+ "and order type "+orderType+" is completed!",true);
+		UtilityLog.info("Batch Print with saved search "+name+" with order "
+				+ ""+orderCriteria+" and order type "+orderType+" is completed!");
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDownLoadLink().Enabled()  ;}}), Input.wait30); 
@@ -315,12 +323,14 @@ public class BatchPrintPage {
                                                                   orderCriteria.equals("LastEditDate:")||
                                                                   orderCriteria.equals("DocDate:")||
                                                                   orderCriteria.equals("LastSaveDate:")){
-                                                           //System.out.println("***********************Testing MasterDate***********************************");
+                                                           //System.out.println("***********************Testing Dates***********************************");
                                                            if(line.contains(orderCriteria)){
                                                                   if(!line.substring(line.indexOf("Date:")+5).toString().isEmpty()&&!line.substring(line.indexOf("Date:")+5).equalsIgnoreCase(" ")){
                                                                         //System.out.println("---"+line.substring(line.indexOf("Date:")+5).toString());
                                                                         System.out.println(f.getAbsoluteFile().toString());
+                                                                        UtilityLog.info(f.getAbsoluteFile().toString());
                                                                         System.out.println(line.substring(line.indexOf("Date:")+5).toString().trim());
+                                                                        UtilityLog.info(line.substring(line.indexOf("Date:")+5).toString().trim());
                                                                         orderInFiles.add(line.substring(line.indexOf("Date:")+5).toString().trim());
                                                                        
                                                                   }
@@ -329,12 +339,14 @@ public class BatchPrintPage {
                                                     }
                                                     else if(orderCriteria.equals("CustodianName:")||
                                                                   orderCriteria.equals("DocFileName:")){
-                                                           //System.out.println("***********************Testing MasterDate***********************************");
+                                                           //System.out.println("***********************Testing Names***********************************");
                                                            if(line.contains(orderCriteria)){
                                                                   if(!line.substring(line.indexOf("Name:")+5).toString().isEmpty()&&!line.substring(line.indexOf("Name:")+5).equalsIgnoreCase(" ")){
                                                                         //System.out.println("---"+line.substring(line.indexOf("Date:")+5).toString());
                                                                         System.out.println(f.getAbsoluteFile().toString());
+                                                                        UtilityLog.info(f.getAbsoluteFile().toString());
                                                                         System.out.println(line.substring(line.indexOf("Name:")+5).toString().trim());
+                                                                        UtilityLog.info(line.substring(line.indexOf("Name:")+5).toString().trim());
                                                                         orderInFiles.add(line.substring(line.indexOf("Name:")+5).toString().trim());
                                                                        
                                                                   }
@@ -368,10 +380,14 @@ public class BatchPrintPage {
        System.out.println("Expected "+orderCriteria.replace(":", "")+" order : "+expectedOrder);
        //Now compare sorted arraylist with output
        if(expectedOrder.equals(orderInFiles)){
-    	   System.out.println(orderCriteria+" is in requested order! -->PASS");
+    	   //System.out.println(orderCriteria+" is in requested order! -->PASS");
+    	   Reporter.log(orderCriteria+" is in requested order! -->PASS",true);
+ 		   UtilityLog.info(orderCriteria+" is in requested order! -->PASS");
        }else{
            // System.out.println("FAIL");
-    	   System.out.println(orderCriteria+" is NOT in requested order! -->FAIL");
+    	  // System.out.println(orderCriteria+" is NOT in requested order! -->FAIL");
+    	   Reporter.log(orderCriteria+" is NOT in requested order! -->FAIL",true);
+ 		   UtilityLog.info(orderCriteria+" is NOT in requested order! -->FAIL");
     	   Assert.assertTrue(expectedOrder.equals(orderInFiles));
        }
       
