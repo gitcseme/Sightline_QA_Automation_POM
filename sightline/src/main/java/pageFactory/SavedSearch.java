@@ -669,10 +669,11 @@ public class SavedSearch {
 
 		// getShareSaveBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
-
+		Thread.sleep(5000);
+		
 		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		Thread.sleep(2000);
-
+	
+		driver.getWebDriver().navigate().refresh();
 		// get Search ID
 		String SearchID = getSelectSearchWithID(searchName).getText();
 		System.out.println(SearchID);

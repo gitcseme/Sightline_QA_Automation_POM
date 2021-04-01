@@ -247,8 +247,8 @@ public class Input {
 			 	userpage.AddUserstoProject(projectName);
 				
 			 	userpage.BulkUserAccess(Input.projectName);
-			 	System.out.println("add rights manually");
-				Thread.sleep(40000);
+			 /*	System.out.println("add rights manually");
+				Thread.sleep(40000);*/
 			 	
 				lp.logout();
 				
@@ -262,7 +262,7 @@ public class Input {
 	}
 
 	public void ingestion() throws InterruptedException{
-		
+		try{
 		if(ingestion.equalsIgnoreCase("yes")){
 				driver = new Driver();
 				lp = new LoginPage(driver);
@@ -284,19 +284,60 @@ public class Input {
 					bc.selectproject();
 					
 				    IngestionPage page1 = new IngestionPage(driver);
-			     	page1.AddOnlyNewIngestion(dataset.get(i).toString());
-			     	
+			     	if(!page1.AddOnlyNewIngestion(dataset.get(i).toString())){
+			     		System.out.println("Execution aborted!, Ingestion did not go well! take a look and continue.");
+						UtilityLog.info("Execution aborted!, Ingestion did not go well! take a look and continue. ");
+						System.exit(1);
+						
+			     	}
+			     		
+		     	
 			 	    SessionSearch search = new SessionSearch(driver);
 			 	    
 			     	int count = search.basicMetaDataSearch("IngestionName", null, page1.IngestionName, null);
-			     	if(dataset.get(i).toString().equals("Automation_Collection1K_Tally"))
-			     		Assert.assertEquals(count, 1003);
-			     	else if(dataset.get(i).toString().equals("Automation_20Family_20Threaded"))
-			     		Assert.assertEquals(count, 74);
-			     	else if(dataset.get(i).toString().equals("Automation_AllSources"))
-			     		Assert.assertEquals(count, 125);
-			     		
-			     	search.bulkRelease("Default Security Group");  
+			     	if(dataset.get(i).toString().equals("Automation_Collection1K_Tally")){
+			     		if(count!=1003)
+			     		{
+			     			System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+			     			System.out.println(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+							UtilityLog.info(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+			     			System.exit(1);
+			     		}
+			     		else 
+			     			UtilityLog.info(dataset+" has all the documnets");
+			     	}
+			     	else if(dataset.get(i).toString().equals("Automation_20Family_20Threaded")){
+			     		if(count!=74)
+			     		{
+			     			System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+			     			System.out.println(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+							UtilityLog.info(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+			     			System.exit(1);
+			     		}
+			     		else 
+			     			UtilityLog.info(dataset+" has all the documnets");
+			     	}
+			     	else if(dataset.get(i).toString().equals("Automation_AllSources")){
+			     		if(count!=125)
+			     		{
+			     			System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+			     			System.out.println(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+							UtilityLog.info(dataset.get(i).toString()+" : Docs number mismatch! take a look and then continue the execution!!");
+			     			System.exit(1);
+			     		}
+			     		else 
+			     			UtilityLog.info(dataset+" has all the documnets");
+			     	}
+			     	if(!search.bulkReleaseIngestions("Default Security Group")){
+			     		 System.out.println("Execution aborted!");
+			 			UtilityLog.info("Execution aborted!");
+			 			System.out.println("Bulk relese did not go well! take a look and continue!!");
+			 			UtilityLog.info("Bulk relese did not go well! take a look and continue!!");
+			 			System.exit(1);
+			     	}
 			     	lp.logout();
 				}
 				System.out.println("******Ingestion Completed********");
@@ -304,6 +345,11 @@ public class Input {
 		}else{
 			System.out.println("Choosen not to perform any ingestion");
 			UtilityLog.info("Choosen not to perform any ingestion");
+		}
+		}catch (Exception e) {
+			System.out.println("Execution aborted!, Something went wrong during ingestion.");
+			UtilityLog.info("Execution aborted!, Something went wrong during ingestion.");
+			System.exit(1);
 		}
 		
 }

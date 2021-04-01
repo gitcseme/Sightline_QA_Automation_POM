@@ -962,7 +962,7 @@ public class SessionSearch {
    	 
    	 driver.getWebDriver().get(Input.url+"Search/Searches");
    	 try{
-   		 getPureHitAddButton().Click();
+   		 getPureHitAddButton().waitAndClick(10);
    		}catch (Exception e) {
    			//System.out.println("Pure hit block already moved to action panel");
    			UtilityLog.info("Pure hit block already moved to action panel");
@@ -1235,7 +1235,7 @@ public void bulkAssign() {
 public void bulkRelease(final String SecGroup) {
 
 	 try{
-		 getPureHitAddButton().Click();
+		 getPureHitAddButton().waitAndClick(10);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
@@ -1246,25 +1246,78 @@ public void bulkRelease(final String SecGroup) {
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);
 	 }catch (Exception e) {
-		 getBulkReleaseActionDL().Click();
+		 getBulkReleaseActionDL().waitAndClick(10);
 	}
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Click();
+	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
-	 getBulkRelease_ButtonRelease().Click();
+	 getBulkRelease_ButtonRelease().waitAndClick(20);
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getFinalizeButton().Visible()  ;}}), Input.wait60); 
-	 getFinalizeButton().Click();
+	 getFinalizeButton().waitAndClick(20);
    
-	 base.VerifySuccessMessage("Records saved successfully");
+	 base.VerifySuccessMessageB("Records saved successfully");
 	 
 	 System.out.println("performing bulk release");
 	 UtilityLog.info("performing bulk release");
 	
+}
+
+public boolean bulkReleaseIngestions(final String SecGroup) {
+	boolean release = false;
+	try{
+	 try{
+		 getPureHitAddButton().waitAndClick(10);
+		}catch (Exception e) {
+			System.out.println("Pure hit block already moved to action panel");
+			UtilityLog.info("Pure hit block already moved to action panel");
+		}
+	 
+	 getBulkActionButton().waitAndClick(10);
+	 try {
+		Thread.sleep(3000);
+	} catch (InterruptedException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	
+	 try{
+		 getBulkReleaseAction().waitAndClick(10);
+	 }catch (Exception e) {
+		 getBulkReleaseActionDL().waitAndClick(10);
+	}
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
+	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+	 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
+	 getBulkRelease_ButtonRelease().waitAndClick(20);
+	 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getFinalizeButton().Visible()  ;}}), Input.wait60); 
+	 getFinalizeButton().waitAndClick(20);
+  
+	 if(!base.VerifySuccessMessageB("Records saved successfully")){
+		    System.out.println("Execution aborted!");
+			UtilityLog.info("Execution aborted!");
+			System.out.println("Bulk relese did not go well! take a look and continue!!");
+			UtilityLog.info("Bulk relese did not go well! take a look and continue!!");
+			System.exit(1);
+	 }
+	 
+	 System.out.println("performed bulk release");
+	 UtilityLog.info("performed bulk release");
+		release = true;
+		
+	}finally {
+		System.out.println("in");
+		return release;
+	}
 }
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{

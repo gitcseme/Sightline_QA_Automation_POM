@@ -390,6 +390,27 @@ public class BaseClass {
 		UtilityLog.info("Expected message - "+ExpectedMsg);
 		Reporter.log("Expected message - "+ExpectedMsg,true);
 	}
+	
+	public boolean VerifySuccessMessageB(String ExpectedMsg) {
+		boolean release = false;
+		try{
+		driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSuccessMsgHeader().Visible();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+			UtilityLog.info("Expected message - "+ExpectedMsg);
+			Reporter.log("Expected message - "+ExpectedMsg,true);
+			
+			release = true;
+			
+		}finally {
+			return release;
+		}
+		
+	}
 
 	public void VerifyWarningMessage(String ExpectedMsg) {
 		driver.WaitUntil((new Callable<Boolean>() {
