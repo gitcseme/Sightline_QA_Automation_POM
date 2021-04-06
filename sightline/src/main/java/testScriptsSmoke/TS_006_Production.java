@@ -46,10 +46,7 @@ public class TS_006_Production {
 		
 		//Input in = new Input();
 		//in.loadEnvConfig();
-		driver = new Driver();
 		
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	
 	
 	}
@@ -57,6 +54,10 @@ public class TS_006_Production {
 	@Test(groups={"smoke","regression"})
 	public void  AddNewProduction() throws Exception {
 		//Pre-requisites
+		driver = new Driver();
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);

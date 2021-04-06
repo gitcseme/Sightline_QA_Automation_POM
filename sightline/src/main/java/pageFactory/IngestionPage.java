@@ -3,6 +3,7 @@ package pageFactory;
 import java.util.concurrent.Callable;
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import executionMaintenance.UtilityLog;
 import testScriptsSmoke.Input;
 
 public class IngestionPage {
@@ -169,11 +170,13 @@ public class IngestionPage {
 
     }
     
-    public void AddOnlyNewIngestion(String dataset) throws InterruptedException {
-		
+    public boolean AddOnlyNewIngestion(String dataset) throws InterruptedException {
+    	
+		boolean ingestionStatus = false;
+		try{
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddanewIngestionButton().Enabled()  ;}}), Input.wait30); 
-    	getAddanewIngestionButton().Click();
+    	getAddanewIngestionButton().waitAndClick(10);
     	
     	// Select Source System
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -263,7 +266,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSourceSelectionText().Enabled()  ;}}), Input.wait30); 
-    	getSourceSelectionText().Click();
+    	getSourceSelectionText().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSourceSelectionTextLoadFile().Visible()  ;}}), Input.wait30); 
@@ -282,7 +285,7 @@ public class IngestionPage {
     	if (dataset.contains("Automation_AllSources")|| dataset.contains("Automation_20Family_20Threaded")) {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeCheckBox().Visible()  ;}}), Input.wait30); 
-    	getNativeCheckBox().Click();
+    	getNativeCheckBox().waitAndClick(10);
     	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeLST().Visible()  ;}}), Input.wait30); 
@@ -303,7 +306,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getPDFCheckBoxstionButton().Enabled()  ;}}), Input.wait30); 
-    	getPDFCheckBoxstionButton().Click();
+    	getPDFCheckBoxstionButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getPDFLST().Visible()  ;}}), Input.wait30); 
@@ -313,7 +316,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getTIFFCheckBox().Enabled()  ;}}), Input.wait30); 
-    	getTIFFCheckBox().Click();
+    	getTIFFCheckBox().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSourceSelectionTextLoadFile().Visible()  ;}}), Input.wait30); 
@@ -322,7 +325,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMP3CheckBoxstionButton().Enabled()  ;}}), Input.wait30); 
-    	getMP3CheckBoxstionButton().Click();
+    	getMP3CheckBoxstionButton().waitAndClick(10);
     	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -333,7 +336,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAudioTranscriptCheckBoxstionButton().Enabled()  ;}}), Input.wait30); 
-    	getAudioTranscriptCheckBoxstionButton().Click();
+    	getAudioTranscriptCheckBoxstionButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSourceSelectionTextLoadFile().Visible()  ;}}), Input.wait30); 
@@ -343,7 +346,7 @@ public class IngestionPage {
     	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getOtherCheckBox().Enabled()  ;}}), Input.wait30); 
-    	getOtherCheckBox().Click();
+    	getOtherCheckBox().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getOtherLoadFile().Visible()  ;}}), Input.wait30); 
@@ -363,7 +366,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNextButton().Visible()  ;}}), Input.wait30); 
-    	getNextButton().Click();
+    	getNextButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getMappingSOURCEFIELD2().Visible()  ;}}), Input.wait30); 
@@ -503,17 +506,28 @@ public class IngestionPage {
 			System.out.println("No need to select fields for this dataset'");
 		 }
 			
+    	//Below called function handles all the stages of ingestion from catalog to publish!
     	IngestionCatlogtoPublish(dataset);
     	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getIngestionName().Visible()  ;}}),Input.wait60); 
-        getIngestionName().Click();
+        getIngestionName().waitAndClick(10);
         
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getIngestionNameText().Visible()  ;}}),Input.wait60); 
      	IngestionName = getIngestionNameText().getText();
 		Thread.sleep(2000);
 		System.out.println(IngestionName);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+    	getCloseButton().waitAndClick(10);	
+    	
+    	ingestionStatus =true;
+    	
+		
+		}finally {
+			return ingestionStatus;
+		}
   	}
  
     public void ReIngestionofNativeWithOverlay(String dataset) throws InterruptedException {
@@ -525,15 +539,15 @@ public class IngestionPage {
     
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-    	getFilterByPUBLISHED().Click();
+    	getFilterByPUBLISHED().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getIngestionActionButton().Displayed()  ;}}), Input.wait30); 
-    	getIngestionActionButton().Click();
+    	getIngestionActionButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getIngestionAction_Copy().Displayed()  ;}}), Input.wait30); 
-    	getIngestionAction_Copy().Click();
+    	getIngestionAction_Copy().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSpecifySourceFolder().Visible()   ;}}), Input.wait30); 
@@ -556,7 +570,7 @@ public class IngestionPage {
 		
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeCheckBox().Visible()  ;}}), Input.wait30); 
-    	 getNativeCheckBox().Click();
+    	 getNativeCheckBox().waitAndClick(10);
     	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNativeLST().Visible()  ;}}), Input.wait30); 
@@ -567,7 +581,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNextButton().Visible()  ;}}), Input.wait30); 
-    	getNextButton().Click();
+    	getNextButton().waitAndClick(10);
     	
     	IngestionCatlogtoPublish(dataset);
     	
@@ -576,7 +590,7 @@ public class IngestionPage {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getIngestionName().Visible()  ;}}),Input.wait60); 
-        getIngestionName().Click();
+        getIngestionName().waitAndClick(10);
         
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getIngestionNameText().Visible()  ;}}),Input.wait60); 
@@ -592,55 +606,59 @@ public class IngestionPage {
     	    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getPreviewRun().Visible()  ;}}), Input.wait30); 
-    	getPreviewRun().Click();
+    	getPreviewRun().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-    	getApproveMessageOKButton().Click();
+    	getApproveMessageOKButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
-    	getbtnRunIngestion().Click();
+    	getbtnRunIngestion().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().Click();
+    	getFilterByButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().Click();
+    	getFilterByFAILED().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCATALOGED().Click();
+    	getFilterByCATALOGED().waitAndClick(10);
     	
     	//catlogging
-    	for (int i = 0; i < 30; i++)
+    	for (int i = 0; i < 40; i++)
 		{
 			try{	
 				getCatalogedIngestionStatus().Displayed();
-				System.out.println("Catlogged");
+				UtilityLog.info(dataset+" cataloged.");
 				break;
 			}catch (Exception e) {
 						
 					try
 					{
 						Thread.sleep(5000);
-						getRefreshButton().Click();
+						getRefreshButton().waitAndClick(10);
 					   if(getFailedIngestionStatus().Displayed()){ 
-							System.exit(0);
+						    System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+							System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
+							UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
+							System.exit(1);
 						
 							}
 					}
 					catch (Throwable e1)
 					{
-						System.out.println("Continue");
+						System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 					}
 			}
 	}
     	
     	//copy
-    	getRefreshButton().Click();
+    	getRefreshButton().waitAndClick(10);
     	    		
         getIngestionName().waitAndClick(Input.wait30);
     
@@ -648,50 +666,55 @@ public class IngestionPage {
     			getRunCopying().Visible()  ;}}),Input.wait30);
     	Thread.sleep(6000);
     	getRunCopying().ScrollTo();
-        getRunCopying().Click();
+        getRunCopying().waitAndClick(10);
         
         base.VerifySuccessMessage("Ingestion copy has Started.");
+        UtilityLog.info(dataset+"'s copying is started.");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCloseButton().Enabled()  ;}}), Input.wait30); 
-    	getCloseButton().Click();	
+    	getCloseButton().waitAndClick(10);	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().Click();
+    	getFilterByButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
-    	getFilterByCOPIED().Click();
+    	getFilterByCOPIED().waitAndClick(10);
     	
     	
     	for (int i = 0; i < 120; i++)
 		{
 				try{
 					getCopiedIngestionStatus().Displayed();
-					System.out.println("Copied");
+					UtilityLog.info(dataset+" copied.");
 					break;
 				}catch (Exception e) {
 				
 				try
 				{
 					Thread.sleep(5000);
-					getRefreshButton().Click();
+					getRefreshButton().waitAndClick(10);
 					if(getFailedIngestionStatus().Displayed()){
-					System.exit(0);
+						    System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+							System.out.println(dataset+" is failed in copying stage. Take a look and continue!");
+							UtilityLog.info(dataset+" is failed in copying stage. Take a look and continue!");
+							System.exit(1);
 				
 					}
 				}
 				catch (Throwable e1)
 				{
-					System.out.println("Continue");
+					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 				}
 			
 			}
 		}
     	
     	//Indexing
-    	getRefreshButton().Click();
+    	getRefreshButton().waitAndClick(10);
     	    		
        getIngestionName().waitAndClick(Input.wait30);
        
@@ -701,7 +724,7 @@ public class IngestionPage {
        
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
-        getIsAudioCheckbox().Click();
+        getIsAudioCheckbox().waitAndClick(10);
     	
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getLanguage().Visible()  ;}}),Input.wait60); 
@@ -712,21 +735,21 @@ public class IngestionPage {
        }
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getRunIndexing().Visible()  ;}}),Input.wait60); 
-        getRunIndexing().Click();
+        getRunIndexing().waitAndClick(10);
         
         base.VerifySuccessMessage("Ingestion Indexing has Started.");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCloseButton().Enabled()  ;}}), Input.wait30); 
-    	getCloseButton().Click();	
+    	getCloseButton().waitAndClick(10);	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().Click();
+    	getFilterByButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByINDEXED().Visible()  ;}}), Input.wait30); 
-    	getFilterByINDEXED().Click();
+    	getFilterByINDEXED().waitAndClick(10);
     	
     	
     	for (int i = 0; i < 120; i++)
@@ -734,22 +757,26 @@ public class IngestionPage {
 			
     		try{
 				getIndexedIngestionStatus().Displayed();
-				System.out.println("Indexed");
+				UtilityLog.info(dataset+" indexed.");
 				break;
     		}catch (Exception e) {
 				
 			try
 			{
 				Thread.sleep(10000);
-				getRefreshButton().Click();
+				getRefreshButton().waitAndClick(10);
 				if(getFailedIngestionStatus().Displayed()){
-					System.exit(0);
+					    System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset+" is failed in indexing stage. Take a look and continue!");
+						UtilityLog.info(dataset+" is failed in indexing stage. Take a look and continue!");
+						System.exit(1);
 				
 				}
 			}
 				catch (Throwable e1)
 			{
-				System.out.println("Continue");
+				System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 			}
 		}
 }
@@ -760,29 +787,29 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getActionDropdownArrow().Visible()  ;}}),Input.wait60); 
-    	getActionDropdownArrow().Click();
+    	getActionDropdownArrow().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getActionApprove().Visible()  ;}}),Input.wait60); 
-    	getActionApprove().Click();
+    	getActionApprove().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-    	getApproveMessageOKButton().Click();
+    	getApproveMessageOKButton().waitAndClick(10);
     	
     	base.VerifySuccessMessage("Approve started successfully");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCloseButton().Visible()  ;}}), Input.wait30); 
-    	getCloseButton().Click();	
+    	getCloseButton().waitAndClick(10);	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
-    	getFilterByButton().Click();
+    	getFilterByButton().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
-    	getFilterByAPPROVED().Click();
+    	getFilterByAPPROVED().waitAndClick(10);
     	
     	
     	for (int i = 0; i < 30; i++)
@@ -790,7 +817,7 @@ public class IngestionPage {
 			try
 			{
 				getApproveIngestionStatus().Displayed();
-				System.out.println("Approved");
+				UtilityLog.info(dataset+" approved.");
 				break;
 				
 			}
@@ -799,15 +826,19 @@ public class IngestionPage {
 				try
 				{
 					Thread.sleep(5000);
-					getRefreshButton().Click();
+					getRefreshButton().waitAndClick(10);
 					if(getFailedIngestionStatus().Displayed()){
-						System.exit(0);
+						    System.out.println("Execution aborted!");
+							UtilityLog.info("Execution aborted!");
+							System.out.println(dataset+" is failed in approving stage. Take a look and continue!");
+							UtilityLog.info(dataset+" is failed in approving stage. Take a look and continue!");
+							System.exit(1);
 					
 						}
 				}
 				catch (Throwable e1)
 				{
-					System.out.println("Continue");
+					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 				}
 	
 			}
@@ -822,7 +853,7 @@ public class IngestionPage {
 			
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getIncrementalAnalyticsbutton().Visible()  ;}}),Input.wait60); 
-    	getIncrementalAnalyticsbutton().Click();
+    	getIncrementalAnalyticsbutton().waitAndClick(10);
     	}
     	 else {
 			 System.out.println("No need to select incremental'");
@@ -830,7 +861,7 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getRunAnalyticsRunButton().Visible()  ;}}),Input.wait60); 
-    	getRunAnalyticsRunButton().Click();
+    	getRunAnalyticsRunButton().waitAndClick(10);
     	
     	base.VerifySuccessMessage("Run has Started successfully");
     
@@ -840,8 +871,8 @@ public class IngestionPage {
 			try
 			{
 				
-		    	getRunAnalyticsPublishButton().Click();
-				System.out.println("Analytics Completed");
+		    	getRunAnalyticsPublishButton().waitAndClick(10);
+		    	UtilityLog.info(dataset+" analytics completed.");
 				break;
 				
 			}
@@ -852,13 +883,17 @@ public class IngestionPage {
 					Thread.sleep(5000);
 					driver.getWebDriver().navigate().refresh();
 					if(getFailedIngestionStatus().Displayed()){
-						System.exit(0);
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset+" is failed in analytics stage. Take a look and continue!");
+						UtilityLog.info(dataset+" is failed in analytics stage. Take a look and continue!");
+						System.exit(1);
 					
 						}
 				}
 				catch (Throwable e1)
 				{
-					System.out.println("Continue"+i);
+					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 				}
 			
 			}
@@ -875,11 +910,11 @@ public class IngestionPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-    	getFilterByFAILED().Click();
+    	getFilterByFAILED().waitAndClick(10);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-    	getFilterByPUBLISHED().Click();
+    	getFilterByPUBLISHED().waitAndClick(10);
     	
     	
     	for (int i = 0; i < 10; i++)
@@ -888,7 +923,7 @@ public class IngestionPage {
 			{
 				
 				getPublishIngestionStatus().Displayed();
-				System.out.println("Published");
+				UtilityLog.info(dataset+" published.");
 				break;
 			}
 			catch (Exception e)
@@ -896,15 +931,19 @@ public class IngestionPage {
 				try
 				{
 					Thread.sleep(5000);
-					getRefreshButton().Click();
+					getRefreshButton().waitAndClick(10);
 					if(getFailedIngestionStatus().Displayed()){
-						System.exit(0);
+						System.out.println("Execution aborted!");
+						UtilityLog.info("Execution aborted!");
+						System.out.println(dataset+" is failed in publishing stage. Take a look and continue!");
+						UtilityLog.info(dataset+" is failed in publishing stage. Take a look and continue!");
+						System.exit(1);
 					
 						}
 				}
 				catch (Throwable e1)
 				{
-					System.out.println("Continue");
+					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
 				}
 				
 			}
@@ -921,7 +960,7 @@ public class IngestionPage {
    
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
-   	getFilterByPUBLISHED().Click();
+   	getFilterByPUBLISHED().waitAndClick(10);
    	
    	getRefreshButton().waitAndClick(5);
    	Thread.sleep(2000);
@@ -959,11 +998,11 @@ public class IngestionPage {
    	
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			getNextButton().Visible()  ;}}), Input.wait30); 
-   	getNextButton().Click();
+   	getNextButton().waitAndClick(10);
    	
    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-	getApproveMessageOKButton().Click();
+	getApproveMessageOKButton().waitAndClick(10);
 	Thread.sleep(5000);
 	
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

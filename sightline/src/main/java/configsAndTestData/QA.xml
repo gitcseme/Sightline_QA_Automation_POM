@@ -3,8 +3,8 @@
     <url>https://sightlineqa.consiliotest.com/</url>
     <prodpath>\\ld5sltest.consiliotest.com\ld5slqa\Productions\Automation</prodpath>
     <SourceLocation>IngestionTestData\Automation</SourceLocation>
-    <domainName>45889DNew</domainName>
-    <projectName>Auto_MultiSQL1</projectName>
+    <domainName>AutoDomain</domainName>
+    <projectName>AutoSmoke_04012021</projectName>
 
     <!-- TD_24July -->
 

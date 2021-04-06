@@ -555,7 +555,12 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
-		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		try{
+			getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		}catch (Exception e) {
+			//if passed production path is wrong! go by index and then select 
+			getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
+		}
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
@@ -598,9 +603,9 @@ public class ProductionPage {
 		//Assert.assertTrue(getDocumentGeneratetext().Displayed());
 			
 		
-		/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
-		getQC_backbutton().waitAndClick(15);*/
+		getQC_backbutton().waitAndClick(15);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
@@ -610,9 +615,9 @@ public class ProductionPage {
 		//System.out.println(batesno);
 		UtilityLog.info(batesno);
 		
-		/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().waitAndClick(10);*/
+		getbtnSummaryNext().waitAndClick(10);
 		
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

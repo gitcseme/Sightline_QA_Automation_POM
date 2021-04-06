@@ -4,7 +4,7 @@
        	<prodpath>Productions PT WorkSpace\Automation</prodpath>
        	<SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
        	<domainName>Master_Client</domainName>
-        <projectName>125DocsDND</projectName>
+        <projectName>Delete125ApproveError</projectName>
      
     	<sa1userName>sightlineqa.test@gmail.com</sa1userName> 
               <sa1password>Sightline@123</sa1password> 

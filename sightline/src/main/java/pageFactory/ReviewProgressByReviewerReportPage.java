@@ -17,12 +17,16 @@ public class ReviewProgressByReviewerReportPage {
     public Element getReviewerProgressReport_Expand(){ return driver.FindElementByXPath(".//*[@id='divreviewer']/div/a[2]"); }
     public Element getReviewerProgressReport_SelectAll(){ return driver.FindElementByXPath(".//input[@id='checkAll4']/following-sibling::i"); }
     public Element getReviewerProgressReport_AssignmentGroupExpand(){ return driver.FindElementById("assignmentGroupID"); }
+    public Element getReviewerProgressReport_AssignmentGroupExpandNew(){ return driver.FindElementByXPath("//*[@id='assignmentGroupID']"); }
+    
     public Element getReviewerProgressReport_Assignment(){ return driver.FindElementByXPath(".//*[@id='-1_anchor']/i[1]"); } 
     public Element getReviewerProgressReport_DistributedCompletedDocs(){ return driver.FindElementByXPath(".//*[@id='DivId_asignmentgrid']//label[contains(.,'Distributed Completed Docs:')]/following-sibling::div"); } 
     public Element  getReviewerProgressReport_DocumentsDistributed(){ return driver.FindElementByXPath(".//*[@id='DivId_asignmentgrid']//label[contains(.,'Documents Distributed:')]/following-sibling::div"); }
     public Element getReviewerReviewProgress_SummaryTitle(){ return driver.FindElementByXPath(".//*[@id='DivId_asignmentgrid']/ul/li/h2[1]"); }
     public Element getToggleBtn(){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//button[contains(@class,'toggle btn')]"); }
     public Element getFirstUserfromlist(){ return driver.FindElementByXPath(".//*[@id='Edit User Group']/fieldset/div/div[1]/div/div/div/ul/li/a/label"); }
+    public Element getFirstUserfromlistNew(){ return driver.FindElementByXPath("(//*[@id='userMultiSelect']/option[1])[2]"); }
+    
     public Element getReviewerReviewProgress_Share(){ return driver.FindElementById("ReportReviewer"); }
     public Element getEmailAddress(){ return driver.FindElementByXPath("//textarea[@id='txtEmail']"); }
     public Element getReports_ShareBtn(){ return driver.FindElementById("btnSaveShareReport"); }
@@ -72,13 +76,13 @@ public class ReviewProgressByReviewerReportPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getReviewerProgressReport_AssignmentGroupExpand().Enabled()  ;}}), Input.wait30); 
-		getReviewerProgressReport_AssignmentGroupExpand().Click();
+		getReviewerProgressReport_AssignmentGroupExpand().waitAndClick(15);
 	    //Thread.sleep(2000);
 	    
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  getReviewerProgressReport_Assignment().Visible()  ;}}), Input.wait30);	
-	     getReviewerProgressReport_Assignment().ScrollTo();
-		  getReviewerProgressReport_Assignment().waitAndClick(15);
+	    		getReviewerProgressReport_AssignmentGroupExpandNew().Visible()  ;}}), Input.wait30);	
+	    //getReviewerProgressReport_AssignmentGroupExpandNew().ScrollTo();
+	    getReviewerProgressReport_AssignmentGroupExpandNew().waitAndClick(15);
 		  Thread.sleep(2000);
 	    
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -111,7 +115,7 @@ public class ReviewProgressByReviewerReportPage {
 			   
 			   getSchedulerForm_btnSubmit().Click();
 			   
-			   successMsgConfirmation("EN : Record scheduled successfully"); 
+			   successMsgConfirmation("Record scheduled successfully"); 
 		/*	   
 			   SchedulesPage page1 = new SchedulesPage(driver);
 			   page1.checkStatusComplete("Review Progress by Reviewer Report"); 	*/	
@@ -131,23 +135,27 @@ public class ReviewProgressByReviewerReportPage {
 				 getReviewerReviewProgress_Share().Visible()  ;}}), Input.wait30);
 		 getReviewerReviewProgress_Share().waitAndClick(10);
 		 
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
+		 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getToggleBtn().Visible() ;}}), Input.wait30);
-		 getToggleBtn().Click();
+		 getToggleBtn().Click();*/
 		 
+		 try{
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getFirstUserfromlist().Visible()  ;}}), Input.wait30);	
+				 getFirstUserfromlistNew().Visible()  ;}}), Input.wait30);	
     	//	 for(int i=0;i<getUserslist().size();i++){
-				getFirstUserfromlist().waitAndClick(10);
+		 getFirstUserfromlistNew().waitAndClick(10);
 				Thread.sleep(2000);
+		 }catch (Exception e) {
+			getToggleBtn().waitAndClick(10);
+			driver.FindElementByXPath("//*[@id='Edit User Group']/fieldset/div/div[1]/div/div/div/ul/li[1]/a/label/input").waitAndClick(10);
+		}
 				
-				
-		 getToggleBtn().waitAndClick(5);
+		 //getToggleBtn().waitAndClick(5);
 		 
 		 //text area to enter mail id is getting blocked
-		/* driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getEmailAddress().Visible() ;}}), Input.wait30);
-		 getEmailAddress().SendKeys(usertosharewith);*/
+		 getEmailAddress().SendKeys(usertosharewith);
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getReports_ShareBtn().Enabled() ;}}), Input.wait30);

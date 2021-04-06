@@ -44,7 +44,8 @@ public class TS_006_ValidateBatchPrint {
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		UtilityLog.info("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		
 		String searchname= "BP"+Utility.dynamicNameAppender();
@@ -55,7 +56,7 @@ public class TS_006_ValidateBatchPrint {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch("morning"+Keys.ENTER+"AND"+Keys.ENTER+"test");
+		search.basicContentSearch(Input.searchString1);
 		search.saveSearch(searchname); 
 		
 	    BatchPrintPage page1 = new BatchPrintPage(driver);
