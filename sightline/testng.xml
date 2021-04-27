@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--   <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd"> -->
 
 <suite name="Sightline QA automation">
 
 <suite-files>
-    <listeners>
+ <listeners>
         <listener class-name="executionMaintenance.AnnotationTransformer"/>
-    </listeners> 
+ </listeners>  
+ 
+    
     <suite-file path="./smokeSuite.xml"/> 
 
   	<!--<suite-file path="./failed.xml"/>  

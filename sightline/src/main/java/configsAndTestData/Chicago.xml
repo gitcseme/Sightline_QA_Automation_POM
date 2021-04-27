@@ -5,14 +5,14 @@
      
        	<SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
        	 <domainName>Master_Client</domainName>
-        <projectName>MASTER_DO_NOT_CHANGE_SMALL</projectName>
+        <projectName>Auto02112021</projectName>
      
     	<sa1userName>automationsightlineconsilio@gmail.com</sa1userName> 
    		<sa1password>Sightline@123</sa1password> 
 
      
         <!-- CPA -->
-        <pa1FullName>CPA1 PA1</pa1FullName>
+        <pa1FullName>Auto PA1</pa1FullName>
         <pa1userName>automations.ightlineconsilio@gmail.com</pa1userName>
         <pa1password>consilio@123</pa1password>
         

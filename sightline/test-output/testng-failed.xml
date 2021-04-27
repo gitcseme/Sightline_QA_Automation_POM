@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
-  <test name="BasicAndAdvancedSearchOperations(failed)">
+<suite name="Failed suite [Working Suite]">
+  <test thread-count="5" name="Categorization(failed)">
     <groups>
       <run>
         <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+      <class name="testScriptsSmoke.TS_005_ValidateCategorization">
         <methods>
-          <include name="ConceptualSearch"/>
-          <include name="preCondition"/>
-          <include name="close"/>
+          <include name="preConditions"/>
+          <include name="beforeTestMethod"/>
           <include name="takeScreenShot"/>
-          <include name="contentSearchWithOperatorsInBS"/>
-          <include name="contentSearchWithOperatorsInAS"/>
-          <include name="audioSearch"/>
+          <include name="close"/>
+          <include name="validateCategorization"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      </class> <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
     </classes>
-  </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
-</suite> <!-- Failed suite [Smoke Suite] -->
+  </test> <!-- Categorization(failed) -->
+</suite> <!-- Failed suite [Working Suite] -->
