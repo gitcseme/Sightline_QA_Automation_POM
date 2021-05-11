@@ -15,6 +15,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.openqa.selenium.interactions.Actions;
 
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -125,17 +126,22 @@ public class CustomDocumentDataReport {
 	          String[] nextRecord; 
 	    
 	          // we are going to read data line by line 
-	          while ((nextRecord = csvReader.readNext()) != null) { 
-	              for (String cell : nextRecord) { 
-	                
-	            	  actual.add(cell.toString().trim().replaceAll("ï»¿\"",""));
-	                  //System.out.println(cell.toString());
-	                  //System.out.println(cell.toString().replaceAll("ï»¿\"",""));
-	  	    		
-	              } 
-	            
-	              break;
-	          } 
+	          try {
+				while ((nextRecord = csvReader.readNext()) != null) { 
+				      for (String cell : nextRecord) { 
+				        
+				    	  actual.add(cell.toString().trim().replaceAll("ï»¿\"",""));
+				          //System.out.println(cell.toString());
+				          //System.out.println(cell.toString().replaceAll("ï»¿\"",""));
+						
+				      } 
+				    
+				      break;
+				  }
+			} catch (CsvValidationException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
       	    
 	  	
 	    	  System.out.println("Selected columns order : "+expected );
