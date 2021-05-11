@@ -6,44 +6,49 @@
     <domainName>AutoDomain</domainName>
     <projectName>AutoSmoke_04012021</projectName>
 
-    <!-- TD_24July -->
-
-    <sa1userName>ferhat.tarannum@consilio.com</sa1userName>
-    <sa1password>Dec2020@3112</sa1password>
-
-    <!-- DA Admin -->
+   
+   <!-- Need to Get Domain Admin -->
   
+  <!-- 
     <da1userName>sight.line.consilio.qa@gmail.com</da1userName>
     <da1password>Dec2020@3112</da1password>
 
+ -->
 
-    <!-- CPA -->
-    <pa1FullName>PA1 QA</pa1FullName>
-    <pa1userName>sightlineconsilio.qa@gmail.com</pa1userName>
-    <pa1password>Dec2020@3112</pa1password>
-
-    <pa2FullName>PA2 QA</pa2FullName>
-    <pa2userName>sight.line.consili.oqa@gmail.com</pa2userName>
-    <pa2password>Dec2020@3112</pa2password>
-
-    <!--CRMU -->
-    <rmu1FullName>QA RMU1</rmu1FullName>
-    <rmu1userName>r.m.userconsilio@gmail.com</rmu1userName>
-    <rmu1password>Dec2020@3112</rmu1password>
-
-    <rmu2FullName>RMU2 QA</rmu2FullName>
-    <rmu2userName>s.ight.line.consilioqa@gmail.com</rmu2userName>
-    <rmu2password>Dec2020@3112</rmu2password>
-
-
-    <!-- CRev -->
-    <rev1FullName>QA REV1</rev1FullName>
-    <rev1userName>r.m.u.serconsilio@gmail.com</rev1userName>
-    <rev1password>Dec2020@3112</rev1password>
-
-    <rev2FullName>REV2 QA</rev2FullName>
-    <rev2userName>sight.line.consi.lioqa@gmail.com</rev2userName>
-    <rev2password>Dec2020@3112</rev2password>
+  		<!-- Modified By : Srinivas -->
+        <!-- Modified Date : 2021-05-06 -->
+        <!-- Password Picked up from Passwordstate -->
+     
+        <!-- User Name : SA QA -->    
+        <sa1userName>QASA1@Consilio.com</sa1userName> 
+        <sa1password>TestCons!042021</sa1password> 
+     
+        <!-- Consilio PAU Automation -->
+        <pa1FullName>Consilio PAU1 Automation</pa1FullName>
+        <pa1userName>QAPAU1@Consilio.com</pa1userName>
+        <pa1password>Q@test_10</pa1password> 
+        
+        <pa2FullName>Consilio PAU2 Automation</pa2FullName>
+        <pa2userName>QAPAU2@Consilio.com</pa2userName>
+        <pa2password>Q@test_10</pa2password>
+        
+        <!--Consilio RMU Automation  -->
+        <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
+        <rmu1userName>QARMU1@Consilio.com</rmu1userName>
+        <rmu1password>Q@test_10</rmu1password>
+        
+        <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
+        <rmu2userName>QARMU3@Consilio.com</rmu2userName>
+        <rmu2password>Q@test_10</rmu2password>
+        
+        <!-- Consilio REVU Automation -->
+        <rev1FullName>Consilio REVU1 Automation</rev1FullName>
+        <rev1userName>QAREV1@Consilio.com</rev1userName>
+        <rev1password>Q@test_12</rev1password>
+        
+        <rev2FullName>Consilio REVU2 Automation</rev2FullName>
+        <rev2userName>QAREV2@Consilio.com</rev2userName>
+        <rev2password>Q@test_12</rev2password>
 
     <shareTo>CPA2 PA2</shareTo>
 

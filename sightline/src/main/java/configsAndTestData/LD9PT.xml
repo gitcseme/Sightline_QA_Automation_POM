@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LD9PT>
-  		<url>https://sightlinept.consilio.com/</url>
-       	<prodpath>Productions PT WorkSpace\Automation</prodpath>
-       	<SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
-       	<domainName>Master_Client</domainName>
-        <projectName>Delete125ApproveError</projectName>
+          <url>https://sightlinept.consilio.com/</url>
+           <prodpath>Productions PT WorkSpace\Automation</prodpath>
+           <SourceLocation>IngestionTestData\Automation\Master Automation Data</SourceLocation>
+           <domainName>Master_Client</domainName>
+        <projectName>125DocsDND</projectName>
+         
+        <!-- User Name : SA QA -->    
+        <sa1userName>QASA1@Consilio.com</sa1userName> 
+        <sa1password>TestCons!042021</sa1password> 
      
-    	<sa1userName>sightlineqa.test@gmail.com</sa1userName> 
-              <sa1password>Sightline@123</sa1password> 
-     
-        <!-- PTPA1 PA1 -->
-        <pa1FullName>PAU1 PT</pa1FullName>
-        <pa1userName>s.ightlineqa.test@gmail.com</pa1userName>
-        <pa1password>Sightline@123</pa1password> 
+        <!-- Consilio PAU Automation -->
+        <pa1FullName>Consilio PAU1 Automation</pa1FullName>
+        <pa1userName>QAPAU1@Consilio.com</pa1userName>
+        <pa1password>Q@test_10</pa1password> 
         
-        <pa2FullName>PAU2 PT</pa2FullName>
-        <pa2userName>si.ghtlineqa.test@gmail.com</pa2userName>
-        <pa2password>Sightline@123</pa2password>
+        <pa2FullName>Consilio PAU2 Automation</pa2FullName>
+        <pa2userName>QAPAU2@Consilio.com</pa2userName>
+        <pa2password>Q@test_10</pa2password>
         
-        <!--PTRMU  -->
-        <rmu1FullName>RMU1 PT</rmu1FullName>
-        <rmu1userName>sig.htlineqa.test@gmail.com</rmu1userName>
-        <rmu1password>Sightline@123</rmu1password>
+        <!--Consilio RMU Automation  -->
+        <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
+        <rmu1userName>QARMU1@Consilio.com</rmu1userName>
+        <rmu1password>Q@test_10</rmu1password>
         
-        <rmu2FullName>RMU2 PT</rmu2FullName>
-        <rmu2userName>sigh.tlineqa.test@gmail.com</rmu2userName>
-        <rmu2password>Sightline@123</rmu2password>
+        <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
+        <rmu2userName>QARMU2@Consilio.com</rmu2userName>
+        <rmu2password>Q@test_10</rmu2password>
         
-        <!-- PTRev -->
-        <rev1FullName>REV1 PT</rev1FullName>
-        <rev1userName>sight.lineqa.test@gmail.com</rev1userName>
-        <rev1password>Sightline@123</rev1password>
+        <!-- Consilio REVU Automation -->
+        <rev1FullName>Consilio REVU1 Automation</rev1FullName>
+        <rev1userName>QAREV1@Consilio.com</rev1userName>
+        <rev1password>Q@test_12</rev1password>
         
-        <rev2FullName>REV2 PT</rev2FullName>
-        <rev2userName>sightl.ineqa.test@gmail.com</rev2userName>
-        <rev2password>Sightline@123</rev2password>
+        <rev2FullName>Consilio REVU2 Automation</rev2FullName>
+        <rev2userName>QAREV2@Consilio.com</rev2userName>
+        <rev2password>Q@test_12</rev2password>
+
 
         <shareTo>PTPA2 PA2</shareTo>
        
