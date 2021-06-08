@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
+  <listeners>
+    <listener class-name="executionMaintenance.AnnotationTransformer"/>
+  </listeners>
   <test thread-count="5" name="Categorization(failed)">
     <groups>
       <run>
@@ -29,7 +32,6 @@
       <class name="testScriptsSmoke.TS_008_AllManageModules">
         <methods>
           <include name="takeScreenShot"/>
-          <include name="createKeywordField"/>
           <include name="beforeTestMethod"/>
           <include name="close"/>
           <include name="CreateSecurityGroup"/>
@@ -38,26 +40,6 @@
       </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
     </classes>
   </test> <!-- AllManageModules(failed) -->
-  <test thread-count="5" name="BasicAndAdvancedSearchOperations(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
-        <methods>
-          <include name="ConceptualSearch"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="searchsavedSearch"/>
-          <include name="takeScreenShot"/>
-          <include name="audioSearch"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
-    </classes>
-  </test> <!-- BasicAndAdvancedSearchOperations(failed) -->
   <test thread-count="5" name="TS_017_DocList(failed)">
     <groups>
       <run>
@@ -86,7 +68,6 @@
     <classes>
       <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch">
         <methods>
-          <include name="viewInTallyResultsInBasicSearch"/>
           <include name="takeScreenShot"/>
           <include name="preCondition"/>
           <include name="close"/>
@@ -155,23 +136,6 @@
       </class> <!-- testScriptsSmoke.TS_009_ValidateAssignmentFunctionality -->
     </classes>
   </test> <!-- ValidateAssignmentFunctionality(failed) -->
-  <test thread-count="5" name="Workflow(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_010_Workflow">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="Test"/>
-          <include name="beforeTestMethod"/>
-          <include name="close"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_010_Workflow -->
-    </classes>
-  </test> <!-- Workflow(failed) -->
   <test thread-count="5" name="DocView - Non Audio(failed)">
     <groups>
       <run>
@@ -205,34 +169,29 @@
           <include name="close"/>
           <include name="beforeTestMethod"/>
           <include name="reviewProgressByRevReport"/>
-          <include name="tallySubTally"/>
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
     </classes>
   </test> <!-- Reports(failed) -->
-  <test thread-count="5" name="DocViewAudio(failed)">
+  <test thread-count="5" name="BatchUpload(failed)">
     <groups>
       <run>
         <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_018_DocViewAudio">
+      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
         <methods>
-          <include name="addRemark"/>
-          <include name="before"/>
-          <include name="AudioDownload"/>
-          <include name="addreduction"/>
-          <include name="beforeTestMethod"/>
-          <include name="addComment"/>
-          <include name="close"/>
-          <include name="addPlay"/>
           <include name="takeScreenShot"/>
+          <include name="batchUploadByPA"/>
+          <include name="preCondition"/>
+          <include name="close"/>
+          <include name="beforeTestMethod"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_018_DocViewAudio -->
+      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
     </classes>
-  </test> <!-- DocViewAudio(failed) -->
+  </test> <!-- BatchUpload(failed) -->
   <test thread-count="5" name="Production(failed)">
     <groups>
       <run>

@@ -57,7 +57,7 @@ public  class Driver  {
 	      this.driver.get(Input.url);
 	      System.out.println(Input.browserName + "is opned and loading application");
 	      waitForPageToBeReady();
-	      
+	        
 	   }  
 	   
 	
@@ -276,6 +276,8 @@ public  class Driver  {
 		
 				driver = new ChromeDriver(caps);
 				driver.manage().window().maximize();
+				
+			
 				return driver;	
 	      } 
 

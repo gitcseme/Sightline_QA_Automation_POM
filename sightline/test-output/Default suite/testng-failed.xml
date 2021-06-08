@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test name="Default test(failed)">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations">
+      <class name="testScriptsSmoke.TS_019_ICEWorkFlow">
         <methods>
-          <include name="preCondition"/>
           <include name="close"/>
           <include name="takeScreenShot"/>
-          <include name="contentSearchWithOperatorsInBS"/>
-          <include name="contentSearchWithOperatorsInAS"/>
-          <include name="audioSearch"/>
+          <include name="PMUploadAndInitiate"/>
           <include name="beforeTestMethod"/>
+          <include name="before"/>
+          <include name="RMUploadAndInitiate"/>
+          <include name="SystemAdminUserVerifications"/>
+          <include name="PMUploadAndRefresh"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations -->
+      </class> <!-- testScriptsSmoke.TS_019_ICEWorkFlow -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

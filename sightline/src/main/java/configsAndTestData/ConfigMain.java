@@ -21,6 +21,8 @@ public class ConfigMain {
 	public int wait90;
 	public int wait120;
 	public int interval;
+	
+	public String ICESmokeFolderPath;
 	public String  Collection1KFolder;
 	public String  FamilyFolder;
 	public String  AllSourcesFolder;
@@ -216,6 +218,16 @@ public class ConfigMain {
 	}
 	public void setBrowserName(String browserName) {
 		this.browserName = browserName;
+	}
+	
+	public String getICESmokeFolderPath()
+	{
+		return ICESmokeFolderPath;
+	}
+	
+	public void  setICESmokeFolderPath(String iceSmokeFolderPath)
+	{
+		this.ICESmokeFolderPath = iceSmokeFolderPath;
 	}
 	
 	

@@ -1,14 +1,8 @@
-27/04/2021 16:01:26 devpinoyLogger *****************************************************
-27/04/2021 16:01:26 devpinoyLogger Running scripts on Chicago Environment
-27/04/2021 16:01:26 devpinoyLogger Test data is copied to TestData.xml
-27/04/2021 16:01:26 devpinoyLogger *****************************************************
-27/04/2021 16:01:33 devpinoyLogger Running on exsiting project : Auto02112021
-27/04/2021 16:01:33 devpinoyLogger Choosen not to perform any ingestion
-27/04/2021 16:01:34 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
-27/04/2021 16:01:34 devpinoyLogger Started Execution for prerequisite
-27/04/2021 16:01:57 devpinoyLogger Login success!
-27/04/2021 16:02:08 devpinoyLogger Search is done for test and PureHit is : 3
-27/04/2021 16:02:08 devpinoyLogger ****************************************************************************************
-27/04/2021 16:02:08 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - validateCategorization  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
-27/04/2021 16:02:08 devpinoyLogger ****************************************************************************************
-
+08/06/2021 13:14:50 devpinoyLogger *****************************************************
+08/06/2021 13:14:50 devpinoyLogger Running scripts on QA Environment
+08/06/2021 13:14:50 devpinoyLogger Test data is copied to TestData.xml
+08/06/2021 13:14:50 devpinoyLogger *****************************************************
+08/06/2021 13:14:53 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
+08/06/2021 13:14:53 devpinoyLogger Choosen not to perform any ingestion
+08/06/2021 13:14:53 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
+08/06/2021 13:14:53 devpinoyLogger Started Execution for prerequisite

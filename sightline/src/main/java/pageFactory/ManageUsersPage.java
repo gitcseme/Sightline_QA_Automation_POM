@@ -6,6 +6,7 @@ import org.openqa.selenium.Keys;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
@@ -39,13 +40,31 @@ public class ManageUsersPage {
     public Element getBulkEnableButton(){ return driver.FindElementByXPath("//*[@id='rbEnable']/following-sibling::i"); }
     public Element getBulkIngestion(){ return driver.FindElementById("lblCanIngestion"); }
     public Element getBulkProduction(){ return driver.FindElementById("lblCanProductions"); }
+    public Element getBulkDataset() {return driver.FindElementByXPath("//*[@id='lblCanProview']/i");}
     public Element getBulkUserList(){ return driver.FindElementByXPath("//*[@id='divBulkUserList']//label[contains(text(),'"+Input.pa1FullName+"')]"); }
     public Element getBulkUserSave(){ return driver.FindElementById("btnSaveBulkAccessControls"); }
+    public Element getEditBtn(Element project) {return project.FindElementBycssSelector("td:nth-child(9) >  a"); }
+    public Element getBulkCancelBtn(){return driver.FindElementByCssSelector("btnCancelBulkAccessControls");}
     
+    public Element getEditUserFunctionality() {return driver.FindElementByCssSelector("#myTab1 > li:nth-child(2) > a");}
+    public Element getIngestionsCheckbox() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(3) > label");}
+    public Element getDatasetCheckbox() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(11) > label");}
+    public Element getDatasetCheckStatus() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(11) > label > input");}
+    public Element getIngestionCheckStatus() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(3) > label > input");}
+    public Element getSaveBtnEditUser() {return driver.FindElementByCssSelector("#btnsubmit");}
+  
     
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
-  
+    public Element getICEProjectStatuslabel(){return driver.FindElementByCssSelector("#hdrICEStatus");}
+    public Element getICEProjectStatus() {return driver.FindElementByCssSelector("#ProjectDataTable > tbody > tr > td:nth-child(5)");}
+      public Element searchUserBox() {return driver.FindElementByCssSelector("#txtsearchUser");}
+      public Element searchUserApplyBtn() {return driver.FindElementByCssSelector("#btnAppyFilter");}
+      public Element editSAUserBtn() {return driver.FindElementByCssSelector("#dtUserList > tbody > tr > td:nth-child(9) > a:nth-child(1)");}
+      public Element getDatasetOptionInFunctionalityTab() {return driver.FindElementByXPath("//*[@id='s2']/div/div[1]/div/div/div[11]/label");}
+      public Element getDatasetOptionInFunctionalityTabCheck() {return driver.FindElementByXPath("//*[@id='s2']/div/div[1]/div/div/div[11]/label/i");}
+      public Element getEditUserCancelBtn() {return driver.FindElementByCssSelector("#submit");}
+     
     
        //Annotation Layer added successfully
     public ManageUsersPage(Driver driver){
@@ -183,5 +202,123 @@ public class ManageUsersPage {
     	UtilityLog.info("Success msg passed");
 	}
    
+    public Element getUserListbyUserName(String username, String projectname)
+    {
+    	driver.FindElementByCssSelector("#LeftMenu > li > a").Click();
+    	driver.FindElementByCssSelector("#LeftMenu > li > ul > li > a").WaitUntilPresent().Click();
+    	driver.waitForPageToBeReady();
+    	driver.FindElementByCssSelector("#txtsearchUser").WaitUntilPresent().SendKeys(username);
+    	driver.FindElementByCssSelector("#btnAppyFilter").Click();
+    	driver.waitForPageToBeReady();
+    	ElementCollection pages = driver.FindElementsByCssSelector("#dtUserList_paginate > ul > li");
+    	for(int i = 0;i<pages.size()-2;i++)
+    	{
+    		
+    		ElementCollection projects = driver.FindElementsByCssSelector("#dtUserList > tbody > tr");
+    		for(Element project: projects)
+    		{
+    			project.ScrollTo();
+    			if(project.FindElementBycssSelector("td:nth-child(6)").getText().equalsIgnoreCase(Input.ICEProjectName))
+    			{
+    				
+    				
+    				return project;
+    			}
+    		}
+    		driver.FindElementByCssSelector("#dtUserList_paginate > ul > li:nth-child(4) > a").Click();
+    		driver.waitForPageToBeReady();
+    		driver.scrollPageToTop();
+    	}
+    	return null;
+    	
+    }
+    
+
+    public Element getUserList(String username)
+    {
+    	driver.FindElementByCssSelector("#LeftMenu > li > a").Click();
+    	driver.FindElementByCssSelector("#LeftMenu > li > ul > li > a").WaitUntilPresent().Click();
+    	driver.waitForPageToBeReady();
+    	driver.FindElementByCssSelector("#txtsearchUser").WaitUntilPresent().SendKeys(username);
+    	driver.FindElementByCssSelector("#btnAppyFilter").Click();
+    	driver.waitForPageToBeReady();
+    	Element project = driver.FindElementByCssSelector("#dtUserList > tbody > tr");
+    	return project;
+      }
+ 
+ 
+    public Element getProjectListByProjectName(String projectname) throws InterruptedException
+    {
+    	driver.FindElementByCssSelector("#LeftMenu > li > a").WaitUntilPresent().Click();
+		driver.FindElementByCssSelector("#LeftMenu > li.active > ul > li:nth-child(2) > a").WaitUntilPresent().Click();
+		driver.waitForPageToBeReady();
+		driver.FindElementByCssSelector("#txtProjectLabel").WaitUntilPresent().setText(Input.ICEProjectName);
+		driver.FindElementByCssSelector("#btnFilter").WaitUntilPresent().Click();
+		Thread.sleep(2000);
+		
+    	return null;
+    }
+    
+
+    public void BulkUserAccessDataset(String projectname) throws InterruptedException {
+  		
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserAccessButton().Visible()  ;}}), Input.wait30); 
+      	getBulkUserAccessButton().Click();
+      	
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserRole().Visible()  ;}}), Input.wait30); 
+      	getBulkUserRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+      	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getBulkUserProject().Visible()  ;}}), Input.wait30); 
+      	getBulkUserProject().selectFromDropdown().selectByVisibleText(projectname);
+      	Thread.sleep(3000);
+      	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			 getBulkDataset().Visible()  ;}}), Input.wait30); 
+      	getBulkDataset().Click();
+      	
+      	
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserList().Visible()  ;}}), Input.wait30); 
+      	getBulkUserList().Click();
+     
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserSave().Visible()  ;}}), Input.wait30); 
+      	getBulkUserSave().Click();
+      	
+      	successMsgConfirmation("Access rights applied successfully");
+             
+  	}
+    
+ public boolean isBulkUserAccessDatasetGreyedForReview(String projectname) throws InterruptedException {
+  		
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserAccessButton().Visible()  ;}}), Input.wait30); 
+      	getBulkUserAccessButton().Click();
+      	
+      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserRole().Visible()  ;}}), Input.wait30); 
+      	getBulkUserRole().selectFromDropdown().selectByVisibleText("Reviewer");
+      	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getBulkUserProject().Visible()  ;}}), Input.wait30); 
+      	getBulkUserProject().selectFromDropdown().selectByVisibleText(projectname);
+      	Thread.sleep(3000);
+      	
+        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			 getBulkDataset().Visible()  ;}}), Input.wait30); 
+      	if(getBulkDataset().GetAttribute("style").contains("grey"))
+      	{
+      		getBulkCancelBtn().Click();
+      		return true;
+      	}else
+      	{
+      		getBulkCancelBtn().Click();
+      		return false;
+      	}
+      	
+ }
  
  }

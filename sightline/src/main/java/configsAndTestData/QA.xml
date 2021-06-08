@@ -3,8 +3,9 @@
     <url>https://sightlineqa.consiliotest.com/</url>
     <prodpath>\\ld5sltest.consiliotest.com\ld5slqa\Productions\Automation</prodpath>
     <SourceLocation>IngestionTestData\Automation</SourceLocation>
-    <domainName>AutoDomain</domainName>
+    <domainName>QADomain</domainName>
     <projectName>AutoSmoke_04012021</projectName>
+     <ICEProjectName>TestingICE</ICEProjectName>
 
    
    <!-- Need to Get Domain Admin -->

@@ -75,6 +75,7 @@ public class Input {
 	public static String rev2userName;
 	public static String rev2password;
 	public static String domainName;
+	public static String ICEProjectName;
 	//Test data------------------------------------------------------
 	public static String searchString1;
 	public static String searchString2;
@@ -112,7 +113,7 @@ public class Input {
 	public static int totalNumberOfDocsincludeadvoption;
 	public static String MasterPDF1location;
 	public static String MasterPDF2location;
-	
+	public static String iCESmokeFolderPath;
 
 	@BeforeSuite(alwaysRun=true)
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -139,6 +140,7 @@ public class Input {
 		wait120 = config.wait120;
 		interval = config.interval;
 		
+		iCESmokeFolderPath = config.ICESmokeFolderPath;
 		Collection1KFolder = config.Collection1KFolder;
 		FamilyFolder = config.FamilyFolder;
 		AllSourcesFolder = config.AllSourcesFolder;
@@ -184,6 +186,8 @@ public class Input {
 		rev2FullName= envConfig.rev2FullName;
 		prodPath= envConfig.prodPath;
 		SourceLocation = envConfig.SourceLocation;
+		ICEProjectName = envConfig.ICEProjectName;
+		
 		//Test data-------------------------------------------------------------
 		
 		loadSuiteTestData();//Load required suite data first, smoke or regression one

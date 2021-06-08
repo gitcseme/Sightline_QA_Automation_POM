@@ -3,6 +3,7 @@ package configsAndTestData;
 public class Environment {
 	public String url;
 	public String projectName;
+	public String ICEProjectName;
 	public String domainName;
 	public String sa1userName;
 	public String sa1password;
@@ -140,6 +141,15 @@ public class Environment {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+	
+	public String getICEProjectName() {
+		return ICEProjectName;
+	}
+	
+	public void setICEProjectName(String ICEProjectName) {
+		this.ICEProjectName = ICEProjectName;
+	}
+	
 	public String getSa1userName() {
 		return sa1userName;
 	}
