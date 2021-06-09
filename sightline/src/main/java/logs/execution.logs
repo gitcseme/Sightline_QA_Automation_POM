@@ -1,8 +1,341 @@
-08/06/2021 13:14:50 devpinoyLogger *****************************************************
-08/06/2021 13:14:50 devpinoyLogger Running scripts on QA Environment
-08/06/2021 13:14:50 devpinoyLogger Test data is copied to TestData.xml
-08/06/2021 13:14:50 devpinoyLogger *****************************************************
-08/06/2021 13:14:53 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
-08/06/2021 13:14:53 devpinoyLogger Choosen not to perform any ingestion
-08/06/2021 13:14:53 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
-08/06/2021 13:14:53 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:41 devpinoyLogger *****************************************************
+08/06/2021 14:53:41 devpinoyLogger Running scripts on QA Environment
+08/06/2021 14:53:41 devpinoyLogger Test data is copied to TestData.xml
+08/06/2021 14:53:41 devpinoyLogger *****************************************************
+08/06/2021 14:53:41 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
+08/06/2021 14:53:41 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - validateCategorization  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  validateCategorization  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ******Execution started for TS_008_AllManageModules********
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createCommentField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createCommentField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createKeywordField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createKeywordField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - createRedactionLabel  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  createRedactionLabel  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateTagField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateTagField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateFolderField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateFolderField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateAnnotationLayer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateAnnotationLayer  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateSecurityGroup  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateSecurityGroup  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - DeleteTagField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  DeleteTagField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - DeleteFolderField  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  DeleteFolderField  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:41 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateCodingform  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:41 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:41 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateCodingform  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - ConceptualSearch  ,  MTM TC IDs:  3739,3740,3741       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  ConceptualSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - audioSearch  ,  MTM TC IDs:  3739       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  audioSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInAS  ,  MTM TC IDs:  3136,3137,3138,3139																       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInAS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - contentSearchWithOperatorsInBS  ,  MTM TC IDs:  27,34,35,36       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  contentSearchWithOperatorsInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - metaDataSearch  ,  MTM TC IDs:  166,199,232,2941,2942,2943,2946       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  metaDataSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - proximityAndRegExInBS  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  proximityAndRegExInBS  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - searchsavedSearch  ,  MTM TC IDs:  3739       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  searchsavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_017_DocList********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - doclistBulkRelease  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  doclistBulkRelease  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagAndBulkFolder  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagAndBulkFolder  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - doclistToDocView  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  doclistToDocView  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_003_BulkActionsFromBasicSearch********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkFolderInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkFolderInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInDocViewInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInDocViewInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInDoclistInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInDoclistInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - viewInTallyResultsInBasicSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  viewInTallyResultsInBasicSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_003_AdvancedSearchBulkActions********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkFolderInAdvancedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkFolderInAdvancedSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - bulkTagInAdvancedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  bulkTagInAdvancedSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_007_SavedSearchShareSchedule********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - saveSearchToDocList  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  saveSearchToDocList  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - saveSearchToDocView  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  saveSearchToDocView  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - scheduleSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  scheduleSavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - shareSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  shareSavedSearch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_009_ValidateAssignmentFunctionality********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateQuickBatch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateQuickBatch  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - CreateAssignmentDistributeToReviwer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  CreateAssignmentDistributeToReviwer  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - Test  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  Test  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_011_DocViewNonAudioReviewer********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addCommentandcompleteDoc  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addCommentandcompleteDoc  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addRemarkToFirstDoc  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addRemarkToFirstDoc  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addredaction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addredaction  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_012_ValidateReportsFunctionality********
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - conceptExplorer  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  conceptExplorer  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - reviewProgressByRevReport  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  reviewProgressByRevReport  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - tallySubTally  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  tallySubTally  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_013_ValidateBatchUpload********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - batchUploadByPA  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  batchUploadByPA  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_018_DocViewAudio********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - AudioDownload  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  AudioDownload  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addComment  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addComment  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addPlay  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addPlay  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addRemark  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addRemark  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - addreduction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  addreduction  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ******Execution started for TS_006_Production********
+08/06/2021 14:53:42 devpinoyLogger Started Execution for prerequisite
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - AddNewProduction  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  AddNewProduction  XXXXXXXXXXXXXXXXXXXXXX
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+08/06/2021 14:53:42 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - BatchPrintWithNative  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+08/06/2021 14:53:42 devpinoyLogger ****************************************************************************************
+
+08/06/2021 14:53:42 devpinoyLogger XXXXXXXXXXXXXXXXXXXXXXX   -E---N---D-  BatchPrintWithNative  XXXXXXXXXXXXXXXXXXXXXX
