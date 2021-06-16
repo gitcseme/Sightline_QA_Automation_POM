@@ -1,230 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Smoke Suite]">
-  <listeners>
-    <listener class-name="executionMaintenance.AnnotationTransformer"/>
-  </listeners>
-  <test thread-count="5" name="Categorization(failed)">
+  <test thread-count="5" name="ICE-Smoke(failed)">
     <groups>
       <run>
         <include name="smoke"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_005_ValidateCategorization">
+      <class name="testScriptsSmoke.TS_019_ICEWorkFlow">
         <methods>
-          <include name="preConditions"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
           <include name="close"/>
-          <include name="validateCategorization"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
-    </classes>
-  </test> <!-- Categorization(failed) -->
-  <test thread-count="5" name="AllManageModules(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_008_AllManageModules">
-        <methods>
           <include name="takeScreenShot"/>
-          <include name="beforeTestMethod"/>
-          <include name="close"/>
-          <include name="CreateSecurityGroup"/>
+          <include name="PMUploadAndInitiate"/>
           <include name="before"/>
+          <include name="RMUploadAndInitiate"/>
+          <include name="SystemAdminUserVerifications"/>
+          <include name="PMUploadAndRefresh"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_008_AllManageModules -->
+      </class> <!-- testScriptsSmoke.TS_019_ICEWorkFlow -->
     </classes>
-  </test> <!-- AllManageModules(failed) -->
-  <test thread-count="5" name="TS_017_DocList(failed)">
+  </test> <!-- ICE-Smoke(failed) -->
+  <test thread-count="5" name="ICE-Regression(failed)">
     <groups>
       <run>
-        <include name="smoke"/>
+        <include name="regression"/>
       </run>
     </groups>
     <classes>
-      <class name="testScriptsSmoke.TS_017_DocList">
+      <class name="testScriptsRegression.ICE_Regression">
         <methods>
-          <include name="beforeTestMethod"/>
-          <include name="preCondition"/>
+          <include name="DragAndDropSAToPA"/>
+          <include name="PMUploadAndDeleteFile"/>
+          <include name="PAExceptionFileFromManageScreen"/>
+          <include name="PAExceptionFileFromDatasetScreen"/>
+          <include name="BulkUserAccessControlHasDatasetOption"/>
+          <include name="before"/>
           <include name="close"/>
-          <include name="doclistToDocView"/>
+          <include name="PAUDupeAllFiles"/>
           <include name="takeScreenShot"/>
-          <include name="bulkTagAndBulkFolder"/>
+          <include name="DragAndDropMultipleUsers"/>
+          <include name="datasetOptionDisplayedIfChecked"/>
+          <include name="VerifyEditUserHasDatasetOption"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_017_DocList -->
+      </class> <!-- testScriptsRegression.ICE_Regression -->
     </classes>
-  </test> <!-- TS_017_DocList(failed) -->
-  <test thread-count="5" name="BulkActionsFromSessionSearch(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_003_BulkActionsFromBasicSearch">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="bulkTagInBasicSearch"/>
-          <include name="beforeTestMethod"/>
-          <include name="bulkFolderInBasicSearch"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_003_BulkActionsFromBasicSearch -->
-    </classes>
-  </test> <!-- BulkActionsFromSessionSearch(failed) -->
-  <test thread-count="5" name="AdvancedSearchBulkActions(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_003_AdvancedSearchBulkActions">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="bulkFolderInAdvancedSearch"/>
-          <include name="beforeTestMethod"/>
-          <include name="bulkTagInAdvancedSearch"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_003_AdvancedSearchBulkActions -->
-    </classes>
-  </test> <!-- AdvancedSearchBulkActions(failed) -->
-  <test thread-count="5" name="SavedSearchShareSchedule(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_007_SavedSearchShareSchedule">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="shareSavedSearch"/>
-          <include name="beforeTestMethod"/>
-          <include name="saveSearchToDocView"/>
-          <include name="scheduleSavedSearch"/>
-          <include name="saveSearchToDocList"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_007_SavedSearchShareSchedule -->
-    </classes>
-  </test> <!-- SavedSearchShareSchedule(failed) -->
-  <test thread-count="5" name="ValidateAssignmentFunctionality(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_009_ValidateAssignmentFunctionality">
-        <methods>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="CreateAssignmentDistributeToReviwer"/>
-          <include name="takeScreenShot"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_009_ValidateAssignmentFunctionality -->
-    </classes>
-  </test> <!-- ValidateAssignmentFunctionality(failed) -->
-  <test thread-count="5" name="DocView - Non Audio(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer">
-        <methods>
-          <include name="addredaction"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
-          <include name="addCommentandcompleteDoc"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="addRemarkToFirstDoc"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_011_DocViewNonAudioReviewer -->
-    </classes>
-  </test> <!-- DocView - Non Audio(failed) -->
-  <test thread-count="5" name="Reports(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_012_ValidateReportsFunctionality">
-        <methods>
-          <include name="beforeClass"/>
-          <include name="close"/>
-          <include name="beforeTestMethod"/>
-          <include name="reviewProgressByRevReport"/>
-          <include name="takeScreenShot"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_012_ValidateReportsFunctionality -->
-    </classes>
-  </test> <!-- Reports(failed) -->
-  <test thread-count="5" name="BatchUpload(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_013_ValidateBatchUpload">
-        <methods>
-          <include name="takeScreenShot"/>
-          <include name="batchUploadByPA"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_013_ValidateBatchUpload -->
-    </classes>
-  </test> <!-- BatchUpload(failed) -->
-  <test thread-count="5" name="Production(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_006_Production">
-        <methods>
-          <include name="AddNewProduction"/>
-          <include name="preCondition"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_006_Production -->
-    </classes>
-  </test> <!-- Production(failed) -->
-  <test thread-count="5" name="BatchPrint(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
-    <classes>
-      <class name="testScriptsSmoke.TS_006_ValidateBatchPrint">
-        <methods>
-          <include name="BatchPrintWithNative"/>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-          <include name="beforeTestMethod"/>
-        </methods>
-      </class> <!-- testScriptsSmoke.TS_006_ValidateBatchPrint -->
-    </classes>
-  </test> <!-- BatchPrint(failed) -->
+  </test> <!-- ICE-Regression(failed) -->
 </suite> <!-- Failed suite [Smoke Suite] -->

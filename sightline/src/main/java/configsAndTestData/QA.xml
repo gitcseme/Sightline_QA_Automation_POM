@@ -16,18 +16,18 @@
 
  -->
 
-  		<!-- Modified By : Srinivas -->
+  		<!-- Modified By : Shilpi	 -->
         <!-- Modified Date : 2021-05-06 -->
         <!-- Password Picked up from Passwordstate -->
      
         <!-- User Name : SA QA -->    
-        <sa1userName>QASA1@Consilio.com</sa1userName> 
-        <sa1password>TestCons!042021</sa1password> 
+        <sa1userName>shilpi.mangal@consilio.com</sa1userName> 
+        <sa1password>Sightline@123</sa1password> 
      
         <!-- Consilio PAU Automation -->
         <pa1FullName>Consilio PAU1 Automation</pa1FullName>
-        <pa1userName>QAPAU1@Consilio.com</pa1userName>
-        <pa1password>Q@test_10</pa1password> 
+        <pa1userName>r.muserconsilio@gmail.com</pa1userName>
+        <pa1password>Sightline@1234</pa1password> 
         
         <pa2FullName>Consilio PAU2 Automation</pa2FullName>
         <pa2userName>QAPAU2@Consilio.com</pa2userName>
@@ -35,8 +35,8 @@
         
         <!--Consilio RMU Automation  -->
         <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
-        <rmu1userName>QARMU1@Consilio.com</rmu1userName>
-        <rmu1password>Q@test_10</rmu1password>
+        <rmu1userName>rm.userconsilio@gmail.com</rmu1userName>
+        <rmu1password>Sightline@123</rmu1password>
         
         <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
         <rmu2userName>QARMU3@Consilio.com</rmu2userName>

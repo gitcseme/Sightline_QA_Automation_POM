@@ -31,7 +31,7 @@ public class ICE_DatasetsPage {
 	public Element getSortBy() {return driver.FindElementByCssSelector("#SortBy");}
 	public ElementCollection getDatasets() {return driver.FindElementsByCssSelector("#dataset_tilesContainer > li");}
 	public Element getLoadMoreBtn() {return driver.FindElementById("btnLoadDataset");}
-	public Element getTotalDocumentsEl(){return driver.FindElementByCssSelector("#cardGrid > div > div > div:nth-Child(3) > div > strong");}
+	//public Element getTotalDocumentsEl(){return driver.FindElementByCssSelector("#cardGrid > div > div > div:nth-Child(3) > div > strong");}
 	public Element getTotalDocumentCount(){return driver.FindElementByCssSelector("#cardGrid > div > div > div:nth-Child(3) > div:nth-child(2) > strong");}
 	
 	/*Dataset tile related elements*/
@@ -50,6 +50,13 @@ public class ICE_DatasetsPage {
 	public Element getCancelBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CancelUploadSet");}
 	public Element getCreateBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CreateUploadSet");}
 	
+	/*Elements added by shilpi as part of fixes */
+	public Element getdatasetleftmenuBtn() {return driver.FindElementByXPath("//*[@name='DataSets']");}
+	public Element getTotalDocumentsEl(){return driver.FindElementByXPath("//*[@id='cardGrid']//div[3]/div[1]/strong");}
+
+	
+	
+	
 	public ICE_DatasetsPage (Driver driver)
 	{
 		this.driver = driver;
@@ -57,11 +64,11 @@ public class ICE_DatasetsPage {
 		
 	public Element getDatasetBtnLMenu()
 	{
-		ElementCollection menuOptions = driver.FindElementsByCssSelector("#LeftMenu > li");
+		ElementCollection menuOptions = driver.FindElementsByXPath(".//*[@id='LeftMenu']/li");
 		for(Element option : menuOptions)
 		{
 			try{
-			if(option.FindElementBycssSelector("a.a-menu").GetAttribute("title").equalsIgnoreCase("Datasets"))
+			if(option.FindElementByXPath("//*[@name='DataSets']").GetAttribute("title").equalsIgnoreCase("Datasets"))
 			{
 				return option;
 			}}

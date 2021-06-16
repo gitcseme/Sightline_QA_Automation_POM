@@ -44,16 +44,16 @@ public class TS_019_ICEWorkFlow {
     	UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		   	//	String securitygroup= "Default Security Group";
+		Input in = new Input();
+		in.loadEnvConfig();
+		
     		driver = new Driver();
     	    lp = new LoginPage(driver);
     	    lp.clearBrowserCache();
     		// To zoom out 3 times
-			for(int i=0; i<3; i++){
-			driver.FindElementByTagName("html").getWebElement().sendKeys(Keys.chord(Keys.CONTROL,Keys.SUBTRACT));
 			}
     	   
-    	}
+    
     
   
 	@Test(groups={"smoke","regression"},priority=1)
@@ -72,15 +72,15 @@ public class TS_019_ICEWorkFlow {
 		bc.impersonateSAtoPAICE();
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
 		//Test case No: 9533: Priority 1
-		Assert.assertNotNull(dp.getDatasetBtnLMenu());
-		dp.getDatasetBtnLMenu().Click();
+		Assert.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
+		dp.getdatasetleftmenuBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		//Test Case No: 9548, Priority 2
 		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Published"));
 		bc.impersonatePAtoRMUICE();
 		//Test case No: 9533: Priority 1
-		Assert.assertNotNull(dp.getDatasetBtnLMenu());
-		dp.getDatasetBtnLMenu().Click();
+		Assert.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
+		dp.getdatasetleftmenuBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		//Test Case No: 9548, Priority 2
 		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
