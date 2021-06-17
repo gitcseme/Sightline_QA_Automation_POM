@@ -56,7 +56,7 @@ public class TS_019_ICEWorkFlow {
     
     
   
-	@Test(groups={"smoke","regression"},priority=1)
+	//@Test(groups={"smoke","regression"},priority=1)
 	public void SystemAdminUserVerifications() throws InterruptedException
 	{
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -90,22 +90,51 @@ public class TS_019_ICEWorkFlow {
 	@Test(groups={"smoke","regression"},priority=2)
 	public void PMUploadAndInitiate() throws InterruptedException
 	{
-		
-    	
-    	 //The below line of codes will make sure the RMU user has access to dataset option.
+	 //The below line of codes will make sure the RMU user has access to dataset option.
     	 //For the current project, also verifies that by default Project Admin user has access.
     	 
 		lp.loginToSightLineICE(Input.sa1userName, Input.sa1password);
 	   	ManageUsersPage mp = new ManageUsersPage(driver);
-    	Element project  = mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
-    	mp.getEditBtn(project).Click();
+	  
+		
+	   	/* Validate dataset option for RMU user */
+	    //Test Case No: 11048, Priority 2
+    	//Element project  = mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
+		
+		mp.getuserandsearch(Input.rmu1userName);
+		
+		//mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
+    	mp.getEditBtn().Click();
 		driver.waitForPageToBeReady();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				mp.getEditUserFunctionality().Visible() ;}}),Input.wait90);
     	mp.getEditUserFunctionality().Click();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				mp.getDatasetCheckbox().Visible() ;}}),Input.wait90);
+    	
+    	sa.assertTrue(mp.getDatasetCheckStatus().Selected());
+    	if(!mp.getDatasetCheckStatus().Selected())
+    	{
+    	mp.getDatasetCheckbox().Click();
+    	mp.getSaveBtnEditUser().Click();
+    	driver.waitForPageToBeReady();
+    	}
+    	
+    	/* Validate dataset option for PA user */
     	//Test Case No: 11049, Priority 2
+    	//Element project1  = mp.getUserListbyUserName(Input.pa1userName,Input.ICEProjectName);
+	   	
+		//mp.getUserListbyUserName(Input.pa1userName,Input.ICEProjectName);
+	   	mp.getuserandsearch(Input.pa1userName);
+    	mp.getEditBtn().Click();
+		driver.waitForPageToBeReady();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				mp.getEditUserFunctionality().Visible() ;}}),Input.wait90);
+    	mp.getEditUserFunctionality().Click();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				mp.getDatasetCheckbox().Visible() ;}}),Input.wait90);
+    	
+    	
     	sa.assertTrue(mp.getDatasetCheckStatus().Selected());
     	if(!mp.getDatasetCheckStatus().Selected())
     	{
@@ -116,13 +145,12 @@ public class TS_019_ICEWorkFlow {
     	lp.logout();
     	driver.waitForPageToBeReady();
     	
-    	
-    	 //Now starts Project Admin user creating dataset, uplaod and initiate. 
+      	 //Now starts Project Admin user creating dataset, uplaod and initiate. 
     	 
     
     	int fileCountBeforeUpload = 0;
     	int fileuploaded =0;
-    	lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
+    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
 		//Test Case No: 11037, Priority 2
 		Assert.assertTrue(dp.getDatasetBtnLMenuPosition() == 2);
@@ -227,8 +255,8 @@ public class TS_019_ICEWorkFlow {
     	 
 		lp.loginToSightLineICE(Input.sa1userName, Input.sa1password);
 	   	ManageUsersPage mp = new ManageUsersPage(driver);
-    	Element project  = mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
-    	mp.getEditBtn(project).Click();
+    //	Element project  = mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
+    //	mp.getEditBtn(project).Click();
 		driver.waitForPageToBeReady();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				mp.getEditUserFunctionality().Visible() ;}}),Input.wait90);

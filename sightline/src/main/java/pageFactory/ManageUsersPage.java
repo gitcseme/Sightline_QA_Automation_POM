@@ -43,7 +43,8 @@ public class ManageUsersPage {
     public Element getBulkDataset() {return driver.FindElementByXPath("//*[@id='lblCanProview']/i");}
     public Element getBulkUserList(){ return driver.FindElementByXPath("//*[@id='divBulkUserList']//label[contains(text(),'"+Input.pa1FullName+"')]"); }
     public Element getBulkUserSave(){ return driver.FindElementById("btnSaveBulkAccessControls"); }
-    public Element getEditBtn(Element project) {return project.FindElementBycssSelector("td:nth-child(9) >  a"); }
+    public Element getEditBtn() {return driver.FindElementByXPath("//*[@id='dtUserList']/tbody//tr[td='" + Input.ICEProjectName + "']/td[9]/a[1]"); }
+   // public Element getEditBtn(Element project) {return project.FindElementBycssSelector("td:nth-child(9) >  a"); }
     public Element getBulkCancelBtn(){return driver.FindElementByCssSelector("btnCancelBulkAccessControls");}
     
     public Element getEditUserFunctionality() {return driver.FindElementByCssSelector("#myTab1 > li:nth-child(2) > a");}
@@ -202,6 +203,16 @@ public class ManageUsersPage {
     	UtilityLog.info("Success msg passed");
 	}
    
+    public void getuserandsearch(String username)
+    {
+    	driver.FindElementByCssSelector("#LeftMenu > li > a").Click();
+    	driver.FindElementByCssSelector("#LeftMenu > li > ul > li > a").WaitUntilPresent().Click();
+    	driver.waitForPageToBeReady();
+    	driver.FindElementByCssSelector("#txtsearchUser").WaitUntilPresent().SendKeys(username);
+    	driver.FindElementByCssSelector("#btnAppyFilter").Click();
+    	driver.waitForPageToBeReady();
+       	}
+    	
     public Element getUserListbyUserName(String username, String projectname)
     {
     	driver.FindElementByCssSelector("#LeftMenu > li > a").Click();
@@ -232,6 +243,8 @@ public class ManageUsersPage {
     	return null;
     	
     }
+    	   	
+   
     
 
     public Element getUserList(String username)

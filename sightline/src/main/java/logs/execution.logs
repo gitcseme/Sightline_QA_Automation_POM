@@ -1,13 +1,9 @@
-16/06/2021 17:10:00 devpinoyLogger ******Execution started for TS_019_ICEWorkFlow********
-16/06/2021 17:10:00 devpinoyLogger Started Execution for prerequisite
-16/06/2021 17:10:00 devpinoyLogger *****************************************************
-16/06/2021 17:10:00 devpinoyLogger Running scripts on QA Environment
-16/06/2021 17:10:00 devpinoyLogger Test data is copied to TestData.xml
-16/06/2021 17:10:00 devpinoyLogger *****************************************************
-16/06/2021 17:10:04 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
-16/06/2021 17:10:04 devpinoyLogger Choosen not to perform any ingestion
-16/06/2021 17:10:12 devpinoyLogger Login success!
-16/06/2021 17:10:26 devpinoyLogger Impersnated from SA to PA
-16/06/2021 17:10:38 devpinoyLogger Impersnated from PA to RMU
-16/06/2021 17:10:51 devpinoyLogger Logged out successfully!
-16/06/2021 17:12:15 devpinoyLogger Logged out successfully!
+17/06/2021 16:15:43 devpinoyLogger ******Execution started for TS_019_ICEWorkFlow********
+17/06/2021 16:15:43 devpinoyLogger Started Execution for prerequisite
+17/06/2021 16:15:43 devpinoyLogger *****************************************************
+17/06/2021 16:15:44 devpinoyLogger Running scripts on QA Environment
+17/06/2021 16:15:44 devpinoyLogger Test data is copied to TestData.xml
+17/06/2021 16:15:44 devpinoyLogger *****************************************************
+17/06/2021 16:15:47 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
+17/06/2021 16:15:47 devpinoyLogger Choosen not to perform any ingestion
+17/06/2021 16:16:16 devpinoyLogger Login success!
