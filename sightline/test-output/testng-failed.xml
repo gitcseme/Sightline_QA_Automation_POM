@@ -10,8 +10,6 @@
           <include name="PMUploadAndInitiate"/>
           <include name="beforeTestMethod"/>
           <include name="before"/>
-          <include name="RMUploadAndInitiate"/>
-          <include name="PMUploadAndRefresh"/>
         </methods>
       </class> <!-- testScriptsSmoke.TS_019_ICEWorkFlow -->
     </classes>

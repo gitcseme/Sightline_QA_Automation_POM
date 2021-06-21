@@ -1,7 +1,11 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.WebElement;
 
 import SightlineObjects.DatasetDetails;
 import SightlineObjects.DatasetTileDetails;
@@ -9,6 +13,7 @@ import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import automationLibrary.GenFunc;
+import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class ICE_DatasetsPage {
@@ -21,7 +26,7 @@ public class ICE_DatasetsPage {
 	public Element getDatasetPage() {return driver.FindElementByCssSelector("#cardCanvas");}
 	public ElementCollection DocViewDocumentList() {return driver.FindElementsByCssSelector("#dtDocList > tbody > tr");}
 	/*Page related Elements*/
-	public Element getShowDropDown(){return driver.FindElementByCssSelector("#DatasetTypeList");}
+	//public Element getShowDropDown(){return driver.FindElementByCssSelector("#DatasetTypeList");}
 	public ElementCollection getShowDropDownOptions(){return driver.FindElementsByCssSelector("#DatasetTypeList > option");}
 	public Element getCreateNewUploadSetLink(){return driver.FindElementByCssSelector("#createSet");}
 	public Element getCreateNewMappedSetLink() {return driver.FindElementByCssSelector("#createMappedSet");}
@@ -43,7 +48,7 @@ public class ICE_DatasetsPage {
 	
 	/*New Dataset popup related Elements*/
 	public Element getCreateDatasetPopup() {return driver.FindElementByCssSelector("div.ui-dialog");} //getattribute("display") - if none, popup is closed if block it is open.
-	public Element getDatasetNameTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtDatasetName");}
+	public Element getDatasetNameTxtBox() {return getCreateDatasetPopup().FindElementById("txtDatasetName");}
 	public Element getCustodianNameTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtCustodianName");}
 	public ElementCollection getCustodianNameList() {return getCreateDatasetPopup().FindElementBycssSelector("#datalistCustodianName").getOptions();}
 	public Element getDescriptionTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtDatasetDescription");}
@@ -53,7 +58,9 @@ public class ICE_DatasetsPage {
 	/*Elements added by shilpi as part of fixes */
 	public Element getdatasetleftmenuBtn() {return driver.FindElementByXPath("//*[@name='DataSets']");}
 	public Element getTotalDocumentsEl(){return driver.FindElementByXPath("//*[@id='cardGrid']//div[3]/div[1]/strong");}
-
+	public ElementCollection getleftmenuList(){ return driver.FindElementsByXPath(".//*[@id='LeftMenu']/li"); }
+	public Element getShowDropDown(){return driver.FindElementById("DatasetTypeList");}
+	
 	
 	
 	
@@ -96,6 +103,7 @@ public class ICE_DatasetsPage {
 		}
 		return 0;
 	}
+	
 	
 	public Element getDatasetByName(String datasetName) throws InterruptedException 
 	{	
@@ -147,9 +155,9 @@ public class ICE_DatasetsPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDatasetNameTxtBox().Visible() ;}}),Input.wait60);
 		
-		getDatasetNameTxtBox().WaitUntilPresent().setText(dd.getDatasetName());
+		getDatasetNameTxtBox().setText(dd.getDatasetName());
 		
-		getCustodianNameTxtBox().WaitUntilPresent().setText(dd.getCustodianName());
+		getCustodianNameTxtBox().setText(dd.getCustodianName());
 		
 		if(dd.getDescription() != null || !dd.getDescription().isEmpty())
 		{

@@ -89,8 +89,7 @@ public class LoginPage {
 			driver.waitForPageToBeReady();
 			
 			
-			((JavascriptExecutor)driver).executeScript("document.body.style.zoom='90%';");
-    	}catch (Exception e) {
+		}catch (Exception e) {
 			
 		}
     	//below code is to handles 2FA
