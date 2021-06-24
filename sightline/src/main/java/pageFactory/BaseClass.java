@@ -123,7 +123,7 @@ public class BaseClass {
 	}
 
 	public Element getYesBtn() {
-		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+		return driver.FindElementById("bot1-Msg1");
 	}
 
 	// select domain
@@ -157,8 +157,11 @@ public class BaseClass {
 	}
 	
 	public ElementCollection getBackTasks() {return driver.FindElementsByCssSelector("#bgTask > ul > li");}
-	  
+	  //added by shilpi on 24/06/2021
+	public Element getBckTask_selecttask() {return driver.FindElementByXPath("//*[@id='bgTask']//li[1]//a");}
 
+	
+	
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;

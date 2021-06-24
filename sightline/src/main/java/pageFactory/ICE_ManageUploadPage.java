@@ -67,6 +67,10 @@ public class ICE_ManageUploadPage {
     public Element getConfirmNavigationPopupNoBtn() {return driver.FindElementByCssSelector("#bot2-Msg1");}
     public Element getConfirmNavigationPopupYesBtn() {return driver.FindElementByCssSelector("#bot1-Msg1");}
     
+    /*Elements added by shilpi as part of fixes */
+	public Element getdraganddroptab() {return driver.FindElementById("liRegularUploadTab");}
+
+    
     public ICE_ManageUploadPage(Driver driver, String datasetName)
     {
     	this.driver = driver;

@@ -144,6 +144,7 @@ public class TS_019_ICEWorkFlow {
 		lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
 		// Test Case No: 11037, Priority 2
+	
 		 List<String> test1 = new ArrayList<String>(); 
 		 List<WebElement> menuposition = dp.getleftmenuList().FindWebElements(); 
 		 for(int i=0; i<menuposition.size(); i++)
@@ -161,7 +162,7 @@ public class TS_019_ICEWorkFlow {
 			 
 			 }
 		 }
-		 
+	
 		 Assert.assertEquals(position, 2);
 		
 		 Reporter.log("Dataset menu option avilable under doc explorer");
@@ -191,20 +192,39 @@ public class TS_019_ICEWorkFlow {
 		
 		
 		DatasetDetails testdd = new DatasetDetails();
-		testdd.setDatasetName("Auto" + Utility.dynamicNameAppender());
-		testdd.setCustodianName("Auto " + Utility.dynamicNameAppender());
-		testdd.setDescription(this.getClass().toString());
+		//testdd.setDatasetName("Auto" + Utility.dynamicNameAppender());
+		//testdd.setCustodianName("Auto " + Utility.dynamicNameAppender());
+		//testdd.setDescription(this.getClass().toString());
 		// Test Case No:9520
-		dp.CreateNewUploadSet(testdd);
+		//dp.CreateNewUploadSet(testdd);
+		
+		String dname ="Auto" + Utility.dynamicNameAppender();
+		String dcustodian ="Auto" + Utility.dynamicNameAppender();
+		String ddisc ="Auto test for dataset" + Utility.dynamicNameAppender();
+		dp.setdatasetdetails(dname,dcustodian, ddisc);
 		driver.waitForPageToBeReady();
+		
+		dp.getdatasetleftmenuBtn().waitAndClick(30);
+		dp.DeleteUploadedDatasetByName(dname);
+		
+		dp.setdatasetdetails(dname,dcustodian, ddisc);
+		
 		ICE_ManageUploadPage mup = new ICE_ManageUploadPage(driver, testdd.getDatasetName());
+		System.out.println(Input.iCESmokeFolderPath);
 		String testFolderPath = System.getProperty("user.dir") + Input.iCESmokeFolderPath;
+		mup.getdraganddroptab().waitAndFind(30);
+
 		fileCountBeforeUpload = mup.getUploadCount();
 		// Test Case No: 11069, Priority 2
 		Assert.assertTrue(mup.getDropZoneLink().Displayed());
 		// Test Case No: 10840, Priority 2
-		Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
-				"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
+		//Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
+		//		"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
+		
+		System.out.println(mup.getDropZoneStaticText().getText().trim());
+	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains("* Using Drag-and-Drop Upload is recommended to upload smaller datasets (smaller than 10GB) to Sightline. For better experience uploading data using Drag-and-Drop upload and High-Speed Upload, Consilio recommends never putting PSTs, MBOX or other email containers into ZIP archives. However, we recommend putting folders and loose eFiles into ZIP archives and upload. In addition, please ensure that the unzipped loose eFiles have unique names within a dataset, in order to avoid files with same names being overwritten."));
+			    
+		
 		// Test Case no: 10827, Priority 2
 		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
 		fileuploaded = mup.uploadFilesByFolder(testFolderPath);
@@ -237,7 +257,26 @@ public class TS_019_ICEWorkFlow {
 				return dpdp.getProcessingStatus().equalsIgnoreCase("Processing");
 			}
 		}), 10000);
+		
+		final BaseClass bc = new BaseClass(driver);
+        final int Bgcount = bc.initialBgCount();
+        
+   	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+   
+   	 	driver.WaitUntil((new Callable<Boolean>() {	public Boolean call() {
+				return bc.getBackgroundTask_Button().Visible();	}}), Input.wait60);
+		bc.getBackgroundTask_Button().Click();
+		
 
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {
+				return bc.getBckTask_selecttask().Visible();}}), Input.wait30);
+		System.out.println( bc.getBckTask_selecttask().getText());
+	 String actualtext = bc.getBckTask_selecttask().getText();
+	 Assert.assertEquals("The dataset "+dname+" has been processed successfully.", actualtext);
+   	 UtilityLog.info("Processing is completed");
+   	 Reporter.log("Processing is completed",true);
+   
 		driver.Navigate().refresh();
 		// Test Case No: 9518, Priority 1
 		Assert.assertTrue(

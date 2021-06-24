@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import SightlineObjects.DatasetDetails;
 import SightlineObjects.DatasetTileDetails;
@@ -19,7 +20,8 @@ import testScriptsSmoke.Input;
 public class ICE_DatasetsPage {
 	
 	Driver driver;
-	BaseClass bc = new BaseClass(driver);
+	BaseClass bc;
+	
 	
 	public String getDatasetPageTitle() {return driver.FindElementByClassName("page-title").getText();}
 	public boolean isDatasetActive() {return driver.FindElementByCssSelector("#LeftMenu > li:nth-child(2)").GetAttribute("class").equalsIgnoreCase("Active");}
@@ -43,17 +45,17 @@ public class ICE_DatasetsPage {
 	public Element getDatasetNamelink(Element dataset){return dataset.FindElementBycssSelector("span.pTime > a");}
 	public Element getErrorCtLink(Element dataset) {return dataset.FindElementBycssSelector("div.errorCt > span");}
 	public ElementCollection getDatasetDropdownMenuOptions(Element dataset) {return dataset.FindElementBycssSelector("ul.datasets-dropdown-menu").getLis();}
-	public Element getSettingsDropdown(Element dataset) {return dataset.FindElementBycssSelector("div.actionBtn > a");}
+	public Element getSettingsDropdown() {return driver.FindElementByXPath("//*[@id='dataset_tilesContainer']/li/div/a");}
 	public Element getManageUploadBtn(Element dataset) {return dataset.FindElementBycssSelector("span:nth-child(5) > a");}
 	
 	/*New Dataset popup related Elements*/
 	public Element getCreateDatasetPopup() {return driver.FindElementByCssSelector("div.ui-dialog");} //getattribute("display") - if none, popup is closed if block it is open.
-	public Element getDatasetNameTxtBox() {return getCreateDatasetPopup().FindElementById("txtDatasetName");}
-	public Element getCustodianNameTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtCustodianName");}
+	public Element getDatasetNameTxtBox() {return driver.FindElementById("txtDatasetName");}
+//	public Element getCustodianNameTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtCustodianName");}
 	public ElementCollection getCustodianNameList() {return getCreateDatasetPopup().FindElementBycssSelector("#datalistCustodianName").getOptions();}
-	public Element getDescriptionTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtDatasetDescription");}
+	//public Element getDescriptionTxtBox() {return getCreateDatasetPopup().FindElementBycssSelector("#txtDatasetDescription");}
 	public Element getCancelBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CancelUploadSet");}
-	public Element getCreateBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CreateUploadSet");}
+//	public Element getCreateBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CreateUploadSet");}
 	
 	/*Elements added by shilpi as part of fixes */
 	public Element getdatasetleftmenuBtn() {return driver.FindElementByXPath("//*[@name='DataSets']");}
@@ -61,12 +63,15 @@ public class ICE_DatasetsPage {
 	public ElementCollection getleftmenuList(){ return driver.FindElementsByXPath(".//*[@id='LeftMenu']/li"); }
 	public Element getShowDropDown(){return driver.FindElementById("DatasetTypeList");}
 	
-	
-	
+	public Element getCustodianNameTxtBox() {return driver.FindElementById("txtCustodianName");}
+	public Element getDescriptionTxtBox() {return driver.FindElementById("txtDatasetDescription");}
+	public Element getCreateBtn() {return driver.FindElementById("CreateUploadSet");}
+	public Element getdeletebtn() {return driver.FindElementByXPath("//*[@id='dataset_tilesContainer']//dl/dt/a"); }	
 	
 	public ICE_DatasetsPage (Driver driver)
 	{
 		this.driver = driver;
+		bc= new BaseClass(driver);
 	}
 		
 	public Element getDatasetBtnLMenu()
@@ -102,6 +107,26 @@ public class ICE_DatasetsPage {
 			}
 		}
 		return 0;
+	}
+	
+	public int getDatasetMenuPosition()
+	{
+		 int position = 0;
+		 List<String> test1 = new ArrayList<String>(); 
+		 List<WebElement> menuposition = getleftmenuList().FindWebElements(); 
+		 for(int i=0; i<menuposition.size(); i++)
+		 {
+			 position++;
+			 test1.add(menuposition.get(i).getText());
+			 if(test1.contains("DATASETS"))
+			 {
+			 Assert.assertTrue(test1.contains("DATASETS"));
+			 System.out.println(position);
+			 menuposition.get(i).click();
+			 }
+						 
+		 }
+		return position;
 	}
 	
 	
@@ -180,25 +205,25 @@ public class ICE_DatasetsPage {
 		return true;
 	}
 	
-	@SuppressWarnings("unused")
 	public boolean DeleteUploadedDatasetByName(String datasetName) throws InterruptedException
 	{
 		System.out.println("********Deletion of set is started.********");
-		Element dataset = getDatasetByName(datasetName);
-			dataset.ScrollTo();
-		if(dataset!=null)
+		getDatasetByName(datasetName);
+		
+		if(getDatasetByName(datasetName)!=null)
 			{
 			System.out.println("********Found dataset to delete.********");
-				//getSettingsDropdown(dataset).ScrollTo();
-				getSettingsDropdown(dataset).Click();
 			
-				getSettingsDropdown(dataset).FindElementByXPath("//*[@id='dataset_tilesContainer']/li/div[1]/dl/dt/a").WaitUntilPresent().Click();
+		 Thread.sleep(2000);
+		   getSettingsDropdown().waitAndClick(30);	
+			
+		   getdeletebtn().waitAndClick(10);
+			
+			  driver.waitForPageToBeReady();
 				
-				driver.waitForPageToBeReady();
+				bc.getYesBtn().waitAndClick(10);
 				
-				driver.FindElementById("bot1-Msg1").WaitUntilPresent().Click();
-				
-				driver.waitForPageToBeReady();
+				bc.VerifySuccessMessage("Dataset Deleted Successfully");
 				
 				driver.scrollPageToTop();
 				
@@ -391,5 +416,41 @@ public class ICE_DatasetsPage {
 		Mapped,
 		All
 	}
+	
+	public void setdatasetdetails(String dname,String dcustodian,String ddisc)
+	
+	{
+		
+		System.out.println("********Started to create new uploaded set.********");
+		
+		getCreateNewUploadSetLink().WaitUntilPresent().Click();
+	
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getDatasetNameTxtBox().Visible() ;}}),Input.wait60);
+		
+		getDatasetNameTxtBox().SendKeys(dname);
+		
+		getCustodianNameTxtBox().SendKeys(dcustodian);	
+		
+		getDescriptionTxtBox().SendKeys(ddisc);
+		
+		getCreateBtn().WaitUntilPresent().Click();
+
+		bc.getNOBtn().waitAndClick(30);
+		
+		try{
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					driver.FindElementById("mydropzone").Visible()  ;}}),Input.wait60);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			System.out.println("********Creation of new uploaded set is completed.********");
+	
+	}
+	
+	
 
 }
