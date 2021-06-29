@@ -208,7 +208,7 @@ public class ICE_ManageUploadPage {
     	
 		Thread.sleep(4000);
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
-		dp.getDatasetBtnLMenu().Click();
+		dp.getdatasetleftmenuBtn().Click();
 		}
     
 

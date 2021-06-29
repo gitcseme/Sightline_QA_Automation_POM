@@ -28,6 +28,7 @@ import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import pageFactory.BaseClass;
 import pageFactory.ICE_DatasetProgressStatusPage;
+import pageFactory.ICE_DatasetSummaryPage;
 import pageFactory.ICE_DatasetsPage;
 import pageFactory.ICE_ManageUploadPage;
 import pageFactory.LoginPage;
@@ -39,6 +40,7 @@ public class TS_019_ICEWorkFlow {
 	LoginPage lp;
 	SoftAssert sa = new SoftAssert();
 	BaseClass bc = new BaseClass(driver);
+	
 
 	@SuppressWarnings("static-access")
 	@BeforeClass(alwaysRun = true)
@@ -53,21 +55,19 @@ public class TS_019_ICEWorkFlow {
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.clearBrowserCache();
-		// To zoom out 3 times
 	}
 
-	// @Test(groups={"smoke","regression"},priority=1)
+	 @Test(groups={"smoke","regression"},priority=1)
 	public void SystemAdminUserVerifications() throws InterruptedException {
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		driver.waitForPageToBeReady();
 		ManageUsersPage muPage = new ManageUsersPage(driver);
 		muPage.getProjectListByProjectName(Input.ICEProjectName);
 		// Test Case No: 9450: Priority 1
-		Assert.assertTrue(
-				muPage.getICEProjectStatuslabel().getText().toString().equalsIgnoreCase("ICE PROJECT STATUS"));
+		Assert.assertTrue(muPage.getICEProjectStatuslabel().getText().toString().equalsIgnoreCase("ICE PROJECT STATUS"));
 		// Test Case No: 9451: Priority 1
 		Assert.assertTrue(muPage.getICEProjectStatus().getText().toString().trim().equalsIgnoreCase("ACTIVE"));
-		// #ProjectDataTable > tbody > tr > td:nth-child(5)
+		
 		BaseClass bc = new BaseClass(driver);
 		bc.impersonateSAtoPAICE();
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
@@ -93,55 +93,11 @@ public class TS_019_ICEWorkFlow {
 		// option.
 		// For the current project, also verifies that by default Project Admin user has
 		// access.
-		/*
-		 * lp.loginToSightLineICE(Input.sa1userName, Input.sa1password); ManageUsersPage
-		 * mp = new ManageUsersPage(driver);
-		 * 
-		 * 
-		 * // Validate dataset option for RMU user //Test Case No: 11048, Priority 2
-		 * //Element project =
-		 * mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
-		 * 
-		 * mp.getuserandsearch(Input.rmu1userName);
-		 * 
-		 * //mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
-		 * mp.getEditBtn().Click(); driver.waitForPageToBeReady(); driver.WaitUntil((new
-		 * Callable<Boolean>() {public Boolean call(){return
-		 * mp.getEditUserFunctionality().Visible() ;}}),Input.wait90);
-		 * mp.getEditUserFunctionality().Click(); driver.WaitUntil((new
-		 * Callable<Boolean>() {public Boolean call(){return
-		 * mp.getDatasetCheckbox().Visible() ;}}),Input.wait90);
-		 * 
-		 * sa.assertTrue(mp.getDatasetCheckStatus().Selected());
-		 * if(!mp.getDatasetCheckStatus().Selected()) { mp.getDatasetCheckbox().Click();
-		 * 
-		 * } mp.getSaveBtnEditUser().Click(); driver.waitForPageToBeReady();
-		 * 
-		 * // Validate dataset option for PA user //Test Case No: 11049, Priority 2
-		 * //Element project1 =
-		 * mp.getUserListbyUserName(Input.pa1userName,Input.ICEProjectName);
-		 * 
-		 * //mp.getUserListbyUserName(Input.pa1userName,Input.ICEProjectName);
-		 * mp.getuserandsearch(Input.pa1userName); mp.getEditBtn().Click();
-		 * driver.waitForPageToBeReady(); driver.WaitUntil((new Callable<Boolean>()
-		 * {public Boolean call(){return mp.getEditUserFunctionality().Visible()
-		 * ;}}),Input.wait90); mp.getEditUserFunctionality().Click();
-		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * mp.getDatasetCheckbox().Visible() ;}}),Input.wait90);
-		 * 
-		 * 
-		 * sa.assertTrue(mp.getDatasetCheckStatus().Selected());
-		 * if(!mp.getDatasetCheckStatus().Selected()) { mp.getDatasetCheckbox().Click();
-		 * 
-		 * } mp.getSaveBtnEditUser().Click(); driver.waitForPageToBeReady();
-		 * lp.logout(); driver.waitForPageToBeReady();
-		 */
-		// Now starts Project Admin user creating dataset, uplaod and initiate.
 
 		int fileCountBeforeUpload = 0;
 		int fileuploaded = 0;
 		int position = 0;
-		lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
 		// Test Case No: 11037, Priority 2
 	
@@ -156,8 +112,6 @@ public class TS_019_ICEWorkFlow {
 			 Assert.assertTrue(test1.contains("DATASETS"));
 			 System.out.println(position);
 			 menuposition.get(i).click();
-			 
-			
 			 break;
 			 
 			 }
@@ -168,11 +122,11 @@ public class TS_019_ICEWorkFlow {
 		 Reporter.log("Dataset menu option avilable under doc explorer");
 		 UtilityLog.info("Dataset menu option avilable under doc explorer");
 		 
-		//Assert.assertTrue(dp.getDatasetBtnLMenuPosition() == 2);
+		
 		// Assert.assertTrue(dp.getDatasetBtnLMenuPosition() == 2);
 		// Test Case No: 9473, Prioirty 2
 		
-	//	dp.getDatasetBtnLMenu().Click();
+		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
 		// Test Case No: 9460, Priority 2
 		Assert.assertEquals(dp.getDatasetPageTitle(), "Datasets");
@@ -218,11 +172,10 @@ public class TS_019_ICEWorkFlow {
 		// Test Case No: 11069, Priority 2
 		Assert.assertTrue(mup.getDropZoneLink().Displayed());
 		// Test Case No: 10840, Priority 2
-		//Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
-		//		"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
+	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
+	//			"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
 		
-		System.out.println(mup.getDropZoneStaticText().getText().trim());
-	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains("* Using Drag-and-Drop Upload is recommended to upload smaller datasets (smaller than 10GB) to Sightline. For better experience uploading data using Drag-and-Drop upload and High-Speed Upload, Consilio recommends never putting PSTs, MBOX or other email containers into ZIP archives. However, we recommend putting folders and loose eFiles into ZIP archives and upload. In addition, please ensure that the unzipped loose eFiles have unique names within a dataset, in order to avoid files with same names being overwritten."));
+		sa.assertTrue(mup.getDropZoneStaticText().getText().trim().contains("* Using Drag-and-Drop Upload is recommended to upload smaller datasets (smaller than 10GB) to Sightline. For better experience uploading data using Drag-and-Drop upload and High-Speed Upload, Consilio recommends never putting PSTs, MBOX or other email containers into ZIP archives. However, we recommend putting folders and loose eFiles into ZIP archives and upload. In addition, please ensure that the unzipped loose eFiles have unique names within a dataset, in order to avoid files with same names being overwritten."));
 			    
 		
 		// Test Case no: 10827, Priority 2
@@ -233,8 +186,10 @@ public class TS_019_ICEWorkFlow {
 		// Test Case no: 10827, Priority 2
 		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Files Uploaded, Initiate Processing >"));
 		Thread.sleep(2000);
-		mup.getUploadFilesBtn().Click();
+		mup.getUploadFilesBtn().waitAndClick(10);
 		// Test Case No: 10861, Priority 2
+		
+		mup.getInitatePopup().WaitUntilPresent();
 		Assert.assertTrue(mup.getInitatePopup().Displayed());
 		Assert.assertEquals(mup.getInitatePopupMessage().getText(),
 				"Are you sure you want to initiate processing for this dataset?");
@@ -242,6 +197,10 @@ public class TS_019_ICEWorkFlow {
 		driver.waitForPageToBeReady();
 		// Test Case No: 10858, Priority 2
 		Assert.assertTrue(mup.getUploadFilesBtn().Enabled());
+		
+		final BaseClass bc = new BaseClass(driver);
+        final int Bgcount = bc.initialBgCount();
+        
 		mup.InitiateProcessing();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -253,19 +212,34 @@ public class TS_019_ICEWorkFlow {
 		ICE_DatasetProgressStatusPage dpdp = new ICE_DatasetProgressStatusPage(driver, testdd.getDatasetName(), false);
 
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dpdp.getProcessingStatus().equalsIgnoreCase("Processing");
-			}
-		}), 10000);
+			public Boolean call() {	return dpdp.getProcessingStatus().equalsIgnoreCase("Processing");}}), 10000);
 		
-		final BaseClass bc = new BaseClass(driver);
-        final int Bgcount = bc.initialBgCount();
+		driver.Navigate().refresh();
+		// Test Case No: 9518, Priority 1
+		Assert.assertTrue(dpdp.getEntireProjectSummaryTableHeader().equalsIgnoreCase("TYPE FILE COUNT TOTAL SIZE (MB)"));
+		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
+		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
+		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
         
-   	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
-   
-   	 	driver.WaitUntil((new Callable<Boolean>() {	public Boolean call() {
-				return bc.getBackgroundTask_Button().Visible();	}}), Input.wait60);
+		ICE_DatasetSummaryPage dsumpage = new ICE_DatasetSummaryPage(driver, testdd.getDatasetName());
+		sa.assertTrue(dsumpage.isDatasetSummaryPageLoaded());
+		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
+
+		
+		// Test Case No: 9527, Priority 1
+		sa.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");}}), 1800000);
+
+		Assert.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
+
+		  
+  	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120); 
+  
+  	 	driver.WaitUntil((new Callable<Boolean>() {	public Boolean call() {
+				return bc.getBackgroundTask_Button().Visible();	}}), Input.wait120);
 		bc.getBackgroundTask_Button().Click();
 		
 
@@ -274,44 +248,27 @@ public class TS_019_ICEWorkFlow {
 		System.out.println( bc.getBckTask_selecttask().getText());
 	 String actualtext = bc.getBckTask_selecttask().getText();
 	 Assert.assertEquals("The dataset "+dname+" has been processed successfully.", actualtext);
-   	 UtilityLog.info("Processing is completed");
-   	 Reporter.log("Processing is completed",true);
-   
-		driver.Navigate().refresh();
-		// Test Case No: 9518, Priority 1
-		Assert.assertTrue(
-				dpdp.getEntireProjectSummaryTableHeader().equalsIgnoreCase("TYPE FILE COUNT TOTAL SIZE (MB)"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
-
-		// Test Case No: 9527, Priority 1
-		Assert.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");
-			}
-		}), 1800000);
-
-		Assert.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
+  	 UtilityLog.info("Processing is completed");
+  	 Reporter.log("Processing is completed",true);
 
 		bc.impersonatePAtoRMU();
 
 		// Test Case No: 9529, Priority 1
-		Assert.assertNotNull(dp.getDatasetBtnLMenu());
+		sa.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
 		lp.logout();
 
 	}
 
-	// @Test(groups={"smoke","regression"},priority=3)
+     @Test(groups={"smoke","regression"},priority=3)
 	public void RMUploadAndInitiate() throws InterruptedException {
-
+    	
 		ICE_DatasetsPage dp;
-		lp.loginToSightLineICE(Input.rmu1userName, Input.rmu1password);
 		dp = new ICE_DatasetsPage(driver);
+		lp.loginToSightLineICE(Input.rmu1userName, Input.rmu1password);
+		
 		// Test Case No: 9456, Priority 2
-		sa.assertNull(dp.getDatasetBtnLMenu());
+		sa.assertNull(dp.getdatasetleftmenuBtn());
+		
 		lp.logout();
 		dp = null;
 		driver.waitForPageToBeReady();
@@ -327,17 +284,15 @@ public class TS_019_ICEWorkFlow {
 		// mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
 		// mp.getEditBtn(project).Click();
 		driver.waitForPageToBeReady();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return mp.getEditUserFunctionality().Visible();
-			}
-		}), Input.wait90);
-		mp.getEditUserFunctionality().Click();
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return mp.getDatasetCheckbox().Visible();
-			}
-		}), Input.wait90);
+		mp.getUserList(Input.rmu1userName);
+		
+	//	mp.getUserListbyUserName(Input.rmu1userName,Input.ICEProjectName);
+		
+		mp.getEditUserFunctionality(Input.ICEProjectName).waitAndClick(10);
+		
+		mp.getUserFunctionalitytab().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return mp.getDatasetCheckbox().Visible();}}), Input.wait90);
+		
 		// Test Case No: 10983,11048, Priority 2
 		sa.assertFalse(mp.getDatasetCheckStatus().Selected());
 		if (!mp.getDatasetCheckStatus().Selected()) {
@@ -352,14 +307,40 @@ public class TS_019_ICEWorkFlow {
 
 		int fileCountBeforeUpload = 0;
 		int fileuploaded = 0;
+		int position = 0;
 		lp.loginToSightLineICE(Input.rmu1userName, Input.rmu1password);
 		dp = new ICE_DatasetsPage(driver);
 		// Test Case No: 11038, Priority 2
-		Assert.assertTrue(dp.getDatasetBtnLMenuPosition() == 3);
+	//	Assert.assertTrue(dp.getDatasetBtnLMenuPosition() == 3);
+		
+		 List<String> test1 = new ArrayList<String>(); 
+		 List<WebElement> menuposition = dp.getleftmenuList().FindWebElements(); 
+		 for(int i=0; i<menuposition.size(); i++)
+		 {
+			 position++;
+			 test1.add(menuposition.get(i).getText());
+			 if(test1.contains("DATASETS"))
+			 {
+			 Assert.assertTrue(test1.contains("DATASETS"));
+			 System.out.println(position);
+			 menuposition.get(i).click();
+			 break;
+			 
+			 }
+		 }
+	
+		 Assert.assertEquals(position, 3);
+		
+		
 		// Test Case No: 11055, Priority 2
-		Assert.assertNotNull(dp.getDatasetBtnLMenu());
-		dp.getDatasetBtnLMenu().Click();
+
+		 Reporter.log("Dataset menu option avilable under doc explorer");
+		 UtilityLog.info("Dataset menu option avilable under doc explorer");
+		 
+		
+	   dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
+		// Test Case No: 9460, Priority 2
 
 		// Test Case No: 9460,10981, Priority 2
 		Assert.assertEquals(dp.getDatasetPageTitle(), "Datasets");
@@ -374,14 +355,30 @@ public class TS_019_ICEWorkFlow {
 		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
 		dp.getShowDropDown().Click();
 		// Test Case No: 11089, Priority 2
-		Assert.assertTrue(dp.getShowDropDown().FindElementBycssSelector("option").Selected());
+		//Assert.assertTrue(dp.getShowDropDown().FindElementBycssSelector("option").Selected());
 
+		
+		String showdrpdown = dp.getShowDropDown().selectFromDropdown().getFirstSelectedOption().getText();
+		Assert.assertEquals(showdrpdown, "All Datasets");
+		
+		
 		DatasetDetails testdd = new DatasetDetails();
-		testdd.setDatasetName("Auto" + Utility.dynamicNameAppender());
-		testdd.setCustodianName("Auto " + Utility.dynamicNameAppender());
-		testdd.setDescription(this.getClass().toString());
-		// Test Case No:9520
-		dp.CreateNewUploadSet(testdd);
+//		testdd.setDatasetName("Auto" + Utility.dynamicNameAppender());
+//		testdd.setCustodianName("Auto " + Utility.dynamicNameAppender());
+//		testdd.setDescription(this.getClass().toString());
+//		// Test Case No:9520
+//		dp.CreateNewUploadSet(testdd);
+		
+		String dname ="Auto" + Utility.dynamicNameAppender();
+		String dcustodian ="Auto" + Utility.dynamicNameAppender();
+		String ddisc ="Auto test for dataset" + Utility.dynamicNameAppender();
+		dp.setdatasetdetails(dname,dcustodian, ddisc);
+		driver.waitForPageToBeReady();
+		
+		dp.getdatasetleftmenuBtn().waitAndClick(30);
+		dp.DeleteUploadedDatasetByName(dname);
+		
+		dp.setdatasetdetails(dname,dcustodian, ddisc);
 		driver.waitForPageToBeReady();
 		ICE_ManageUploadPage mup = new ICE_ManageUploadPage(driver, testdd.getDatasetName());
 		String testFolderPath = System.getProperty("user.dir") + Input.iCESmokeFolderPath;
@@ -442,27 +439,28 @@ public class TS_019_ICEWorkFlow {
 
 		Assert.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
 
-		dp.getDatasetBtnLMenu().Click();
+		
+		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
-		dp.viewSetInDocListByName(testdd.getDatasetName(), false);
+		dp.viewSetInDocListByName(dname, false);
 		driver.waitForPageToBeReady();
-		dp.getDatasetBtnLMenu().Click();
+		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
-		dp.viewSetInDocViewByName(testdd.getDatasetName());
+		dp.viewSetInDocViewByName(dname);
 		driver.waitForPageToBeReady();
-		dp.getDatasetBtnLMenu().Click();
+		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
-		dp.viewSetInTallyByName(testdd.getDatasetName());
+		dp.viewSetInTallyByName(dname);
 
 		lp.logout();
 
 	}
 
-	// @Test(groups={"smoke","regression"},priority=4)
+	 @Test(groups={"smoke","regression"},priority=4)
 	public void PMUploadAndRefresh() throws InterruptedException {
 		lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
-		dp.getDatasetBtnLMenu().Click();
+		dp.getdatasetleftmenuBtn().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		DatasetDetails testdd = new DatasetDetails();
 		testdd.setDatasetName("Auto" + Utility.dynamicNameAppender());
@@ -474,12 +472,14 @@ public class TS_019_ICEWorkFlow {
 		String testFolderPath = System.getProperty("user.dir") + "\\ICETestData\\UploadDelay";
 		mup.uploadFilesByFolderAndRefresh(testFolderPath);
 		// Test Case No: 10792, Priority 1
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				mup.getConfirmNavigationPopup().Visible() ;}}),Input.wait60);
 		Assert.assertTrue(mup.getConfirmNavigationPopup().Displayed());
 		Assert.assertTrue(mup.getConfirmNavigationPopupNoBtn().Enabled());
 		Assert.assertTrue(mup.getConfirmNavigationPopupYesBtn().Enabled());
 		mup.getConfirmNavigationPopupYesBtn().Click();
 		driver.waitForPageToBeReady();
-		dp.DeleteUploadedDatasetByName(testdd.getDatasetName());
 		lp.logout();
 	}
 

@@ -29,7 +29,7 @@ public class ICE_DatasetSummaryPage {
 	
 	public boolean isDatasetSummaryPageLoaded()
 	{
-		String pagename = driver.FindElementByClassName("page-title").getText().toString().trim();
+		String pagename = driver.FindElementByXPath("//h1[@class='page-title']").getText().toString().trim();
 		if(pagename.equalsIgnoreCase("Dataset Summary: "+datasetName))
 		{
 			return true;

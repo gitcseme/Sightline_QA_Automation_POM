@@ -58,7 +58,7 @@ public class ICE_DatasetsPage {
 //	public Element getCreateBtn() {return getCreateDatasetPopup().FindElementBycssSelector("#CreateUploadSet");}
 	
 	/*Elements added by shilpi as part of fixes */
-	public Element getdatasetleftmenuBtn() {return driver.FindElementByXPath("//*[@name='DataSets']");}
+	public Element getdatasetleftmenuBtn() {return driver.FindElementByName("DataSets");}
 	public Element getTotalDocumentsEl(){return driver.FindElementByXPath("//*[@id='cardGrid']//div[3]/div[1]/strong");}
 	public ElementCollection getleftmenuList(){ return driver.FindElementsByXPath(".//*[@id='LeftMenu']/li"); }
 	public Element getShowDropDown(){return driver.FindElementById("DatasetTypeList");}
@@ -137,7 +137,7 @@ public class ICE_DatasetsPage {
 		this.getSearchBoxBtn().WaitUntilPresent().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDatasets().size()==1  ;}}),Input.wait60);	
-			return this.getDatasets().getElementByIndex(0);
+			return this.getDatasets().getElementByIndex(1);
 	}
 	
 
@@ -190,6 +190,8 @@ public class ICE_DatasetsPage {
 		}
 		
 		getCreateBtn().WaitUntilPresent().Click();
+		
+		bc.getNOBtn().waitAndClick(30);
 		
 		try{
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -306,9 +308,9 @@ public class ICE_DatasetsPage {
 	public void viewSetInDocViewByName(String datasetName) throws InterruptedException
 	{
 		System.out.println("********Finding dataset to view in DocView********");			
-		Element dataset = getDatasetByName(datasetName);
-		dataset.FindElementBycssSelector("#idAction").WaitUntilPresent().Click();
-		dataset.FindElementBycssSelector("#idBulkFolder").WaitUntilPresent().Click();
+		//Element dataset = getDatasetByName(datasetName);
+		driver.FindElementById("idAction").WaitUntilPresent().Click();
+		driver.FindElementById("idBulkFolder").WaitUntilPresent().Click();
 		driver.waitForPageToBeReady();
 		driver.getUrl().contains("/DocView");
 		System.out.println("********Dataset in DocView completed********");
@@ -317,9 +319,9 @@ public class ICE_DatasetsPage {
 	public void viewSetInDocListByName(String datasetName, boolean isDupeTest) throws InterruptedException
 	{
 		System.out.println("********Dataset in DocList started********");
-		Element dataset = getDatasetByName(datasetName);
-		dataset.FindElementBycssSelector("#idAction").WaitUntilPresent().Click();
-		dataset.FindElementBycssSelector("#idBulkTag").WaitUntilPresent().Click();
+		//Element dataset = getDatasetByName(datasetName);
+		driver.FindElementById("idAction").WaitUntilPresent().Click();
+		driver.FindElementById("idBulkTag").WaitUntilPresent().Click();
 		driver.waitForPageToBeReady();
 		driver.getUrl().contains("/DocList");
 		System.out.println("********Dataset in DocList completed********");
@@ -376,9 +378,9 @@ public class ICE_DatasetsPage {
 	public void viewSetInTallyByName(String datasetName) throws InterruptedException
 	{
 		System.out.println("********Dataset in Tally started********");
-		Element dataset = getDatasetByName(datasetName);
-		dataset.FindElementBycssSelector("#idAction").WaitUntilPresent().Click();
-		dataset.FindElementBycssSelector("#idBulkTally").WaitUntilPresent().Click();
+		//Element dataset = getDatasetByName(datasetName);
+		driver.FindElementById("idAction").WaitUntilPresent().Click();
+		driver.FindElementById("idBulkTally").WaitUntilPresent().Click();
 		driver.waitForPageToBeReady();
 		driver.getUrl().contains("/Tally");
 		System.out.println("********Dataset in Tally completed********");
