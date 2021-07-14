@@ -251,7 +251,7 @@ public class TS_019_ICEWorkFlow {
   	 UtilityLog.info("Processing is completed");
   	 Reporter.log("Processing is completed",true);
 
-		bc.impersonatePAtoRMU();
+		bc.impersonatePAtoRMUICE();
 
 		// Test Case No: 9529, Priority 1
 		sa.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
@@ -386,8 +386,14 @@ public class TS_019_ICEWorkFlow {
 		// Test Case No: 11069, Priority 2
 		Assert.assertTrue(mup.getDropZoneLink().Displayed());
 		// Test Case No: 10840, Priority 2
-		Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
-				"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
+	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
+	//			"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
+		
+		
+		sa.assertTrue(mup.getDropZoneStaticText().getText().trim().contains("* Using Drag-and-Drop Upload is recommended to upload smaller datasets (smaller than 10GB) to Sightline. For better experience uploading data using Drag-and-Drop upload and High-Speed Upload, Consilio recommends never putting PSTs, MBOX or other email containers into ZIP archives. However, we recommend putting folders and loose eFiles into ZIP archives and upload. In addition, please ensure that the unzipped loose eFiles have unique names within a dataset, in order to avoid files with same names being overwritten."));
+	    
+		
+		
 		// Test Case no: 10827, Priority 2
 		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
 		fileuploaded = mup.uploadFilesByFolder(testFolderPath);
