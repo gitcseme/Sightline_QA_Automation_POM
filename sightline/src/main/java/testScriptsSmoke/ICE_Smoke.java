@@ -49,9 +49,6 @@ public class ICE_Smoke {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		Input in = new Input();
-		in.loadEnvConfig();
-
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.clearBrowserCache();
