@@ -35,7 +35,7 @@ import pageFactory.LoginPage;
 import pageFactory.ManageUsersPage;
 import pageFactory.Utility;
 
-public class TS_019_ICEWorkFlow {
+public class ICE_Smoke {
 	Driver driver;
 	LoginPage lp;
 	SoftAssert sa = new SoftAssert();
@@ -510,13 +510,9 @@ public class TS_019_ICEWorkFlow {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
-			lp.logout();
-		} finally {
+		
 			lp.quitBrowser();
-			lp.clearBrowserCache();
-
-		}
+			
 	}
 
 }

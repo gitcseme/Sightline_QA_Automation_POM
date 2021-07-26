@@ -69,7 +69,11 @@ public class ICE_ManageUploadPage {
     
     /*Elements added by shilpi as part of fixes */
 	public Element getdraganddroptab() {return driver.FindElementById("liRegularUploadTab");}
-
+	public Element getremovelink() {return driver.FindElementByClassName("dz-remove");}
+	public Element getcancellink() {return driver.FindElementByXPath("//a[contains(.,'Cancel upload')]");}
+	public Element getUploadfileCount() {return driver.FindElementById("fileCount");}
+	
+	
     
     public ICE_ManageUploadPage(Driver driver, String datasetName)
     {

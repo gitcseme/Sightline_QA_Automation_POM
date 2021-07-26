@@ -14,6 +14,7 @@ import testScriptsSmoke.Input;
 public class ManageUsersPage {
 
     Driver driver;
+    BaseClass bc;
   
     public Element getAssignUserButton(){ return driver.FindElementById("btnAssign"); }
     public Element getBulkUserAccessButton(){ return driver.FindElementById("btnBulkUserAccessControl"); }
@@ -40,19 +41,19 @@ public class ManageUsersPage {
     public Element getBulkEnableButton(){ return driver.FindElementByXPath("//*[@id='rbEnable']/following-sibling::i"); }
     public Element getBulkIngestion(){ return driver.FindElementById("lblCanIngestion"); }
     public Element getBulkProduction(){ return driver.FindElementById("lblCanProductions"); }
-    public Element getBulkDataset() {return driver.FindElementByXPath("//*[@id='lblCanProview']/i");}
-    public Element getBulkUserList(){ return driver.FindElementByXPath("//*[@id='divBulkUserList']//label[contains(text(),'"+Input.pa1FullName+"')]"); }
+    public Element getBulkDataset() {return driver.FindElementByXPath("//*[@id='chkCanDataSets']/following-sibling::i");}
+    public Element getBulkUserList(String user){ return driver.FindElementByXPath("//*[@id='divBulkUserList']//label[contains(text(),'"+user+"')]"); }
     public Element getBulkUserSave(){ return driver.FindElementById("btnSaveBulkAccessControls"); }
     public Element getEditBtn() {return driver.FindElementByXPath("//*[@id='dtUserList']/tbody//tr[td='" + Input.ICEProjectName + "']/td[9]/a[1]"); }
    // public Element getEditBtn(Element project) {return project.FindElementBycssSelector("td:nth-child(9) >  a"); }
-    public Element getBulkCancelBtn(){return driver.FindElementByCssSelector("btnCancelBulkAccessControls");}
+    public Element getBulkCancelBtn(){return driver.FindElementById("btnCancelBulkAccessControls");}
     
     public Element getEditUserFunctionality() {return driver.FindElementByCssSelector("#myTab1 > li:nth-child(2) > a");}
     public Element getIngestionsCheckbox() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(3) > label");}
     public Element getDatasetCheckbox() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(11) > label");}
     public Element getDatasetCheckStatus() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(11) > label > input");}
     public Element getIngestionCheckStatus() {return driver.FindElementByCssSelector("div.form-group-edit > div > div:nth-child(3) > label > input");}
-    public Element getSaveBtnEditUser() {return driver.FindElementByCssSelector("#btnsubmit");}
+    public Element getSaveBtnEditUser() {return driver.FindElementById("btnsubmit");}
   
     
     public Element getSuccessMsgHeader(){ return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span"); }
@@ -62,10 +63,19 @@ public class ManageUsersPage {
       public Element searchUserBox() {return driver.FindElementByCssSelector("#txtsearchUser");}
       public Element searchUserApplyBtn() {return driver.FindElementByCssSelector("#btnAppyFilter");}
       public Element editSAUserBtn() {return driver.FindElementByCssSelector("#dtUserList > tbody > tr > td:nth-child(9) > a:nth-child(1)");}
-      public Element getDatasetOptionInFunctionalityTab() {return driver.FindElementByXPath("//*[@id='s2']/div/div[1]/div/div/div[11]/label");}
+      public Element getDatasetOptionInFunctionalityTab() {return driver.FindElementById("UserRights_CanDatasets");}
       public Element getDatasetOptionInFunctionalityTabCheck() {return driver.FindElementByXPath("//*[@id='s2']/div/div[1]/div/div/div[11]/label/i");}
       public Element getEditUserCancelBtn() {return driver.FindElementByCssSelector("#submit");}
      
+      
+      /*Elements added by shilpi as part of fixes */
+      public Element getEditUserFunctionality(String projectName) {return driver.FindElementByXPath("//*[@id='dtUserList']//tr[td='"+Input.ICEProjectName+"']/td[9]/a[1]"); }
+      public Element getUserFunctionalitytab() {return driver.FindElementByXPath("//*[@href='#s2']"); }
+      public Element getBulkdisableButton(){ return driver.FindElementByXPath("//*[@id='rbDisable']/following-sibling::i"); }
+      public Element getBulkDatasettab() {return driver.FindElementById("chkCanDataSets");}
+      public Element getBulkUsersg(){ return driver.FindElementById("ddlBulkUserSecurityGroup"); }
+      
+      
     
        //Annotation Layer added successfully
     public ManageUsersPage(Driver driver){
@@ -73,7 +83,7 @@ public class ManageUsersPage {
         this.driver = driver;
         this.driver.getWebDriver().get(Input.url+"User/UserListView");
         driver.waitForPageToBeReady();
-
+        bc = new BaseClass(driver);
     }
 
     public void AddUserstoProject(String projectname) throws InterruptedException {
@@ -151,7 +161,7 @@ public class ManageUsersPage {
     	getAssignUser_Save().Click();
     	
     	
-    	successMsgConfirmation("User Mapping Successful");
+    	bc.VerifySuccessMessage("User Mapping Successful");
            
 	}
     
@@ -183,27 +193,18 @@ public class ManageUsersPage {
      	getBulkEnableButton().Click();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getBulkUserList().Visible()  ;}}), Input.wait30); 
-    	getBulkUserList().Click();
+    			getBulkUserList(Input.pa1FullName).Visible()  ;}}), Input.wait30); 
+    	getBulkUserList(Input.pa1FullName).Click();
    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getBulkUserSave().Visible()  ;}}), Input.wait30); 
     	getBulkUserSave().Click();
     	
-    	successMsgConfirmation("Access rights applied successfully");
+    	bc.VerifySuccessMessage("Access rights applied successfully");
            
 	}
     
-    public void successMsgConfirmation(String msg) {
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSuccessMsgHeader().Visible()  ;}}), Input.wait60); 
-    	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-    	Assert.assertEquals(msg, getSuccessMsg().getText().toString());
-    	System.out.println("Success msg passed");
-    	UtilityLog.info("Success msg passed");
-	}
-   
-    public void getuserandsearch(String username)
+        public void getuserandsearch(String username)
     {
     	driver.FindElementByCssSelector("#LeftMenu > li > a").Click();
     	driver.FindElementByCssSelector("#LeftMenu > li > ul > li > a").WaitUntilPresent().Click();
@@ -225,7 +226,7 @@ public class ManageUsersPage {
     	for(int i = 0;i<pages.size()-2;i++)
     	{
     		
-    		ElementCollection projects = driver.FindElementsByCssSelector("#dtUserList > tbody > tr");
+    		ElementCollection projects = driver.FindElementsByXPath("//*[@id='dtUserList']/tbody/tr/td[6]");
     		for(Element project: projects)
     		{
     			project.ScrollTo();
@@ -273,7 +274,7 @@ public class ManageUsersPage {
     }
     
 
-    public void BulkUserAccessDataset(String projectname) throws InterruptedException {
+    public void BulkUserAccessDataset(String role,String username,String enabledisable) throws InterruptedException {
   		
       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       			getBulkUserAccessButton().Visible()  ;}}), Input.wait30); 
@@ -281,27 +282,43 @@ public class ManageUsersPage {
       	
       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       			getBulkUserRole().Visible()  ;}}), Input.wait30); 
-      	getBulkUserRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+      	getBulkUserRole().selectFromDropdown().selectByVisibleText(role);
       	
        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
        			getBulkUserProject().Visible()  ;}}), Input.wait30); 
-      	getBulkUserProject().selectFromDropdown().selectByVisibleText(projectname);
-      	Thread.sleep(3000);
+      	getBulkUserProject().selectFromDropdown().selectByVisibleText(Input.ICEProjectName);
       	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			 getBulkDataset().Visible()  ;}}), Input.wait30); 
-      	getBulkDataset().Click();
+      	if(role.equalsIgnoreCase("Review Manager"))
+      	{
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getBulkUsersg().Visible()  ;}}), Input.wait30); 
+      	getBulkUsersg().selectFromDropdown().selectByVisibleText("Default Security Group");
       	
+      	getBulkDataset().waitAndClick(20);
+      	}
+      	else {
+      		UtilityLog.info("No need to select");
+      	}
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+      			getBulkUserList(username).Visible()  ;}}), Input.wait30); 
+      	getBulkUserList(username).Click();
       	
-      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-      			getBulkUserList().Visible()  ;}}), Input.wait30); 
-      	getBulkUserList().Click();
+      	if(enabledisable=="enable")
+      	{
+      	getBulkEnableButton().waitAndClick(20);
+      	}
+      	else if(enabledisable=="disable")
+      	{
+      		getBulkdisableButton().waitAndClick(20);
+      	}
      
       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       			getBulkUserSave().Visible()  ;}}), Input.wait30); 
       	getBulkUserSave().Click();
       	
-      	successMsgConfirmation("Access rights applied successfully");
+      	bc.VerifySuccessMessage("Access rights applied successfully");
+      	
+      	getBulkCancelBtn().waitAndClick(10);
              
   	}
     
@@ -333,5 +350,57 @@ public class ManageUsersPage {
       	}
       	
  }
+ 
+  public void selectdatasetoption(String user)
+  {
+	    getuserandsearch(user);
+		
+		getEditUserFunctionality(Input.ICEProjectName).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return 
+	    		getEditUserFunctionality().Displayed()  ;}}),Input.wait30);
+		getEditUserFunctionality().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return 
+				getDatasetOptionInFunctionalityTabCheck().Displayed() ;}}),Input.wait30);
+	
+		boolean isChecked = getDatasetOptionInFunctionalityTab().getWebElement().getAttribute("checked").equals("checked");
+
+		if (isChecked) 
+		{
+			UtilityLog.info("Already selected");
+		}
+		else {
+			getDatasetOptionInFunctionalityTabCheck().waitAndClick(10);
+		}
+		
+		getSaveBtnEditUser().Click();
+		driver.waitForPageToBeReady();
+  }
+  
+  public void Deselectdatasetoption(String user)
+  {
+	    getuserandsearch(user);
+		
+		getEditUserFunctionality(Input.ICEProjectName).waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return 
+	    		getEditUserFunctionality().Displayed()  ;}}),Input.wait60);
+		getEditUserFunctionality().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return 
+				getDatasetOptionInFunctionalityTabCheck().Displayed() ;}}),Input.wait60);
+		
+		boolean isChecked = getDatasetOptionInFunctionalityTab().getWebElement().getAttribute("checked").equals("checked");
+
+		if (isChecked) 
+		
+		{
+			getDatasetOptionInFunctionalityTabCheck().waitAndClick(10);
+		}
+		else {
+			UtilityLog.info("Option already deselected");
+		}
+		
+		getSaveBtnEditUser().Click();
+		driver.waitForPageToBeReady();
+  }
+ 
  
  }

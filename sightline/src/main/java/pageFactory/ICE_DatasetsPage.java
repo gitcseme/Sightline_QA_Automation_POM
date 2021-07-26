@@ -68,6 +68,15 @@ public class ICE_DatasetsPage {
 	public Element getCreateBtn() {return driver.FindElementById("CreateUploadSet");}
 	public Element getdeletebtn() {return driver.FindElementByXPath("//*[@id='dataset_tilesContainer']//dl/dt/a"); }	
 	
+	//added by shilpi as part of fixing
+	public Element geterrorcount() {return driver.FindElementByXPath("//*[@class='errorCt col-md-4 txt-color-red']//span"); }	
+	public Element getdatasetnamelink(String name) {return driver.FindElementByXPath("//strong[contains(.,'"+name+"')]"); }	
+	public Element getaddtoformdoclist() { return driver.FindElementById("addFormObjects"); }
+	public Element getupdatecolumndoclist() { return driver.FindElementById("btnUpdateColumns"); }
+
+	
+	
+	
 	public ICE_DatasetsPage (Driver driver)
 	{
 		this.driver = driver;
@@ -137,7 +146,7 @@ public class ICE_DatasetsPage {
 		this.getSearchBoxBtn().WaitUntilPresent().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDatasets().size()==1  ;}}),Input.wait60);	
-			return this.getDatasets().getElementByIndex(1);
+			return this.getDatasets().getElementByIndex(0);
 	}
 	
 
@@ -189,7 +198,7 @@ public class ICE_DatasetsPage {
 			getDescriptionTxtBox().WaitUntilPresent().setText(dd.getDescription());
 		}
 		
-		getCreateBtn().WaitUntilPresent().Click();
+		getCreateBtn().waitAndClick(60);
 		
 		bc.getNOBtn().waitAndClick(30);
 		
@@ -340,24 +349,17 @@ public class ICE_DatasetsPage {
 		if(!AllCustodianFieldDisplayed)
 		{
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					driver.FindElementByCssSelector("#btnSelectColumn").Enabled() ;}}),Input.wait90);	
+			    driver.FindElementByCssSelector("#btnSelectColumn").Enabled() ;}}),Input.wait90);	
 			driver.FindElementByCssSelector("#btnSelectColumn").WaitUntilPresent().Click();
-			driver.FindElementByCssSelector("#hb2 > ul > li").WaitUntilPresent().Click();
-			ElementCollection fields = driver.FindElementsByCssSelector("ul.list-unstyled > li");
-			for(Element field:fields)
-			{
-				field.ScrollTo();
-				if(field.getText().equalsIgnoreCase("AllCustodians"))
-				{
-					field.FindElementBycssSelector("label.checkbox").Click();
-					driver.FindElementByCssSelector("#addFormObjects").Click();
-					driver.FindElementByCssSelector("#btnUpdateColumns").Click();
-					driver.waitForPageToBeReady();
+			driver.FindElementByXPath("//input[@data-syslbl='AllCustodians']/following-sibling::i").waitAndClick(15);
+			getaddtoformdoclist().waitAndClick(5);
+			getupdatecolumndoclist().waitAndClick(5);
+			driver.waitForPageToBeReady();
 				}
 			}
 		}
-			}
-	}
+			
+	
 	
 	public int getFieldPositionInDocListByName(String fieldName)
 	{

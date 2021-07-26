@@ -1,13 +1,24 @@
 package pageFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -22,15 +33,20 @@ public class ICE_ErrorNExceptionsPage {
 	BaseClass bc;
 	
 	public Element getErrorNExceptionPage() {return driver.FindElementByCssSelector("ol.breadcrumb > li:nth-child(2)");}
-	public Element getExcludeFileDocumentsTab() {return driver.FindElementByCssSelector("#liExcludedFilesDocuments");}
+	public Element getExcludeFileDocumentsTab() {return driver.FindElementById("liExcludedFilesDocuments");}
 	public Element getExcludeFileDocumentsTabLink() {return driver.FindElementByCssSelector("#liExcludedFilesDocuments > a");}
-	public Element getIncludedDocsWithErrorsTab() {return driver.FindElementByCssSelector("#liIncludedDocswithErrors");}
+	public Element getIncludedDocsWithErrorsTab() {return driver.FindElementById("liIncludedDocswithErrors");}
 	public Element getIncludedDocsWithErrorsLink() {return driver.FindElementByCssSelector("#liIncludedDocswithErrors > a");}
 	public ElementCollection getExcludedFilesList() {return driver.FindElementsByCssSelector("#dtExcludedDocs > tbody > tr");}
 	public ElementCollection getIncludedFilesList() {return driver.FindElementsByCssSelector("#dtIncludedDocs > tbody > tr");}
 	public Element getExportListBtn() {return driver.FindElementByCssSelector("#btnExportExFile");}
 	public Element getMessage() {return driver.FindElementByCssSelector("#divbigBoxes > div > div > i > span");}
 	public boolean isMessageSuccess() {return driver.FindElementByCssSelector("#divbigBoxes > div > div > i > span").getText().equalsIgnoreCase("success !");}
+	public Element getIncludedDocsWithErrors() {return driver.FindElementByXPath("//*[@id='dtIncludedDocs']/tbody/tr/td[3]");}
+	public ElementCollection getExcludedDocsWithErrors() {return driver.FindElementsByXPath("//*[@id='dtExcludedDocs']/tbody/tr/td/input");}
+	public Element getExcludedDocsWithErrors1() {return driver.FindElementByXPath("//*[@id='dtExcludedDocs']/tbody/tr/td/input");}
+
+	
 	public ICE_ErrorNExceptionsPage(Driver driver, String datasetname)
 	{
 		this.driver = driver;
@@ -258,4 +274,114 @@ public class ICE_ErrorNExceptionsPage {
 		return match;
 	}
 
+	public void selectfewfilesforexport()
+	{
+		getExcludedDocsWithErrors().WaitUntilPresent();
+	//	ElementCollection files = getExcludedDocsWithErrors();
+		
+		Random r = new Random();
+	//	int randomValue = r.nextInt(getExcludedDocsWithErrors().size()); //Getting a random value that is between 0 and (list's size)-1
+	//	getExcludedDocsWithErrors().getElementByIndex(randomValue).waitAndClick(10);; //Clicking on the random item in the list.
+		
+		 
+		 List<WebElement> optimized = getExcludedDocsWithErrors().FindWebElements();
+		 int[] indexArray = new int[] {1,3,11,12};
+	         for(int k=0;k<indexArray.length;k++)
+         {
+        		optimized.get(k).click();
+    			
+    		
+       	   }
+		
+	}
+	
+	public void testExportAllRecords(String downloadPath,int noOfEntries) throws Exception {
+		
+	
+        File file = getLatestFilefromDir(downloadPath);
+		String csvFileName = file.getName();
+		System.out.println("CSV File Downloaded is :- "+csvFileName);
+
+		System.out.println("Verifying number of entries with number of entries in csv");
+		getRowCount(downloadPath);
+		Assert.assertEquals(noOfEntries, getRecordsCountInCSV(downloadPath,csvFileName));
+	}
+	
+
+
+public int getRecordsCountInCSV(String downloadPath, String csvFileName) {
+	int lineNumberCount = 0;
+	try {
+		if (!csvFileName.isEmpty() || csvFileName != null) {
+			String filePath =	downloadPath + System.getProperty("file.separator") + csvFileName;
+			System.out.println(filePath);
+			File file = new File(filePath);
+			if (file.exists()) {
+				System.out.println("File found :" +csvFileName);
+				FileReader fr = new FileReader(file);
+				LineNumberReader linenumberreader = new LineNumberReader(fr);
+				while (linenumberreader.readLine() != null) {
+					lineNumberCount++;
+				}
+				//To remove the header
+				lineNumberCount=lineNumberCount-1;
+				System.out.println("Total number of lines found in csv : " + (lineNumberCount));
+				linenumberreader.close();
+				
+			} else {
+				System.out.println("File does not exists");
+			}
+		}
+	}
+	catch (IOException e) {
+		e.printStackTrace();
+	}
+	
+	return lineNumberCount;
+}
+
+ public int getRowCount(String downloadPath) throws Exception {
+
+		// Making of excel file object 
+	    File myFile = new File(downloadPath);
+		FileInputStream fis = new FileInputStream(myFile); 
+		XSSFWorkbook myWorkBook = new XSSFWorkbook(fis); 
+		XSSFSheet mySheet = myWorkBook.getSheet("Logout"); 
+		XSSFRow row = null; 
+ 
+		// Making the object of excel row 
+		row = mySheet.getRow(0); 
+ 
+		int colCount = row.getLastCellNum(); 
+		System.out.println("Column Count :- " + colCount); 
+		 
+		int rowCount = mySheet.getLastRowNum() + 1; 
+		System.out.println("Row Count :- " + rowCount);
+		return rowCount; 
+	} 
+	
+
+//Below method is used to get the latest file from the directory. 
+//It takes the folder path as the parameter and returns the file which is recently added to the folder.
+
+private File getLatestFilefromDir(String dirPath){
+    File dir = new File(dirPath);
+    File[] files = dir.listFiles();
+    if (files == null || files.length == 0) {
+        return null;
+    }
+
+    File lastModifiedFile = files[0];
+    for (int i = 1; i < files.length; i++) {
+       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
+           lastModifiedFile = files[i];
+       }
+    }
+    return lastModifiedFile;
+}
+
+
+	
+	
+		
 }
