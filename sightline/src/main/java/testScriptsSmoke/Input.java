@@ -50,6 +50,10 @@ public class Input {
 	public static String jiraUrl;
 	public static String jiraUserName;
 	public static String jiraToken;
+	public static String jiraProject;
+	public static String testingBuild;
+	public static String iCESmokeFolderPath;
+	public static String ICEProjectName;
 			
 	//Environment data---------------------------------------------
 	public static String url;
@@ -152,6 +156,9 @@ public class Input {
 		jiraUrl = config.getJiraUrl();
 		jiraUserName = config.getJiraUserName();
 		jiraToken = config.getJiraToken();
+		jiraProject = config.getJiraProject();
+		testingBuild = config.getTestingBuild();
+		iCESmokeFolderPath = config.getICESmokeFolderPath();
 		
 		/*
 		 * Ingestion Data
@@ -201,6 +208,7 @@ public class Input {
 		rev2FullName= envConfig.getRev2FullName();
 		prodpath= envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
+		ICEProjectName = envConfig.getICEProjectName();
 		//Test data-------------------------------------------------------------
 		
 		loadSuiteTestData();//Load required suite data first, smoke or regression one
@@ -214,7 +222,7 @@ public class Input {
 		searchString1NOTsearchString2 = testData.getSearchString1NOTsearchString2();
 		searchString2NOTsearchString1 = testData.getSearchString2NOTsearchString1();
 		audioSearchString1 = testData.getAudioSearchString1();
-		audioSearchString1pureHit = testData.getConceptualSearchString1PureHit();
+		audioSearchString1pureHit = testData.getAudioSearchString1pureHit();
 		conceptualSearchString1 = testData.getSearchString1();
 		conceptualSearchString1PureHit = testData.getConceptualSearchString1PureHit();
 		metaDataCN=testData.getMetaDataCN();

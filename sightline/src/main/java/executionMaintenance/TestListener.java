@@ -40,20 +40,18 @@ public class TestListener implements ITestListener {
 			System.out.println("*** Test execution " + result.getMethod().getMethodName() + " failed...");
 			ExtentTestManager.getTest().log(Status.FAIL, "Test Failed");
 			ExtentTestManager.getTest().log(Status.FAIL,"TEST CASE FAILED IS " + result.getThrowable().getMessage());
-					
-		/*
-		JiraPolicy executionPolicy = result.getMethod().getConstructorOrMethod().getMethod().getAnnotation(JiraPolicy.class);
-		boolean isBugTrue = executionPolicy.logJiraTicket();
-		if(isBugTrue) {
-			System.out.println("Verify whether this is a bug: "+ isBugTrue);
-			JiraServiceProvider jiraSp = new JiraServiceProvider("https://seenuanand.atlassian.net","srinivas.anand1@gmail.com","MpnMm0VjOPwu5LBEzArG535E","PERFAUTO");
+		
+			System.out.println("Verify whether this is a bug: "+ Input.logJiraTicket);
+		if(Input.logJiraTicket) {
+			
+			JiraServiceProvider jiraSp = new JiraServiceProvider(Input.jiraUrl,Input.jiraUserName,Input.jiraToken,Input.jiraProject);
 			String issueSummary = result.getMethod().getConstructorOrMethod().getMethod() + "Got failed due to some automation assertion or exception";
 			String issueDescription =result.getThrowable().getMessage()+"\n";
 			issueDescription.concat(ExceptionUtils.getFullStackTrace(result.getThrowable()));
 			
 			jiraSp.createJiraTicket("Bug", issueSummary, issueDescription, "Srinivas Anand");
 			
-		}	*/	
+		}		
 	}
 	
 	public void onTestSkipped(ITestResult result) {

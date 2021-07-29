@@ -43,5 +43,6 @@ public class Environment {
 	public String prodpath;
 	public String SourceLocation;
 	public String shareTo;
+	public String ICEProjectName;
 	
 }

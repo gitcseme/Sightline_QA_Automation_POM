@@ -289,7 +289,9 @@ public  class Driver  {
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    		System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
+		    		
+		    	  // Edge Driver
+		    	  System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
 		    				
 		    		WebDriver driver = new EdgeDriver();		    		
 		    		//Start Edge Session

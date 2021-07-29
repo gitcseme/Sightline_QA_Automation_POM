@@ -13,6 +13,10 @@ public class ConfigLoader {
 	// public ConfigMain commonConfig;
 	
 	StringBuilder sb;
+	/**
+	 * @param dataXml
+	 * @return
+	 */
 	public Object load(String dataXml) {
 	
 	try{

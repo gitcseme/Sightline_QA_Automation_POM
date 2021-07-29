@@ -12,12 +12,26 @@ public class JiraServiceProvider {
 	public JiraClient jira;
 	public String project;
 	
+	/**
+	 * @Description To fetch the Jira basic details like URL and Project Name
+	 * @param jiraUrl
+	 * @param userName
+	 * @param password
+	 * @param project
+	 */
 	public JiraServiceProvider(String jiraUrl, String userName, String password, String project) {
 		BasicCredentials credentials = new BasicCredentials(userName, password);
 		jira = new JiraClient(jiraUrl, credentials);
 		this.project = project;
 	}
 	
+	/**
+	 * To Create Jira Ticket
+	 * @param issueType
+	 * @param summary
+	 * @param description
+	 * @param reporterName
+	 */
 	public void createJiraTicket(String issueType, String summary, String description, String reporterName) {
 		
 		try {

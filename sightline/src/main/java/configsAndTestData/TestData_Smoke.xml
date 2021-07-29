@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SMOKE TEST DATA -->
- <TestData>
- <!-- Serach strings and expected pure hit counts -->
-    <searchString1>comments</searchString1>
-    <searchString2>test</searchString2>
-    <pureHitSeachString1>9</pureHitSeachString1>
-    <pureHitSeachString2>3</pureHitSeachString2>
-    <searchString1ANDsearchString2>1</searchString1ANDsearchString2>
-    <searchString1ORsearchString2>11</searchString1ORsearchString2>
-    <searchString1NOTsearchString2>8</searchString1NOTsearchString2>
-    <searchString2NOTsearchString1>2</searchString2NOTsearchString1>
-    <audioSearchString1>right</audioSearchString1>
-    <audioSearchString1pureHit>6</audioSearchString1pureHit>
-    <conceptualSearchString1>community</conceptualSearchString1>
-    <conceptualSearchString1PureHit>3</conceptualSearchString1PureHit>
-    <metaDataCN>P Allen</metaDataCN>
-    <metaDataCNcount>121</metaDataCNcount>
-    <totalNumberOfDocs>125</totalNumberOfDocs>
+<TestData>
+	<!-- Serach strings and expected pure hit counts -->
+	<searchString1>comments</searchString1>
+	<searchString2>test</searchString2>
+	<pureHitSeachString1>9</pureHitSeachString1>
+	<pureHitSeachString2>3</pureHitSeachString2>
+	<searchString1ANDsearchString2>1</searchString1ANDsearchString2>
+	<searchString1ORsearchString2>11</searchString1ORsearchString2>
+	<searchString1NOTsearchString2>8</searchString1NOTsearchString2>
+	<searchString2NOTsearchString1>2</searchString2NOTsearchString1>
+	<audioSearchString1>right</audioSearchString1>
+	<audioSearchString1pureHit>1</audioSearchString1pureHit>
+	<conceptualSearchString1>field report</conceptualSearchString1>
+	<conceptualSearchString1PureHit>6</conceptualSearchString1PureHit>
+	<metaDataCN>P Allen</metaDataCN>
+	<metaDataCNcount>121</metaDataCNcount>
+	<totalNumberOfDocs>125</totalNumberOfDocs>
 </TestData>

@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConfigMain>
-	<env>Chicago</env><!--it should be QA or DE or LD9PT or Chicago or UK or US or US_CM or HK or CA-->
+	<env>LD9PT</env><!--it should be QA or DE or LD9PT or Chicago or UK or US or US_CM or HK or CA-->
+	<testingBuild>CMS-BuildNo-7-3-CMSenvironment</testingBuild>testingBuild>
 	<newProject>NO</newProject><!--it should be YES or NO only-->
 	<ingestion>NO</ingestion><!--it should be YES or NO only-->
-	<suite>Regression</suite><!--it should be Smoke or Regression only-->
-	<numberOfDataSets>3</numberOfDataSets>
+	<suite>Smoke</suite><!--it should be Smoke or Regression only-->
+	<numberOfDataSets>1</numberOfDataSets>
+	
 	<!-- <browserName>CHROME</browserName> -->
 	<browserName>CHROME</browserName>
 	<screenShotOnPass>NO</screenShotOnPass>
 	<screenShotOnFail>YES</screenShotOnFail>
+	
+	<!-- Extent Report Detailed Report if Needed -->
 	<extentReportMethodWise>false</extentReportMethodWise> <!-- Mark this as true if you need method wise extetntreport info or false-->
+	
+	<!-- Jira Connections  -->
 	<logJiraTicket>false</logJiraTicket> <!-- true if the defect has to be raised else false -->
-	<jiraUrl>https://consilio.atlassian.net</jiraUrl>
-	<jiraUserName>srinivas.a@consilio.com</jiraUserName>
-	<jiraToken>MpnMm0VjOPwu5LBEzArG535E</jiraToken>
+	<jiraUrl>https://consilio.atlassian.net</jiraUrl> <!-- Jira URL -->
+	<jiraUserName>srinivas.a@consilio.com</jiraUserName> <!-- Jira User Name  -->
+	<jiraToken>MpnMm0VjOPwu5LBEzArG535E</jiraToken> <!-- Jira Token Number -->
+	<jiraProject>Project Name </jiraProject> <!-- Project Name where we need to add Bug -->
+	
+	<!-- ICE smoke test data Start -->
+	<ICESmokeFolderPath>\ICETestData\SmokeFolder</ICESmokeFolderPath>
+	<!-- ICE smoke test data End -->
 		
 	<!-- Modified By Srinivas-->
 	<!-- Modified Date : 2021-05-12 -->
@@ -45,6 +56,6 @@
     <Collection1KSourceDatField2>DocID</Collection1KSourceDatField2>
     <FamilySourceDatField2>DocID</FamilySourceDatField2>
     <AllSourcesSourceDatField2>ProdBeg</AllSourcesSourceDatField2>
-    <!-- Ingetion Related data END -->
+    <!-- Ingestion Related data END -->
     
 </ConfigMain>

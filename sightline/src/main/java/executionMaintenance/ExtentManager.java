@@ -1,6 +1,8 @@
 package executionMaintenance;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
@@ -8,14 +10,27 @@ import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 //.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
+import testScriptsSmoke.Input;
+
 public class ExtentManager {
 	
+	//static LocalDateTime now = LocalDateTime.now();
+   // static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+   // static String formatDateTime = now.format(formatter);
+
     private static ExtentReports extent;
-    private static String reportFileName = "SmokeTest-Automaton-Report-Build-7.3-Chicago" + ".html";
+    private static String reportFileName = "Sightline-SmokeTest-"+DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDateTime.now())+"-Automaton-Report-"+Input.testingBuild+ ".html";
     private static String fileSeperator = System.getProperty("file.separator");
     private static String reportFilepath = System.getProperty("user.dir") +fileSeperator+ "TestReport";
     private static String reportFileLocation =  reportFilepath +fileSeperator+ reportFileName;
-  
+    
+    // Get System Information
+    private static String osName = System.getProperty("os.name");
+    private static String vmVersion = System.getProperty("java.vm.version");
+    private static String userName = System.getProperty("user.name");
+    private static String hostName = System.getenv("COMPUTERNAME");
+    private static String projectName = Input.projectName;
+      
  
     public static ExtentReports getInstance() {
         if (extent == null)
@@ -39,9 +54,12 @@ public class ExtentManager {
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
         //Set environment details
-		extent.setSystemInfo("OS", "Windows");
-		extent.setSystemInfo("Chicago", "QA");
-		extent.setSystemInfo("User", "Srinivas A");
+		extent.setSystemInfo("OS", osName);
+		extent.setSystemInfo("Java Version",vmVersion );
+		extent.setSystemInfo("Execution on Host",hostName);
+		//extent.setSystemInfo("Environment", "UK");
+		extent.setSystemInfo("User", userName);
+		extent.setSystemInfo("Execution on Project",projectName);
  
         return extent;
     }

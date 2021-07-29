@@ -53,5 +53,8 @@ public class ConfigMain {
 	public boolean LogJiraTicket;
 	public String JiraUrl;
 	public String JiraUserName;
-	public String JiraToken;	
+	public String JiraToken;
+	public String JiraProject;
+	public String TestingBuild;
+	public String ICESmokeFolderPath;
 }
