@@ -15,7 +15,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -53,6 +56,8 @@ public class TS_009_ValidateAssignmentFunctionality {
 		//Open browser
 		//Input in = new Input();
 		//in.loadEnvConfig();
+		
+			
 		driver = new Driver();
 		//Login as a PA
 		lp = new LoginPage(driver);
@@ -127,6 +132,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -139,6 +145,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

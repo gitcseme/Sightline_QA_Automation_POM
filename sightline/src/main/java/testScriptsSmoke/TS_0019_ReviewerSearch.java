@@ -178,6 +178,7 @@ public class TS_0019_ReviewerSearch {
 	}
 
 	/**
+	 * @Description Proximity Search
 	 * @param searchString
 	 * @param smokeExpectedCount
 	 * @param regressionExpectedCount
