@@ -19,6 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -311,26 +312,40 @@ public class DocViewPage {
 		return Phit;
 	}
    
-    public void addCommentToNonAudioDoc(String comment) {
+    public void addCommentToNonAudioDoc(String comment) throws Exception {
+    	
+    	//To make sure we are in basic search page
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	driver.waitForPageToBeReady();
+    	
+    	driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+    	driver.waitForPageToBeReady();
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAddComment1().Visible()  ;}}), Input.wait60);   
+    			getAddComment1().Visible()  ;}}), Input.wait30);   
     	getAddComment1().Clear();
     	getAddComment1().SendKeys(comment);
-    	getCompleteDocBtn().waitAndClick(30);
-    	
+       	getCompleteDocBtn().Click();   	
+       	
     	base.VerifySuccessMessage("Document completed successfully");
 	}
    
     public void addRemarkNonAudioDoc(String remark) {
+    	//To make sure we are in basic search page
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	driver.waitForPageToBeReady();
+    	
+    	driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+    	driver.waitForPageToBeReady();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait60); 
+    			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait30); 
     	//getDocView_DocId("ID00000125").waitAndClick(20);
       
-    	getNonAudioRemarkBtn().waitAndClick(10);
+    	getNonAudioRemarkBtn().waitAndClick(5);
     	
     	   try {
-    			getDocView_Remark_DeleteIcon().waitAndClick(10);
+    			getDocView_Remark_DeleteIcon().waitAndClick(5);
     			base.getPopupYesBtn().waitAndClick(5);
     		} catch (Exception e) {
     			// TODO Auto-generated catch block

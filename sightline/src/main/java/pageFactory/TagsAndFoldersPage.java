@@ -180,9 +180,9 @@ public class TagsAndFoldersPage {
 
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAllFolderRoot().Visible()  ;}}), Input.wait30); 
-         Thread.sleep(2000);
+         Thread.sleep(3000);
          getAllFolderRoot().waitAndClick(10);
-         Thread.sleep(2000);
+         Thread.sleep(3000);
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
          getFolderActionDropDownArrow().waitAndClick(30);
@@ -209,7 +209,14 @@ public class TagsAndFoldersPage {
     {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getTagsTab().Visible()  ;}}), Input.wait30); 
-        getTagsTab().waitAndClick(10);
+        try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	getTagsTab().waitAndClick(10);
+        
     	
     	//Select secGroup
         try{
@@ -217,7 +224,7 @@ public class TagsAndFoldersPage {
     			getTagSecutiryGroup().Visible()  ;}}), Input.wait30); 
     	getTagSecutiryGroup().selectFromDropdown().selectByVisibleText(securityGroup);
         }catch (Exception e) {
-			// TODO: handle exception
+        	e.printStackTrace();
 		}
         driver.scrollingToBottomofAPage();
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -252,9 +259,10 @@ public class TagsAndFoldersPage {
          try{
      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			getFolderSecutiryGroup().Visible()  ;}}), Input.wait30); 
+     	Thread.sleep(3000);
      	getFolderSecutiryGroup().selectFromDropdown().selectByVisibleText(securityGroup);
          }catch (Exception e) {
- 			// TODO: handle exception
+        	 e.printStackTrace();
  		}
 
          driver.scrollingToBottomofAPage();
@@ -302,7 +310,7 @@ public class TagsAndFoldersPage {
         getAddTag().waitAndClick(10);
    
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getTagName().Visible()  ;}}), Input.wait30); 
+			 getTagName().Visible()  ;}}), Input.wait60); 
        getTagName().SendKeys(strtag);
        
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

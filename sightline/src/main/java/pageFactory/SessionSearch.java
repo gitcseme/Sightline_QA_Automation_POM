@@ -314,13 +314,19 @@ public class SessionSearch {
     
     public void saveSearch(String searchName) {
     	try{
-    	//Thread.sleep(3000);
+    
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSaveSearch_Button().Visible() && getSaveSearch_Button().Enabled() ;}}), Input.wait30);  
     	getSaveSearch_Button().waitAndClick(5);
-    	}catch (Exception e) {    		
+    	}catch (Exception e) { 
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAdvanceS_SaveSearch_Button().Visible() && getAdvanceS_SaveSearch_Button().Enabled() ;}}), Input.wait30);  
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
     	
     	try{
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled() ;}}), Input.wait30);  
     		getSaveAsNewSearchRadioButton().waitAndClick(5);
         	}catch (Exception e) {
         		System.out.println("Radio button already selected");
@@ -329,14 +335,15 @@ public class SessionSearch {
     	
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait30);     	
+    			getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled() ;}}), Input.wait30);     	
     	getSavedSearch_MySearchesTab().Click();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled()  ;}}), Input.wait30); 
     	getSaveSearch_Name().SendKeys(searchName);    	
     	
-    	 
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled()  ;}}), Input.wait30); 
     	getSaveSearch_SaveButton().Click();
     	
     	base.VerifySuccessMessage("Saved search saved successfully");

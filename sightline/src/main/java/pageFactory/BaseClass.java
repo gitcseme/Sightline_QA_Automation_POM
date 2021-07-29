@@ -179,36 +179,36 @@ public class BaseClass {
 			public Boolean call() {
 				return getChangeRole().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait90);
 		getChangeRole().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getSelectRole().Visible();
-			}
-		}), Input.wait60);
+				return getSelectRole().Visible();}}), Input.wait90);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		
+						
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getAvlDomain().Visible();
+				return getAvlDomain().Visible() && getAvlDomain().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait90);
+		Thread.sleep(1000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getAvlProject().Visible();
+				return getAvlProject().Visible() && getAvlProject().Enabled();
 			}
-		}), Input.wait30);
-
+		}), Input.wait90);
+		Thread.sleep(1000);	
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getSelectSecurityGroup().Visible();
+				return getSelectSecurityGroup().Visible() && getSelectSecurityGroup().Enabled();
 			}
-		}), Input.wait30);
+		}), Input.wait90);
+		Thread.sleep(1000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().waitAndClick(Input.wait3);
 		
@@ -238,6 +238,7 @@ public class BaseClass {
 				return getAvlDomain().Visible();
 			}
 		}), Input.wait30);
+		Thread.sleep(1000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -245,6 +246,7 @@ public class BaseClass {
 				return getAvlProject().Visible();
 			}
 		}), Input.wait30);
+		Thread.sleep(1000);
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -252,6 +254,7 @@ public class BaseClass {
 				return getSelectSecurityGroup().Visible();				
 			}
 		}), Input.wait30);
+		Thread.sleep(1000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		
 		getSaveChangeRole().waitAndClick(Input.wait3);
