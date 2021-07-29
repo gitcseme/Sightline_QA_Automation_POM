@@ -41,8 +41,8 @@ public class TS_006_ValidateBatchPrint {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		UtilityLog.info("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		
 		String searchname= "BP"+Utility.dynamicNameAppender();

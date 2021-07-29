@@ -65,8 +65,8 @@ public class TS_005_ValidateCategorization {
 		UtilityLog.info("Started Execution for prerequisite");
 		
 		// Need to enable this Input class to load the environment data while executing the class individually
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		///Input in = new Input();
+		///in.loadEnvConfig();
 		
 		String searchString = Input.searchString2;	
 			

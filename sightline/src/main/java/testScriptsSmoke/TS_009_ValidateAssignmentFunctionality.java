@@ -144,8 +144,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 			bc.screenShot(result);
 
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
+		System.out.println("Executed :" + result.getMethod().getMethodName());		
 	}
 
 	@AfterClass(alwaysRun = true)
@@ -154,7 +153,7 @@ public class TS_009_ValidateAssignmentFunctionality {
 			lp.logout();
 		     //lp.quitBrowser();	
 			}finally {
-				lp.quitBrowser();
+				lp.closeBrowser();
 				lp.clearBrowserCache();
 			}
 	}

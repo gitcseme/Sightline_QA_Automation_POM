@@ -159,8 +159,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		
-	    Input in = new Input();
-		in.loadEnvConfig();
+	    //Input in = new Input();
+		//in.loadEnvConfig();
 		
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
