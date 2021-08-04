@@ -45,7 +45,8 @@ public class SessionSearch {
     public Element getPureHitAddButton(){ return driver.FindElementByXPath(".//*[@id='001']/i[2]"); }
   
     //Bulk tag and folder
-    public Element getBulkActionButton(){ return driver.FindElementById("idAction"); }
+    //public Element getBulkActionButton(){ return driver.FindElementById("idAction"); }
+    public Element getBulkActionButton(){ return driver.FindElementByXPath("//*[@id=\"idAction\"]"); }
     public Element getBulkTagAction(){ return driver.FindElementByXPath("//a[contains(text(),'Bulk Tag')]"); }
     public Element getTagsAllRoot(){ return driver.FindElementByXPath("//*[@id='tagsJSTree']//*[@id='-1_anchor']"); }
     
@@ -58,6 +59,8 @@ public class SessionSearch {
     public Element getEnterFolderName(){ return driver.FindElementById("txtFolderName"); }
     public Element getContinueCount(){ return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']"); }
     public Element getContinueButton(){ return driver.FindElementByXPath(".//*[@id='divBulkAction']//button[contains(.,'Continue')]"); }
+    //public Element getContinueButton(){ return driver.FindElementById("btnAdd"); }
+    //public Element getContinueButton(){ return driver.FindElementByXPath("//*[@id=\"btnAdd\"]"); }
     public Element getFinalCount(){ return driver.FindElementByXPath("//span[@id='spanTotal']"); }
     public Element getFinalizeButton(){ return driver.FindElementById("btnfinalizeAssignment"); }
     public Element getFolderTab(){ return driver.FindElementByXPath("//a[contains(text(),'Folders')]"); }
@@ -308,29 +311,47 @@ public class SessionSearch {
 		
 		return null;
 	}
+    
     public void saveSearch(String searchName) {
     	try{
+    
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSaveSearch_Button().Visible() && getSaveSearch_Button().Enabled() ;}}), Input.wait30);  
     	getSaveSearch_Button().waitAndClick(5);
-    	}catch (Exception e) {
+    	}catch (Exception e) { 
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getAdvanceS_SaveSearch_Button().Visible() && getAdvanceS_SaveSearch_Button().Enabled() ;}}), Input.wait30);  
     		getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
     	
     	try{
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled() ;}}), Input.wait30);  
     		getSaveAsNewSearchRadioButton().waitAndClick(5);
         	}catch (Exception e) {
         		System.out.println("Radio button already selected");
         		UtilityLog.info("Radio button already selected");
     		}
     	
+    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSavedSearch_MySearchesTab().Visible()  ;}}), Input.wait60); 
+    			getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled() ;}}), Input.wait30);     	
     	getSavedSearch_MySearchesTab().Click();
-    	getSaveSearch_Name().SendKeys(searchName);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled()  ;}}), Input.wait30); 
+    	getSaveSearch_Name().SendKeys(searchName);    	
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled()  ;}}), Input.wait30); 
     	getSaveSearch_SaveButton().Click();
+    	
     	base.VerifySuccessMessage("Saved search saved successfully");
+    	
     	Reporter.log("Saved the search with name '"+searchName+"'", true);
     	UtilityLog.info("Saved search with name - "+searchName);
 	}
+    
     public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
     	
     	
@@ -381,7 +402,7 @@ public class SessionSearch {
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
         	}
     	if(MessageNumber == 4)
-            Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
+            Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n If the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
     	if(MessageNumber == 5){
         	String msg= "Invalid parenthesis balance, please ensure all the braces have proper parenthesis balance.";
         	 
@@ -810,6 +831,12 @@ public class SessionSearch {
     	 //Enter seatch string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAs_ConceptualTextArea().Visible()  ;}}), Input.wait30); 
+    	try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			
+			e.printStackTrace();
+		}
     	getAs_ConceptualTextArea().SendKeys(SearchString) ;
 
     	try {
@@ -910,22 +937,22 @@ public class SessionSearch {
    		}catch (Exception e) {
    			System.out.println("Pure hit block already moved to action panel");
    			UtilityLog.info("Pure hit block already moved to action panel");
-   		}
-   		 
-   	
+   		}		    	
    	 
-   	 getBulkActionButton().waitAndClick(20);
+   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			getBulkActionButton().Visible()  ;}}), Input.wait60); 
+   	 getBulkActionButton().waitAndClick(5);
    	
-   	/* driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); */
+   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkFolderAction().Visible()  ;}}), Input.wait60); 
    	 
-   	 getBulkFolderAction().waitAndClick(10);
+   	 getBulkFolderAction().waitAndClick(5);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().waitAndClick(10);
+   	 getBulkNewTab().waitAndClick(20);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterFolderName().Visible()  ;}}), Input.wait60); 
@@ -1064,18 +1091,18 @@ public class SessionSearch {
    		UtilityLog.info("Pure hit block already moved to action panel");
    	}
    	 
-   	 getBulkActionButton().waitAndClick(20);
+   	 getBulkActionButton().waitAndClick(30);
    	
    	 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkTagAction().Visible()  ;}}), Input.wait60); */
    	 Thread.sleep(2000); // synch with app!
-   	 getBulkTagAction().waitAndClick(10);
+   	 getBulkTagAction().waitAndClick(30);
    	 
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
    	
-   	 getBulkNewTab().waitAndClick(10);
+   	 getBulkNewTab().waitAndClick(60);
    	
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getEnterTagName().Visible()  ;}}), Input.wait60); 
@@ -1138,7 +1165,7 @@ public void ViewInDocList() throws InterruptedException{
 	 
 	driver.getWebDriver().get(Input.url+"Search/Searches");
 	 try{
-		 getPureHitAddButton().waitAndClick(10);
+		 getPureHitAddButton().waitAndClick(20);
 		}catch (Exception e) {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
@@ -1174,11 +1201,10 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
-	 getBulkActionButton().waitAndClick(10);
-	Thread.sleep(1000);
+	 getBulkActionButton().waitAndClick(5);
 	 
 	 try{
-		 getDocViewAction().waitAndClick(10);
+		 getDocViewAction().waitAndClick(5);
 		 }catch (Exception e) {
 			 getDocViewActionDL().Click();
 		}
@@ -1403,20 +1429,15 @@ public void selectTagInASwp(String tagName) {
 	 System.out.println(getTree().FindWebElements().size());
 	 UtilityLog.info(getTree().FindWebElements().size());
 		for (WebElement iterable_element : getTree().FindWebElements()) {
-			//System.out.println(iterable_element.getText());
 			if(iterable_element.getText().contains(tagName)){
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
-		//		System.out.println(iterable_element.getText());
 				iterable_element.click();
 			}
 		}
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMetaDataInserQuery().Visible()  ;}}), Input.wait30); 
 		getMetaDataInserQuery().Click();
 		driver.scrollPageToTop();
 
@@ -1431,16 +1452,9 @@ public void selectFolderInASwp(String folderName) {
 	System.out.println(getTree().FindWebElements().size());
 	UtilityLog.info(getTree().FindWebElements().size());
 	for (WebElement iterable_element : getTree().FindWebElements()) {
-		//System.out.println(iterable_element.getText());
 		if(iterable_element.getText().contains(folderName)){
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 			new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 			driver.scrollingToBottomofAPage();
-	//		System.out.println(iterable_element.getText());
 			iterable_element.click();
 		}
 	}
@@ -1460,15 +1474,8 @@ public void selectSecurityGinWPS(String sgname) {
 		for (WebElement iterable_element : getSecurityNamesTree().FindWebElements()) {
 			//System.out.println(iterable_element.getText());
 			if(iterable_element.getText().contains(sgname)){
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					
-					e.printStackTrace();
-				}
 				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click();
 				driver.scrollingToBottomofAPage();
-		//		System.out.println(iterable_element.getText());
 				iterable_element.click();
 			}
 		}

@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<QA>
-	<url>https://sightlineqa.consiliotest.com/</url>
-	<prodpath>\\ld5sltest.consiliotest.com\ld5slqa\Productions\Automation
-	</prodpath>
-	<SourceLocation>IngestionTestData\Automation</SourceLocation>
-	<domainName>AutoDomain</domainName>
-	<projectName>AutoSmoke_04012021</projectName>
+<CA>
+	<url>https://sightlineca.consilio.com/</url>
+	<prodpath>\\ld9nas02\UKSLPERF\Productions\Automation</prodpath>
+	<SourceLocation>IngestionTestData1\Automation\Master Automation Data
+	</SourceLocation>
+	<domainName>Automation_Domain_DND</domainName>
+	<projectName>Test_Issue_CA</projectName>
 
 	<!-- Provide ICE Project Name -->
 	<ICEProjectName>ICETest2</ICEProjectName>
-
-	<!-- Domain Account -->
-
-	<da1userName>QADAU2@Consilio.com</da1userName>
-	<da1password>Q@test_10</da1password>
-
-	<!-- Modified By : Srinivas -->
-	<!-- Modified Date : 2021-05-06 -->
-	<!-- Password Picked up from Passwordstate -->
-
 
 	<!-- User Name : SA QA -->
 	<sa1userName>qasa1@consilio.com</sa1userName>
@@ -54,4 +44,4 @@
 	<shareTo>CPA2 PA2</shareTo>
 
 
-</QA>
+</CA>    

@@ -111,7 +111,7 @@ import pageFactory.Utility;
  * @author srinivas.a
  *
  */
-public class TS_004_BasicAndAdvancedSearchOperations {
+public class TS_0020_ReviewManagerSearch {
 
 	Driver driver;	
 	LoginPage loginPage;
@@ -122,7 +122,6 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	String folderName = "folderSearch" + Utility.dynamicNameAppender();
 	String saveSearchName = "savedSearch" + Utility.dynamicNameAppender();
 	String assignmentName = "assignmentSearch" + Utility.dynamicNameAppender();
-	
 	String proximity10Instance1 = "\"ProximitySearch Balance Iterative\"~10 OR ( \"ProximitySearch Balance Recall\"~10 AND \"ProximitySearch Recall\"~10) OR \"Balance Recall\"~10! OR ( \"develop* where evo*\"~7) OR ( \"money through\"~0 ) OR ( \"where m?ney\"~3 OR DocFileName:( \"Requirments Without\"~3) OR CustodianName:( \"P Allen\"~3) ) OR \"Number of holidays\"~0 OR \"ProximitySearch Balance Iterative\"~10 OR ( \"ProximitySearch Balance Recall\"~10 AND \"ProximitySearch Recall\"~10)";
 	String proximity10Instance2	= "\"Truthful (\"Hunter S Shively\")\"~9 AND \"(\"ulie A Gomez\") Development\"~5 OR ( \"(\"my worksheet in case you want to review \") (\"money related\")\"~5 AND \"ProximitySearch (\"Balance of Recall\")\"~9  AND \"Collaboration (\"customer and\")\"~5 ) OR  (\"(\"in case* you want to\") (\"m?ney evolve\")\"~3 OR \"(\"Search* methodology\") (\"keyword highlighting\")\"~3 ) OR DocFileName: ( \"Requirments (\"format by ZL Technologies7\")\"~3) OR CustodianName:( \"P Allen\"~3) OR (\"money (\"development requirements\"~4)\"~6 OR \"m0ney (\"iterative methodology\"~4)\"~6)";	
 	String proximity10Instance3 = "\"ProximitySearch Balance Iterative\"~10" + Keys.ENTER
@@ -158,10 +157,10 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 */
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		
-	    //Input in = new Input();
+
+		//Input in = new Input();
 		//in.loadEnvConfig();
-		
+
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -172,10 +171,10 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		UtilityLog.info("Started Execution for prerequisite");
 
 		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		UtilityLog.info("Logged in as Project Admin user");
-		Reporter.log("Logged in as Project Admin user");
+		UtilityLog.info("Logged in as Reviewer user");
+		Reporter.log("Logged in as Reviewer user");
 	}
 
 	/**
@@ -188,7 +187,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void proximityAndRegExInBasicSearch(String searchString, int smokeExpectedCount,int regressionExpectedCount, String BasicTestCaseID) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO,"Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO,"Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO,"Class Name: "+this.getClass().getSimpleName()+"/ Method Name: proximityAndRegExInBasicSearch");
 			ExtentTestManager.getTest().log(Status.INFO,"Search/Parameter Key Word Is : "+searchString);
 			ExtentTestManager.getTest().log(Status.INFO,"Test Case ID : "+BasicTestCaseID);
@@ -216,7 +215,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void contentSearchWithOperatorsInBasicSearch(String searchString, int expectedCount) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: contentSearchWithOperatorsInBasicSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search/Parameter Key Word Is : "+searchString);
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
@@ -237,7 +236,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void contentSearchWithOperatorsInAdvanceSearch(String searchString, int expectedCount) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: contentSearchWithOperatorsInAdvanceSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search/Parameter Key Word Is : "+searchString);
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
@@ -264,7 +263,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			regressionExpectedCount) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: metaDataSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+metaDataName + " "+ IS_or_Range +" "+ first_input + second_input);
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
@@ -289,7 +288,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void searchsavedSearch() {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: searchsavedSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+saveSearchName);
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
@@ -309,7 +308,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void audioSearch() {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: audioSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+Input.audioSearchString1 +"/ North American English");
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
@@ -325,7 +324,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void ConceptualSearch() {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
-			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.rmu1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: ConceptualSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+Input.conceptualSearchString1 +"/ mid");
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");

@@ -5,16 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
-
 
 import automationLibrary.Driver;
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
 import configsAndTestData.Environment;
 import configsAndTestData.TestData;
-import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.IngestionPage;
@@ -26,11 +23,12 @@ import pageFactory.Utility;
 
 public class Input {
 	Driver driver;
-	LoginPage lp;
-	BaseClass bc;
+	LoginPage loginPage;
+	BaseClass baseClass;
 	//Config and test data files---------------------------------//
 	public static ConfigMain config;
 	public static Environment envConfig;
+	
 	public static TestData testData;
 	//ConfigMain data---------------------------------------------
 	public  static String newProject;
@@ -39,6 +37,7 @@ public class Input {
 	public static String browserName;
 	public static  String screenShotOnPass;
 	public static  String screenShotOnFail;
+	public static int wait3;
 	public static int wait30;
 	public static int wait60;
 	public static int wait90;
@@ -46,10 +45,19 @@ public class Input {
 	public static int interval;
 	public static String batchFilesPath;
 	public static int numberOfDataSets;
-	
+	public static boolean extentReportMethodWise;
+	public static boolean logJiraTicket;
+	public static String jiraUrl;
+	public static String jiraUserName;
+	public static String jiraToken;
+	public static String jiraProject;
+	public static String testingBuild;
+	public static String iCESmokeFolderPath;
+	public static String ICEProjectName;
+			
 	//Environment data---------------------------------------------
 	public static String url;
-	public static String prodPath;
+	public static String prodpath;
 	public static String projectName;
 	public static String sa1password;
 	public static String sa1userName;
@@ -112,6 +120,7 @@ public class Input {
 	public static int totalNumberOfDocsincludeadvoption;
 	public static String MasterPDF1location;
 	public static String MasterPDF2location;
+	public static String prodPath;
 	
 
 	@BeforeSuite(alwaysRun=true)
@@ -121,91 +130,107 @@ public class Input {
 		UtilityLog.info("*****************************************************");
 		//Common Data-------------------------------------------------------------
 		config = (ConfigMain) new ConfigLoader().load("ConfigMain");
-		envConfig = (Environment) new ConfigLoader().load(config.env);
-		System.out.println("Running scripts on "+config.env+" Environment");
-		UtilityLog.info("Running scripts on "+config.env+" Environment");
+		//Reading from Config Main File
+		envConfig = (Environment) new ConfigLoader().load(config.getEnv());
+		//Reading from Jenkins
+		//envConfig = (Environment) new ConfigLoader().load(System.getProperty("tEnvironment"));
+		System.out.println("Running scripts on "+config.getEnv()+" Environment");
+		UtilityLog.info("Running scripts on "+config.getEnv()+" Environment");
 		
-		newProject = config.newProject;
-		ingestion = config.ingestion;
-		suite = config.suite;
-		numberOfDataSets = config.numberOfDataSets;
-		browserName = config.browserName;
-		screenShotOnPass = config.screenShotOnPass;
-		screenShotOnFail = config.screenShotOnFail;
-		batchFilesPath= config.batchFilesPath;
-		wait30 = config.wait30;
-		wait60 = config.wait60;
-		wait90 = config.wait90;
-		wait120 = config.wait120;
-		interval = config.interval;
+		newProject = config.getNewProject();
+		ingestion = config.getIngestion();
+		suite = config.getSuite();
+		numberOfDataSets = config.getNumberOfDataSets();
+		browserName = config.getBrowserName();
+		screenShotOnPass = config.getScreenShotOnPass();
+		screenShotOnFail = config.getScreenShotOnFail();
+		batchFilesPath= config.getBatchFilesPath();
+		wait3 = config.getWait3();
+		wait30 = config.getWait30();
+		wait60 = config.getWait60();
+		wait90 = config.getWait90();
+		wait120 = config.getWait120();
+		interval = config.getInterval();
+		extentReportMethodWise = config.isExtentReportMethodWise();
+		logJiraTicket = config.isLogJiraTicket();
+		jiraUrl = config.getJiraUrl();
+		jiraUserName = config.getJiraUserName();
+		jiraToken = config.getJiraToken();
+		jiraProject = config.getJiraProject();
+		testingBuild = config.getTestingBuild();
+		iCESmokeFolderPath = config.getICESmokeFolderPath();
 		
-		Collection1KFolder = config.Collection1KFolder;
-		FamilyFolder = config.FamilyFolder;
-		AllSourcesFolder = config.AllSourcesFolder;
-		Collection1KDATFile =config.Collection1KDATFile;
-		FamilyDATFile = config.FamilyDATFile;
-		AllSourcesDATFile = config.AllSourcesDATFile;
-		Collection1KDockey = config.Collection1KDockey;
-		FamilyDockey = config.FamilyDockey;
-		AllSourcesDockey =  config.AllSourcesDockey;
-		Collection1KSourceDatField2 = config.Collection1KSourceDatField2;
-		FamilySourceDatField2 = config.FamilySourceDatField2;
-		AllSourcesSourceDatField2 = config.AllSourcesSourceDatField2;
-		Collection1KTextFile = config.Collection1KTextFile;
-		FamilyTextFile = config.FamilyTextFile;
-		AllSourcesTextFile = config.AllSourcesTextFile;
-		FamilyNativeFile = config.FamilyNativeFile;
-		AllSourcesNativeFile = config.AllSourcesNativeFile;
+		/*
+		 * Ingestion Data
+		 */
+		Collection1KFolder = config.getCollection1KFolder();
+		FamilyFolder = config.getFamilyFolder();
+		AllSourcesFolder = config.getAllSourcesFolder();
+		Collection1KDATFile =config.getCollection1KDATFile();
+		FamilyDATFile = config.getFamilyDATFile();
+		AllSourcesDATFile = config.getAllSourcesDATFile();
+		Collection1KDockey = config.getCollection1KDockey();
+		FamilyDockey = config.getFamilyDockey();
+		AllSourcesDockey =  config.getAllSourcesDockey();
+		Collection1KSourceDatField2 = config.getCollection1KSourceDatField2();
+		FamilySourceDatField2 = config.getFamilySourceDatField2();
+		AllSourcesSourceDatField2 = config.getAllSourcesSourceDatField2();
+		Collection1KTextFile = config.getCollection1KTextFile();
+		FamilyTextFile = config.getFamilyTextFile();
+		AllSourcesTextFile = config.getAllSourcesTextFile();
+		FamilyNativeFile = config.getFamilyNativeFile();
+		AllSourcesNativeFile = config.getAllSourcesNativeFile();
 		
 		//Environment data-------------------------------------------------------------
-		url=envConfig.url;
-		projectName= envConfig.projectName;
-		domainName= envConfig.domainName;
-		sa1userName=envConfig.sa1userName;
-		sa1password = envConfig.sa1password;
-		pa1userName = envConfig.pa1userName;
-		pa1password=envConfig.pa1password;
-		rmu1userName =envConfig.rmu1userName;
-		rmu1password =envConfig.rmu1password;
-		rev1userName =envConfig.rev1userName;
-		rev1password =envConfig.rev1password;
-		pa2userName = envConfig.pa2userName;
-		pa2password=envConfig.pa2password;
-		rmu2userName =envConfig.rmu2userName;
-		rmu2password =envConfig.rmu2password;
-		rev2userName =envConfig.rev2userName;
-		rev2password =envConfig.rev2password;
+		url=envConfig.getUrl();
+		projectName= envConfig.getProjectName();
+		domainName= envConfig.getDomainName();
+		sa1userName=envConfig.getSa1userName();
+		sa1password = envConfig.getSa1password();
+		pa1userName = envConfig.getPa1userName();
+		pa1password=envConfig.getPa1password();
+		rmu1userName =envConfig.getRmu1userName();
+		rmu1password =envConfig.getRmu1password();
+		rev1userName =envConfig.getRev1userName();
+		rev1password =envConfig.getRev1password();
+		pa2userName = envConfig.getPa2userName();
+		pa2password=envConfig.getPa2password();
+		rmu2userName =envConfig.getRmu2userName();
+		rmu2password =envConfig.getRmu2password();
+		rev2userName =envConfig.getRev2userName();
+		rev2password =envConfig.getRev2password();
 		shareTo = envConfig.shareTo;
-		pa1FullName= envConfig.pa1FullName;
-		rmu1FullName= envConfig.rmu1FullName;
-		rev1FullName= envConfig.rev1FullName;
-		pa2FullName= envConfig.pa2FullName;
-		rmu2FullName= envConfig.rmu2FullName;
-		rev2FullName= envConfig.rev2FullName;
-		prodPath= envConfig.prodPath;
-		SourceLocation = envConfig.SourceLocation;
+		pa1FullName= envConfig.getPa1FullName();
+		rmu1FullName= envConfig.getRmu1FullName();
+		rev1FullName= envConfig.getRev1FullName();
+		pa2FullName= envConfig.getPa2FullName();
+		rmu2FullName= envConfig.getRmu2FullName();
+		rev2FullName= envConfig.getRev2FullName();
+		prodpath= envConfig.getProdpath();
+		SourceLocation = envConfig.getSourceLocation();
+		ICEProjectName = envConfig.getICEProjectName();
 		//Test data-------------------------------------------------------------
 		
 		loadSuiteTestData();//Load required suite data first, smoke or regression one
 		testData = (TestData) new ConfigLoader().load("TestData");
-		searchString1 = testData.searchString1;
-		searchString2 = testData.searchString2;
-		pureHitSeachString1 = testData.pureHitSeachString1;
-		pureHitSeachString2 = testData.pureHitSeachString2;
-		searchString1ANDsearchString2 = testData.searchString1ANDsearchString2;
-		searchString1ORsearchString2 = testData.searchString1ORsearchString2;
-		searchString1NOTsearchString2 = testData.searchString1NOTsearchString2;
-		searchString2NOTsearchString1 = testData.searchString2NOTsearchString1;
-		audioSearchString1 = testData.audioSearchString1;
-		audioSearchString1pureHit = testData.audioSearchString1pureHit;
-		conceptualSearchString1 = testData.conceptualSearchString1;
-		conceptualSearchString1PureHit = testData.conceptualSearchString1PureHit;
-		metaDataCN=testData.metaDataCN;
-		metaDataCNcount = testData.metaDataCNcount;
-		totalNumberOfDocs = testData.totalNumberOfDocs;
-		totalNumberOfDocsincludeadvoption = testData.totalNumberOfDocsincludeadvoption;
-		MasterPDF1location = testData.MasterPDF1location;
-		MasterPDF2location = testData.MasterPDF2location;
+		searchString1 = testData.getSearchString1();
+		searchString2 = testData.getSearchString2();
+		pureHitSeachString1 = testData.getPureHitSeachString1();
+		pureHitSeachString2 = testData.getPureHitSeachString2();
+		searchString1ANDsearchString2 = testData.getSearchString1ANDsearchString2();
+		searchString1ORsearchString2 = testData.getSearchString1ORsearchString2();
+		searchString1NOTsearchString2 = testData.getSearchString1NOTsearchString2();
+		searchString2NOTsearchString1 = testData.getSearchString2NOTsearchString1();
+		audioSearchString1 = testData.getAudioSearchString1();
+		audioSearchString1pureHit = testData.getAudioSearchString1pureHit();
+		conceptualSearchString1 = testData.getSearchString1();
+		conceptualSearchString1PureHit = testData.getConceptualSearchString1PureHit();
+		metaDataCN=testData.getMetaDataCN();
+		metaDataCNcount = testData.getMetaDataCNcount();
+		totalNumberOfDocs = testData.getTotalNumberOfDocs();
+		totalNumberOfDocsincludeadvoption = testData.getTotalNumberOfDocsincludeadvoption();
+		MasterPDF1location = testData.getMasterPDF1location();
+		MasterPDF2location = testData.getMasterPDF2location();
 		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
@@ -224,8 +249,9 @@ public class Input {
 	
 	public void projectCreationAndUserAssignment() throws ParseException, InterruptedException, IOException {
 		
-		driver = new Driver();
+		
 		if(newProject.equalsIgnoreCase("yes")){
+				driver = new Driver();
 				
 				System.out.println("******Creating new project********");
 				UtilityLog.info("******Creating new project********");
@@ -235,10 +261,10 @@ public class Input {
 				LoginPage.clearBrowserCache();
 					
 				
-				lp = new LoginPage(driver);
+				loginPage = new LoginPage(driver);
 				
 			  
-			    lp.loginToSightLine(sa1userName, sa1password);
+			    loginPage.loginToSightLine(sa1userName, sa1password);
 				String hcode = "HC"+Utility.dynamicNameAppender();
 				ProjectPage page = new ProjectPage(driver);
 				page.AddNonDomainProject(projectName, hcode);
@@ -250,7 +276,7 @@ public class Input {
 			 /*	System.out.println("add rights manually");
 				Thread.sleep(40000);*/
 			 	
-				lp.logout();
+				loginPage.logout();
 				
 				System.out.println("******Project creation and user assignment is done********\n");
 				UtilityLog.info("******Project creation and user assignment is done********\n");
@@ -265,11 +291,11 @@ public class Input {
 		try{
 		if(ingestion.equalsIgnoreCase("yes")){
 				driver = new Driver();
-				lp = new LoginPage(driver);
+				loginPage = new LoginPage(driver);
 				ArrayList<String> dataset = new ArrayList<String>();
 				if(Input.suite.equalsIgnoreCase("Regression")){
-					dataset.add("Automation_Collection1K_Tally");
-					dataset.add("Automation_AllSources");
+					//dataset.add("Automation_Collection1K_Tally");
+					//dataset.add("Automation_AllSources");
 					dataset.add("Automation_20Family_20Threaded");
 				}else if(Input.suite.equalsIgnoreCase("smoke")){
 					dataset.add("Automation_AllSources");
@@ -278,10 +304,10 @@ public class Input {
 				UtilityLog.info(dataset);
 				System.out.println("******Ingestion will start for "+dataset+"********");
 				UtilityLog.info("******Ingestion will start for "+dataset+"********");
-				lp.loginToSightLine(Input.pa1userName,Input.pa1password);
+				loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
 				for (int i = 0; i < dataset.size(); i++) {
-					bc = new BaseClass(driver);
-					bc.selectproject();
+					baseClass = new BaseClass(driver);
+					baseClass.selectproject();
 					
 				    IngestionPage page1 = new IngestionPage(driver);
 			     	if(!page1.AddOnlyNewIngestion(dataset.get(i).toString())){
@@ -338,7 +364,7 @@ public class Input {
 			 			UtilityLog.info("Bulk relese did not go well! take a look and continue!!");
 			 			System.exit(1);
 			     	}
-			     	lp.logout();
+			     	loginPage.logout();
 				}
 				System.out.println("******Ingestion Completed********");
 				UtilityLog.info("******Ingestion Completed********");
@@ -376,14 +402,14 @@ public void loadSuiteTestData() throws IOException {
 
 //to make sure all docs released to default SG -helpful when ingestion done manually!
 public void releaseDocs() {
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
 	  SessionSearch search = new SessionSearch(driver);
 	  search.basicContentSearch("*");
 	  search.bulkRelease("Default Security Group");  
 	  System.out.println("Docs released to default security group!");
 	  UtilityLog.info("Docs released to default security group!");
-	  lp.logout();
+	  loginPage.logout();
 }
 	
 }

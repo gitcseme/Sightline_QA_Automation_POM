@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
@@ -44,7 +45,7 @@ public class ProjectPage {
         bc = new BaseClass(driver);
     }
 
-    public void AddDomainProject(String projectname,String clientname) {
+    public void AddDomainProject(String projectname,String clientname) throws InterruptedException {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddProjectBtn().Visible()  ;}}), Input.wait30); 
@@ -100,7 +101,7 @@ public class ProjectPage {
  	       
 	}
     
-       public void AddNonDomainProject(String projectname,String hcode) {
+       public void AddNonDomainProject(String projectname,String hcode) throws InterruptedException{
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddProjectBtn().Visible()  ;}}), Input.wait30); 
