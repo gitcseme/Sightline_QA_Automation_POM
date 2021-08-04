@@ -1,14 +1,10 @@
-27/04/2021 16:01:26 devpinoyLogger *****************************************************
-27/04/2021 16:01:26 devpinoyLogger Running scripts on Chicago Environment
-27/04/2021 16:01:26 devpinoyLogger Test data is copied to TestData.xml
-27/04/2021 16:01:26 devpinoyLogger *****************************************************
-27/04/2021 16:01:33 devpinoyLogger Running on exsiting project : Auto02112021
-27/04/2021 16:01:33 devpinoyLogger Choosen not to perform any ingestion
-27/04/2021 16:01:34 devpinoyLogger ******Execution started for TS_005_ValidateCategorization********
-27/04/2021 16:01:34 devpinoyLogger Started Execution for prerequisite
-27/04/2021 16:01:57 devpinoyLogger Login success!
-27/04/2021 16:02:08 devpinoyLogger Search is done for test and PureHit is : 3
-27/04/2021 16:02:08 devpinoyLogger ****************************************************************************************
-27/04/2021 16:02:08 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - validateCategorization  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
-27/04/2021 16:02:08 devpinoyLogger ****************************************************************************************
-
+21/06/2021 16:43:54 devpinoyLogger ******Execution started for TS_019_ICEWorkFlow********
+21/06/2021 16:43:54 devpinoyLogger Started Execution for prerequisite
+21/06/2021 16:43:54 devpinoyLogger *****************************************************
+21/06/2021 16:43:54 devpinoyLogger Running scripts on QA Environment
+21/06/2021 16:43:54 devpinoyLogger Test data is copied to TestData.xml
+21/06/2021 16:43:54 devpinoyLogger *****************************************************
+21/06/2021 16:43:58 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
+21/06/2021 16:43:58 devpinoyLogger Choosen not to perform any ingestion
+21/06/2021 16:44:06 devpinoyLogger Dataset menu option avilable under doc explorer
+21/06/2021 16:45:20 devpinoyLogger Logged out successfully!

@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.io.File;
+import org.openqa.selenium.JavascriptExecutor;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -90,6 +91,8 @@ public class LoginPage {
             //Click Login button
         	getEloginButton().Click();
 			driver.waitForPageToBeReady();
+			
+			
 		}catch (Exception e) {
 			
 		}
@@ -123,9 +126,68 @@ public class LoginPage {
 
     }
 	
-	/**
-	 * To logout
-	 */
+
+	 // @SuppressWarnings("static-access")
+	public void loginToSightLineICE(String strUserName,String strPasword){
+    	driver.waitForPageToBeReady();
+        //Fill user name
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getEuserName().Visible()  ;}}), Input.wait30); 
+    	getEuserName().SendKeys(strUserName);
+
+        //Fill password
+    	getEpassword().SendKeys(strPasword);
+
+        //Click Login button
+    	getEloginButton().Click();
+    	
+    	//check if user session is active
+    	try{
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getEuserName().Enabled()  ;}}), 3000); 
+    		getActiveSessionYesButton().Click();	
+    		
+    		//driver.Navigate().refresh();
+    		driver.waitForPageToBeReady();
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getEuserName().Enabled()  ;}}), 30000);
+    		getEuserName().SendKeys(strUserName) ;
+
+            //Fill password
+        	getEpassword().SendKeys(strPasword);
+            //Click Login button
+        	getEloginButton().Click();
+			driver.waitForPageToBeReady();
+		}catch (Exception e) {
+			
+		}
+    	//below code is to handles 2FA
+    	try{
+		/*	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				getEuserName().Enabled()  ;}}), Input.wait30);
+		*/
+    	getEmailMeButton().Click();
+		getInputOTP().SendKeys(LoginPage.readGmailMail("Your one-time passcode to log into Sightline","","OTP",strUserName,strPasword));
+		getEloginButton().Click();
+		}catch (Exception e1) {
+			//System.out.println("2FA is failed/disabled");
+		}
+    	
+    	//Make sure sign out menu is visible post login
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 getSignoutMenu().Visible()  ;}}), Input.wait30); 
+    	BaseClass bc = new BaseClass(driver);
+    	try{
+    		if(!strUserName.equals(Input.sa1userName))
+    			bc.getSelectICEProject();
+    	}catch (Exception e) {
+			// TODO: handle exception
+		}
+    	Assert.assertTrue(getSignoutMenu().Visible());
+    	System.out.println("Login success!");
+
+    }
+	
     public void logout(){
     	
     	driver.Navigate().refresh();

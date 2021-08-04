@@ -31,6 +31,8 @@ public class ConfigMain {
 	public int wait90;
 	public int wait120;
 	public int interval;
+	
+	public String ICESmokeFolderPath;
 	public String  Collection1KFolder;
 	public String  FamilyFolder;
 	public String  AllSourcesFolder;
@@ -58,3 +60,4 @@ public class ConfigMain {
 	public String TestingBuild;
 	public String ICESmokeFolderPath;
 }
+

@@ -17,10 +17,11 @@ import lombok.Setter;
 public class Environment {
 	public String url;
 	public String projectName;
+	public String ICEProjectName;
 	public String domainName;
 	public String sa1userName;
 	public String sa1password;
-    public String da1userName;
+  public String da1userName;
 	public String da1password;
 	public String pa1userName;
 	public String pa1password;

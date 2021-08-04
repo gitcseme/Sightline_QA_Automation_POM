@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Working Suite]">
-  <test thread-count="5" name="Categorization(failed)">
-    <groups>
-      <run>
-        <include name="smoke"/>
-      </run>
-    </groups>
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_005_ValidateCategorization">
+      <class name="testScriptsSmoke.TS_019_ICEWorkFlow">
         <methods>
-          <include name="preConditions"/>
-          <include name="beforeTestMethod"/>
-          <include name="takeScreenShot"/>
           <include name="close"/>
-          <include name="validateCategorization"/>
+          <include name="takeScreenShot"/>
+          <include name="PMUploadAndInitiate"/>
+          <include name="beforeTestMethod"/>
+          <include name="before"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_005_ValidateCategorization -->
+      </class> <!-- testScriptsSmoke.TS_019_ICEWorkFlow -->
     </classes>
-  </test> <!-- Categorization(failed) -->
-</suite> <!-- Failed suite [Working Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

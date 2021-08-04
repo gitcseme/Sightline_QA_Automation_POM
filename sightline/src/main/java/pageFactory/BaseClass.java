@@ -83,6 +83,10 @@ public class BaseClass {
 	public Element getSelectProject() {
 		return driver.FindElementByXPath("//a[@title='" + Input.projectName + "']");
 	}
+	 public Element getSelectICEProject(){
+		 return driver.FindElementByXPath("//a[@title='"+Input.ICEProjectName+"']"); 
+		 }
+	   
 
 	public Element getPopupYesBtn() {
 		return driver.FindElementByXPath("//button[@id='btnYes']");
@@ -119,7 +123,7 @@ public class BaseClass {
 	}
 
 	public Element getYesBtn() {
-		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
+		return driver.FindElementById("bot1-Msg1");
 	}
 
 	// select domain
@@ -151,7 +155,13 @@ public class BaseClass {
 	public Element getAvlProject() {
 		return driver.FindElementById("ddlAvailableProjects");
 	}
+	
+	public ElementCollection getBackTasks() {return driver.FindElementsByCssSelector("#bgTask > ul > li");}
+	  //added by shilpi on 24/06/2021
+	public Element getBckTask_selecttask() {return driver.FindElementByXPath("//*[@id='bgTask']//li[1]//a");}
 
+	
+	
 	public BaseClass(Driver driver) {
 
 		this.driver = driver;
@@ -949,6 +959,96 @@ UtilityLog.info(values);
 
 		System.out.println("Impersnated back PA to SA");
 		UtilityLog.info("Impersnated back PA to SA");
+	}
+	
+	public void impersonateSAtoPAICE() throws InterruptedException {
+		getSignoutMenu().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait30);
+		getChangeRole().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait30);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
+		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+		Thread.sleep(3000);
+
+		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.ICEProjectName);
+
+		getSaveChangeRole().waitAndClick(5);
+		System.out.println("Impersnated from SA to PA");
+		UtilityLog.info("Impersnated from SA to PA");
+	}
+
+	public void impersonatePAtoRMUICE() throws InterruptedException {
+		getSignoutMenu().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getChangeRole().Visible();
+			}
+		}), Input.wait60);
+		getChangeRole().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectRole().Visible();
+			}
+		}), Input.wait60);
+		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
+		Thread.sleep(3000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible();
+			}
+		}), Input.wait30);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
+
+		Thread.sleep(3000);
+
+		getAvlProject().selectFromDropdown().selectByVisibleText(Input.ICEProjectName);
+		Thread.sleep(3000);
+
+		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+		getSaveChangeRole().waitAndClick(10);
+		System.out.println("Impersnated from PA to RMU");
+		UtilityLog.info("Impersnated from PA to RMU");
+
+	}
+
+	public String getBullHornDetailByIndex(int index) {
+    	driver.FindElementByCssSelector("i.fa-bullhorn").WaitUntilPresent().Click();
+    	ElementCollection notifications = driver.FindElementsByCssSelector("#bgTask > ul > li").WaitUntilPresent();
+    	if(notifications.size()> index)
+    	{
+    	return notifications.getElementByIndex(index).FindElementBycssSelector("em.badge >  a").getText();
+    	}else
+    	{
+    		return null;
+    	}
+    	
+	}
+    
+
+    public int getBullHornCount() {
+    	driver.FindElementByCssSelector("i.fa-bullhorn").WaitUntilPresent().Click();
+    	ElementCollection notifications = driver.FindElementsByCssSelector("#bgTask > ul > li").WaitUntilPresent();
+    	driver.FindElementByCssSelector("i.fa-bullhorn").WaitUntilPresent().Click();
+    	return notifications.size();
+    	
 	}
 
 }

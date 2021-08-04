@@ -8,6 +8,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver.Options;
 
 public class ElementCollection implements Iterable<Element> {
 	private WebElement element = null;
@@ -140,6 +141,13 @@ public class ElementCollection implements Iterable<Element> {
 				}
 				return elementList.iterator();
 			}
+			
+			public void remove(Element element)
+			{
+				AssertExists();
+				int indexValue = elements.indexOf(element);
+				elements.remove(indexValue);
+			}
 
 			  public Boolean Displayed()
 			     {
@@ -163,7 +171,20 @@ public class ElementCollection implements Iterable<Element> {
 			          return true;
 			         
 			     }
-	     
+			     
+			     public Element getLastElement()
+			        {
+			                AssertExists();
+			                return new Element(driver, elements.get(elements.size()-1));
+			         }
+			        
+			        
+			        public Element getFirstElement()
+			        {
+			                AssertExists();
+			                return new Element(driver, elements.get(0));
+			         }
+			   
      }
 
 	
