@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DE>
-     <url>https://sightlinede.consilio.com/</url>
-           <prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
-           <SourceLocation>IngestionTestData\Automation</SourceLocation>
-            <domainName>Automation_Domain_DND</domainName>
-        <projectName>Auto_06052021</projectName>
-       
-       <!-- UKSA1 SA1-->
-        <sa1userName>qasa1@consilio.com</sa1userName>
-       <sa1password>TestCons!042021</sa1password>
-    
-        <!-- USPA -->
-        <pa1FullName>QA PAU1</pa1FullName>
-       <pa1userName>QAPAU1@Consilio.com</pa1userName>
-        <pa1password>Q@test_10</pa1password>
-     
-        <pa2FullName>QA PAU2</pa2FullName>
-        <pa2userName>QAPAU2@Consilio.com</pa2userName>
-        <pa2password>Q@test_10</pa2password>
-        
-    
-        <!--USRMU-->
-        <rmu1FullName>QA RMU1</rmu1FullName>
-        <rmu1userName>QARMU1@Consilio.com</rmu1userName>
-        <rmu1password>Q@test_10</rmu1password>
-       
-        <rmu2FullName>QA RMU2</rmu2FullName>
-        <rmu2userName>QARMU2@Consilio.com</rmu2userName>
-        <rmu2password>Q@test_10</rmu2password>
-       
-        <!-- USRev -->
-        <rev2FullName>QA REV2</rev2FullName>
-        <rev2userName>QAREV1@Consilio.com</rev2userName>
-        <rev2password>Q@test_12</rev2password>
-       
-        <rev1FullName>QA REV1</rev1FullName>
-        <rev1userName>QAREV2@Consilio.com</rev1userName>
-        <rev1password>Q@test_12</rev1password>
-       
-       
-        <shareTo>QA PAU2</shareTo>
-      
-      
+
+	<url>https://sightlinede.consilio.com/</url>
+	<prodpath>\\fr4nas71\slprod\Productions\Automation</prodpath>
+	<!-- <SourceLocation>IngestionTestData\Automation</SourceLocation> -->
+	<SourceLocation>\\fr4nas71\slprod\Productions\Automation
+	</SourceLocation>
+	<domainName>Automation_Domain_DND</domainName>
+	<projectName>Auto_Smoke_DND</projectName>
+
+	<!-- Provide ICE Project Name -->
+	<ICEProjectName>ICETest2</ICEProjectName>
+
+	<!-- SA1 -->
+	<sa1userName>qasa@consilio.com</sa1userName>
+	<sa1password>TestCons!042021</sa1password>
+
+	<!-- PA -->
+	<pa2FullName>QA PAU2</pa2FullName>
+	<pa2userName>qapau2@consilio.com</pa2userName>
+	<pa2password>Q@test_10</pa2password>
+
+	<pa1FullName>QA PAU1</pa1FullName>
+	<pa1userName>qapau1@consilio.com</pa1userName>
+	<pa1password>Q@test_10</pa1password>
+
+
+	<!--RMU -->
+	<rmu1FullName>QA RMU1</rmu1FullName>
+	<rmu1userName>qarmu1@consilio.com</rmu1userName>
+	<rmu1password>Q@test_10</rmu1password>
+
+	<rmu2FullName>QA RMU2</rmu2FullName>
+	<rmu2userName>qarmu2@consilio.com</rmu2userName>
+	<rmu2password>Q@test_10</rmu2password>
+
+	<!-- Rev -->
+	<rev2FullName>QA REV2</rev2FullName>
+	<rev2userName>qarev2@consilio.com</rev2userName>
+	<rev2password>Q@test_12</rev2password>
+
+	<rev1FullName>QA REV1</rev1FullName>
+	<rev1userName>qarev1@consilio.com</rev1userName>
+	<rev1password>Q@test_12</rev1password>
+
+
+	<shareTo>QA PAU2</shareTo>
+
 </DE>

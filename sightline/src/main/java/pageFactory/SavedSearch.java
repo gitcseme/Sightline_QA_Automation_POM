@@ -38,7 +38,7 @@ public class SavedSearch {
 	}
 
 	public Element getSelectWithName(String serachName) {
-		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]");
+		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + serachName + "']/td[1]/label/i");
 	}
 
 	public Element getSavedSearch_ScheduleButton() {
@@ -358,12 +358,6 @@ public class SavedSearch {
 				return getSelectUploadedFile(batchFile).Visible();
 			}
 		}), Input.wait30);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		getSelectUploadedFile(batchFile).Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -397,7 +391,7 @@ public class SavedSearch {
 
 		// Delete uploaded set
 		driver.scrollPageToTop();
-		getSavedSearchDeleteButton().waitAndClick(10);
+		getSavedSearchDeleteButton().waitAndClick(5);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {return getSubmitToUpload().Visible();}}), Input.wait60);
@@ -416,19 +410,9 @@ public class SavedSearch {
 				return getSavedSearch_SearchName().Visible();
 			}
 		}), Input.wait60);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		getSavedSearch_SearchName().SendKeys(searchName);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		getSavedSearch_ApplyFilterButton().Click();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -436,12 +420,12 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 
-		getSelectWithName(searchName).waitAndClick(10);
+		getSelectWithName(searchName).waitAndClick(5);
 
-		getToDocList().waitAndClick(10);
+		getToDocList().waitAndClick(5);
 
 		try {
-			base.getYesBtn().waitAndClick(10);
+			base.getYesBtn().waitAndClick(5);
 		} catch (Exception e) {
 			System.out.println("Pop up message does not appear");
 			Log.info("Pop up message does not appear");
@@ -462,10 +446,9 @@ public class SavedSearch {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		getSavedSearch_SearchName().SendKeys(searchName);
-		Thread.sleep(2000);
-
-		getSavedSearch_ApplyFilterButton().Click();
+		savedSearch_Searchandclick(searchName);
+		
+		
 		Thread.sleep(1000);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -494,27 +477,27 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		getSavedSearch_SearchName().SendKeys(searchName);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_ApplyFilterButton().Visible();
+			}
+		}), Input.wait30);
 		getSavedSearch_ApplyFilterButton().Click();
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectWithName(searchName).Visible();
 			}
-		}), Input.wait30);
-		Thread.sleep(2000);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		}), Input.wait30);		
 		getSelectWithName(searchName).Click();
-
+				
+				
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_ScheduleButton().Visible();
+			}
+		}), Input.wait30);
 		getSavedSearch_ScheduleButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -526,7 +509,12 @@ public class SavedSearch {
 
 		final BaseClass bc = new BaseClass(driver);
 		final int Bgcount = bc.initialBgCount();
-
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSchedulerBtn().Visible();
+			}
+		}), Input.wait60);
 		getSaveSchedulerBtn().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -541,13 +529,7 @@ public class SavedSearch {
 	public void shareSavedSearchPA(final String searchName, String securitygroupname)
 			throws ParseException, InterruptedException {
 
-		//base.getSelectProject();
-
-		/*Dimension dim = new Dimension(1600, 900);
-		driver.getWebDriver().manage().window().setSize(dim);
-*/
-		// driver.getWebDriver().manage().window().setSize(800);
-		
+			
 		savedSearch_Searchandclick(searchName);
 		getShareSerachBtn().waitAndClick(5);
 		Thread.sleep(2000);
@@ -561,19 +543,35 @@ public class SavedSearch {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getShareSaveBtn().Visible();
+				return getShareSaveBtn().Visible() && getShareSaveBtn().Enabled();
 			}
 		}), Input.wait30);
-		getShareSaveBtnNew().waitAndClick(10);
+		getShareSaveBtnNew().Click();
 		driver.getWebDriver().manage().window().maximize();
 
 		// getShareSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
-
-		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-		Thread.sleep(3000);
-
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_SearchName().Visible() && getSavedSearch_SearchName().Enabled();
+			}
+		}), Input.wait30);
+		getSavedSearch_SearchName().SendKeys(searchName);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_ApplyFilterButton().Visible() && getSavedSearch_ApplyFilterButton().Enabled();
+			}
+		}), Input.wait30);
+		getSavedSearch_ApplyFilterButton().waitAndClick(5);
+		
 		// get Search ID
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSearchWithID(searchName).Visible();
+			}
+		}), Input.wait30);
 		String SearchID = getSelectSearchWithID(searchName).getText();
 		System.out.println(SearchID);
 		UtilityLog.info(SearchID);
@@ -584,7 +582,7 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 
-		getSelectWithName(searchName).waitAndClick(10);
+		getSelectWithName(searchName).waitAndClick(5);
 
 		// Again select same search and share with security group
 		// savedSearch_Searchandclick(searchName);
@@ -604,7 +602,9 @@ public class SavedSearch {
 
 		// click on share with project admin tab
 		getSavedSearchGroupName("Project Admin").waitAndClick(10);
-
+		
+		getSavedSearch_SearchName().SendKeys(searchName);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		// verify id should get changed
 		String newSearchID = getSelectSearchWithID(searchName).waitAndGet(10);
 		System.out.println(newSearchID);
@@ -616,7 +616,11 @@ public class SavedSearch {
 		// click on share with security group tab
 		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
 		Thread.sleep(2000);
-
+		
+		getSavedSearch_SearchName().SendKeys(searchName);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		Thread.sleep(3000);
+		
 		// verify id should get changed
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -635,9 +639,14 @@ public class SavedSearch {
 
 		// click on share with security group tab
 		this.driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		
+		Thread.sleep(3000);
 		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
 		Thread.sleep(2000);
-
+        
+		getSavedSearch_SearchName().SendKeys(searchName);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		Thread.sleep(3000);
 		// verify id should get changed
 		String newSearchID2 = getSelectSearchWithID(searchName).getText();
 		System.out.println(newSearchID2);
@@ -657,31 +666,37 @@ public class SavedSearch {
 			public Boolean call() {
 				return getShare_SecurityGroup(securitygroupname).Visible();
 			}
-		}), Input.wait30);
-		getShare_SecurityGroup(securitygroupname).waitAndClick(10);
+		}), Input.wait60);
+		getShare_SecurityGroup(securitygroupname).waitAndClick(60);
 
 		// driver.WaitUntil((new Callable<Boolean>() {public Boolean
 		// call(){return
 		// getShareSaveBtn().Visible() ;}}), Input.wait30);
 		// getShareSaveBtn().javascriptclick();
 
-		getShareSaveBtnNew().waitAndClick(10);
+		getShareSaveBtnNew().waitAndClick(30);
 
 		// getShareSaveBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
-		Thread.sleep(5000);
-		
-		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		Thread.sleep(5000);		
 	
-		driver.getWebDriver().navigate().refresh();
-		// get Search ID
+		driver.getWebDriver().navigate().refresh();		// get Search ID
+		getSavedSearch_SearchName().SendKeys(searchName);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSearchWithID(searchName).Visible();
+			}
+		}), Input.wait30);
 		String SearchID = getSelectSearchWithID(searchName).getText();
 		System.out.println(SearchID);
 		UtilityLog.info(SearchID);
 		// click on share with security group tab
 		getSavedSearchGroupName(securitygroupname).waitAndClick(10);
+		
+		getSavedSearch_SearchName().SendKeys(searchName);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		Thread.sleep(5000);
-
 		// verify id should get changed
 		String newSearchID1 = getSelectSearchWithID(searchName).getText();
 		System.out.println(newSearchID1);

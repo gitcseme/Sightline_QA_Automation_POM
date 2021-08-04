@@ -115,7 +115,7 @@ public class BaseClass {
 	}
 
 	public Element getSuccessMsgHeader() {
-		return driver.FindElementByXPath(" //div[starts-with(@id,'bigBoxColor')]//span");
+		return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//span");
 	}
 
 	public Element getSuccessMsg() {
@@ -189,31 +189,39 @@ public class BaseClass {
 			public Boolean call() {
 				return getChangeRole().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait90);
 		getChangeRole().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getSelectRole().Visible();
-			}
-		}), Input.wait60);
+				return getSelectRole().Visible();}}), Input.wait90);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		Thread.sleep(3000);
+						
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlDomain().Visible() && getAvlDomain().Enabled();
+			}
+		}), Input.wait90);
+		Thread.sleep(1000);
+		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getAvlDomain().Visible();
+				return getAvlProject().Visible() && getAvlProject().Enabled();
 			}
-		}), Input.wait30);
-		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
-
-		Thread.sleep(3000);
-
+		}), Input.wait90);
+		Thread.sleep(1000);	
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-		Thread.sleep(3000);
-
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSecurityGroup().Visible() && getSelectSecurityGroup().Enabled();
+			}
+		}), Input.wait90);
+		Thread.sleep(1000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-		getSaveChangeRole().waitAndClick(10);
+		getSaveChangeRole().waitAndClick(Input.wait3);
+		
 		System.out.println("Impersnated from PA to RMU");
 		UtilityLog.info("Impersnated from PA to RMU");
 
@@ -235,22 +243,32 @@ public class BaseClass {
 		}), Input.wait60);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Reviewer");
 
-		Thread.sleep(1000);
-
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAvlDomain().Visible();
 			}
 		}), Input.wait30);
+		Thread.sleep(1000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlProject().Visible();
+			}
+		}), Input.wait30);
 		Thread.sleep(1000);
-
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSecurityGroup().Visible();				
+			}
+		}), Input.wait30);
 		Thread.sleep(1000);
-
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
-		getSaveChangeRole().waitAndClick(5);
+		
+		getSaveChangeRole().waitAndClick(Input.wait3);
+		
 		System.out.println("Impersnated from RMU to Reviewer");
 
 		UtilityLog.info("Impersnated from RMU to Reviewer");
@@ -300,7 +318,7 @@ public class BaseClass {
 			}
 		}), Input.wait30);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
-		Thread.sleep(3000);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAvlDomain().Visible();
@@ -308,8 +326,11 @@ public class BaseClass {
 		}), Input.wait30);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-		Thread.sleep(3000);
-
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectTo().Visible();
+			}
+		}), Input.wait30);
 		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
 
 		getSaveChangeRole().waitAndClick(5);
@@ -323,17 +344,17 @@ public class BaseClass {
 			public Boolean call() {
 				return getProjectNames().Visible();
 			}
-		}), 10000);
+		}), Input.wait3);
 		driver.scrollPageToTop();
 		// Select project if required one is not seletced
-		getProjectNames().waitAndClick(5);
+		getProjectNames().waitAndClick(3);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectProject().Visible();
 			}
-		}), 10000);
-		getSelectProject().waitAndClick(5);
+		}), Input.wait3);
+		getSelectProject().waitAndClick(3);
 		driver.waitForPageToBeReady();
 		
 	}
@@ -390,16 +411,29 @@ public class BaseClass {
 	}
 
 	public void VerifySuccessMessage(String ExpectedMsg) {
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSuccessMsgHeader().Visible();
+		    
+		try {
+			Thread.sleep(Input.wait3);						
+			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+			UtilityLog.info("Expected message - "+ExpectedMsg);
+			Reporter.log("Expected message - "+ExpectedMsg,true);	
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}	
+			
+		try {
+			if(getCloseSucessmsg().Exists()) {
+				getCloseSucessmsg().Click();
+				UtilityLog.info("Closed Success message popup");
 			}
-		}), Input.wait30);
-		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
-		UtilityLog.info("Expected message - "+ExpectedMsg);
-		Reporter.log("Expected message - "+ExpectedMsg,true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
 	}
+		
+	//Return type is boolean.. used in ingestion script
 	
 	public boolean VerifySuccessMessageB(String ExpectedMsg) {
 		boolean release = false;
@@ -453,13 +487,7 @@ public class BaseClass {
 		System.out.println("Today's number: " + today + "\n");
 
 		// Click and open the datepickers
-		DateFrom.waitAndClick(10);
-		try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		DateFrom.waitAndClick(10);		
 
 		// This is from date picker table
 		WebElement dateWidgetFrom = dateWidget.getWebElement();
@@ -483,12 +511,6 @@ public class BaseClass {
 				cell.click();
 				break;
 			}
-		}
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 
@@ -561,16 +583,16 @@ public class BaseClass {
 
 		Actions builder = new Actions(driver.getWebDriver());
 		builder.clickAndHold(element.getWebElement()).perform();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		driver.WaitUntil((new Callable<Boolean>() { public Boolean call() { return
+				tooltipmsg.equalsIgnoreCase(TextToValidate); } }), Input.wait30);
+		
 		String tooltipmsg = element.GetAttribute("title");
 		System.out.println("Tooltip/ Help message is " + tooltipmsg);
+		
 		UtilityLog.info("Expected Tooltip/ Help message is " + TextToValidate);
 		UtilityLog.info("Actual Tooltip/ Help message is " + tooltipmsg);
+		
 		softAssertion.assertEquals(TextToValidate, tooltipmsg);
 		softAssertion.assertAll();
 	}
@@ -655,12 +677,11 @@ public class BaseClass {
 		}), Input.wait30);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlProject().Visible();
+			}
+		}), Input.wait30);
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText(sgname);
@@ -685,8 +706,7 @@ public class BaseClass {
 			}
 		}), Input.wait60);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		Thread.sleep(3000);
-
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAvlDomain().Visible();
@@ -694,10 +714,19 @@ public class BaseClass {
 		}), Input.wait30);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlProject().Visible();
+			}
+		}), Input.wait30);
 
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-		Thread.sleep(3000);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSecurityGroup().Visible();
+			}
+		}), Input.wait30);
 
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().Click();
@@ -823,10 +852,19 @@ UtilityLog.info(values);
 		}), Input.wait30);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-		Thread.sleep(3000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAvlProject().Visible();
+			}
+		}), Input.wait30);
 
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
-		Thread.sleep(2000);
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectSecurityGroup().Visible();
+			}
+		}), Input.wait30);
 
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().waitAndClick(5);
@@ -883,11 +921,16 @@ UtilityLog.info(values);
 		}), Input.wait30);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
-		Thread.sleep(3000);
-
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectProjectTo().Visible();
+			}
+		}), Input.wait30);
 		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
 
-		getSaveChangeRole().waitAndClick(5);
+		getSaveChangeRole().waitAndClick(Input.wait3);
+		
 		System.out.println("Impersnated from SA to PA");
 		UtilityLog.info("Impersnated from SA to PA");
 

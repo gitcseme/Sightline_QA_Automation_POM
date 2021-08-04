@@ -1,6 +1,50 @@
+/*
+ *	public void saveSearchToDocList()
+ *		Author : Srinivas Anand
+ * 		Created date: 14-06-2021
+ * 		Test Case ID:
+ * 		Description : Verify saved searches is working correctly With Doclist
+ * 		Modified by: Srinivas Anand
+ * 		Modified date: 14-06-2021
+ * 		Description: Modified Search and Filter functionality which was missing
+ * 
+ *	public void saveSearchToDocView()
+ *		Author : Srinivas Anand
+ * 		Created date: 14-06-2021
+ * 		Test Case ID:
+ * 		Description : Verify saved searches is working correctly With DocView
+ * 		Modified by: Srinivas Anand
+ * 		Modified date: 14-06-2021
+ * 		Description: Modified Search and Filter functionalitites which was missing
+ * 
+ *	public void scheduleSavedSearch()
+ *		Author : Srinivas Anand
+ * 		Created date: 14-06-2021
+ * 		Test Case ID:
+ * 		Description : Verify Schedule saved searches is working correctly
+ * 		Modified by: Srinivas Anand
+ * 		Modified date: 14-06-2021
+ * 		Description: Modified Search and Filter functionalitites which was missing
+ *  
+ *  public void shareSavedSearch()  
+ * 		Author : Shilpi Mangal
+ * 		Created date: 08-01-2020
+ * 		Test Case ID
+ * 		Description : Verify sharing of saved searches is working correctly
+ * 		Modified by: Srinivas Anand
+ * 		Modified date: 14-06-2021
+ * 		Description: Modified Search and Filter functionalitites which was missing
+ * 
+ * 
+ */
 package testScriptsSmoke;
 
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+
+import automationLibrary.Driver;
+
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -15,7 +59,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 
-import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.DocListPage;
@@ -28,10 +72,10 @@ import pageFactory.Utility;
 
 public class TS_007_SavedSearchShareSchedule {
 	Driver driver;
-	LoginPage lp;
-	SavedSearch ss;
+	LoginPage loginPage;
+	SavedSearch sessionSearch;
 	SessionSearch search;
-	BaseClass bc;
+	BaseClass baseClass;
 	public static int purehits;
 	
 	//String searchText = "test";
@@ -46,99 +90,77 @@ public class TS_007_SavedSearchShareSchedule {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		///Input in = new Input(); in.loadEnvConfig();
+		
 		//Open browser
 		driver = new Driver();
+		
 		//Login as a PA
-		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		//Search and save it
-		ss= new SavedSearch(driver);		
+		sessionSearch= new SavedSearch(driver);		
 		
 		search = new SessionSearch(driver);
 		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
 		search.saveSearch(SearchNamePA);
-		
-		bc = new BaseClass(driver);
-	}
-	@Test(groups={"smoke","regression"})
-	public void  saveSearchToDocList() throws ParseException, InterruptedException {
-		
-		
-		
-		ss.savedSearchToDocList(saveSearchName);
-		final DocListPage dp = new DocListPage(driver);
-	    dp.getDocList_info().WaitUntilPresent();
-	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
-	    System.out.println("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
-	    UtilityLog.info("Found "+dp.getDocList_info().getText().toString().replaceAll(",", "")+" docs in doclist");
-	  // Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""), String.valueOf(purehits));
-	 //   Assert.assertTrue(dp.getDocList_info().getText().toString().replaceAll(",", "").contains(String.valueOf(Input.pureHitSeachString1)));
-	    Assert.assertTrue(dp.getDocList_info().Displayed());
-	    System.out.println("Expected docs("+purehits+") are shown in doclist");
-	    UtilityLog.info("Expected docs("+purehits+") are shown in doclist");
-
+		baseClass = new BaseClass(driver);
 	}
 	
-	@Test(groups={"smoke","regression"})
-	public void  saveSearchToDocView() throws ParseException, InterruptedException {
-		
-		
-		
-		ss.savedSearchToDocView(saveSearchName);
-	    DocViewPage dv= new DocViewPage(driver);
-	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		   !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
 	
-	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
-	    System.out.println("Expected docs("+purehits+") are shown in docView");
-	    UtilityLog.info("Expected docs("+purehits+") are shown in docView");
-
-	}
+	  @Test(groups={"smoke","regression"}) public void saveSearchToDocList() throws
+	  ParseException, InterruptedException {
+	  
+	  sessionSearch.savedSearchToDocList(saveSearchName); final DocListPage dp =
+	  new DocListPage(driver); dp.getDocList_info().WaitUntilPresent();
+	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+	  !dp.getDocList_info().getText().isEmpty() ;}}),Input.wait60);
+	  System.out.println("Found "+dp.getDocList_info().getText().toString().
+	  replaceAll(",", "")+" docs in doclist");
+	  Assert.assertTrue(dp.getDocList_info().Displayed());
+	  System.out.println("Expected docs("+purehits+") are shown in doclist");
+	  UtilityLog.info("Expected docs("+purehits+") are shown in doclist");
+	  
+	  }
+	 
+	  @Test(groups={"smoke","regression"}) public void saveSearchToDocView() throws
+	  ParseException, InterruptedException {
+	  
+	  sessionSearch.savedSearchToDocView(saveSearchName); DocViewPage dv= new
+	  DocViewPage(driver); driver.WaitUntil((new Callable<Boolean>() {public
+	  Boolean call(){return
+	  !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
+	  Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "
+	  +purehits+" Docs");
+	  System.out.println("Expected docs("+purehits+") are shown in docView");
+	  UtilityLog.info("Expected docs("+purehits+") are shown in docView");
+	  
+	  }
+	 
+	  @Test(groups={"smoke","regression"}) public void scheduleSavedSearch() throws
+	  ParseException, InterruptedException {
+	  
+	  //Schedule the saved search
+	  sessionSearch.scheduleSavedSearch(saveSearchName); SchedulesPage sp = new
+	  SchedulesPage(driver); sp.checkStatusComplete(saveSearchName); }
+	  		 
 	
-	@Test(groups={"smoke","regression"})
-	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
-		
-		//Schedule the saved search
-		
-		ss.scheduleSavedSearch(saveSearchName);
-		SchedulesPage sp = new SchedulesPage(driver);
-		sp.checkStatusComplete(saveSearchName);
-	}
-	
-	 /*
-	 * Author : Shilpi Mangal
-	 * Created date: 08-01-2020
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Verify sharing of saved searches is working correctly
-	 */
-	
-	 @Test(groups={"smoke","regression"},priority=13)
+	@Test(groups={"smoke","regression"},priority=13)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
-
-	  	//Share the saved search
+		
+		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
+	  	loginPage.logout();
 	  	
-	  /*	 
-	     SecurityGroupsPage sgpage = new SecurityGroupsPage(driver);
-	  	 sgpage.AddSecurityGroup(securitygroupname);
-	  	 
-	      this.driver.getWebDriver().get(Input.url+ "Search/Searches");
-	      search.ViewInDocList();
-	     
-	      doclist.DoclisttobulkRelease(securitygroupname);*/
-	  	ss.shareSavedSearchPA(SearchNamePA,"Default Security Group");
-	  	lp.logout();
-	  	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	  	bc.selectsecuritygroup("Default Security Group");
+	  	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	  	baseClass.selectsecuritygroup("Default Security Group");
 	  	search.basicContentSearch(Input.searchString1);
 	  	search.saveSearch(SearchNameRMU);
-	  	ss.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
+	  	sessionSearch.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
 	  	
 	  	}
+		 
 
 	  @BeforeMethod(alwaysRun = true)
 		public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
@@ -146,6 +168,7 @@ public class TS_007_SavedSearchShareSchedule {
 			System.out.println("------------------------------------------");
 			System.out.println("Executing method :  " + testMethod.getName());
 			UtilityLog.logBefore(testMethod.getName());
+			
 		}
 
 		@AfterMethod(alwaysRun = true)
@@ -153,21 +176,20 @@ public class TS_007_SavedSearchShareSchedule {
 			Reporter.setCurrentTestResult(result);
 			UtilityLog.logafter(testMethod.getName());
 			if (ITestResult.FAILURE == result.getStatus()) {
-				Utility bc = new Utility(driver);
-				bc.screenShot(result);
-
+				Utility baseClass = new Utility(driver);
+				baseClass.screenShot(result);
 			}
-			System.out.println("Executed :" + result.getMethod().getMethodName());
+			System.out.println("Executed :" + result.getMethod().getMethodName());			
 		}
 		
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
-			lp.logout();
-		     //lp.quitBrowser();	
+			loginPage.logout();
+		     //loginPage.quitBrowser();	
 			}finally {
-				lp.quitBrowser();
-				lp.clearBrowserCache();
+				loginPage.quitBrowser();
+				loginPage.clearBrowserCache();
 			}
 	}
 }

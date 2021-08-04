@@ -12,7 +12,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
@@ -45,7 +49,7 @@ public class TS_012_ValidateReportsFunctionality {
 
 		// Input in = new Input();
 		// in.loadEnvConfig();
-
+		
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -161,6 +165,7 @@ public class TS_012_ValidateReportsFunctionality {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -173,6 +178,7 @@ public class TS_012_ValidateReportsFunctionality {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

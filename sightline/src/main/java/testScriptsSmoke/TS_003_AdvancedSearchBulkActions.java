@@ -15,7 +15,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
 import pageFactory.LoginPage;
@@ -54,6 +57,8 @@ public class TS_003_AdvancedSearchBulkActions {
 
 		//Input in = new Input();
 		//in.loadEnvConfig();
+		
+			
 		driver = new Driver();
 		//Login as PA
 		
@@ -64,6 +69,7 @@ public class TS_003_AdvancedSearchBulkActions {
     	   		
     	//Search for any content on basic search screen
      	sessionSearch.advancedContentSearch(searchText);
+     	ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+searchText);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
     	
     	        
@@ -92,6 +98,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	       //System.out.println(tagName+" could be seen under tags and folder page");
 	       log.info(tagName+" could be seen under tags and folder page");
 	       Reporter.log(tagName+" could be seen under tags and folder page",true);
+	       ExtentTestManager.getTest().log(Status.INFO, "Tag Key Word Is : "+tagName);
 	   
 	}
 	/*
@@ -106,6 +113,7 @@ public class TS_003_AdvancedSearchBulkActions {
 		
 		//Create Bulk Folder   
 		sessionSearch.bulkFolder(folderName);
+		ExtentTestManager.getTest().log(Status.INFO, "Folder Key Word Is : "+folderName);
         
 	}
 	@AfterClass(alwaysRun = true)
@@ -116,25 +124,28 @@ public class TS_003_AdvancedSearchBulkActions {
 			}finally {
 				lp.quitBrowser();
 				lp.clearBrowserCache();
+				
 			}	
 	}
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());
+		UtilityLog.logBefore(testMethod.getName());		
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
+		UtilityLog.logafter(testMethod.getName());		
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
-
 		}
+		
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}     
 }

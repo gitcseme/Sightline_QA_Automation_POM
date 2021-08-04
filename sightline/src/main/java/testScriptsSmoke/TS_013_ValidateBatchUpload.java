@@ -11,7 +11,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
@@ -30,8 +34,8 @@ public class TS_013_ValidateBatchUpload {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		//Input in = new Input();
-		// in.loadEnvConfig();
-
+		//in.loadEnvConfig();
+		
 		// Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -44,7 +48,6 @@ public class TS_013_ValidateBatchUpload {
 		// Login as a PA
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		saveSearch = new SavedSearch(driver);
-
 		saveSearch.uploadBatchFile(saveSearch.renameFile());
 		System.out.println("Successfully ran for PA user...");
 		UtilityLog.info("Successfully ran for PA user...");
@@ -80,6 +83,7 @@ public class TS_013_ValidateBatchUpload {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)

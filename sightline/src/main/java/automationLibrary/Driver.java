@@ -275,9 +275,8 @@ public  class Driver  {
 				options.setExperimentalOption("prefs", prefs);
 		
 				driver = new ChromeDriver(caps);
-				driver.manage().window().maximize();
-				
-			
+		
+				driver.manage().window().maximize();				
 				return driver;	
 	      } 
 
@@ -291,13 +290,11 @@ public  class Driver  {
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    		System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
-		    		DesiredCapabilities m_capability = DesiredCapabilities.chrome();
-		    		m_capability.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
-
-		    		m_capability = DesiredCapabilities.edge();
-		    		WebDriver driver = new EdgeDriver(m_capability);
 		    		
+		    	  // Edge Driver
+		    	  System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
+		    				
+		    		WebDriver driver = new EdgeDriver();		    		
 		    		//Start Edge Session
 		    		driver.manage().window().maximize();
 					return driver;	

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.concurrent.Callable;
+
 import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
@@ -16,7 +17,6 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.testng.Reporter;
@@ -30,7 +30,7 @@ import testScriptsSmoke.Input;
 public class LoginPage {
 
     Driver driver;
-      
+    
     public Element getEuserName(){ return driver.FindElementById("txtBxUserID"); }
     public Element getEpassword(){ return driver.FindElementById("txtBxUserPass"); }
     public Element getEloginButton(){ return driver.FindElementByName("submit"); }
@@ -55,6 +55,10 @@ public class LoginPage {
 
     }
 
+	/**
+	 * To Login to application
+	 * @param username and password
+	 */
    // @SuppressWarnings("static-access")
 	public void loginToSightLine(String strUserName,String strPasword){
     	driver.waitForPageToBeReady();
@@ -111,6 +115,7 @@ public class LoginPage {
     	try{
     		if(!strUserName.equals(Input.sa1userName))
     			bc.selectproject();
+    		Reporter.log("Selected Project : "+Input.projectName);
     	}catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -121,6 +126,7 @@ public class LoginPage {
 
     }
 	
+
 	 // @SuppressWarnings("static-access")
 	public void loginToSightLineICE(String strUserName,String strPasword){
     	driver.waitForPageToBeReady();
@@ -245,6 +251,10 @@ public class LoginPage {
 		driver.close();
 
 	}
+    
+	/**
+	 * To Quite Browser
+	 */
     public void quitBrowser() {
 		driver.Quit();
 
@@ -378,19 +388,23 @@ public class LoginPage {
 	      return url;
       
     }
+    
+	/**
+	 * To Clear bowser cache
+	 */
     public static void clearBrowserCache() {
-   	 /*try {
+   	 try {
    	        String[] command = {"cmd.exe", "/C", "Start", System.getProperty("user.dir")+ "//BrowserDrivers//chromeBrowser.bat"};
    	        Runtime.getRuntime().exec(command); 
    	        try {
-				Thread.sleep(4000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
    	        //p.destroyForcibly();
    	    } catch (IOException ex1) {
-   	    }*/
+   	    }
     	//Thread.sleep(5000); //wait for clean up activity
 	}
 

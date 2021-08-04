@@ -44,18 +44,18 @@ public class SecurityGroupsPage {
     public void AddSecurityGroup(String securitygroupname) {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupCreateButton().Visible()  ;}}), Input.wait60); 
-    	getSecurityGroupCreateButton().waitAndClick(5);
+    			getSecurityGroupCreateButton().Visible() && getSecurityGroupCreateButton().Enabled();}}), Input.wait60); 
+    	getSecurityGroupCreateButton().Click();
     	
     	Actions action = new Actions(driver.getWebDriver());
     	action.moveToElement(driver.getWebDriver().findElement(By.xpath("//button[text()='Create']"))).click().perform();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupName().Visible()  ;}}), Input.wait30); 
+    			getSecurityGroupName().Visible() && getSecurityGroupName().Enabled() ;}}), Input.wait30); 
     	getSecurityGroupName().SendKeys(securitygroupname);
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSecurityGroupSaveButton().Visible()  ;}}), Input.wait30); 
+    			getSecurityGroupSaveButton().Visible() && getSecurityGroupSaveButton().Enabled();}}), Input.wait60); 
     	getSecurityGroupSaveButton().Click();
     	
     	bc.VerifySuccessMessage("Security group added successfully");
@@ -89,17 +89,24 @@ public class SecurityGroupsPage {
     	 
     	   this.driver.getWebDriver().get(Input.url+"SecurityGroups/SecurityGroups");
     	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			   getSG_AnnLayerbutton().Visible()  ;}}), Input.wait30); 
+    			   getSG_AnnLayerbutton().Visible() && getSG_AnnLayerbutton().Enabled() ;}}), Input.wait30); 
     	   getSG_AnnLayerbutton().waitAndClick(5);
     	   
-    	   getSG_AddAnnLayer().waitAndClick(15);
+    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			   getSG_AddAnnLayer().Visible() && getSG_AddAnnLayer().Enabled() ;}}), Input.wait30); 
+    	   getSG_AddAnnLayer().waitAndClick(5);
     	   
-    	   getSG_AddAnnLayer_Right().waitAndClick(15);
+    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			   getSG_AddAnnLayer_Right().Visible() && getSG_AddAnnLayer_Right().Enabled() ;}}), Input.wait30); 
+    	   getSG_AddAnnLayer_Right().waitAndClick(5);
+    	  
     	   try {
     		   bc.VerifyWarningMessage("Cannot add more than one security group. "
     		   		+ "A security group can have only one annotation layer at a time.");
     		 
-    	     getSG_AnnSaveButton().waitAndClick(15);
+    		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    				   getSG_AnnSaveButton().Visible() && getSG_AnnSaveButton().Enabled();}}), Input.wait30); 
+    	     getSG_AnnSaveButton().waitAndClick(5);
     	     bc.VerifySuccessMessage("Your selections were saved successfully");
     	     bc.CloseSuccessMsgpopup();
     	   }

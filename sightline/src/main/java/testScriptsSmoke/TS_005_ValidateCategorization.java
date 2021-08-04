@@ -1,5 +1,31 @@
+/*
+ * @BeforeClass(alwaysRun = true)
+ * 	 * Author : Suresh Bavihalli
+	 * Created date: May 2019
+	 * Test Case ID:
+	 * Description : Login as a PAU and create one bulk tag and folder
+	 * Modified date: 15-Jun-2021 
+	 * Modified by:	Srinivas Anand
+	 * Description : valid object Initialization name added was lp made it loginPage.
+	 * 
+* public void validateCategorization()
+* 	 * Author : Suresh Bavihalli
+	 * Created date: May 2019
+	 * Test Case ID:
+	 * Description: Validate categorization with created tag and folder
+	 * Modified date: 
+	 * Modified by:
+	 * Description: 
+* @AfterMethod(alwaysRun = true)	 
+*	 * Author : Srinivas Anand
+	 * Created date: June 2021
+	 * Test Case ID:
+	 * Description: Execute once the test method is completed.
+	 * Modified date: June 2021
+	 * Modified by: Srinivas Anand
+	 * Description : 
+ */
 package testScriptsSmoke;
-
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -12,7 +38,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.Categorization;
 import pageFactory.LoginPage;
@@ -21,57 +51,51 @@ import pageFactory.Utility;
 
 public class TS_005_ValidateCategorization {
 	Driver driver;
-	LoginPage lp;
+	LoginPage login;
 	SessionSearch sessionSearch;
 	int pureHit;
 	
-	
-
 	String tagName = "CatTag2"+Utility.dynamicNameAppender();
 	String folderName="CatFolder2"+Utility.dynamicNameAppender();
-	
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: May 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Login as a PAU and create one bulk tag and folder
-	 */	
+		
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		// Need to enable this Input class to load the environment data while executing the class individually
+		///Input in = new Input();
+		///in.loadEnvConfig();
 		
-		String searchString = Input.searchString2;
+		String searchString = Input.searchString2;	
+			
 		//Open browser
 		driver = new Driver();
+		
 		//Login as a PA	
-    	lp=new LoginPage(driver);
-    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);   		
-    	//Search for any content on basic search screen
+		login=new LoginPage(driver);
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);   		
+    	
+		//Search for any content on basic search screen    	
 		sessionSearch =new SessionSearch(driver);
-		//System.out.println(searchString);
-    	sessionSearch.basicContentSearch(searchString);
-    	//System.out.println(searchString);
+		System.out.println(searchString);
+    	
+		sessionSearch.basicContentSearch(searchString);
+    	System.out.println(searchString);
+    	
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
     	
-    	
-	
 	}
-	
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: May 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Validate categorization with created tag and folder
-	 */	
+		
 	@Test(groups={"smoke","regression"})
-	   public void validateCategorization() throws InterruptedException {
+	   public void validateCategorization() throws InterruptedException {	
+		
+		 ExtentTestManager.getTest().log(Status.INFO, "Test Started");
+		  ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
+		  ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: proximityAndRegExInBasicSearch");
+		  ExtentTestManager.getTest().log(Status.INFO, "Search/Parameter Key Word Is TagName: "+ tagName + "/Folder Name: "+folderName);
+		  ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON Need to Check");
 		//Create Bulk Tag   
 		sessionSearch.bulkTag(tagName);
 		//Create bulk folder
@@ -83,6 +107,7 @@ public class TS_005_ValidateCategorization {
 		  }else{
 			 Assert.assertTrue(cat.runCatWithTagsAndFolders(tagName,folderName)>=8);
 		  }
+		  
 		  Reporter.log("Expected documents count shown in categorization result",true);
 		  UtilityLog.info("Expected documents count shown in categorization result");
 	   }
@@ -93,6 +118,7 @@ public class TS_005_ValidateCategorization {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -105,15 +131,16 @@ public class TS_005_ValidateCategorization {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
-			lp.logout();
+			login.logout();
 		     //lp.quitBrowser();	
 			}finally {
-				lp.quitBrowser();
-				lp.clearBrowserCache();
+				login.closeBrowser();
+				login.clearBrowserCache();
 			}
 	}
 }

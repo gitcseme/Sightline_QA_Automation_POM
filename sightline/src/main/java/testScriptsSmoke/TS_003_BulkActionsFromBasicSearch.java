@@ -1,5 +1,16 @@
+/*
+ * Verify that the Bulk Action From Basic Search Performs as expected
+  	 * Author : Suresh Bavihalli
+	 * Created date: April 2019
+	 * Modified date: June 2021
+	 * Modified by: Srinivas Anand
+	 	* public void bulkFolderInBasicSearch()
+	 	* public void bulkTagInBasicSearch()
+	 	* public void viewInDocViewInBasicSearch()
+	 	* public void viewInTallyResultsInBasicSearch()
+ */
 package testScriptsSmoke;
-//
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -14,8 +25,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
-import configsAndTestData.ConfigLoader;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -29,22 +42,17 @@ import pageFactory.Utility;
 
 public class TS_003_BulkActionsFromBasicSearch {
 	Driver driver;
-	LoginPage lp;
+	LoginPage loginPage;
 	UtilityLog log;
 	SessionSearch sessionSearch;	
-	static int pureHit;
-	String searchText ="test";
+	static int pureHit;	
 	SoftAssert softAssertion;
-	TagsAndFoldersPage tf;
+	TagsAndFoldersPage tagsAndFolderPage;
 	String tagName = "tagName"+Utility.dynamicNameAppender();
 	String folderName = "folderName1"+Utility.dynamicNameAppender();
 	
 	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : Login as PAU and keep search ready, from here all the scripts will run! 
+	 * Description : Login as Project Admin User and keep search ready, from here all the scripts will run! 
 	 */	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -52,30 +60,25 @@ public class TS_003_BulkActionsFromBasicSearch {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		//bt = new BaseTest();
 		//Open browser
 		softAssertion= new SoftAssert();
 		//Input in = new Input();
 		//in.loadEnvConfig();
+				
 		driver = new Driver();
-		//Login as PA
-		lp=new LoginPage(driver);
+		//Login as Project Admin
+		loginPage=new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
-    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-    	 tf = new TagsAndFoldersPage(driver);
+    	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+    	 tagsAndFolderPage = new TagsAndFoldersPage(driver);
     	//Search for any content on basic search screen
-     	sessionSearch.basicContentSearch(searchText);
-    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
-    	        
+     	sessionSearch.basicContentSearch(Input.searchString2);
+    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());   	        
 
 	}
 	
 	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : As a PA user validate bulk folder in baisc search  
+	 * Description : As a Project Admin user validate bulk folder in baisc search  
 	 */	
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInBasicSearch() throws InterruptedException {
@@ -85,12 +88,9 @@ public class TS_003_BulkActionsFromBasicSearch {
 		sessionSearch.bulkFolder(folderName);
         
 	}
+
 	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : As a PA user validate bulk tag in baisc search  
+	 * Description : As a Project Admin user validate bulk tag in baisc search  
 	 */	
 	@Test(groups={"smoke","regression"})
    public void bulkTagInBasicSearch() throws InterruptedException {
@@ -101,24 +101,21 @@ public class TS_003_BulkActionsFromBasicSearch {
 	   //Verify tag in manage tags page!
 	   this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
+       		tagsAndFolderPage.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
   	
-       tf.getTag_ToggleDocCount().waitAndClick(8);
+       tagsAndFolderPage.getTag_ToggleDocCount().waitAndClick(8);
        Thread.sleep(4000);
        
-       Assert.assertTrue(tf.getTagandCount(tagName, pureHit).Present());
+       Assert.assertTrue(tagsAndFolderPage.getTagandCount(tagName, pureHit).Present());
+       
        //System.out.println(tagName+" could be seen under tags and folder page");
        UtilityLog.info(tagName+" could be seen under tags and folder page");
        Reporter.log(tagName+" could be seen under tags and folder page",true);
    
 	}
 	
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : As a PA user validate navigation to doclist from basic search  
+	/*	 
+	 * Description : As a Project Admin user validate navigation to doclist from basic search  
 	 */	
 	@Test(groups={"smoke","regression"})
 	public void viewInDoclistInBasicSearch() throws InterruptedException {
@@ -133,12 +130,8 @@ public class TS_003_BulkActionsFromBasicSearch {
        Reporter.log("Expected docs("+pureHit+") are shown in doclist",true);
 	   UtilityLog.info("Expected docs("+pureHit+") are shown in doclist");
 	}
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : As a PA user validate navigation to docview from basic search  
+	/*	 
+	 * Description : As a Project Admin user validate navigation to docview from basic search  
 	 */
 	@Test(groups={"smoke","regression"})
    public void viewInDocViewInBasicSearch() throws InterruptedException {
@@ -155,12 +148,8 @@ public class TS_003_BulkActionsFromBasicSearch {
 	   UtilityLog.info("Expected docs("+pureHit+") are shown in docView");
 	}
 	
-	/*
-	 * Author : Suresh Bavihalli
-	 * Created date: April 2019
-	 * Modified date: 
-	 * Modified by:
-	 * Description : As a PA user validate navigation to tally report from basic search  
+	/*	 
+	 * Description : As a Project Admin user validate navigation to tally report from basic search  
 	 */
 	@Test(groups={"smoke","regression"})
    public void viewInTallyResultsInBasicSearch() throws InterruptedException {
@@ -181,6 +170,7 @@ public class TS_003_BulkActionsFromBasicSearch {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -193,15 +183,16 @@ public class TS_003_BulkActionsFromBasicSearch {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
+	
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
-		lp.logout();
-	     //lp.quitBrowser();	
+		loginPage.logout();	    
 		}finally {
-			lp.quitBrowser();
-			lp.clearBrowserCache();
+			loginPage.closeBrowser();
+			LoginPage.clearBrowserCache();
 		}
 	}
 }

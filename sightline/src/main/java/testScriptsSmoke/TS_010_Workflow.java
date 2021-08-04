@@ -10,7 +10,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+
 import automationLibrary.Driver;
+import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.LoginPage;
@@ -31,7 +35,7 @@ public class TS_010_Workflow {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Input in = new Input();
 		// in.loadEnvConfig();
-
+	
 		driver = new Driver();
 		String codingfrom = "CF" + Utility.dynamicNameAppender();
 		String SearchName = "WF" + Utility.dynamicNameAppender();
@@ -77,6 +81,7 @@ public class TS_010_Workflow {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
+		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -89,6 +94,7 @@ public class TS_010_Workflow {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

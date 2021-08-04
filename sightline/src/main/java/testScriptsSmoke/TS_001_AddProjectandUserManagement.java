@@ -10,6 +10,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.ProjectPage;
@@ -26,8 +27,8 @@ public class TS_001_AddProjectandUserManagement {
      public void before() throws Exception{
     	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
-    	Input in = new Input(); 	
-		in.loadEnvConfig();
+    	//Input in = new Input(); 	
+		//in.loadEnvConfig();
 	
 		
     	//	String securitygroup= "Default Security Group";
