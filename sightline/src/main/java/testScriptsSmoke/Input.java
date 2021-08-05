@@ -52,8 +52,7 @@ public class Input {
 	public static String jiraToken;
 	public static String jiraProject;
 	public static String testingBuild;
-	public static String iCESmokeFolderPath;
-	public static String ICEProjectName;
+	
 			
 	//Environment data---------------------------------------------
 	public static String url;
