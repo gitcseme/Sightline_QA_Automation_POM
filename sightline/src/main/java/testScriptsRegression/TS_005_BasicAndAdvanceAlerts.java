@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 import org.testng.asserts.SoftAssert;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -14,13 +13,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -114,20 +110,19 @@ public class TS_005_BasicAndAdvanceAlerts {
     	sessionSearch.wrongQueryAlertBasicSaerch(data, 2,"fielded", "CustodianName");
     	
 	}
-    @Test
-    public void dateandOtherSeachesInBSP() {
+    @Test(dataProvider="reservedWords",groups= {"regression"})
+    public void dateandOtherSeachesInBSP(String data) {
 		
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("2009-09-20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	sessionSearch.wrongQueryAlertBasicSaerch("2009/09/20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
+    	sessionSearch.wrongQueryAlertBasicSaerch(data, 3,"non fielded", null);
+    	
+    
     	
     	/*sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"non fielded", null);
     	sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"fielded", "CustodianName");*/
     	
-    	sessionSearch.wrongQueryAlertBasicSaerch("(that this verification)", 10,"non fielded", null);
+    	sessionSearch.wrongQueryAlertBasicSaerch( data,10,"non fielded", null);
     	sessionSearch.getTallyContinue().Click();
     	//verify counts 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -139,15 +134,13 @@ public class TS_005_BasicAndAdvanceAlerts {
     	
 	}
     
-    @Test
-    public void dateASeach() {
+    @Test(dataProvider="reservedWords",groups= {"regression"})
+    public void dateASeach(String data) {
     	// TODO Auto-generated method stub
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("2009-09-20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("2009/09/20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
+    	sessionSearch.wrongQueryAlertAdvanceSaerch(data, 3,"non fielded", null);
+    	
     	/*sessionSearch.wrongQueryAlertAdvanceSaerch("bi-weekly", 4,"non fielded", null);
     	driver.getWebDriver().navigate().refresh();
     	sessionSearch.wrongQueryAlertAdvanceSaerch("bi-weekly", 4,"fielded", "CustodianName");*/
@@ -161,8 +154,8 @@ public class TS_005_BasicAndAdvanceAlerts {
     	Assert.assertTrue(Integer.parseInt(sessionSearch.getPureHitsCount().getText())>1);
     	
 	}
-    @Test
-    public void otherWarningMessages() {
+    @Test(dataProvider="Warning Messages",groups= {"regression"})
+    public void otherWarningMessages(String data) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
     	sessionSearch.wrongQueryAlertAdvanceSaerch("(\"test test\"", 5,"non fielded", null);
@@ -245,7 +238,12 @@ public class TS_005_BasicAndAdvanceAlerts {
         	{"test not yes"},
         	{"Test Or yes"},
         	{"Test And yes"},
-        	{"yes Not the"}
+        	{"yes Not the"},
+         {"2009-09-20"},
+         { "2009/09/20"},
+         {"(that this verification)"},
+         
+         
     };
     }
     
@@ -363,6 +361,31 @@ public class TS_005_BasicAndAdvanceAlerts {
         	{" stock investment\"~5"},
         	{"\"stock investment~5\""}*/
         };
+        
+      
+    }
+    
+    @DataProvider(name = "Warning Messages")
+    public Object[][] dataProviderMethod2() {
+    	 return new Object[][] {
+    		 {"(\"test test\"", 5,"non fielded", null},
+    		 {"\"gove\"~2"},
+    		 {"\"government \"money laundering\"\"~2"},
+    		 {"\"TEST this\"~ 4"},
+    		 {"PT AND"},
+    		 {"PT OR"},
+    		 {"PT NOT"},
+    		 {"CustodianName : (P Allen"},
+    		 {"Remark: (Reamark1"},
+    		 {"Document_Comments: ( Comment1"},
+    		 {"\"\"Term1 Term2\"~ 4\""},
+    		 {"\"discrepan? scripts\""},
+    		 {"\"Term1 Term2\"~ 4"},
+    
+    		 
+    	 };
+    	
+    	
     }
 	@AfterClass(alwaysRun = true)
 	public void close(){
