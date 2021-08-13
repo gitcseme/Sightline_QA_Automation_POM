@@ -221,7 +221,7 @@ public class ProductionPage {
     //added by shilpi on 08/17
     public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
     public Element getDocumentGeneratetext() { return driver.FindElementByXPath("//span[contains(text(),'Documents Generated')]"); }
-    public Element getQC_backbutton() { return driver.FindElementByXPath("//a[contains(text(),'< Back')]"); }
+    public Element getQC_backbutton() { return driver.FindElementByXPath("//a[contains(@class,'btn btn-default')]"); }
     public Element getQC_Download() { return driver.FindElementByXPath("//a[text()='Download']"); }
     public Element getQC_Downloadbutton_allfiles() { return driver.FindElementByXPath("(//a[@title='Download All files'])[1]"); }
     
