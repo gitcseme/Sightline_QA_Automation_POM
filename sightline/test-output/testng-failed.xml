@@ -5,13 +5,18 @@
     <classes>
       <class name="testScriptsRegression.TS_001_BasicSearch">
         <methods>
-          <include name="autoSuggest"/>
-          <include name="preCondition"/>
+          <include name="conceptuallySimilar"/>
+          <include name="existingBulkTag"/>
           <include name="bulkUnFolder"/>
-          <include name="beforeTestMethod"/>
-          <include name="bulkUnTag"/>
+          <include name="emailInclusive"/>
           <include name="exsitingBulkFolder"/>
           <include name="copySearchTextToNewSearch"/>
+          <include name="starSearch"/>
+          <include name="autoSuggest"/>
+          <include name="preCondition"/>
+          <include name="beforeTestMethod"/>
+          <include name="metaDataSearchsBS"/>
+          <include name="bulkUnTag"/>
           <include name="takeScreenShot"/>
         </methods>
       </class> <!-- testScriptsRegression.TS_001_BasicSearch -->

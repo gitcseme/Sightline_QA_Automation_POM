@@ -1,7 +1,60 @@
-16/08/2021 15:40:23 devpinoyLogger *****************************************************
-16/08/2021 15:40:24 devpinoyLogger Running scripts on LD9PT Environment
-16/08/2021 15:40:24 devpinoyLogger Test data is copied to TestData.xml
-16/08/2021 15:40:24 devpinoyLogger *****************************************************
-16/08/2021 15:40:24 devpinoyLogger Running on exsiting project : MyTest_Hema_DND
-16/08/2021 15:40:24 devpinoyLogger Choosen not to perform any ingestion
-16/08/2021 15:41:18 devpinoyLogger Login success!
+16/08/2021 17:56:26 devpinoyLogger *****************************************************
+16/08/2021 17:56:26 devpinoyLogger Running scripts on LD9PT Environment
+16/08/2021 17:56:26 devpinoyLogger Test data is copied to TestData.xml
+16/08/2021 17:56:26 devpinoyLogger *****************************************************
+16/08/2021 17:56:26 devpinoyLogger Running on exsiting project : MyTest_Hema_DND
+16/08/2021 17:56:26 devpinoyLogger Choosen not to perform any ingestion
+16/08/2021 17:56:55 devpinoyLogger Login success!
+16/08/2021 17:57:11 devpinoyLogger Search is done for test and PureHit is : 50
+16/08/2021 17:57:34 devpinoyLogger Logged out successfully!
+16/08/2021 17:57:56 devpinoyLogger Login success!
+16/08/2021 17:59:43 devpinoyLogger Logged out successfully!
+16/08/2021 18:00:03 devpinoyLogger Login success!
+16/08/2021 18:00:18 devpinoyLogger Search is done for EmailInclusiveReason with value * - null purehit is : 729
+16/08/2021 18:00:30 devpinoyLogger Logged out successfully!
+16/08/2021 18:00:50 devpinoyLogger Login success!
+16/08/2021 18:01:05 devpinoyLogger Search is done for EmailInclusiveReason with value * - null purehit is : 729
+16/08/2021 18:01:17 devpinoyLogger Logged out successfully!
+16/08/2021 18:01:38 devpinoyLogger Login success!
+16/08/2021 18:01:52 devpinoyLogger Impersnated from RMU to Reviewer
+16/08/2021 18:02:05 devpinoyLogger Search is done for CustodianName with value P Allen - null purehit is : 1135
+16/08/2021 18:02:27 devpinoyLogger Logged out successfully!
+16/08/2021 18:02:48 devpinoyLogger Login success!
+16/08/2021 18:03:19 devpinoyLogger Expected message - Folder added successfully
+16/08/2021 18:03:19 devpinoyLogger Closed Success message popup
+16/08/2021 18:03:19 devpinoyLogger Closed Success message popup
+16/08/2021 18:03:19 devpinoyLogger Folder Successful
+16/08/2021 18:03:28 devpinoyLogger Search is done for test and PureHit is : 50
+16/08/2021 18:04:02 devpinoyLogger Expected message - Records saved successfully
+16/08/2021 18:04:02 devpinoyLogger Closed Success message popup
+16/08/2021 18:04:02 devpinoyLogger Bulk folder is done, folder is : AFolder1771096
+16/08/2021 18:04:41 devpinoyLogger 11
+16/08/2021 18:04:57 devpinoyLogger Search is done and PureHit is : 50
+16/08/2021 18:05:09 devpinoyLogger Logged out successfully!
+16/08/2021 18:05:30 devpinoyLogger Login success!
+16/08/2021 18:05:48 devpinoyLogger Expected message - Tag added successfully
+16/08/2021 18:05:48 devpinoyLogger Closed Success message popup
+16/08/2021 18:05:48 devpinoyLogger Tag Successful
+16/08/2021 18:05:48 devpinoyLogger Closed Success message popup
+16/08/2021 18:05:57 devpinoyLogger Search is done for test and PureHit is : 50
+16/08/2021 18:06:21 devpinoyLogger Expected message - Records saved successfully
+16/08/2021 18:06:21 devpinoyLogger Closed Success message popup
+16/08/2021 18:06:31 devpinoyLogger Bulk Tag is done, Tag is : ATag2507660
+16/08/2021 18:07:11 devpinoyLogger 28
+16/08/2021 18:07:28 devpinoyLogger Search is done and PureHit is : 50
+16/08/2021 18:07:40 devpinoyLogger Logged out successfully!
+16/08/2021 18:08:00 devpinoyLogger Login success!
+16/08/2021 18:08:08 devpinoyLogger Search is done for * and PureHit is : 1202
+16/08/2021 18:08:41 devpinoyLogger Logged out successfully!
+16/08/2021 18:09:02 devpinoyLogger Login success!
+16/08/2021 18:09:12 devpinoyLogger Search is done for test and PureHit is : 50
+16/08/2021 18:09:56 devpinoyLogger Expected message - Records saved successfully
+16/08/2021 18:09:56 devpinoyLogger Closed Success message popup
+16/08/2021 18:10:06 devpinoyLogger Bulk folder is done, folder is : folderName14974006
+16/08/2021 18:10:34 devpinoyLogger Expected message - Records saved successfully
+16/08/2021 18:10:34 devpinoyLogger Closed Success message popup
+16/08/2021 18:10:44 devpinoyLogger Bulk Unfolder is done, folder is : folderName14974006
+16/08/2021 18:11:12 devpinoyLogger Logged out successfully!
+16/08/2021 18:11:32 devpinoyLogger Login success!
+16/08/2021 18:11:55 devpinoyLogger Search is done for CreateDate with value 1993-08-11 - null purehit is : 1
+16/08/2021 18:12:17 devpinoyLogger Logged out successfully!
