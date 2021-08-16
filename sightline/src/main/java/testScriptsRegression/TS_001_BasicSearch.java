@@ -43,7 +43,7 @@ public class TS_001_BasicSearch {
     	
 		//Open browser
 		softAssertion= new SoftAssert();
-		//Input in = new Input(); in.loadEnvConfig();
+		Input in = new Input(); in.loadEnvConfig();
 		
 		driver = new Driver();
 		
@@ -322,7 +322,7 @@ public class TS_001_BasicSearch {
 			}	
 		LoginPage.clearBrowserCache();
 	}
-	@DataProvider(name = "metaDataSearch2")
+	@DataProvider(name = "metaDataSearch")
 	public Object[][] metaData() {
 		return new Object[][] { 
 			{1,"CreateDate", "IS", "1993-08-11", null}, 
