@@ -44,8 +44,7 @@ public class TS_001_BasicSearch {
 		//Open browser
 		softAssertion= new SoftAssert();
 		//Input in = new Input(); in.loadEnvConfig();
-		Input in = new Input(); 
-		in.loadEnvConfig();
+		
 		driver = new Driver();
 		
 		bc = new BaseClass(driver);
