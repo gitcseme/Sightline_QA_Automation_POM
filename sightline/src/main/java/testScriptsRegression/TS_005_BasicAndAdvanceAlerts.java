@@ -37,11 +37,13 @@ public class TS_005_BasicAndAdvanceAlerts {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
 		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 
 	}
 
@@ -113,14 +115,13 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
+	@Test(dataProvider = "dateSearches", groups = { "regression" })
 	public void dateandOtherSeachesInBSP(String data) {
 
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
 		sessionSearch.wrongQueryAlertBasicSaerch(data, 3, "non fielded", null);
 		driver.getWebDriver().navigate().refresh();
-		
 
 		/*
 		 * sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"non fielded", null);
@@ -128,7 +129,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 		 * "CustodianName");
 		 */
 
-		sessionSearch.wrongQueryAlertBasicSaerch("(that this verification)",10, "non fielded", null );
+		sessionSearch.wrongQueryAlertBasicSaerch("(that this verification)", 10, "non fielded", null);
 		driver.getWebDriver().navigate().refresh();
 		sessionSearch.getTallyContinue().Click();
 		// verify counts
@@ -141,18 +142,24 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "Warning Messages", groups = { "regression" })
-	public void otherWarningMessages(String data,int MessageNumber, String fielded, String fieldName) {
+	@Test(dataProvider = "warningMessages", groups = { "regression" })
+	public void otherWarningMessages(String data, int MessageNumber, String fielded, String fieldName) {
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
-		sessionSearch.wrongQueryAlertAdvanceSaerch(fieldName, MessageNumber, fieldName, fieldName);
+		sessionSearch.wrongQueryAlertAdvanceSaerch(data, MessageNumber, fielded, fieldName);
 
 	}
 
 	@DataProvider(name = "reservedWords")
 	public Object[][] dataProviderMethod1() {
 		return new Object[][] { { "test or the" }, { "test and yes" }, { "test not yes" }, { "Test Or yes" },
-				{ "Test And yes" }, { "yes Not the" },{"2009-09-20"},{"2009/09/20"},};
+				{ "Test And yes" }, { "yes Not the" }, };
+	}
+
+	@DataProvider(name = "dateSearches")
+	public Object[][] dataProviderMethod3() {
+
+		return new Object[][] { { "2009-09-20" }, { "2009/09/20" }, };
 	}
 
 	@DataProvider(name = "special chars")
@@ -205,55 +212,54 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@DataProvider(name = "Warning Messages")
+	@DataProvider(name = "warningMessages")
 
 	public Object[][] dataProviderMethod2() {
 		return new Object[][] {
 
-				
-				  { "\"test test\"},", 5, "non fielded", null },
-				  
-				  { "\"gove\"~2", 6, "non fielded", null },
-				  
-				  { "\"government \"money laundering\"\"~2", 7, "non fielded", null },
-				  
-				  { "\"TEST this\"~ 4", 8, "non fielded", null },
-				  
-				  { "PT AND", 9, "non fielded", null }, { "PT OR", 9, "non fielded", null },
-				  
-				  { "PT NOT", 9, "non fielded", null },
-				  
-				  { "CustodianName : {P Allen", 5, "non fielded", null },
-				  
-				  { "Remark: {Reamark1", 5, "non fielded", null },
-				  
-				  { "Document_Comments: { Comment1", 5, "non fielded", null },
-				  
-				  // advanceSearch { "\"test test\"", 5, "non fielded", null },
-				  
-				  { "\"test test\"},", 5, "non fielded", null },
-				  
-				  { "\"gove\"~2", 6, "non fielded", null },
-				  
-				  { "\"government \"money laundering\"\"~2", 7, "non fielded", null },
-				  
-				  { "\"TEST this\"~ 4", 8, "non fielded", null },
-				  
-				  { "PT AND", 9, "non fielded", null },
-				  
-				  { "PT OR", 9, "non fielded", null },
-				  
-				  { "PT NOT", 9, "non fielded", null },
-				  
-				  { "CustodianName : {P Allen", 5, "non fielded", null }, {
-				  "Remark: {Reamark1", 5, "non fielded", null },
-				  
-				  { "Document_Comments: { Comment1", 5, "non fielded", null },
-				 
-				 { "\"Term1 Term2\"~ 4",11,"non fielded", null },
-				 
+				{ "\"test test\"},", 5, "non fielded", null },
 
-				{ "\"discrepan? scripts\"", 12,"non fielded", null}, };
+				{ "\"gove\"~2", 6, "non fielded", null },
+
+				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
+
+				{ "\"TEST this\"~ 4", 8, "non fielded", null },
+
+				{ "PT AND", 9, "non fielded", null }, { "PT OR", 9, "non fielded", null },
+
+				{ "PT NOT", 9, "non fielded", null },
+
+				{ "CustodianName : {P Allen", 5, "non fielded", null },
+
+				{ "Remark: {Reamark1", 5, "non fielded", null },
+
+				{ "Document_Comments: { Comment1", 5, "non fielded", null },
+
+				// advanceSearch
+
+				{ "\"test test\"", 5, "non fielded", null },
+
+				{ "\"test test\"},", 5, "non fielded", null },
+
+				{ "\"gove\"~2", 6, "non fielded", null },
+
+				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
+
+				{ "\"TEST this\"~ 4", 8, "non fielded", null },
+
+				{ "PT AND", 9, "non fielded", null },
+
+				{ "PT OR", 9, "non fielded", null },
+
+				{ "PT NOT", 9, "non fielded", null },
+
+				{ "CustodianName : {P Allen", 5, "non fielded", null }, { "Remark: {Reamark1", 5, "non fielded", null },
+
+				{ "Document_Comments: { Comment1", 5, "non fielded", null },
+
+				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null },
+
+				{ "\"discrepan? scripts\"", 12, "non fielded", null }, };
 
 	}
 
