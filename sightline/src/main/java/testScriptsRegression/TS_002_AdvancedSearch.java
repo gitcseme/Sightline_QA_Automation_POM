@@ -49,7 +49,8 @@ public class TS_002_AdvancedSearch {
 	
 		softAssertion= new SoftAssert();
 		//Open browser
-		
+		Input in = new Input(); 
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
@@ -71,6 +72,7 @@ public class TS_002_AdvancedSearch {
 	   	public void metaSearchWithOperatorsInASreg() {
 	   		SoftAssert softAssertion= new SoftAssert();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	   		driver.waitForPageToBeReady();
 	   		bc.selectproject();
 			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
 
@@ -97,10 +99,11 @@ public class TS_002_AdvancedSearch {
 		 * Modified by:
 		 * Description : As a PA user validate all meta data searches in advance searches
 		 */	
-		@Test(groups={"regression"},priority=2)
+		@Test(groups={"regression"},priority=0)
 		public void metaDataSearchsAS() {
 			SoftAssert softAssertion= new SoftAssert();
 			driver.getWebDriver().get(Input.url+ "Search/Searches");
+			driver.waitForPageToBeReady();
 	    	bc.selectproject();
 	    	softAssertion.assertEquals(95,search.advancedMetaDataSearch("MasterDate", "IS", "1980-01-01", null));
 			
@@ -245,7 +248,7 @@ public class TS_002_AdvancedSearch {
 			
 		   //Create Bulk Tag   and then untag
 		   driver.getWebDriver().get(Input.url+"Search/Searches");
-		   
+		   driver.waitForPageToBeReady();
 		   bc.selectproject();
 		   search.advancedContentSearch(Input.searchString1);
 		   search.bulkTag(tagName);
@@ -277,7 +280,7 @@ public class TS_002_AdvancedSearch {
     public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
-	
+		driver.waitForPageToBeReady();
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		//Bulk folder and unfolder
@@ -312,7 +315,7 @@ public class TS_002_AdvancedSearch {
     	 String folderName = "folderName1"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
     	 
-    	 
+    	 driver.waitForPageToBeReady();
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkFolder(folderName);
@@ -335,7 +338,7 @@ public class TS_002_AdvancedSearch {
 		
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
-    	 
+    	 driver.waitForPageToBeReady();
     	 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkTag(tagName);
@@ -365,6 +368,7 @@ public class TS_002_AdvancedSearch {
 		 
 		 
 		 //Search and release doc to SG
+		 driver.waitForPageToBeReady();
 		 bc.selectproject();
 		   
 		 int count =search.basicContentSearch(Input.searchString1);
@@ -394,7 +398,7 @@ public class TS_002_AdvancedSearch {
 		 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
 		 String saveSearchName = "A_SaveSearch"+Utility.dynamicNameAppender();
 		 
-		 
+		 driver.waitForPageToBeReady();
 		 //create tag with searchString1
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
@@ -486,7 +490,7 @@ public class TS_002_AdvancedSearch {
     	//create tag for work product first
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
-    	 
+    	 driver.waitForPageToBeReady();
     	 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkTag(tagName);
@@ -546,7 +550,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -591,7 +595,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -657,7 +661,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -713,7 +717,7 @@ public class TS_002_AdvancedSearch {
      	@Test(groups={"regression"},priority=13)
 	   	public void AdvSearchgetallresults() throws InterruptedException {
 	   		
-	   		
+     		driver.waitForPageToBeReady();
 	   		bc.selectproject();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
 			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1165);

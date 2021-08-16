@@ -1,10 +1,7 @@
-21/06/2021 16:43:54 devpinoyLogger ******Execution started for TS_019_ICEWorkFlow********
-21/06/2021 16:43:54 devpinoyLogger Started Execution for prerequisite
-21/06/2021 16:43:54 devpinoyLogger *****************************************************
-21/06/2021 16:43:54 devpinoyLogger Running scripts on QA Environment
-21/06/2021 16:43:54 devpinoyLogger Test data is copied to TestData.xml
-21/06/2021 16:43:54 devpinoyLogger *****************************************************
-21/06/2021 16:43:58 devpinoyLogger Running on exsiting project : AutoSmoke_04012021
-21/06/2021 16:43:58 devpinoyLogger Choosen not to perform any ingestion
-21/06/2021 16:44:06 devpinoyLogger Dataset menu option avilable under doc explorer
-21/06/2021 16:45:20 devpinoyLogger Logged out successfully!
+16/08/2021 15:40:23 devpinoyLogger *****************************************************
+16/08/2021 15:40:24 devpinoyLogger Running scripts on LD9PT Environment
+16/08/2021 15:40:24 devpinoyLogger Test data is copied to TestData.xml
+16/08/2021 15:40:24 devpinoyLogger *****************************************************
+16/08/2021 15:40:24 devpinoyLogger Running on exsiting project : MyTest_Hema_DND
+16/08/2021 15:40:24 devpinoyLogger Choosen not to perform any ingestion
+16/08/2021 15:41:18 devpinoyLogger Login success!
