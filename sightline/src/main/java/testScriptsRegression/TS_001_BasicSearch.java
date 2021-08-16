@@ -205,7 +205,7 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-	
+//
     @Test(groups={"smoke","regression"},priority=7)
 	public void starSearch() {
 		lp=new LoginPage(driver);

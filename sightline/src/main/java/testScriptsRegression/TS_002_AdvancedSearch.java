@@ -114,7 +114,7 @@ public class TS_002_AdvancedSearch {
 	 * Modified by:
 	 * Description : search docs in advanced search and do bulk tag. 
 	 * Untag the same and validate the count under 'Tags and Folders' page  
-	 */
+//	 */
 	   @Test(groups={"regression"},priority=3)
 	   public void bulkUnTag() throws InterruptedException {
 		
