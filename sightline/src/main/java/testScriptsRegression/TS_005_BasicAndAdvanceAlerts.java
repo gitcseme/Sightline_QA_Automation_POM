@@ -36,12 +36,12 @@ public class TS_005_BasicAndAdvanceAlerts {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     
-		Input in = new Input(); in.loadEnvConfig();
+		
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
 		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa2userName, Input.pa2password);
     	
 
 	}
