@@ -3,7 +3,6 @@
         <url>https://sightlinept.consilio.com/</url>
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>             
-        <domainName>Hema_auto_DND</domainName>
         <projectName>MyTest_Hema_DND</projectName>
         
         <!-- Provide ICE Project Name -->

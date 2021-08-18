@@ -513,8 +513,8 @@ public class TS_002_AdvancedSearch {
  		SavedSearch savedSearch = new SavedSearch(driver);
  		
  		for(int i=10;i<=10;i++) {
- 			savedSearch.savedSearchExecute(searchName, 15);
- 			Thread.sleep(2000);
+ 				savedSearch.savedSearchExecute(searchName, 15);
+ 				Thread.sleep(2000);
  		} 		
 	}
      @Test(groups={"regression"},priority=12)
