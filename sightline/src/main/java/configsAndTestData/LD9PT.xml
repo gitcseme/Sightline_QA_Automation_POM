@@ -15,13 +15,13 @@
                   
         <!-- Consilio PAU Automation   -->
         <pa1FullName>Consilio PAU1 Automation</pa1FullName>
-        <pa1userName>qapau4@Consilio.com</pa1userName>
-        <pa1password>Consilio@123</pa1password> 
+        <pa1userName>qapau5@Consilio.com</pa1userName>
+        <pa1password>Q@test_15</pa1password> 
       
         
         <pa2FullName>Consilio PAU2 Automation</pa2FullName>
-        <pa2userName>qapau5@Consilio.com</pa2userName>
-        <pa2password>Q@test_15</pa2password>
+        <pa2userName>qapau4@Consilio.com</pa2userName>
+        <pa2password>Consilio@123</pa2password>
         
         <!--Consilio RMU Automation  -->
         <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>

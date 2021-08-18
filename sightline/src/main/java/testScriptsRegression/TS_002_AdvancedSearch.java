@@ -50,13 +50,16 @@ public class TS_002_AdvancedSearch {
 	
 		softAssertion= new SoftAssert();
 		//Open browser
+		Input in = new Input(); 
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
 		//Login as PA
 		lp=new LoginPage(driver);
 		search = new SessionSearch(driver);
-    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+    	
     
 	}
 		
@@ -107,6 +110,7 @@ public class TS_002_AdvancedSearch {
 	    	softAssertion.assertEquals(Expected_count,search.advancedMetaDataSearch(metaDataName,IS_or_Range,first_input,second_input));
 			softAssertion.assertAll();
 		}
+		
 	/*
 	 * Author : Suresh Bavihalli
 	 * Created date: Feb 2019
@@ -140,7 +144,7 @@ public class TS_002_AdvancedSearch {
 	       
 	       Assert.assertTrue(tf.getTagandCount(tagName, 0).Displayed());
 	       System.out.println(tagName+" could be seen under tags and folder page");
-	   
+	       
 	}
   /*
 	 * Author : Suresh Bavihalli
@@ -174,6 +178,7 @@ public class TS_002_AdvancedSearch {
 	     
 	       Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
 	       System.out.println(folderName+" could be seen under tags and folder page");
+	       
 	}
  /*
 	 * Author : Suresh Bavihalli
@@ -198,6 +203,7 @@ public class TS_002_AdvancedSearch {
 		 search.switchToWorkproduct();
 		 search.selectFolderInASwp(folderName);
 		 Assert.assertEquals(search.serarchWP(), Input.pureHitSeachString1);
+		 
 	  }
 	/*
 	 * Author : Suresh Bavihalli
@@ -235,7 +241,6 @@ public class TS_002_AdvancedSearch {
      public void WPSecuirtyGroupSearch() throws InterruptedException {
     	
     	 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
-    	 
     	 //Create security group	
     	 sgpage = new SecurityGroupsPage(driver);
 		 sgpage.AddSecurityGroup(securitygroupname);
@@ -271,7 +276,6 @@ public class TS_002_AdvancedSearch {
 		 String folderName = "folderName1"+Utility.dynamicNameAppender();
 		 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
 		 String saveSearchName = "A_SaveSearch"+Utility.dynamicNameAppender();
-		 
 		 driver.waitForPageToBeReady();
 		 //create tag with searchString1
 		 bc.selectproject();
@@ -306,7 +310,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(50,search.serarchWP());
 		 
 		 
 		 
@@ -320,7 +324,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("OR");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(15,search.serarchWP());
+		 softAssertion.assertEquals(87,search.serarchWP());
 		 
 		 //TagNotFolder
 		 bc.selectproject();
@@ -328,7 +332,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectTagInASwp(tagName);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 softAssertion.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(35,search.serarchWP());
 		 
 		 //FolderNotTag
 		 bc.selectproject();
@@ -336,7 +340,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);	
 		 search.selectOperator("NOT");
 		 search.selectTagInASwp(tagName);
-		 softAssertion.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(37,search.serarchWP());
 		 
 		 //SG Not folder
 		 bc.selectproject();
@@ -344,7 +348,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 softAssertion.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(35,search.serarchWP());
 		
 		 //folder not SG
 		 bc.selectproject();
@@ -352,7 +356,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);
 		 search.selectOperator("NOT");
 		 search.selectSecurityGinWPS(securitygroupname);
-		 softAssertion.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(37,search.serarchWP());
 		 
 		 softAssertion.assertAll();
 	}
@@ -415,7 +419,6 @@ public class TS_002_AdvancedSearch {
     			search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	Assert.assertTrue(Integer.parseInt(search.getPureHitsCount().getText())>50);
-    	
 	}
      
      @Test(groups={"regression"},priority=10)
@@ -502,32 +505,17 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(16,search.serarchWP());
+ 		softAssertion.assertEquals(15,search.serarchWP());
  		
  		String searchName="00Atest"+Utility.dynamicNameAppender();
  		search.saveSearch(searchName);
  		
  		SavedSearch savedSearch = new SavedSearch(driver);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
  		
+ 		for(int i=10;i<=10;i++) {
+ 			savedSearch.savedSearchExecute(searchName, 15);
+ 			Thread.sleep(2000);
+ 		} 		
 	}
      @Test(groups={"regression"},priority=12)
      public void contentNOTwpTag() throws InterruptedException {
@@ -568,7 +556,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),33);
+ 		Assert.assertEquals(search.serarchWP(),35);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
@@ -584,13 +572,14 @@ public class TS_002_AdvancedSearch {
    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    				search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
    		
-     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"33");
+   		Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"35");
+     	
 
 	}
 
      	@Test(groups={"regression"},priority=13)
 	   	public void AdvSearchgetallresults() throws InterruptedException {
-	   		
+     		
      		driver.waitForPageToBeReady();
 	   		bc.selectproject();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -614,20 +603,23 @@ public class TS_002_AdvancedSearch {
 			System.out.println(conceptcount);
 			softAssertion.assertTrue(Integer.parseInt(conceptcount)>=1);
 			softAssertion.assertAll();
+			
 	    }
 	   	
      	 @Test(groups={"regression"},priority=14)
 	     public void contentwithAdvSearchoptions() throws InterruptedException {
-	    	 
+     		
 	    	 bc.selectproject();
 		   	 search.advancedContentSearch(Input.searchString2);
 		   	 bc.selectproject();
 	 		 search.advContentSearchwithoptions(Input.searchString2);
+	 		
 	    }	 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
+	    System.out.println("Executing method : " + testMethod.getName());  
+	   
 	 }
      @AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
@@ -636,7 +628,7 @@ public class TS_002_AdvancedSearch {
  		bc.screenShot(result);
  	}
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
+// 	lp.logout();
      }
 	
      @AfterClass(alwaysRun = true)
@@ -648,7 +640,7 @@ public class TS_002_AdvancedSearch {
  				lp.quitBrowser();
  			}
  	}
-     @DataProvider(name = "metaDataSearch2711")
+     @DataProvider(name = "metaDataSearch")
   	public Object[][] metaData() {
   		return new Object[][] { 
   			{95,"MasterDate", "IS", "1980-01-01", null},
