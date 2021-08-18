@@ -130,7 +130,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 		 */
 
 		sessionSearch.wrongQueryAlertBasicSaerch("(that this verification)", 10, "non fielded", null);
-		driver.getWebDriver().navigate().refresh();
+		// driver.getWebDriver().navigate().refresh();
 		sessionSearch.getTallyContinue().Click();
 		// verify counts
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -217,29 +217,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 	public Object[][] dataProviderMethod2() {
 		return new Object[][] {
 
-				{ "\"test test\"},", 5, "non fielded", null },
-
-				{ "\"gove\"~2", 6, "non fielded", null },
-
-				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
-
-				{ "\"TEST this\"~ 4", 8, "non fielded", null },
-
-				{ "PT AND", 9, "non fielded", null }, { "PT OR", 9, "non fielded", null },
-
-				{ "PT NOT", 9, "non fielded", null },
-
-				{ "CustodianName : {P Allen", 5, "non fielded", null },
-
-				{ "Remark: {Reamark1", 5, "non fielded", null },
-
-				{ "Document_Comments: { Comment1", 5, "non fielded", null },
-
-				// advanceSearch
-
-				{ "\"test test\"", 5, "non fielded", null },
-
-				{ "\"test test\"},", 5, "non fielded", null },
+				{ "test test}", 10, "non fielded", null },
 
 				{ "\"gove\"~2", 6, "non fielded", null },
 
@@ -253,13 +231,31 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 				{ "PT NOT", 9, "non fielded", null },
 
-				{ "CustodianName : {P Allen", 5, "non fielded", null }, { "Remark: {Reamark1", 5, "non fielded", null },
+				{ "CustodianName : {P Allen", 10, "non fielded", null },
 
-				{ "Document_Comments: { Comment1", 5, "non fielded", null },
+				{ "Document_Comments: { Comment1", 10, "non fielded", null },
 
-				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null },
+				// advanceSearch
 
-				{ "\"discrepan? scripts\"", 12, "non fielded", null }, };
+				{ "test test", 10, "non fielded", null },
+
+				{ "\"gove\"~2", 6, "non fielded", null },
+
+				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
+
+				{ "\"TEST this\"~ 4", 8, "non fielded", null },
+
+				{ "PT AND", 9, "non fielded", null },
+
+				{ "PT OR", 9, "non fielded", null },
+
+				{ "PT NOT", 9, "non fielded", null },
+
+				{ "CustodianName : {P Allen", 10, "non fielded", null },
+
+				{ "Document_Comments: { Comment1", 10, "non fielded", null },
+
+				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null }, };
 
 	}
 
