@@ -79,7 +79,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 		sessionSearch.wrongQueryAlertAdvanceSaerch(data, 1, "non fielded", null);
 	}
 
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
+	// @Test(dataProvider = "reservedWords", groups = { "regression" })
 	public void reserveredWordsAsearchNonFielded(String data) {
 		// TODO Auto-generated method stub
 		driver.getWebDriver().navigate().refresh();
@@ -88,7 +88,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
+	// @Test(dataProvider = "reservedWords", groups = { "regression" })
 	public void reserveredWordsASeachfielded(String data) {
 		// TODO Auto-generated method stub
 		driver.getWebDriver().navigate().refresh();
@@ -97,7 +97,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
+	// @Test(dataProvider = "reservedWords", groups = { "regression" })
 	public void reserveredWordsBsearchNonFielded(String data) {
 
 		driver.getWebDriver().navigate().refresh();
@@ -106,7 +106,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
+	// @Test(dataProvider = "reservedWords", groups = { "regression" })
 	public void reserveredWordsBSeachfielded(String data) {
 
 		driver.getWebDriver().navigate().refresh();
@@ -115,7 +115,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "dateSearches", groups = { "regression" })
+	// @Test(dataProvider = "dateSearches", groups = { "regression" })
 	public void dateandOtherSeachesInBSP(String data) {
 
 		driver.getWebDriver().navigate().refresh();
@@ -159,7 +159,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 	@DataProvider(name = "dateSearches")
 	public Object[][] dataProviderMethod3() {
 
-		return new Object[][] { { "2009-09-20" }, { "2009/09/20" }, };
+		return new Object[][] { { "2009-09-20" }, { "2009/09/20" } };
 	}
 
 	@DataProvider(name = "special chars")
@@ -255,7 +255,11 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 				{ "Document_Comments: { Comment1", 10, "non fielded", null },
 
-				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null }, };
+				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null },
+
+				{ "discrepan? scripts", 10, "non fielded", null }
+
+		};
 
 	}
 
