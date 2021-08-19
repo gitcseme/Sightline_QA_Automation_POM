@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Reporter;
@@ -97,6 +100,7 @@ public class TagsAndFoldersPage {
     
     public Element getTagGroupName(){ return driver.FindElementById("txtTagGroupName"); }
 
+    
     
        public TagsAndFoldersPage(Driver driver){
 
@@ -193,7 +197,8 @@ public class TagsAndFoldersPage {
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 
-     getFolderName().SendKeys(strFolder);
+      new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
+     //getFolderName().SendKeys(strFolder);
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveFolder().Visible()  ;}}), Input.wait30); 
@@ -226,13 +231,16 @@ public class TagsAndFoldersPage {
         }catch (Exception e) {
         	e.printStackTrace();
 		}
-        driver.scrollingToBottomofAPage();
+       //driver.scrollingToBottomofAPage(); 
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagName(strtag).Visible()  ;}}), Input.wait30); 
+         
     	 getTagName(strtag).waitAndClick(10);
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+    	 
+    	 driver.scrollPageToTop();
          getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -253,7 +261,8 @@ public class TagsAndFoldersPage {
     {
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getFoldersTab().Visible()  ;}}), Input.wait30); 
-         getFoldersTab().waitAndClick(10);	
+    	 driver.scrollPageToTop();
+         getFoldersTab().waitAndClick(15);	
          
        //Select secGroup
          try{
@@ -265,13 +274,15 @@ public class TagsAndFoldersPage {
         	 e.printStackTrace();
  		}
 
-         driver.scrollingToBottomofAPage();
+         //driver.scrollingToBottomofAPage();
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getFolderName(strFolder).Visible()  ;}}), Input.wait30); 
          getFolderName(strFolder).waitAndClick(10);	
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+        
+         driver.scrollPageToTop();
          getFolderActionDropDownArrow().waitAndClick(10);
      
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -303,6 +314,8 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+    	
+    	 driver.scrollPageToTop();
         getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -332,6 +345,7 @@ public class TagsAndFoldersPage {
     	 driver.getWebDriver().navigate().to(Input.url+"TagsAndFolders/TagsAndFolders");
     	 
     	
+    	 driver.scrollPageToTop();
          getTagActionDropDownArrow().waitAndClick(10);
          
         /* Assert.assertFalse(getTagViewDocView().Enabled());
@@ -343,7 +357,9 @@ public class TagsAndFoldersPage {
     	
     	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getTagActionDropDownArrow().waitAndClick(10);
+    	 
+    	 driver.scrollPageToTop();
+    	 getTagActionDropDownArrow().waitAndClick(10);
      
         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		getTagViewDocView().Visible()  ;}}), Input.wait30); 
@@ -359,7 +375,9 @@ public class TagsAndFoldersPage {
      	 getTagName(strtag).waitAndClick(10);
      	
      	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30);
+     	 
+     	 driver.scrollPageToTop();
           getTagActionDropDownArrow().waitAndClick(10);
       
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -389,6 +407,8 @@ public class TagsAndFoldersPage {
       
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+         
+         driver.scrollPageToTop();
           getFolderActionDropDownArrow().waitAndClick(10);
       
           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -417,6 +437,8 @@ public class TagsAndFoldersPage {
       
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+         
+         driver.scrollPageToTop();
           getFolderActionDropDownArrow().waitAndClick(10);
       
           driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -733,7 +755,8 @@ public class TagsAndFoldersPage {
      
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getTagName().Visible()  ;}}), Input.wait30); 
-	     getTagName().SendKeys(strtag);
+		 new Actions(driver.getWebDriver()).sendKeys(strtag).perform();
+	    // getTagName().SendKeys(strtag);
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getCancelTag().Visible()  ;}}), Input.wait30); 
@@ -756,7 +779,8 @@ public class TagsAndFoldersPage {
    
      
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getTagName().Visible()  ;}}), Input.wait30); 
+				 getTagName().Visible()  ;}}), Input.wait30);
+		 //driver.scrollingToElementofAPage(getTagName());
 	     getTagName().SendKeys("");
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -814,6 +838,8 @@ public class TagsAndFoldersPage {
       			element.click();
       			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       	    			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
+      			
+      			driver.scrollPageToTop();
       	        getTagActionDropDownArrow().waitAndClick(10);
       	     
       	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
