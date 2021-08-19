@@ -93,9 +93,10 @@ public class TS_001_BasicSearch {
 		ss.getSelectMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
 		
 			
-		ss.getMetaDataSearchText1().SendKeys("P Allen");
-		Thread.sleep(2000);
-		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
+//		ss.getMetaDataSearchText1().SendKeys("P Allen");
+//		Thread.sleep(2000);
+//		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
+		ss.getMetaDataSearchText1().SendKeys("P Allen"+Keys.DOWN+Keys.ENTER);
 		
 		ss.getMetaDataInserQuery().Click();
 		  //Click on Search button
@@ -132,7 +133,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	
-	@Test(groups={"regression"},priority=4)
+	@Test(groups={"regression"},priority=0)
 	public void conceptuallySimilar() throws InterruptedException {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -213,6 +214,7 @@ public class TS_001_BasicSearch {
 	  	sessionSearch = new SessionSearch(driver);
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
+	  	lp.logout();
 	}
 	@Test(groups={"regression"},priority=8)
     public void bulkUnTag() throws InterruptedException {

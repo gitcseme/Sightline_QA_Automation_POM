@@ -2,8 +2,9 @@
 <LD9PT>
         <url>https://sightlinept.consilio.com/</url>
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
-        <SourceLocation>IngestionTestData\Automation</SourceLocation>             
-        <projectName>MyTest_Hema_DND</projectName>
+        <SourceLocation>IngestionTestData\Automation</SourceLocation>
+        <domainName>Hema_auto_DND</domainName>             
+        <projectName>RegressionDataSet_Hema_DND</projectName>
         
         <!-- Provide ICE Project Name -->
         <ICEProjectName>ICETest2</ICEProjectName>
@@ -24,8 +25,8 @@
         
         <!--Consilio RMU Automation  -->
         <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
-        <rmu1userName>qarmu4@Consilio.com</rmu1userName>
-        <rmu1password>Consilio@1</rmu1password>
+        <rmu1userName>qarmu5@consilio.com</rmu1userName>
+        <rmu1password>Q@test_15</rmu1password>
         
         <rmu2FullName>Consilio RMU2 Automation</rmu2FullName>
         <rmu2userName>qarmu5@consilio.com</rmu2userName>
