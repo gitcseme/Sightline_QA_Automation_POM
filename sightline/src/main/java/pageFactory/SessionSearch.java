@@ -1509,7 +1509,7 @@ public void selectOperator(String operator) {
 
 }
 
-//Function to perform redaction name search 
+//Function to perform redaction name search. 
 public void  selectRedactioninWPS(final String redactName) throws InterruptedException{
 	 
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
