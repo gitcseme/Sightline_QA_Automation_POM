@@ -413,7 +413,7 @@ public class BaseClass {
 	public void VerifySuccessMessage(String ExpectedMsg) {
 		    
 		try {
-				Thread.sleep(5000);		
+			Thread.sleep(Input.wait3);				
 			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
 			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 			UtilityLog.info("Expected message - "+ExpectedMsg);
