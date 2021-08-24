@@ -1,6 +1,7 @@
 package testScriptsRegression;
 
 import java.io.IOException;
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
@@ -41,11 +42,12 @@ public class TS_003_AdvanceSearch1 {
 
 	
 	@BeforeClass(alwaysRun = true)
-	public void preCondition() throws ParseException {
+	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	//bt = new BaseTest();
 		//Open browser
 		softAssertion= new SoftAssert();
+		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
@@ -84,6 +86,13 @@ public class TS_003_AdvanceSearch1 {
 				dc.getDocView_SelectReductionLabel().Visible()  ;}}), Input.wait60);
 		dc.getDocView_SelectReductionLabel().selectFromDropdown().selectByVisibleText(RedactionName);
 		dc.getDocView_SelectReductionLabel().Click();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 dc.getRedactionTag_SaveButton().Visible()  ;}}), Input.wait60);
+		dc.getRedactionTag_SaveButton().Click();
+			
+		
+
+		bc.VerifySuccessMessage("Redaction tags saved successfully.");
 		
 		
 		/*bc.VerifySuccessMessage("Redaction tags saved successfully.");*/
@@ -124,6 +133,7 @@ public class TS_003_AdvanceSearch1 {
 	
 		//Search docs and assign to newly created assignment
 		SessionSearch search = new SessionSearch(driver);
+		bc.selectproject();
 		search.basicContentSearch(Input.searchString1);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignMentName);
@@ -156,7 +166,7 @@ public class TS_003_AdvanceSearch1 {
 		 
 		 
 		 
-		 //TagOrFolderORsavedSearch
+		 //TagOrFolderORsavedSearchs
 		 bc.selectproject();
 		 search.switchToWorkproduct();
 		 search.selectTagInASwp(tagName);

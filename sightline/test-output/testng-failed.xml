@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
+<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testScriptsSmoke.TS_019_ICEWorkFlow">
+      <class name="testScriptsRegression.TS_001_BasicSearch">
         <methods>
-          <include name="close"/>
-          <include name="takeScreenShot"/>
-          <include name="PMUploadAndInitiate"/>
+          <include name="conceptuallySimilar"/>
+          <include name="existingBulkTag"/>
+          <include name="bulkUnFolder"/>
+          <include name="emailInclusive"/>
+          <include name="exsitingBulkFolder"/>
+          <include name="copySearchTextToNewSearch"/>
+          <include name="starSearch"/>
+          <include name="autoSuggest"/>
+          <include name="preCondition"/>
           <include name="beforeTestMethod"/>
-          <include name="before"/>
+          <include name="metaDataSearchsBS"/>
+          <include name="bulkUnTag"/>
+          <include name="takeScreenShot"/>
         </methods>
-      </class> <!-- testScriptsSmoke.TS_019_ICEWorkFlow -->
+      </class> <!-- testScriptsRegression.TS_001_BasicSearch -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

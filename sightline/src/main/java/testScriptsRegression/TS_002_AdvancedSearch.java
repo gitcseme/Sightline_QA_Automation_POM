@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
@@ -49,14 +50,16 @@ public class TS_002_AdvancedSearch {
 	
 		softAssertion= new SoftAssert();
 		//Open browser
-		
+		Input in = new Input(); 
+		in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		searchText =Input.searchString1;
 		//Login as PA
 		lp=new LoginPage(driver);
 		search = new SessionSearch(driver);
-    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+    	
     
 	}
 		
@@ -71,6 +74,7 @@ public class TS_002_AdvancedSearch {
 	   	public void metaSearchWithOperatorsInASreg() {
 	   		SoftAssert softAssertion= new SoftAssert();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	   		driver.waitForPageToBeReady();
 	   		bc.selectproject();
 			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1166);
 
@@ -97,139 +101,16 @@ public class TS_002_AdvancedSearch {
 		 * Modified by:
 		 * Description : As a PA user validate all meta data searches in advance searches
 		 */	
-		@Test(groups={"regression"},priority=2)
-		public void metaDataSearchsAS() {
+		@Test(dataProvider="metaDataSearch",groups={"regression"},priority=0)
+		public void metaDataSearchsAS(int Expected_count,String metaDataName,String IS_or_Range,String first_input,String second_input) {
 			SoftAssert softAssertion= new SoftAssert();
 			driver.getWebDriver().get(Input.url+ "Search/Searches");
+			driver.waitForPageToBeReady();
 	    	bc.selectproject();
-	    	softAssertion.assertEquals(95,search.advancedMetaDataSearch("MasterDate", "IS", "1980-01-01", null));
-			
-
-	    	//with time in IS 
-	    	bc.selectproject();
-	    	softAssertion.assertEquals(11,search.advancedMetaDataSearch("MasterDate", "IS", "1989-02-10 16:59:39", null));
-			
-	    	bc.selectproject();
-			softAssertion.assertEquals(124,search.advancedMetaDataSearch("MasterDate", "RANGE", "1980-01-01", "2000-01-01"));
-					
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			//check IS and Range options
-			//bc.selectproject();
-			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
-			
-			//bc.selectproject();
-			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			//bc.selectproject();
-			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
-			
-			//bc.selectproject();
-			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			//bc.selectproject();
-			//softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
-			
-			/*bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05")); 
-			*/
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=search.advancedMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-			
-			
-		/* * //field mapping is not done for blow meta data search
-		 * 
-		 * *//* bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>=ss.advancedMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		*/	
-			bc.selectproject();
-			softAssertion.assertTrue(4==search.advancedMetaDataSearch("EmailAuthorName", null, "(Gouri Dhavalikar)", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailAuthorAddress", null, "Gouri.Dhavalikar@symphonyteleca.com", null));
-			
-			
-			bc.selectproject();
-			softAssertion.assertTrue(26==search.advancedMetaDataSearch("EmailAllDomains", null, "consilio.com;harman;harman.com", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailRecipientNames", null, "Satish Pawal;Shunmugasundaram Senthivelu;Swapnal Sonawane", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(0>search.advancedMetaDataSearch("EmailRecipientAddresses", null, "Robert.Superty@consilio.com", null));
-			
-			bc.selectproject();
-			softAssertion.assertTrue(26==search.advancedMetaDataSearch("EmailRecipientDomains", null, "consilio.com", null));
-			/*
-			bc.selectproject();
-			softAssertion.assertTrue(95==search.advancedMetaDataSearch("DocFileSize", null, "9728", null)); 
-			
-			bc.selectproject();
-			softAssertion.assertTrue(138==search.advancedMetaDataSearch("DocFileSize","RANGE", "60","9728"));*/
-			
-			bc.selectproject();
-			softAssertion.assertTrue(841==search.advancedMetaDataSearch("DocFileExtension", null,".msg", null));
-			
+	    	softAssertion.assertEquals(Expected_count,search.advancedMetaDataSearch(metaDataName,IS_or_Range,first_input,second_input));
 			softAssertion.assertAll();
 		}
+		
 	/*
 	 * Author : Suresh Bavihalli
 	 * Created date: Feb 2019
@@ -237,7 +118,7 @@ public class TS_002_AdvancedSearch {
 	 * Modified by:
 	 * Description : search docs in advanced search and do bulk tag. 
 	 * Untag the same and validate the count under 'Tags and Folders' page  
-	 */
+//	 */
 	   @Test(groups={"regression"},priority=3)
 	   public void bulkUnTag() throws InterruptedException {
 		
@@ -245,7 +126,7 @@ public class TS_002_AdvancedSearch {
 			
 		   //Create Bulk Tag   and then untag
 		   driver.getWebDriver().get(Input.url+"Search/Searches");
-		   
+		   driver.waitForPageToBeReady();
 		   bc.selectproject();
 		   search.advancedContentSearch(Input.searchString1);
 		   search.bulkTag(tagName);
@@ -263,7 +144,7 @@ public class TS_002_AdvancedSearch {
 	       
 	       Assert.assertTrue(tf.getTagandCount(tagName, 0).Displayed());
 	       System.out.println(tagName+" could be seen under tags and folder page");
-	   
+	       
 	}
   /*
 	 * Author : Suresh Bavihalli
@@ -277,7 +158,7 @@ public class TS_002_AdvancedSearch {
     public void bulkUnFolder() throws InterruptedException {
 	
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
-	
+		driver.waitForPageToBeReady();
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		//Bulk folder and unfolder
@@ -297,6 +178,7 @@ public class TS_002_AdvancedSearch {
 	     
 	       Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
 	       System.out.println(folderName+" could be seen under tags and folder page");
+	       
 	}
  /*
 	 * Author : Suresh Bavihalli
@@ -312,7 +194,7 @@ public class TS_002_AdvancedSearch {
     	 String folderName = "folderName1"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
     	 
-    	 
+    	 driver.waitForPageToBeReady();
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkFolder(folderName);
@@ -321,6 +203,7 @@ public class TS_002_AdvancedSearch {
 		 search.switchToWorkproduct();
 		 search.selectFolderInASwp(folderName);
 		 Assert.assertEquals(search.serarchWP(), Input.pureHitSeachString1);
+		 
 	  }
 	/*
 	 * Author : Suresh Bavihalli
@@ -335,7 +218,7 @@ public class TS_002_AdvancedSearch {
 		
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
-    	 
+    	 driver.waitForPageToBeReady();
     	 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkTag(tagName);
@@ -358,13 +241,13 @@ public class TS_002_AdvancedSearch {
      public void WPSecuirtyGroupSearch() throws InterruptedException {
     	
     	 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
-    	 
     	 //Create security group	
     	 sgpage = new SecurityGroupsPage(driver);
 		 sgpage.AddSecurityGroup(securitygroupname);
 		 
 		 
 		 //Search and release doc to SG
+		 driver.waitForPageToBeReady();
 		 bc.selectproject();
 		   
 		 int count =search.basicContentSearch(Input.searchString1);
@@ -393,8 +276,7 @@ public class TS_002_AdvancedSearch {
 		 String folderName = "folderName1"+Utility.dynamicNameAppender();
 		 String securitygroupname = "SG1"+Utility.dynamicNameAppender();
 		 String saveSearchName = "A_SaveSearch"+Utility.dynamicNameAppender();
-		 
-		 
+		 driver.waitForPageToBeReady();
 		 //create tag with searchString1
 		 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
@@ -428,7 +310,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(50,search.serarchWP());
 		 
 		 
 		 
@@ -442,7 +324,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("OR");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(15,search.serarchWP());
+		 softAssertion.assertEquals(87,search.serarchWP());
 		 
 		 //TagNotFolder
 		 bc.selectproject();
@@ -450,7 +332,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectTagInASwp(tagName);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 softAssertion.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(35,search.serarchWP());
 		 
 		 //FolderNotTag
 		 bc.selectproject();
@@ -458,7 +340,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);	
 		 search.selectOperator("NOT");
 		 search.selectTagInASwp(tagName);
-		 softAssertion.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(37,search.serarchWP());
 		 
 		 //SG Not folder
 		 bc.selectproject();
@@ -466,7 +348,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("NOT");
 		 search.selectFolderInASwp(folderName);
-		 softAssertion.assertEquals(47,search.serarchWP());
+		 softAssertion.assertEquals(35,search.serarchWP());
 		
 		 //folder not SG
 		 bc.selectproject();
@@ -474,7 +356,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectFolderInASwp(folderName);
 		 search.selectOperator("NOT");
 		 search.selectSecurityGinWPS(securitygroupname);
-		 softAssertion.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(37,search.serarchWP());
 		 
 		 softAssertion.assertAll();
 	}
@@ -486,7 +368,7 @@ public class TS_002_AdvancedSearch {
     	//create tag for work product first
     	 String tagName = "tagName"+Utility.dynamicNameAppender();
     	 driver.getWebDriver().get(Input.url+"Search/Searches");
-    	 
+    	 driver.waitForPageToBeReady();
     	 bc.selectproject();
 		 search.advancedContentSearch(Input.searchString1);
 		 search.bulkTag(tagName);
@@ -537,7 +419,6 @@ public class TS_002_AdvancedSearch {
     			search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	
     	Assert.assertTrue(Integer.parseInt(search.getPureHitsCount().getText())>50);
-    	
 	}
      
      @Test(groups={"regression"},priority=10)
@@ -546,7 +427,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -591,7 +472,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -624,32 +505,17 @@ public class TS_002_AdvancedSearch {
        	driver.scrollingToBottomofAPage();
  		 search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(16,search.serarchWP());
+ 		softAssertion.assertEquals(15,search.serarchWP());
  		
  		String searchName="00Atest"+Utility.dynamicNameAppender();
  		search.saveSearch(searchName);
  		
  		SavedSearch savedSearch = new SavedSearch(driver);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 15);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
- 		Thread.sleep(2000);
- 		savedSearch.savedSearchExecute(searchName, 16);
  		
+ 		for(int i=10;i<=10;i++) {
+ 				savedSearch.savedSearchExecute(searchName, 15);
+ 				Thread.sleep(2000);
+ 		} 		
 	}
      @Test(groups={"regression"},priority=12)
      public void contentNOTwpTag() throws InterruptedException {
@@ -657,7 +523,7 @@ public class TS_002_AdvancedSearch {
      	//create tag for work product first
      	 String tagName = "tagName"+Utility.dynamicNameAppender();
      	 driver.getWebDriver().get(Input.url+"Search/Searches");
-     	 
+     	driver.waitForPageToBeReady();
      	 bc.selectproject();
  		 search.advancedContentSearch(Input.searchString2);
  		 search.bulkTag(tagName);
@@ -690,7 +556,7 @@ public class TS_002_AdvancedSearch {
        	//driver.scrollingToBottomofAPage();
  		search.selectTagInASwp(tagName);
  		 
- 		Assert.assertEquals(search.serarchWP(),33);
+ 		Assert.assertEquals(search.serarchWP(),35);
  		Thread.sleep(3000);
  		//below code for covering RPMXCON-38084
      	SavedSearch savedSeach = new SavedSearch(driver);
@@ -706,14 +572,15 @@ public class TS_002_AdvancedSearch {
    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    				search.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
    		
-     	Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"33");
+   		Assert.assertEquals(search.getPureHitsCount2ndSearch().getText(),"35");
+     	
 
 	}
 
      	@Test(groups={"regression"},priority=13)
 	   	public void AdvSearchgetallresults() throws InterruptedException {
-	   		
-	   		
+     		
+     		driver.waitForPageToBeReady();
 	   		bc.selectproject();
 	   		driver.getWebDriver().get(Input.url+ "Search/Searches");
 			softAssertion.assertTrue(search.advancedContentSearch("CustodianName: (  P Allen)"+Keys.ENTER+"OR"+Keys.ENTER+Input.searchString1)>=1165);
@@ -736,20 +603,23 @@ public class TS_002_AdvancedSearch {
 			System.out.println(conceptcount);
 			softAssertion.assertTrue(Integer.parseInt(conceptcount)>=1);
 			softAssertion.assertAll();
+			
 	    }
 	   	
      	 @Test(groups={"regression"},priority=14)
 	     public void contentwithAdvSearchoptions() throws InterruptedException {
-	    	 
+     		
 	    	 bc.selectproject();
 		   	 search.advancedContentSearch(Input.searchString2);
 		   	 bc.selectproject();
 	 		 search.advContentSearchwithoptions(Input.searchString2);
+	 		
 	    }	 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
+	    System.out.println("Executing method : " + testMethod.getName());  
+	   
 	 }
      @AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
@@ -758,7 +628,7 @@ public class TS_002_AdvancedSearch {
  		bc.screenShot(result);
  	}
  	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
+// 	lp.logout();
      }
 	
      @AfterClass(alwaysRun = true)
@@ -770,4 +640,49 @@ public class TS_002_AdvancedSearch {
  				lp.quitBrowser();
  			}
  	}
+     @DataProvider(name = "metaDataSearch")
+  	public Object[][] metaData() {
+  		return new Object[][] { 
+  			{95,"MasterDate", "IS", "1980-01-01", null},
+ 			{11,"MasterDate", "IS", "1989-02-10 16:59:39", null},
+ 			{124,"MasterDate", "RANGE", "1980-01-01", "2000-01-01"},
+ 			{0,"EmailSentDate", "IS", "1990-05-05", null},
+ 			{0,"EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"},
+ 			{0,"AppointmentStartDate", "IS", "1990-05-05", null},
+ 			{0,"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"AppointmentEndDateOnly", "IS", "1990-05-05", null},
+// 			{"AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+ 			{0,"DocDateDateOnly", "IS", "1990-05-05", null},
+ 			{0,"DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"DateAccessedDateOnly", "IS", "1990-05-05", null},
+// 			{"DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{0,"DateCreatedDateOnly", "IS", "1990-05-05", null},
+// 			{26,"DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//// 			{"DateEditedDateOnly", "IS", "1990-05-05", null},
+// 			{"DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"DateModifiedDateOnly", "IS", "1990-05-05", null},
+// 			{"DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"DatePrintedDateOnly", "IS", "1990-05-05", null},
+// 			{"DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"DateReceivedDateOnly", "IS", "1990-05-05", null},
+// 			{"DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"DateSavedDateOnly", "IS", "1990-05-05", null},
+// 			{"DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"}, 
+ 			{0,"MasterDateDateOnly", "IS", "1990-05-05", null},
+ 			{208,"MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+ 			{0,"EmailDateSentDateOnly", "IS", "1990-05-05", null},
+ 			{0,"EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+// 			{"AppointmentStartDateOnly", "IS", "1990-05-05", null},
+// 			{"AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+ 			{13,"EmailAuthorName", null, "(Gouri Dhavalikar)", null},
+ 			{0,"EmailAuthorAddress", null, "Gouri.Dhavalikar@symphonyteleca.com", null},
+ 			{0,"EmailAllDomains", null, "consilio.com;harman;harman.com", null},
+ 			{29,"EmailRecipientNames", null, "Satish Pawal;Shunmugasundaram Senthivelu;Swapnal Sonawane", null},
+ 			{0,"EmailRecipientAddresses", null, "Robert.Superty@consilio.com", null},
+ 			{0,"EmailRecipientDomains", null, "consilio.com", null},
+// 			{95,"DocFileSize", null, "9728", null}, 
+// 			{138,"DocFileSize","RANGE", "60","9728"},
+ 			{841,"DocFileExtension", null,".msg", null},
+  		};
+      }
 }

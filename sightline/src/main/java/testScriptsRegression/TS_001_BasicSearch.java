@@ -43,8 +43,10 @@ public class TS_001_BasicSearch {
     	
 		//Open browser
 		softAssertion= new SoftAssert();
-		//Input in = new Input(); in.loadEnvConfig();
+		Input in = new Input(); in.loadEnvConfig();
+		
 		driver = new Driver();
+		
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
 		
@@ -91,9 +93,10 @@ public class TS_001_BasicSearch {
 		ss.getSelectMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
 		
 			
-		ss.getMetaDataSearchText1().SendKeys("P Allen");
-		Thread.sleep(2000);
-		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
+//		ss.getMetaDataSearchText1().SendKeys("P Allen");
+//		Thread.sleep(2000);
+//		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
+		ss.getMetaDataSearchText1().SendKeys("P Allen"+Keys.DOWN+Keys.ENTER);
 		
 		ss.getMetaDataInserQuery().Click();
 		  //Click on Search button
@@ -130,7 +133,7 @@ public class TS_001_BasicSearch {
 		lp.logout();
 	}
 	
-	@Test(groups={"regression"},priority=4)
+	@Test(groups={"regression"},priority=0)
 	public void conceptuallySimilar() throws InterruptedException {
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -203,7 +206,7 @@ public class TS_001_BasicSearch {
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
 		lp.logout();
 	}
-	
+//
     @Test(groups={"smoke","regression"},priority=7)
 	public void starSearch() {
 		lp=new LoginPage(driver);
@@ -211,6 +214,7 @@ public class TS_001_BasicSearch {
 	  	sessionSearch = new SessionSearch(driver);
     	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
+	  	lp.logout();
 	}
 	@Test(groups={"regression"},priority=8)
     public void bulkUnTag() throws InterruptedException {
@@ -275,109 +279,16 @@ public class TS_001_BasicSearch {
 	    lp.logout();
 	}
 	
-	@Test(groups={"regression"},priority=10)
-	public void metaDataSearchsBS() {
+	@Test(dataProvider="metaDataSearch",groups={"regression"},priority=10)
+	public void metaDataSearchsBS(int Expected_count, String metaDataName,String IS_or_Range,String
+			first_input, String second_input) {
 		SoftAssert softAssertion= new SoftAssert();
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	bc.selectproject();
-		softAssertion.assertEquals(1,ss.basicMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
-	
 		bc.selectproject();
-		softAssertion.assertEquals(340,ss.basicMetaDataSearch("CreateDate", "RANGE", "1986-01-01", "2018-01-01"));
-       
-		//with time in Range	
-		bc.selectproject();
-		softAssertion.assertEquals(170,ss.basicMetaDataSearch("CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"));
-	
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
-		//check IS and Range options
-		/*bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-	*/	
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		/*bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		*/
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		/*
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		*/
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		
-		//field mapping is not done for blow meta data search
-		/*
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "IS", "1990-05-05", null));
-		
-		bc.selectproject();
-		softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
-		*/
+		softAssertion.assertEquals(Expected_count,ss.basicMetaDataSearch(metaDataName, IS_or_Range, first_input, second_input));
 		softAssertion.assertAll();
 		lp.logout();
 	}
@@ -412,6 +323,43 @@ public class TS_001_BasicSearch {
 				lp.quitBrowser();
 			}	
 		LoginPage.clearBrowserCache();
+	}
+	@DataProvider(name = "metaDataSearch")
+	public Object[][] metaData() {
+		return new Object[][] { 
+			{1,"CreateDate", "IS", "1993-08-11", null}, 
+			{340,"CreateDate", "RANGE", "1986-01-01", "2018-01-01"},
+			{170,"CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"},
+			{0,"EmailSentDate", "IS", "1990-05-05", null},
+			{0,"EmailSentDate", "RANGE","1990-05-05", "2000-05-05"},
+			{0,"AppointmentStartDate", "IS", "1990-05-05", null},
+			{0,"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"AppointmentEndDateOnly", "IS", "1990-05-05", null},
+//			{"AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{0,"DocDateDateOnly", "IS", "1990-05-05", null},
+			{0,"DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DateAccessedDateOnly", "IS", "1990-05-05", null},
+//			{"DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{0,"DateCreatedDateOnly", "IS", "1990-05-05", null},
+			{26,"DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DateEditedDateOnly", "IS", "1990-05-05", null},
+//			{"DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DateModifiedDateOnly", "IS", "1990-05-05", null},
+//			{"DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DatePrintedDateOnly", "IS", "1990-05-05", null},
+//			{"DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DateReceivedDateOnly", "IS", "1990-05-05", null},
+//			{"DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"DateSavedDateOnly", "IS", "1990-05-05", null},
+//			{"DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{0,"MasterDateDateOnly", "IS", "1990-05-05", null},
+			{208,"MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{0,"EmailDateSentDateOnly", "IS", "1990-05-05", null},
+			{0,"EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+//			{"AppointmentStartDateOnly", "IS", "1990-05-05", null},
+//			{"AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"},	
+
+		};
 	}
 	
 }

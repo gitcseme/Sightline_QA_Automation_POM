@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConfigMain>
 	<env>LD9PT</env><!--it should be QA or DE or LD9PT or Chicago or UK or US or US_CM or HK or CA-->
-	<testingBuild>CMS-BuildNo-7-3-Chicago-environment</testingBuild>
+	<testingBuild>QA_Regression_Build_1-7-4-PT-environment</testingBuild>
 	<newProject>NO</newProject><!--it should be YES or NO only-->
 	<ingestion>NO</ingestion><!--it should be YES or NO only-->
-	<suite>Smoke</suite><!--it should be Smoke or Regression only-->
-	<numberOfDataSets>1</numberOfDataSets>
+	<suite>Regression</suite><!--it should be Smoke or Regression only-->
+	<numberOfDataSets>3</numberOfDataSets>
 	
 	<!-- <browserName>CHROME</browserName> -->
 	<browserName>CHROME</browserName>

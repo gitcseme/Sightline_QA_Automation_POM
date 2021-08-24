@@ -1201,10 +1201,12 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
-	 getBulkActionButton().waitAndClick(5);
+	 getBulkActionButton().waitAndClick(60);
 	 
 	 try{
-		 getDocViewAction().waitAndClick(5);
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocViewAction().Visible()  ;}}), Input.wait30);
+		 getDocViewAction().waitAndClick(60);
 		 }catch (Exception e) {
 			 getDocViewActionDL().Click();
 		}
@@ -1490,24 +1492,24 @@ public void selectOperator(String operator) {
 	getOperatorDD().Click();
 	if(operator.equalsIgnoreCase("and")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait30); 
+				getOperatorAND().Visible()  ;}}), Input.wait60); 
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorOR().Visible()  ;}}), Input.wait30); 
+				getOperatorOR().Visible()  ;}}), Input.wait60); 
 		getOperatorOR().waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorNOT().Visible()  ;}}), Input.wait30); 
+				getOperatorNOT().Visible()  ;}}), Input.wait60); 
 		getOperatorNOT().Click();	
 	}
 
 
 }
 
-//Function to perform redaction name search 
+//Function to perform redaction name search. 
 public void  selectRedactioninWPS(final String redactName) throws InterruptedException{
 	 
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
