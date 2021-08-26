@@ -162,7 +162,7 @@ public class TS_007_SavedSearchShareSchedule {
 	  	}
 	
 	@Test(groups={"smoke","regression"},priority=5)
-	  public void shareSavedSearch() throws ParseException, InterruptedException {
+	  public void shareSavedSearchRev() throws ParseException, InterruptedException {
 		
 		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
 	  	loginPage.logout();
