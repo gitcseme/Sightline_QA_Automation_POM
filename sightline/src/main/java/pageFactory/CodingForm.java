@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ISelect;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Reporter;
@@ -66,6 +67,8 @@ public class CodingForm {
     public Element getCodingForm_CopyButton(String CFName){ return driver.FindElementByXPath(".//*[@id='CodingFormDataTable']//td[text()='"+CFName+"']/../td//a[text()='Copy']"); }
     public Element getCodingForm_DeleteButton(String CFName){ return driver.FindElementByXPath(".//*[@id='CodingFormDataTable']//td[text()='"+CFName+"']/../td//a[text()='Delete']"); }
     public Element getManageCodingFormButton(){ return driver.FindElementByXPath("//a[contains(text(),'Manage Coding Forms')]"); }
+    public Element getSortDateCreated(){ return driver.FindElementByXPath("//th[contains(text(),'Date Created (UTC)')]"); } 
+    
     
     //select coding's radio button from table
     public Element getCFlistTable(){ return driver.FindElementByXPath("//*[@id='CodingFormDataTable']"); }
@@ -346,6 +349,7 @@ public class CodingForm {
     String expectedHDHelpText ="Check this tag if this document critical to surface to lead attorneys on the matter immediately";
     String expectedDCHelpText ="Please enter any general comments related to review of this document";
     
+   
     public CodingForm(Driver driver){
 
         this.driver = driver;
@@ -403,15 +407,21 @@ public class CodingForm {
 	  
 	}
      
-     public void EditCodingform(final String cfName) {
+     public void EditCodingform(final String cfName) throws InterruptedException {
     	 
        this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");
+       driver.Navigate().refresh();
    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			   getCodingForm_NumberToShow().Visible()  ;}}), Input.wait60);
    	   getCodingForm_NumberToShow().selectFromDropdown().selectByVisibleText("100");
-	 
+   	   
+	
+   	getSortDateCreated().Click();
+   	getSortDateCreated().Click();
+   
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		  getCodingForm_EditButton(cfName).Visible()  ;}}),Input.wait60);
+      
   	   getCodingForm_EditButton(cfName).waitAndClick(10);
   	  
   	   getCF_SecondTag().waitAndClick(10);
@@ -473,21 +483,22 @@ public class CodingForm {
     	   base.CloseSuccessMsgpopup();
     }
      
-     public boolean CopyCodingform(final String cfName) {
+     public void CopyCodingform(final String cfName) throws InterruptedException {
     	 
     	 this.driver.getWebDriver().get(Input.url+ "CodingForm/Create");
      	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			  getCodingForm_CopyButton(cfName).Visible()  ;}}), Input.wait30);
    
-     	   boolean nextPage= true;
+     	 /*  boolean nextPage= true;
       	   boolean found= false;
       	   System.out.println(getCFnames().size());
       	   while(nextPage){
       		   int row = 1;
-      		   
+      		 driver.Navigate().refresh();
       		   for (WebElement ele : getCFnames().FindWebElements()) {
       			  System.out.println(ele.getText().trim());
-      				if(ele.getText().trim().equals(cfName)){
+      			  
+      			  if(ele.getText().trim().equals(cfName)){
       					nextPage = false;
       					found=true;
       					getCodingForm_CopyButton(cfName).Click();
@@ -497,8 +508,8 @@ public class CodingForm {
       				}
       				
       				row++;
-      				
-      			}
+      		   }
+      			
       		   try{
       			   driver.scrollingToBottomofAPage();
       			   driver.getWebDriver().findElement(By.xpath("//li[@class='paginate_button next disabled']/a")).isDisplayed();
@@ -507,12 +518,25 @@ public class CodingForm {
       		   catch (Exception e) {
       			   driver.getWebDriver().findElement(By.linkText("Next")).click(); 
       		   } 
+      		   
+      		  
       			   
       	   }  
-
-  	   
+*/           
+     	  
+  			
+  		
+  			getSortDateCreated().Click();
+  			getSortDateCreated().Click();
+  			
+  			Thread.sleep(3000);
+     	  
+     	 getCodingForm_CopyButton(cfName).Click();
+     	 System.out.println(cfName +" is selected");
+     	
   	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			   base.getYesBtn().Visible()  ;}}),Input.wait60);
+  	   
   	   String msg = getCF_DeletePopup().getText();
   	   System.out.println(msg);
   	   Assert.assertEquals("Are you sure you want to copy?", msg);
@@ -520,15 +544,16 @@ public class CodingForm {
   	    
   	   base.VerifySuccessMessage("Coding form copied successfully");
   	   base.CloseSuccessMsgpopup();
-  	 return found;
+  	 //return found;
   	 	   
   }
      
-     public void ViewCFinDocViewThrSearch(String cfName) {
+     public void ViewCFinDocViewThrSearch(String cfName) throws InterruptedException {
     	 
-    	 
-    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			   doc.getDocView_CFName().Visible()  ;}}),Input.wait60);
+    	 Thread.sleep(5000);
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+     			   doc.getDocView_CFName().Visible()  ;}}),Input.wait60);
+    	 Thread.sleep(5000);
     	  if(doc.getDocView_CFName().Displayed()){
     	  String name = doc.getDocView_CFName().getText().toString();
     	  System.out.println(name);
@@ -536,10 +561,12 @@ public class CodingForm {
     	  }
       }
      
-     public void ViewCFinDocViewThrAssignment(String cfName) {
+     public void ViewCFinDocViewThrAssignment(String cfName) throws InterruptedException {
     	 
+    	 Thread.sleep(5000);
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			 doc.getDocView_CFName().Visible()  ;}}),Input.wait60);
+      Thread.sleep(5000);
   	  if(doc.getDocView_CFName().Displayed()){
   	  String name = doc.getDocView_CFName().getText().toString();
   	  System.out.println(name);
@@ -550,7 +577,6 @@ public class CodingForm {
      public boolean selectCF_SGF_RBtn(final String CFname) {
    	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			  getCFlistTable().Visible()  ;}}),Input.wait30);
-   	   
    	   boolean nextPage= true;
    	   boolean found= false;
    	   System.out.println(getCFnames().size());
@@ -641,13 +667,13 @@ public void AddCodingformwithTag(String cfName,String tag) {
 		getCodingForm_ErrorMsg().Visible()  ;}}),Input.wait30);
   getCodingForm_ErrorMsg().SendKeys("Error for testing");
   
-driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		getCodingForm_HelpText().Visible()  ;}}),Input.wait30);
-getCodingForm_HelpText().SendKeys("Help for testing");
+  getCodingForm_HelpText().SendKeys("Help for testing");
 
-getCF_AddLogicButton().waitAndClick(5);
+  getCF_AddLogicButton().waitAndClick(5);
 
-driver.scrollPageToTop();
+  driver.scrollPageToTop();
   
   getSaveCFBtn().Click();
   
@@ -739,6 +765,8 @@ public void AddCodingformwithComment(String cfName,String comment) {
    			   getCodingForm_NumberToShow().Visible()  ;}}), Input.wait60);
    	   getCodingForm_NumberToShow().selectFromDropdown().selectByVisibleText("100");
 	 
+   	    getSortDateCreated().Click();
+     	getSortDateCreated().Click();
       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		  getCodingForm_EditButton(cfName).Visible()  ;}}),Input.wait60);
   	   getCodingForm_EditButton(cfName).waitAndClick(10);
