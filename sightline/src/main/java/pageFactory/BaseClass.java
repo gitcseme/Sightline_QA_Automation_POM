@@ -432,7 +432,25 @@ public class BaseClass {
 		}
 				
 	}
-		
+	public void VerifySuccessMessageQuick(String ExpectedMsg) {
+	    
+						
+			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+			UtilityLog.info("Expected message - "+ExpectedMsg);
+			Reporter.log("Expected message - "+ExpectedMsg,true);		
+			
+		try {
+			if(getCloseSucessmsg().Exists()) {
+				getCloseSucessmsg().Click();
+				UtilityLog.info("Closed Success message popup");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+	}
+	
 	//Return type is boolean.. used in ingestion script
 	
 	public boolean VerifySuccessMessageB(String ExpectedMsg) {
@@ -469,11 +487,18 @@ public class BaseClass {
 	}
 
 	public void VerifyErrorMessage(String ExpectedMsg) {
-		driver.WaitUntil((new Callable<Boolean>() {
+		 driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSuccessMsgHeader().Visible();
 			}
 		}), Input.wait30);
+		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
+	}
+	public void VerifyErrorMessageQuick(String ExpectedMsg) {
+		
 		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 		UtilityLog.info("Expected message - "+ExpectedMsg);
