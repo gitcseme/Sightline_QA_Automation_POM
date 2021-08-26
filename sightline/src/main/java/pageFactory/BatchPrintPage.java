@@ -233,7 +233,7 @@ public class BatchPrintPage {
 		getGenerateButton().waitAndClick(5);
 		
 		
-		base.VerifySuccessMessageQuick("Successfully initiated the batch print. You will be prompted with notification once completed.");
+		base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
 		for (int i=0;i<30;i++) {
 			try {	
