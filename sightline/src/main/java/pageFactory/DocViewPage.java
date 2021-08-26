@@ -220,12 +220,12 @@ public class DocViewPage {
   
     //Added by sure 04/09/19
     public Element getDocView_defaultView(){ return driver.FindElementByXPath("//span[contains(text(),'Default')]"); }
-    public Element getDocView_textView(){ return driver.FindElementByXPath("(//span[contains(text(),'TEXT')])[2]"); }
+    public Element getDocView_textView(){ return driver.FindElementByXPath("//li[@id='liDocumentTxtView']"); }
     public Element getDocView_imagesView(){ return driver.FindElementByXPath("//span[contains(text(),'Images')]"); }
     public Element getDocView_translationsView(){ return driver.FindElementByXPath("//span[contains(text(),'Translations')]"); }
     
     public Element getDocView_CurrentDocId(){ return driver.FindElementById("activeDocumentId"); }
-    public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
+    public Element getDocView_textArea(){ return driver.FindElementByXPath("//body[1]/div[3]/div[1]/div[2]/form[1]/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[7]"); }
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
     public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
