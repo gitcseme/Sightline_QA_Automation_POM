@@ -168,7 +168,8 @@ public class DocViewPage {
     public Element getDocView_Analytics_Threaded_FirstDoc(){ return driver.FindElementByXPath("//*[@id='threadedCheckBoxRow']//th[2]//input[contains(@id,'threadedDocumentCheckboxHeader')]/following-sibling::i"); }
     public Element getDocView_MiniDoc_CodeSameIcon(){ return driver.FindElementByXPath(".//*[@id='SearchDataTable']/tbody/tr[1]/td[1]//i[contains(@class,'fa fa-link')]"); }
     public Element getDocView_HistoryButton(){ return driver.FindElementById("btnDocHistory"); }
-    public Element getDocView_Historydropdown(){ return driver.FindElementByXPath("//*[@id='ulDocViewHistory']/li[2]"); }
+    //public Element getDocView_Historydropdown(){ return driver.FindElementByXPath("//*[@id='ulDocViewHistory']/li[2]"); }
+    public Element getDocView_Historydropdown(){ return driver.FindElementByXPath("//ul[@id='ulDocViewHistory']"); }
     public Element getDocView_Analytics_Threadedicon(){ return driver.FindElementByXPath("//*[@id='threadedDocumentIdRow']//th[@class='thread_current gray-bg-1 ']"); }
     public Element getDocView_Metadata_EmailInclusiveScore(){ return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'EmailInclusiveScore')]/following-sibling::td"); }
     public Element getDocView_Metadata_EmailInclusiveReason(){ return driver.FindElementByXPath("//*[@id='MetaDataDT']//td[contains(text(),'EmailInclusiveReason')]/following-sibling::td"); }
@@ -464,8 +465,9 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
         	 //click on yes button
     		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-    		 getDocview_ButtonYes().Click();
-    	    
+    		 getDocview_ButtonYes().waitAndClick(20);
+    
+    		
     		 base.VerifySuccessMessage("Record Deleted Successfully");
         	 Thread.sleep(10000);
                }
@@ -519,7 +521,7 @@ public void audioReduction() throws InterruptedException, ParseException {
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getDocview_RedactionsTab().Visible() ;}}), Input.wait30);
 	getDocview_RedactionsTab().waitAndClick(30);
-	
+    driver.Navigate().refresh();
 	
 	 try {
        	 //Delete any existing redaction if any
@@ -533,12 +535,13 @@ public void audioReduction() throws InterruptedException, ParseException {
 		 getDocview_ButtonNO().Click();
 	*/    
 		 //click on yes button
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-		 getDocview_ButtonYes().waitAndClick(10);
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocview_ButtonYes().Visible() ;}}),Input.wait30); 
+		 getDocview_ButtonYes().waitAndClick(20);
 	    
 		 base.VerifySuccessMessage("Record Deleted Successfully");
 		 base.CloseSuccessMsgpopup();
+		 Thread.sleep(2000);
            }
      catch (Exception e)
      {
@@ -617,14 +620,15 @@ public void audioComment(String comments) {
    
 
 }
-public void audioDownload() {
+public void audioDownload() throws InterruptedException {
 	 //downlaod
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getDocview_Audio_Downloadbutton().Visible() ;}}),Input.wait30);
     getDocview_Audio_Downloadbutton().waitAndClick(30);
     
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   		 getDocview_Audio_DownloadFile().Visible() ;}}),Input.wait30);
+   		 getDocview_Audio_DownloadFile().Visible() ;}}),Input.wait30); 
+    
     getDocview_Audio_DownloadFile().Click();
 
 }
