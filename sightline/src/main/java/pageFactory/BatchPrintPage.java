@@ -793,7 +793,7 @@ private static List sortStrings(List names) {
 				getGenerateButton().Enabled()  ;}}), Input.wait30); 
 		getGenerateButton().waitAndClick(5);
 		
-		base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
+		base.VerifySuccessMessageQuick("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
 		for (int i=0;i<15;i++) {
 			try {	
@@ -935,8 +935,9 @@ private static List sortStrings(List names) {
  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  			getBatchPrintEnterBranding().Enabled() ;}}), Input.wait30); 
  	getBatchPrintEnterBranding().ScrollTo();
- 	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click();
+ 	//new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click();
  	
+ 	Thread.sleep(2000);
  	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click().sendKeys("Test");
  	
    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -961,7 +962,7 @@ private static List sortStrings(List names) {
  			getGenerateButton().Enabled()  ;}}), Input.wait30); 
  	getGenerateButton().waitAndClick(5);
  	
- 	base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
+ 	base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
  	
  	//base = new BaseClass(driver);
  //	base.BckTaskClick();
