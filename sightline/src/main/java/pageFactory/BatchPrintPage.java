@@ -594,7 +594,7 @@ private static List sortStrings(List names) {
 		getMedia_InsertMetadata().waitAndClick(5);
 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getselectMetadataFields_Media().Enabled()  ;}}), Input.wait30); 
+				getselectMetadataFields_Media().Visible()  ;}}), Input.wait30); 
 		getselectMetadataFields_Media().selectFromDropdown().selectByVisibleText("CustodianName");
 		
 		getOkButton_Media().waitAndClick(5);
@@ -678,10 +678,10 @@ private static List sortStrings(List names) {
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getBatchPrintEnterBranding().Enabled() ;}}), Input.wait30); 
 	getBatchPrintEnterBranding().ScrollTo();
-	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click();
+	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click().sendKeys("Test");
 	//getTIFF_EnterBranding().Click();
-	getBatchPrintEnterBranding().SendKeys("Test");
-	//Thread.sleep(2000);
+	//getBatchPrintEnterBranding().SendKeys("Test");
+	Thread.sleep(2000);
 		
   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		  getInsertMetadataFieldOKButton().Visible()  ;}}), Input.wait30); 
@@ -704,12 +704,12 @@ private static List sortStrings(List names) {
 			getGenerateButton().Enabled()  ;}}), Input.wait30); 
 	getGenerateButton().waitAndClick(5);
 	
-	base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+	base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
 	
-	for (int i=0;i<20;i++) {
+	for (int i=0;i<15;i++) {
 		try {	
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait120); 
+			getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait90); 
 	if(getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled())
 		break;
 	}
@@ -793,12 +793,12 @@ private static List sortStrings(List names) {
 				getGenerateButton().Enabled()  ;}}), Input.wait30); 
 		getGenerateButton().waitAndClick(5);
 		
-		base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+		base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
-		for (int i=0;i<20;i++) {
+		for (int i=0;i<15;i++) {
 			try {	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait30); 
+				getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait90); 
 		if(getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled())
 			break;
 		}
@@ -808,7 +808,7 @@ private static List sortStrings(List names) {
 			System.out.println("Refresh");
 		}
 		}	
-		
+	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getTaskType().Displayed() ;}}), Input.wait30); 
 		String status = getBatchPrintStatus().getText();
@@ -849,6 +849,40 @@ private static List sortStrings(List names) {
  	driver.scrollingToBottomofAPage();
  	
  	try {
+		getBP_Exception_Media().Displayed();
+		//insert metadata for media files
+		/*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getMedia_InsertMetadata().Visible()  ;}}), Input.wait30); */
+		getMedia_InsertMetadata().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getselectMetadataFields_Media().Visible()  ;}}), Input.wait30); 
+		getselectMetadataFields_Media().selectFromDropdown().selectByVisibleText("CustodianName");
+		
+		getOkButton_Media().waitAndClick(5);
+	} catch (Exception e1) {
+		
+		System.out.println("No Media file displayed");
+	}
+	
+	try {
+		getBP_Exception_Excel().Displayed();
+		
+		getExcel_InsertMetadata().waitAndClick(5);
+		
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getselectMetadataFields_Excel().Visible()  ;}}), Input.wait30); 
+		getselectMetadataFields_Excel().selectFromDropdown().selectByVisibleText("DocID");
+		
+	/*	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getOkButton_Excel().Visible()  ;}}), Input.wait30); */
+		getOkButton_Excel().waitAndClick(5);
+	} catch (Exception e1) {
+		
+		System.out.println("No Excel file displayed");
+	}
+	 	
+ 	try {
  		getBP_Exception_Other().Displayed();
  	
  		getOther_InsertMetadata().waitAndClick(5);
@@ -870,16 +904,16 @@ private static List sortStrings(List names) {
  	driver.scrollingToBottomofAPage();
  	
  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			getSelectSourceDOCID().Visible()  ;}}), Input.wait30); 
- 	getSelectSourceDOCID().waitAndClick(5);
- 	
- 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			getSelectDOCID().Visible()  ;}}), Input.wait30); 
- 	getSelectDOCID().waitAndClick(5);
- 	
- 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			getSelectMasterDate().Visible()  ;}}), Input.wait30); 
- 	getSelectMasterDate().waitAndClick(5);
+			getSelectDOCID().Visible()  ;}}), Input.wait30); 
+	getSelectDOCID().waitAndClick(5);
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getSelectMasterDate().Visible()  ;}}), Input.wait30); 
+	getSelectMasterDate().waitAndClick(5);
+	
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getSelectSourceDOCID().Visible()  ;}}), Input.wait30); 
+	getSelectSourceDOCID().waitAndClick(5);
  	
  	driver.scrollingToBottomofAPage();
  	
@@ -903,7 +937,7 @@ private static List sortStrings(List names) {
  	getBatchPrintEnterBranding().ScrollTo();
  	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click();
  	
- 	getBatchPrintEnterBranding().SendKeys("Test");
+ 	new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click().sendKeys("Test");
  	
    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
  		  getInsertMetadataFieldOKButton().Visible()  ;}}), Input.wait30); 
@@ -927,14 +961,14 @@ private static List sortStrings(List names) {
  			getGenerateButton().Enabled()  ;}}), Input.wait30); 
  	getGenerateButton().waitAndClick(5);
  	
- 	base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+ 	base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
  	
  	//base = new BaseClass(driver);
  //	base.BckTaskClick();
- 	for (int i=0;i<5;i++) {
+ 	for (int i=0;i<15;i++) {
  		try {	
  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
- 			getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait30); 
+ 			getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait90); 
  	if(getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled())
  		break;
  	}
