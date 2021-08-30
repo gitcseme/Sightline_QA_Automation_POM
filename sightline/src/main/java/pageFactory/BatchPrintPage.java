@@ -962,7 +962,7 @@ private static List sortStrings(List names) {
  			getGenerateButton().Enabled()  ;}}), Input.wait30); 
  	getGenerateButton().waitAndClick(5);
  	
- 	base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
+ 	base.VerifySuccessMessageB("Successfully initiated the batch print. You will be prompted with notification once completed.");
  	
  	//base = new BaseClass(driver);
  //	base.BckTaskClick();
