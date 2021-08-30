@@ -27,9 +27,13 @@ public class TagAndFolder {
 	HomePage hm;
 	BaseClass bc;
 	
+	
+	
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+		Input in = new Input();
+		in.loadEnvConfig();
 	 	driver = new Driver();
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
@@ -39,7 +43,9 @@ public class TagAndFolder {
 	@Test(priority =1, groups={"smoke","regression"})
 	public void deleteTagSAasPA() throws ParseException, InterruptedException, IOException {
 		
+		
 		driver =  new Driver();
+		
 		//Login as PA
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
@@ -69,11 +75,11 @@ public class TagAndFolder {
     		Assert.assertFalse(1==0);
     	}catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Tag successfully deleted from security group!");
-		}
+		} 
     	
     	//Delete from all Groups, it make sure deleting tag under security group not deleted from all groups!
     	
-    	page.DeleteTag(tag,"All Groups");
+    	//page.DeleteTag(tag,"All Groups");
     	
     	//try deleting tag from all groups again to make sure its been deleted
     	try{
@@ -94,9 +100,9 @@ public class TagAndFolder {
     	}catch (org.openqa.selenium.NoSuchElementException e) {
 			System.out.println("Folder successfully deleted from security group");
 			
-		}
+		} 
     	//delete folder form all groups!
-    	page.DeleteFolder(folder,"All Groups");
+    	//page.DeleteFolder(folder,"All Groups");
     	
     	//try deleting folder from all groups again to make sure its been deleted
     	try{
@@ -106,13 +112,14 @@ public class TagAndFolder {
 			System.out.println("folder successfully deleted from all groups!");
 			System.out.println("folder deletion working fine!!");
 		}
-    	
+    	lp.logout();
 	}
 	
 	    //added by Narendra
 		@Test(priority =2,groups={"smoke","regression"})
 		public void OperationOnTag() throws ParseException, IOException, InterruptedException {
-					lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+					
+			         lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 							
 			        //Add tag
 					String tag = "newTag"+Utility.dynamicNameAppender();
@@ -131,6 +138,8 @@ public class TagAndFolder {
 			    	//Delete tag under security group
 			    	page.DeleteTag(tag,"Default Security Group");
 			    	System.out.println("Tag successfully deleted from security group!");
+			    	
+			    lp.logout();
 			    				 
 		
 		}
@@ -149,7 +158,8 @@ public class TagAndFolder {
 			    	//Delete tag under security group
 			    	page.DeleteFolder(folder,"Default Security Group");
 			    	System.out.println("Folder deleted from security group");
-			 
+			        
+			    	
 		
 		}
 		

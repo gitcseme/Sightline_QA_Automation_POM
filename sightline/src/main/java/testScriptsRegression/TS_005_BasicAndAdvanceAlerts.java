@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 import org.testng.asserts.SoftAssert;
-import org.openqa.selenium.Keys;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -14,13 +13,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
-import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -114,15 +110,12 @@ public class TS_005_BasicAndAdvanceAlerts {
     	sessionSearch.wrongQueryAlertBasicSaerch(data, 2,"fielded", "CustodianName");
     	
 	}
-    @Test
-    public void dateandOtherSeachesInBSP() {
+    @Test(dataProvider = "dateSearches", groups = { "regression" })
+    public void dateandOtherSeachesInBSP(String data) {
 		
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("2009-09-20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	sessionSearch.wrongQueryAlertBasicSaerch("2009/09/20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
+    	sessionSearch.wrongQueryAlertBasicSaerch(data, 3,"non fielded", null);
     	
     	/*sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"non fielded", null);
     	sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"fielded", "CustodianName");*/
@@ -139,104 +132,14 @@ public class TS_005_BasicAndAdvanceAlerts {
     	
 	}
     
-    @Test
-    public void dateASeach() {
-    	// TODO Auto-generated method stub
+    
+    @Test(dataProvider = "warningMessages", groups = { "regression" })
+    public void otherWarningMessages(String data, int MessageNumber, String fielded, String fieldName) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("2009-09-20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("2009/09/20", 3,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	/*sessionSearch.wrongQueryAlertAdvanceSaerch("bi-weekly", 4,"non fielded", null);
-    	driver.getWebDriver().navigate().refresh();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("bi-weekly", 4,"fielded", "CustodianName");*/
-
-    	
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("(that this verification)", 10,"non fielded", null);
-    	sessionSearch.getTallyContinue().Click();
-    	//verify counts 
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			sessionSearch.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
-    	Assert.assertTrue(Integer.parseInt(sessionSearch.getPureHitsCount().getText())>1);
-    	
-	}
-    @Test
-    public void otherWarningMessages() {
-    	driver.getWebDriver().navigate().refresh();
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("(\"test test\"", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"test test\")", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"gove\"~2", 6,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"government \"money laundering\"\"~2", 7,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"TEST this\"~ 4", 8,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("PT AND", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("PT OR", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("PT NOT", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("CustodianName : (P Allen", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("Remark: (Reamark1", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("Document_Comments: ( Comment1", 5,"non fielded", null);
+    	sessionSearch.wrongQueryAlertAdvanceSaerch(data, MessageNumber, fielded, fieldName);
     	
     	
-    	//advanceSearch
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("(\"test test\"", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("\"test test\")", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("\"gove\"~2", 6,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("\"government \"money laundering\"\"~2", 7,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertBasicSaerch("\"TEST this\"~ 4", 8,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("PT AND", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("PT OR", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("PT NOT", 9,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("CustodianName : (P Allen", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("Remark: (Reamark1", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("Document_Comments: ( Comment1", 5,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"Term1 Term2\"~ 4", 11,"non fielded", null);
-    	
-    	bc.selectproject();
-    	sessionSearch.wrongQueryAlertAdvanceSaerch("\"discrepan? scripts\"", 12,"non fielded", null);
 	}
     @DataProvider(name = "reservedWords")
     public Object[][] dataProviderMethod1() {
@@ -248,6 +151,12 @@ public class TS_005_BasicAndAdvanceAlerts {
         	{"yes Not the"}
     };
     }
+    
+    @DataProvider(name = "dateSearches")
+	public Object[][] dataProviderMethod3() {
+
+		return new Object[][] { { "2009-09-20" }, { "2009/09/20" } };
+	}
     
     @DataProvider(name = "special chars")
     public Object[][] dataProviderMethod() {
@@ -364,6 +273,58 @@ public class TS_005_BasicAndAdvanceAlerts {
         	{"\"stock investment~5\""}*/
         };
     }
+    
+    @DataProvider(name = "warningMessages")
+
+	public Object[][] dataProviderMethod2() {
+		return new Object[][] {
+
+				{ "test test}", 10, "non fielded", null },
+
+				{ "\"gove\"~2", 6, "non fielded", null },
+
+				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
+
+				{ "\"TEST this\"~ 4", 8, "non fielded", null },
+
+				{ "PT AND", 9, "non fielded", null },
+
+				{ "PT OR", 9, "non fielded", null },
+
+				{ "PT NOT", 9, "non fielded", null },
+
+				{ "CustodianName : {P Allen", 10, "non fielded", null },
+
+				{ "Document_Comments: { Comment1", 10, "non fielded", null },
+
+				// advanceSearch
+
+				{ "test test", 10, "non fielded", null },
+
+				{ "\"gove\"~2", 6, "non fielded", null },
+
+				{ "\"government \"money laundering\"\"~2", 7, "non fielded", null },
+
+				{ "\"TEST this\"~ 4", 8, "non fielded", null },
+
+				{ "PT AND", 9, "non fielded", null },
+
+				{ "PT OR", 9, "non fielded", null },
+
+				{ "PT NOT", 9, "non fielded", null },
+
+				{ "CustodianName : {P Allen", 10, "non fielded", null },
+
+				{ "Document_Comments: { Comment1", 10, "non fielded", null },
+
+				{ "\"Term1 Term2\"~ 4", 11, "non fielded", null },
+
+				{ "discrepan? scripts", 10, "non fielded", null }
+
+		};
+
+	}
+    
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

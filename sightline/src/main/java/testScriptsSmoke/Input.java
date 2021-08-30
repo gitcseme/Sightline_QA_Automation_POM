@@ -296,9 +296,9 @@ public class Input {
 				loginPage = new LoginPage(driver);
 				ArrayList<String> dataset = new ArrayList<String>();
 				if(Input.suite.equalsIgnoreCase("Regression")){
-					//dataset.add("Automation_Collection1K_Tally");
-					//dataset.add("Automation_AllSources");
-					dataset.add("Automation_20Family_20Threaded");
+					dataset.add("Automation_Collection1K_Tally");
+//					dataset.add("Automation_AllSources");
+					//dataset.add("Automation_20Family_20Threaded");
 				}else if(Input.suite.equalsIgnoreCase("smoke")){
 					dataset.add("Automation_AllSources");
 				}

@@ -110,7 +110,7 @@ public class TS_007_SavedSearchShareSchedule {
 	}
 	
 	
-	  @Test(groups={"smoke","regression"}) public void saveSearchToDocList() throws
+	  @Test(groups={"smoke","regression"},priority=1) public void saveSearchToDocList() throws
 	  ParseException, InterruptedException {
 	  
 	  sessionSearch.savedSearchToDocList(saveSearchName); final DocListPage dp =
@@ -125,7 +125,7 @@ public class TS_007_SavedSearchShareSchedule {
 	  
 	  }
 	 
-	  @Test(groups={"smoke","regression"}) public void saveSearchToDocView() throws
+	  @Test(groups={"smoke","regression"},priority=2) public void saveSearchToDocView() throws
 	  ParseException, InterruptedException {
 	  
 	  sessionSearch.savedSearchToDocView(saveSearchName); DocViewPage dv= new
@@ -139,7 +139,7 @@ public class TS_007_SavedSearchShareSchedule {
 	  
 	  }
 	 
-	  @Test(groups={"smoke","regression"}) public void scheduleSavedSearch() throws
+	  @Test(groups={"smoke","regression"},priority=3) public void scheduleSavedSearch() throws
 	  ParseException, InterruptedException {
 	  
 	  //Schedule the saved search
@@ -147,7 +147,7 @@ public class TS_007_SavedSearchShareSchedule {
 	  SchedulesPage(driver); sp.checkStatusComplete(saveSearchName); }
 	  		 
 	
-	@Test(groups={"smoke","regression"},priority=13)
+	@Test(groups={"smoke","regression"},priority=4)
 	  public void shareSavedSearch() throws ParseException, InterruptedException {
 		
 		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
@@ -158,6 +158,20 @@ public class TS_007_SavedSearchShareSchedule {
 	  	search.basicContentSearch(Input.searchString1);
 	  	search.saveSearch(SearchNameRMU);
 	  	sessionSearch.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
+	  	
+	  	}
+	
+	@Test(groups={"smoke","regression"},priority=5)
+	  public void shareSavedSearchRev() throws ParseException, InterruptedException {
+		
+		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
+	  	loginPage.logout();
+	  	
+	  	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+	  	baseClass.selectsecuritygroup("Default Security Group");
+	  	search.basicContentSearch(Input.searchString1);
+	  	search.saveSearch(SearchNameRMU);
+	  	
 	  	
 	  	}
 		 

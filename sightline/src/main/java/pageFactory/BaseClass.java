@@ -413,7 +413,6 @@ public class BaseClass {
 	}
 
 	public void VerifySuccessMessage(String ExpectedMsg) {
-
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@id,'bigBoxColor')]//span")));					
 		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());

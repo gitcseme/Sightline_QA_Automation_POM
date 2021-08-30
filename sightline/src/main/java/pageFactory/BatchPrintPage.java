@@ -206,7 +206,8 @@ public class BatchPrintPage {
 		getBatchPrintEnterBranding().ScrollTo();
 		new Actions(driver.getWebDriver()).moveToElement(getBatchPrintEnterBranding().getWebElement()).click();
 		//getTIFF_EnterBranding().Click();
-    	getBatchPrintEnterBranding().SendKeys("Test");
+		new Actions(driver.getWebDriver()).sendKeys("Test").perform();
+    	//getBatchPrintEnterBranding().SendKeys("Test");
     	//Thread.sleep(2000);
     		
 	  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -226,10 +227,11 @@ public class BatchPrintPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getSelectExportFileName().Enabled()  ;}}), Input.wait30); 
 		getSelectExportFileSortBy().selectFromDropdown().selectByVisibleText("DocID");
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getGenerateButton().Enabled()  ;}}), Input.wait30); 
 		getGenerateButton().waitAndClick(5);
+		
 		
 		base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
