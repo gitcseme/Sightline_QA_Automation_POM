@@ -793,7 +793,7 @@ private static List sortStrings(List names) {
 				getGenerateButton().Enabled()  ;}}), Input.wait30); 
 		getGenerateButton().waitAndClick(5);
 		
-		base.VerifySuccessMessageQuick("Successfully initiated the batch print. You will be prompted with notification once completed.");
+		base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
 		for (int i=0;i<15;i++) {
 			try {	
