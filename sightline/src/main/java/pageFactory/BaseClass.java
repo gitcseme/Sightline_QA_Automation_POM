@@ -14,7 +14,9 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -411,17 +413,13 @@ public class BaseClass {
 	}
 
 	public void VerifySuccessMessage(String ExpectedMsg) {
-		    
-		try {
-			Thread.sleep(Input.wait3);				
-			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
-			UtilityLog.info("Expected message - "+ExpectedMsg);
-			Reporter.log("Expected message - "+ExpectedMsg,true);	
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}	
-			
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@id,'bigBoxColor')]//span")));					
+		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);	
+
 		try {
 			if(getCloseSucessmsg().Exists()) {
 				getCloseSucessmsg().Click();
