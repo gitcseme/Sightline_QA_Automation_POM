@@ -430,7 +430,25 @@ public class BaseClass {
 		}
 				
 	}
-		
+	public void VerifySuccessMessageQuick(String ExpectedMsg) {
+	    
+						
+			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+			UtilityLog.info("Expected message - "+ExpectedMsg);
+			Reporter.log("Expected message - "+ExpectedMsg,true);		
+			
+		try {
+			if(getCloseSucessmsg().Exists()) {
+				getCloseSucessmsg().Click();
+				UtilityLog.info("Closed Success message popup");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+	}
+	
 	//Return type is boolean.. used in ingestion script
 	
 	public boolean VerifySuccessMessageB(String ExpectedMsg) {
@@ -467,11 +485,18 @@ public class BaseClass {
 	}
 
 	public void VerifyErrorMessage(String ExpectedMsg) {
-		driver.WaitUntil((new Callable<Boolean>() {
+		 driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSuccessMsgHeader().Visible();
 			}
 		}), Input.wait30);
+		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
+	}
+	public void VerifyErrorMessageQuick(String ExpectedMsg) {
+		
 		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 		UtilityLog.info("Expected message - "+ExpectedMsg);
@@ -1048,5 +1073,33 @@ UtilityLog.info(values);
     	return notifications.size();
     	
 	}
+
+
+//
+/**
+ * @Description Pass step info for test cases ID and Test Step
+ * @param message
+ */
+public void stepInfo(String message) {
+    Reporter.log("<font color='blue'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID when the complete test is passed
+ * @param message
+ */
+public void passedStep(String message) {
+    Reporter.log("<font color='green'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID and Test Step failed
+ * @param message
+ */
+   
+public void failedStep(String message) {
+    Reporter.log("<font color='red'>"+message+"</font>");
+    Assert.fail(message);
+    }
 
 }
