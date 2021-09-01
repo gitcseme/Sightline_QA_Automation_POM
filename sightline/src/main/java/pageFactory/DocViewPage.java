@@ -226,7 +226,8 @@ public class DocViewPage {
     public Element getDocView_translationsView(){ return driver.FindElementByXPath("//span[contains(text(),'Translations')]"); }
     
     public Element getDocView_CurrentDocId(){ return driver.FindElementById("activeDocumentId"); }
-    public Element getDocView_textArea(){ return driver.FindElementByXPath("//body[1]/div[3]/div[1]/div[2]/form[1]/section[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[7]"); }
+    //public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[contains(@id,'pccViewerControl')]//*[name()='svg']//*[name()='text'][1]"); }
+    public Element getDocView_textArea(){ return driver.FindElementByXPath("//div[@id='divDefaultViewer']");}
   
     public Element getDocView_Redact_Rectangle(){ return driver.FindElementById("blackRectRedact_divDocViewer"); }
     public WebElement getDocView_Redactrec_textarea(){ return driver.FindElementById("ig0level5").getWebElement(); }
@@ -620,7 +621,7 @@ public void audioComment(String comments) {
    
 
 }
-public void audioDownload() throws InterruptedException {
+public void audioDownload() {
 	 //downlaod
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getDocview_Audio_Downloadbutton().Visible() ;}}),Input.wait30);
