@@ -1076,4 +1076,32 @@ UtilityLog.info(values);
     	
 	}
 
+
+//
+/**
+ * @Description Pass step info for test cases ID and Test Step
+ * @param message
+ */
+public void stepInfo(String message) {
+    Reporter.log("<font color='blue'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID when the complete test is passed
+ * @param message
+ */
+public void passedStep(String message) {
+    Reporter.log("<font color='green'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID and Test Step failed
+ * @param message
+ */
+   
+public void failedStep(String message) {
+    Reporter.log("<font color='red'>"+message+"</font>");
+    Assert.fail(message);
+    }
+
 }
