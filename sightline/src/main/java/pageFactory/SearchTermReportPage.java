@@ -40,7 +40,7 @@ public class SearchTermReportPage {
 		
 		  getApplyBtn().waitAndClick(20);
     	  
-    	  bc.VerifyErrorMessage("Please select at least one search.");
+    	  bc.VerifyErrorMessageQuick("Please select at least one search.");
     	  bc.CloseSuccessMsgpopup();
 		  
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
