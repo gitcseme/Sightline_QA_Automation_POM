@@ -108,7 +108,7 @@ public class CodingForm_Regression {
 	    public void CopyCodingForm() {
 			
 			cf = new CodingForm(driver);
-		    cf.CopyCodingform(codingfrom);
+		    try { cf.CopyCodingform(codingfrom); } catch(Exception e) {}
 		}
 
 

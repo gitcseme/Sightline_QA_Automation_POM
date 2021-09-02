@@ -14,7 +14,9 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -411,16 +413,30 @@ public class BaseClass {
 	}
 
 	public void VerifySuccessMessage(String ExpectedMsg) {
-		    
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@id,'bigBoxColor')]//span")));					
+		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);	
+
 		try {
-			Thread.sleep(Input.wait3);				
+			if(getCloseSucessmsg().Exists()) {
+				getCloseSucessmsg().Click();
+				UtilityLog.info("Closed Success message popup");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+	}
+	public void VerifySuccessMessageQuick(String ExpectedMsg) {
+	    
+						
 			Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
 			Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 			UtilityLog.info("Expected message - "+ExpectedMsg);
-			Reporter.log("Expected message - "+ExpectedMsg,true);	
-		} catch (InterruptedException e1) {
-			e1.printStackTrace();
-		}	
+			Reporter.log("Expected message - "+ExpectedMsg,true);		
 			
 		try {
 			if(getCloseSucessmsg().Exists()) {
@@ -432,7 +448,7 @@ public class BaseClass {
 		}
 				
 	}
-		
+	
 	//Return type is boolean.. used in ingestion script
 	
 	public boolean VerifySuccessMessageB(String ExpectedMsg) {
@@ -469,11 +485,18 @@ public class BaseClass {
 	}
 
 	public void VerifyErrorMessage(String ExpectedMsg) {
-		driver.WaitUntil((new Callable<Boolean>() {
+		 driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSuccessMsgHeader().Visible();
 			}
 		}), Input.wait30);
+		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
+		UtilityLog.info("Expected message - "+ExpectedMsg);
+		Reporter.log("Expected message - "+ExpectedMsg,true);
+	}
+	public void VerifyErrorMessageQuick(String ExpectedMsg) {
+		
 		Assert.assertEquals("Error !", getSuccessMsgHeader().getText().toString());
 		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 		UtilityLog.info("Expected message - "+ExpectedMsg);
@@ -1050,5 +1073,33 @@ UtilityLog.info(values);
     	return notifications.size();
     	
 	}
+
+
+//
+/**
+ * @Description Pass step info for test cases ID and Test Step
+ * @param message
+ */
+public void stepInfo(String message) {
+    Reporter.log("<font color='blue'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID when the complete test is passed
+ * @param message
+ */
+public void passedStep(String message) {
+    Reporter.log("<font color='green'>"+message+"</font>");
+    }
+ 
+/**
+ * @Description Pass step info for test cases ID and Test Step failed
+ * @param message
+ */
+   
+public void failedStep(String message) {
+    Reporter.log("<font color='red'>"+message+"</font>");
+    Assert.fail(message);
+    }
 
 }

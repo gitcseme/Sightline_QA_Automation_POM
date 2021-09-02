@@ -173,18 +173,17 @@ public class TS_003_BulkActionsFromBasicSearch {
 		
 	}
 
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-
-		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
-	}
+	/*
+	 * @AfterMethod(alwaysRun = true) public void takeScreenShot(ITestResult result,
+	 * Method testMethod) { Reporter.setCurrentTestResult(result);
+	 * UtilityLog.logafter(testMethod.getName()); if (ITestResult.FAILURE ==
+	 * result.getStatus()) { Utility bc = new Utility(driver);
+	 * bc.screenShot(result);
+	 * 
+	 * } System.out.println("Executed :" + result.getMethod().getMethodName());
+	 * ExtentTestManager.getTest().log(Status.INFO,
+	 * this.getClass().getSimpleName()+"/"+testMethod.getName()); }
+	 */
 	
 	@AfterClass(alwaysRun = true)
 	public void close(){

@@ -548,7 +548,7 @@ public class SessionSearch {
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
-        //Enter seatch string
+        //Enter search string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEnterSearchString().Visible()  ;}}), Input.wait30); 
     	getEnterSearchString().SendKeys(SearchString) ;

@@ -7,18 +7,13 @@ import java.text.ParseException;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.LoginPage;
-import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -33,8 +28,8 @@ public class TS_010_Workflow {
 	public void Test() throws ParseException, InterruptedException, Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 	
 		driver = new Driver();
 		String codingfrom = "CF" + Utility.dynamicNameAppender();
@@ -84,18 +79,17 @@ public class TS_010_Workflow {
 		
 	}
 
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result, Method testMethod) {
-		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-
-		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
-	}
+	/*
+	 * @AfterMethod(alwaysRun = true) public void takeScreenShot(ITestResult result,
+	 * Method testMethod) { Reporter.setCurrentTestResult(result);
+	 * UtilityLog.logafter(testMethod.getName()); if (ITestResult.FAILURE ==
+	 * result.getStatus()) { Utility bc = new Utility(driver);
+	 * bc.screenShot(result);
+	 * 
+	 * } System.out.println("Executed :" + result.getMethod().getMethodName());
+	 * ExtentTestManager.getTest().log(Status.INFO,
+	 * this.getClass().getSimpleName()+"/"+testMethod.getName()); }
+	 */
 
 	@AfterClass(alwaysRun = true)
 	public void close() {

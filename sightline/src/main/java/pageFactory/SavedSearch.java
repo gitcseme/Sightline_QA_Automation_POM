@@ -1,6 +1,5 @@
 package pageFactory;
 
-import org.openqa.selenium.*;
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,7 +9,10 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -547,7 +549,6 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 		getShareSaveBtnNew().Click();
-		driver.getWebDriver().manage().window().maximize();
 
 		// getShareSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
@@ -830,32 +831,38 @@ public class SavedSearch {
 	}
 
 	public void savedSearch_Searchandclick(final String searchName) {
-
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSavedSearch_SearchName().Visible();
-			}
-		}), Input.wait30);
 		
-		getSavedSearch_SearchName().SendKeys(searchName);
+		//Navigate to Saved Searches page and search for a Saved Search
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		WebElement searchBox = driver.getWebDriver().findElement(By.id("txtSearchName"));
+		searchBox.sendKeys(searchName);
+		
+		//Save the table info text before applying filter
+		String gridInfoId = "SavedSearchGrid_info";
+		final String oldInfoText = driver.getWebDriver().findElement(By.id(gridInfoId)).getText();
+		
+		//Apply filter
+		WebElement applyFilter = driver.getWebDriver().findElement(By.id("btnApplyFilter"));
+		applyFilter.click();
+		
+		//Create Expected Condition - when the table info text has changed
+		ExpectedCondition<WebElement> infoTextChanged = (webDriver) -> {
+			WebElement localGridInfo = webDriver.findElement(By.id(gridInfoId));
+			String newInfoText = localGridInfo.getText();
+			boolean same = newInfoText.compareTo(oldInfoText) == 0;
+			if (same) return null; 
+			return localGridInfo;
+		};
+		
+		//Wait until Expected Condition is fulfilled
+		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		WebElement gridInfo = wait.until(infoTextChanged);
+		
+		
+		//Select the Saved Search
+		WebElement savedSearchRadio = driver.getWebDriver().findElement(By.xpath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + searchName + "']/td[1]/label/i"));
+		savedSearchRadio.click();
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		getSavedSearch_ApplyFilterButton().waitAndClick(10);
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getSelectWithName(searchName).Visible();
-			}
-		}), Input.wait30);
-
-		getSelectWithName(searchName).waitAndClick(10);
 	}
 
 	public void SaveSearchToBulkTag(final String searchName, String TagName) throws InterruptedException {
