@@ -78,7 +78,7 @@ public class ABMReportPage {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getApplyBtn().Visible()  ;}}), Input.wait30);	
 	      getApplyBtn().Click();
-	      Thread.sleep(2000);
+	     // Thread.sleep(2000);
 	      
 	     bc.VerifyWarningMessage("Please select reviewers");
 	     bc.CloseSuccessMsgpopup();
@@ -88,10 +88,10 @@ public class ABMReportPage {
 	     getABM_ReviewerExpandbutton().Click();
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		 getABM_RevList("0QARMU11 RMU11").Visible()  ;}}), Input.wait30);
-	     getABM_RevList("0QARMU11 RMU11").Displayed();
-	     getABM_RevList("0QADA1 DA11").Displayed();
-	     getABM_RevList("0QAPA1 PA1").Displayed();
+	    		 getABM_RevList("Indium Project Admin1").Visible()  ;}}), Input.wait30);
+	     getABM_RevList("Indium Project Admin1").Displayed();
+	     getABM_RevList("Indium Review Manager1").Displayed();
+	     getABM_RevList("Indium Reviewer1").Displayed();
 	     
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
@@ -103,7 +103,7 @@ public class ABMReportPage {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getApplyBtn().Visible()  ;}}), Input.wait30);	
 	      getApplyBtn().Click();
-	      Thread.sleep(2000);
+	    //  Thread.sleep(2000);
 		      
 	     bc.VerifyWarningMessage("Please select assignments");
 	     
