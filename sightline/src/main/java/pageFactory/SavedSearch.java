@@ -834,16 +834,14 @@ public class SavedSearch {
 		
 		//Navigate to Saved Searches page and search for a Saved Search
 		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		WebElement searchBox = driver.getWebDriver().findElement(By.id("txtSearchName"));
-		searchBox.sendKeys(searchName);
+		getSavedSearch_SearchName().SendKeys(searchName);
 		
 		//Save the table info text before applying filter
 		String gridInfoId = "SavedSearchGrid_info";
 		final String oldInfoText = driver.getWebDriver().findElement(By.id(gridInfoId)).getText();
 		
 		//Apply filter
-		WebElement applyFilter = driver.getWebDriver().findElement(By.id("btnApplyFilter"));
-		applyFilter.click();
+		getSavedSearch_ApplyFilterButton().Click();
 		
 		//Create Expected Condition - when the table info text has changed
 		ExpectedCondition<WebElement> infoTextChanged = (webDriver) -> {
@@ -856,7 +854,7 @@ public class SavedSearch {
 		
 		//Wait until Expected Condition is fulfilled
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-		WebElement gridInfo = wait.until(infoTextChanged);
+		wait.until(infoTextChanged);
 		
 		
 		//Select the Saved Search
