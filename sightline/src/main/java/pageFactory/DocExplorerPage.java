@@ -425,7 +425,7 @@ public class DocExplorerPage {
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
     	getDocExp_SelectAllDocs().waitAndClick(10);
-    	Thread.sleep(2000);//
+    	Thread.sleep(2000);//here
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			doclist.getYesAllPageDocs().Visible()  ;}}), Input.wait120); 
     	doclist.getYesAllPageDocs().waitAndClick(15);//changed here..
