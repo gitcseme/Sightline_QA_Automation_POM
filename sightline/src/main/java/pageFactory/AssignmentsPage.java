@@ -686,7 +686,7 @@ public class AssignmentsPage {
 	   	bc.getYesBtn().waitAndClick(10);
 	   	
 	   	search.bulkUnFolder_popUp(foldername);
-		  
+		  //
 		}
    
    public void createAssgnGroup(String assgngrpName) throws InterruptedException {

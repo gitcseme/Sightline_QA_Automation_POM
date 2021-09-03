@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import automationLibrary.ElementCollection;
+import automationLibrary.ElementCollection;//
 import testScriptsSmoke.Input;
 
 public class DocListPage {
