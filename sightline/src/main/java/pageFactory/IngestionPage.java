@@ -147,7 +147,9 @@ public class IngestionPage {
     public Element getAnalyticsCAATSTAGINGCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ANALYTICS_STAGING_COMPLETED')]"); }
     public Element getAnalyticsCAATINDEXINGCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ANALYTICS_INDEXING_COMPLETED')]"); }
     public Element Analytics_CAATESINDEXINGCOMPLETED(){ return driver.FindElementByXPath(".//*[@id='ProjectFieldsDataTable']//td[contains(.,'ES_INDEXING_COMPLETED')]"); }
-    public Element getIngestionName(){ return driver.FindElementByXPath("(//*[@id='cardCanvas']//span[contains(.,'Automation')])[3]"); }
+    public Element getIngestionName(){ return driver.FindElementByXPath("(//*[@id='cardCanvas']//span[contains(.,'Automation')])[1]"); }
+    public Element getIngestionName1(){ return driver.FindElementByXPath("(//*[@id='cardCanvas']//span[contains(.,'Automation')])[2]"); }
+    public Element getIngestionName2(){ return driver.FindElementByXPath("(//*[@id='cardCanvas']//span[contains(.,'Automation')])[3]"); }
     public Element getMP3Count(){ return driver.FindElementByXPath(".//*[@id='dt_basic']/tbody/tr[6]/td[2]"); }
     public Element getIngestionNameText(){ return driver.FindElementByXPath(".//*[@id='IngestionDetailsPopUp1']/section/div/div/div[3]/fieldset/div[2]/div"); }
     public Element getIncrementalAnalyticsbutton(){ return driver.FindElementByXPath(".//*[@id='IncrementalAnalytics']/following-sibling::i"); }
