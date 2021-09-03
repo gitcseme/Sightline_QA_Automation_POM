@@ -1,18 +1,20 @@
 package pageFactory;
 
 import java.util.List;
+
 import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
-import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SessionSearch {
@@ -20,6 +22,7 @@ public class SessionSearch {
     Driver driver;
     public static int pureHit;
     BaseClass base;
+    SoftAssert assertion=new SoftAssert();
   
     //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
@@ -225,6 +228,7 @@ public class SessionSearch {
     	this.driver = driver;
         this.driver.getWebDriver().get(Input.url+ "Search/Searches");
         base = new BaseClass(driver);
+        base.selectproject();
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -502,7 +506,7 @@ public class SessionSearch {
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	if(MessageNumber == 6){
-            		String msg= "One or more of your Proximity Queries has only a single Term. This could be as a result of extra Double Quotes around terms or the use of Parentheses which group multiple values as a single term.";
+            		String msg= "One or more of your Proximity Queries has only a single Term. This could be as a result of extra Double Quotes around terms or the use of Parenthesis which group multiple values as a single term.";
             	
                 
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
@@ -548,7 +552,8 @@ public class SessionSearch {
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
-        //Enter search string
+    	driver.waitForPageToBeReady();
+        //Enter seatch string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEnterSearchString().Visible()  ;}}), Input.wait30); 
     	getEnterSearchString().SendKeys(SearchString) ;
@@ -1201,12 +1206,12 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
-	 getBulkActionButton().waitAndClick(60);
+	 getBulkActionButton().waitAndClick(60);//increased time from 5 sec to 60sec
 	 
 	 try{
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocViewAction().Visible()  ;}}), Input.wait30);
-		 getDocViewAction().waitAndClick(60);
+				 getDocViewAction().Visible()  ;}}), Input.wait30);// added wait statement here
+		 getDocViewAction().waitAndClick(60);//increased time from 5 sec to 60sec
 		 }catch (Exception e) {
 			 getDocViewActionDL().Click();
 		}
@@ -1350,7 +1355,8 @@ public boolean bulkReleaseIngestions(final String SecGroup) {
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{
 
-	 Thread.sleep(1000);	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+			 getBulkActionButton().Visible() ;}}), Input.wait60);
 	 getBulkActionButton().Click();
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -1382,6 +1388,34 @@ public void bulkUnTag(final String TagName) throws InterruptedException{
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
 }
+
+public void bulkUnTag_popUp(final String TagName) throws InterruptedException{
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getBulkUntagbutton().Visible()  ;}}), Input.wait30); 
+	 getBulkUntagbutton().Click();//
+	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getSelectTagExisting(TagName).Visible()  ;}}), Input.wait60); 
+	 getSelectTagExisting(TagName).waitAndClick(10);
+	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+	 getContinueButton().Click();
+	 
+	 final BaseClass bc = new BaseClass(driver);
+     final int Bgcount = bc.initialBgCount();
+  
+	 bc.VerifySuccessMessage("Records saved successfully");
+	 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+	 System.out.println("Bulk Untag is done, Tag is : "+TagName); 
+	 UtilityLog.info("Bulk Untag is done, Tag is : "+TagName);
+	 
+	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
+	 driver.getWebDriver().navigate().refresh();//
+}
+
 
 //Function to perform new bulk folder with given folder name
 public void bulkUnFolder(final String folderName) throws InterruptedException{
@@ -1418,7 +1452,30 @@ public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
 }
+public void bulkUnFolder_popUp(final String foldername) throws InterruptedException{
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBulkUnFolderbutton().Visible()  ;}}), Input.wait30); 
+		 getBulkUnFolderbutton().Click();
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getSelectFolderExisting(foldername).Visible()  ;}}), Input.wait60); 
+		 getSelectFolderExisting(foldername).waitAndClick(5);
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+		 getContinueButton().Click();
+		 
+		 final BaseClass bc = new BaseClass(driver);
+		 final int Bgcount = bc.initialBgCount();
 
+		 bc.VerifySuccessMessage("Records saved successfully");
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+		 System.out.println("Bulk Unfolder is done, folder is : "+foldername);
+		 UtilityLog.info("Bulk Unfolder is done, folder is : "+foldername);
+	   	assertion.assertAll();//
+}
 
 
 public void selectTagInASwp(String tagName) {
@@ -1492,7 +1549,7 @@ public void selectOperator(String operator) {
 	getOperatorDD().Click();
 	if(operator.equalsIgnoreCase("and")){
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait60); 
+				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){

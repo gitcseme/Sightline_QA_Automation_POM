@@ -52,7 +52,7 @@ public class DocListPage {
     //Actions
    // public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
     public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='selectAllRows']/following-sibling::i"); }
-    public Element getYesAllPageDocs(){ return driver.FindElementByXPath("(//*[@id='Yes'])[1]"); }
+    public Element getYesAllPageDocs(){ return driver.FindElementByXPath("//input[@id='Yes']"); }//changed here
     public Element getPopUpOkBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); }
     public Element getBackToSourceBtn(){ return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]"); }
   //addition by shilpi on 04/26
