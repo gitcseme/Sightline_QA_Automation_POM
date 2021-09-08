@@ -7,6 +7,8 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -48,7 +50,8 @@ public class AssignmentsPage {
     public Element getAssignment_ManageReviewersTab(){ return driver.FindElementByXPath("//*[contains(text(),'Manage Reviewers')]"); }
     
     public Element getSelectAssignmentDocCount(String assignmentName){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td[7]"); }
-    public Element getAssgnCounts(String assignmentName,int colno){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td='"+assignmentName+"']/td["+colno+"]"); }
+    public Element getAssgnCounts(String assignmentName,int colno){ return driver.FindElementByXPath("//*[@id='GridAssignment']/tbody//tr[td[text()='"+assignmentName+"']]/td["+colno+"]"); }
+    
     public Element getPersistCB_ExistAssgn(){ return driver.FindElementByXPath("//div[@id='existingassignment']//label[@class='checkbox']/i"); }
     public Element getPersistCB_NewAssgn(){ return driver.FindElementByXPath("//div[@id='newassignmentdiv']//label[@class='checkbox']/i"); }
     public Element getSelectSavePermission(){ return driver.FindElementByXPath("(//label[@class='toggle'])[23]"); }
@@ -317,14 +320,15 @@ public class AssignmentsPage {
     	
     	
     	driver.scrollingToBottomofAPage();
-    	Thread.sleep(2000);
+    	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='GridAssignment']/tbody//tr[td[text()='"+assignmentName+"']]")));
     	
     	getAssgnCounts(assignmentName, 9);
     	//verify total docs count
     	String acttotalcount = getAssgnCounts(assignmentName, 9).getText();
     	System.out.println(Integer.parseInt(acttotalcount));
     	UtilityLog.info(acttotalcount);
-    	//assertion.assertEquals(docCount, Integer.parseInt(acttotalcount));
+    	assertion.assertEquals(docCount, Integer.parseInt(acttotalcount));
     	
     	//verify distributed docs count
     	String actdistributedcount = getAssgnCounts(assignmentName, 9).getText();
