@@ -33,6 +33,8 @@ public class ABMReport {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
+		Input in = new Input(); in.loadEnvConfig();	
+		
 		//Open browser
 		driver = new Driver();
 		
@@ -41,14 +43,14 @@ public class ABMReport {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		//Search and save it
 		SessionSearch search = new SessionSearch(driver);
-		purehits = search.basicContentSearch(Input.searchString1);
+		purehits = search.basicContentSearch(Input.searchString2);
 		search.saveSearch(saveSearchName);
 		Thread.sleep(5000);
 		
 		AssignmentsPage asgnmp = new AssignmentsPage(driver);
 	    search.ViewInDocList();
 	    DocListPage dp = new DocListPage(driver);
-	    dp.DoclisttobulkAssign(assignmentName,null);
+	    dp.DoclisttobulkAssign(assignmentName,"10");
         asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form",purehits);
 	    
 	}	   

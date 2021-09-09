@@ -268,7 +268,7 @@ public class TallyPage {
 			}
 		}), Input.wait30);
 
-		getTally_btnTallyAll().ScrollTo();
+		//getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
 
 		driver.WaitUntil((new Callable<Boolean>() {

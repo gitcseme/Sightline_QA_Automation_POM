@@ -51,7 +51,8 @@ import testScriptsSmoke.Input;
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
+		Input in = new Input();
+		in.loadEnvConfig();
 		//Open browser
 		driver = new Driver();
 		//Login as PA
@@ -100,7 +101,7 @@ import testScriptsSmoke.Input;
  	public void navigations() throws InterruptedException {
  		
 		SessionSearch search = new SessionSearch(driver);
-		search.basicContentSearch(Input.searchString1);
+		//search.basicContentSearch(Input.searchString1);
 		search.ViewInDocView();
 		
 		DocViewPage dv = new DocViewPage(driver);
@@ -136,7 +137,7 @@ import testScriptsSmoke.Input;
 	   	}
 	    }
 		
-		//@AfterClass(alwaysRun = true)
+		@AfterClass(alwaysRun = true)
 		public void close(){
 			try{ 
 				lp.logout();
