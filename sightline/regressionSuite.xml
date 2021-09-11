@@ -2,10 +2,10 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression Suite">
 
- <test name="Input"> 
-    <classes>
+ 	<test name="Input"> 
+    	<classes>
         <class name="testScriptsSmoke.Input" ></class>  
-    </classes>
+   	 </classes>
 	</test> 
 	 	
    
@@ -113,8 +113,7 @@
 	 <classes>
         <class name="testScriptsSmoke.TS_018_DocViewAudio" ></class>  
     </classes>
-	</test> 
-	
+	</test> 	
 	
 	 <test name="Production">
 	 <groups><run><include name="smoke" /><include name="regression" /></run></groups>
