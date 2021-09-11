@@ -158,7 +158,7 @@ public class AssignQuickBatch_Regression {
 	 }
 			   
 	  @Test(groups={"regression"},priority=6)
-	   public void ValidateNameQuickBatchfailure()
+	   public void ValidateNameQuickBatchfailure() throws InterruptedException
 	   {
 		   DocExplorerPage docexp = new DocExplorerPage(driver);
 			docexp.DocExplorertoquickBatch();
