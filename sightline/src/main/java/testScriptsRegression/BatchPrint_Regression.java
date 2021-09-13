@@ -38,8 +38,8 @@ public class BatchPrint_Regression {
 	    public void preConditions() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		
-		
-			
+		Input in = new Input();in.loadEnvConfig();
+		bc = new BaseClass(driver);
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -47,7 +47,7 @@ public class BatchPrint_Regression {
 	    }
 		
 		
-	     @Test(groups={"regression"})
+	   //  @Test(groups={"regression"})
 		 public void BatchPrintWitExceptionalFile() throws InterruptedException {
 			  
 			 bc.stepInfo("Test Case id:RPMXCON-47464-BatchPrintWitExceptionalFile");
