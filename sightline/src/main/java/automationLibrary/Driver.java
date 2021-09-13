@@ -258,7 +258,12 @@ public  class Driver  {
 	      try { 
 	    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
 				ChromeOptions options = new ChromeOptions();
+				
 				options.addArguments("chrome.switches","--disable-extensions");
+				
+				if(Input.headlessMode) {
+					options.addArguments("--headless");
+				}
 				new DesiredCapabilities();
 				DesiredCapabilities caps = DesiredCapabilities.chrome();
 				caps.setCapability(ChromeOptions.CAPABILITY, options);

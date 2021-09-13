@@ -52,6 +52,7 @@ public class Input {
 	public static String jiraToken;
 	public static String jiraProject;
 	public static String testingBuild;
+	public static boolean headlessMode;
 	
 			
 	//Environment data---------------------------------------------
@@ -160,6 +161,7 @@ public class Input {
 		jiraProject = config.getJiraProject();
 		testingBuild = config.getTestingBuild();
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
+		headlessMode = config.isHeadlessMode();
 		
 		/*
 		 * Ingestion Data

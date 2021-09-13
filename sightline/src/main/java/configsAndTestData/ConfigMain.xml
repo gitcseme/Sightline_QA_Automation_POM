@@ -9,11 +9,12 @@
 	
 	<!-- <browserName>CHROME</browserName> -->
 	<browserName>CHROME</browserName>
+	<HeadlessMode>false</HeadlessMode>
 	<screenShotOnPass>NO</screenShotOnPass>
 	<screenShotOnFail>YES</screenShotOnFail>
 	
 	<!-- Extent Report Detailed Report if Needed -->
-	<extentReportMethodWise>false</extentReportMethodWise> <!-- Mark this as true if you need method wise extetntreport info or false-->
+	<extentReportMethodWise>true</extentReportMethodWise> <!-- Mark this as true if you need method wise extetntreport info or false-->
 	
 	<!-- Jira Connections  -->
 	<logJiraTicket>false</logJiraTicket> <!-- true if the defect has to be raised else false -->
