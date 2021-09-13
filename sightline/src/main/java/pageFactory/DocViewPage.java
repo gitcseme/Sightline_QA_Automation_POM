@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
-
+//
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -76,7 +76,7 @@ public class DocViewPage {
     //non audio reduction page
     public Element getDocView_RedactThisPage(){ return driver.FindElementByXPath("//*[@id='redactCurrentPage_divDocViewer']"); }
     public Element getDocView_SelectReductionLabel(){ return driver.FindElementById("ddlRedactionTagsForPopup"); }
-    public Element getRedactionTag_SaveButton() {return driver.FindElementByXPath("//*[@id=\"btnSave\"]"); }
+    public Element getRedactionTag_SaveButton() {return driver.FindElementByXPath("//*[@id=\"btnSave\"]"); }//added Element
     public Element getDocView_SaveReduction1(int i){ return driver.FindElementByXPath("(//div[@class='ui-dialog-buttonset']//button[1])["+i+"]"); }
     public Element getDocView_SaveReduction(){ return driver.FindElementByXPath("//div[@class='ui-dialog-buttonset']//button[1]"); }
     public Element getDocView_SaveReductionNew(){ return driver.FindElementByXPath("//*[@id='btnSave']"); }
@@ -240,12 +240,13 @@ public class DocViewPage {
     
     //Doc view page redaction
     public Element getPreRedaction(){ return driver.FindElementByCssSelector("#PrevAllRedaction");}
+    //added by shilpi
     
     
     public DocViewPage(Driver driver){
-
+    	
         this.driver = driver;
-     
+       
        
         softAssertion= new SoftAssert(); 
         base = new BaseClass(driver);

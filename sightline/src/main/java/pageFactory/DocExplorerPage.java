@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +12,14 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
-import junit.framework.Assert;
+
 import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
@@ -417,15 +419,19 @@ public class DocExplorerPage {
     	doclist.getApplyFilter().waitAndClick(10);
 	}
     
-    public void DocExplorertoquickBatch()
+    public void DocExplorertoquickBatch() throws InterruptedException
     {
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
     	getDocExp_SelectAllDocs().waitAndClick(10);
-    	
+    	Thread.sleep(2000);//here
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait30); 
+    			doclist.getYesAllPageDocs().Visible()  ;}}), Input.wait120); 
+    	doclist.getYesAllPageDocs().waitAndClick(15);//changed here..
+    	Thread.sleep(2000);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
     	doclist.getPopUpOkBtn().Click();
     	
     	getDocExp_actionButton().waitAndClick(10);
