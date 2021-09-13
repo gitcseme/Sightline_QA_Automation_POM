@@ -40,22 +40,58 @@ public class TagsAndFolders_Regression {
 	bc = new BaseClass(driver);
 	
 	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	bc.passedStep("*****Login successfull*****");
 	
-	tnfpage = new TagsAndFoldersPage(driver);
+	/* tnfpage = new TagsAndFoldersPage(driver);
+	bc.stepInfo("Test case Id: RPMXCON-52476 - CreateTag");
+	bc.stepInfo("*****Create new Tag*****");
 	tnfpage.CreateTag(Tag,"Default Security Group");
+	bc.passedStep("*****Tag added successfully*****");
+	bc.stepInfo("Test case Id: RPMXCON-52489 - CreateFolder");
+	bc.stepInfo("*****Create new Folder*****");
  	tnfpage.CreateFolder(Folder,"Default Security Group");
+ 	bc.passedStep("*****Folder added successfully*****");
 	
 	SessionSearch search= new SessionSearch(driver); 
 	search.basicContentSearch(Input.searchString1);
+	bc.stepInfo("*****Bulk Tag with Existing Tag*****");
 	search.bulkTagExisting(Tag);
+	bc.passedStep("*****Bulk Tag is done with Existing Tag*****");
+	bc.stepInfo("*****Bulk Folder with Existing Folder*****");
 	search.bulkFolderExisting(Folder);
+	bc.stepInfo("*****Bulk Folder is done with Existing Folder*****"); */
 	
 	}
 	
-	@Test(priority =1,groups={"smoke","regression"})
+	@Test(priority=1,groups={"smoke","regression"})
+	public void CreateTagandfolder() throws InterruptedException {
+
+		tnfpage = new TagsAndFoldersPage(driver);
+		bc.stepInfo("Test case Id: RPMXCON-52476 - CreateTag");
+		bc.stepInfo("*****Create new Tag*****");
+		tnfpage.CreateTag(Tag,"Default Security Group");
+		bc.passedStep("*****Tag added successfully*****");
+		bc.stepInfo("Test case Id: RPMXCON-52489 - CreateFolder");
+		bc.stepInfo("*****Create new Folder*****");
+	 	tnfpage.CreateFolder(Folder,"Default Security Group");
+	 	bc.passedStep("*****Folder added successfully*****");
+		
+		SessionSearch search= new SessionSearch(driver); 
+		search.basicContentSearch(Input.searchString1);
+		bc.stepInfo("*****Bulk Tag with Existing Tag*****");
+		search.bulkTagExisting(Tag);
+		bc.passedStep("*****Bulk Tag is done with Existing Tag*****");
+		bc.stepInfo("*****Bulk Folder with Existing Folder*****");
+		search.bulkFolderExisting(Folder);
+		bc.stepInfo("*****Bulk Folder is done with Existing Folder*****");
+		
+	}
+	@Test(priority=2,groups={"smoke","regression"})
 	public void TagsViewinDocview() throws ParseException, InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-53185 - TagViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
 	    tnfpage.ViewinDocViewthrTag(Tag);
+	    bc.stepInfo("****Validating count in Docview****");
     
 		//Validate in docview count
 		docview= new DocViewPage(driver);
@@ -64,31 +100,41 @@ public class TagsAndFolders_Regression {
 		String num = docview.getDocView_info().getText();
 		Assert.assertTrue(Integer.parseInt(num.replaceAll("[^0-9]", ""))>0);
 		System.out.println("Expected docs("+Integer.parseInt(num.replaceAll("[^0-9]", ""))+") are shown in docView");
+		bc.passedStep("*****Expected docs Validation successfull in TagviewinDocview*****");
 	}
 	
-	@Test(priority =2,groups={"smoke","regression"})
+	@Test(priority=3,groups={"smoke","regression"})
 	public void TagsViewinDocList() throws ParseException, InterruptedException {
-		
+		bc.stepInfo("Test case Id: RPMXCON-53187 - TagViewinDoclist");
 		 tnfpage = new TagsAndFoldersPage(driver);
-	     tnfpage.ViewinDocListthrTag(Tag);
-       //view in doclist and verify count
 		 doclist = new DocListPage(driver);
+	     tnfpage.ViewinDocListthrTag(Tag);
+	     bc.stepInfo("****Validating count in DocList****");
+       //view in doclist and verify count
+		 //doclist = new DocListPage(driver);
 		 doclist.getDocList_info().WaitUntilPresent();
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	     !doclist.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	     
 	     Assert.assertTrue(Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))>0);
 	     System.out.println("Expected docs("+Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))+") are shown in doclist");
-	     //doclist.getBackToSourceBtn().Click();
-	     //tnfpage.getTagsTab().WaitUntilPresent();
+	     bc.passedStep("*****Expected docs Validation successfull in TagViewinDocList*****");
+	     bc.stepInfo("Test case Id: RPMXCON-53189 - BacktoTagandfolderpage");
+	     bc.stepInfo("click on back to source from Tagviewindoclist");
+	     doclist.getBackToSourceBtn().Click();
+	    tnfpage.getTagsTab().WaitUntilPresent();
+	    bc.passedStep("*****Redirected to Tagandfolder page from Tagviewindoclist *****");
+	    
 	}
 	
 	
-	@Test(priority =3,groups={"smoke","regression"})
+	@Test(priority=4,groups={"smoke","regression"})
 	public void FolderViewinDocview() throws ParseException, InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-53186 - FolderViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
 		tnfpage.ViewinDocViewthrFolder(Folder);
 		Thread.sleep(3000);
+		 bc.stepInfo("****Validating count in DocView****");
 		//Validate in docview count
 		docview= new DocViewPage(driver);
 		//docview.getDocView_info().WaitUntilPresent();
@@ -97,95 +143,125 @@ public class TagsAndFolders_Regression {
 		String num = docview.getDocView_info().getText();
 		Assert.assertTrue(Integer.parseInt(num.replaceAll("[^0-9]", ""))>0);
 		System.out.println("Expected docs("+Integer.parseInt(num.replaceAll("[^0-9]", ""))+") are shown in docView");
+		bc.passedStep("*****Expected docs Validation successfull in FolderviewinDocView*****");
 	}
 	
-	@Test(priority =4,groups={"smoke","regression"})
+	@Test(priority=5,groups={"smoke","regression"})
 	public void FolderViewinDocList() throws ParseException, InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-53188 - FolderViewinDocList");
 		tnfpage = new TagsAndFoldersPage(driver);
+		doclist = new DocListPage(driver);
 		tnfpage.ViewinDocListthrFolder(Folder);
-    
+		 bc.stepInfo("****Validating count in DocListview****");
 		 //view in doclist and verify count
-		 doclist = new DocListPage(driver);
+		 //doclist = new DocListPage(driver);
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 docview.getDocView_info().Visible()  ;}}), Input.wait30);
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	     !doclist.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
 	     Assert.assertTrue(Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))>0);
 	     System.out.println("Expected docs("+Integer.parseInt(doclist.getDocList_info().getText().replaceAll("[^0-9]", ""))+") are shown in doclist");
-	     //doclist.getBackToSourceBtn().Click();
-	     //tnfpage.getTagsTab().WaitUntilPresent();
+	     bc.passedStep("*****Expected docs Validation successfull in FolderviewinDocList*****");
+	     bc.stepInfo("Test case Id: RPMXCON-53190 - BacktoTagandfolderpage");
+	     bc.stepInfo("click on back to source from folder viewindoclist");
+	     doclist.getBackToSourceBtn().Click();
+	     tnfpage.getTagsTab().WaitUntilPresent();
+	     bc.passedStep("*****Redirected to Tagandfolder page from Folderviewindoclist *****");
 	     lp.logout();
+	     
 	}
 	
-	@Test(priority =5,groups={"smoke","regression"})
+	@Test(priority=6,groups={"smoke","regression"})
 	public void deleteTagSAasPA() throws ParseException, InterruptedException, IOException {
- 
+		bc.stepInfo("Test case Id: RPMXCON-52490 - OperationsAsPA");
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		//Impersonate as RMU
-	
+		bc.stepInfo("Impersnating from SA to PA");
 		bc.impersonateSAtoPA();
+		bc.stepInfo("Impersnated from SA to PA");
 
 		//add tag
+		bc.stepInfo("*****Create new Tag*****");
 		String tag = "newTag"+Utility.dynamicNameAppender();
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 		page.CreateTag(tag,"Default Security Group");
 		System.out.println("Tag added Successfully : "+tag);
+		bc.passedStep("*****Tag added successfully*****");
 		
 		//add folder
+		bc.stepInfo("*****Create new Folder*****");
 		String folder = "newFolder"+Utility.dynamicNameAppender();
 		page.CreateFolder(folder, "Default Security Group");
     	System.out.println("Folder added Successfully : "+folder);
+    	bc.passedStep("*****Folder added successfully*****");
     	
     	//Delete tag under security group
+    	bc.stepInfo("*****Delete Existing Tag*****");
     	page.DeleteTag(tag,"Default Security Group");
     	System.out.println("Tag deleted from security group");
+    	bc.passedStep("*****Tag Deleted successfully from security group*****");
+    	
     	
     	//Delete folder under security group
+    	bc.stepInfo("*****Delete Existing Folder*****");
     	page.DeleteFolder(folder,"Default Security Group");
     	System.out.println("Folder deleted from security group");
+    	bc.passedStep("*****Folder Deleted successfully from security group*****");
     	lp.logout();
  	}
 
 	//added by Narendra
-@Test(priority =6,groups={"smoke","regression"})
+@Test(priority=7,groups={"smoke","regression"})
 public void OperationOnTag() throws ParseException, IOException, InterruptedException {
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-					
+			bc.stepInfo("Test case Id: RPMXCON-53181 - OperationOnTag");		
 	        //Add tag
+			bc.stepInfo("*****Create new Tag*****");
 			String tag = "newTag"+Utility.dynamicNameAppender();
 			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 			page.CreateTag(tag,"Default Security Group");
 			System.out.println("Tag added Successfully : "+tag);
+			bc.passedStep("*****Tag added successfully*****");
 			
 			//Cancel tag
+			bc.stepInfo("*****Cancel Tag modification*****");
 			page.Tags(tag,"Default Security Group");
 			System.out.println("Tag modification cancelled successfully");
+			bc.passedStep("*****Tag modification cancelled successfully*****");
 			
 			//Edit Tag Group
+			bc.stepInfo("*****Tag modification*****");
 			page.TagGroup("Default Security Group");
 			System.out.println("Tag group modified successfully");
+			bc.passedStep("*****Tag group modified successfully*****");
 				    	
 	    	//Delete tag under security group
+			bc.stepInfo("*****Delete Tag*****");
 	    	page.DeleteTag(tag,"Default Security Group");
 	    	System.out.println("Tag successfully deleted from security group!");
+	    	bc.passedStep("*****Tag successfully deleted from security group!*****");
 	    				 
 
 }
 
-@Test(priority =7,groups={"smoke","regression"})
+@Test(priority=8,groups={"smoke","regression"})
 public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
 			//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-				
+	        bc.stepInfo("Test case Id: RPMXCON-53182 - OperationOnFolder");		
 			//add folder
+	        bc.stepInfo("*****Create new Folder*****");
 			String folder = "newFolder"+Utility.dynamicNameAppender();
 			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 			page.CreateFolder(folder, "Default Security Group");
 	    	System.out.println("Folder added Successfully : "+folder);
+	    	bc.passedStep("*****Folder added successfully*****");
 	    	
 	    	
 	    	//Delete tag under security group
+	    	bc.stepInfo("*****Delete new Folder*****");
 	    	page.DeleteFolder(folder,"Default Security Group");
 	    	System.out.println("Folder deleted from security group");
+	    	bc.passedStep("*****Folder deleted from security group*****");
 
 }
 			
