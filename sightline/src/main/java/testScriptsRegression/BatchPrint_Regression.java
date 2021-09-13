@@ -47,7 +47,7 @@ public class BatchPrint_Regression {
 	    }
 		
 		
-	   //  @Test(groups={"regression"})
+	     @Test(groups={"regression"})
 		 public void BatchPrintWitExceptionalFile() throws InterruptedException {
 			  
 			 bc.stepInfo("Test Case id:RPMXCON-47464-BatchPrintWitExceptionalFile");
