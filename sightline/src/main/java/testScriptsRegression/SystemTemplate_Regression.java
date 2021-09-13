@@ -26,13 +26,14 @@ public class SystemTemplate_Regression {
 	public void before() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		
+		
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
 
 	}
 
-	//@Test(priority = 1, groups = { "smoke", "regression" })
+	@Test(priority = 1, groups = { "smoke", "regression" })
 	public void provisionedTags_8633_1() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tnfpage = new TagsAndFoldersPage(driver);
@@ -44,7 +45,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	//@Test(priority = 2, groups = { "smoke", "regression" })
+	@Test(priority = 2, groups = { "smoke", "regression" })
 	public void provisionedTags_8633_2() throws InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Test case Id:RPMXCON-52910-provisionedTagsAsRMU");
@@ -56,7 +57,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	//@Test(priority = 3, groups = { "smoke", "regression" })
+	@Test(priority = 3, groups = { "smoke", "regression" })
 	public void tagsClassifications_8657_1() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Test case Id:RPMXCON-52927-tagsClassifications");
@@ -68,7 +69,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	// @Test(priority =4,groups={"smoke","regression"})
+	 @Test(priority =4,groups={"smoke","regression"})
 	public void tagsClassifications_8657_2() throws InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Test case Id:RPMXCON-52927-tagsClassificationsAsRMU");
@@ -80,7 +81,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	// @Test(priority =5,groups={"smoke","regression"})
+	 @Test(priority =5,groups={"smoke","regression"})
 	public void layerAnnotations_8660_1() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Test case Id:RPMXCON-52930-layerAnnotations");
@@ -92,7 +93,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	//@Test(priority =6,groups={"smoke","regression"})
+	@Test(priority =6,groups={"smoke","regression"})
 	public void layerAnnotations_8660_2() throws InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Test case Id:RPMXCON-52930-layerAnnotationsAsRMU");
@@ -104,7 +105,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	// @Test(priority =7,groups={"smoke","regression"})
+	 @Test(priority =7,groups={"smoke","regression"})
 	public void provisionedFolder_8661_1() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Test case Id:RPMXCON-52931-provisionedFolder");
@@ -116,7 +117,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	//@Test(priority =8,groups={"smoke","regression"})
+	@Test(priority =8,groups={"smoke","regression"})
 	public void provisionedFolder_8661_2() throws InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Test case Id:RPMXCON-52931-provisionedFolderAsRMU");
@@ -128,7 +129,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-//@Test(priority =9,groups={"smoke","regression"})
+@Test(priority =9,groups={"smoke","regression"})
 	public void redactionTags_8663_1() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Test case Id:RPMXCON-52933-redactionTags");
@@ -140,7 +141,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	// @Test(priority =10,groups={"smoke","regression"})
+	 @Test(priority =10,groups={"smoke","regression"})
 	public void redactionTags_8663_2() throws InterruptedException {
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		bc.stepInfo("Test case Id:RPMXCON-52933-redactionTagsAsRMU");
@@ -152,7 +153,7 @@ public class SystemTemplate_Regression {
 
 	}
 
-	// @Test(priority =11,groups={"smoke","regression"})
+	 @Test(priority =11,groups={"smoke","regression"})
 	public void provisionedFolderGroup_9028() throws InterruptedException {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.stepInfo("Test case Id:RPMXCON-53129-provisionedFolderGroup");

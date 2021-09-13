@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import automationLibrary.Driver;
+import pageFactory.BaseClass;
 import pageFactory.BatchPrintPage;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
@@ -28,6 +29,7 @@ public class BatchPrint_Regression {
 	String orderCriteria = "DocID";
 	String orderType = "Asc";
 	String SearchNameIngestion;
+	BaseClass bc;
 	
 	BatchPrintPage bp;
 
@@ -48,6 +50,7 @@ public class BatchPrint_Regression {
 	     @Test(groups={"regression"})
 		 public void BatchPrintWitExceptionalFile() throws InterruptedException {
 			  
+			 bc.stepInfo("Test Case id:RPMXCON-47464-BatchPrintWitExceptionalFile");
 			//  lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			   final IngestionPage ingest = new IngestionPage(driver);
 			//  driver.getWebDriver().get(Input.url+ "Ingestion/Home");
@@ -100,7 +103,7 @@ public class BatchPrint_Regression {
 			
 		}
 	    
-			 Thread.sleep(2000);
+			Thread.sleep(2000);
 			System.out.println(SearchNameIngestion);
 			
 			SessionSearch search = new SessionSearch(driver);
@@ -110,18 +113,26 @@ public class BatchPrint_Regression {
 			
 			bp = new BatchPrintPage(driver);
 			bp.BatchPrintWitExceptionalFile(searchnameExcep);
+			bc.passedStep("verified user can view details in Exceptional files");
+			
 		   }
 		
 		 @Test(groups={"regression"})
 		 public void BatchPrintWitMP3() throws InterruptedException {
-			  
+			
+	     bc.stepInfo("Test Case id:RPMXCON-47481-BatchPrintWitMP3");
+			 
 		 SessionSearch search = new SessionSearch(driver);
 		 driver.getWebDriver().get(Input.url+ "Search/Searches");
 		 search.audioSearch("morning", "North American English");
 		 search.saveSearchAdvanced(searchnameMP3); 
-			
+		
+		 
 		 bp = new BatchPrintPage(driver);
+		 
 		 bp.BatchPrintWitMP3(searchnameMP3);
+		 bc.passedStep("verified error info is displayed");
+		
 		   }
 		 
 		 @Test(groups={"regression"})
