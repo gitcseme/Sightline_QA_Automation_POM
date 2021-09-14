@@ -33,8 +33,8 @@ public class TagsAndFolders_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	Input in = new Input();
-	in.loadEnvConfig();
+	/*Input in = new Input();
+	in.loadEnvConfig();*/
  	driver = new Driver();
 	lp = new LoginPage(driver);
 	bc = new BaseClass(driver);
