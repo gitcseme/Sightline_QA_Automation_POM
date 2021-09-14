@@ -7,7 +7,7 @@
 	<suite>Regression</suite><!--it should be Smoke or Regression only-->
 	<numberOfDataSets>3</numberOfDataSets>
 	
-	<!-- <browserName>CHROME</browserName> -->
+	<!-- <browserName>CHROME/EDGE</browserName> -->
 	<browserName>CHROME</browserName>
 	<HeadlessMode>false</HeadlessMode>
 	<screenShotOnPass>NO</screenShotOnPass>
