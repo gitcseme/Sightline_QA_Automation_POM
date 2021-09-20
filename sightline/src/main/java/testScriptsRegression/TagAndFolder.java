@@ -132,13 +132,13 @@ public class TagAndFolder {
 			System.out.println("folder successfully deleted from all groups!");
 			System.out.println("folder deletion working fine!!");
 		}
-    	lp.logout();
+    	//lp.logout();
 	}
 	
 	    //added by Narendra
 		@Test(priority=2,groups={"smoke","regression"})
 		public void OperationOnTag() throws ParseException, IOException, InterruptedException {
-					
+			         bc.stepInfo("Test case Id: RPMXCON-53181 - OperationOnTag");
 			         lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 							
 			         //Add tag
@@ -167,18 +167,19 @@ public class TagAndFolder {
 				    	System.out.println("Tag successfully deleted from security group!");
 				    	bc.passedStep("*****Tag successfully deleted from security group!*****");
 			    	
-			    lp.logout();
+			    //lp.logout();
 			    				 
 		
 		}
 		
 		@Test(priority=3,groups={"smoke","regression"})
 		public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
+			        bc.stepInfo("Test case Id: RPMXCON-53182 - OperationOnFolder");	
 					lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 					//add folder
 			        bc.stepInfo("*****Create new Folder*****");
+			        TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 					String folder = "newFolder"+Utility.dynamicNameAppender();
-					TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 					page.CreateFolder(folder, "Default Security Group");
 			    	System.out.println("Folder added Successfully : "+folder);
 			    	bc.passedStep("*****Folder added successfully*****");
@@ -200,13 +201,20 @@ public class TagAndFolder {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
 		}
+		 System.out.println("Executed :" + result.getMethod().getMethodName());
+		 	try{
+		 		lp.logout();
+		 	}catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 		 @AfterClass(alwaysRun = true)
 		 public void close(){
 			try{ 
 				lp.logout();
 			     //lp.quitBrowser();	
-				}finally {
+				}catch (Exception e) {}
+			finally {
 					lp.quitBrowser();
 				
 				}

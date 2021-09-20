@@ -50,11 +50,15 @@ public class DocList_Regression {
 	//@Test(groups={"regression"})
 	public void PreviewDocNonAudio() throws InterruptedException {
 		
+		bc.stepInfo("Test case Id: RPMXCON-54566 - PreviewDocNonAudio");
+		bc.stepInfo("****session search*****");
 		ss.basicContentSearch(Input.searchString2);
     	ss.ViewInDocList();
-    	
+   
+    	bc.stepInfo("****Verify Non-Audio Document Preview functionality*****");
     	final DocListPage dl= new DocListPage(driver);
     	dl.DoclistPreviewNonAudio();
+    	bc.passedStep("****Non-Audio Document Preview is done successfully*****");
     }
 	
 		/*
@@ -66,12 +70,14 @@ public class DocList_Regression {
 		 */
 		@Test(groups={"regression"})
 		public void PreviewDocAudio() throws InterruptedException {
-			
+			bc.stepInfo("Test case Id: RPMXCON-54565 - PreviewDocNonAudio");
+			bc.stepInfo("****Audio search*****");
 			ss.audioSearch("morning", "North American English");
 			ss.ViewInDocList();
-				
+			bc.stepInfo("****Verify Audio Document Preview functionality*****");	
 	    	final DocListPage dl= new DocListPage(driver);
 	    	dl.DoclistPreviewAudio();
+	    	bc.passedStep("****Audio Document Preview is done successfully*****");
 		}
 
 		//To validate masterdate for all image files in doclist
@@ -112,18 +118,19 @@ public class DocList_Regression {
 		
 		@Test(groups={"regression"})
 		public void docFileTypeInDocList() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-53664 - docFileTypeInDocList");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
 	    	final DocListPage dl= new DocListPage(driver);
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			dl.getGetDocFIleTypeFilter().Visible()  ;}}), Input.wait30);
-			
+	    	bc.stepInfo("*****verify documents using FileType filter*****");
 	    	dl.getGetDocFIleTypeFilter().waitAndClick(10);
 	    	dl.include("HyperText Markup Language");
 	    	dl.getApplyFilter().waitAndClick(10);
 	    	dl.validateCount("Showing 1 to 1 of 1 entries");
-	    
+	    	bc.stepInfo("*****cancel previous filter*****");
 	    	//cancel previous filter
 	    	dl.removeRpeviousFilters();
 	    
@@ -131,14 +138,17 @@ public class DocList_Regression {
 	    	dl.exclude("HyperText Markup Language");
 	    	dl.getApplyFilter().Click();
 	    	dl.validateCount("Showing 1 to 10 of 1,201 entries");
+	    	bc.passedStep("*****Documents count Validation sucessfully*****");
 }
 		
 		@Test(groups={"regression"})
 		public void custodianFiltersInDocList() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-53664 - custodianFiltersInDocList");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
 	    	final DocListPage dl= new DocListPage(driver);
+	    	bc.stepInfo("*****verify documents using custodian name filter*****");
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			dl.getCustodianFilter().Visible()  ;}}), Input.wait30);
@@ -147,6 +157,7 @@ public class DocList_Regression {
 	    	dl.include("P Allen");
 	    	dl.getApplyFilter().Click();
 	    	dl.validateCount("Showing 1 to 10 of 1,134 entries");
+	    	bc.passedStep("*****Documents count Validation sucessfully*****");
 	    	
 	    	//cancel previous filter
 	    	dl.removeRpeviousFilters();
@@ -156,6 +167,7 @@ public class DocList_Regression {
 	    	dl.exclude("P Allen");
 	    	dl.getApplyFilter().Click();
 	    	//dl.validateCount("Showing 1 to 4 of 4 entries");
+	    	
 	    	
 		}
 		  @BeforeMethod
