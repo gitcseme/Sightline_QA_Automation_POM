@@ -3,7 +3,10 @@ package testScriptsRegression;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 import org.testng.Assert;
@@ -34,15 +37,12 @@ public class TagsAndFolders_Regression {
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	/*Input in = new Input();
-	in.loadEnvConfig();*/
+	in.loadEnvConfig(); */
  	driver = new Driver();
 	lp = new LoginPage(driver);
-	bc = new BaseClass(driver);
-	
-	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	bc.passedStep("*****Login successfull*****");
-	
-	/* tnfpage = new TagsAndFoldersPage(driver);
+	bc = new BaseClass(driver);	
+	/*
+    tnfpage = new TagsAndFoldersPage(driver);
 	bc.stepInfo("Test case Id: RPMXCON-52476 - CreateTag");
 	bc.stepInfo("*****Create new Tag*****");
 	tnfpage.CreateTag(Tag,"Default Security Group");
@@ -63,14 +63,23 @@ public class TagsAndFolders_Regression {
 	
 	}
 	
+	@BeforeMethod
+	 public void beforeTestMethod(Method testMethod){
+		System.out.println("------------------------------------------");
+	    System.out.println("Executing method : " + testMethod.getName());       
+	 }
+	
 	@Test(priority=1,groups={"smoke","regression"})
 	public void CreateTagandfolder() throws InterruptedException {
-
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.passedStep("*****Login successfull*****");
 		tnfpage = new TagsAndFoldersPage(driver);
 		bc.stepInfo("Test case Id: RPMXCON-52476 - CreateTag");
 		bc.stepInfo("*****Create new Tag*****");
 		tnfpage.CreateTag(Tag,"Default Security Group");
 		bc.passedStep("*****Tag added successfully*****");
+		driver.Navigate().refresh();
+		
 		bc.stepInfo("Test case Id: RPMXCON-52489 - CreateFolder");
 		bc.stepInfo("*****Create new Folder*****");
 	 	tnfpage.CreateFolder(Folder,"Default Security Group");
@@ -88,13 +97,17 @@ public class TagsAndFolders_Regression {
 	}
 	@Test(priority=2,groups={"smoke","regression"})
 	public void TagsViewinDocview() throws ParseException, InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("*****Login successfull*****");
+		docview= new DocViewPage(driver);
 		bc.stepInfo("Test case Id: RPMXCON-53185 - TagViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
+		bc.stepInfo("****View tag in Docview****");
 	    tnfpage.ViewinDocViewthrTag(Tag);
 	    bc.stepInfo("****Validating count in Docview****");
     
 		//Validate in docview count
-		docview= new DocViewPage(driver);
+		//docview= new DocViewPage(driver);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 docview.getDocView_info().Visible()  ;}}), Input.wait30);
 		String num = docview.getDocView_info().getText();
@@ -105,9 +118,12 @@ public class TagsAndFolders_Regression {
 	
 	@Test(priority=3,groups={"smoke","regression"})
 	public void TagsViewinDocList() throws ParseException, InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("*****Login successfull*****");
 		bc.stepInfo("Test case Id: RPMXCON-53187 - TagViewinDoclist");
 		 tnfpage = new TagsAndFoldersPage(driver);
 		 doclist = new DocListPage(driver);
+		 bc.stepInfo("****View Tag in Doclist****");
 	     tnfpage.ViewinDocListthrTag(Tag);
 	     bc.stepInfo("****Validating count in DocList****");
        //view in doclist and verify count
@@ -130,13 +146,18 @@ public class TagsAndFolders_Regression {
 	
 	@Test(priority=4,groups={"smoke","regression"})
 	public void FolderViewinDocview() throws ParseException, InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("*****Login successfull*****");
 		bc.stepInfo("Test case Id: RPMXCON-53186 - FolderViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
+		docview= new DocViewPage(driver);
+		 bc.stepInfo("****View folder in DocView****");
 		tnfpage.ViewinDocViewthrFolder(Folder);
+		
 		Thread.sleep(3000);
 		 bc.stepInfo("****Validating count in DocView****");
 		//Validate in docview count
-		docview= new DocViewPage(driver);
+		//docview= new DocViewPage(driver);
 		//docview.getDocView_info().WaitUntilPresent();
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 docview.getDocView_info().Visible()  ;}}), Input.wait30);
@@ -148,9 +169,12 @@ public class TagsAndFolders_Regression {
 	
 	@Test(priority=5,groups={"smoke","regression"})
 	public void FolderViewinDocList() throws ParseException, InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("*****Login successfull*****");
 		bc.stepInfo("Test case Id: RPMXCON-53188 - FolderViewinDocList");
 		tnfpage = new TagsAndFoldersPage(driver);
 		doclist = new DocListPage(driver);
+		bc.stepInfo("****View folder in Doclist****");
 		tnfpage.ViewinDocListthrFolder(Folder);
 		 bc.stepInfo("****Validating count in DocListview****");
 		 //view in doclist and verify count
@@ -167,7 +191,7 @@ public class TagsAndFolders_Regression {
 	     doclist.getBackToSourceBtn().Click();
 	     tnfpage.getTagsTab().WaitUntilPresent();
 	     bc.passedStep("*****Redirected to Tagandfolder page from Folderviewindoclist *****");
-	     lp.logout();
+	     //lp.logout();
 	     
 	}
 	
@@ -176,14 +200,16 @@ public class TagsAndFolders_Regression {
 		bc.stepInfo("Test case Id: RPMXCON-52490 - OperationsAsPA");
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		//Impersonate as RMU
+		
+		
 		bc.stepInfo("Impersnating from SA to PA");
 		bc.impersonateSAtoPA();
 		bc.stepInfo("Impersnated from SA to PA");
 
 		//add tag
 		bc.stepInfo("*****Create new Tag*****");
-		String tag = "newTag"+Utility.dynamicNameAppender();
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		String tag = "newTag"+Utility.dynamicNameAppender();
 		page.CreateTag(tag,"Default Security Group");
 		System.out.println("Tag added Successfully : "+tag);
 		bc.passedStep("*****Tag added successfully*****");
@@ -191,7 +217,7 @@ public class TagsAndFolders_Regression {
 		//add folder
 		bc.stepInfo("*****Create new Folder*****");
 		String folder = "newFolder"+Utility.dynamicNameAppender();
-		page.CreateFolder(folder, "Default Security Group");
+		page.CreateFolder(folder,"Default Security Group");
     	System.out.println("Folder added Successfully : "+folder);
     	bc.passedStep("*****Folder added successfully*****");
     	
@@ -211,14 +237,14 @@ public class TagsAndFolders_Regression {
  	}
 
 	//added by Narendra
-@Test(priority=7,groups={"smoke","regression"})
+@Test(priority=8,groups={"smoke","regression"})
 public void OperationOnTag() throws ParseException, IOException, InterruptedException {
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			bc.stepInfo("Test case Id: RPMXCON-53181 - OperationOnTag");		
 	        //Add tag
 			bc.stepInfo("*****Create new Tag*****");
-			String tag = "newTag"+Utility.dynamicNameAppender();
 			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+			String tag = "newTag"+Utility.dynamicNameAppender();
 			page.CreateTag(tag,"Default Security Group");
 			System.out.println("Tag added Successfully : "+tag);
 			bc.passedStep("*****Tag added successfully*****");
@@ -244,15 +270,16 @@ public void OperationOnTag() throws ParseException, IOException, InterruptedExce
 
 }
 
-@Test(priority=8,groups={"smoke","regression"})
+@Test(priority=7,groups={"smoke","regression"})
 public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
-			//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	      
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 	        bc.stepInfo("Test case Id: RPMXCON-53182 - OperationOnFolder");		
 			//add folder
+	        String folder = "newfolder"+Utility.dynamicNameAppender();
+	        TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 	        bc.stepInfo("*****Create new Folder*****");
-			String folder = "newFolder"+Utility.dynamicNameAppender();
-			TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-			page.CreateFolder(folder, "Default Security Group");
+            page.CreateFolder(folder, "Default Security Group");
 	    	System.out.println("Folder added Successfully : "+folder);
 	    	bc.passedStep("*****Folder added successfully*****");
 	    	
@@ -272,13 +299,20 @@ public void OperationOnFolder() throws ParseException, IOException, InterruptedE
  		Utility bc = new Utility(driver);
  		bc.screenShot(result);
  	}
+ 	 System.out.println("Executed :" + result.getMethod().getMethodName());
+	 	try{
+	 		lp.logout();
+	 	}catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
 			lp.logout();
-		     //lp.quitBrowser();	
-			}finally {
+		     //lp.quitBrowser();
+		}catch (Exception e) {}
+			finally {
 				lp.quitBrowser();
 			
 			}
