@@ -48,14 +48,14 @@ public class TS_017_DocList {
 
 		// Open browser
 		
-		// Input in = new Input(); in.loadEnvConfig();
-		
+	
 		driver = new Driver();
-		baseClass = new BaseClass(driver);
-		sessionSearch = new SessionSearch(driver);
+		
 		// loginPage as a PA
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
 	}
 
 	/*

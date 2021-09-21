@@ -190,15 +190,16 @@ public class TagsAndFoldersPage {
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
          getFolderActionDropDownArrow().waitAndClick(30);
-     
+        Thread.sleep(2000);
+	    
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAddFolder().Visible()  ;}}), Input.wait30); 
          getAddFolder().waitAndClick(10);
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 
-      new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
-     //getFolderName().SendKeys(strFolder);
+    //  new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
+     getFolderName().SendKeys(strFolder);
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getSaveFolder().Visible()  ;}}), Input.wait30); 

@@ -54,18 +54,14 @@ public class TS_003_AdvancedSearchBulkActions {
 		
 		//Open browser
 		log = Logger.getLogger("devpinoyLogger");
-
-		//Input in = new Input();
-		//in.loadEnvConfig();
-		
 			
 		driver = new Driver();
 		//Login as PA
 		
 		lp=new LoginPage(driver);
-		sessionSearch = new SessionSearch(driver);
+	
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-    	
+    		sessionSearch = new SessionSearch(driver);
     	   		
     	//Search for any content on basic search screen
      	sessionSearch.advancedContentSearch(searchText);

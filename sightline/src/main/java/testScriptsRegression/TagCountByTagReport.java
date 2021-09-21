@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import automationLibrary.Driver;
 import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
+import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
 import pageFactory.DocListPage;
@@ -36,6 +37,7 @@ import testScriptsSmoke.Input;
 public class TagCountByTagReport {
 	Driver driver;
 	LoginPage lp;
+	BaseClass baseclass;
 	//SessionSearch search;
 	
 	String tagname = "tag"+Utility.dynamicNameAppender();
@@ -52,7 +54,7 @@ public class TagCountByTagReport {
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
-	
+		baseclass = new BaseClass(driver);
 		TagsAndFoldersPage p = new TagsAndFoldersPage(driver);
 		p.CreateTag(tagname,"Default Security Group");
 		
@@ -62,9 +64,11 @@ public class TagCountByTagReport {
 	}	   
 	  @Test(groups={"smoke","regression"})
 	  public void TagCountReport() throws InterruptedException, ParseException {
-		  
+		  baseclass.stepInfo("Test case Id: RPMXCON-56248 - TagCountbyReport ");	
+		  baseclass.stepInfo("*****verify User can view Tags Count by Tags report in Date wise*****");
 			TagCountbyTagReport report = new TagCountbyTagReport(driver);
 		    report.ValidateTagCountreport(tagname); 
+		    baseclass.passedStep("*****Validation of Tags Count by Tags report is done*****");
 			
 	}
 	 

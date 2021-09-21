@@ -159,13 +159,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		
-	    //Input in = new Input();
-		//in.loadEnvConfig();
-		
-		driver = new Driver();
-		baseClass = new BaseClass(driver);
-		sessionSearch = new SessionSearch(driver);
-
+	  	driver = new Driver();
+	
 		// Login as a PA
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -176,6 +171,9 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 		UtilityLog.info("Logged in as Project Admin user");
 		Reporter.log("Logged in as Project Admin user");
+			baseClass = new BaseClass(driver);
+		sessionSearch = new SessionSearch(driver);
+
 	}
 
 	/**
