@@ -38,8 +38,8 @@ public class CodingForm_Regression {
 	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
+		Input in = new Input();
+		in.loadEnvConfig();
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	     
 		//Open browser
@@ -82,6 +82,7 @@ public class CodingForm_Regression {
 	
 	   @Test(groups={"smoke","regression"},priority=2)
 	   public void ValidateCFinDocViewFromSearch() throws InterruptedException {
+		   baseclass.stepInfo("Test case Id: RPMXCON-XXXXX - ValidateCFinDocViewFromSearch");
 		   baseclass.stepInfo("*****Validating Coding form in DocView from search*****");
 		   String serachString = Input.searchString2;
 		    
@@ -102,20 +103,21 @@ public class CodingForm_Regression {
 
 	   @Test(groups={"smoke","regression"},priority=3)
 	   public void ValidateCFinDocViewFromAssignment() throws InterruptedException {
+		   baseclass.stepInfo("Test case Id: RPMXCON-XXXXX - ValidateCFinDocViewFromAssignment");
 		   baseclass.stepInfo("*****Validating Coding form in DocView from Assignment*****");
 		    
 		   baseclass.stepInfo("*****Creating Assignment*****");
 		    AssignmentsPage ass = new AssignmentsPage(driver);
 		    ass.createAssignment(AssgnName, codingfrom);
 		  
-		    /*String serachString = Input.searchString2;
+		    String serachString = Input.searchString2;
 		  
-		    Search for any content on basic search screen
+		   // Search for any content on basic search screen
 			sessionSearch =new SessionSearch(driver);
 			System.out.println(serachString);
 	    	sessionSearch.basicContentSearch(serachString);
 	    	System.out.println(serachString);
-	    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText()); */
+	    	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText()); 
 	    	
 		    baseclass.stepInfo("*****Assign Docs to existing Assignment*****");
 	    	sessionSearch.bulkAssign();
