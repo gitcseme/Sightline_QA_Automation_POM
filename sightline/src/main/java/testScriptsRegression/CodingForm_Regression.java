@@ -38,8 +38,8 @@ public class CodingForm_Regression {
 	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
-		Input in = new Input();
-		in.loadEnvConfig();
+		/*Input in = new Input();
+		in.loadEnvConfig();*/
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	     
 		//Open browser
