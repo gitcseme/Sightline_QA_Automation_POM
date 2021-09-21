@@ -36,8 +36,8 @@ public class TagsAndFolders_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	Input in = new Input();
-	in.loadEnvConfig();
+	/*Input in = new Input();
+	in.loadEnvConfig(); */
  	driver = new Driver();
 	lp = new LoginPage(driver);
 	bc = new BaseClass(driver);	
@@ -76,13 +76,11 @@ public class TagsAndFolders_Regression {
 		tnfpage = new TagsAndFoldersPage(driver);
 		bc.stepInfo("Test case Id: RPMXCON-52476 - CreateTag");
 		bc.stepInfo("*****Create new Tag*****");
-		//String Tag = "Tag"+Utility.dynamicNameAppender();
 		tnfpage.CreateTag(Tag,"Default Security Group");
 		bc.passedStep("*****Tag added successfully*****");
 		driver.Navigate().refresh();
 		bc.stepInfo("Test case Id: RPMXCON-52489 - CreateFolder");
 		bc.stepInfo("*****Create new Folder*****");
-		//String Folder = "Folder"+Utility.dynamicNameAppender();
 	 	tnfpage.CreateFolder(Folder,"Default Security Group");
 	 	bc.passedStep("*****Folder added successfully*****");
 		
@@ -269,10 +267,11 @@ public void OperationOnTag() throws ParseException, IOException, InterruptedExce
 
 @Test(priority=7,groups={"smoke","regression"})
 public void OperationOnFolder() throws ParseException, IOException, InterruptedException {
-	        String folder = "newfolder"+Utility.dynamicNameAppender();
+	      
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 	        bc.stepInfo("Test case Id: RPMXCON-53182 - OperationOnFolder");		
 			//add folder
+	        String folder = "newfolder"+Utility.dynamicNameAppender();
 	        TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 	        bc.stepInfo("*****Create new Folder*****");
             page.CreateFolder(folder, "Default Security Group");
