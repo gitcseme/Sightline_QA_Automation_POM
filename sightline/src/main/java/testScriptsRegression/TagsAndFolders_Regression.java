@@ -79,6 +79,7 @@ public class TagsAndFolders_Regression {
 		tnfpage.CreateTag(Tag,"Default Security Group");
 		bc.passedStep("*****Tag added successfully*****");
 		driver.Navigate().refresh();
+		
 		bc.stepInfo("Test case Id: RPMXCON-52489 - CreateFolder");
 		bc.stepInfo("*****Create new Folder*****");
 	 	tnfpage.CreateFolder(Folder,"Default Security Group");
@@ -101,6 +102,7 @@ public class TagsAndFolders_Regression {
 		docview= new DocViewPage(driver);
 		bc.stepInfo("Test case Id: RPMXCON-53185 - TagViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
+		bc.stepInfo("****View tag in Docview****");
 	    tnfpage.ViewinDocViewthrTag(Tag);
 	    bc.stepInfo("****Validating count in Docview****");
     
@@ -121,6 +123,7 @@ public class TagsAndFolders_Regression {
 		bc.stepInfo("Test case Id: RPMXCON-53187 - TagViewinDoclist");
 		 tnfpage = new TagsAndFoldersPage(driver);
 		 doclist = new DocListPage(driver);
+		 bc.stepInfo("****View Tag in Doclist****");
 	     tnfpage.ViewinDocListthrTag(Tag);
 	     bc.stepInfo("****Validating count in DocList****");
        //view in doclist and verify count
@@ -148,6 +151,7 @@ public class TagsAndFolders_Regression {
 		bc.stepInfo("Test case Id: RPMXCON-53186 - FolderViewinDocview");
 		tnfpage = new TagsAndFoldersPage(driver);
 		docview= new DocViewPage(driver);
+		 bc.stepInfo("****View folder in DocView****");
 		tnfpage.ViewinDocViewthrFolder(Folder);
 		
 		Thread.sleep(3000);
@@ -170,6 +174,7 @@ public class TagsAndFolders_Regression {
 		bc.stepInfo("Test case Id: RPMXCON-53188 - FolderViewinDocList");
 		tnfpage = new TagsAndFoldersPage(driver);
 		doclist = new DocListPage(driver);
+		bc.stepInfo("****View folder in Doclist****");
 		tnfpage.ViewinDocListthrFolder(Folder);
 		 bc.stepInfo("****Validating count in DocListview****");
 		 //view in doclist and verify count
