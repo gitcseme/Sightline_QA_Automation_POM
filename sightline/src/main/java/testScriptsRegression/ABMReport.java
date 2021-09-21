@@ -53,7 +53,7 @@ public class ABMReport {
 		search.saveSearch(saveSearchName);
 		search.ViewInDocList();
 
-		dp.DoclisttobulkAssign(assignmentName, "10");
+		dp.DoclisttobulkAssign(assignmentName,"10");
 
 		asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form", purehits);
 
@@ -81,27 +81,27 @@ public class ABMReport {
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
-	}
-
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
-	}
-
+	    System.out.println("Executing method : " + testMethod.getName());       
+	 }
+     @AfterMethod(alwaysRun = true)
+	 public void takeScreenShot(ITestResult result) {
+ 	 if(ITestResult.FAILURE==result.getStatus()){
+ 		Utility bc = new Utility(driver);
+ 		bc.screenShot(result);
+ 	}
+ 	 System.out.println("Executed :" + result.getMethod().getMethodName());
+ 	
+     }
+	
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
+	public void close(){
+		try{ 
 			lp.logout();
-			// lp.quitBrowser();
-		} finally {
-			lp.quitBrowser();
-		}
+		     //lp.quitBrowser();	
+			}finally {
+				lp.quitBrowser();
+			}
 		LoginPage.clearBrowserCache();
 	}
 }
+

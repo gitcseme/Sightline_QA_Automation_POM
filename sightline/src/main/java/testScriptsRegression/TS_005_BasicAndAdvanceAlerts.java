@@ -23,70 +23,61 @@ import testScriptsSmoke.Input;
 public class TS_005_BasicAndAdvanceAlerts {
 	Driver driver;
 	LoginPage lp;
-	SessionSearch sessionSearch;
+	SessionSearch sessionSearch;	
 	int pureHit;
 	SoftAssert softAssertion;
 
 	BaseClass bc;
-	/*
-	 * String tagName = "tagName"+Utility.dynamicNameAppender(); String folderName =
-	 * "AFolderName"+Utility.dynamicNameAppender();
-	 */
-
+	/*String tagName = "tagName"+Utility.dynamicNameAppender();
+	String folderName = "AFolderName"+Utility.dynamicNameAppender();*/
+	
+	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-
-		//Input in = new Input();
-		//in.loadEnvConfig();
-
+		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+    
+		
 		driver = new Driver();
 		lp = new LoginPage(driver);
-
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc = new BaseClass(driver);
-
 		sessionSearch = new SessionSearch(driver);
 
 	}
-
-	@BeforeMethod
-	public void beforeTestMethod(Method testMethod) {
+		
+	 @BeforeMethod
+	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
-		System.out.println("Executing method : " + testMethod.getName());
-	}
-
-	@AfterMethod(alwaysRun = true)
-	public void takeScreenShot(ITestResult result) {
-		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility bc = new Utility(driver);
-			bc.screenShot(result);
-		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());
-
-	}
-
-	// @Test(dataProvider = "special chars",groups= {"regression"})
-	public void BSphraseAndProximitySearchWrongQueryAlert(String data, int MessageNumber, String fielded,
-			String fieldName, String TestCaseId) {
-		driver.getWebDriver().navigate().refresh();
-		bc.selectproject();
-
-		sessionSearch.wrongQueryAlertBasicSaerch(data, 1, "non fielded", null, "TestCaseId");
-	}
-
-	// @Test(dataProvider = "special chars",groups= {"regression"})
-	public void ASphraseAndProximitySearchWrongQueryAlert(String data, int MessageNumber, String fielded,
-			String fieldName, String TestCaseId) {
-		driver.getWebDriver().navigate().refresh();
-		bc.selectproject();
-
-		sessionSearch.wrongQueryAlertAdvanceSaerch(data, 1, "non fielded", null, "TestCaseId");
-	}
-
-	@Test(dataProvider = "reservedWords", groups = { "regression" })
-	public void reserveredWordsAsearchNonFielded(String data, int MessageNumber, String fielded, String fieldName,
-			String TestCaseId) {
+	    System.out.println("Executing method : " + testMethod.getName());       
+	 }
+     @AfterMethod(alwaysRun = true)
+	 public void takeScreenShot(ITestResult result) {
+ 	 if(ITestResult.FAILURE==result.getStatus()){
+ 		Utility bc = new Utility(driver);
+ 		bc.screenShot(result);
+ 	 }
+ 	 System.out.println("Executed :" + result.getMethod().getMethodName());
+ 	
+     }
+     
+    //@Test(dataProvider = "special chars",groups= {"regression"})
+    public void BSphraseAndProximitySearchWrongQueryAlert(String data) {
+    	driver.getWebDriver().navigate().refresh();
+    	bc.selectproject();
+    	
+   		sessionSearch.wrongQueryAlertBasicSaerch(data, 1,"non fielded", null, "TestcaseId");
+	} 
+    
+    //@Test(dataProvider = "special chars",groups= {"regression"})
+    public void ASphraseAndProximitySearchWrongQueryAlert(String data) {
+    	driver.getWebDriver().navigate().refresh();
+    	bc.selectproject();
+    	
+   		sessionSearch.wrongQueryAlertAdvanceSaerch(data, 1,"non fielded", null, "TestcaseId");
+	} 
+    
+    @Test(dataProvider =  "reservedWords",groups= {"regression"})
+    public void reserveredWordsAsearchNonFielded(String data, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
 		// TODO Auto-generated method stub
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
@@ -94,7 +85,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords1", groups = { "regression" })
+	@Test(dataProvider ="reservedWords1",groups= {"regression"})
 	public void reserveredWordsASeachfielded(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 		// TODO Auto-generated method stub
@@ -104,26 +95,25 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords2", groups = { "regression" })
+	@Test(dataProvider = "reservedWords2",groups= {"regression"})
 	public void reserveredWordsBsearchNonFielded(String data) {
 
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
-		sessionSearch.wrongQueryAlertBasicSaerch(data, 2, "non fielded", null, "TestCaseId");
+		sessionSearch.wrongQueryAlertBasicSaerch(data, 2,"non fielded", null, "TestCaseId");
 
 	}
 
-	@Test(dataProvider = "reservedWords3", groups = { "regression" })
+	@Test(dataProvider ="reservedWords3",groups = {"regression"})
 	public void reserveredWordsBSeachfielded(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
 
-		sessionSearch.wrongQueryAlertBasicSaerch(data, 2, "fielded", "CustodianName", "TestCaseId");
+		sessionSearch.wrongQueryAlertBasicSaerch(data, 2,"fielded", "CustodianName", "TestCaseId");
 
 	}
-
 	@Test(dataProvider = "dateSearches", groups = { "regression" })
 	public void dateandOtherSeachesInBSP(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
@@ -166,6 +156,124 @@ public class TS_005_BasicAndAdvanceAlerts {
 		sessionSearch.wrongQueryAlertAdvanceSaerch(data, MessageNumber, fielded, fieldName, TestCaseId);
 
 	}
+    
+    @DataProvider(name = "special chars")
+    public Object[][] dataProviderMethod() {
+        return new Object[][] { {"\"discrepa* scripts\""},
+        	{"\"*screpancy in\""},
+        	{"\"discre*cy in\""},
+        	{"\"discrepancy i*\""},
+        	{"\"discrepancy *n\""},
+        	{"\"discr*ancy in\""},
+        	{"\"discrepan* i*\""},
+        	{"\"discrepan* script*\""},
+        	{"\"discrepan* scripts\""},
+        	{"\"discrepan* script*\""},
+        	{"\"discrepan* scripts\""},
+        	{"\"*screpancy scripts\"~3"},
+        	{"\"discre*y scripts\"~3"},
+        	{"\"*screpancy org*\""},
+        	{"\"discre*y org\""},
+        	{"\"discrepa* org\""},
+        	{"\"*screpancy and*\""},
+        	{"\"discre*y and\""},
+        	{"\"discrepa* and\""},
+        	{"\"*screpancy not*\""},
+        	{"\"discre*y not*\""},
+        	{"\"discrepa* not*\""},
+        	{"\"discrepan* scripts\"~3"},
+        	{"\"*screpancy scripts\"~3"},
+        	{"\"discre*y scripts\"~3"},
+        	{"\"discrepancy scrip*\"~3"}, 
+        	{"\"discrepancy *ripts\"~3"},
+        	{"\"discr*ancy scripts\"~3"},
+        	{"\"discrepan* scrip*\"~3"},
+        	{"\"discrepan* script*\"~3"},
+        	{"\"discrepan*  scripts\"~3"},
+        	{"\"discrepan* script*\"~3"},
+        	{"\"discrepan* scripts\"~3"},
+        	{"\"*screpancy org*\"~3"},
+        	{"\"discre*y org\"~3"},
+        	{"\"discrepa* org\"~3"},
+        	{"\"*screpancy and*\"~3"}, 
+        	{"\"discre*y and\"~3" },
+        	{"\"discrepa* and\"~3"},
+        	{"\"*screpancy not*\"~3"},
+        	{"\"discre*y not*\"~3" },
+        	{"\"discrepa* not*\"~3"},
+        	{"\"discrepan? scripts\"~3"},
+        	{"\"?screpancy scripts\"~3"},
+        	{"\"discre?y scripts\"~3"}, 
+        	{"\"discrepancy scrip?\"~3"}, 
+        	{"\"discrepancy ?ripts\"~3"}, 
+        	{"\"discr?ancy scripts\"~3"}, 
+        	{"\"discrepan? scrip*\"~3"},
+        	{"\"discrepan? script?\"~3"},
+        	{"\"discrepan?  scripts\"~3"},
+        	{"\"discrepan? script*\"~3"},
+        	{"\"discrepan? scripts\"~3"},
+        	{"\"discre?y scripts\"~3"},
+        	{"\"?screpancy scripts\"~3"},
+        	{"\"?screpancy org?\"~3"},
+        	{"\"discre?y org\"~3"},
+        	{"\"discrepa? org\"~3"},
+        	{"\"?screpancy and?\"~3"},
+        	{"\"discre?y and\"~3"},
+        	{"\"discrepa? and\"~3"},
+        	{"\"?screpancy not?\"~3"},
+        	{"\"discre?y not?\"~3"},
+        	{"\"discrepa? not?\"~3"},
+        	{"\"discrepa? scripts\""},
+        	{"\"?screpancy in\""},
+        	{"\"discre?cy in\""},
+        	{"\"discrepancy i?\""},
+        	{"\"discrepancy ?n\""},
+        	{"\"discr*ancy in\""},
+        	{"\"discrepan? i?\""},
+        	{"\"discrepan? script*\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? script*\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"?screpancy scripts\"~3"},
+        	{"\"discre*y scripts\"~3"},
+        	{"\"?screpancy org?\""},
+        	{"\"discre?y org\""},
+        	{"\"discrepa? org\""},
+        	{"\"?screpancy and?\""},
+        	{"\"discre?y and\""},
+        	{"\"discrepa? and\""},
+        	{"\"?screpancy not?\""},
+        	{"\"discre?y not?\""},
+        	{"\"discrepa? not?\""},
+        	{"\"discrepan* script?\"~3"},
+        	{"\"discre*y scripts\"~3"},
+        	{"\"*screpancy scripts\"~3"},
+        	{"(\"?screpancy org?” OR \"*screpancy org*\" ) NOT \"discre?y org\"~3"},
+        	{"\"discrepan? script*\"~3"},
+        	{"\"*screpancy scripts\""},
+        	{"\"discre*y scripts\""},
+        	{"(\"?screpancy org?” OR \"*screpancy or\" ) NOT ((\"?screpancy and\" OR \"*screpancy and *\" ) AND (\"?screpancy not?\" OR \"*screpancy not\" ) ) OR "
+        			+ "( \"?screpancy and?\"~3 OR \"?screpancy or?\"~3 OR \"?screpancy not\"~3)"},
+        	{"\"?screpancy  and  scripts\" OR ( \"?screpancy  or scripts\" NOT \"*screpancy  not scripts\")"},
+        	{"CustodianName: (Andrew)OR(\"?screpancy and scripts\" OR (\"?screpancy or scripts\")NOT(\"*screpancy not scripts\" )) AND \"?screpancy not?\"~3"},
+        	{"\"discrepan* i?\""},
+        	{"\"discrepan* script?\""},
+        	{"\"discrepancy in\" OR \"discrepancy scripts\"~3"},
+        	{"\"discrepancy scripts\"~3 OR \"discrepanc* in\"~3"},
+        	{"\"discrepanc* in\"~3"},
+        	
+        	//new scenarios
+        	/*{"stock investment~5"},
+        	{"\"stock investment~5"},
+        	{" stock investment\"~5"},
+        	{"\"stock investment~5\""}*/
+        };
+    }
+    
+   
 
 	@DataProvider(name = "reservedWords")
 	public Object[][] dataProviderMethod1() {
@@ -223,55 +331,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 				{ "(that this verification)", 10, "non fielded", null, "RPMXCON-47271" } };
 	}
 
-	@DataProvider(name = "special chars")
-	public Object[][] dataProviderMethod() {
-		return new Object[][] { { "\"discrepa* scripts\"" }, { "\"*screpancy in\"" }, { "\"discre*cy in\"" },
-				{ "\"discrepancy i*\"" }, { "\"discrepancy *n\"" }, { "\"discr*ancy in\"" }, { "\"discrepan* i*\"" },
-				{ "\"discrepan* script*\"" }, { "\"discrepan* scripts\"" }, { "\"discrepan* script*\"" },
-				{ "\"discrepan* scripts\"" }, { "\"*screpancy scripts\"~3" }, { "\"discre*y scripts\"~3" },
-				{ "\"*screpancy org*\"" }, { "\"discre*y org\"" }, { "\"discrepa* org\"" }, { "\"*screpancy and*\"" },
-				{ "\"discre*y and\"" }, { "\"discrepa* and\"" }, { "\"*screpancy not*\"" }, { "\"discre*y not*\"" },
-				{ "\"discrepa* not*\"" }, { "\"discrepan* scripts\"~3" }, { "\"*screpancy scripts\"~3" },
-				{ "\"discre*y scripts\"~3" }, { "\"discrepancy scrip*\"~3" }, { "\"discrepancy *ripts\"~3" },
-				{ "\"discr*ancy scripts\"~3" }, { "\"discrepan* scrip*\"~3" }, { "\"discrepan* script*\"~3" },
-				{ "\"discrepan*  scripts\"~3" }, { "\"discrepan* script*\"~3" }, { "\"discrepan* scripts\"~3" },
-				{ "\"*screpancy org*\"~3" }, { "\"discre*y org\"~3" }, { "\"discrepa* org\"~3" },
-				{ "\"*screpancy and*\"~3" }, { "\"discre*y and\"~3" }, { "\"discrepa* and\"~3" },
-				{ "\"*screpancy not*\"~3" }, { "\"discre*y not*\"~3" }, { "\"discrepa* not*\"~3" },
-				{ "\"discrepan? scripts\"~3" }, { "\"?screpancy scripts\"~3" }, { "\"discre?y scripts\"~3" },
-				{ "\"discrepancy scrip?\"~3" }, { "\"discrepancy ?ripts\"~3" }, { "\"discr?ancy scripts\"~3" },
-				{ "\"discrepan? scrip*\"~3" }, { "\"discrepan? script?\"~3" }, { "\"discrepan?  scripts\"~3" },
-				{ "\"discrepan? script*\"~3" }, { "\"discrepan? scripts\"~3" }, { "\"discre?y scripts\"~3" },
-				{ "\"?screpancy scripts\"~3" }, { "\"?screpancy org?\"~3" }, { "\"discre?y org\"~3" },
-				{ "\"discrepa? org\"~3" }, { "\"?screpancy and?\"~3" }, { "\"discre?y and\"~3" },
-				{ "\"discrepa? and\"~3" }, { "\"?screpancy not?\"~3" }, { "\"discre?y not?\"~3" },
-				{ "\"discrepa? not?\"~3" }, { "\"discrepa? scripts\"" }, { "\"?screpancy in\"" },
-				{ "\"discre?cy in\"" }, { "\"discrepancy i?\"" }, { "\"discrepancy ?n\"" }, { "\"discr*ancy in\"" },
-				{ "\"discrepan? i?\"" }, { "\"discrepan? script*\"" }, { "\"discrepan? scripts\"" },
-				{ "\"discrepan? script*\"" }, { "\"discrepan? scripts\"" }, { "\"discrepan? scripts\"" },
-				{ "\"discrepan? scripts\"" }, { "\"discrepan? scripts\"" }, { "\"?screpancy scripts\"~3" },
-				{ "\"discre*y scripts\"~3" }, { "\"?screpancy org?\"" }, { "\"discre?y org\"" },
-				{ "\"discrepa? org\"" }, { "\"?screpancy and?\"" }, { "\"discre?y and\"" }, { "\"discrepa? and\"" },
-				{ "\"?screpancy not?\"" }, { "\"discre?y not?\"" }, { "\"discrepa? not?\"" },
-				{ "\"discrepan* script?\"~3" }, { "\"discre*y scripts\"~3" }, { "\"*screpancy scripts\"~3" },
-				{ "(\"?screpancy org?” OR \"*screpancy org*\" ) NOT \"discre?y org\"~3" },
-				{ "\"discrepan? script*\"~3" }, { "\"*screpancy scripts\"" }, { "\"discre*y scripts\"" },
-				{ "(\"?screpancy org?” OR \"*screpancy or\" ) NOT ((\"?screpancy and\" OR \"*screpancy and *\" ) AND (\"?screpancy not?\" OR \"*screpancy not\" ) ) OR "
-						+ "( \"?screpancy and?\"~3 OR \"?screpancy or?\"~3 OR \"?screpancy not\"~3)" },
-				{ "\"?screpancy  and  scripts\" OR ( \"?screpancy  or scripts\" NOT \"*screpancy  not scripts\")" },
-				{ "CustodianName: (Andrew)OR(\"?screpancy and scripts\" OR (\"?screpancy or scripts\")NOT(\"*screpancy not scripts\" )) AND \"?screpancy not?\"~3" },
-				{ "\"discrepan* i?\"" }, { "\"discrepan* script?\"" },
-				{ "\"discrepancy in\" OR \"discrepancy scripts\"~3" },
-				{ "\"discrepancy scripts\"~3 OR \"discrepanc* in\"~3" }, { "\"discrepanc* in\"~3" },
-
-				// new scenarios
-				/*
-				 * {"stock investment~5"}, {"\"stock investment~5"}, {" stock investment\"~5"},
-				 * {"\"stock investment~5\""}
-				 */
-		};
-	}
-
+	
 	@DataProvider(name = "warningMessagesbasicsearch")
 
 	public Object[][] dataProviderMethod3() {
@@ -329,11 +389,11 @@ public class TS_005_BasicAndAdvanceAlerts {
 	}
 
 	@AfterClass(alwaysRun = true)
-	public void close() {
-		try {
+	public void close(){
+		try{
 			lp.logout();
-			// lp.quitBrowser();
-		} finally {
+			//lp.quitBrowser();
+		}finally {
 			lp.quitBrowser();
 		}
 		LoginPage.clearBrowserCache();

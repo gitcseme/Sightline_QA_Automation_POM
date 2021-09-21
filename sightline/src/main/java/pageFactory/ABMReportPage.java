@@ -2,9 +2,6 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
-import javax.management.ListenerNotFoundException;
-
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import automationLibrary.Driver;
@@ -60,7 +57,7 @@ public class ABMReportPage {
     	  Thread.sleep(2000);
     	  bc.VerifyWarningMessage("Please select source details");
     	  bc.CloseSuccessMsgpopup();
-    	 
+		  
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getABM_SelectSource().Visible()  ;}}), Input.wait30);		
 		   getABM_SelectSource().Click();
@@ -81,16 +78,13 @@ public class ABMReportPage {
 	      getApplyBtn().Click();
 	     Thread.sleep(2000);
 	      
-		
-		  bc.VerifyWarningMessage("Please select reviewers");
-		  bc.CloseSuccessMsgpopup();
-		 
+	     bc.VerifyWarningMessage("Please select reviewers");
+	     bc.CloseSuccessMsgpopup();
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getABM_ReviewerExpandbutton().Visible()  ;}}), Input.wait30);
 	     getABM_ReviewerExpandbutton().Click();
 	     
-			
 			/*
 			 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
 			 * getABM_RevList("Indium Project Admin1").Visible() ;}}), Input.wait30);
@@ -98,6 +92,7 @@ public class ABMReportPage {
 			 * getABM_RevList("Indium Review Manager1").Displayed();
 			 * getABM_RevList("Indium Reviewer1").Displayed();
 			 */
+	     
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getABM_Reviewer_SelectAll().Visible() ;}}), Input.wait30);
