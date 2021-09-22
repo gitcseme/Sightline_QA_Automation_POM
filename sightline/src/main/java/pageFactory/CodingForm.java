@@ -1187,8 +1187,15 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 										Assert.assertEquals(getTIGGroupLabelTxt,expectedTIGCHECKGROUPLabel);
 																				
 										String getTIGInstructionTxt = getTIGInstructionText().GetAttribute("Value");
-										Assert.assertEquals(getTIGInstructionTxt,expectedTIGInstructionText);
-																				
+										if(getTIGInstructionTxt.isEmpty()) {
+										softAssertion.assertEquals(getTIGInstructionTxt,expectedTIGInstructionText);
+										}
+										
+										else {
+											
+											Assert.assertEquals(getTIGInstructionTxt,expectedDefaultAction2Text);
+											
+										}
 										
 										WebElement optionTIG = getTIGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getTIGDefaultActionTxt = optionTIG.getText();
