@@ -43,6 +43,9 @@ import testScriptsSmoke.Input;
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	//Open browser
 	
@@ -87,7 +90,7 @@ import testScriptsSmoke.Input;
 	    @Test(groups={"regression"},priority=4)
 		 public void ProductionwithNatives() throws Exception {
 		 System.out.println("******Execution started for ProductionwithNatives********");
-		 page.ProductionwithNatives(productionname1, PrefixID, SuffixID, foldername,templatername);
+		 page.ProductionwithNatives(productionname,productionname1, PrefixID, SuffixID, foldername,templatername);
 	  }
 		 
 	    @Test(groups={"regression"},priority=5)
