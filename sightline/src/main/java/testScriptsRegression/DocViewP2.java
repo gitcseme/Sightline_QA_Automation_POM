@@ -80,7 +80,7 @@ import testScriptsSmoke.Input;
 					driver.getWebDriver().findElement(By.id("divViewerText")).isDisplayed();}}),Input.wait60);
 			Assert.assertTrue(driver.getWebDriver().findElement(By.id("divViewerText")).isDisplayed());
 			docId = dv.getDocView_CurrentDocId().getText();
-			bc.passedStep("****Document is reviewed on Text teb in Doc view*****");
+			bc.passedStep("****Document is reviewed on Text tab in Doc view*****");
 			
 			
 			bc.stepInfo("Test case Id: RPMXCON-51914- DocviewImagetab");
@@ -95,17 +95,17 @@ import testScriptsSmoke.Input;
 			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
 			docId = dv.getDocView_CurrentDocId().getText();
 			dv.getDocView_imagesView().waitAndClick(10);
-			bc.passedStep("****next navigated document is reviewed on image teb in Doc view*****");
+			bc.passedStep("****next navigated document is reviewed on image tab in Doc view*****");
 			
-			bc.stepInfo("Test case Id: RPMXCON-51689- DocviewTexttab");
-			bc.stepInfo("****Navigating to Next document From clicking mini Doclist in Docview *****");
+			bc.stepInfo("Test case Id: RPMXCON-51689- DocviewTranslationstab");
+			bc.stepInfo("****Document reviewe on Translations tab in Doc view*****");
 			dv.getDocView_Next().waitAndClick(10);
 			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
 			docId = dv.getDocView_CurrentDocId().getText();
 			
 			
 			dv.getDocView_translationsView().waitAndClick(10);
-			bc.passedStep("****Document is reviewed on Translations teb in Doc view*****");
+			bc.passedStep("****Document is reviewed on Translations tab in Doc view*****");
 			
 			
 			
