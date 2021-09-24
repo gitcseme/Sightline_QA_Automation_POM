@@ -52,8 +52,7 @@ import testScriptsSmoke.Input;
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input in = new Input();
-		in.loadEnvConfig(); 
+		
 		//Open browser
 		driver = new Driver();
 		//Login as PA
