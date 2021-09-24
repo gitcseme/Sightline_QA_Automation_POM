@@ -293,20 +293,32 @@ public class DocExplorerPage {
 	  			getDocExp_EmailRecNameFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailRecNameFilter().waitAndClick(10);
 	  	bc.stepInfo("*****Include EmailRecipientName*****");
+	  	try {
 	  	doclist.include(data1);
+	  	
 	  	Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 1 of 1 entries");
+	  	validateCount("Showing 1 to 1 of 1 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Recipient Name not found! Please check");
+		  	bc.failedStep("Email Author Recipient not found! Please check");
+		  	}
 	  	bc.stepInfo("*****update EmailRecipientName*****");
+	  	try {
 	  	UpdateFilter(data2);
+	  	
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 22 of 22 entries");
+	  	validateCount("Showing 1 to 22 of 22 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Recipient Name not found! Please check");
+		  	bc.failedStep("Email Author Recipient not found! Please check");
+		  	}
 	  	bc.passedStep("*****EmailRecipientName Filter  Validated successfully*****");
 	 }
   
@@ -317,20 +329,34 @@ public class DocExplorerPage {
 	  			getDocExp_EmailAuthNameFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailAuthNameFilter().waitAndClick(10);
 	  	bc.stepInfo("*****Exclude EmailAuthorName*****");
+	  	try {
 	  	doclist.exclude(data1);
-	  	Thread.sleep(2000);
+        Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
 	  	validateCount("Showing 1 to 50 of 1,201 entries");
+	  	}
+	  	catch(Exception e) {
+	  	System.out.println("Email Author Name not found! Please check");
+	  	bc.failedStep("Email Author Name not found! Please check");
+	  	}
+	  	
 	  	bc.stepInfo("*****Update EmailAuthorName*****");
+	  	try {
 	  	UpdateFilter(data2);
+	  	
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
 	  	validateCount("Showing 1 to 50 of 1,200 entries");
+	  	}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Name not found! Please check");
+		  	bc.failedStep("Email Author Name not found! Please check");
+		  	}
 	  	bc.passedStep("*****EmailAuthorName Filter  Validated successfully*****");
 	 }
   
@@ -341,20 +367,32 @@ public class DocExplorerPage {
 	  			getDocExp_EmailAuthDomainFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailAuthDomainFilter().waitAndClick(10);
 	  	bc.stepInfo("*****Include EmailAuthorDomain*****");
+	  	try {
 	  	doclist.include(data1);
+	  	
 	  	Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
 	  	validateCount("Showing 1 to 6 of 6 entries");
+	  	}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Domain Name not found! Please check");
+		  	bc.failedStep("Email Author Domain Name not found! Please check");
+		  	}
 	  	bc.stepInfo("*****Update EmailAuthorDomain*****");
+	  	try {
 	  	UpdateFilter(data2);
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 10 of 10 entries");
+	  	validateCount("Showing 1 to 10 of 10 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Domain Name not found! Please check");
+		  	bc.failedStep("Email Author Domain Name not found! Please check");
+		  	}
 	  	bc.passedStep("*****EmailAuthorDomain Filter  Validated successfully*****");
 	 }
   
@@ -409,7 +447,12 @@ public class DocExplorerPage {
  	  getDocExp_DocumentList_info().waitAndClick(30); //works only when results updates!!
         
  	   //Now validate results
- 	   Assert.assertTrue(getDocExp_DocumentList_info().getText().toString().equalsIgnoreCase(counts));
+ 	 try {
+ 	 	   Assert.assertTrue(getDocExp_DocumentList_info().getText().toString().equalsIgnoreCase(counts));}
+ 	 	  catch(AssertionError e)
+ 	 	  { System.out.println("Count validation failed!! Please check");
+ 	 	  bc.failedStep("******Count validation failed!! Please check********");
+ 	 	  }
  	   
  }
   
