@@ -233,7 +233,7 @@ public class SessionSearch {
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
-    public String getToolTipMsgBS(String isOrRange, String metaDataField) {
+    public String getToolTipMsgBS(String isOrRange, String metaDataField,String Testcaseid) {
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEnterSearchString().Visible()  ;}}), Input.wait30);
@@ -271,7 +271,7 @@ public class SessionSearch {
 		return null;
 	}
     
-    public String getToolTipMsgAS(String isOrRange, String metaDataField) {
+    public String getToolTipMsgAS(String isOrRange, String metaDataField,String Testcaseid) {
     	
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
@@ -530,7 +530,13 @@ public class SessionSearch {
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	
-        	
+				/*
+				 * if(MessageNumber == 11){ String msg=
+				 * "Your query has multiple potential syntax issues.1. Your query contains a ~ (tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax."
+				 * ; Assert.assertEquals(msg.replaceAll(" ",
+				 * ""),getQueryAlertGetText().getText().replaceAll(" ",
+				 * "").replaceAll("\n","")); }
+				 */
         	if(MessageNumber == 12){
             	String msg= "Search queries with wildcard characters within phrases are not supported. Alternatively, you could get the same results by performing a proximity search with a distance of zero. For example, a search \"trade contr*\" can be equivalently reconstructed as \"trade contr*\"~0! to get the same results. Please reach out to Support or your administrator for any additional help.";
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
