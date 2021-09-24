@@ -1,15 +1,19 @@
 package pageFactory;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.List;
-
+import java.util.Set;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
-//
+
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
@@ -89,7 +93,7 @@ public class SessionSearch {
     public Element getSavedSearch_MySearchesTab(){ return driver.FindElementById("-1_anchor"); }
     public Element getSaveSearch_Name(){ return driver.FindElementById("txtSaveSearchName"); }
     public Element getSaveSearch_SaveButton(){ return driver.FindElementById("btnEdit"); }
-    public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
+    public Element getBulkRelDefaultSecurityGroup_CheckBox(int count){ return driver.FindElementByXPath("//form[@id='Edit User Group']/fieldset/div/div/div/div/div["+count+"]//i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
     
@@ -220,8 +224,10 @@ public class SessionSearch {
    // public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
     
     //Query alert for proximity and regex search
+   
+    public Element getSecurityGrpEle(){ return driver.FindElementByXPath("//*[@id=\"Edit User Group\"]/fieldset/div/div/div/div"); }
     public Element getYesQueryAlert(){ return driver.FindElementByCssSelector("#bot1-Msg1"); }
-    
+    public ElementCollection getSecurityGName(){ return driver.FindElementsByXPath("//*[@id='Edit User Group']/fieldset/div/div/div/div/div/div[2]"); }
     
     public SessionSearch(Driver driver){
 
@@ -1265,7 +1271,8 @@ public void bulkAssign() {
 
 
 //Bulk release to default security group
-public void bulkRelease(final String SecGroup) {
+public void bulkRelease(final String SecGroup) throws InterruptedException {
+	int count=0;
 
 	 try{
 		 getPureHitAddButton().waitAndClick(10);
@@ -1275,16 +1282,33 @@ public void bulkRelease(final String SecGroup) {
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
-	
+	 getBulkReleaseAction().ElementToBeClickableExplicitWait(getBulkReleaseAction(), 2000);
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);
 	 }catch (Exception e) {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
-	 
+	 Thread.sleep(5000);
+	//added here
+	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
+		 count=count+1;
+			if(iterable_element.getText().contains(SecGroup)){
+				
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().perform();
+				getBulkRelDefaultSecurityGroup_CheckBox(count).VisibilityOfElementExplicitWait(getBulkRelDefaultSecurityGroup_CheckBox(count), 5000);
+				break;
+			}
+		}
+
+	 getBulkRelDefaultSecurityGroup_CheckBox(count).Click(); 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
 	 getBulkRelease_ButtonRelease().waitAndClick(20);
@@ -1302,6 +1326,7 @@ public void bulkRelease(final String SecGroup) {
 
 public boolean bulkReleaseIngestions(final String SecGroup) {
 	boolean release = false;
+	int count=0;
 	try{
 	 try{
 		 getPureHitAddButton().waitAndClick(10);
@@ -1323,9 +1348,24 @@ public boolean bulkReleaseIngestions(final String SecGroup) {
 	 }catch (Exception e) {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
+			if(iterable_element.getText().contains(SecGroup)){
+				count=count+1;
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				new Actions(driver.getWebDriver()).moveToElement(getBulkRelDefaultSecurityGroup_CheckBox(count).getWebElement()).click();
+				driver.scrollingToBottomofAPage();
+		
+				getBulkRelDefaultSecurityGroup_CheckBox(count).Click();
+			}
+		}
+//	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
+//	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
@@ -1548,18 +1588,21 @@ public void selectOperator(String operator) {
 	driver.scrollPageToTop();
 	getOperatorDD().Click();
 	if(operator.equalsIgnoreCase("and")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
+		getOperatorAND().ElementToBeClickableExplicitWait(getOperatorAND(), 2000);
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorOR().Visible()  ;}}), Input.wait60); 
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorOR().Visible()  ;}}), Input.wait60); 
+		getOperatorOR().ElementToBeClickableExplicitWait(getOperatorOR(), 2000);
 		getOperatorOR().waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorNOT().Visible()  ;}}), Input.wait60); 
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorNOT().Visible()  ;}}), Input.wait60); 
+		getOperatorNOT().ElementToBeClickableExplicitWait(getOperatorNOT(), 2000);
 		getOperatorNOT().Click();	
 	}
 
@@ -1645,12 +1688,13 @@ getAdvancedSearchLink().Click();
 
 }
 
-public int serarchWP() {
+public int serarchWP() throws InterruptedException {
 	driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getQuerySearchButton().Visible()  ;}}), Input.wait30); 
 	getQuerySearchButton().waitAndClick(5);
 	//verify counts for all the tiles
+	Thread.sleep(5000);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
 		
