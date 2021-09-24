@@ -109,7 +109,7 @@ public class DocList_Regression {
 		//To validate custodian filter
 		@Test(priority=4,groups={"regression"})
 		public void masterDateFiltersInDocList() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-54530 - docFileTypeInDocList");
+			bc.stepInfo("Test case Id: RPMXCON-54530 - masterDateFiltersInDocList");
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
@@ -166,6 +166,7 @@ public class DocList_Regression {
 	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			dl.getCustodianFilter().Visible()  ;}}), Input.wait30);
+	    	bc.stepInfo("*****Include custodian name filter*****");
 			//include 
 	    	dl.getCustodianFilter().waitAndClick(10);
 	    	dl.include("P Allen");
@@ -175,12 +176,13 @@ public class DocList_Regression {
 	    	
 	    	//cancel previous filter
 	    	dl.removeRpeviousFilters();
-	    	
+	    	bc.stepInfo("*****Exclude custodian name filter*****");
 	    	//exclude
 	    	dl.getCustodianFilter().waitAndClick(10);
 	    	dl.exclude("P Allen");
 	    	dl.getApplyFilter().Click();
-	    	//dl.validateCount("Showing 1 to 4 of 4 entries");
+	    	dl.validateCount("Showing 1 to 10 of 68 entries");
+	    	bc.passedStep("*****Documents count Validation sucessfully*****");
 	    	
 	    	
 		}

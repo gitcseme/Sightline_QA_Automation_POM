@@ -98,7 +98,7 @@ import testScriptsSmoke.Input;
 			bc.passedStep("****next navigated document is reviewed on image tab in Doc view*****");
 			
 			bc.stepInfo("Test case Id: RPMXCON-51689- DocviewTranslationstab");
-			bc.stepInfo("****Document reviewe on Translations tab in Doc view*****");
+			bc.stepInfo("****Document review on Translations tab in Doc view*****");
 			dv.getDocView_Next().waitAndClick(10);
 			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
 			docId = dv.getDocView_CurrentDocId().getText();
