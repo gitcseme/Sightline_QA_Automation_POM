@@ -34,6 +34,7 @@ import testScriptsSmoke.Input;
 	Driver driver;
 	LoginPage lp;
 	DocViewPage docView;
+	BaseClass bc;
 	
     HomePage hm;
 	//BaseClass bc;
@@ -51,13 +52,14 @@ import testScriptsSmoke.Input;
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		/*Input in = new Input();
-		in.loadEnvConfig(); */
+		Input in = new Input();
+		in.loadEnvConfig(); 
 		//Open browser
 		driver = new Driver();
 		//Login as PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		bc = new BaseClass(driver);
 		
     	  
         
@@ -65,64 +67,85 @@ import testScriptsSmoke.Input;
 	
 		@Test(groups={"regression"},priority=1)
 		public void  VerifyTabsOnDocView() throws InterruptedException {
- 		
+ 		    
    		 	String docId;
+   		    DocViewPage dv = new DocViewPage(driver);
 			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString1);
 			search.ViewInDocView();
 			
-			DocViewPage dv = new DocViewPage(driver);
+			bc.stepInfo("Test case Id: RPMXCON-50911- DocviewTexttab");
+			bc.stepInfo("****review on Text tab in Docview *****");
 			dv.getDocView_textView().waitAndClick(10);
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					driver.getWebDriver().findElement(By.id("divViewerText")).isDisplayed();}}),Input.wait60);
 			Assert.assertTrue(driver.getWebDriver().findElement(By.id("divViewerText")).isDisplayed());
 			docId = dv.getDocView_CurrentDocId().getText();
+			bc.passedStep("****Document is reviewed on Text teb in Doc view*****");
 			
+			
+			bc.stepInfo("Test case Id: RPMXCON-51914- DocviewImagetab");
+			bc.stepInfo("****review on Images tab and navigate to next document in Doc view*****");
 			dv.getDocView_Next().waitAndClick(10);
 			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
 			docId = dv.getDocView_CurrentDocId().getText();
-			
 			dv.getDocView_imagesView().waitAndClick(10);
+			
+			
+			dv.getDocView_Next().waitAndClick(10);
+			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
+			docId = dv.getDocView_CurrentDocId().getText();
+			dv.getDocView_imagesView().waitAndClick(10);
+			bc.passedStep("****next navigated document is reviewed on image teb in Doc view*****");
+			
+			bc.stepInfo("Test case Id: RPMXCON-51689- DocviewTexttab");
+			bc.stepInfo("****Navigating to Next document From clicking mini Doclist in Docview *****");
 			dv.getDocView_Next().waitAndClick(10);
 			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
 			docId = dv.getDocView_CurrentDocId().getText();
 			
-			dv.getDocView_imagesView().waitAndClick(10);
-			dv.getDocView_Next().waitAndClick(10);
-			Assert.assertTrue(!docId.equals(dv.getDocView_CurrentDocId().getText()));
-			docId = dv.getDocView_CurrentDocId().getText();
 			
 			dv.getDocView_translationsView().waitAndClick(10);
+			bc.passedStep("****Document is reviewed on Translations teb in Doc view*****");
 			
 			
 			
 		}
 	@Test(groups={"regression"},priority=2)	
  	public void navigations() throws InterruptedException {
- 		
-		SessionSearch search = new SessionSearch(driver);
-		//search.basicContentSearch(Input.searchString1);
-		search.ViewInDocView();
 		
 		DocViewPage dv = new DocViewPage(driver);
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString1);
+		search.ViewInDocView();
+		
+		
 		Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
-		
+		bc.stepInfo("Test case Id: RPMXCON-51969- DocviewNavigation");
+		bc.stepInfo("****Navigating Last document in DocView *****");
 		dv.getDocView_Last().waitAndClick(10);
 		Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
-		
+		bc.passedStep("****Navigation to Last document in DocView is success*****");
+		bc.stepInfo("Test case Id: RPMXCON-51968 - DocviewNavigation");
+		bc.stepInfo("****Navigating first document in DocView *****");
 		dv.getDocView_First().waitAndClick(10);
 		Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
-		
+		bc.passedStep("****Navigation to First document in DocView is success*****");
+		bc.stepInfo("Test case Id: RPMXCON-51967 - DocviewNavigation");
+		bc.stepInfo("****Navigating Next document in DocView *****");
 		dv.getDocView_Next().waitAndClick(10);
 		Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
-		
+		bc.passedStep("****Navigation to Next document in DocView is success*****");
+		bc.stepInfo("Test case Id: RPMXCON-51966 - DocviewNavigation");
+		bc.stepInfo("****Navigating Previous document in DocView*****");
 		dv.getDocView_Previous().waitAndClick(10);
 		Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
+		bc.passedStep("****Navigation to Previous document in DocView is success*****");
 		
 		
 
