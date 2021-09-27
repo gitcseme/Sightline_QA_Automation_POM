@@ -19,7 +19,7 @@ public class SearchTermReportPage {
     public Element getST_Actionsbutton(){ return driver.FindElementById("tallyactionbtn"); }
     public Element getST_Actions_QB(){ return driver.FindElementByXPath("//a[contains(.,'Quick Batch')]"); }
     //public Element getST_SelectHits(){ return driver.FindElementById("chkHits"); }
-    public Element getST_Selectsearch(String searchname){ return driver.FindElementByXPath("//a[contains(.,'"+searchname+"']/i[1]"); }
+    public Element getST_Selectsearch(String searchname){ return driver.FindElementByXPath("//a[contains(.,'"+searchname+"']/i[1]"); }//
     
     
       public SearchTermReportPage(Driver driver){

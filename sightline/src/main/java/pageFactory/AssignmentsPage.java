@@ -178,7 +178,7 @@ public class AssignmentsPage {
         //This initElements method will create all WebElements
         assertion = new SoftAssert();
         search = new SessionSearch(driver);
-        docview = new DocViewPage(driver);
+        docview = new DocViewPage(driver);//
 
     }
 

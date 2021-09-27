@@ -14,7 +14,7 @@ public class TallyPage {
 
 	Driver driver;
 	BaseClass base;
-	final DocListPage dp;
+	final DocListPage dp;//
 
 	public Element getAutoSelectedSearchSource() {
 		return driver.FindElementByXPath("//li[contains(text(),'Documents: Selected Documents from Search')]");

@@ -18,7 +18,7 @@ public class UserManagement {
 	   BaseClass bc;
 	   SoftAssert softAssertion;
 	   
-	   public Element getAddUserBtn(){ return driver.FindElementById("addNewUser"); }
+	   public Element getAddUserBtn(){ return driver.FindElementById("addNewUser"); }//
 	    public Element getFirstName(){ return driver.FindElementByXPath("//*[@tabindex='1']"); }
 	    public Element getLastName(){ return driver.FindElementByXPath("//*[@tabindex='2']"); }
 	    public Element getSelectRole(){ return driver.FindElementByXPath("//*[@tabindex='3']"); }
