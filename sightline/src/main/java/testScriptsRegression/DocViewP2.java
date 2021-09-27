@@ -52,7 +52,6 @@ import testScriptsSmoke.Input;
 	public void preCondition() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
 		//Open browser
 		driver = new Driver();
 		//Login as PA
@@ -117,32 +116,42 @@ import testScriptsSmoke.Input;
 		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocView();
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				dv.getDocView_textArea().Displayed()  ;}}), Input.wait60);
 		
 		
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
 		bc.stepInfo("Test case Id: RPMXCON-51969- DocviewNavigation");
 		bc.stepInfo("****Navigating Last document in DocView *****");
 		dv.getDocView_Last().waitAndClick(10);
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				dv.getDocView_textArea().Displayed()  ;}}), Input.wait60);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
 		bc.passedStep("****Navigation to Last document in DocView is success*****");
 		bc.stepInfo("Test case Id: RPMXCON-51968 - DocviewNavigation");
 		bc.stepInfo("****Navigating first document in DocView *****");
 		dv.getDocView_First().waitAndClick(10);
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				dv.getDocView_textArea().Displayed()  ;}}), Input.wait60);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
 		bc.passedStep("****Navigation to First document in DocView is success*****");
 		bc.stepInfo("Test case Id: RPMXCON-51967 - DocviewNavigation");
 		bc.stepInfo("****Navigating Next document in DocView *****");
 		dv.getDocView_Next().waitAndClick(10);
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				dv.getDocView_textArea().Displayed()  ;}}), Input.wait60);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
 		bc.passedStep("****Navigation to Next document in DocView is success*****");
 		bc.stepInfo("Test case Id: RPMXCON-51966 - DocviewNavigation");
 		bc.stepInfo("****Navigating Previous document in DocView*****");
 		dv.getDocView_Previous().waitAndClick(10);
-		Thread.sleep(4000);
+		//Thread.sleep(4000);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				dv.getDocView_textArea().Displayed()  ;}}), Input.wait60);
 		Assert.assertTrue(dv.getDocView_textArea().Displayed());
 		bc.passedStep("****Navigation to Previous document in DocView is success*****");
 		

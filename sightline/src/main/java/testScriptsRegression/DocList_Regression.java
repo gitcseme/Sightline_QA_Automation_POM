@@ -53,7 +53,7 @@ public class DocList_Regression {
 	@Test(priority=1,groups={"regression"})
 	public void PreviewDocNonAudio() throws InterruptedException {
 		
-		bc.stepInfo("Test case Id: RPMXCON-54566 - PreviewDocNonAudio");
+		bc.stepInfo("Test case Id: RPMXCON-54566 - Preview Document NonAudio");
 		bc.stepInfo("****session search*****");
 		//final DocListPage dl= new DocListPage(driver);
 		ss.basicContentSearch(Input.searchString2);
@@ -74,7 +74,7 @@ public class DocList_Regression {
 		@Test(priority=2,groups={"regression"})
 		public void PreviewDocAudio() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-54565 - PreviewDocNonAudio");
+			bc.stepInfo("Test case Id: RPMXCON-54565 - Preview Document Audio");
 			bc.stepInfo("****Audio search*****");
 			//final DocListPage dl= new DocListPage(driver);
 			driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -109,7 +109,7 @@ public class DocList_Regression {
 		//To validate custodian filter
 		@Test(priority=4,groups={"regression"})
 		public void masterDateFiltersInDocList() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-54530 - masterDateFiltersInDocList");
+			bc.stepInfo("Test case Id: RPMXCON-54530 - Validate masterDateFilters InDocList");
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
@@ -131,7 +131,7 @@ public class DocList_Regression {
 		@Test(priority=5,groups={"regression"})
 		public void docFileTypeInDocList() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-53664 - docFileTypeInDocList");
+			bc.stepInfo("Test case Id: RPMXCON-53664 - Validate docFileType filter InDocList");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
@@ -157,7 +157,7 @@ public class DocList_Regression {
 		@Test(priority=6,groups={"regression"})
 		public void custodianFiltersInDocList() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-53664 - custodianFiltersInDocList");
+			bc.stepInfo("Test case Id: RPMXCON-53664 - Validate custodianFilters InDocList");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
