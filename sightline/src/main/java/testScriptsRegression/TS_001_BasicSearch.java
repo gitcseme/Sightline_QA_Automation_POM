@@ -47,11 +47,10 @@ public class TS_001_BasicSearch {
 		
 		driver = new Driver();
 		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);//modified here
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
-//		lp.logout();
-		
+	
 
 	}
 	@Test(groups={"regression"},priority=1)
@@ -279,6 +278,8 @@ public class TS_001_BasicSearch {
 
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		bc.selectproject();
+		bc.passedStep("******** Search page is successfully opened********");
+		bc.stepInfo(TestCaseId);
 		softAssertion.assertEquals(Expected_count,ss.basicMetaDataSearch(metaDataName, IS_or_Range, first_input, second_input));
 		softAssertion.assertAll();
 
