@@ -147,7 +147,7 @@ public class BaseClass {
 	}
 
 	public Element getNOBtn() {
-		return driver.FindElementByXPath("//button[@id='bot2-Msg1']");
+		return driver.FindElementById("bot2-Msg1");
 	}
 
 	public Element getAvlDomain() {
