@@ -2,6 +2,7 @@ package testScriptsRegression;
 
 import java.io.IOException;
 
+
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
@@ -39,7 +40,7 @@ public class TS_003_AdvanceSearch1 {
 	int pureHit;
 	BaseClass bc;
 	SoftAssert softAssertion;
-
+	DocViewPage dc;
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -50,12 +51,13 @@ public class TS_003_AdvanceSearch1 {
 		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
-		searchText =Input.searchString1;
+		
 		//Login as PA
 		lp=new LoginPage(driver);
-		search = new SessionSearch(driver);
     	lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-    	   		
+    	searchText =Input.searchString1;
+    	search = new SessionSearch(driver);
+    	dc =new DocViewPage(driver);  		
     	
 	}
 	
@@ -73,9 +75,10 @@ public class TS_003_AdvanceSearch1 {
 		search.basicContentSearch("test");
 		search.ViewInDocView();
 		
-		final DocViewPage dc =new DocViewPage(driver);
+		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 dc.getDocView_RedactIcon().Visible()  ;}}), Input.wait60);
+		dc.getDocView_RedactIcon().VisibilityOfElementExplicitWait(dc.getDocView_RedactIcon(), 2000);
 		dc.getDocView_RedactIcon().Click();
 		 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -162,7 +165,7 @@ public class TS_003_AdvanceSearch1 {
 		 search.searchSavedSearch(saveSearchName);
 		 search.selectOperator("AND");
 		 search.selectAssignmentInWPS(assignMentName);
-		 softAssertion.assertEquals(3,search.serarchWP());
+		 softAssertion.assertEquals(15,search.serarchWP());
 		 
 		 
 		 
@@ -176,7 +179,7 @@ public class TS_003_AdvanceSearch1 {
 		 search.searchSavedSearch(saveSearchName);
 		 search.selectOperator("AND");
 		 search.selectAssignmentInWPS(assignMentName);
-		 softAssertion.assertEquals(53,search.serarchWP());
+		 softAssertion.assertEquals(87,search.serarchWP());
 		 
 		 softAssertion.assertAll();
 }
@@ -198,7 +201,7 @@ public class TS_003_AdvanceSearch1 {
 			
 			//check folder and count in advance search
 			bc.selectproject();
-			bc.selectproject();
+//			bc.selectproject();
 			search.switchToWorkproduct();
 		    search.selectFolderInASwp(Folder);
 			Assert.assertEquals(count,search.serarchWP());
@@ -236,12 +239,12 @@ public class TS_003_AdvanceSearch1 {
 		    	
 				bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","left")==2);
+		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","left")>=0);
 		    	
 		    		    	
 		    	bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=1);
+		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=0);
 		    	
 		    	bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
