@@ -41,9 +41,9 @@ public class TS_001_BasicSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
-		//Open browser
+		
 		softAssertion= new SoftAssert();
-		Input in = new Input(); in.loadEnvConfig();
+//		Input in = new Input(); in.loadEnvConfig();
 		
 		driver = new Driver();
 		lp=new LoginPage(driver);

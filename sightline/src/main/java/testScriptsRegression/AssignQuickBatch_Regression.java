@@ -55,9 +55,9 @@ public class AssignQuickBatch_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-				//Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
+				
+//		Input in = new Input();
+//		in.loadEnvConfig();
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);

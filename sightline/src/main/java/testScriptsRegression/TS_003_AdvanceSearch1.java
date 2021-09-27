@@ -45,10 +45,10 @@ public class TS_003_AdvanceSearch1 {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    	//bt = new BaseTest();
-		//Open browser
+    	
+		
 		softAssertion= new SoftAssert();
-		Input in = new Input(); in.loadEnvConfig();
+//		Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		
