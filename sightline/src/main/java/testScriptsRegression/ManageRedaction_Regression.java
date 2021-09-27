@@ -31,6 +31,7 @@ public class ManageRedaction_Regression {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
 
+	//Input in = new Input();in.loadEnvConfig();
 	driver = new Driver();
 	lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -40,11 +41,16 @@ public class ManageRedaction_Regression {
 	
 	@Test(priority =1,groups={"regression"})
 	public void AddRedactionwithRMU() throws ParseException, InterruptedException {
-		
+		bc.stepInfo("RPMXCON-53622-To verify user with Manage privileges can create Redaction Tag");
 		redact.AddRedaction(redactname,"RMU");
+		bc.passedStep(redactname+"added successfully");
 		redact.AddRedaction(editredactname,"RMU");
+		bc.stepInfo("RPMXCON-53623-To verify user with Manage Privileges can edit redaction tag");
 		redact.EditRedaction(editredactname);
+		bc.passedStep(editredactname+"edited successfully");
+		bc.stepInfo("RPMXCON-53624-To verify user with Manage Privileges can remove redaction tag");
 		redact.DeleteRedaction(redactname);
+		bc.passedStep(redactname+"deleted successfully");
 	}
 	
 	@Test(priority =2,groups={"regression"})
@@ -52,18 +58,26 @@ public class ManageRedaction_Regression {
 		
 		lp.logout();
 		lp.loginToSightLine(Input.pa1userName,Input.pa1password);
+		bc.stepInfo("RPMXCON-53622-To verify user with Manage privileges can create Redaction Tag");
 		redact.AddRedaction(redactname,"PA");
+		bc.passedStep(redactname+"added successfully");
 		redact.AddRedaction(editredactname,"PA");
+		bc.stepInfo("RPMXCON-53623-To verify user with Manage Privileges can edit redaction tag");
 		redact.EditRedaction(editredactname);
+		bc.passedStep(editredactname+"edited successfully");
+		bc.stepInfo("RPMXCON-53624-To verify user with Manage Privileges can remove redaction tag");
 		redact.DeleteRedaction(redactname);
+		bc.passedStep(redactname+"deleted successfully");
 	}
 	
 	@Test(priority =3,groups={"regression"})
 	public void AddRedactionImpersonate() throws ParseException, InterruptedException {
 		
 		 //Impersonate as PA 
+		bc.stepInfo("RPMXCON-53688-To verify user can create redaction tags after impersonating the role");
 		bc.impersonatePAtoRMU();
 		redact.AddRedaction(redactname,"RMU");
+		bc.passedStep(redactname+"added successfully");
 	}
 	
 	
