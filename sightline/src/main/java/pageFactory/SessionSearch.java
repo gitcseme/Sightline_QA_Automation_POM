@@ -1289,7 +1289,7 @@ public void bulkRelease(final String SecGroup) throws InterruptedException {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
 	 Thread.sleep(5000);
-	//added here
+	//added here in the pom
 	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
 		 count=count+1;
 			if(iterable_element.getText().contains(SecGroup)){
@@ -1587,22 +1587,22 @@ public void selectSecurityGinWPS(String sgname) {
 public void selectOperator(String operator) {
 	driver.scrollPageToTop();
 	getOperatorDD().Click();
-	if(operator.equalsIgnoreCase("and")){
+	if(operator.equalsIgnoreCase("AND")){
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
-		getOperatorAND().ElementToBeClickableExplicitWait(getOperatorAND(), 2000);
+		getOperatorAND().ElementToBeClickableExplicitWait(getOperatorAND(), 10000);
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getOperatorOR().Visible()  ;}}), Input.wait60); 
-		getOperatorOR().ElementToBeClickableExplicitWait(getOperatorOR(), 2000);
+		getOperatorOR().ElementToBeClickableExplicitWait(getOperatorOR(), 10000);
 		getOperatorOR().waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getOperatorNOT().Visible()  ;}}), Input.wait60); 
-		getOperatorNOT().ElementToBeClickableExplicitWait(getOperatorNOT(), 2000);
+		getOperatorNOT().ElementToBeClickableExplicitWait(getOperatorNOT(), 10000);
 		getOperatorNOT().Click();	
 	}
 
@@ -1694,7 +1694,8 @@ public int serarchWP() throws InterruptedException {
 			 getQuerySearchButton().Visible()  ;}}), Input.wait30); 
 	getQuerySearchButton().waitAndClick(5);
 	//verify counts for all the tiles
-	Thread.sleep(5000);
+	driver.waitForPageToBeReady();
+//	getPureHitsCount().VisibilityOfElementExplicitWait(getPureHitsCount(), 10000);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
 		
