@@ -18,7 +18,7 @@ public class UserManagement {
 	   BaseClass bc;
 	   SoftAssert softAssertion;
 	   
-	   public Element getAddUserBtn(){ return driver.FindElementById("addNewUser"); }//
+	   public Element getAddUserBtn(){ return driver.FindElementById("addNewUser"); }
 	    public Element getFirstName(){ return driver.FindElementByXPath("//*[@tabindex='1']"); }
 	    public Element getLastName(){ return driver.FindElementByXPath("//*[@tabindex='2']"); }
 	    public Element getSelectRole(){ return driver.FindElementByXPath("//*[@tabindex='3']"); }
@@ -26,7 +26,7 @@ public class UserManagement {
 	    public Element getSelectLanguage(){ return driver.FindElementByXPath("//*[@tabindex='6']"); }
 	    public Element getSelectDomain(){ return driver.FindElementByXPath("//*[@tabindex='8']"); }
 	    public Element getSelectProject(){ return driver.FindElementByXPath("//*[@tabindex='7']"); }
-	    public Element getSecurityGroup(){ return driver.FindElementByXPath("(//*[@tabindex='8'])"); }
+	    public Element getSecurityGroup(){ return driver.FindElementByXPath("//*[@id='ddlSysAdminSecGroup']"); }
 	    public Element getSave(){ return driver.FindElementById("SaveUser"); }
 	    
 	    //set password
@@ -161,7 +161,7 @@ public void setPassword(String pwd) {
 		 
 	}
 	
- public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
+ public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) throws InterruptedException {
 		
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddUserBtn().Visible() ;}}), Input.wait30);
@@ -185,7 +185,13 @@ public void setPassword(String pwd) {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSelectProject().Visible() ;}}), Input.wait30);
 		 //getSelectDomain().SendKeys(domain);
-		 getSelectProject().selectFromDropdown().selectByVisibleText(project);
+		 if(project.length()>19) {
+			 project=project.substring(0, 20);
+			 project=project+"...";
+//			 System.out.println(project);
+			 getSelectProject().selectFromDropdown().selectByVisibleText(project);
+		 }
+		
 		 }
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSecurityGroup().Visible() ;}}), Input.wait30);
@@ -197,10 +203,12 @@ public void setPassword(String pwd) {
 		}
 		 if(role.equalsIgnoreCase("Review Manager")
 					||role.equalsIgnoreCase("Reviewer")){
-		 getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");;
+			 
+		 getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		 
 		 }
 		 getSave().Click();
+		 Thread.sleep(2000);
 		 bc.VerifySuccessMessage("User profile was successfully created");
 		 
 	}
@@ -300,7 +308,9 @@ public void setPassword(String pwd) {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSelectProject().Visible() ;}}), Input.wait30);
 		 //getSelectDomain().SendKeys(domain);
-		 getSelectProject().selectFromDropdown().selectByVisibleText(project);
+	
+			 getSelectProject().selectFromDropdown().selectByVisibleText(project);
+		
 		 }
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSecurityGroup().Visible() ;}}), Input.wait30);

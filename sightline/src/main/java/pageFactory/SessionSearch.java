@@ -1,12 +1,9 @@
 package pageFactory;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.Callable;
 
-import org.openqa.selenium.JavascriptExecutor;
+
+import java.util.concurrent.Callable;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -224,10 +221,9 @@ public class SessionSearch {
    // public Element getadvoption_threaded(){ return driver.FindElementByXPath("//*[@id='chkIncludeThreadedDocuments']/following-sibling::i"); }
     
     //Query alert for proximity and regex search
-   
-    public Element getSecurityGrpEle(){ return driver.FindElementByXPath("//*[@id=\"Edit User Group\"]/fieldset/div/div/div/div"); }
     public Element getYesQueryAlert(){ return driver.FindElementByCssSelector("#bot1-Msg1"); }
     public ElementCollection getSecurityGName(){ return driver.FindElementsByXPath("//*[@id='Edit User Group']/fieldset/div/div/div/div/div/div[2]"); }
+    
     
     public SessionSearch(Driver driver){
 
@@ -1688,14 +1684,12 @@ getAdvancedSearchLink().Click();
 
 }
 
-public int serarchWP() throws InterruptedException {
+public int serarchWP() {
 	driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getQuerySearchButton().Visible()  ;}}), Input.wait30); 
 	getQuerySearchButton().waitAndClick(5);
 	//verify counts for all the tiles
-	driver.waitForPageToBeReady();
-//	getPureHitsCount().VisibilityOfElementExplicitWait(getPureHitsCount(), 10000);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
 		
