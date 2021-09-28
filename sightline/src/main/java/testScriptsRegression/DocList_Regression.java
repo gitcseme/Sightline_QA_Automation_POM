@@ -77,7 +77,7 @@ public class DocList_Regression {
 			bc.stepInfo("Test case Id: RPMXCON-54565 - Preview Document Audio");
 			bc.stepInfo("****Audio search*****");
 			//final DocListPage dl= new DocListPage(driver);
-			driver.getWebDriver().get(Input.url+ "Search/Searches");
+			//driver.getWebDriver().get(Input.url+ "Search/Searches");
 			ss.audioSearch("morning", "North American English");
 			ss.ViewInDocList();
 			bc.stepInfo("****validate Audio Document Preview functionality*****");	
