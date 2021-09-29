@@ -2,6 +2,7 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
+
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import automationLibrary.Driver;
@@ -268,7 +269,7 @@ public class TallyPage {
 			}
 		}), Input.wait30);
 
-		//getTally_btnTallyAll().ScrollTo();
+		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -625,49 +626,49 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_SelectSource().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SelectSource().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SecurityGroupsButton().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SecurityGroupsButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SelectSecurityGroup().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SelectSecurityGroup().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SaveSelections().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SaveSelections().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SelectaTallyFieldtoruntallyon().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SelectaTallyFieldtoruntallyon().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_Metadataselect().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_Metadataselect().selectFromDropdown().selectByVisibleText("CustodianName");
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_btnTallyApply().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_btnTallyApply().Click();
 
 		base.yesPopUp();
@@ -676,7 +677,7 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_btnTallyAll().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 
 		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
@@ -685,43 +686,47 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_tallyactionbtn().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		getTally_tallyactionbtn().VisibilityOfElementExplicitWait(getTally_tallyactionbtn(), 60);
 		getTally_tallyactionbtn().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_actionSubTally().Visible();
 			}
-		}), Input.wait30);
-		getTally_actionSubTally().Click();
-
+		}), Input.wait60);
+		getTally_actionSubTally().VisibilityOfElementExplicitWait(getTally_actionSubTally(), 60);
+		getTally_actionSubTally().waitAndClick(15);
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SourceSubTally().Visible();
 			}
-		}), Input.wait30);
-		Thread.sleep(3000);
-		getTally_SourceSubTally().Click();
+		}), Input.wait60);
+//		Thread.sleep(2000);
+		getTally_SourceSubTally().ElementToBeClickableExplicitWait(getTally_SourceSubTally(), 60);
+//		Element.VisibilityOfElementExplicitWait(getTally_SourceSubTally(), 60);
+		getTally_SourceSubTally().waitAndClick(15);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_subMetadata().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_subMetadata().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_submetadataselect().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText("DocFileExtension");
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_btnSubTallyApply().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_btnSubTallyApply().Click();
 
 		base = new BaseClass(driver);
@@ -733,14 +738,14 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_SubTallyActionButton().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getTally_SubTallyActionButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getQuickBatchAction(2).Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 
 		getQuickBatchAction(2).waitAndClick(10);
 

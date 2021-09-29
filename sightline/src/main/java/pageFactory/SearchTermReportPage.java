@@ -37,10 +37,12 @@ public class SearchTermReportPage {
       	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
        			getReport_SearchTerm().Visible()  ;}}), Input.wait30); 
          getReport_SearchTerm().Click();
-		
-		  getApplyBtn().waitAndClick(20);
-    	  
-    	  bc.VerifyErrorMessageQuick("Please select at least one search.");
+		Thread.sleep(2000);
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		 getApplyBtn().Visible()  ;}}), Input.wait60);
+		  getApplyBtn().waitAndClick(15);
+    	  Thread.sleep(2000);
+    	  bc.VerifyErrorMessage("Please select at least one search.");
     	  bc.CloseSuccessMsgpopup();
 		  
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -48,13 +50,14 @@ public class SearchTermReportPage {
 		  getST_Selectmysearches().Click();
 		   
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  getApplyBtn().Visible()  ;}}), Input.wait30);	
+				  getApplyBtn().Visible()  ;}}), Input.wait60);	
 	      getApplyBtn().Click();
 	      Thread.sleep(2000);
-	    
+	      driver.waitForPageToBeReady();
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    		 getST_SummaryPage().Visible()  ;}}), Input.wait60);
-	   
+	    		 getST_SummaryPage().Visible()  ;}}), Input.wait120);
+	     getST_SummaryPage().VisibilityOfElementExplicitWait(getST_SummaryPage(), 60);
+	     getST_SummaryPage().WaitUntilPresent();
 		 Assert.assertTrue(getST_SummaryPage().Displayed());
 		 System.out.println("test passed");
 	  }
@@ -69,7 +72,9 @@ public class SearchTermReportPage {
 				 getST_Actionsbutton().Visible()  ;}}), Input.wait30); 
 	     getST_Actionsbutton().waitAndClick(20);
 	     Thread.sleep(2000);
-	   	 
+	     
+	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	    		 getST_Actions_QB().Visible()  ;}}), Input.wait30); 
 	   	getST_Actions_QB().waitAndClick(20);
 	   	 
 	    }

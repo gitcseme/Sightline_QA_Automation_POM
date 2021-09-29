@@ -12,8 +12,10 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 /// <summary>
@@ -24,7 +26,7 @@ public class Element{
 
 private By by;
 private WebElement element = null;
-private  Driver driver;
+private   Driver driver;
 	
    public Element(Driver driver, By by)
      {
@@ -233,9 +235,11 @@ private  Driver driver;
 			  AssertExists();
 		      element.click();
 		      clicked =true;
+		      
 				//System.out.println("Clicked after trying "+i+"th time!");
 			 //System.out.println("Clicked after trying "+i+" times");
 		      break;
+		      
 			}
 			catch(Exception e){
 				
@@ -672,6 +676,17 @@ private  Driver driver;
     	 AssertExists();
 		   return element;
 	   }
+     
+     public  Element VisibilityOfElementExplicitWait(Element element,int seconds) {
+    	
+    	new WebDriverWait(driver.getWebDriver(),seconds).until(ExpectedConditions.visibilityOf(element.getWebElement()));//added here
+    	return element;
+     }
+     public  Element ElementToBeClickableExplicitWait(Element element,int seconds) {
+     	
+     	new WebDriverWait(driver.getWebDriver(),seconds).until(ExpectedConditions.elementToBeClickable(element.getWebElement()));
+     	return element;
+      }
    
      public Select selectFromDropdown() {
     	 AssertExists(); //this updates element !
