@@ -405,7 +405,7 @@ public void loadSuiteTestData() throws IOException {
 }
 
 //to make sure all docs released to default SG -helpful when ingestion done manually!
-public void releaseDocs() {
+public void releaseDocs() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
 	  SessionSearch search = new SessionSearch(driver);
