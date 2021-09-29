@@ -38,8 +38,7 @@ public class CodingForm_Regression {
 	
 	@BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
-		/*Input in = new Input();
-		in.loadEnvConfig();*/
+		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	     
 		//Open browser
@@ -82,7 +81,7 @@ public class CodingForm_Regression {
 	
 	   @Test(groups={"smoke","regression"},priority=2)
 	   public void ValidateCFinDocViewFromSearch() throws InterruptedException {
-		   baseclass.stepInfo("Test case Id: RPMXCON-XXXXX - ValidateCFinDocViewFromSearch");
+		   baseclass.stepInfo("Test case Id: RPMXCON-50967 - Verify when user navigates from Basic Search/Saved search/Doc List and coding form is assigned to security group, custom coding form is editableh");
 		   baseclass.stepInfo("*****Validating Coding form in DocView from search*****");
 		   String serachString = Input.searchString2;
 		    
@@ -103,7 +102,7 @@ public class CodingForm_Regression {
 
 	   @Test(groups={"smoke","regression"},priority=3)
 	   public void ValidateCFinDocViewFromAssignment() throws InterruptedException {
-		   baseclass.stepInfo("Test case Id: RPMXCON-XXXXX - ValidateCFinDocViewFromAssignment");
+		   baseclass.stepInfo("Test case Id: RPMXCON-51004 - Verify coding form for a document in an assignment after applying coding stamp when different coding form is applied to assignment and security group and document is viewed from basic search");
 		   baseclass.stepInfo("*****Validating Coding form in DocView from Assignment*****");
 		    
 		   baseclass.stepInfo("*****Creating Assignment*****");
