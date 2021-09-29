@@ -2,9 +2,13 @@ package pageFactory;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import automationLibrary.Driver;
@@ -22,7 +26,7 @@ public class SessionSearch {
     BaseClass base;
   
     //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
-    public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
+    public Element getEnterSearchString(){ return driver.FindElementByXPath("//*[@id='xEdit']/li[last()]/input"); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
     public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
@@ -550,7 +554,7 @@ public class SessionSearch {
     	
         //Enter search string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
+    			getEnterSearchString().Visible()  ;}}), Input.wait30);
     	getEnterSearchString().SendKeys(SearchString) ;
 
         //Click on Search button
@@ -573,6 +577,30 @@ public class SessionSearch {
     	Reporter.log("Search is done for "+SearchString+" and PureHit is : "+pureHit,true);
     	return pureHit;
    }
+    
+    public void basicContentSearchWithExistingSearch(String SearchString){
+
+    	//To make sure we are in basic search page
+    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+    	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		wait.until(ExpectedConditions.visibilityOf(driver.getWebDriver().findElement(By.id("xEdit"))));
+    	WebElement field = driver.getWebDriver().findElement(By.xpath("//ul[@id='xEdit']/li[last()]/input"));
+    	
+    	new Actions(driver.getWebDriver()).moveToElement(field);
+    	field.click();
+    	field.sendKeys(Keys.BACK_SPACE);
+    	field.sendKeys(Keys.DELETE);
+    	
+    	
+        //Enter search string
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getEnterSearchString().Visible()  ;}}), Input.wait30);
+    	getEnterSearchString().SendKeys(SearchString) ;
+
+        //Click on Search button
+    	getSearchButton().Click();
+    }
+    
     //Function to perform content search for a given search string
       public int advancedContentSearch(String SearchString){
     	

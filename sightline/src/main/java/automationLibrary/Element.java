@@ -672,6 +672,10 @@ private  Driver driver;
     	 AssertExists();
 		   return element;
 	   }
+     
+     public By getBy() {
+    	 return by;
+     }
    
      public Select selectFromDropdown() {
     	 AssertExists(); //this updates element !

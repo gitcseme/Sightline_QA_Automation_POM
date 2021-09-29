@@ -37,7 +37,8 @@ import testScriptsSmoke.Input;
 	String templatername = "TempProd"+Utility.dynamicNameAppender(); 
 	String Tagname = "Tag"+Utility.dynamicNameAppender();
 	String Tagnameprev = "Privileged";
-	String Tagnametech = "Technical_Issue";
+	String Tagnametech = "Technical_Issue" + Utility.dynamicNameAppender();
+
 	
 	
 	@BeforeClass(alwaysRun = true)

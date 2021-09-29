@@ -336,6 +336,13 @@ public class TagsAndFoldersPage {
      
       base.VerifySuccessMessage("Tag added successfully");
       Reporter.log("Tag "+strtag+" is as/under "+classificationname,true);
+      
+      try {
+		Thread.sleep(10);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
       base.CloseSuccessMsgpopup();
      
     }
