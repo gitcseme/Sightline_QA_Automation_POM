@@ -44,7 +44,8 @@ public class DocExplorer_Regression {
 	@BeforeClass(alwaysRun=true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
+		Input in = new Input(); 
+		 in.loadEnvConfig();
 	 	//Open browser
 		driver = new Driver();
 		//bc = new BaseClass(driver);
@@ -155,7 +156,7 @@ public class DocExplorer_Regression {
 	@Test(groups={"regression"},priority=7)
 	public void EmailAuthorNameFilter() throws InterruptedException {
 		
-		docexp.EmailAuthorNameFilter("Philip.allen@consilio.com","amit.Bandal@symphonyteleca.com");
+		docexp.EmailAuthorNameFilter("Phillip.Allen@consilio.com","Amit.Bandal@symphonyteleca.com");
     }
 	
 	/*
@@ -226,7 +227,7 @@ public class DocExplorer_Regression {
 		bc.stepInfo("*****Assign Docs to Assignment2*****");
 		doclist.DoclisttobulkAssign(assignmentName2,"100");
 		assgn.assignDocstoNewAssgn(assignmentName2, null,purehits);
-		 bc.stepInfo("Test case Id: RPMXCON-54678 - AssignmentsFilter");
+		 bc.stepInfo("Test case Id: RPMXCON-54678 - Verify  Assignments Filter with Exclude functionality is working correctly on Doc Explorer list.");
 		bc.stepInfo("*****Include Assignment Filter*****");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");
 		bc.passedStep("*****Include Assignment Filter successfully*****");
