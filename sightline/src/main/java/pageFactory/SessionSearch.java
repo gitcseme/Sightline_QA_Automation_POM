@@ -1,6 +1,8 @@
 package pageFactory;
 
 import java.util.List;
+
+
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
@@ -9,14 +11,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
-import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
 public class SessionSearch {
@@ -24,6 +27,7 @@ public class SessionSearch {
     Driver driver;
     public static int pureHit;
     BaseClass base;
+    SoftAssert assertion=new SoftAssert();
   
     //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
     public Element getEnterSearchString(){ return driver.FindElementByXPath("//*[@id='xEdit']/li[last()]/input"); }
@@ -90,7 +94,7 @@ public class SessionSearch {
     public Element getSavedSearch_MySearchesTab(){ return driver.FindElementById("-1_anchor"); }
     public Element getSaveSearch_Name(){ return driver.FindElementById("txtSaveSearchName"); }
     public Element getSaveSearch_SaveButton(){ return driver.FindElementById("btnEdit"); }
-    public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
+    public Element getBulkRelDefaultSecurityGroup_CheckBox(int count){ return driver.FindElementByXPath("//form[@id='Edit User Group']/fieldset/div/div/div/div/div["+count+"]//i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
     
@@ -222,6 +226,7 @@ public class SessionSearch {
     
     //Query alert for proximity and regex search
     public Element getYesQueryAlert(){ return driver.FindElementByCssSelector("#bot1-Msg1"); }
+    public ElementCollection getSecurityGName(){ return driver.FindElementsByXPath("//*[@id='Edit User Group']/fieldset/div/div/div/div/div/div[2]"); }
     
     
     public SessionSearch(Driver driver){
@@ -229,11 +234,12 @@ public class SessionSearch {
     	this.driver = driver;
         this.driver.getWebDriver().get(Input.url+ "Search/Searches");
         base = new BaseClass(driver);
+        base.selectproject();
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
     }
-    public String getToolTipMsgBS(String isOrRange, String metaDataField) {
+    public String getToolTipMsgBS(String isOrRange, String metaDataField,String Testcaseid) {
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEnterSearchString().Visible()  ;}}), Input.wait30);
@@ -271,7 +277,7 @@ public class SessionSearch {
 		return null;
 	}
     
-    public String getToolTipMsgAS(String isOrRange, String metaDataField) {
+    public String getToolTipMsgAS(String isOrRange, String metaDataField,String Testcaseid) {
     	
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
@@ -356,7 +362,7 @@ public class SessionSearch {
     	UtilityLog.info("Saved search with name - "+searchName);
 	}
     
-    public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
+    public void wrongQueryAlertBasicSaerch(String SearchString, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
     	
     	
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -413,7 +419,7 @@ public class SessionSearch {
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
         	}
     	if(MessageNumber == 6){
-        		String msg= "One or more of your Proximity Queries has only a single Term. This could be as a result of extra Double Quotes around terms or the use of Parenthesis which group multiple values as a single term.";
+        		String msg= "One or more of your Proximity Queries has only a single Term. This could be as a result of extra Double Quotes around terms or the use of Parentheses which group multiple values as a single term.";
         	
             
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
@@ -443,7 +449,7 @@ public class SessionSearch {
    
     	
 	}
-    public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName) {
+    public void wrongQueryAlertAdvanceSaerch(String SearchString, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
     	
 
     		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -530,10 +536,13 @@ public class SessionSearch {
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	
-        	if(MessageNumber == 11){
-            	String msg= "Your query has multiple potential syntax issues.1. Your query contains a ~ (tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
-            	}
+				/*
+				 * if(MessageNumber == 11){ String msg=
+				 * "Your query has multiple potential syntax issues.1. Your query contains a ~ (tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax."
+				 * ; Assert.assertEquals(msg.replaceAll(" ",
+				 * ""),getQueryAlertGetText().getText().replaceAll(" ",
+				 * "").replaceAll("\n","")); }
+				 */
         	if(MessageNumber == 12){
             	String msg= "Search queries with wildcard characters within phrases are not supported. Alternatively, you could get the same results by performing a proximity search with a distance of zero. For example, a search \"trade contr*\" can be equivalently reconstructed as \"trade contr*\"~0! to get the same results. Please reach out to Support or your administrator for any additional help.";
             	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
@@ -552,7 +561,8 @@ public class SessionSearch {
     	//To make sure we are in basic search page
     	driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
-        //Enter search string
+    	driver.waitForPageToBeReady();
+        //Enter seatch string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getEnterSearchString().Visible()  ;}}), Input.wait30);
     	getEnterSearchString().SendKeys(SearchString) ;
@@ -1229,12 +1239,12 @@ public void ViewInDocView() throws InterruptedException{
 	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
-	 getBulkActionButton().waitAndClick(60);
+	 getBulkActionButton().waitAndClick(60);//increased time from 5 sec to 60sec
 	 
 	 try{
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocViewAction().Visible()  ;}}), Input.wait30);
-		 getDocViewAction().waitAndClick(60);
+				 getDocViewAction().Visible()  ;}}), Input.wait30);// added wait statement here
+		 getDocViewAction().waitAndClick(60);//increased time from 5 sec to 60sec
 		 }catch (Exception e) {
 			 getDocViewActionDL().Click();
 		}
@@ -1288,7 +1298,8 @@ public void bulkAssign() {
 
 
 //Bulk release to default security group
-public void bulkRelease(final String SecGroup) {
+public void bulkRelease(final String SecGroup) throws InterruptedException {
+	int count=0;
 
 	 try{
 		 getPureHitAddButton().waitAndClick(10);
@@ -1298,16 +1309,33 @@ public void bulkRelease(final String SecGroup) {
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
-	
+	 getBulkReleaseAction().ElementToBeClickableExplicitWait(getBulkReleaseAction(), 2000);
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);
 	 }catch (Exception e) {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
-	 
+	 Thread.sleep(5000);
+	//added here in the pom
+	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
+		 count=count+1;
+			if(iterable_element.getText().contains(SecGroup)){
+				
+				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().perform();
+				getBulkRelDefaultSecurityGroup_CheckBox(count).VisibilityOfElementExplicitWait(getBulkRelDefaultSecurityGroup_CheckBox(count), 5000);
+				break;
+			}
+		}
+
+	 getBulkRelDefaultSecurityGroup_CheckBox(count).Click(); 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
 	 getBulkRelease_ButtonRelease().waitAndClick(20);
@@ -1325,6 +1353,7 @@ public void bulkRelease(final String SecGroup) {
 
 public boolean bulkReleaseIngestions(final String SecGroup) {
 	boolean release = false;
+	int count=0;
 	try{
 	 try{
 		 getPureHitAddButton().waitAndClick(10);
@@ -1346,9 +1375,24 @@ public boolean bulkReleaseIngestions(final String SecGroup) {
 	 }catch (Exception e) {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
-	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
+			if(iterable_element.getText().contains(SecGroup)){
+				count=count+1;
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				new Actions(driver.getWebDriver()).moveToElement(getBulkRelDefaultSecurityGroup_CheckBox(count).getWebElement()).click();
+				driver.scrollingToBottomofAPage();
+		
+				getBulkRelDefaultSecurityGroup_CheckBox(count).Click();
+			}
+		}
+//	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
+//	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
@@ -1378,7 +1422,8 @@ public boolean bulkReleaseIngestions(final String SecGroup) {
 //Function to perform bulk untag
 public void bulkUnTag(final String TagName) throws InterruptedException{
 
-	 Thread.sleep(1000);	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+			 getBulkActionButton().Visible() ;}}), Input.wait60);
 	 getBulkActionButton().Click();
 	 
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -1410,6 +1455,34 @@ public void bulkUnTag(final String TagName) throws InterruptedException{
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
 }
+
+public void bulkUnTag_popUp(final String TagName) throws InterruptedException{
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getBulkUntagbutton().Visible()  ;}}), Input.wait30); 
+	 getBulkUntagbutton().Click();//
+	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getSelectTagExisting(TagName).Visible()  ;}}), Input.wait60); 
+	 getSelectTagExisting(TagName).waitAndClick(10);
+	
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+	 getContinueButton().Click();
+	 
+	 final BaseClass bc = new BaseClass(driver);
+     final int Bgcount = bc.initialBgCount();
+  
+	 bc.VerifySuccessMessage("Records saved successfully");
+	 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+	 			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+	 System.out.println("Bulk Untag is done, Tag is : "+TagName); 
+	 UtilityLog.info("Bulk Untag is done, Tag is : "+TagName);
+	 
+	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
+	 driver.getWebDriver().navigate().refresh();//
+}
+
 
 //Function to perform new bulk folder with given folder name
 public void bulkUnFolder(final String folderName) throws InterruptedException{
@@ -1446,7 +1519,30 @@ public void bulkUnFolder(final String folderName) throws InterruptedException{
 	 //Since page is freezing after bulk actiononly in automation, lets reload page to avoid it..
 	 driver.getWebDriver().navigate().refresh();
 }
+public void bulkUnFolder_popUp(final String foldername) throws InterruptedException{
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getBulkUnFolderbutton().Visible()  ;}}), Input.wait30); 
+		 getBulkUnFolderbutton().Click();
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getSelectFolderExisting(foldername).Visible()  ;}}), Input.wait60); 
+		 getSelectFolderExisting(foldername).waitAndClick(5);
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			    	getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+		 getContinueButton().Click();
+		 
+		 final BaseClass bc = new BaseClass(driver);
+		 final int Bgcount = bc.initialBgCount();
 
+		 bc.VerifySuccessMessage("Records saved successfully");
+		 
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				bc.initialBgCount() == Bgcount+1  ;}}), Input.wait60); 
+		 System.out.println("Bulk Unfolder is done, folder is : "+foldername);
+		 UtilityLog.info("Bulk Unfolder is done, folder is : "+foldername);
+	   	assertion.assertAll();//
+}
 
 
 public void selectTagInASwp(String tagName) {
@@ -1518,19 +1614,22 @@ public void selectSecurityGinWPS(String sgname) {
 public void selectOperator(String operator) {
 	driver.scrollPageToTop();
 	getOperatorDD().Click();
-	if(operator.equalsIgnoreCase("and")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorAND().Visible()  ;}}), Input.wait60); 
+	if(operator.equalsIgnoreCase("AND")){
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
+		getOperatorAND().ElementToBeClickableExplicitWait(getOperatorAND(), 10000);
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorOR().Visible()  ;}}), Input.wait60); 
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorOR().Visible()  ;}}), Input.wait60); 
+		getOperatorOR().ElementToBeClickableExplicitWait(getOperatorOR(), 10000);
 		getOperatorOR().waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOperatorNOT().Visible()  ;}}), Input.wait60); 
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getOperatorNOT().Visible()  ;}}), Input.wait60); 
+		getOperatorNOT().ElementToBeClickableExplicitWait(getOperatorNOT(), 10000);
 		getOperatorNOT().Click();	
 	}
 

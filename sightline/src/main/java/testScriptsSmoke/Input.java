@@ -52,6 +52,7 @@ public class Input {
 	public static String jiraToken;
 	public static String jiraProject;
 	public static String testingBuild;
+	public static boolean headlessMode;
 	
 			
 	//Environment data---------------------------------------------
@@ -159,6 +160,7 @@ public class Input {
 		jiraProject = config.getJiraProject();
 		testingBuild = config.getTestingBuild();
 		iCESmokeFolderPath = config.getICESmokeFolderPath();
+		headlessMode = config.isHeadlessMode();
 		
 		/*
 		 * Ingestion Data
@@ -402,7 +404,7 @@ public void loadSuiteTestData() throws IOException {
 }
 
 //to make sure all docs released to default SG -helpful when ingestion done manually!
-public void releaseDocs() {
+public void releaseDocs() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName,Input.pa1password);
 	  SessionSearch search = new SessionSearch(driver);

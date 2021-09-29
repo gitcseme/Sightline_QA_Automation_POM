@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
-import automationLibrary.ElementCollection;
+import automationLibrary.ElementCollection;//
 import testScriptsSmoke.Input;
 
 public class DocListPage {
@@ -52,7 +52,7 @@ public class DocListPage {
     //Actions
    // public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='dtDocList']/thead/tr/th[2]/label"); }
     public Element getSelectAll(){ return driver.FindElementByXPath("//*[@id='selectAllRows']/following-sibling::i"); }
-    public Element getYesAllPageDocs(){ return driver.FindElementByXPath("(//*[@id='Yes'])[1]"); }
+    public Element getYesAllPageDocs(){ return driver.FindElementByXPath("//input[@id='Yes']"); }//changed here
     public Element getPopUpOkBtn(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); }
     public Element getBackToSourceBtn(){ return driver.FindElementByXPath("//a[contains(text(),'Back to Source')]"); }
   //addition by shilpi on 04/26
@@ -249,27 +249,28 @@ public class DocListPage {
        	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
        			getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
        	 getPopUpOkBtn().Click();
-       	 
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        	   getDocList_actionButton().Visible()  ;}}), Input.wait60); 
-         getDocList_actionButton().waitAndClick(10);
-         Thread.sleep(3000);
-        	     
-         getDocList_action_BulkReleaseButton().waitAndClick(10);
-         
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        		 search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
-         search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Click();
-    	 
-    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			 search.getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
-    	 search.getBulkRelease_ButtonRelease().Click();
-    	 
-    	 search.getFinalizeButton().waitAndClick(30);
-       
-    	 base.VerifySuccessMessage("Records saved successfully");
-    	 
-    	 System.out.println("performing bulk release");
+       	 search.bulkRelease(SecGroup);
+//       	 
+//         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//        	   getDocList_actionButton().Visible()  ;}}), Input.wait60); 
+//         getDocList_actionButton().waitAndClick(10);
+//         Thread.sleep(3000);
+//        	     
+//         getDocList_action_BulkReleaseButton().waitAndClick(10);
+//         
+//         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//        		 search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60);
+//         search.getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Click();
+//    	 
+//    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			 search.getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
+//    	 search.getBulkRelease_ButtonRelease().Click();
+//    	 
+//    	 search.getFinalizeButton().waitAndClick(30);
+//       
+//    	 base.VerifySuccessMessage("Records saved successfully");
+//    	 
+//    	 System.out.println("performing bulk release");
     	
       }
      

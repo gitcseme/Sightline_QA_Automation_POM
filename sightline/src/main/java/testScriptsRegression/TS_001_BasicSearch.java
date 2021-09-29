@@ -41,42 +41,49 @@ public class TS_001_BasicSearch {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
-		//Open browser
+		
 		softAssertion= new SoftAssert();
-		Input in = new Input(); in.loadEnvConfig();
+//		Input in = new Input(); in.loadEnvConfig();
 		
 		driver = new Driver();
-		
+		lp=new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);//modified here
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
-		
+	
 
 	}
 	@Test(groups={"regression"},priority=1)
 	public void copySearchTextToNewSearch(){
-		lp=new LoginPage(driver);
+		lp.logout();
+		bc.passedStep("********logged in succesfully as RMU user********");
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.passedStep("********logged in succesfully as PA user********");
+		bc.stepInfo("Test Case Id : RPMXCON-57088 To verify as an user login into the Application, User will be able to copy the text query from search text box in basic search page via Clipboard & same text user will be able to copy in the new search box in basic search");
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
     	bc.selectproject();
     	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
-    	
+    	bc.passedStep("********basic content Search is succesful********");
     	//below locators are one time use in second search
     	ss.getCopyTo().Click();
+    	bc.passedStep("********Copied the query********");
     	ss.getCopyToNewSearch().Click();
     	ss.getSecondSearchBtn().Click();
-    	
+    	bc.passedStep("********Copied query search is succesful********");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			ss.getSecondPureHit().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
     	    	
     	softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()),Input.pureHitSeachString1);
-		lp.logout();
+    	bc.passedStep("********Actual pureHit count is same as expected********");
+
 	}
 	
 	@Test(groups={"regression"},priority=2)
 	public void autoSuggest() throws InterruptedException {
-		
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	
+		bc.passedStep("Test Case Id : RPMXCON-46873 Verify that Auto suggest functionality is working fine with CustodianName Metadata in Basic Search Screen");
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+		bc.selectproject();
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				ss.getBasicSearch_MetadataBtn().Visible()  ;}}), Input.wait30); 
@@ -93,11 +100,9 @@ public class TS_001_BasicSearch {
 		ss.getSelectMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
 		
 			
-//		ss.getMetaDataSearchText1().SendKeys("P Allen");
-//		Thread.sleep(2000);
-//		ss.getMetaDataSearchText1().SendKeys(""+Keys.DOWN+Keys.ENTER);
+
 		ss.getMetaDataSearchText1().SendKeys("P Allen"+Keys.DOWN+Keys.ENTER);
-		
+		bc.passedStep("********Search Text is selected from auto suggest successfully********");
 		ss.getMetaDataInserQuery().Click();
 		  //Click on Search button
 		ss.getSearchButton().Click();
@@ -112,125 +117,109 @@ public class TS_001_BasicSearch {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		ss.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
 		Assert.assertEquals(ss.getPureHitsCount().getText(), "1135");
-		lp.logout();
+		bc.passedStep("********Actual pureHit count is same as expected********");
 
 	}
 
 	@Test(groups={"regression"},priority=3)
 	public void emailInclusive() {
-		
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+	
+		bc.stepInfo("Test Case Id : RPMXCON-49738 Validate for Metadata searches for terms with @ including email addresses in Basic Search");
+		bc.selectproject();
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null)>=1);//1135);
+		bc.passedStep("********MetaData Search for EmailInclusiveReason is completed succesfully********");
 		lp.logout();
-		
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("********logged in succesfully as RMU user********");
 		softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null)>=1);//1135);
-		
+		bc.passedStep("********MetaData Search for EmailInclusiveReason is completed succesfully********");
 		softAssertion.assertAll();
-		
-		lp.logout();
+
 	}
 	
 	@Test(groups={"regression"},priority=0)
 	public void conceptuallySimilar() throws InterruptedException {
-		lp=new LoginPage(driver);
+		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.passedStep("********logged in succesfully as RMU user********");
+		bc.stepInfo("Test Case Id : RPMXCON-57032 To verify as an user, Custodian Name metadata field in search is working");
 		//Impersonate as Reviewer
-		bc = new BaseClass(driver);
+		Thread.sleep(3000);
 		bc.impersonateRMUtoReviewer();	
 		ss.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
+		bc.passedStep("********Custodian MetaDataSearch is completed successfully********");
 		ss.getConceptuallyPlayButton().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				ss.getCSHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
 		Assert.assertTrue(Integer.parseInt(ss.getCSHitsCount().getText())>= 1);
-	
-		lp.logout();
+		bc.passedStep("********Actual pureHitCount is same as Expected********");
+
 	}
 	
-	@Test(groups={"regression"},priority=5)
-    public void exsitingBulkFolder() throws InterruptedException {
-		String Folder = "AFolder"+Utility.dynamicNameAppender(); 
-		//Login as PA
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-    	
-    	//create folder 
-    	TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-		page.CreateFolder(Folder,"Default Security Group");
-    	System.out.println("Folder creation is Successful : "+Folder);
-    
-    	//Search and add docs to created folder 
-    	sessionSearch = new SessionSearch(driver);
-     	sessionSearch.basicContentSearch(Input.searchString1);
-	
-     	//add docs to folder 
-		sessionSearch.bulkFolderExisting(Folder);
-		
-		//check folder and count in advance search
-		
-		bc.selectproject();
-		sessionSearch.switchToWorkproduct();
-		sessionSearch.selectFolderInASwp(Folder);
-		Assert.assertEquals(Input.pureHitSeachString1, sessionSearch.serarchWP());
-		lp.logout();
-        
-	}
+
 	
    @Test(groups={"regression"},priority=6)
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
-		lp=new LoginPage(driver);
+		lp.logout();bc.passedStep("********logged out succesfully as RMU user********");
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-   	
+		bc.passedStep("********logged in succesfully as PA user********");
+		bc.stepInfo("Test Case Id : RPMXCON-57205 Verify that Bulk Tag functionality is working correctly through Basic Search Screen");
 	   	//create tag 
 	   	TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 		page.CreateTag(Tag,"Default Security Group");
+		bc.passedStep("********Tag created successfuly********");
 	   	System.out.println("Tag creation is Successful : "+Tag);
    
 	   	//Search and add docs to created tag 
 	   	sessionSearch = new SessionSearch(driver);
     	sessionSearch.basicContentSearch(Input.searchString1);
-	
+    	bc.passedStep("********Basic Content Search is successfuly********");
     	//add docs to folder 
 		sessionSearch.bulkTagExisting(Tag);
+		bc.passedStep("********Documents are added to the Existing Tag name successfuly********");
 		
 		//check folder and count in advance search
 		
-		bc.selectproject();
+		 bc.selectproject();
 		 sessionSearch.switchToWorkproduct();
+		 bc.passedStep("********Switched to WorkProduct successfuly********");
 		 sessionSearch.selectTagInASwp(Tag);
+		 bc.passedStep("********Selected the Existing Tag name********");
 		 Assert.assertEquals(Input.pureHitSeachString1,sessionSearch.serarchWP());
-		lp.logout();
+		 bc.passedStep("********pureHit Count is same as Expected count********");
+
+		 
 	}
-//
+
     @Test(groups={"smoke","regression"},priority=7)
 	public void starSearch() {
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		bc.stepInfo("Test Case Id : RPMXCON-57275 Verify that belly band message appears when user tries to search proximity which contains wildcard * in Basic Search Query Screen.");
 	  	sessionSearch = new SessionSearch(driver);
-    	
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
-	  	lp.logout();
+	  	bc.passedStep("********pureHit Count is same as Expected count********");
+
+	  	
 	}
 	@Test(groups={"regression"},priority=8)
     public void bulkUnTag() throws InterruptedException {
-	
+		bc.stepInfo("Test Case Id : RPMXCON-57178 Verify that UnTag works properly using Bulk Tag Action in Basic Search Screen");
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
-	   //Login
-	   lp=new LoginPage(driver);
-	   lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+
 	   //perform search
 	   sessionSearch = new SessionSearch(driver);
 	   sessionSearch.basicContentSearch(Input.searchString1);
+	   bc.passedStep("********Basic Content Search is successfuly********");
 	   //Bulk Tag
 	   sessionSearch.bulkTag(tagName);
+	   bc.passedStep("********Bulk Tag the documents to Tag Name is successfull********");
 	   //Untag
 	   sessionSearch.bulkUnTag(tagName);
+	   bc.passedStep("********Bulk UnTag is successfull********");
        final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
        		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
@@ -241,28 +230,31 @@ public class TS_001_BasicSearch {
        System.out.println(tf.getTagandCount(tagName, 0).getText());
 
        Assert.assertTrue(tf.getTagandCount(tagName, 0).Displayed());
+       bc.passedStep("********TagCount is displayed under tags and folder page as expected********");
        System.out.println(tagName+" could be seen under tags and folder page");
        
-       lp.logout();
+
+      
    }
 
 	@Test(groups={"regression"},priority=9)
 	public void bulkUnFolder() throws InterruptedException {
 	
+		bc.stepInfo("Test Case Id : RPMXCON-57179 Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
-		//Login
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+	
 		//Perform search
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
+		bc.passedStep("********Basic Content Search is successfuly********");
 		
 		//Bulk folder
 		sessionSearch.bulkFolder(folderName);
+		bc.passedStep("********Bulk Folder the documents to Folder Name is successfull********");
 		
 		//Unfolder
 		sessionSearch.bulkUnFolder(folderName);
+		bc.passedStep("********Bulk UnFolder is successfull********");
 		final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    tf.getFoldersTab().Visible()  ;}}),Input.wait60); 
@@ -274,23 +266,23 @@ public class TS_001_BasicSearch {
 	    
 	    System.out.println(tf.getFolderandCount(folderName, 0).getText());
 	    Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
-
+	    bc.passedStep("********FolderCount is displayed under tags and folder page as expected********");
 	    System.out.println(folderName+" could be seen under tags and folder page");
-	    lp.logout();
+
 	}
 	
 	@Test(dataProvider="metaDataSearch",groups={"regression"},priority=10)
-	public void metaDataSearchsBS(int Expected_count, String metaDataName,String IS_or_Range,String
+	public void metaDataSearchsBS(String TestCaseId,int Expected_count, String metaDataName,String IS_or_Range,String
 			first_input, String second_input) {
 		SoftAssert softAssertion= new SoftAssert();
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
+
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		bc.selectproject();
+		bc.passedStep("******** Search page is successfully opened********");
+		bc.stepInfo(TestCaseId);
 		softAssertion.assertEquals(Expected_count,ss.basicMetaDataSearch(metaDataName, IS_or_Range, first_input, second_input));
 		softAssertion.assertAll();
-		lp.logout();
+
 	}
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
@@ -327,21 +319,21 @@ public class TS_001_BasicSearch {
 	@DataProvider(name = "metaDataSearch")
 	public Object[][] metaData() {
 		return new Object[][] { 
-			{1,"CreateDate", "IS", "1993-08-11", null}, 
-			{340,"CreateDate", "RANGE", "1986-01-01", "2018-01-01"},
-			{170,"CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"},
-			{0,"EmailSentDate", "IS", "1990-05-05", null},
-			{0,"EmailSentDate", "RANGE","1990-05-05", "2000-05-05"},
-			{0,"AppointmentStartDate", "IS", "1990-05-05", null},
-			{0,"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"AppointmentEndDateOnly", "IS", "1990-05-05", null},
-//			{"AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{0,"DocDateDateOnly", "IS", "1990-05-05", null},
-			{0,"DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57222 Verify that Basic Search works properly - for CreateDate time metadata - Provide only dates (not times) with Is operator",1,"CreateDate", "IS", "1993-08-11", null}, 
+			{"Test Case Id : RPMXCON-57223 Verify that Basic Search works properly - for CreateDate  time metadata - Provide only dates (not times) with Range operator",340,"CreateDate", "RANGE", "1986-01-01", "2018-01-01"},
+			{"Test Case Id : RPMXCON-57219 Verify that Basic Search works properly for CreateDate date/time field  with Range operator",170,"CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"},
+			{"Test Case Id : RPMXCON-49149 Verify that Basic Search works properly for EmailSentDate date/time field with Is operator and NOT having time components",0,"EmailSentDate", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-49150 Verify that Basic Search works properly for EmailSentDate date/time field with Range operator and NOT having time components",0,"EmailSentDate", "RANGE","1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57135 Verify that application displays correct options for AppointmentStartDateOnly field on Basic Search screen.",0,"AppointmentStartDate", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-49143 Verify that Basic Search works properly for AppointmentStartDate  date/time field  with Range operator",0,"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"},
+//			{null,"AppointmentEndDateOnly", "IS", "1990-05-05", null},
+//			{null,"AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57125 Verify that application displays correct options for DocDateDateOnly field on Basic Search screen.",0,"DocDateDateOnly", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-57125 Verify that application displays correct options for DocDateDateOnly field on Basic Search screen.",0,"DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
 //			{"DateAccessedDateOnly", "IS", "1990-05-05", null},
 //			{"DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{0,"DateCreatedDateOnly", "IS", "1990-05-05", null},
-			{26,"DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57127 Verify that application displays correct options for DateCreatedDateOnly field on Basic Search screen.",0,"DateCreatedDateOnly", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-57127 Verify that application displays correct options for DateCreatedDateOnly field on Basic Search screen.",26,"DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
 //			{"DateEditedDateOnly", "IS", "1990-05-05", null},
 //			{"DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
 //			{"DateModifiedDateOnly", "IS", "1990-05-05", null},
@@ -352,10 +344,10 @@ public class TS_001_BasicSearch {
 //			{"DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
 //			{"DateSavedDateOnly", "IS", "1990-05-05", null},
 //			{"DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{0,"MasterDateDateOnly", "IS", "1990-05-05", null},
-			{208,"MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{0,"EmailDateSentDateOnly", "IS", "1990-05-05", null},
-			{0,"EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57003 Verify that Basic Search works properly for MasterDateDateOnly field",0,"MasterDateDateOnly", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-57003 Verify that Basic Search works properly for MasterDateDateOnly field",208,"MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
+			{"Test Case Id : RPMXCON-57134 Verify that application displays correct options for EmailDateSentDateOnly field on Basic Search screen.",0,"EmailDateSentDateOnly", "IS", "1990-05-05", null},
+			{"Test Case Id : RPMXCON-57134 Verify that application displays correct options for EmailDateSentDateOnly field on Basic Search screen.",0,"EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
 //			{"AppointmentStartDateOnly", "IS", "1990-05-05", null},
 //			{"AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"},	
 

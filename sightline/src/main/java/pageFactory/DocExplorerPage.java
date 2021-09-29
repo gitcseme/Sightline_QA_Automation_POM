@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,13 +12,14 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
-import junit.framework.Assert;
+
 import junit.framework.AssertionFailedError;
 import testScriptsSmoke.Input;
 
@@ -85,53 +87,68 @@ public class DocExplorerPage {
     	switch (Filtertype) {
     	
     	case "DocID":
+    		bc.stepInfo("Test case Id: RPMXCON-54658 - Verify that “DocID” Column header Filter is working correctly on Doc Explorer list.");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_DocID().Visible() ;}}), Input.wait30);
+    		bc.stepInfo("*****Select DocID*****");
         	String DocId = getDocExp_DocID().getText();
         	System.out.println(DocId);
         	UtilityLog.info(DocId);
+        	bc.passedStep("*****DocID HeaderFilter Selected*****");
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_DocIDSearchName().Visible() ;}}), Input.wait30);
+        	     bc.stepInfo("*****Enter DocID*****");
         		getDocExp_DocIDSearchName().SendKeys(DocId);
         		doclist.getApplyFilter().waitAndClick(10);
             	Thread.sleep(2000);
             	validateCount("Showing 1 to 1 of 1 entries");
             	getDocExp_DocIDSearchName().Clear();
+            	bc.passedStep("*****DocID HeaderFilter Validated successfully*****");
         	   break;
         	
     	case "Custodian":
+    		bc.stepInfo("Test case Id: RPMXCON-54660 - Verify that “CustodianName” Column header Filter is working correctly on Doc Explorer list.");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_CusName().Visible() ;}}), Input.wait30);
+    		bc.stepInfo("*****Select Custodian Name*****");
         	String Cusname = getDocExp_CusName().getText();
         	System.out.println(Cusname);
         	UtilityLog.info(Cusname);
+        	bc.passedStep("*****Custodian Name HeaderFilter Selected*****");
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_CustodianSearchName().Visible() ;}}), Input.wait30);
+        	bc.stepInfo("*****Enter Custodian Name*****");
         	getDocExp_CustodianSearchName().SendKeys(Cusname);
         	doclist.getApplyFilter().waitAndClick(10);
         	Thread.sleep(2000);
         	validateCount("Showing 1 to 50 of 1,134 entries");
         	getDocExp_CustodianSearchName().Clear();
+        	bc.passedStep("*****Custodian Name HeaderFilter Validated successfully*****");
         	break;
         	
     	case "MasterDate":
+    		bc.stepInfo("Test case Id: RPMXCON-54663 - Verify that “MasterDate” Column header Filter is working correctly on Doc Explorer list.");
     		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_MasterDate().Visible() ;}}), Input.wait30);
+    		bc.stepInfo("*****Select Master Date*****");
         	String date = getDocExp_MasterDate().getText();
-        	SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        	SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
         	Date date1 = dateformat.parse(date);
         	String expdate = dateformat.format(date1);
         	System.out.println(expdate);
         	UtilityLog.info(expdate);
+        	bc.passedStep("*****MasterDate HeaderFilter Selected*****");
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         			getDocExp_MasterDateSearchName().Visible() ;}}), Input.wait30);
+        	bc.stepInfo("*****Enter Master Date*****");
         	getDocExp_MasterDateSearchName().SendKeys(expdate);
             doclist.getApplyFilter().waitAndClick(10);
             Thread.sleep(2000);
         	validateCount("Showing 1 to 50 of 95 entries");
+        	bc.passedStep("*****MasterDate HeaderFilter Validated successfully*****");
         	break;
     	
     	}
@@ -140,63 +157,70 @@ public class DocExplorerPage {
    }
     
     public void TagWithMasterDateFilter(String dataforfilter) throws InterruptedException {
-        
+    	bc.stepInfo("Test case Id: RPMXCON-54726 - Verify that list view should sort by Master Date + DocID after applying multiple Filters (Tags and MasterDate-Before Date) with Exclude functionality");
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_TagFilter().Visible() ;}}), Input.wait60);
     	getDocExp_TagFilter().waitAndClick(10);
-    	
-    	doclist.exclude(dataforfilter);
+    	bc.stepInfo("*****Exclude Tag*****");
+    	doclist.exclude(dataforfilter); 
     	Thread.sleep(2000);
+    	bc.passedStep("*****Filter with Tag Validated is successfull*****");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_MasterDateFiler().Visible() ;}}), Input.wait30);
     	getDocExp_MasterDateFiler().waitAndClick(10);
-    	
+    	bc.stepInfo("*****Add Datefilter*****");
     	doclist.dateFilter("before",  "2010/01/01", null);
     	doclist.getApplyFilter().waitAndClick(10);
     	Thread.sleep(5000);
     	
-    	validateCount("Showing 1 to 50 of 1,145 entries");
+    	validateCount("Showing 1 to 50 of 1,143 entries");
+    	bc.passedStep("*****MasterDate Filter with Tag excluded Validated successfully*****");
    }
     
     
     public void MasterDateFilter() throws InterruptedException {
-      
+    	 bc.stepInfo("Test case Id: RPMXCON-54686 - Verify that “MasterDate” Filter with Include - between date functionality is working correctly on Doc Explorer list.");
+    	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+    	bc.stepInfo("*****Filter with Include between date*****");
     	dateFilterexplorer("between", "2001/01/01", "2020/01/01");
     	Thread.sleep(2000);
     	
     	doclist.getApplyFilter().waitAndClick(10);
     	
     	validateCount("Showing 1 to 50 of 302 entries");
+    	bc.passedStep("*****MasterDate Filter with Include between date Validated successfully*****");
    }
     
  public void TagFilter(String data1,String data2) throws InterruptedException {
-      
+	 bc.stepInfo("Test case Id: RPMXCON-54680 - Verify that “Tags” Filter with Include functionality is working correctly on Doc Explorer list.");
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_TagFilter().Visible() ;}}), Input.wait60);
     	getDocExp_TagFilter().waitAndClick(10);
-    	
+    	bc.stepInfo("*****Include Tag*****");
     	doclist.include(data1);
     	Thread.sleep(2000);
     	
     	doclist.getApplyFilter().waitAndClick(10);
     	
-    	validateCount("Showing 1 to 48 of 48 entries");
-    	
+    	validateCount("Showing 1 to 50 of 50 entries");
+    	bc.stepInfo("*****Update Tag*****");
 	    UpdateFilter(data2);
     	
         doclist.getApplyFilter().waitAndClick(10);
     	
     	validateCount("Showing 1 to 50 of 1,202 entries");
+    	bc.passedStep("*****Include Tag Filter Validated successfully*****");
    }
     
   public void CustodianFilter(String data1,String data2,String functionality) throws InterruptedException {
-     
+	    bc.stepInfo("Test case Id: RPMXCON-54671 - Verify that “CustodianName” Filter with Include functionality is working correctly on Doc Explorer list.");
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_CustodianFilter().Visible() ;}}), Input.wait60);
+    	bc.stepInfo("*****Include Custodian name*****");
     	getDocExp_CustodianFilter().waitAndClick(10);
     	
     	if(functionality.equalsIgnoreCase("include"))
@@ -216,7 +240,9 @@ public class DocExplorerPage {
         Thread.sleep(5000);
         
     	validateCount("Showing 1 to 50 of 1,136 entries");
+    	bc.passedStep("*****Custodian name include Filter Validated successfully*****");
 	  	}
+    	bc.stepInfo("*****Exclude Custodian name*****");
     	if(functionality.equalsIgnoreCase("exclude"))
 	  	{
     	doclist.exclude(data1);
@@ -235,97 +261,139 @@ public class DocExplorerPage {
     	
     	validateCount("Showing 1 to 50 of 66 entries");
 	  	}
-    	
+    	bc.passedStep("*****Custodian name exclude Filter Validated successfully*****");
    }
     
   public void DocFileTypeFilter(String data1,String data2) throws InterruptedException {
-   
+	  bc.stepInfo("Test case Id: RPMXCON-54673 - Verify that “DocFileType” Filter with Include functionality is working correctly on Doc Explorer list.");
   	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getDocExp_GetDocFIleTypeFilter().Visible() ;}}), Input.wait60);
   	getDocExp_GetDocFIleTypeFilter().waitAndClick(10);
-  	
+  	bc.stepInfo("*****Include Docfile type*****");
   	doclist.include(data1);
   	Thread.sleep(2000);
   	
   	doclist.getApplyFilter().waitAndClick(10);
   	
-  	validateCount("Showing 1 to 50 of 813 entries");
-  	
+  	validateCount("Showing 1 to 50 of 865 entries");
+  	bc.stepInfo("*****Update Docfile type*****");
   	UpdateFilter(data2);
   	
     doclist.getApplyFilter().waitAndClick(10);
   	
-  	validateCount("Showing 1 to 50 of 817 entries");
+  	validateCount("Showing 1 to 50 of 869 entries");
+  	bc.passedStep("*****Docfile Type Filter Validated successfully*****");
  }
   
   public void EmailRecipientNameFilter(String data1,String data2) throws InterruptedException {
-	   
+	  bc.stepInfo("Test case Id: RPMXCON-54675 - Verify that “EmailRecipientNames” Filter with Include functionality is working correctly on Doc Explorer list.");
 	  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
 	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			getDocExp_EmailRecNameFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailRecNameFilter().waitAndClick(10);
-	  	
+	  	bc.stepInfo("*****Include EmailRecipientName*****");
+	  	try {
 	  	doclist.include(data1);
+	  	
 	  	Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 3 of 3 entries");
-	  	
+	  	validateCount("Showing 1 to 1 of 1 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Recipient Name not found! Please check");
+		  	bc.failedStep("Email Author Recipient not found! Please check");
+		  	}
+	  	bc.stepInfo("*****update EmailRecipientName*****");
+	  	try {
 	  	UpdateFilter(data2);
+	  	
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 13 of 13 entries");
+	  	validateCount("Showing 1 to 22 of 22 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Recipient Name not found! Please check");
+		  	bc.failedStep("Email Author Recipient not found! Please check");
+		  	}
+	  	bc.passedStep("*****EmailRecipientName Filter  Validated successfully*****");
 	 }
   
   public void EmailAuthorNameFilter(String data1,String data2) throws InterruptedException {
-	   
+	  bc.stepInfo("Test case Id: RPMXCON-54692 - Verify that “EmailAuthorName” Filter with Exclude functionality is working correctly on Doc Explorer list.");
 	  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
 	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			getDocExp_EmailAuthNameFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailAuthNameFilter().waitAndClick(10);
-	  	
+	  	bc.stepInfo("*****Exclude EmailAuthorName*****");
+	  	try {
 	  	doclist.exclude(data1);
-	  	Thread.sleep(2000);
+        Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 50 of 2,537 entries");
+	  	validateCount("Showing 1 to 50 of 1,201 entries");
+	  	}
+	  	catch(Exception e) {
+	  	System.out.println("Email Author Name not found! Please check");
+	  	bc.failedStep("Email Author Name not found! Please check");
+	  	}
 	  	
+	  	bc.stepInfo("*****Update EmailAuthorName*****");
+	  	try {
 	  	UpdateFilter(data2);
+	  	
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 50 of 2,535 entries");
+	  	validateCount("Showing 1 to 50 of 1,200 entries");
+	  	}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Name not found! Please check");
+		  	bc.failedStep("Email Author Name not found! Please check");
+		  	}
+	  	bc.passedStep("*****EmailAuthorName Filter  Validated successfully*****");
 	 }
   
   public void EmailAuthorDomainFilter(String data1,String data2) throws InterruptedException {
-	   
+	     bc.stepInfo("Test case Id: RPMXCON-54676 - Verify that “EmailAuthorDomain” Filter with Include functionality is working correctly on Doc Explorer list");
 	  	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
 	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	  			getDocExp_EmailAuthDomainFilter().Visible() ;}}), Input.wait60);
 	  	getDocExp_EmailAuthDomainFilter().waitAndClick(10);
-	  	
+	  	bc.stepInfo("*****Include EmailAuthorDomain*****");
+	  	try {
 	  	doclist.include(data1);
+	  	
 	  	Thread.sleep(2000);
 	  	
 	  	doclist.getApplyFilter().waitAndClick(10);
 	  	Thread.sleep(5000);
 	  	
 	  	validateCount("Showing 1 to 6 of 6 entries");
-	  	
+	  	}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Domain Name not found! Please check");
+		  	bc.failedStep("Email Author Domain Name not found! Please check");
+		  	}
+	  	bc.stepInfo("*****Update EmailAuthorDomain*****");
+	  	try {
 	  	UpdateFilter(data2);
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	    Thread.sleep(5000);
 	  	
-	  	validateCount("Showing 1 to 10 of 10 entries");
+	  	validateCount("Showing 1 to 10 of 10 entries");}
+	  	catch(Exception e) {
+		  	System.out.println("Email Author Domain Name not found! Please check");
+		  	bc.failedStep("Email Author Domain Name not found! Please check");
+		  	}
+	  	bc.passedStep("*****EmailAuthorDomain Filter  Validated successfully*****");
 	 }
   
   public void AssignmentFilter(String assgnm1,String assgnm2,String functionality) throws InterruptedException {
@@ -379,7 +447,12 @@ public class DocExplorerPage {
  	  getDocExp_DocumentList_info().waitAndClick(30); //works only when results updates!!
         
  	   //Now validate results
- 	   Assert.assertTrue(getDocExp_DocumentList_info().getText().toString().equalsIgnoreCase(counts));
+ 	 try {
+ 	 	   Assert.assertTrue(getDocExp_DocumentList_info().getText().toString().equalsIgnoreCase(counts));}
+ 	 	  catch(AssertionError e)
+ 	 	  { System.out.println("Count validation failed!! Please check");
+ 	 	  bc.failedStep("******Count validation failed!! Please check********");
+ 	 	  }
  	   
  }
   
@@ -417,15 +490,19 @@ public class DocExplorerPage {
     	doclist.getApplyFilter().waitAndClick(10);
 	}
     
-    public void DocExplorertoquickBatch()
+    public void DocExplorertoquickBatch() throws InterruptedException
     {
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
     	getDocExp_SelectAllDocs().waitAndClick(10);
-    	
+    	Thread.sleep(2000);//here
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait30); 
+    			doclist.getYesAllPageDocs().Visible()  ;}}), Input.wait120); 
+    	doclist.getYesAllPageDocs().waitAndClick(15);//changed here..
+    	Thread.sleep(2000);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			doclist.getPopUpOkBtn().Visible()  ;}}), Input.wait60); 
     	doclist.getPopUpOkBtn().Click();
     	
     	getDocExp_actionButton().waitAndClick(10);
@@ -484,18 +561,19 @@ public class DocExplorerPage {
        
    
   public void CommentFilter() throws InterruptedException {
-      
+	  bc.stepInfo("Test case Id: RPMXCON-54682 - Verify that Comments Filter with Include functionality is working correctly on Doc Explorer list.");
   	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getDocExp_CommentsFilter().Visible() ;}}), Input.wait60);
   	getDocExp_CommentsFilter().waitAndClick(10);
-  	
+  	bc.stepInfo("*****Include Comment*****");
   	doclist.include("Document_Comments");
   	Thread.sleep(2000);
   	
   	doclist.getApplyFilter().waitAndClick(10);
   	
-    validateCount("Showing 1 to 2 of 2 entries");
+    validateCount("Showing 1 to 1 of 1 entries");
+    bc.passedStep("*****Comment Filter  Validated successfully*****");
  }
 
   public void DocExplorertodoclist()

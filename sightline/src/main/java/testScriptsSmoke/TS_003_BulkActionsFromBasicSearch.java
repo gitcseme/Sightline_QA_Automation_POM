@@ -61,20 +61,20 @@ public class TS_003_BulkActionsFromBasicSearch {
 		UtilityLog.info("Started Execution for prerequisite");
 		
 		//Open browser
-		softAssertion= new SoftAssert();
-		//Input in = new Input();
-		//in.loadEnvConfig();
-				
+					
 		driver = new Driver();
 		//Login as Project Admin
 		loginPage=new LoginPage(driver);
-		sessionSearch = new SessionSearch(driver);
+	
     	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+				sessionSearch = new SessionSearch(driver);
     	 tagsAndFolderPage = new TagsAndFoldersPage(driver);
     	//Search for any content on basic search screen
      	sessionSearch.basicContentSearch(Input.searchString2);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());   	        
-
+          softAssertion= new SoftAssert();
+	
+	
 	}
 	
 	/*

@@ -36,6 +36,7 @@ import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -256,9 +257,16 @@ public  class Driver  {
 	   private WebDriver chromeDriver() { 
 	      
 	      try { 
+	    	  	
 	    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
-				ChromeOptions options = new ChromeOptions();
+	    	    ChromeOptions options = new ChromeOptions();
+				
 				options.addArguments("chrome.switches","--disable-extensions");
+				
+				if(Input.headlessMode) {
+					//options.addArguments("--headless","--window-size=1920,1080");
+					options.addArguments("--headless");
+				}
 				new DesiredCapabilities();
 				DesiredCapabilities caps = DesiredCapabilities.chrome();
 				caps.setCapability(ChromeOptions.CAPABILITY, options);
@@ -273,10 +281,13 @@ public  class Driver  {
 				prefs.put("credentials_enable_service", false);
 				prefs.put("profile.password_manager_enabled", false);
 				options.setExperimentalOption("prefs", prefs);
-		
+				
+				//WebDriverManager.chromedriver().setup();
+				
+				//WebDriver  driver = new ChromeDriver(options);
+				
 				driver = new ChromeDriver(caps);
-		
-				driver.manage().window().maximize();				
+				driver.manage().window().maximize();
 				return driver;	
 	      } 
 
@@ -287,17 +298,35 @@ public  class Driver  {
 	      } 
 	   } 
 	  
+	   
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
 		    		
 		    	  // Edge Driver
-		    	  System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
-		    				
-		    		WebDriver driver = new EdgeDriver();		    		
-		    		//Start Edge Session
-		    		driver.manage().window().maximize();
-					return driver;	
+		    	  WebDriverManager.edgedriver().setup();
+		    	  
+		    	  EdgeOptions options = new EdgeOptions(); 
+		    	 
+		    	  DesiredCapabilities capabilities = DesiredCapabilities.edge();
+		    	  capabilities.setCapability(EdgeOptions.CAPABILITY, options);
+		    	  capabilities.setCapability("ignore-certificate-errors", true);
+		    	  capabilities.setCapability("UseChromium", true);
+		    	  capabilities.setCapability("InPrivate", true);
+		    	 
+		    	  /**
+		    	   * This works With higher version of selenium
+		    	   * ToDO
+		    	   */
+		    	/*  if (Input.headlessMode) {
+		    		    options.AddArguments("--headless");
+		    		 }
+		    	 */
+
+		    	  //Start Edge Session
+		    	  EdgeDriver driver = new EdgeDriver(capabilities);
+		    	  driver.manage().window().maximize();
+		    	  return driver;	
 		      } 
 
 		      catch (Exception ex) { 
