@@ -53,7 +53,7 @@ public class DocList_Regression {
 	@Test(priority=1,groups={"regression"})
 	public void PreviewDocNonAudio() throws InterruptedException {
 		
-		bc.stepInfo("Test case Id: RPMXCON-54566 - Preview Document NonAudio");
+		bc.stepInfo("Test case Id: RPMXCON-54564 - Verify that Non-Audio Document Preview functionality is working proper in Basic Search >> DocList screen.");
 		bc.stepInfo("****session search*****");
 		//final DocListPage dl= new DocListPage(driver);
 		ss.basicContentSearch(Input.searchString2);
@@ -74,7 +74,7 @@ public class DocList_Regression {
 		@Test(priority=2,groups={"regression"})
 		public void PreviewDocAudio() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-54565 - Preview Document Audio");
+			bc.stepInfo("Test case Id: RPMXCON-54565 - Verify that Audio Document Preview functionality is working proper in Advanced Search >> DocList screen.");
 			bc.stepInfo("****Audio search*****");
 			//final DocListPage dl= new DocListPage(driver);
 			//driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -109,7 +109,7 @@ public class DocList_Regression {
 		//To validate custodian filter
 		@Test(priority=4,groups={"regression"})
 		public void masterDateFiltersInDocList() throws InterruptedException {
-			bc.stepInfo("Test case Id: RPMXCON-54530 - Validate masterDateFilters InDocList");
+			bc.stepInfo("Test case Id: RPMXCON-54530 - Validate Masterdate range on DocList");
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
@@ -131,7 +131,7 @@ public class DocList_Regression {
 		@Test(priority=5,groups={"regression"})
 		public void docFileTypeInDocList() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-53664 - Validate docFileType filter InDocList");
+			bc.stepInfo("Test case Id: RPMXCON-53664 - To verify filtering of documents by File Type on doclist grid");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
@@ -157,7 +157,7 @@ public class DocList_Regression {
 		@Test(priority=6,groups={"regression"})
 		public void custodianFiltersInDocList() throws InterruptedException {
 			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-			bc.stepInfo("Test case Id: RPMXCON-53664 - Validate custodianFilters InDocList");
+			bc.stepInfo("Test case Id: RPMXCON-53679 -To Verify, As a Admin user login, I will be able to filter the doc List grid by Custodian Name ");
 			bc.selectproject();
 	    	Assert.assertTrue(ss.basicContentSearch("*")==Input.totalNumberOfDocs);
 	    	ss.ViewInDocList();
