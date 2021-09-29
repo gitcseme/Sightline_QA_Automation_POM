@@ -561,7 +561,7 @@ public class DocExplorerPage {
        
    
   public void CommentFilter() throws InterruptedException {
-	  bc.stepInfo("Test case Id: RPMXCON-54682 - CommentFilter");
+	  bc.stepInfo("Test case Id: RPMXCON-54682 - Verify that Comments Filter with Include functionality is working correctly on Doc Explorer list.");
   	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
   	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   			getDocExp_CommentsFilter().Visible() ;}}), Input.wait60);
@@ -572,7 +572,7 @@ public class DocExplorerPage {
   	
   	doclist.getApplyFilter().waitAndClick(10);
   	
-    validateCount("Showing 1 to 2 of 1 entries");
+    validateCount("Showing 1 to 1 of 1 entries");
     bc.passedStep("*****Comment Filter  Validated successfully*****");
  }
 
