@@ -241,7 +241,7 @@ public class TS_003_AdvanceSearch1 {
 		    		    	
 		    	bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=1);
+		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=0);
 		    	bc.passedStep("********Audio search is successful********");	
 				 bc.passedStep("********pure Hit count is same as expected********");
 				 

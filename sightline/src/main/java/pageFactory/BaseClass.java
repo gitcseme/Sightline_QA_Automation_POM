@@ -728,6 +728,7 @@ public class BaseClass {
 				return getSelectRole().Visible();
 			}
 		}), Input.wait60);
+		Thread.sleep(2000);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -735,6 +736,7 @@ public class BaseClass {
 				return getAvlDomain().Visible();
 			}
 		}), Input.wait30);
+		Thread.sleep(2000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -742,7 +744,7 @@ public class BaseClass {
 				return getAvlProject().Visible();
 			}
 		}), Input.wait30);
-
+		Thread.sleep(2000);
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -750,7 +752,7 @@ public class BaseClass {
 				return getSelectSecurityGroup().Visible();
 			}
 		}), Input.wait30);
-
+		Thread.sleep(2000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().Click();
 		System.out.println("Impersnated from SA to RMU");
