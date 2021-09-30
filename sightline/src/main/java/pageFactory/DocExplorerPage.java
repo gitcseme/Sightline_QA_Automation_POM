@@ -493,6 +493,7 @@ public class DocExplorerPage {
     public void DocExplorertoquickBatch() throws InterruptedException
     {
     	this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+    	Thread.sleep(2000);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_SelectAllDocs().Visible()  ;}}), Input.wait30); 
     	getDocExp_SelectAllDocs().waitAndClick(10);
@@ -506,7 +507,7 @@ public class DocExplorerPage {
     	doclist.getPopUpOkBtn().Click();
     	
     	getDocExp_actionButton().waitAndClick(10);
-    	
+    	Thread.sleep(2000);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getDocExp_action_quickbatch().Visible()  ;}}), Input.wait30); 
     	getDocExp_action_quickbatch().Click();

@@ -1587,20 +1587,18 @@ public void selectOperator(String operator) throws InterruptedException {
 	driver.scrollPageToTop();
 	getOperatorDD().Click();
 	if(operator.equalsIgnoreCase("AND")){
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//				getOperatorAND().Visible()  ;}}), Input.wait60); //increased time from 30 to 60 secs
+
+
 		Thread.sleep(2000);
 		getOperatorAND().Click();	
 	}
 	if(operator.equalsIgnoreCase("OR")){
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//				getOperatorOR().Visible()  ;}}), Input.wait60); 
+
 		Thread.sleep(2000);
 		getOperatorOR().waitAndClick(5);	
 	}
 	if(operator.equalsIgnoreCase("NOT")){
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//				getOperatorNOT().Visible()  ;}}), Input.wait60); 
+
 		Thread.sleep(2000);
 		getOperatorNOT().Click();	
 	}
