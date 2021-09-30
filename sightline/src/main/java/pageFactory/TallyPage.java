@@ -426,7 +426,8 @@ public class TallyPage {
 				return getTally_SourceSubTally().Visible();
 			}
 		}), Input.wait30);
-		Thread.sleep(3000);
+		
+		
 		getTally_SourceSubTally().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
