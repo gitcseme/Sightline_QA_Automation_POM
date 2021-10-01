@@ -36,7 +36,7 @@ import testScriptsSmoke.Input;
 	TagsAndFoldersPage page;
 	AssignmentsPage agnmt;
 	HomePage hm;
-	BaseClass bc;
+	BaseClass bc;//changes here
 	DocListPage dp;
 	
 	String Remark= "Re"+Utility.dynamicNameAppender();
