@@ -61,9 +61,8 @@ public class SavedSearch_Regression  {
 		//Search and save it
 		search = new SessionSearch(driver);
 		purehits=search.basicContentSearch(Input.searchString1);
-		
-	 search.saveSearch(saveSearchName);
-      search.saveSearch(SearchNamePA);
+		search.saveSearch(saveSearchName);
+        search.saveSearch(SearchNamePA);
 		Thread.sleep(5000);
 		ss = new SavedSearch(driver);
         base = new BaseClass(driver);
@@ -100,7 +99,7 @@ public class SavedSearch_Regression  {
 	@Test(groups={"regression"},priority=2)
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		System.out.println("****************DocView Started*************************"); 
-		base.stepInfo("Test case Id: RPMXCON-48762-saveSearchToDocView");
+		base.stepInfo("Test case Id: RPMXCON-48762-Verify that DocView Action is working properly on Saved Search Screen");
 		 DocViewPage dv= new DocViewPage(driver);
 		ss.savedSearchToDocView(saveSearchName);
 	   
@@ -123,7 +122,8 @@ public class SavedSearch_Regression  {
 		
 		System.out.println("****************Bulk Tag Started*************************"); 
 		//Schedule the saved search
-		base.stepInfo("Test case Id:RPMXCON-53564-SavedSearchBulkTag");
+		base.stepInfo("Test case Id:RPMXCON-53564-SavedSearchBulkTag-Verify that As a "
+				+ "Project Admin Login I will be able to perform Bulk Tag from saved search");
 		 ss.SaveSearchToBulkTag(saveSearchName, TagName);
 		 base.stepInfo("**New Bulktag Created successfully**");
 		 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
@@ -149,7 +149,8 @@ public class SavedSearch_Regression  {
 		
 		//Schedule the saved search
 		System.out.println("****************Bulk Folder Started*************************"); 
-		base.stepInfo("Test case Id:RPMXCON-53565-SavedSearchBulkFolder");
+		base.stepInfo("Test case Id:RPMXCON-53565-Verify that As a Project Admin Login I will be able to "
+				+ "perform Bulk Folder from saved search");
 		 ss.SaveSearchToBulkFolder(saveSearchName, FolderName);
 		 base.stepInfo("**New BulkFolder Created successfully**");
 		 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
@@ -190,7 +191,7 @@ public class SavedSearch_Regression  {
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
-		base.stepInfo("Test case Id:RPMXCON-48763-Schedule Saved Search");
+		base.stepInfo("Test case Id:RPMXCON-48763-Verify that Schedule functionality is working proper in Saved searches");
 		ss.scheduleSavedSearch("PA4835328");
 		base.stepInfo("**Schedule Search Created successfully**");
 		SchedulesPage sp = new SchedulesPage(driver);
