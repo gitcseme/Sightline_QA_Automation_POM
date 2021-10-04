@@ -1241,20 +1241,20 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   
 //		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //			    	sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-		    
+//		    
 //		    System.out.println(sp.getContinueCount().getText());
 //		   int actualcount = Integer.parseInt(sp.getContinueCount().getText());
 //		   System.out.println(actualcount);
 		   //Assert.assertEquals(actualcount,9);
 		   
 		   base.getCancelbutton().waitAndClick(10);
-//		   try {
-//			   Thread.sleep(3000);
-//		   alert = driver.switchTo().alert();
-//		   alert.accept();
-//		   } catch (Exception e)
-//		   { e.printStackTrace();}
-		   
+
+		   try {	
+			   Thread.sleep(3000);
+		   alert = driver.switchTo().alert();
+		   alert.accept();	
+		   } catch (Exception e)	
+		   { e.printStackTrace();}
 		   		   getSaveDoc().waitAndClick(30);
     	   driver.Navigate().refresh();
 		   
