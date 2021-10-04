@@ -810,10 +810,10 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
  	
  	  // Verify Yellow color of highlighted text
 		WebElement activeElement = driver.switchTo().activeElement();
-//		String HighlightedColor = driver.FindElementByCssSelector("rect[style*='#FFFF00']").GetCssValue("fill");
-//		System.out.println(HighlightedColor);
+		String HighlightedColor = driver.FindElementByCssSelector("rect[style*='#FFFF00']").GetCssValue("fill");
+		System.out.println(HighlightedColor);
 		
-//		Assert.assertEquals(HighlightedColor, "rgb(255, 255, 0)");
+		Assert.assertEquals(HighlightedColor, "rgb(255, 255, 0)");
 
 		/*if (HighlightedColor.equalsIgnoreCase("rgb(255, 255, 0)")) {
 
