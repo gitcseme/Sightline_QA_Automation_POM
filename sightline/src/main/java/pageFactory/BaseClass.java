@@ -1097,6 +1097,19 @@ UtilityLog.info(values);
 		};
 		return condition;
 	}
+    
+    
+    static ExpectedCondition<String> waitForTextToLoad(By textLocator) {
+     	ExpectedCondition<String> condition = (webDriver) -> {
+    		WebElement element = webDriver.findElement(textLocator);
+			String text = element.getText();
+			if (text == null || text.length() == 0) return null; 
+			return text;
+    	};
+		return condition;
+	}
+    
+
 
 //
 /**

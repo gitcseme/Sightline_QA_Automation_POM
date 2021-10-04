@@ -27,15 +27,16 @@ import testScriptsSmoke.Input;
 	ProductionPage page;
 	TagsAndFoldersPage tp;
 	SessionSearch ss;
+	BaseClass bc;
 	
-	String productionname= "P"+Utility.dynamicNameAppender();
+	String productionname;
 	String productionname1= "P1"+Utility.dynamicNameAppender();
 	String exportname= "EXP"+Utility.dynamicNameAppender();
 	String PrefixID = "A_"+Utility.dynamicNameAppender();;
 	String SuffixID = "_P"+Utility.dynamicNameAppender();;
-	String foldername = "FolderProd"+Utility.dynamicNameAppender(); 
+	String foldername;
 	String templatername = "TempProd"+Utility.dynamicNameAppender(); 
-	String Tagname = "Tag"+Utility.dynamicNameAppender();
+	String Tagname;
 	String Tagnameprev = "Privileged";
 	String Tagnametech = "Technical_Issue" + Utility.dynamicNameAppender();
 
@@ -43,6 +44,9 @@ import testScriptsSmoke.Input;
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws InterruptedException, ParseException, IOException {
+		
+		foldername = "FolderProd"+Utility.dynamicNameAppender(); 
+		Tagname = "Tag"+Utility.dynamicNameAppender();
 		
 		Input in = new Input();
 		in.loadEnvConfig();
@@ -52,7 +56,8 @@ import testScriptsSmoke.Input;
 	
 		driver = new Driver();
 		//Login as PA
-		lp=new LoginPage(driver);
+		lp = new LoginPage(driver);
+		bc = new BaseClass(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
 		 tp = new TagsAndFoldersPage(driver);
@@ -62,13 +67,28 @@ import testScriptsSmoke.Input;
 		 ss.bulkFolderExisting(foldername);
 		 tp.CreateTagwithClassification(Tagname,"Privileged");
 		 
-		page = new ProductionPage(driver);
+
+		 
+//		page = new ProductionPage(driver);
+//		lp.logout();
+		
 		
 	}
+	
+	@BeforeMethod
+	 public void beforeTestMethod(Method testMethod){
+		productionname= "P"+Utility.dynamicNameAppender();
+		System.out.println("------------------------------------------");
+	    System.out.println("Executing method : " + testMethod.getName());  
+//	    lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	    page = new ProductionPage(driver);
+	 }
 
 	
 	    @Test(groups={"regression"},priority=1)
 	    public void AddNewProduction() throws ParseException, InterruptedException, IOException {
+	    	bc.stepInfo("Test Case Id : RPMXCON-55716 'To Verify that End-to-end productions functionality is working properly'");
+	    	
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		page.CreateProduction(productionname, PrefixID, SuffixID, foldername, Tagnameprev);
 	  
@@ -100,7 +120,7 @@ import testScriptsSmoke.Input;
 		 tp.CreateTagwithClassification(Tagnametech,"Technical Issue");
 		 ss.basicContentSearch("crammer");
 		 ss.bulkTagExisting(Tagnametech);
-		 page.ProductionwithTechIssuetags(productionname1, PrefixID, SuffixID, foldername,Tagnameprev,Tagnametech);
+		 page.ProductionwithTechIssuetags(productionname, PrefixID, SuffixID, foldername,Tagnameprev,Tagnametech);
 	  }
 	 	
 	   //added by Narendra	
@@ -162,8 +182,7 @@ import testScriptsSmoke.Input;
 	   public void CustomizedTemplate() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		String tempName = "newtemp"+Utility.dynamicNameAppender();
-		String productionName = "prod"+Utility.dynamicNameAppender();
-		page.CustomizeTemplate(tempName,productionName);
+		page.CustomizeTemplate(tempName,productionname);
 	  
 	  }
 		
@@ -191,11 +210,7 @@ import testScriptsSmoke.Input;
 		  
 		  }
 	
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
+	 
      @AfterMethod(alwaysRun = true)
 	 public void takeScreenShot(ITestResult result) {
  	 if(ITestResult.FAILURE==result.getStatus()){
@@ -206,13 +221,8 @@ import testScriptsSmoke.Input;
  	
      }
 	@AfterClass(alwaysRun = true)
-	public void close(){
-		try{ 
-			lp.logout();
-		     //lp.quitBrowser();	
-			}finally {
-				lp.quitBrowser();
-						}
-		LoginPage.clearBrowserCache();
-	}
+     public void close(){
+		lp.logout();
+		driver.Quit();
+  	}
 }

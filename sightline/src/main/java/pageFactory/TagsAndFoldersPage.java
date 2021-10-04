@@ -11,6 +11,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import automationLibrary.Driver;
@@ -38,7 +40,7 @@ public class TagsAndFoldersPage {
     public Element getAddTag(){ return driver.FindElementById("aAddTag"); }
     public Element getTagName(){ return driver.FindElementById("txtTagName"); }
     public Element getSaveTag(){ return driver.FindElementById("btnAddTag"); }
-    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath(".//*[@id='tabs-a']/div[1]/div/button[2]"); }
+    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath(".//div[@id='tabs-a']/div[1]/div/button[@data-toggle='dropdown']"); }
     public Element getFoldersTab(){ return driver.FindElementByXPath("//*[@class='tags-folders']//a[contains(text(),'Folders')]"); }
     public Element getTagsTab(){ return driver.FindElementById("ui-id-1"); }
     public Element getAllFolderRoot(){ return driver.FindElementByXPath("//a[contains(text(),'All Folders')]"); }
@@ -46,7 +48,7 @@ public class TagsAndFoldersPage {
     public Element getAddFolder(){ return driver.FindElementById("aAddFolder"); }
     public Element getFolderName(){ return driver.FindElementById("txtFolderName"); }
     public Element getSaveFolder(){ return driver.FindElementById("btnAddFolder"); }
-    public Element getFolderActionDropDownArrow(){ return driver.FindElementByXPath("//*[@id='tabs-b']/div[1]/div/button[2]"); }
+    public Element getFolderActionDropDownArrow(){ return driver.FindElementByXPath("//div[@id='tabs-b']//div/button[@data-toggle='dropdown']"); }
  
     //added on 4th feb
     public Element getTagName(String TagName){ return driver.FindElementByXPath("//a[contains(text(),'"+TagName+"')]"); }
@@ -186,23 +188,17 @@ public class TagsAndFoldersPage {
         		 getAllFolderRoot().Visible()  ;}}), Input.wait30); 
          Thread.sleep(3000);
          getAllFolderRoot().waitAndClick(10);
-         Thread.sleep(3000);
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getFolderActionDropDownArrow().waitAndClick(30);
-     
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        		 getAddFolder().Visible()  ;}}), Input.wait30); 
-         getAddFolder().waitAndClick(10);
+         
+         WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+         wait.until(ExpectedConditions.elementToBeClickable(getFolderActionDropDownArrow().getBy())).click();
+         
+         wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
      
      driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 
       new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
-     //getFolderName().SendKeys(strFolder);
-     
-     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getSaveFolder().Visible()  ;}}), Input.wait30); 
-     getSaveFolder().waitAndClick(10);
+  
+      wait.until(ExpectedConditions.elementToBeClickable(getSaveFolder().getBy())).click();
      
      base.VerifySuccessMessage("Folder added successfully");
      base.CloseSuccessMsgpopup();
