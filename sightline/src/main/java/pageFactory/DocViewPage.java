@@ -15,8 +15,11 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -334,11 +337,11 @@ public class DocViewPage {
    
     public void addRemarkNonAudioDoc(String remark) {
     	//To make sure we are in basic search page
-    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	driver.waitForPageToBeReady();
-    	
-    	driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
-    	driver.waitForPageToBeReady();
+//    	driver.getWebDriver().get(Input.url+ "Search/Searches");
+//    	driver.waitForPageToBeReady();
+//    	
+//    	driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
+//    	driver.waitForPageToBeReady();
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getNonAudioRemarkBtn().Visible()  ;}}), Input.wait30); 
@@ -807,10 +810,10 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
  	
  	  // Verify Yellow color of highlighted text
 		WebElement activeElement = driver.switchTo().activeElement();
-		String HighlightedColor = driver.FindElementByCssSelector("rect[style*='#FFFF00']").GetCssValue("fill");
-		System.out.println(HighlightedColor);
+//		String HighlightedColor = driver.FindElementByCssSelector("rect[style*='#FFFF00']").GetCssValue("fill");
+//		System.out.println(HighlightedColor);
 		
-		Assert.assertEquals(HighlightedColor, "rgb(255, 255, 0)");
+//		Assert.assertEquals(HighlightedColor, "rgb(255, 255, 0)");
 
 		/*if (HighlightedColor.equalsIgnoreCase("rgb(255, 255, 0)")) {
 
@@ -1133,7 +1136,10 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	   }
 	   
 	   public void AnalyticsActions() throws InterruptedException {
-		   
+		   Thread.sleep(2000);
+		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
+		   getDocView_EditMode().waitAndClick(10);
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				   getDocView_Analytics_Threaded_FirstDoc().Displayed()  ;}}), Input.wait60);   
 		   getDocView_Analytics_Threaded_FirstDoc().waitAndClick(15);
@@ -1160,9 +1166,9 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   getDocView_MiniDoc_SelectRow(1).waitAndClick(10);
 		   
 		   getDocView_Mini_ActionButton().waitAndClick(10);
-		   
+		   Thread.sleep(2000);
 		   getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);	
-		   
+		   Thread.sleep(2000);
 		   base.VerifySuccessMessage("Code Same has been successfully removed");
 		   base.CloseSuccessMsgpopup();
 		   Thread.sleep(2000);
@@ -1203,9 +1209,9 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 				   getDocView_Analytics_Threaded().Displayed()  ;}}), Input.wait30);  
 		   getDocView_Analytics_Threaded().Displayed();*/
 		   
-		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
-		   getDocView_EditMode().Click();
+//		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
+//		   getDocView_EditMode().Click();
 	   
 		   String parentWindowID = driver.getWebDriver().getWindowHandle();
 			   
@@ -1214,40 +1220,49 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   getDocView_HdrAnalytics().Click();
 		   
 		   for(String winHandle : driver.getWebDriver().getWindowHandles()){
+			   
+			   
 			    driver.switchTo().window(winHandle);
-			}
+		   }  
 		   
 		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
-		   
-		   getDocView_ChildWindow_ActionButton().waitAndClick(10);
-		   
-		   getDocView_Analytics_Thread_Folder().waitAndClick(10);
 		   driver.getWebDriver().close();
-		   
+		   Thread.sleep(2000);
 		   driver.switchTo().window(parentWindowID);
 		   Thread.sleep(3000);
+		   getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		   Thread.sleep(2000);
+		   getDocView_Analytics_Thread_Folder().waitAndClick(10);
+		 
+		  
+		
+//		   driver.switchTo().window(parentWindowID);
+		   Thread.sleep(3000);
 		   
-		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			    	sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
-		   int actualcount = Integer.parseInt(sp.getContinueCount().getText());
-		   System.out.println(actualcount);
+//		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			    	sp.getContinueCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60); 
+		    
+//		    System.out.println(sp.getContinueCount().getText());
+//		   int actualcount = Integer.parseInt(sp.getContinueCount().getText());
+//		   System.out.println(actualcount);
 		   //Assert.assertEquals(actualcount,9);
 		   
 		   base.getCancelbutton().waitAndClick(10);
-		   try {
-			   Thread.sleep(3000);
-		   alert = driver.switchTo().alert();
-		   alert.accept();
-		   } catch (Exception e)
-		   { e.printStackTrace();}
+//		   try {
+//			   Thread.sleep(3000);
+//		   alert = driver.switchTo().alert();
+//		   alert.accept();
+//		   } catch (Exception e)
+//		   { e.printStackTrace();}
 		   
-		   getSaveDoc().waitAndClick(30);
+		   		   getSaveDoc().waitAndClick(30);
     	   driver.Navigate().refresh();
 		   
 	   }
 	   
 	   public void MiniDoclistFolderAction(String foldername) throws InterruptedException {
-		   	
+		   Thread.sleep(3000);
+		   getDocView_EditMode().ElementToBeClickableExplicitWait(getDocView_EditMode(), 10000);
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
 		   getDocView_EditMode().waitAndClick(10);
@@ -1320,7 +1335,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			               System.out.println("Remark Button not displayed for PA");
 			 }
 
-		   getDocView_DocId("ID00001059").waitAndClick(20);
+//		   getDocView_DocId("ID00001059").waitAndClick(20);
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getDocView_ThreadedChild_Selectalldoc().Displayed()  ;}}), Input.wait30);   
 		   getDocView_ThreadedChild_Selectalldoc().waitAndClick(10);
@@ -1565,13 +1580,25 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		     } 
 		  
 		  public void Analytics_FamilyActions(String folderName) throws InterruptedException {
-			   	
-			  getDocView_Analytics_FamilyTab().waitAndClick(30);
-			   
-			  getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
-			   
-			  getDocView_ChildWindow_ActionButton().waitAndClick(10);
+//			 Thread.sleep(5000);
+			  Actions actions = new Actions(driver.getWebDriver());
+			  WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+			  wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//li[@id='liDocumentFamilyMember']")));
+//			  presenceOfElementLocated(getDocView_Analytics_FamilyTab().getWebElement())
+//			  wait.until(ExpectedConditions.stalenessOf(getDocView_Analytics_FamilyTab().getWebElement()));
 			  
+			 getDocView_Analytics_FamilyTab().VisibilityOfElementExplicitWait(getDocView_Analytics_FamilyTab(), 1000000);
+			 getDocView_Analytics_FamilyTab().ElementToBeClickableExplicitWait(getDocView_Analytics_FamilyTab(), 1000000);
+			  getDocView_Analytics_FamilyTab().waitAndClick(30);
+			  Thread.sleep(1000);
+			  getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().VisibilityOfElementExplicitWait(getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc(), 1000000);
+			  getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().ElementToBeClickableExplicitWait(getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc(), 100000);
+			  actions.moveToElement( getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().getWebElement()).click().build().perform();
+//			  getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
+			  
+			  getDocView_ChildWindow_ActionButton().ElementToBeClickableExplicitWait(getDocView_ChildWindow_ActionButton(), 100000); 
+			  getDocView_ChildWindow_ActionButton().waitAndClick(10);
+			  getDocView_FamilyBulkFolder().ElementToBeClickableExplicitWait(getDocView_FamilyBulkFolder(), 100000);
 			  getDocView_FamilyBulkFolder().waitAndClick(10);
 			   
 			  sp.getSelectFolderExisting(folderName).waitAndClick(5);
@@ -1595,9 +1622,9 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 			  
 			  //View in Doclist
 			  getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().waitAndClick(10);
-			   
+			  getDocView_Analytics_FamilyTab().VisibilityOfElementExplicitWait(getDocView_Analytics_FamilyTab(), 1000000);
 			  getDocView_ChildWindow_ActionButton().waitAndClick(10);
-			  
+			  Thread.sleep(10000);
 			  getDocView_FamilyViewInDoclist().waitAndClick(10);
 			  
 			 }
@@ -1623,7 +1650,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		  }	  
 			  
 		  public void MiniDoclistConifgSortOrder() throws InterruptedException {
-			   	
+			  driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
 			   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 						getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
 			   getDocView_EditMode().waitAndClick(10);

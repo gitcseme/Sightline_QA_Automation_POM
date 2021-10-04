@@ -171,16 +171,17 @@ public class AssignmentsPage {
     public ElementCollection getSubGroups(){ return driver.FindElementsByXPath("//a[@id='-1_anchor']/following-sibling::ul//a"); }
     public Element getkeyWordPopUpOk(){ return driver.FindElementByXPath("//button[@id='keywordOK']"); }
     public Element getKeyConfirmYes(){ return driver.FindElementByXPath("//button[@id=\"bot1-Msg1\"]"); }
+    public ElementCollection getSelectUserNameToAssign(){ return driver.FindElementsByXPath("//*[@id='divNotAssignedUsers']/div/div[2]"); }
     
     public AssignmentsPage(Driver driver){
 
         this.driver = driver;
         bc = new BaseClass(driver);
-        
-        this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
-        driver.waitForPageToBeReady();
-        //This initElements method will create all WebElements
         assertion = new SoftAssert();
+        this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+//        driver.waitForPageToBeReady();
+        //This initElements method will create all WebElements
+        
         search = new SessionSearch(driver);
         docview = new DocViewPage(driver);
 
@@ -382,10 +383,29 @@ public class AssignmentsPage {
     	getAssignment_ManageReviewersTab().waitAndClick(30);
     	
     	getAddReviewersBtn().waitAndClick(10);
+//    	driver.scrollingToElementofAPage(getSelectUserToAssign());
+    	 for (WebElement iterable_element : getSelectUserNameToAssign().FindWebElements()) {
+    		
+    			if(iterable_element.getText().contains(Input.rev1userName)){
+    				
+    				
+    				try {
+    					Thread.sleep(5000);
+    				} catch (InterruptedException e) {
+    					// TODO Auto-generated catch block
+    					e.printStackTrace();
+    				}
+
+    				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().perform();
+    				driver.scrollingToBottomofAPage();
+    				getSelectUserToAssign().waitAndClick(10);
+    				break;
+    			}
+    		}
     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSelectUserToAssign().Visible()  ;}}), Input.wait60);
-    	getSelectUserToAssign().waitAndClick(10);
+//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//    			getSelectUserToAssign().Visible()  ;}}), Input.wait60);
+//    	getSelectUserToAssign().waitAndClick(10);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAdduserBtn().Visible()  ;}}), Input.wait60);
     	getAdduserBtn().waitAndClick(10);
