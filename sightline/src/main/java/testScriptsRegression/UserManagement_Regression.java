@@ -43,6 +43,8 @@ public class UserManagement_Regression {
 	
     @Test(groups={"regression"})
     public void AddRMUwithAttorney() throws InterruptedException {
+    	
+    	
 	   //user'gmail account
 		String newUserid= "r.muserconsilio@gmai.com";
 		String newUserPwd="consilio@123";
@@ -53,10 +55,13 @@ public class UserManagement_Regression {
 		
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 
+		bc.stepInfo("RPMXCON-53237-Verify system admin should be able to set the Attorney Profile for RMU user");
 		//create rmu
 		um = new UserManagement(driver);
 		firstName = "00RMU"+Utility.dynamicNameAppender();
 		um.RMUUserwithAttorneyProfile(firstName, "AutoRMU", "Review Manager", newUserid, " ", Input.projectName);
+		
+		bc.stepInfo("User profile Successfully Created");
 		//activate account
 		driver.Navigate().to(LoginPage.readGmailMail("Welcome ",firstName,"ActivationLink",newUserid,newUserPwd));
 		driver.waitForPageToBeReady();
@@ -80,7 +85,8 @@ public class UserManagement_Regression {
     @Test(priority =2,groups={"smoke","regression"})
 	public void LockAccountCheck() throws InterruptedException {
     	String expectedErrorMsg ="20001000020 : Your account has been locked. Please contact your administrator or support";
-    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);   
+    	lp.loginToSightLine(Input.pa1userName, Input.pa1password);  
+    	bc.stepInfo("RPMXCON-52735-To verify that Project Admin can lock the PAU, RMU and Reviewer users in the same project.");
 		this.driver.getWebDriver().get(Input.url+ "User/UserListView#");
 		final UserManagement um= new UserManagement(driver);
 		um.lockAccount("RMU","Review Manager","active");
@@ -101,6 +107,7 @@ public class UserManagement_Regression {
    	public void UnlockAccountCheck() throws InterruptedException {
        	
        	lp.loginToSightLine(Input.pa1userName, Input.pa1password);   
+       	bc.stepInfo("RPMXCON-52736-To verify that Project Admin can unlock the PAU, RMU and Reviewer users in the same project.");
    		this.driver.getWebDriver().get(Input.url+ "User/UserListView#");
    		final UserManagement um= new UserManagement(driver);
    		um.UnlockAccount("RMU","Review Manager","active");
@@ -111,6 +118,8 @@ public class UserManagement_Regression {
     
     @Test(priority =4,groups={"smoke","regression"})
    	public void ImpersonateSAUtoREVUtoSAU() throws InterruptedException {
+    	
+    	bc.stepInfo("RPMXCON-53287-Verify if SAU impersonate as Reviewer, he should able to impersonate back as SAU");
        	    //Login as SA
 			lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 			//Impersonate as Reviewer
@@ -129,33 +138,37 @@ public class UserManagement_Regression {
 	 public void asDAaddNewRMU() throws InterruptedException {
 	   		String newUserid= "a.u.t.o.mation.consilio@gmail.com";
 	   		lp.loginToSightLine(Input.da1userName, Input.da1password);
+	   		bc.stepInfo("RPMXCON-53238-Verify Domain admin should be able to set the Attorney Profile for RMU user");
 	   		//create RMU
 	   		um = new UserManagement(driver);
 	   		firstName = "00DA"+Utility.dynamicNameAppender();
 	   		um.RMUUserwithAttorneyProfile(firstName, "RMU", "Review Manager", newUserid, " ", Input.projectName);
-	   		
+	   		bc.passedStep("User successfully created");
 	   	}
 	 
 	 @Test(priority =7,groups={"smoke","regression"})
 	 public void asPAaddNewRMU() throws InterruptedException {
 	   		String newUserid= "a.u.t.o.m.a.tion.consilio@gmail.com";
 	   		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+	   		bc.stepInfo("RPMXCON-53239-Verify Project admin should be able to set the Attorney Profile for RMU user");
 	   		//create RMU
 	   		um = new UserManagement(driver);
 	   		firstName = "00PA"+Utility.dynamicNameAppender();
 	   		um.RMUUserAttorneyasPA(firstName, "RMU", "Review Manager", newUserid, " ");
-	   		
+	   		bc.passedStep("User successfully created");
 	   	}
 	 
 	 @Test(priority =8,groups={"smoke","regression"})
 	 public void asRMUaddNewRMU() throws InterruptedException {
 	   		String newUserid= "a.u.t.o.m.a.t.i.on.consilio@gmail.com";
 	   		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	   		
+	   		bc.stepInfo("RPMXCON-53240-Verify RMU should be able to set the Attorney Profile for RMU user");
 	   		//create RMU
 	   		um = new UserManagement(driver);
 	   		firstName = "00RMU"+Utility.dynamicNameAppender();
 	   		um.RMUUserAttorneyasRMU(firstName, "RMU", "Review Manager", newUserid, " ");
-	   		
+	   		bc.passedStep("User successfully created");
 	   	}
 	 
 	 
