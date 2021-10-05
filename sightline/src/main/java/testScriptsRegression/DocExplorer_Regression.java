@@ -44,8 +44,7 @@ public class DocExplorer_Regression {
 	@BeforeClass(alwaysRun=true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		Input in = new Input(); 
-		 in.loadEnvConfig();
+		
 	 	//Open browser
 		driver = new Driver();
 		//bc = new BaseClass(driver);
@@ -53,16 +52,20 @@ public class DocExplorer_Regression {
 		//Login as a PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		
 		bc = new BaseClass(driver);
-		docexp = new DocExplorerPage(driver);
+		bc.selectproject();
+		
 		search= new SessionSearch(driver);
-		purehits=search.basicContentSearch(Input.searchString1);
+		
+		purehits=search.basicContentSearch(Input.searchString1); 
 		//search.bulkFolderExisting("Confidential");
 		search.bulkTagExisting("Confidential");
-		bc.selectproject();
+		docexp = new DocExplorerPage(driver);
 		search.basicContentSearch("*");
 		//search.bulkFolderExisting("Attorney_Client");
-		search.bulkTagExisting("Attorney_Client");
+		search.bulkTagExisting("Attorney_Client"); 
+		
 	}
 	
 	/*
@@ -221,12 +224,12 @@ public class DocExplorer_Regression {
 		search.ViewInDocList();
 		bc.stepInfo("*****Assign Docs to Assignment1*****");
 		doclist.DoclisttobulkAssign(assignmentName1,"10");
-		assgn.assignDocstoNewAssgn(assignmentName1, null,purehits);
+		assgn.assignDocstoNewAssgn(assignmentName1, null,10);
 		search.ViewInDocList();
 		doclist.Selectpagelength("100");
 		bc.stepInfo("*****Assign Docs to Assignment2*****");
 		doclist.DoclisttobulkAssign(assignmentName2,"100");
-		assgn.assignDocstoNewAssgn(assignmentName2, null,purehits);
+		assgn.assignDocstoNewAssgn(assignmentName2, null,52);
 		 bc.stepInfo("Test case Id: RPMXCON-54678 - Verify  Assignments Filter with Exclude functionality is working correctly on Doc Explorer list.");
 		bc.stepInfo("*****Include Assignment Filter*****");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");

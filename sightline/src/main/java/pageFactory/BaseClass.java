@@ -311,28 +311,31 @@ public class BaseClass {
 			public Boolean call() {
 				return getChangeRole().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getChangeRole().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectRole().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAvlDomain().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectProjectTo().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
 
 		getSaveChangeRole().waitAndClick(5);

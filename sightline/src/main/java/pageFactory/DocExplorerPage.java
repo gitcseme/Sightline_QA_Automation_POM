@@ -416,7 +416,7 @@ public class DocExplorerPage {
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	  	
-	  	validateCount("Showing 1 to 48 of 48 entries");
+	  	validateCount("Showing 1 to 50 of 52 entries");
 	  	}
 		if(functionality.equalsIgnoreCase("exclude"))
 	  	{
@@ -431,7 +431,7 @@ public class DocExplorerPage {
 	  	
 	    doclist.getApplyFilter().waitAndClick(10);
 	  	
-	  	validateCount("Showing 1 to 50 of 1,154 entries");
+	  	validateCount("Showing 1 to 50 of 1,150 entries");
 	  	}
 	  	
 	 }
@@ -572,7 +572,7 @@ public class DocExplorerPage {
   	
   	doclist.getApplyFilter().waitAndClick(10);
   	
-    validateCount("Showing 1 to 1 of 1 entries");
+    validateCount("Showing 1 to 3 of 3 entries");
     bc.passedStep("*****Comment Filter  Validated successfully*****");
  }
 
