@@ -1109,6 +1109,16 @@ UtilityLog.info(values);
 		return condition;
 	}
     
+    static ExpectedCondition<WebElement> waitForAttributeToChange(By locator, String attributeName, String oldText) {
+	    ExpectedCondition<WebElement> condition = (webDriver) -> {
+	    	WebElement element = webDriver.findElement(locator);
+			String attributeText = element.getAttribute(attributeName);
+			if (attributeText.equals(oldText)) return null; 
+			return element;
+	    };
+	    return condition;
+	}
+    
 
 
 //

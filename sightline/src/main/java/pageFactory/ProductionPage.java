@@ -683,9 +683,9 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDocumentGeneratetext().Displayed() ;}}), Input.wait120); 	
 		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
-		getQC_backbutton().waitAndClick(5);
+//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+//		getQC_backbutton().waitAndClick(5);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
@@ -801,8 +801,20 @@ public class ProductionPage {
     	getTIFF_BurnRedtoggle().waitAndClick(10);
 		
 		getTIFF_SpecifyRedactText().waitAndClick(10);
-		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		getTIFF_SelectRed_Radiobutton().waitAndClick(10);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
 		wait.until(ExpectedConditions.elementToBeClickable(tagContainer().getBy()));
@@ -1244,7 +1256,7 @@ public class ProductionPage {
   			tagContainer.click();
   			
   			
-  			WebElement myTag = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='tagTreeTIFFComponent']//a[@data-content='" + tagnameprev + "']")));
+  			WebElement myTag = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='tagTreeTIFFComponent']//a[@data-content='"+ tagnameprev +"']")));
   			myTag.click();
   			
 //  			getPriveldge_TagTree(tagnameprev).waitAndClick(10);
@@ -1728,6 +1740,7 @@ public class ProductionPage {
 		driver.getWebDriver().findElement(By.id("ProductionSetdiv")).click();
 		
 		ExpectedCondition<WebElement> totalCountChanged1 = BaseClass.waitForTextToChangeCondition(By.id(totalCountId), oldtotalCount);
+		wait.until(totalCountChanged1);
 		
 		
 //		getProdStateFilter().WaitUntilPresent();
@@ -1782,8 +1795,7 @@ public class ProductionPage {
 	
   		{
 			startProduction(productionname);
-			getBasicInfoNext();
-			fillingDATSection();
+			fillDATFields( );
 			fillingTIFFSection(Tagnameprev, Tagnametech);
   			 
   			driver.scrollingToBottomofAPage();
@@ -1948,6 +1960,9 @@ public class ProductionPage {
   	        	
   	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	        			getTemplateName().Visible()  ;}}), Input.wait30); 
+  	        	
+  	        	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+  	        	wait.until(ExpectedConditions.visibilityOfElementLocated(getTemplateName().getBy()));
   	        	getTemplateName().SendKeys(tempName);
   	        	System.out.println(tempName);
   	        	
@@ -1957,7 +1972,6 @@ public class ProductionPage {
   	        	bc.CloseSuccessMsgpopup();
   	        	getManageTemplates().waitAndClick(10);
   		        	
-  	        	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
   	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
   	        	ArrayList<String> tableele = new ArrayList<String>();
   		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
@@ -2051,20 +2065,19 @@ public class ProductionPage {
 	        getFilterByCompleted().waitAndClick(10);
 	        
 	        ProductionSetdiv().Click();
+	        String oldText = gettotalCount().getText();
+	        wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getBy(), oldText));
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
-	        Thread.sleep(1000);
 	        getArrow().waitAndClick(10);
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getLock().Visible()  ;}}), Input.wait30); 
 	        getLock().waitAndClick(10);
 	        wait.until(ExpectedConditions.elementToBeClickable(getOK().getBy())).click();
-//	        getOK().waitAndClick(10);
-	        Thread.sleep(1000);
 	        BaseClass bc= new BaseClass(driver);
         	bc.VerifySuccessMessage("Production Lock Successfully.");
         	bc.CloseSuccessMsgpopup();
@@ -2124,7 +2137,7 @@ public class ProductionPage {
         	getSave().waitAndClick(10);
         	BaseClass bc= new BaseClass(driver);
         	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
-        	bc.CloseSuccessMsgpopup();
+//        	bc.CloseSuccessMsgpopup();
         	
         	getManageTemplates().waitAndClick(10);
         	

@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
@@ -40,7 +42,7 @@ public class TagsAndFoldersPage {
     public Element getAddTag(){ return driver.FindElementById("aAddTag"); }
     public Element getTagName(){ return driver.FindElementById("txtTagName"); }
     public Element getSaveTag(){ return driver.FindElementById("btnAddTag"); }
-    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath(".//div[@id='tabs-a']/div[1]/div/button[@data-toggle='dropdown']"); }
+    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath("//div[@id='tabs-a']//div/button[@data-toggle='dropdown']"); }
     public Element getFoldersTab(){ return driver.FindElementByXPath("//*[@class='tags-folders']//a[contains(text(),'Folders')]"); }
     public Element getTagsTab(){ return driver.FindElementById("ui-id-1"); }
     public Element getAllFolderRoot(){ return driver.FindElementByXPath("//a[contains(text(),'All Folders')]"); }
@@ -99,6 +101,9 @@ public class TagsAndFoldersPage {
     public ElementCollection getTagGroup(){ return driver.FindElementsByXPath("//a[contains(@class,'jstree-anchor tag-groups')]"); }
     public Element getEditTag(){ return driver.FindElementById("aEditTagTagGroup"); }
     
+    //added by Lyudmila
+    public Element liAddFolder() { return driver.FindElementByXPath("//div[@id='tabs-b']//div//li[@id='liAddFolder']"); }
+    public Element liAddTag() { return driver.FindElementByXPath("//div[@id='tabs-a']//div//li[@id='liAddTag']"); }
     
     public Element getTagGroupName(){ return driver.FindElementById("txtTagGroupName"); }
 
@@ -186,15 +191,18 @@ public class TagsAndFoldersPage {
 
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAllFolderRoot().Visible()  ;}}), Input.wait30); 
-         Thread.sleep(3000);
+         //Thread.sleep(3000);
          getAllFolderRoot().waitAndClick(10);
          
          WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-         wait.until(ExpectedConditions.elementToBeClickable(getFolderActionDropDownArrow().getBy())).click();
          
-         wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
+       getFolderActionDropDownArrow().Click();
+       
+       wait.until(BaseClass.waitForAttributeToChange(liAddFolder().getBy(), "class", "ui-state-disabled"));
+       
+       wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
      
-     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     		 getFolderName().Visible()  ;}}), Input.wait30); 
       new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
   
@@ -299,6 +307,7 @@ public class TagsAndFoldersPage {
     public void CreateTagwithClassification(String strtag,String classificationname) 
     {
         this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
+        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
         
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getSecutiryGroupTag().Visible()  ;}}), Input.wait30); 
@@ -313,14 +322,16 @@ public class TagsAndFoldersPage {
     	
     	 driver.scrollPageToTop();
         getTagActionDropDownArrow().waitAndClick(10);
+        
+        wait.until(BaseClass.waitForAttributeToChange(getAddTag().getBy(), "class", "ui-state-disabled"));
      
-        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        		getAddTag().Visible()  ;}}), Input.wait30); 
-        getAddTag().waitAndClick(10);
+        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
    
-       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getTagName().Visible()  ;}}), Input.wait60); 
-       getTagName().SendKeys(strtag);
+//       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//			 getTagName().Visible()  ;}}), Input.wait60); 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(getTagName().getBy()));
+        getTagName().SendKeys(strtag);
+        
        
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			 getTagClassification().Visible()  ;}}), Input.wait30); 
