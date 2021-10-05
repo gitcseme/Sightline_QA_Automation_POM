@@ -428,7 +428,7 @@ public class TallyPage {
 		}), Input.wait60);
 		
 		
-		getTally_SourceSubTally().Click();
+		getTally_SourceSubTally().waitAndClick(10);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -458,6 +458,7 @@ public class TallyPage {
 	}
 
 	public void subTallyActions() {
+		getTally_btnSubTallyAll().ElementToBeClickableExplicitWait(getTally_btnSubTallyAll(), 60);
 		getTally_btnSubTallyAll().waitAndClick(30);
 
 		driver.WaitUntil((new Callable<Boolean>() {

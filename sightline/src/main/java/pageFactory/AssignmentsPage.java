@@ -188,17 +188,19 @@ public class AssignmentsPage {
 
     public void createAssignment(String assignmentName, String codingForm) throws InterruptedException {
     	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAssignmentActionDropdown().Visible() ;}}), Input.wait60);
-    	Thread.sleep(2000);
+    	driver.waitForPageToBeReady();
+    	//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			//getAssignmentActionDropdown().Visible() ;}}), Input.wait90);
+    	getAssignmentActionDropdown().ElementToBeClickableExplicitWait(getAssignmentActionDropdown(), 60);
+    	//Thread.sleep(2000);
     	getAssignmentActionDropdown().waitAndClick(10);
     	
      	getAssignmentAction_NewAssignment().WaitUntilPresent();
-    	Thread.sleep(2000);
+    	
     	getAssignmentAction_NewAssignment().waitAndClick(20);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			 getAssignmentName().Visible()  ;}}), Input.wait60);
+    			getAssignmentName().Visible()  ;}}), Input.wait60);
+    	 Thread.sleep(2000);
     	getAssignmentName().SendKeys(assignmentName);
     	getParentAssignmentGroupName().Displayed();
     	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
@@ -223,6 +225,7 @@ public class AssignmentsPage {
     	driver.scrollPageToTop();
     	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
     	getAssignmentSaveButton().waitAndClick(5);
+    	
     	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
     	UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
     	 
@@ -281,6 +284,7 @@ public class AssignmentsPage {
     	driver.scrollPageToTop();
     	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
     	getAssignmentSaveButton().waitAndClick(5);
+        
     	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
     	UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
     	 
@@ -292,8 +296,9 @@ public class AssignmentsPage {
     			getStartingCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
        	
     	getPersistCB_ExistAssgn().waitAndClick(5);
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
+    	//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		//	getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
+    	getSelectAssignmentToBulkAssign(assignmentName).VisibilityOfElementExplicitWait(getSelectAssignmentToBulkAssign(assignmentName), 90);
        	
     	System.out.println(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
     	UtilityLog.info(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
