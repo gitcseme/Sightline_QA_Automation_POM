@@ -117,7 +117,7 @@ public class TS_006_Tally_Report {
 	 public void tallyBulkAssign() throws InterruptedException {
 		 String tagName = "TallyR_tag_"+Utility.dynamicNameAppender();
 		 String codingfrom = "TallyR_CF_"+Utility.dynamicNameAppender();
-		 String assignmentName = "TallyAssign"+Utility.dynamicNameAppender();
+		 String assignmentName = "AssignTally"+Utility.dynamicNameAppender();
 		 
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 baseclass.passedStep("******Login successfull*******");
@@ -143,7 +143,7 @@ public class TS_006_Tally_Report {
 			
 			//Create assignment with newly created coding form
 			 baseclass.stepInfo("*****Creating assignment with newly created coding form*****");
-			AssignmentsPage agnmt = new AssignmentsPage(driver);
+			 AssignmentsPage agnmt = new AssignmentsPage(driver);
 			agnmt.createAssignment(assignmentName,codingfrom);
 			baseclass.passedStep("******Assignment created with newly created coding form*******");
 		
@@ -267,11 +267,11 @@ public class TS_006_Tally_Report {
 	     final TallyPage tally = new TallyPage(driver);
 		 tally.validateTally();
 		 tally.tallyActions();
+		 Thread.sleep(1000);
 		 baseclass.stepInfo("****Selecting SubTally*****");
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					tally.getTally_actionSubTally().Visible()  ;}}), Input.wait30);
 		 tally.getTally_actionSubTally().Click();
-		 Thread.sleep(2000);
 		 tally.validateSubTally();
 		 tally.subTallyActions();
 		 
@@ -295,7 +295,7 @@ public class TS_006_Tally_Report {
 	 public void subTallyBulkAssign() throws InterruptedException {
 		 String tagName = "SubTallyR_tag_"+Utility.dynamicNameAppender();
 		 String codingfrom = "SubTallyR_CF_"+Utility.dynamicNameAppender();
-		 String assignmentName = "SubTallyAssign"+Utility.dynamicNameAppender();
+		 String assignmentName = "AssignSubTally"+Utility.dynamicNameAppender();
 		 
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 baseclass.passedStep("******Login successfull*******");
