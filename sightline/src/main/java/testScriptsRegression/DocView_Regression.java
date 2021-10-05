@@ -36,7 +36,7 @@ import testScriptsSmoke.Input;
 	TagsAndFoldersPage page;
 	AssignmentsPage agnmt;
 	HomePage hm;
-	BaseClass bc;
+	BaseClass bc;//changes here
 	DocListPage dp;
 	
 	String Remark= "Re"+Utility.dynamicNameAppender();
@@ -62,6 +62,7 @@ import testScriptsSmoke.Input;
 		//Login as PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc=new BaseClass(driver);
 		dp = new DocListPage(driver);
     	//add tag
 		page = new TagsAndFoldersPage(driver);
@@ -352,6 +353,7 @@ import testScriptsSmoke.Input;
 			search.getBulkActionButton().ElementToBeClickableExplicitWait(search.getBulkActionButton(), 10000);
 			search.getBulkActionButton().waitAndClick(10);
 			bc.passedStep("*********Clicked Action button********");
+			Thread.sleep(2000);
 			search.getDocViewAction().VisibilityOfElementExplicitWait(search.getDocViewAction(), 10000);
 			actions.moveToElement(search.getDocViewAction().getWebElement()).click().build().perform();
 			bc.passedStep("*********Clicked Doc view********");
@@ -392,6 +394,7 @@ import testScriptsSmoke.Input;
 				search.getBulkActionButton().waitAndClick(10);
 				bc.passedStep("*********Clicked Action button********");
 				search.getDocViewAction().ElementToBeClickableExplicitWait(search.getDocViewAction(),10000);
+				Thread.sleep(2000);
 				search.getDocViewAction().waitAndClick(10);
 				bc.passedStep("*********Clicked Doc view********");
 				docView.MiniDoclistFolderAction(folderName);
@@ -500,16 +503,16 @@ import testScriptsSmoke.Input;
 					bc.passedStep("*********Threaded Documents added to action panel********");
 				
 					
-					search.bulkAssign();
-					bc.passedStep("********* Bulk is performed********");
-					driver.getWebDriver().get(Input.url+"Search/Searches");
+////					search.bulkAssign();
+//					bc.passedStep("********* Bulk is performed********");
+//					driver.getWebDriver().get(Input.url+"Search/Searches");
 					search.getBulkActionButton().ElementToBeClickableExplicitWait(search.getBulkActionButton(), 10000);
 					search.getBulkActionButton().waitAndClick(10);
 					bc.passedStep("*********Clicked Action button********");
 					 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 							 search.getBulkAssignAction().Visible()  ;}}), Input.wait60); 
 					
-				     
+				     Thread.sleep(2000);
 					 search.getBulkAssignAction().waitAndClick(10);
 					 bc.passedStep("*********Clicked Bulk Assign********");
 					agnmt.assignDocstoExisting(assignmentName);
@@ -581,7 +584,7 @@ import testScriptsSmoke.Input;
 		   docView.MiniDoclistConifgSortOrder();
 		   bc.passedStep("*********Mini Doc list config sorted in an order********");
 		}
-//		
+		
 	  	 @Test(groups={"regression"},priority=21)
 	 	public void VerifyAnalyticsConceptual() throws InterruptedException
 	 	{
@@ -593,6 +596,7 @@ import testScriptsSmoke.Input;
 	 		search.basicContentSearch(Input.searchString2);
 	 		bc.passedStep("*********Basic content search is done********");
 	 	    search.getConceptuallyPlayButton().waitAndClick(20);
+	 	    Thread.sleep(1000);
 	 	   bc.passedStep("*********Conceptually Play Button is clicked********");
 	 	   search.getConceptAddButton().ElementToBeClickableExplicitWait(search.getConceptAddButton(), 5000);
 	 	    search.getConceptAddButton().waitAndClick(60);
