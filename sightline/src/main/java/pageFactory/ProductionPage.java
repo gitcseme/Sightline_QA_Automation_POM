@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -29,7 +30,8 @@ public class ProductionPage {
     public String ProdPathallredact;
     public String ProdPathsomeredact;
     public String tagname;
- 
+    public String templatename;
+    SoftAssert assertion = new SoftAssert();
     
     public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
     public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
@@ -249,6 +251,9 @@ public class ProductionPage {
     public Element gettotalCount() { return driver.FindElementById("totalProductionCount"); }
     public Element menuProductions() { return driver.FindElementByXPath("//ul[@id='LeftMenu']//a[@title='Productions']"); }
     public Element menuProductionActive() { return driver.FindElementByXPath("//ul[@id='LeftMenu']//a[@title='Productions']/.."); }
+    public Element tagPrivileged() { return driver.FindElementByXPath("//*[@id='tagTreeTIFFComponent']//a[@data-content='Privileged']"); }
+    public Element getOption(String string) { return driver.FindElementByXPath(".//option[contains(text(), '"+string+"')]"); }
+    public String xpathThreeStepsUp = "./../../..";
 
     public ProductionPage(Driver driver){
 
@@ -683,12 +688,12 @@ public class ProductionPage {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDocumentGeneratetext().Displayed() ;}}), Input.wait120); 	
 		
-//		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
-//		getQC_backbutton().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+		getQC_backbutton().waitAndClick(5);
 	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
+				getProd_BatesRange().Visible()  ;}}), Input.wait30); 
 		String batesno = getProd_BatesRange().getText();
 		
 		Reporter.log("Bate number "+batesno+"",true);
@@ -786,7 +791,7 @@ public class ProductionPage {
 			String fieldexp[]= {"TIFFPageCount","VolumeName"};
 			System.out.println(listsecfiled.getText());
 			if(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"))
-				Assert.assertTrue(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"));
+				assertion.assertTrue(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"));
 			else
 				System.out.println("Element not matching");
 		}
@@ -893,7 +898,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
-		getProdExport_ProductionSets().getWebElement().findElement(By.xpath(".//option[contains(text(), 'EXP')]")).click();
+		getProdExport_ProductionSets().getWebElement().findElement(getOption("EXP").getBy()).click();
 				
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_AddaNewExportSet().Visible()  ;}}), Input.wait30); 
@@ -914,7 +919,7 @@ public class ProductionPage {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_SelectProductionSet().Visible()  ;}}), Input.wait30); 
-		getProdExport_SelectProductionSet().getWebElement().findElement(By.xpath(".//option[contains(text(), 'P')]")).click();
+		getProdExport_SelectProductionSet().getWebElement().findElement(getOption("P").getBy()).click();
 		
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1047,7 +1052,7 @@ public class ProductionPage {
    	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
-    	getProdExport_ProductionSets().getWebElement().findElement(By.xpath(".//option[contains(text(), 'EXP')]")).click();
+    	getProdExport_ProductionSets().getWebElement().findElement(getOption("EXP").getBy()).click();
     	
 		ExpectedCondition<WebElement> totalCountChanged = BaseClass.waitForTextToChangeCondition(By.id(totalCountId), oldtotalCountText);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
@@ -1059,7 +1064,7 @@ public class ProductionPage {
 		final String oldtotalCountText1 = driver.getWebDriver().findElement(By.id(totalCountId)).getText();
 		
 		WebElement completed = wait.until(ExpectedConditions.elementToBeClickable(productionStateFilterCompleted().getBy()));
-		if (completed.findElement(By.xpath("./../../..")).getAttribute("class") != "active") {
+		if (completed.findElement(By.xpath(xpathThreeStepsUp)).getAttribute("class") != "active") {
 			completed.click();
 		}
 		
@@ -1208,7 +1213,7 @@ public class ProductionPage {
   			driver.scrollPageToTop();
   			
   			System.out.println(getNative_text().getText());
-  			Assert.assertTrue(getNative_text().getText().contains("To produce specific docs natively,"));
+  			assertion.assertTrue(getNative_text().getText().contains("To produce specific docs natively,"));
   			Assert.assertEquals(getNative_text_Color().GetAttribute("class"),"blue-text");
   			
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1247,7 +1252,7 @@ public class ProductionPage {
   		    
   		    driver.scrollingToBottomofAPage();
   			
-  			getPriveldge_SelectTagButton().waitAndClick(10);
+  			getPriveldge_SelectTagButton().Click();
   			Thread.sleep(2000);
   			
   			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
@@ -1256,7 +1261,7 @@ public class ProductionPage {
   			tagContainer.click();
   			
   			
-  			WebElement myTag = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='tagTreeTIFFComponent']//a[@data-content='"+ tagnameprev +"']")));
+  			WebElement myTag = wait.until(ExpectedConditions.presenceOfElementLocated(tagPrivileged().getBy()));
   			myTag.click();
   			
 //  			getPriveldge_TagTree(tagnameprev).waitAndClick(10);
@@ -1726,14 +1731,14 @@ public class ProductionPage {
   	   {
   		this.driver.getWebDriver().get(Input.url+"Production/Home");
   		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-  		WebElement dropdown =  wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='productionStateFilter']/following-sibling::div/button")));
+  		WebElement dropdown =  wait.until(ExpectedConditions.presenceOfElementLocated(productionStateFilterDropdown().getBy()));
 		dropdown.click();
 		
 		String totalCountId = "totalProductionCount";
 		final String oldtotalCount = driver.getWebDriver().findElement(By.id(totalCountId)).getText();
 				
-		WebElement completed = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='productionStateFilter']/following-sibling::div//input[@value='COMPLETED']")));
-		if (completed.findElement(By.xpath("./../../..")).getAttribute("class") != "active") {
+		WebElement completed = wait.until(ExpectedConditions.elementToBeClickable(productionStateFilterCompleted().getBy()));
+		if (completed.findElement(By.xpath(xpathThreeStepsUp)).getAttribute("class") != "active") {
 			completed.click();
 		}
 		
@@ -1779,7 +1784,7 @@ public class ProductionPage {
   					getProductionDesc().Visible()  ;}}), Input.wait30); 
   			getProductionDesc().SendKeys(productionname1);
   			
-  			getprod_LoadTemplate().getWebElement().findElement(By.xpath(".//option[contains(text(), '"+templatename+"')]")).click();
+  			getprod_LoadTemplate().getWebElement().findElement(getOption(templatename).getBy()).click();
 //  			getprod_LoadTemplate().selectFromDropdown().selectByVisibleText("Template (Production)");
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   					getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
@@ -1897,7 +1902,7 @@ public class ProductionPage {
   	    	
   	  		String griditemstext = wait.until(BaseClass.waitForTextToLoad(getProductionItemsGridItems().getBy()));
   	    	System.out.println(griditemstext);
-  	    	Assert.assertTrue(griditemstext.contains(tileitems));
+  	    	assertion.assertTrue(griditemstext.contains(tileitems));
 	   		System.out.println("Verified Tile Production and Grid Production are equal");
 	   		
   	    }
@@ -1936,7 +1941,7 @@ public class ProductionPage {
 				for (int i = 1; i<getCustomTemplates().size();i++) {
 					tableele.add(table.get(i).getText());
 	   		 	}
-				Assert.assertTrue(tableele.contains(tempName));
+				assertion.assertTrue(tableele.contains(tempName));
 				System.out.println("Verified saved template under Custom template");
 	        }
   	  }
@@ -1979,7 +1984,7 @@ public class ProductionPage {
   					tableele.add(table.get(i).getText());
   	   		 	}
   				System.out.println(tableele);
-  				Assert.assertTrue(tableele.contains(tempName));
+  				assertion.assertTrue(tableele.contains(tempName));
   				
   				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   						getCustomTemplateName(tempName).Visible()  ;}}), Input.wait30); 
@@ -2081,10 +2086,12 @@ public class ProductionPage {
 	        BaseClass bc= new BaseClass(driver);
         	bc.VerifySuccessMessage("Production Lock Successfully.");
         	bc.CloseSuccessMsgpopup();
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
+        	
+        	String oldText1 = gettotalCount().getText();
+	        wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getBy(), oldText1));
+        	
+        	wait.until(ExpectedConditions.elementToBeClickable(getFilterByButton().getBy())).click();
+	    	for(int i=1; i<getFilterOptions().size(); i++) {
 	       	getFilter(i).waitAndClick(10);
 	       	}
         	
@@ -2094,14 +2101,14 @@ public class ProductionPage {
 		    
 		    ProductionSetdiv().Click();
 
-	        Thread.sleep(1000);
+		    String oldText2 = gettotalCount().getText();
+	        wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getBy(), oldText2));
 	        getprod_ActionButton().getWebElement().click();
 			
-			Thread.sleep(1000);
 			wait.until(ExpectedConditions.elementToBeClickable(getUnlock().getBy())).click();
 			getOK().waitAndClick(10);
 	        String locktxt = getLockIcon().GetAttribute("class");
-        	Assert.assertTrue(locktxt.contains("lock"));
+        	assertion.assertTrue(locktxt.contains("lock"));
         	System.out.println("Verified Lock Production");
 	    }
 
@@ -2150,7 +2157,7 @@ public class ProductionPage {
    		 	}
 			System.out.println(tableele);
 			
-			Assert.assertTrue(tableele.contains(tempName));
+			assertion.assertTrue(tableele.contains(tempName));
 			System.out.println("Verified saved template under Custom template");
 	        
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2248,7 +2255,7 @@ public class ProductionPage {
 	        		getTileDelete().Visible()  ;}}), Input.wait30); 
        
 	      	String deletetiletxt = getTileDelete().GetAttribute("class");
-	      	Assert.assertTrue(deletetiletxt.contains("disable"));
+	      	assertion.assertTrue(deletetiletxt.contains("disable"));
 	      	
 	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	    			getGridView().Visible()  ;}}), Input.wait30);
@@ -2271,7 +2278,7 @@ public class ProductionPage {
   	    			getGridDelete().Visible()  ;}}), Input.wait30); 
        
 	      	String deletegridtxt = getGridDelete().GetAttribute("class");
-	      	Assert.assertTrue(deletegridtxt.contains("disable"));
+	      	assertion.assertTrue(deletegridtxt.contains("disable"));
 	
 	      	System.out.println("Verified Production Deletion is disable");
 	    }
@@ -2314,7 +2321,7 @@ public class ProductionPage {
 			
 			System.out.println("Verified Advance Show/Hide Button wworking as expected");
 			
-			Assert.assertTrue(getGenerateLoadFile().Enabled());
+			assertion.assertTrue(getGenerateLoadFile().Enabled());
 			
 			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getGenerateLoadFile().Enabled() ;}}), Input.wait30); 

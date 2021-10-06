@@ -102,8 +102,8 @@ public class TagsAndFoldersPage {
     public Element getEditTag(){ return driver.FindElementById("aEditTagTagGroup"); }
     
     //added by Lyudmila
-    public Element liAddFolder() { return driver.FindElementByXPath("//div[@id='tabs-b']//div//li[@id='liAddFolder']"); }
-    public Element liAddTag() { return driver.FindElementByXPath("//div[@id='tabs-a']//div//li[@id='liAddTag']"); }
+    public Element liAddFolder(){ return driver.FindElementById("liAddFolder"); }
+    public Element liAddTag(){ return driver.FindElementById("liAddTag"); }
     
     public Element getTagGroupName(){ return driver.FindElementById("txtTagGroupName"); }
 
@@ -198,14 +198,22 @@ public class TagsAndFoldersPage {
          
        getFolderActionDropDownArrow().Click();
        
-       wait.until(BaseClass.waitForAttributeToChange(liAddFolder().getBy(), "class", "ui-state-disabled"));
-       
+       wait.until(ExpectedConditions.visibilityOfElementLocated(getAddFolder().getBy()));
        wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
-     
-       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getFolderName().Visible()  ;}}), Input.wait30); 
-      new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
-  
+       
+       try {
+		wait.until((WebDriver) -> {
+		   	 WebElement element = getFolderName().getWebElement();
+		   	 boolean result = element != null && element.isDisplayed();
+		   	 if (!result) getAddFolder().Click();
+		   	 return result ? element : null;
+		   });
+	} catch (Exception e) {
+		// Do nothing
+}
+       
+       getFolderName().SendKeys(strFolder);
+            
       wait.until(ExpectedConditions.elementToBeClickable(getSaveFolder().getBy())).click();
      
      base.VerifySuccessMessage("Folder added successfully");
@@ -321,16 +329,42 @@ public class TagsAndFoldersPage {
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
     	
     	 driver.scrollPageToTop();
-        getTagActionDropDownArrow().waitAndClick(10);
+    	 
+    	 
+        getTagActionDropDownArrow().Click();
         
-        wait.until(BaseClass.waitForAttributeToChange(getAddTag().getBy(), "class", "ui-state-disabled"));
-     
+        wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
         wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
-   
+        
+        try {
+			wait.until((WebDriver) -> {
+				 WebElement element = getTagName().getWebElement();
+				 boolean result = element != null && element.isDisplayed();
+				 if (!result) getAddTag().Click();
+				 return result ? element : null;
+			});
+		} catch (Exception e1) {
+			// Do nothing
+	}
+        
+        getTagName().SendKeys(strtag);
+        
+//        wait.until(BaseClass.waitForAttributeToChange(liAddTag().getBy(), "class", "ui-state-disabled"));
+//        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy()));
+//        
+//        wait.until((WebDriver) -> {
+//        	getAddTag().Click();
+//        	WebElement element = getTagName().getWebElement();
+//        	return (element != null && element.isDisplayed()) ? element : null;
+//        }).sendKeys(strtag);
+        
+       
+//        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
+        
 //       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //			 getTagName().Visible()  ;}}), Input.wait60); 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(getTagName().getBy()));
-        getTagName().SendKeys(strtag);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(getTagName().getBy()));
+//        getTagName().SendKeys(strtag);
         
        
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

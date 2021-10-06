@@ -1113,7 +1113,7 @@ UtilityLog.info(values);
 	    ExpectedCondition<WebElement> condition = (webDriver) -> {
 	    	WebElement element = webDriver.findElement(locator);
 			String attributeText = element.getAttribute(attributeName);
-			if (attributeText.equals(oldText)) return null; 
+			if (oldText.equals(attributeText)) return null; 
 			return element;
 	    };
 	    return condition;
