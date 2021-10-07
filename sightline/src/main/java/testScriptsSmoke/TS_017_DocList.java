@@ -46,9 +46,6 @@ public class TS_017_DocList {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		// Open browser
-		
-	
 		driver = new Driver();
 		
 		// loginPage as a PA
@@ -94,12 +91,12 @@ public class TS_017_DocList {
 		baseClass.selectproject();
 		sessionSearch.switchToWorkproduct();
 		sessionSearch.selectTagInASwp(bulkTagName);
-		Assert.assertTrue(sessionSearch.serarchWP() == Input.pureHitSeachString1);
+		Assert.assertTrue(sessionSearch.serarchWP()>=1);
 
 		baseClass.selectproject();
 		sessionSearch.switchToWorkproduct();
 		sessionSearch.selectFolderInASwp(bulkFolderName);
-		Assert.assertTrue(sessionSearch.serarchWP() == Input.pureHitSeachString1);
+		Assert.assertTrue(sessionSearch.serarchWP()>=1);
 	}
 
 	/*

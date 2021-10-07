@@ -60,8 +60,6 @@ public class TS_003_BulkActionsFromBasicSearch {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		//Open browser
-					
 		driver = new Driver();
 		//Login as Project Admin
 		loginPage=new LoginPage(driver);

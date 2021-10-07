@@ -51,8 +51,8 @@ public class SavedSearch_Regression  {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	  	
-		//Input in = new Input();in.loadEnvConfig();
+		
+  	
     	//Open browser
 		driver = new Driver();
 		//Login as a PA
@@ -63,7 +63,6 @@ public class SavedSearch_Regression  {
 		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
         search.saveSearch(SearchNamePA);
-		Thread.sleep(5000);
 		ss = new SavedSearch(driver);
         base = new BaseClass(driver);
 	}
@@ -79,8 +78,8 @@ public class SavedSearch_Regression  {
 	public void  saveSearchToDocList() throws ParseException, InterruptedException, NoSuchMethodException, SecurityException {
 		
 		System.out.println("****************DocList Started*************************"); 
-		final DocListPage dp = new DocListPage(driver);
 		ss.savedSearchToDocList(saveSearchName);
+		final DocListPage dp = new DocListPage(driver);
 	    dp.getDocList_info().WaitUntilPresent();
 	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
@@ -99,15 +98,11 @@ public class SavedSearch_Regression  {
 	@Test(groups={"regression"},priority=2)
 	public void  saveSearchToDocView() throws ParseException, InterruptedException {
 		System.out.println("****************DocView Started*************************"); 
-		base.stepInfo("Test case Id: RPMXCON-48762-Verify that DocView Action is working properly on Saved Search Screen");
-		 DocViewPage dv= new DocViewPage(driver);
 		ss.savedSearchToDocView(saveSearchName);
-	   
+	    DocViewPage dv= new DocViewPage(driver);
 	    dv.getDocView_info().WaitUntilPresent();
-	    base.passedStep("counting docs from docview");
 	    Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "+purehits+" Docs");
 	    System.out.println("Expected docs("+purehits+") are shown in docView");
-	    base.passedStep( "***Expected docs("+purehits+") are shown in docView***");
 	}
 	
 	/*
@@ -122,10 +117,8 @@ public class SavedSearch_Regression  {
 		
 		System.out.println("****************Bulk Tag Started*************************"); 
 		//Schedule the saved search
-		base.stepInfo("Test case Id:RPMXCON-53564-SavedSearchBulkTag-Verify that As a "
-				+ "Project Admin Login I will be able to perform Bulk Tag from saved search");
+		
 		 ss.SaveSearchToBulkTag(saveSearchName, TagName);
-		 base.stepInfo("**New Bulktag Created successfully**");
 		 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
@@ -134,7 +127,6 @@ public class SavedSearch_Regression  {
 	       tf.getTagandCount(TagName,purehits).WaitUntilPresent();
 	       Assert.assertTrue(tf.getTagandCount(TagName,purehits).Displayed());
 	       System.out.println(TagName+" could be seen under tags and folder page");
-	       base.passedStep(TagName+" could be seen under tags and folder page");
 	}
 	
 	/*
@@ -149,10 +141,7 @@ public class SavedSearch_Regression  {
 		
 		//Schedule the saved search
 		System.out.println("****************Bulk Folder Started*************************"); 
-		base.stepInfo("Test case Id:RPMXCON-53565-Verify that As a Project Admin Login I will be able to "
-				+ "perform Bulk Folder from saved search");
 		 ss.SaveSearchToBulkFolder(saveSearchName, FolderName);
-		 base.stepInfo("**New BulkFolder Created successfully**");
 		 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
@@ -161,7 +150,6 @@ public class SavedSearch_Regression  {
 	       tf.getFolderandCount(FolderName, purehits).WaitUntilPresent();
 	       Assert.assertTrue(tf.getFolderandCount(FolderName, purehits).Displayed());
 	       System.out.println(FolderName+" could be seen under tags and folder page");
-	       base.passedStep(FolderName+" could be seen under tags and folder page");
 	}
 	
          /*
@@ -191,12 +179,10 @@ public class SavedSearch_Regression  {
 	public void  scheduleSavedSearch() throws ParseException, InterruptedException {
 		
 		//Schedule the saved search
-		base.stepInfo("Test case Id:RPMXCON-48763-Verify that Schedule functionality is working proper in Saved searches");
-		ss.scheduleSavedSearch("PA4835328");
-		base.stepInfo("**Schedule Search Created successfully**");
+		
+		ss.scheduleSavedSearch(saveSearchName);
 		SchedulesPage sp = new SchedulesPage(driver);
 		sp.checkStatusComplete(saveSearchName);
-		base.passedStep("Scheduled run is completed with the status 'COMPLETE'!");
 	}
 	
 	
@@ -270,13 +256,9 @@ public class SavedSearch_Regression  {
 	@Test(groups={"regression"},priority=11)
 	public void savedSearchExecute() throws ParseException, InterruptedException {
 
-		base.stepInfo("RPMXCON-57017-To Verify, In Saved search page when user click on any of the sub folder under \"My Search\"\r\n"
-				+ " and select execute, it will execute all the search query as Admin Login");
 		//Share the saved search
 		
 		ss.savedSearchExecute(saveSearchName, purehits);
-		
-		base.passedStep("Count of Docs executed matched with pure Hit");
   }
 	
 	@Test(groups={"regression"},priority=12)
@@ -299,40 +281,9 @@ public class SavedSearch_Regression  {
 		
 		//Schedule the saved search
 		
-		ss.SaveSearchDelete(saveSearchName);	
+		ss.SaveSearchDelete(saveSearchName);
 	}
-	@Test(groups={"regression"},priority=14)
-	public void SaveSearchDeleteRMU() throws ParseException, InterruptedException {
-		
-		 lp.logout();
-		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		 base.stepInfo("RPMXCON-57027-To Verify, As a RM user login, user can be able to delete a saved search node under \"My Search\"");
-			search = new SessionSearch(driver);
-			purehits=search.basicContentSearch(Input.searchString1);
-		 search.saveSearch(saveSearchName);
-	      search.saveSearch(SearchNamePA);
-		
-		 ss.SaveSearchDelete(saveSearchName);
-		 base.passedStep("Save search tree node successfully deleted.");
-		
-	}
-	@Test(groups={"regression"},priority=15)
-	public void SaveSearchDeleteREV() throws ParseException, InterruptedException {
-		
-		 lp.logout();
-		 lp.loginToSightLine(Input.rev1userName, Input.rev1password);
-		 base.stepInfo("RPMXCON-57028-To Verify, As a Reviewer user login, user can be able to delete a saved search node under\r\n"
-		 		+ " \"My Search\"");
-		 search = new SessionSearch(driver);
-			purehits=search.basicContentSearch(Input.searchString1);
-		 search.saveSearch(saveSearchName);
-	      search.saveSearch(SearchNamePA);
-		
-		 ss.SaveSearchDelete(saveSearchName);
-		 
-		 base.passedStep("Save search tree node successfully deleted.");
-		
-	}
+	
 	 /*
 		 * Author : Shilpi Mangal
 		 * Created date: 08-01-2020
@@ -343,20 +294,21 @@ public class SavedSearch_Regression  {
 	  
 	 
 	  
-@Test(groups={"regression"},priority=16)
+@Test(groups={"regression"},priority=14)
 	public void SaveSearchToBulkAssign() throws ParseException, InterruptedException {
 
 	 lp.logout();
 	 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	 
-	 base.stepInfo("RPMXCON-47952-Verify that correct number of documents appears when user Selects \"Bulk Assign\" action from Basic Search Screen");
 	//Share the saved search
 	   search = new SessionSearch(driver);
 	   purehits=search.basicContentSearch(Input.searchString1);
 	   search.saveSearch(SearchNameRMU);
 		ss.SaveSearchToBulkAssign(SearchNameRMU,assignmentName,codingfrom,purehits);
-		base.passedStep("Verified number of documents present in Bulk Assign");
   }
+	
+  
+
+
 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){

@@ -1,6 +1,7 @@
 package automationLibrary;
 
 import java.time.Duration;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -16,6 +17,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import executionMaintenance.UtilityLog;
+import testScriptsSmoke.Input;
 
 
 /// <summary>
@@ -771,6 +775,18 @@ private   Driver driver;
          Actions act = new Actions(driver.getWebDriver());
          act.dragAndDrop(element, element).perform();
    }	     
+    public void waitForElement(Element element) {
+ 		try {
+ 			driver.WaitUntil((new Callable<Boolean>() {
+ 				public Boolean call() {
+ 					return element.Displayed() && element.Enabled() && element.Present();
+ 				}
+ 			}), Input.wait90);
+ 		} catch (Exception e) {
+ 			UtilityLog.info("Got exception while waiting for element");
+ 			e.printStackTrace();
+ 		}
+ 	}
     
     // ICE related elements
     

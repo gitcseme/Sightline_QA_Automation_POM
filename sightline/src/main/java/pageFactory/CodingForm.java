@@ -98,7 +98,7 @@ public class CodingForm {
     public Element getCodingForm_DefaultAction(int i){ return driver.FindElementById("DefaultAction_"+i+""); }
     public Element getCodingForm_TagNames(int i){ return driver.FindElementByXPath("(//span[@class='itemFriendlyName'])["+i+"]"); }
     public Element getCodingForm_MandField(){ return driver.FindElementByXPath("//span[@class='field-validation-error text-danger']"); }
-    public Element getCodingForm_MetadataField(){ return driver.FindElementByXPath(".//*[@id='lstMetadata']//label"); }
+    public Element getCodingForm_MetadataField(){ return driver.FindElementByXPath("//*[@id='lstMetadata']/li/label/input"); }
     public Element getCF_Metadata(){ return driver.FindElementById("lstMetadata"); }
     public Element getCF_TagTypes(){ return driver.FindElementByXPath(".//*[@id='c-0']//select[@id='0']"); }
     public Element getCF_Preview1(){ return driver.FindElementByXPath(".//*[starts-with(@id,'item0')]//td[1]"); }
@@ -452,7 +452,7 @@ public class CodingForm {
   	  driver.scrollPageToTop();
   	  try {
   	        getCF_firstObjecttab().Displayed();
-  	      Assert.assertFalse(1==0);
+  	      softAssertion.assertFalse(1==0);
   	  }
   	  catch(org.openqa.selenium.NoSuchElementException e) {
 		System.out.println("Tag successfullyremoved");
@@ -539,7 +539,7 @@ public class CodingForm {
   	   
   	   String msg = getCF_DeletePopup().getText();
   	   System.out.println(msg);
-  	   Assert.assertEquals("Are you sure you want to copy?", msg);
+  	   softAssertion.assertEquals("Are you sure you want to copy?", msg);
   	   base.getYesBtn().Click();
   	    
   	   base.VerifySuccessMessage("Coding form copied successfully");
@@ -557,7 +557,7 @@ public class CodingForm {
     	  if(doc.getDocView_CFName().Displayed()){
     	  String name = doc.getDocView_CFName().getText().toString();
     	  System.out.println(name);
-    	  Assert.assertEquals(cfName, name); 
+    	  softAssertion.assertEquals(cfName, name); 
     	  }
       }
      
@@ -570,7 +570,7 @@ public class CodingForm {
   	  if(doc.getDocView_CFName().Displayed()){
   	  String name = doc.getDocView_CFName().getText().toString();
   	  System.out.println(name);
-  	  Assert.assertEquals(cfName, name); 
+  	  softAssertion.assertEquals(cfName, name); 
   	  }
     }
      
@@ -681,7 +681,7 @@ public void AddCodingformwithTag(String cfName,String tag) {
 		  getCF_ValidationAlert().Visible()  ;}}),Input.wait30);
   String text = getCF_ValidationAlert().getText();
   System.out.println(text.substring(19, 59));
-  Assert.assertEquals("Please select Field Logic Action for TAG", text.substring(19, 59));
+  softAssertion.assertEquals("Please select Field Logic Action for TAG", text.substring(19, 59));
   getCodingForm_Validation_ButtonYes().Click();
   
   System.out.println("Coding form "+cfName+" created");
@@ -723,7 +723,7 @@ public void AddCodingformwithComment(String cfName,String comment) {
 	   base.CloseSuccessMsgpopup();
 }
 
-     public void AddCodingformwithMetadata(final String cfName) {
+     public void AddCodingformwithMetadata(final String cfName) throws InterruptedException {
 	   
 	   getAddNewCodingFormBtn().waitAndClick(10);
 	   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -772,6 +772,7 @@ public void AddCodingformwithComment(String cfName,String comment) {
   	   getCodingForm_EditButton(cfName).waitAndClick(10);
   	   
   	   getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+  	   Thread.sleep(2000);
 	   
   	  softAssertion.assertEquals(getCodingForm_MetadataField().GetAttribute("disabled"),"disabled");
 }
@@ -957,7 +958,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 		//   softAssertion.assertFalse(getCF_Preview1().Displayed());
 		   try{
 			   getCF_Preview1().Displayed();
-		           Assert.assertFalse(1==0);
+		           softAssertion.assertFalse(1==0);
 		     }catch (org.openqa.selenium.NoSuchElementException e) {
 		               System.out.println("Tag item not displayed");
 		 }
@@ -970,7 +971,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 		 //  softAssertion.assertFalse(getCF_Preview1().Enabled());
 		   try{
 			   getCF_Preview1().Enabled();
-		           Assert.assertFalse(1==0);
+		           softAssertion.assertFalse(1==0);
 		     }catch (org.openqa.selenium.NoSuchElementException e) {
 		               System.out.println("Tag item not displayed");
 		 }
@@ -1043,7 +1044,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 					for (int i = 0; i<getTable().size();i++) {
 						tableele.add(table.get(i).getText());
 						if (tableele.contains("Default Project Coding Form")) {
-						Assert.assertTrue(tableele.contains("Default Project Coding Form"));
+						softAssertion.assertTrue(tableele.contains("Default Project Coding Form"));
 						System.out.println("Verified provisioned CF is available in the Project");
 						}
 						
@@ -1083,108 +1084,108 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 									//for (int j = 0; j<getnesTable().size();j++) {
 										getupClick1().waitAndClick(10);
 									    String getStaticTxt = getStaticText().GetAttribute("Value");
-										Assert.assertEquals(getStaticTxt,expectedStaticText);
+									    softAssertion.assertEquals(getStaticTxt,expectedStaticText);
 										System.out.println("Verified Static Text");
 										Thread.sleep(3000);
 										
 										
 										getupClick2().waitAndClick(10);
 										String getGroupTxt = getRadioGroupLabel().GetAttribute("Value");
-										Assert.assertEquals(getGroupTxt,expectedGroupText);
+										softAssertion.assertEquals(getGroupTxt,expectedGroupText);
 																				
 										String getInstructionTxt = getInstructionText().GetAttribute("Value");
-										Assert.assertEquals(getInstructionTxt,expectedInstructionText);
+										softAssertion.assertEquals(getInstructionTxt,expectedInstructionText);
 																				
 										WebElement optionG = getRGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getGDefaultActionTxt = optionG.getText();
-										Assert.assertEquals(getGDefaultActionTxt,expectedDefaultAction1Text);
+										softAssertion.assertEquals(getGDefaultActionTxt,expectedDefaultAction1Text);
 										
 										String getErrorMessageTxt = getErrorMessage().GetAttribute("Value");
-										Assert.assertEquals(getErrorMessageTxt,expectedGErrorMsgText);
+										softAssertion.assertEquals(getErrorMessageTxt,expectedGErrorMsgText);
 										System.out.println("Verified Responsive Group");
 										Thread.sleep(3000);
 										
 										getupClick3().waitAndClick(10);
 										String getRTagLabelTxt = getRTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getRTagLabelTxt,expectedRTagLabelText );
+										softAssertion.assertEquals(getRTagLabelTxt,expectedRTagLabelText );
 																				
 										
 										WebElement optionRT = getRTagType().selectFromDropdown().getFirstSelectedOption();
 										String getRTagTypeTxt = optionRT.getText();
-										Assert.assertEquals(getRTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getRTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionRA = getRGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getRGroupAssociationTxt = optionRA.getText();
-										Assert.assertEquals(getRGroupAssociationTxt,expectedGroupAssociation1Text);
+										softAssertion.assertEquals(getRGroupAssociationTxt,expectedGroupAssociation1Text);
 																				
 										String getRDefaultAction2Txt = getRDefaultAction().getText();
-										Assert.assertEquals(getRDefaultAction2Txt,expectedDefaultActionText);
+										softAssertion.assertEquals(getRDefaultAction2Txt,expectedDefaultActionText);
 																				
 										String getRFieldLogicTxt = getRFieldLogic().getText();
-										Assert.assertEquals(getRFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getRFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getRErrorMessage2Txt = getRErrorMessage().getText();
-										Assert.assertEquals(getRErrorMessage2Txt,expectedErrorMsgText);
+										softAssertion.assertEquals(getRErrorMessage2Txt,expectedErrorMsgText);
 										System.out.println("Verified Responsive");
 										Thread.sleep(3000);
 										
 										getupClick4().waitAndClick(10);
 										String getNRTagLabelTxt = getNRTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getNRTagLabelTxt,expectedNRTagLabelText);
+										softAssertion.assertEquals(getNRTagLabelTxt,expectedNRTagLabelText);
 																			
 										
 										WebElement optionNRT = getNRTagType().selectFromDropdown().getFirstSelectedOption();
 										String getNRTagTypeTxt = optionNRT.getText();
-										Assert.assertEquals(getNRTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getNRTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionNRA = getNRGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getNRGroupAssociationTxt = optionNRA.getText();
-										Assert.assertEquals(getNRGroupAssociationTxt,expectedGroupAssociation1Text);
+										softAssertion.assertEquals(getNRGroupAssociationTxt,expectedGroupAssociation1Text);
 																				
 										String getNRDefaultAction2Txt = getNRDefaultAction().getText();
-										Assert.assertEquals(getNRDefaultAction2Txt,expectedDefaultActionText);
+										softAssertion.assertEquals(getNRDefaultAction2Txt,expectedDefaultActionText);
 																				
 										String getNRFieldLogicTxt = getNRFieldLogic().getText();
-										Assert.assertEquals(getNRFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getNRFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getNRErrorMessage2Txt = getNRErrorMessage().getText();
-										Assert.assertEquals(getNRErrorMessage2Txt,expectedErrorMsgText);
+										softAssertion.assertEquals(getNRErrorMessage2Txt,expectedErrorMsgText);
 										System.out.println("Verified Not Responsive");
 										Thread.sleep(3000);
 										
 										getupClick5().waitAndClick(10);
 										String getTITagLabelTxt = getTITagLabel().GetAttribute("Value");
-										Assert.assertEquals(getTITagLabelTxt,expectedTITagLabelText);
+										softAssertion.assertEquals(getTITagLabelTxt,expectedTITagLabelText);
 																		
 										
 										WebElement optionTIT = getTITagType().selectFromDropdown().getFirstSelectedOption();
 										String getTITagTypeTxt = optionTIT.getText();
-										Assert.assertEquals(getTITagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getTITagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionTIA = getTIGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getTIGroupAssociationTxt = optionTIA.getText();
-										Assert.assertEquals(getTIGroupAssociationTxt,expectedGroupAssociation1Text);
+										softAssertion.assertEquals(getTIGroupAssociationTxt,expectedGroupAssociation1Text);
 																				
 										String getTIDefaultActionTxt = getTIDefaultAction().getText();
-										Assert.assertEquals(getTIDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getTIDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getTiFieldLogicTxt = getTIFieldLogic().getText();
-										Assert.assertEquals(getTiFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getTiFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getTIErrorMessageTxt = getTIErrorMessage().getText();
-										Assert.assertEquals(getTIErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getTIErrorMessageTxt,expectedErrorMsgText);
 																				
 										String getTIHelpTxt = getTIHelpText().GetAttribute("Value");
-										Assert.assertEquals(getTIHelpTxt,expectedTIHelpText);
+										softAssertion.assertEquals(getTIHelpTxt,expectedTIHelpText);
 										System.out.println("Verified Technical_Issue");
 										Thread.sleep(3000);
 										
 										getupClick6().waitAndClick(10);
 										String getTIGGroupLabelTxt = getTIGCHECKGROUPLabel().GetAttribute("Value");
-										Assert.assertEquals(getTIGGroupLabelTxt,expectedTIGCHECKGROUPLabel);
+										softAssertion.assertEquals(getTIGGroupLabelTxt,expectedTIGCHECKGROUPLabel);
 																				
 										String getTIGInstructionTxt = getTIGInstructionText().GetAttribute("Value");
 										if(getTIGInstructionTxt.isEmpty()) {
@@ -1193,385 +1194,385 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 										
 										else {
 											
-											Assert.assertEquals(getTIGInstructionTxt,expectedDefaultAction2Text);
+											softAssertion.assertEquals(getTIGInstructionTxt,expectedDefaultAction2Text);
 											
 										}
 										
 										WebElement optionTIG = getTIGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getTIGDefaultActionTxt = optionTIG.getText();
-										Assert.assertEquals(getTIGDefaultActionTxt,expectedDefaultAction2Text);
+										softAssertion.assertEquals(getTIGDefaultActionTxt,expectedDefaultAction2Text);
 																				
 										
 										WebElement optionTIGO = getTIGObject().selectFromDropdown().getFirstSelectedOption();
 										String getTIGObjectTxt = optionTIGO.getText();
-										Assert.assertEquals(getTIGObjectTxt,expectedFieldLogicObjectText1);
+										softAssertion.assertEquals(getTIGObjectTxt,expectedFieldLogicObjectText1);
 																				
 										
 										WebElement optionTIGC= getTIGCondition().selectFromDropdown().getFirstSelectedOption();
 										String getTIGConditionTxt = optionTIGC.getText();
-										Assert.assertEquals(getTIGConditionTxt,expectedFieldLogicConditionText);
+										softAssertion.assertEquals(getTIGConditionTxt,expectedFieldLogicConditionText);
 																				
 										
 										WebElement optionTIGA = getTIGAction().selectFromDropdown().getFirstSelectedOption();
 										String getTIGActionTxt = optionTIGA.getText();
-										Assert.assertEquals(getTIGActionTxt,expectedFieldLogicActionText);								
+										softAssertion.assertEquals(getTIGActionTxt,expectedFieldLogicActionText);								
 																									
 										String getTIGErrorMessageTxt = getTIGErrorMessage().GetAttribute("Value");
-										Assert.assertEquals(getTIGErrorMessageTxt,expectedTIGErrorMsgText);
+										softAssertion.assertEquals(getTIGErrorMessageTxt,expectedTIGErrorMsgText);
 										System.out.println("Verified Tech Issue Group");
 										Thread.sleep(3000);
 										
 
 										getupClick7().waitAndClick(10);
 										String getPITagLabelTxt = getPITagLabel().GetAttribute("Value");
-										Assert.assertEquals(getPITagLabelTxt,expectedPITagLabelText);
+										softAssertion.assertEquals(getPITagLabelTxt,expectedPITagLabelText);
 																				
 										
 										WebElement optionPIT = getPITagType().selectFromDropdown().getFirstSelectedOption();
 										String getPITagTypeTxt = optionPIT.getText();
-										Assert.assertEquals(getPITagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getPITagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionPIA = getPIGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getPIGroupAssociationTxt = optionPIA.getText();
-										Assert.assertEquals(getPIGroupAssociationTxt,expectedGroupAssociation2Text);
+										softAssertion.assertEquals(getPIGroupAssociationTxt,expectedGroupAssociation2Text);
 																				
 										String getPIDefaultActionTxt = getNRDefaultAction().getText();
-										Assert.assertEquals(getPIDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getPIDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getPIFieldLogicTxt = getNRFieldLogic().getText();
-										Assert.assertEquals(getPIFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getPIFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getPIErrorMessageTxt = getNRErrorMessage().getText();
-										Assert.assertEquals(getPIErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getPIErrorMessageTxt,expectedErrorMsgText);
 																				
 										String getPIHelpTxt = getPIHelpText().GetAttribute("Value");
-										Assert.assertEquals(getPIHelpTxt,expectedPIHelpText);
+										softAssertion.assertEquals(getPIHelpTxt,expectedPIHelpText);
 										System.out.println("Verified Processing Issue");
 										Thread.sleep(3000);
 										
 										getupClick8().waitAndClick(10);
 										String getFLTagLabelTxt = getFLTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getFLTagLabelTxt,expectedFLTagLabelText);
+										softAssertion.assertEquals(getFLTagLabelTxt,expectedFLTagLabelText);
 																				
 										
 										WebElement optionFLT = getFLTagType().selectFromDropdown().getFirstSelectedOption();
 										String getFLTagTypeTxt = optionFLT.getText();
-										Assert.assertEquals(getFLTagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getFLTagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionFLA = getFLGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getFLGroupAssociationTxt = optionFLA.getText();
-										Assert.assertEquals(getFLGroupAssociationTxt,expectedGroupAssociation2Text);
+										softAssertion.assertEquals(getFLGroupAssociationTxt,expectedGroupAssociation2Text);
 																				
 										String getFLDefaultActionTxt = getFLDefaultAction().getText();
-										Assert.assertEquals(getFLDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getFLDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getFLFieldLogicTxt = getFLFieldLogic().getText();
-										Assert.assertEquals(getFLFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getFLFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getFLErrorMessageTxt = getFLErrorMessage().getText();
-										Assert.assertEquals(getFLErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getFLErrorMessageTxt,expectedErrorMsgText);
 																				
 										String getFLHelpTxt = getFLHelpText().GetAttribute("Value");
-										Assert.assertEquals(getFLHelpTxt,expectedFLHelpText );
+										softAssertion.assertEquals(getFLHelpTxt,expectedFLHelpText );
 										System.out.println("Verified Foreign Language");
 										Thread.sleep(3000);
 										
 										getupClick9().waitAndClick(10);
 										String getHCTagLabelTxt = getHCTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getHCTagLabelTxt,expectedHCTagLabelText);
+										softAssertion.assertEquals(getHCTagLabelTxt,expectedHCTagLabelText);
 																				
 										
 										WebElement optionHCT = getHCTagType().selectFromDropdown().getFirstSelectedOption();
 										String getHCTagTypeTxt = optionHCT.getText();
-										Assert.assertEquals(getHCTagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getHCTagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionHCA = getHCGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getHCGroupAssociationTxt = optionHCA.getText();
-										Assert.assertEquals(getHCGroupAssociationTxt,expectedGroupAssociation2Text);
+										softAssertion.assertEquals(getHCGroupAssociationTxt,expectedGroupAssociation2Text);
 																				
 										String getHCDefaultActionTxt = getHCDefaultAction().getText();
-										Assert.assertEquals(getHCDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getHCDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getHCFieldLogicTxt = getHCFieldLogic().getText();
-										Assert.assertEquals(getHCFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getHCFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getHCErrorMessageTxt = getHCErrorMessage().getText();
-										Assert.assertEquals(getHCErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getHCErrorMessageTxt,expectedErrorMsgText);
 																				
 										String getHCHelpTxt = getHCHelpText().GetAttribute("Value");
-										Assert.assertEquals(getHCHelpTxt,expectedHCHelpText );
+										softAssertion.assertEquals(getHCHelpTxt,expectedHCHelpText );
 										System.out.println("Verified Hidden Content");
 										Thread.sleep(3000);
 										
 										getupClick10().waitAndClick(10);
 										String getHDTagLabelTxt = getHDTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getHDTagLabelTxt,expectedHDTagLabelText);
+										softAssertion.assertEquals(getHDTagLabelTxt,expectedHDTagLabelText);
 																		
 										
 										WebElement optionHDT = getHDTagType().selectFromDropdown().getFirstSelectedOption();
 										String getHDTagTypeTxt = optionHDT.getText();
-										Assert.assertEquals(getHDTagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getHDTagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionHDA = getHDGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getHDGroupAssociationTxt = optionHDA.getText();
-										Assert.assertEquals(getHDGroupAssociationTxt,expectedGroupAssociation6Text);
+										softAssertion.assertEquals(getHDGroupAssociationTxt,expectedGroupAssociation6Text);
 										
 										
 										WebElement optionHDDA = getHDDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getHDDefaultActionTxt = optionHDDA.getText();
-										Assert.assertEquals(getHDDefaultActionTxt,expectedDefaultAction3Text);
+										softAssertion.assertEquals(getHDDefaultActionTxt,expectedDefaultAction3Text);
 																									
 										String getHDHelpTxt = getHDHelpText().GetAttribute("Value");
-										Assert.assertEquals(getHDHelpTxt,expectedHDHelpText);
+										softAssertion.assertEquals(getHDHelpTxt,expectedHDHelpText);
 										System.out.println("Verified Hot Doc");
 										Thread.sleep(3000);
 										
 										getupClick11().waitAndClick(10);
 										String getPGTagLabelTxt = getPGTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getPGTagLabelTxt,expectedPGTagLabelText);
+										softAssertion.assertEquals(getPGTagLabelTxt,expectedPGTagLabelText);
 																		
 										String getPGInstructionTxt = getPGInstructionText().GetAttribute("Value");
-										Assert.assertEquals(getPGInstructionTxt,expectedPGInstructionText);
+										softAssertion.assertEquals(getPGInstructionTxt,expectedPGInstructionText);
 										
 										
 										WebElement optionPGDA = getPGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getPGDefaultActionTxt = optionPGDA.getText();
-										Assert.assertEquals(getPGDefaultActionTxt,expectedDefaultAction1Text);
+										softAssertion.assertEquals(getPGDefaultActionTxt,expectedDefaultAction1Text);
 																									
 										String getPGErrorMessageTxt = getPGErrorMessage().GetAttribute("Value");
-										Assert.assertEquals(getPGErrorMessageTxt,expectedErrorMessageText);
+										softAssertion.assertEquals(getPGErrorMessageTxt,expectedErrorMessageText);
 										System.out.println("Verified Privileged Group");
 										Thread.sleep(3000);
 										
 										getupClick12().waitAndClick(10);
 										String getPTagLabelTxt = getPTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getPTagLabelTxt,expectedPTagLabelText);
+										softAssertion.assertEquals(getPTagLabelTxt,expectedPTagLabelText);
 																				
 										
 										WebElement optionPT = getPTagType().selectFromDropdown().getFirstSelectedOption();
 										String getPTagTypeTxt = optionPT.getText();
-										Assert.assertEquals(getPTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getPTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionPA = getPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getPGroupAssociationTxt = optionPA.getText();
-										Assert.assertEquals(getPGroupAssociationTxt,expectedGroupAssociation3Text);
+										softAssertion.assertEquals(getPGroupAssociationTxt,expectedGroupAssociation3Text);
 																				
 										String getPDefaultActionTxt = getPDefaultAction().getText();
-										Assert.assertEquals(getPDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getPDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getPFieldLogicTxt = getPFieldLogic().getText();
-										Assert.assertEquals(getPFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getPFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getPErrorMessageTxt = getPErrorMessage().getText();
-										Assert.assertEquals(getPErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getPErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Privileged");
 										Thread.sleep(3000);
 										
 										getupClick13().waitAndClick(10);
 										String getNPTagLabelTxt = getNPTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getNPTagLabelTxt,expectedNPTagLabelText);
+										softAssertion.assertEquals(getNPTagLabelTxt,expectedNPTagLabelText);
 																				
 										
 										WebElement optionNPT = getNPTagType().selectFromDropdown().getFirstSelectedOption();
 										String getNPTagTypeTxt = optionNPT.getText();
-										Assert.assertEquals(getNPTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getNPTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionNPA = getNPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getNPGroupAssociationTxt = optionNPA.getText();
-										Assert.assertEquals(getNPGroupAssociationTxt,expectedGroupAssociation3Text);
+										softAssertion.assertEquals(getNPGroupAssociationTxt,expectedGroupAssociation3Text);
 																				
 										String getNPDefaultActionTxt = getNPDefaultAction().getText();
-										Assert.assertEquals(getNPDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getNPDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getNPFieldLogicTxt = getNPFieldLogic().getText();
-										Assert.assertEquals(getNPFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getNPFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getNPErrorMessageTxt = getNPErrorMessage().getText();
-										Assert.assertEquals(getNPErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getNPErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Not Privileged");
 										Thread.sleep(3000);
 										
 										getupClick14().waitAndClick(10);
 										String getPTGGroupLabelTxt = getPTGCHECKGROUPLabel().GetAttribute("Value");
-										Assert.assertEquals(getPTGGroupLabelTxt,expectedPTGTagLabelText);
+										softAssertion.assertEquals(getPTGGroupLabelTxt,expectedPTGTagLabelText);
 																				
 										String getPTGInstructionTxt = getPTGInstructionText().GetAttribute("Value");
-										Assert.assertEquals(getPTGInstructionTxt,expectedPTGInstructionText);
+										softAssertion.assertEquals(getPTGInstructionTxt,expectedPTGInstructionText);
 																				
 										
 										WebElement optionPTG = getPTGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getPTGDefaultActionTxt = optionPTG.getText();
-										Assert.assertEquals(getPTGDefaultActionTxt,expectedDefaultAction2Text);
+										softAssertion.assertEquals(getPTGDefaultActionTxt,expectedDefaultAction2Text);
 																				
 										
 										WebElement optionPTGO = getPTGObject().selectFromDropdown().getFirstSelectedOption();
 										String getPTGObjectTxt = optionPTGO.getText();
-										Assert.assertEquals(getPTGObjectTxt,expectedFieldLogicObjectText2);
+										softAssertion.assertEquals(getPTGObjectTxt,expectedFieldLogicObjectText2);
 																				
 										
 										WebElement optionPTGC= getPTGCondition().selectFromDropdown().getFirstSelectedOption();
 										String getPTGConditionTxt = optionPTGC.getText();
-										Assert.assertEquals(getPTGConditionTxt,expectedFieldLogicConditionText);
+										softAssertion.assertEquals(getPTGConditionTxt,expectedFieldLogicConditionText);
 																				
 										
 										WebElement optionPTGA = getPTGAction().selectFromDropdown().getFirstSelectedOption();
 										String getPTGOActionTxt = optionPTGA.getText();
-										Assert.assertEquals(getPTGOActionTxt,expectedFieldLogicActionText);								
+										softAssertion.assertEquals(getPTGOActionTxt,expectedFieldLogicActionText);								
 																									
 										String getPTGErrorMessageTxt = getPTGErrorMessage().GetAttribute("Value");
-										Assert.assertEquals(getPTGErrorMessageTxt,expectedErrorMessageText);
+										softAssertion.assertEquals(getPTGErrorMessageTxt,expectedErrorMessageText);
 										System.out.println("Verified Privilege Type Group");
 										Thread.sleep(3000);
 										
 										getupClick15().waitAndClick(10);
 										String getACTagLabelTxt = getACTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getACTagLabelTxt,expectedACTagLabelText);
+										softAssertion.assertEquals(getACTagLabelTxt,expectedACTagLabelText);
 																				
 										
 										WebElement optionACT = getACTagType().selectFromDropdown().getFirstSelectedOption();
 										String getACTagTypeTxt = optionACT.getText();
-										Assert.assertEquals(getACTagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getACTagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionACA = getACGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getACGroupAssociationTxt = optionACA.getText();
-										Assert.assertEquals(getACGroupAssociationTxt,expectedGroupAssociation5Text);
+										softAssertion.assertEquals(getACGroupAssociationTxt,expectedGroupAssociation5Text);
 																				
 										String getACDefaultActionTxt = getACDefaultAction().getText();
-										Assert.assertEquals(getACDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getACDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getACFieldLogicTxt = getACFieldLogic().getText();
-										Assert.assertEquals(getACFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getACFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getACErrorMessageTxt = getACErrorMessage().getText();
-										Assert.assertEquals(getACErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getACErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Attorney Client");
 										Thread.sleep(3000);
 										
 										getupClick16().waitAndClick(10);
 										String getAWPTagLabelTxt = getAWPTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getAWPTagLabelTxt,expectedAWPTagLabelText);
+										softAssertion.assertEquals(getAWPTagLabelTxt,expectedAWPTagLabelText);
 																				
 										
 										WebElement optionAWPT = getAWPTagType().selectFromDropdown().getFirstSelectedOption();
 										String getAWPTagTypeTxt = optionAWPT.getText();
-										Assert.assertEquals(getAWPTagTypeTxt,expectedTagType2Text);
+										softAssertion.assertEquals(getAWPTagTypeTxt,expectedTagType2Text);
 																				
 										
 										WebElement optionAWPA = getAWPGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getAWPGroupAssociationTxt = optionAWPA.getText();
-										Assert.assertEquals(getAWPGroupAssociationTxt,expectedGroupAssociation5Text);
+										softAssertion.assertEquals(getAWPGroupAssociationTxt,expectedGroupAssociation5Text);
 																				
 										String getAWPDefaultActionTxt = getAWPDefaultAction().getText();
-										Assert.assertEquals(getAWPDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getAWPDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getAWPFieldLogicTxt = getAWPFieldLogic().getText();
-										Assert.assertEquals(getAWPFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getAWPFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getAWPErrorMessageTxt = getAWPErrorMessage().getText();
-										Assert.assertEquals(getAWPErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getAWPErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Attorney Work Product");
 										Thread.sleep(3000);
 										
 										getupClick17().waitAndClick(10);
 										String getCGTagLabelTxt = getCGTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getCGTagLabelTxt,expectedCGTagLabelText);
+										softAssertion.assertEquals(getCGTagLabelTxt,expectedCGTagLabelText);
 																		
 										String getCGInstructionTxt = getCGInstructionText().GetAttribute("Value");
-										Assert.assertEquals(getCGInstructionTxt,expectedCGInstructionText);
+										softAssertion.assertEquals(getCGInstructionTxt,expectedCGInstructionText);
 										
 										
 										WebElement optionCGA = getCGDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getCGDefaultActionTxt = optionCGA.getText();
-										Assert.assertEquals(getCGDefaultActionTxt,expectedDefaultAction3Text);
+										softAssertion.assertEquals(getCGDefaultActionTxt,expectedDefaultAction3Text);
 										System.out.println("Verified Confidentiality Group");
 										Thread.sleep(3000);
 										
 										getupClick18().waitAndClick(10);
 										String getCTagLabelTxt = getCTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getCTagLabelTxt,expectedCTagLabelText);
+										softAssertion.assertEquals(getCTagLabelTxt,expectedCTagLabelText);
 																				
 										
 										WebElement optionCT = getCTagType().selectFromDropdown().getFirstSelectedOption();
 										String getCTagTypeTxt = optionCT.getText();
-										Assert.assertEquals(getCTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getCTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionCA = getCGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getCGroupAssociationTxt = optionCA.getText();
-										Assert.assertEquals(getCGroupAssociationTxt,expectedGroupAssociation4Text);
+										softAssertion.assertEquals(getCGroupAssociationTxt,expectedGroupAssociation4Text);
 																				
 										String getCDefaultActionTxt = getCDefaultAction().getText();
-										Assert.assertEquals(getCDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getCDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getCFieldLogicTxt = getCFieldLogic().getText();
-										Assert.assertEquals(getCFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getCFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getCErrorMessageTxt = getCErrorMessage().getText();
-										Assert.assertEquals(getCErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getCErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Confidential");
 										Thread.sleep(3000);
 										
 										getupClick19().waitAndClick(10);
 										String getHTagLabelTxt = getHTagLabel().GetAttribute("Value");
-										Assert.assertEquals(getHTagLabelTxt,expectedHTagLabelText);
+										softAssertion.assertEquals(getHTagLabelTxt,expectedHTagLabelText);
 																				
 										
 										WebElement optionHT = getHTagType().selectFromDropdown().getFirstSelectedOption();
 										String getHTagTypeTxt = optionHT.getText();
-										Assert.assertEquals(getHTagTypeTxt,expectedTagType1Text);
+										softAssertion.assertEquals(getHTagTypeTxt,expectedTagType1Text);
 																				
 										
 										WebElement optionHA = getHGroupAssociation().selectFromDropdown().getFirstSelectedOption();
 										String getHGroupAssociationTxt = optionHA.getText();
-										Assert.assertEquals(getHGroupAssociationTxt,expectedGroupAssociation4Text);
+										softAssertion.assertEquals(getHGroupAssociationTxt,expectedGroupAssociation4Text);
 																				
 										String getHDefaultActionTxt = getHDefaultAction().getText();
-										Assert.assertEquals(getHDefaultActionTxt,expectedDefaultActionText);
+										softAssertion.assertEquals(getHDefaultActionTxt,expectedDefaultActionText);
 																				
 										String getHFieldLogicTxt = getHFieldLogic().getText();
-										Assert.assertEquals(getHFieldLogicTxt,expectedFieldLogicText);
+										softAssertion.assertEquals(getHFieldLogicTxt,expectedFieldLogicText);
 																													
 										String getHErrorMessageTxt = getHErrorMessage().getText();
-										Assert.assertEquals(getHErrorMessageTxt,expectedErrorMsgText);
+										softAssertion.assertEquals(getHErrorMessageTxt,expectedErrorMsgText);
 										System.out.println("Verified Highly Confidential");
 										Thread.sleep(3000);
 										
 										getupClick20().waitAndClick(10);
 										String getDCGroupLabelTxt = getDCCOMMENTLabel().GetAttribute("Value");
-										Assert.assertEquals(getDCGroupLabelTxt,expectedDCTagLabelText );
+										softAssertion.assertEquals(getDCGroupLabelTxt,expectedDCTagLabelText );
 																																							
 										
 										WebElement optionDC = getDCDefaultAction().selectFromDropdown().getFirstSelectedOption();
 										String getDCDefaultActionTxt = optionDC.getText();
-										Assert.assertEquals(getDCDefaultActionTxt,expectedDefaultAction3Text);
+										softAssertion.assertEquals(getDCDefaultActionTxt,expectedDefaultAction3Text);
 																				
 										
 										WebElement optionDCO = getDCObject().selectFromDropdown().getFirstSelectedOption();
 										String getDCObjectTxt = optionDCO.getText();
-										Assert.assertEquals(getDCObjectTxt,expectedFieldLogicObjectText1);
+										softAssertion.assertEquals(getDCObjectTxt,expectedFieldLogicObjectText1);
 																				
 										
 										WebElement optionDCC= getDCCondition().selectFromDropdown().getFirstSelectedOption();
 										String getDCConditionTxt = optionDCC.getText();
-										Assert.assertEquals(getDCConditionTxt,expectedFieldLogicConditionText);
+										softAssertion.assertEquals(getDCConditionTxt,expectedFieldLogicConditionText);
 																				
 										
 										WebElement optionDCA = getDCAction().selectFromDropdown().getFirstSelectedOption();
 										String getDCActionTxt = optionDCA.getText();
-										Assert.assertEquals(getDCActionTxt,expectedFieldLogicActionText);								
+										softAssertion.assertEquals(getDCActionTxt,expectedFieldLogicActionText);								
 																									
 										String getDCErrorMessageTxt = getDCErrorMessage().GetAttribute("Value");
-										Assert.assertEquals(getDCErrorMessageTxt,expectedDCErrorMsgText);
+										softAssertion.assertEquals(getDCErrorMessageTxt,expectedDCErrorMsgText);
 										
 										String getDCHelpTxt = getDCHelpText().GetAttribute("Value");
-										Assert.assertEquals(getDCHelpTxt,expectedDCHelpText);
+										softAssertion.assertEquals(getDCHelpTxt,expectedDCHelpText);
 										System.out.println("Verified Document Comments");
 										
 										driver.scrollPageToTop();
@@ -1589,7 +1590,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
 										 getTestUrCodeClick().waitAndClick(10);
 										 String getResponsiveError = getError1().getText();
-										 Assert.assertEquals(getResponsiveError,expectedErrorMessageText);
+										 softAssertion.assertEquals(getResponsiveError,expectedErrorMessageText);
 										 
 										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 												 getNotResponsiveCheked().Visible()  ;}}), Input.wait30);
@@ -1598,7 +1599,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
 										 getTestUrCodeClick().waitAndClick(10);
 										 String getNotResponsiveError = getError1().getText();
-										 Assert.assertEquals(getNotResponsiveError,expectedErrorMessageText);
+										 softAssertion.assertEquals(getNotResponsiveError,expectedErrorMessageText);
 										 
 										 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 												 getTechnicalIssueCheked().Visible()  ;}}), Input.wait30);
@@ -1607,13 +1608,13 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 												 getTestUrCodeClick().Visible()  ;}}), Input.wait30);
 										 getTestUrCodeClick().waitAndClick(10);
 										 String getTechIssueError1 = getError2().getText();
-										 Assert.assertEquals(getTechIssueError1,expectedTIGErrorMsgText);
+										 softAssertion.assertEquals(getTechIssueError1,expectedTIGErrorMsgText);
 										 
 										 String getTechIssueError2 = getError4().getText();
-										 Assert.assertEquals(getTechIssueError2,expectedErrorMessageText);
+										 softAssertion.assertEquals(getTechIssueError2,expectedErrorMessageText);
 										 
 										 String getTechIssueError3 = getError3().getText();
-										 Assert.assertEquals(getTechIssueError3,expectedDCErrorMsgText);
+										 softAssertion.assertEquals(getTechIssueError3,expectedDCErrorMsgText);
 										 System.out.println("Verified Preview");
 								}
 								

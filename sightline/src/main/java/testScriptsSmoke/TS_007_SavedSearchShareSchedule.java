@@ -90,8 +90,6 @@ public class TS_007_SavedSearchShareSchedule {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		///Input in = new Input(); in.loadEnvConfig();
-		
 		//Open browser
 		driver = new Driver();
 		
@@ -110,8 +108,8 @@ public class TS_007_SavedSearchShareSchedule {
 	}
 	
 	
-	  @Test(groups={"smoke","regression"},priority=1) public void saveSearchToDocList() throws
-	  ParseException, InterruptedException {
+	  @Test(groups={"smoke","regression"},priority=1)
+	  public void saveSearchToDocList() throws  ParseException, InterruptedException {
 	  
 	  sessionSearch.savedSearchToDocList(saveSearchName); final DocListPage dp =
 	  new DocListPage(driver); dp.getDocList_info().WaitUntilPresent();
@@ -125,15 +123,13 @@ public class TS_007_SavedSearchShareSchedule {
 	  
 	  }
 	 
-	  @Test(groups={"smoke","regression"},priority=2) public void saveSearchToDocView() throws
-	  ParseException, InterruptedException {
+	  @Test(groups={"smoke","regression"},priority=2) 
+	  public void saveSearchToDocView() throws  ParseException, InterruptedException {
 	  
-	  sessionSearch.savedSearchToDocView(saveSearchName); DocViewPage dv= new
-	  DocViewPage(driver); driver.WaitUntil((new Callable<Boolean>() {public
-	  Boolean call(){return
-	  !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
-	  Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "
-	  +purehits+" Docs");
+	  sessionSearch.savedSearchToDocView(saveSearchName); 
+	  DocViewPage dv= new  DocViewPage(driver); 
+	  driver.WaitUntil((new Callable<Boolean>() {public	  Boolean call(){return !dv.getDocView_info().getText().isEmpty();}}),Input.wait60);
+	  Assert.assertEquals(dv.getDocView_info().getText().toString(),"of "  +purehits+" Docs");
 	  System.out.println("Expected docs("+purehits+") are shown in docView");
 	  UtilityLog.info("Expected docs("+purehits+") are shown in docView");
 	  

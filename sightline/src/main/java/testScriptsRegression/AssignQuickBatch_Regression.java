@@ -56,8 +56,6 @@ public class AssignQuickBatch_Regression {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 				
-//		Input in = new Input();
-//		in.loadEnvConfig();
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);

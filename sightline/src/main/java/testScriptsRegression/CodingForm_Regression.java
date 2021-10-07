@@ -40,6 +40,7 @@ public class CodingForm_Regression {
 	public void preConditions() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
+				
 	     
 		//Open browser
 		driver = new Driver();
@@ -110,7 +111,7 @@ public class CodingForm_Regression {
 		    ass.createAssignment(AssgnName, codingfrom);
 		  
 		    String serachString = Input.searchString2;
-		  
+		   baseclass.selectproject();
 		   // Search for any content on basic search screen
 			sessionSearch =new SessionSearch(driver);
 			System.out.println(serachString);
@@ -147,7 +148,7 @@ public class CodingForm_Regression {
 		}
 
 	    @Test(groups={"smoke","regression"},priority=5)
-        public void AddCodingformwithMetadata() {
+        public void AddCodingformwithMetadata() throws InterruptedException {
 		
 	    baseclass.stepInfo("Test case Id: RPMXCON-53954 - AddCodingformwithMetadata");
 	    baseclass.stepInfo("*****Add codingform with Metadata*****");

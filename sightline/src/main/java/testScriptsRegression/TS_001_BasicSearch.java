@@ -242,7 +242,7 @@ public class TS_001_BasicSearch {
 	
 		bc.stepInfo("Test Case Id : RPMXCON-57179 Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
 		String folderName = "folderName1"+Utility.dynamicNameAppender();
-	
+	     bc.selectproject();
 		//Perform search
 		sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.searchString1);
@@ -306,7 +306,7 @@ public class TS_001_BasicSearch {
      }
      
    
-	//@AfterClass(alwaysRun = true)
+	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 
 			lp.logout();

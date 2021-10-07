@@ -39,10 +39,7 @@ public class TS_018_DocViewAudio {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
-		 //Input in = new Input();
-		// in.loadEnvConfig();
-		
+   
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -121,7 +118,7 @@ public class TS_018_DocViewAudio {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
+	//	ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

@@ -23,7 +23,7 @@ public class SessionSearch {
     Driver driver;
     public static int pureHit;
     BaseClass base;
-    SoftAssert assertion=new SoftAssert();
+    SoftAssert assertion;
   
     //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
     public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
@@ -90,7 +90,9 @@ public class SessionSearch {
     public Element getSavedSearch_MySearchesTab(){ return driver.FindElementById("-1_anchor"); }
     public Element getSaveSearch_Name(){ return driver.FindElementById("txtSaveSearchName"); }
     public Element getSaveSearch_SaveButton(){ return driver.FindElementById("btnEdit"); }
-    public Element getBulkRelDefaultSecurityGroup_CheckBox(int count){ return driver.FindElementByXPath("//form[@id='Edit User Group']/fieldset/div/div/div/div/div["+count+"]//i"); }
+    public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SG+"']/../div[1]/label/i"); }
+    
+   public Element getBulkRelDefaultSecurityGroup1(int count){ return driver.FindElementByXPath("//form[@id='Edit User Group']/fieldset/div/div/div/div/div["+count+"]//i"); }
     public Element getBulkRelOther_CheckBox(String SGname){ return driver.FindElementByXPath(".//*[@id='Edit User Group']//div[text()='"+SGname+"']/../div[1]/label/i"); }
     public Element getBulkRelease_ButtonRelease(){ return driver.FindElementById("btnRelease"); }
     
@@ -230,7 +232,8 @@ public class SessionSearch {
     	this.driver = driver;
         this.driver.getWebDriver().get(Input.url+ "Search/Searches");
         base = new BaseClass(driver);
-        base.selectproject();
+        assertion=new SoftAssert();
+      //  base.selectproject();
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -1103,11 +1106,11 @@ public class SessionSearch {
    	 
    	 getBulkActionButton().waitAndClick(30);
    	
-   	 /*driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   			 getBulkTagAction().Visible()  ;}}), Input.wait60); */
-   	 Thread.sleep(2000); // synch with app!
+   	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+   			 getBulkTagAction().Visible()  ;}}), Input.wait60); 
    	 getBulkTagAction().waitAndClick(30);
-   	 
+	 Thread.sleep(2000); // synch with app!
+	   
    	 
    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getBulkNewTab().Visible()  ;}}), Input.wait60); 
@@ -1181,7 +1184,7 @@ public void ViewInDocList() throws InterruptedException{
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
 		 
-	 
+	 Thread.sleep(2000);
 	 getBulkActionButton().waitAndClick(15);
 	 Thread.sleep(2000);
 	
@@ -1210,7 +1213,7 @@ public void ViewInDocView() throws InterruptedException{
 		 
 	 driver.scrollPageToTop();
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getBulkActionButton().Visible()  ;}}), Input.wait30); 
+			 getBulkActionButton().Visible() &&  getBulkActionButton().Displayed();}}), Input.wait30); 
 	 getBulkActionButton().waitAndClick(60);//increased time from 5 sec to 60sec
 	 
 	 try{
@@ -1218,7 +1221,7 @@ public void ViewInDocView() throws InterruptedException{
 				 getDocViewAction().Visible()  ;}}), Input.wait30);// added wait statement here
 		 getDocViewAction().waitAndClick(60);//increased time from 5 sec to 60sec
 		 }catch (Exception e) {
-			 getDocViewActionDL().Click();
+			 getDocViewActionDL().waitAndClick(20);
 		}
 	 System.out.println("Navigated to docView to view docs");
 	 UtilityLog.info("Navigated to docView to view docs");
@@ -1271,7 +1274,6 @@ public void bulkAssign() {
 
 //Bulk release to default security group
 public void bulkRelease(final String SecGroup) throws InterruptedException {
-	int count=0;
 
 	 try{
 		 getPureHitAddButton().waitAndClick(10);
@@ -1281,33 +1283,15 @@ public void bulkRelease(final String SecGroup) throws InterruptedException {
 		}
 	 
 	 getBulkActionButton().waitAndClick(10);
-	 getBulkReleaseAction().ElementToBeClickableExplicitWait(getBulkReleaseAction(), 2000);
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);
 	 }catch (Exception e) {
 		 getBulkReleaseActionDL().waitAndClick(10);
 	}
-	 Thread.sleep(5000);
-	//added here in the pom
-	 for (WebElement iterable_element : getSecurityGName().FindWebElements()) {
-		 count=count+1;
-			if(iterable_element.getText().contains(SecGroup)){
-				
-				
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().perform();
-				getBulkRelDefaultSecurityGroup_CheckBox(count).VisibilityOfElementExplicitWait(getBulkRelDefaultSecurityGroup_CheckBox(count), 5000);
-				break;
-			}
-		}
-
-	 getBulkRelDefaultSecurityGroup_CheckBox(count).Click(); 
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).Visible()  ;}}), Input.wait60); 
+	 getBulkRelDefaultSecurityGroup_CheckBox(SecGroup).waitAndClick(10);
+	
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getBulkRelease_ButtonRelease().Visible()  ;}}),Input.wait60); 
 	 getBulkRelease_ButtonRelease().waitAndClick(20);
@@ -1356,10 +1340,10 @@ public boolean bulkReleaseIngestions(final String SecGroup) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				new Actions(driver.getWebDriver()).moveToElement(getBulkRelDefaultSecurityGroup_CheckBox(count).getWebElement()).click();
+				new Actions(driver.getWebDriver()).moveToElement(getBulkRelDefaultSecurityGroup1(count).getWebElement()).click();
 				driver.scrollingToBottomofAPage();
 		
-				getBulkRelDefaultSecurityGroup_CheckBox(count).Click();
+				getBulkRelDefaultSecurityGroup1(count).Click();
 			}
 		}
 //	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 

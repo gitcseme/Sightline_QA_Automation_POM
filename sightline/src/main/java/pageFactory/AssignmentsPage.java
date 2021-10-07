@@ -171,17 +171,16 @@ public class AssignmentsPage {
     public ElementCollection getSubGroups(){ return driver.FindElementsByXPath("//a[@id='-1_anchor']/following-sibling::ul//a"); }
     public Element getkeyWordPopUpOk(){ return driver.FindElementByXPath("//button[@id='keywordOK']"); }
     public Element getKeyConfirmYes(){ return driver.FindElementByXPath("//button[@id=\"bot1-Msg1\"]"); }
-    public ElementCollection getSelectUserNameToAssign(){ return driver.FindElementsByXPath("//*[@id='divNotAssignedUsers']/div/div[2]"); }
     
     public AssignmentsPage(Driver driver){
 
         this.driver = driver;
         bc = new BaseClass(driver);
-        assertion = new SoftAssert();
-        this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
-//        driver.waitForPageToBeReady();
-        //This initElements method will create all WebElements
         
+        this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
+        driver.waitForPageToBeReady();
+        //This initElements method will create all WebElements
+        assertion = new SoftAssert();
         search = new SessionSearch(driver);
         docview = new DocViewPage(driver);
 
@@ -189,19 +188,19 @@ public class AssignmentsPage {
 
     public void createAssignment(String assignmentName, String codingForm) throws InterruptedException {
     	this.driver.getWebDriver().get(Input.url+ "Assignment/ManageAssignment");
-    	driver.waitForPageToBeReady();
-    	//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			//getAssignmentActionDropdown().Visible() ;}}), Input.wait90);
-    	getAssignmentActionDropdown().ElementToBeClickableExplicitWait(getAssignmentActionDropdown(), 60);
-    	//Thread.sleep(2000);
-    	getAssignmentActionDropdown().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAssignmentActionDropdown().Visible() ;}}), Input.wait60);
+    	bc.waitForElement(getAssignmentActionDropdown());
+    	    	getAssignmentActionDropdown().waitAndClick(10);
+    	    	Thread.sleep(2000);
     	
      	getAssignmentAction_NewAssignment().WaitUntilPresent();
     	
     	getAssignmentAction_NewAssignment().waitAndClick(20);
+    	Thread.sleep(2000);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getAssignmentName().Visible()  ;}}), Input.wait60);
-    	 Thread.sleep(2000);
+    			 getAssignmentName().Displayed()  ;}}), Input.wait60);
     	getAssignmentName().SendKeys(assignmentName);
     	getParentAssignmentGroupName().Displayed();
     	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
@@ -226,7 +225,6 @@ public class AssignmentsPage {
     	driver.scrollPageToTop();
     	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
     	getAssignmentSaveButton().waitAndClick(5);
-    	
     	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
     	UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
     	 
@@ -285,7 +283,6 @@ public class AssignmentsPage {
     	driver.scrollPageToTop();
     	//getAssignmentCodingFormDropDown().selectFromDropdown().selectByVisibleText(codingForm);
     	getAssignmentSaveButton().waitAndClick(5);
-        
     	System.out.println("Assignment "+assignmentName+" created with CF "+codingForm);
     	UtilityLog.info("Assignment "+assignmentName+" created with CF "+codingForm);
     	 
@@ -297,9 +294,8 @@ public class AssignmentsPage {
     			getStartingCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait60);
        	
     	getPersistCB_ExistAssgn().waitAndClick(5);
-    	//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		//	getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
-    	getSelectAssignmentToBulkAssign(assignmentName).VisibilityOfElementExplicitWait(getSelectAssignmentToBulkAssign(assignmentName), 90);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSelectAssignmentToBulkAssign(assignmentName).Visible()  ;}}), Input.wait60);
        	
     	System.out.println(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
     	UtilityLog.info(getSelectcopyAssgnmToBulkAssign().FindWebElements().size());
@@ -320,6 +316,7 @@ public class AssignmentsPage {
 		}
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getContinueBulkAssign().Visible()  ;}}), Input.wait60);
+		bc.waitForElement(getContinueBulkAssign());
     	getContinueBulkAssign().waitAndClick(10);
     
        	final BaseClass bc = new BaseClass(driver);
@@ -388,29 +385,10 @@ public class AssignmentsPage {
     	getAssignment_ManageReviewersTab().waitAndClick(30);
     	
     	getAddReviewersBtn().waitAndClick(10);
-//    	driver.scrollingToElementofAPage(getSelectUserToAssign());
-    	 for (WebElement iterable_element : getSelectUserNameToAssign().FindWebElements()) {
-    		
-    			if(iterable_element.getText().contains(Input.rev1userName)){
-    				
-    				
-    				try {
-    					Thread.sleep(5000);
-    				} catch (InterruptedException e) {
-    					// TODO Auto-generated catch block
-    					e.printStackTrace();
-    				}
-
-    				new Actions(driver.getWebDriver()).moveToElement(iterable_element).click().perform();
-    				driver.scrollingToBottomofAPage();
-    				getSelectUserToAssign().waitAndClick(10);
-    				break;
-    			}
-    		}
     	
-//    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//    			getSelectUserToAssign().Visible()  ;}}), Input.wait60);
-//    	getSelectUserToAssign().waitAndClick(10);
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSelectUserToAssign().Visible()  ;}}), Input.wait60);
+    	getSelectUserToAssign().waitAndClick(10);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAdduserBtn().Visible()  ;}}), Input.wait60);
     	getAdduserBtn().waitAndClick(10);

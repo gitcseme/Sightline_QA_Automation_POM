@@ -64,9 +64,7 @@ public class TS_011_DocViewNonAudioReviewer {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		// Open browser
-		Input in = new Input();
-		in.loadEnvConfig();
-		
+			
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		// Login as PA

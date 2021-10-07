@@ -1107,4 +1107,17 @@ public void failedStep(String message) {
     Assert.fail(message);
     }
 
+public void waitForElement(Element element) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return element.Displayed() && element.Enabled() && element.Present();
+				}
+			}), Input.wait90);
+		} catch (Exception e) {
+			UtilityLog.info("Got exception while waiting for element");
+			e.printStackTrace();
+		}
+	}
+
 }

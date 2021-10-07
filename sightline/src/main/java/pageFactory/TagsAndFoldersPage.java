@@ -12,6 +12,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -27,6 +28,7 @@ public class TagsAndFoldersPage {
     BaseClass base;
     LoginPage lp;
 	int j,k;
+	SoftAssert softassert;
      
     public Element getTag_ToggleDocCount(){ return driver.FindElementById("tagDocCount"); }
     public Element getTagandCount(String TagName, int count){ return driver.FindElementByXPath("//*[@id='-1']/ul/li//a[contains(text(),'"+TagName+" ("+count+")')]"); }
@@ -108,6 +110,7 @@ public class TagsAndFoldersPage {
         base = new BaseClass(driver);
         this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
         driver.waitForPageToBeReady();
+        softassert = new SoftAssert();
         }
     
     //securityGroup parameter value will be secGroup name else 'All Groups'   
@@ -647,7 +650,7 @@ public class TagsAndFoldersPage {
       	for (k=0; k<defltfolders2.size(); k++){
       		test5.add(defltfolders2.get(k).getText());}
       	    
-      	Assert.assertTrue(test5.contains("Productions"));
+      	softassert.assertTrue(test5.contains("Productions"));
       	System.out.println("Verified Productions is available under under All Folders as RMU User " );
  	}
 
@@ -700,7 +703,7 @@ public class TagsAndFoldersPage {
       	List<WebElement> dgrp1 = getFolderList().FindWebElements();
       	for (j=0; j<dgrp1.size(); j++){
       		test8.add(dgrp1.get(j).getText());}   	    
-      	Assert.assertTrue(test8.contains("Productions"));
+      	softassert.assertTrue(test8.contains("Productions"));
       	System.out.println("Productions is available under All Folders");
       	Thread.sleep(3000);
       	    	
@@ -715,7 +718,7 @@ public class TagsAndFoldersPage {
       	for (k=0; k<defltfldrgroup2.size(); k++){
       		test9.add(defltfldrgroup2.get(k).getText());}
       	    
-      	Assert.assertTrue(test9.contains("Productions"));
+      	softassert.assertTrue(test9.contains("Productions"));
       	System.out.println("Productions is available under Default Security Group");
       		
  	}
