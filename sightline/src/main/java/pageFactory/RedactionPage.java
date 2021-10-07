@@ -7,6 +7,7 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -19,6 +20,7 @@ public class RedactionPage {
 
     Driver driver;
     BaseClass bc;
+    SoftAssert softassert;
   
     public Element getAllRedactionRootNode(){ return driver.FindElementById("-1_anchor"); }
     public Element getAddRedactionTag(){ return driver.FindElementById("aAddRedactionTag"); }
@@ -41,6 +43,7 @@ public class RedactionPage {
         this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
         driver.waitForPageToBeReady();
         bc = new BaseClass(driver);
+        softassert = new SoftAssert();
        }
 
     public void AddRedaction(String RedactName,String usertype) 
@@ -125,7 +128,7 @@ public class RedactionPage {
     	
      } 
      
-     public void DeleteRedaction(String redactName) {
+     public void DeleteRedaction(String redactName) throws InterruptedException {
  		
     	 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -135,17 +138,20 @@ public class RedactionPage {
      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			getactionDropDown().Visible()  ;}}),Input.wait30); 
      	getactionDropDown().Click();
+     	Thread.sleep(2000);
      	
      	getRedactionDelete().waitAndClick(10);
      	
+     	bc.waitForElement(bc.getNOBtn());
      	bc.getNOBtn().waitAndClick(10);
      	
      	getSelectredaction(redactName).WaitUntilPresent();
-     	Assert.assertTrue(getSelectredaction(redactName).Displayed());
+     	softassert.assertTrue(getSelectredaction(redactName).Displayed());
      	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			getactionDropDown().Visible()  ;}}),Input.wait30); 
      	getactionDropDown().waitAndClick(10);
+     	Thread.sleep(2000);
      	
      	getRedactionDelete().waitAndClick(10);
      	     	

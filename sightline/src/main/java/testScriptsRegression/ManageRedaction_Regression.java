@@ -30,8 +30,6 @@ public class ManageRedaction_Regression {
 	public void before() throws ParseException, InterruptedException, IOException {
 	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	
-
-	//Input in = new Input();in.loadEnvConfig();
 	driver = new Driver();
 	lp = new LoginPage(driver);
 	lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -51,6 +49,8 @@ public class ManageRedaction_Regression {
 		bc.stepInfo("RPMXCON-53624-To verify user with Manage Privileges can remove redaction tag");
 		redact.DeleteRedaction(redactname);
 		bc.passedStep(redactname+"deleted successfully");
+		driver.Navigate().refresh();
+		lp.logout();
 	}
 	
 	@Test(priority =2,groups={"regression"})
