@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
-
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -14,25 +13,17 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import configsAndTestData.ConfigLoader;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
-import pageFactory.TallyPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
-import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
-import pageFactory.RedactionPage;
 import pageFactory.Utility;
 
 public class TS_011_DocViewNonAudioReviewer {
@@ -40,17 +31,18 @@ public class TS_011_DocViewNonAudioReviewer {
 	LoginPage loginPage;
 	DocViewPage docView;
 	public static int purehits;
-
-	String tagName = "tag" + Utility.dynamicNameAppender();
-	String folderName = "folder" + Utility.dynamicNameAppender();
-
+	SessionSearch search;
 	HomePage hm;
 	BaseClass baseClass;
+	String tagName = "tag" + Utility.dynamicNameAppender();
+	String folderName = "folder" + Utility.dynamicNameAppender();
 	String newTag = "newTag" + Utility.dynamicNameAppender();
 	String codingfrom = "CF" + Utility.dynamicNameAppender();
 	String assignmentName = "assi" + Utility.dynamicNameAppender();
 	String commentName = "Comt" + Utility.dynamicNameAppender();
 	String RedactionLabel = "Default Redaction Tag";
+	
+	
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
 	 * Modified by: Description : to assign docs to reviewer, create assignment
@@ -64,43 +56,32 @@ public class TS_011_DocViewNonAudioReviewer {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		// Open browser
-			
-		driver = new Driver();
+	 	driver = new Driver();
 		baseClass = new BaseClass(driver);
 		// Login as PA
 		loginPage = new LoginPage(driver);		
 
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-		docView = new DocViewPage(driver);
-	}
-
-	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description : As a reviewer add comment to document
-	 * 
-	 */
-	@Test(groups = { "smoke", "regression" })
-	public void addCommentandcompleteDoc() throws Exception {
 		
-		        // add tag
-				TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-				page.CreateTag(newTag, "Default Security Group");
+		 // add tag
+		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		page.CreateTag(newTag, "Default Security Group");
 
 				// add comment field
-				CommentsPage comments = new CommentsPage(driver);
-				comments.AddComments(commentName);
+		CommentsPage comments = new CommentsPage(driver);
+		comments.AddComments(commentName);
 						
 				// Create coding for for assignment
-				CodingForm cf = new CodingForm(driver);
-				cf.createCodingform(codingfrom);
+	   CodingForm cf = new CodingForm(driver);
+		cf.createCodingform(codingfrom);
 
 				// Create assignment with newly created coding form
-				AssignmentsPage agnmt = new AssignmentsPage(driver);
-				agnmt.createAssignment(assignmentName, codingfrom);
+		AssignmentsPage agnmt = new AssignmentsPage(driver);
+		agnmt.createAssignment(assignmentName, codingfrom);
 
 				// Search docs and assign to newly created assignment
-				SessionSearch search = new SessionSearch(driver);
+				search = new SessionSearch(driver);
 				purehits = search.basicContentSearch(Input.searchString1);
 				search.bulkAssign();
 				agnmt.assignDocstoExisting(assignmentName);
@@ -126,19 +107,34 @@ public class TS_011_DocViewNonAudioReviewer {
 					}
 				}
 				Assert.assertTrue(found);
-		
-		docView.addCommentToNonAudioDoc("firstcomment");
+				docView = new DocViewPage(driver);
 
 	}
+
+				/*
+				 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
+				 * Modified by: Description : As a reviewer add remark to first document
+				 * 
+				 */
+				@Test(groups = {"smoke", "regression"},priority=1)
+				public void addCommentandcompleteDoc() throws Exception {
+					
+					docView.addCommentToNonAudioDoc("firstcomment");
+				}
 
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
 	 * Modified by: Description : As a reviewer add remark to first document
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" })
-	public void addRemarkToFirstDoc() {
-
+	@Test(groups = { "smoke", "regression" },priority=2)
+	public void addRemarkToFirstDoc() throws InterruptedException {
+		
+		baseClass.selectproject();
+		search = new SessionSearch(driver);
+		purehits = search.basicMetaDataSearch("DocID", null, "ID00000050", null);
+		search.ViewInDocView();
+	
 		docView.addRemarkNonAudioDoc("FirstRemark2");
 	}
 
@@ -147,11 +143,12 @@ public class TS_011_DocViewNonAudioReviewer {
 	 * Modified by: Description : As a reviewer redact the page, search for it and delete the redaction
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" })
+	@Test(groups = { "smoke", "regression" },priority=3)
 	public void addredaction() throws InterruptedException {
 		{
            
 			docView.nonAudioPageRedaction(RedactionLabel);
+			baseClass.selectproject();
 			SessionSearch search = new SessionSearch(driver);
 	    	
 			//Validate in advance sreach under work product search
@@ -193,7 +190,6 @@ public class TS_011_DocViewNonAudioReviewer {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());	
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 
