@@ -1,13 +1,9 @@
 package pageFactory;
 
-import static org.testng.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -29,9 +25,11 @@ public class ProductionPage {
     BaseClass base;
     public String ProdPathallredact;
     public String ProdPathsomeredact;
-    public String tagname;
+    //public String tagname;
     public String templatename;
-    SoftAssert assertion = new SoftAssert();
+    public String productionname;
+    public SoftAssert assertion = new SoftAssert();
+    public WebDriverWait wait;
     
     public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
     public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
@@ -256,11 +254,11 @@ public class ProductionPage {
     public String xpathThreeStepsUp = "./../../..";
 
     public ProductionPage(Driver driver){
-
         this.driver = driver;
         this.driver.getWebDriver().get(Input.url+"Production/Home");
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
+        this.wait = new WebDriverWait(driver.getWebDriver(), 15L);
     }
     
     public void startProduction(String productionname) {
@@ -388,9 +386,6 @@ public class ProductionPage {
 				getPriveldge_SelectTagButton().Visible()  ;}}), Input.wait30);	
 		getPriveldge_SelectTagButton().waitAndClick(5);
 		
-		
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
-		
 		wait.until(ExpectedConditions.elementToBeClickable(getTagTreeTIFFComponent().getBy()));
 		getTagTreeTIFFComponent().Click();
 			
@@ -425,6 +420,42 @@ public class ProductionPage {
 		+ " or all redactions (annotation layer). Specify the redaction text for each"
 		+ " selected redaction.");
     }
+    
+    public void fillTechIssues(String tagname) {
+    	driver.scrollingToBottomofAPage();
+        
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
+        {return getTechissue_toggle().Visible() ;}}), Input.wait30);
+        getTechissue_toggle().waitAndClick(10);
+		  
+			getTechissue_SelectTagButton().waitAndClick(10);
+			
+			WebElement tagContainerTech = wait.until(ExpectedConditions.elementToBeClickable(getTagTreeTIFFComponent().getBy()));
+			tagContainerTech.click();
+			
+			
+			WebElement myTagTech = wait.until(ExpectedConditions.presenceOfElementLocated(getPriveldge_TagTree("Technical_Issue").getBy()));
+			
+			myTagTech.click();
+			
+//			getPriveldge_TagTree(tagnametech).waitAndClick(10);
+//			Thread.sleep(2000);
+			
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+			
+			
+			
+			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+					getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTech_Issue_TextArea().Enabled() ;}}), Input.wait30);
+		    new Actions(driver.getWebDriver()).moveToElement(getTech_Issue_TextArea().getWebElement()).click();
+		    getTech_Issue_TextArea().SendKeys("testing");
+			
+			}
+    	
+   
     
     public void fillTextFields() {
     	
@@ -821,7 +852,6 @@ public class ProductionPage {
 			e.printStackTrace();
 		}
 		
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
 		wait.until(ExpectedConditions.elementToBeClickable(tagContainer().getBy()));
 
 		tagContainer().Click();
@@ -1055,7 +1085,6 @@ public class ProductionPage {
     	getProdExport_ProductionSets().getWebElement().findElement(getOption("EXP").getBy()).click();
     	
 		ExpectedCondition<WebElement> totalCountChanged = BaseClass.waitForTextToChangeCondition(By.id(totalCountId), oldtotalCountText);
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
 		wait.until(totalCountChanged);
     	
 		WebElement dropdown =  wait.until(ExpectedConditions.presenceOfElementLocated((productionStateFilterDropdown()).getBy()));
@@ -1253,9 +1282,6 @@ public class ProductionPage {
   		    driver.scrollingToBottomofAPage();
   			
   			getPriveldge_SelectTagButton().Click();
-  			Thread.sleep(2000);
-  			
-  			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10);
   			
   			WebElement tagContainer = wait.until(ExpectedConditions.elementToBeClickable(getTagTreeTIFFComponent().getBy()));
   			tagContainer.click();
@@ -1730,7 +1756,6 @@ public class ProductionPage {
   	   public void savetemplate(String templatename)
   	   {
   		this.driver.getWebDriver().get(Input.url+"Production/Home");
-  		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
   		WebElement dropdown =  wait.until(ExpectedConditions.presenceOfElementLocated(productionStateFilterDropdown().getBy()));
 		dropdown.click();
 		
@@ -1795,13 +1820,14 @@ public class ProductionPage {
   		}
 		
   		public void ProductionwithTechIssuetags(String productionname,String PrefixID,
-  				String SuffixID,final String foldername,String Tagnametech,String Tagnameprev) 
+  				String SuffixID,final String foldername,String Tagnameprev,String Tagnametech) 
   				throws InterruptedException 
 	
   		{
-			startProduction(productionname);
+  			startProduction(productionname);
 			fillDATFields( );
-			fillingTIFFSection(Tagnameprev, Tagnametech);
+			fillTIFFFields(Tagnameprev);
+			fillTechIssues(Tagnametech);
   			 
   			driver.scrollingToBottomofAPage();
   			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1890,7 +1916,6 @@ public class ProductionPage {
   	        productionStateFilterCompleted().waitAndClick(10);
   	        driver.getWebDriver().findElement(ProductionSetdiv().getBy()).click();
   	        
-  	        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
   	        String tileItemsOld = getProductionItemsTileItems().getText();
   	        
   	        wait.until(BaseClass.waitForTextToChangeCondition(getProductionItemsTileItems().getWebElement(), tileItemsOld));
@@ -1908,7 +1933,8 @@ public class ProductionPage {
   	    }
 
   	    public void SaveTemplate(final String tempName) throws InterruptedException{
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+  	    	driver.getWebDriver().get(Input.url+"Production/Home");
+  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFilterByButton().Visible()  ;}}), Input.wait30);
 	    	getFilterByButton().waitAndClick(10);
 
@@ -1922,7 +1948,7 @@ public class ProductionPage {
 	        if(getProductionItemsTile().size()>0)
 	        {
 	        	getArrow().waitAndClick(10);
-	        	getSaveTemplate().waitAndClick(10);
+	        	wait.until(ExpectedConditions.elementToBeClickable(getSaveTemplate().getBy())).click();
 	        	
 	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        			getTemplateName().Visible()  ;}}), Input.wait30); 
@@ -1933,8 +1959,7 @@ public class ProductionPage {
 	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
 	        	bc.CloseSuccessMsgpopup();
 	        	getManageTemplates().waitAndClick(10);
-		        	
-	        	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+		        
 	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
 	        	ArrayList<String> tableele = new ArrayList<String>();
 		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
@@ -1961,12 +1986,12 @@ public class ProductionPage {
   	        if(getProductionItemsTile().size()>0)
   	        {
   	        	getArrow().waitAndClick(10);
-  	        	getSaveTemplate().waitAndClick(10);
+  	        	wait.until(ExpectedConditions.elementToBeClickable(getSaveTemplate().getBy())).click();
+//  	        	getSaveTemplate().waitAndClick(10);
   	        	
   	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	        			getTemplateName().Visible()  ;}}), Input.wait30); 
   	        	
-  	        	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
   	        	wait.until(ExpectedConditions.visibilityOfElementLocated(getTemplateName().getBy()));
   	        	getTemplateName().SendKeys(tempName);
   	        	System.out.println(tempName);
@@ -2059,8 +2084,7 @@ public class ProductionPage {
   	  }
   	  
   	    public void ProductionLock() throws InterruptedException{
-  	    	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-	    	wait.until(ExpectedConditions.elementToBeClickable(getFilterByButton().getBy())).click();
+  	    	wait.until(ExpectedConditions.elementToBeClickable(getFilterByButton().getBy())).click();
 	    	for(int i=1; i<getFilterOptions().size(); i++) {
 	       	getFilter(i).waitAndClick(10);
 	       	}
@@ -2129,7 +2153,6 @@ public class ProductionPage {
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
-	        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
 	        wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -2144,7 +2167,7 @@ public class ProductionPage {
         	getSave().waitAndClick(10);
         	BaseClass bc= new BaseClass(driver);
         	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
-//        	bc.CloseSuccessMsgpopup();
+        	bc.CloseSuccessMsgpopup();
         	
         	getManageTemplates().waitAndClick(10);
         	
@@ -2346,6 +2369,11 @@ public class ProductionPage {
   	  }
   	    
   	    public void DeleteProduction() throws InterruptedException{
+  	    	String productionname1 = "P"+Utility.dynamicNameAppender();
+  	    	startProduction(productionname1);
+  	    	wait.until(ExpectedConditions.elementToBeClickable(menuProductions().getBy())).click();
+  	  		wait.until(ExpectedConditions.attributeToBe(menuProductionActive().getBy(), "class", "active"));
+  	  		menuProductions().Click();
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFilterByButton().Visible()  ;}}), Input.wait30);
 	    	getFilterByButton().waitAndClick(10);
@@ -2361,15 +2389,14 @@ public class ProductionPage {
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
+	        wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDelete().Visible()  ;}}), Input.wait30); 
 	        getDelete().waitAndClick(10);
-	        Thread.sleep(1000);
-	        getOK().waitAndClick(10);
-	        Thread.sleep(1000);
+//	        Thread.sleep(1000);
+	        wait.until(ExpectedConditions.elementToBeClickable(getOK().getBy())).click();
+//	        Thread.sleep(1000);
 	        BaseClass bc= new BaseClass(driver);
 	      	bc.VerifySuccessMessage("Production deleted successfully");
 	      	bc.CloseSuccessMsgpopup();

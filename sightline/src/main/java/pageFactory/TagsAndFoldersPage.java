@@ -336,37 +336,17 @@ public class TagsAndFoldersPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
         wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
         
-        try {
-			wait.until((WebDriver) -> {
-				 WebElement element = getTagName().getWebElement();
-				 boolean result = element != null && element.isDisplayed();
-				 if (!result) getAddTag().Click();
-				 return result ? element : null;
-			});
-		} catch (Exception e1) {
-			// Do nothing
-	}
+        
+		wait.until((WebDriver) -> {
+			 WebElement element = getTagName().getWebElement();
+			 boolean result = element != null && element.isDisplayed();
+			 if (!result) try { getAddTag().Click(); } catch (Exception e) {}
+			 return result ? element : null;
+		});
+
         
         getTagName().SendKeys(strtag);
         
-//        wait.until(BaseClass.waitForAttributeToChange(liAddTag().getBy(), "class", "ui-state-disabled"));
-//        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy()));
-//        
-//        wait.until((WebDriver) -> {
-//        	getAddTag().Click();
-//        	WebElement element = getTagName().getWebElement();
-//        	return (element != null && element.isDisplayed()) ? element : null;
-//        }).sendKeys(strtag);
-        
-       
-//        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
-        
-//       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-//			 getTagName().Visible()  ;}}), Input.wait60); 
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(getTagName().getBy()));
-//        getTagName().SendKeys(strtag);
-        
-       
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			 getTagClassification().Visible()  ;}}), Input.wait30); 
        getTagClassification().selectFromDropdown().selectByVisibleText(classificationname);

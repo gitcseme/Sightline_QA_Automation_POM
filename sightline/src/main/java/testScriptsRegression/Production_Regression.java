@@ -55,6 +55,8 @@ import testScriptsSmoke.Input;
     	//Open browser
 	
 		driver = new Driver();
+		page = new ProductionPage(driver);
+
 		//Login as PA
 		lp = new LoginPage(driver);
 		bc = new BaseClass(driver);
@@ -69,7 +71,7 @@ import testScriptsSmoke.Input;
 		 
 
 		 
-//		page = new ProductionPage(driver);
+		
 //		lp.logout();
 		
 		
