@@ -35,7 +35,7 @@ public class DocumentAuditReportPage {
       			getReport_DocAudit().Visible()  ;}}), Input.wait30); 
         	getReport_DocAudit().Click();
         	
-//        	getDA_SelectSearch_Expand().waitAndClick(10);
+        	getDA_SelectSearch_Expand().waitAndClick(10);
 		
 		  driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				  getDA_Selectsearch().Visible()  ;}}), Input.wait30);		
