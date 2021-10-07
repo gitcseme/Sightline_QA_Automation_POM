@@ -316,10 +316,6 @@ public class DocViewPage {
    
     public void addCommentToNonAudioDoc(String comment) throws Exception {
     	
-    	//To make sure we are in basic search page
-    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	driver.waitForPageToBeReady();
-    	
     	driver.getWebDriver().get(Input.url+ "DocumentViewer/DocView");
     	driver.waitForPageToBeReady();
     	

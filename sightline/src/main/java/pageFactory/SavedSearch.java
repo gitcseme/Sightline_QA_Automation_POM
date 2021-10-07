@@ -322,7 +322,7 @@ public class SavedSearch {
 				return getBatchUploadButton().Visible();
 			}
 		}), Input.wait30);
-		getBatchUploadButton().Click();
+		getBatchUploadButton().waitAndClick(20);
 		System.out.println("Clicked on Upload button..");
 		UtilityLog.info("Clicked on Upload button..");
 
@@ -334,11 +334,9 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 
-		// System.getProperty("user.dir")+"\\src\\com\\stc\\ExcelFiles\\"+ExcelSheetName+
-		System.out.println(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
 		UtilityLog.info(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
 		getSelectFile().SendKeys(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
-		getSubmitToUpload().Click();
+		getSubmitToUpload().waitAndClick(10);
 
 		base.VerifySuccessMessage("File uploaded successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -380,7 +378,6 @@ public class SavedSearch {
 				return getCounts().Visible();
 			}
 		}), Input.wait30);
-		// System.out.println(getCounts().size());
 		for (int i = 1; i <= getCounts().size(); i++) {
 
 			actualCounts.add(Integer.parseInt(
