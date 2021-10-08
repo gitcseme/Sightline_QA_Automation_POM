@@ -60,7 +60,7 @@ public class TS_005_BasicAndAdvanceAlerts {
  	
      }
      
-    //@Test(dataProvider = "special chars",groups= {"regression"})
+    @Test(dataProvider = "special chars",groups= {"regression"})
     public void BSphraseAndProximitySearchWrongQueryAlert(String data) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
@@ -68,7 +68,7 @@ public class TS_005_BasicAndAdvanceAlerts {
    		sessionSearch.wrongQueryAlertBasicSaerch(data, 1,"non fielded", null, "TestcaseId");
 	} 
     
-    //@Test(dataProvider = "special chars",groups= {"regression"})
+    @Test(dataProvider = "special chars",groups= {"regression"})
     public void ASphraseAndProximitySearchWrongQueryAlert(String data) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
@@ -123,11 +123,9 @@ public class TS_005_BasicAndAdvanceAlerts {
 		sessionSearch.wrongQueryAlertBasicSaerch(data, MessageNumber, fielded, fieldName, TestCaseId);
 
 		// sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"non fielded", null);
-		// sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"fielded",
-		// "CustodianName");
+		// sessionSearch.wrongQueryAlertBasicSaerch("bi-weekly", 4,"fielded","CustodianName");
 
-		// sessionSearch.wrongQueryAlertBasicSaerch(data, MessageNumber, fielded,
-		// fieldName,TestCaseId);
+		// sessionSearch.wrongQueryAlertBasicSaerch(data, MessageNumber, fielded, fieldName,TestCaseId);
 		sessionSearch.getTallyContinue().Click();
 		// verify counts
 		driver.WaitUntil((new Callable<Boolean>() {

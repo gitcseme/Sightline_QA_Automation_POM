@@ -44,6 +44,7 @@ public class AssignQuickBatch_Regression {
 	DocListPage dp;
 	ReportsPage report; 
 	DocExplorerPage docexp;
+	SessionSearch search; 
 	String codingfrom = "cfC1"+Utility.dynamicNameAppender();
 	String tagname = "Assgntag"+Utility.dynamicNameAppender(); 
     String foldername= "Assgnfolder"+Utility.dynamicNameAppender(); 
@@ -55,9 +56,6 @@ public class AssignQuickBatch_Regression {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-				
-//		Input in = new Input();
-//		in.loadEnvConfig();
 		driver = new Driver();
 		
 		lp = new LoginPage(driver);
@@ -66,7 +64,7 @@ public class AssignQuickBatch_Regression {
 		docexp = new DocExplorerPage(driver);
 		bc = new BaseClass(driver);
 		report = new ReportsPage(driver);
-	
+			
 		//add tag
 		page = new TagsAndFoldersPage(driver);
 		page.CreateTag("newTag"+Utility.dynamicNameAppender(),"Default Security Group");
@@ -79,7 +77,7 @@ public class AssignQuickBatch_Regression {
 		CodingForm cf = new CodingForm(driver);
 		cf.createCodingform(codingfrom);
 			
-		SessionSearch search = new SessionSearch(driver);
+		search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.saveSearch(savedsearchname);
 		dp = new DocListPage(driver);
@@ -110,7 +108,7 @@ public class AssignQuickBatch_Regression {
    	bc.passedStep("**** new user created successfully*****");
     bc.impersonateSAtoRMU();
     bc.passedStep("**** impersonated to RMU user successfully*****");
-    SessionSearch search = new SessionSearch(driver);
+    
 	search.basicContentSearch(Input.searchString1);
 	bc.passedStep("**** basic content search is successful*****");
 	search.quickbatch();
@@ -140,7 +138,7 @@ public class AssignQuickBatch_Regression {
 	   public void CreateQuickBatchfromdoclist() throws InterruptedException, ParseException, IOException {
 		  bc.stepInfo("Test Case Id : RPMXCON-54851 Create new Quick Assignment from Document list");
 			bc.selectproject();
-			SessionSearch search = new SessionSearch(driver);
+			
 			search.basicContentSearch(Input.searchString1);
 			bc.passedStep("**** basic content search is successful*****");
 			search.ViewInDocList();
@@ -190,10 +188,10 @@ public class AssignQuickBatch_Regression {
       @Test(groups={"smoke","regression"},priority=7)
 	   public void CreateQuickBatchfromadvancedsearch() throws InterruptedException, ParseException, IOException {
     	  bc.stepInfo("Test Case Id : RPMXCON-54853 Create new Quick Assignment (with Chronological sort order, All reviewers added, enable Family Members/Email Threaded Docs/Near Duplicates ) from Advanced search");
-  		SessionSearch advsearch = new SessionSearch(driver);
-  		advsearch.advancedContentSearch(Input.searchString1);
+        bc.selectproject();	
+  		search.advancedContentSearch(Input.searchString1);
   		bc.passedStep("**** advance content search is successful*****");
-  		advsearch.quickbatch();
+  		search.quickbatch();
   		bc.passedStep("**** adding to quick batch from advance search is successful*****");
   		String assignmentQB6= "assignmentQB6"+Utility.dynamicNameAppender();
   		agnmt.createnewquickbatch_Optimized_withReviewer(assignmentQB6, codingfrom,"AllRev");

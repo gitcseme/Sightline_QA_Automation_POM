@@ -30,7 +30,7 @@ public class DocumentAuditReportPage {
     public void ValidateDAreport(String searchname,String assignmentname) throws InterruptedException {
     	
     	 driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
-         
+         Thread.sleep(2000);
       	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
       			getReport_DocAudit().Visible()  ;}}), Input.wait30); 
         	getReport_DocAudit().Click();

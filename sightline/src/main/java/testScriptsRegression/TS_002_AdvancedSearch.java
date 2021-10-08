@@ -58,8 +58,9 @@ public class TS_002_AdvancedSearch {
 		//Login as PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		bc.passedStep("********logged in succesfully as PA user********");
+		
 		bc = new BaseClass(driver);
+		bc.passedStep("********logged in succesfully as PA user********");
 		searchText =Input.searchString1;
 		search = new SessionSearch(driver);
     	

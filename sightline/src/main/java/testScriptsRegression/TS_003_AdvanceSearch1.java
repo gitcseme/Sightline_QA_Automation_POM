@@ -48,7 +48,7 @@ public class TS_003_AdvanceSearch1 {
     	
 		
 		softAssertion= new SoftAssert();
-//		Input in = new Input(); in.loadEnvConfig();
+	//	Input in = new Input(); in.loadEnvConfig();
 		driver = new Driver();
 		bc = new BaseClass(driver);
 		
@@ -75,12 +75,14 @@ public class TS_003_AdvanceSearch1 {
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		search.basicContentSearch("test");
 		bc.passedStep("********Basic content search is successfull********");
+		bc.stepInfo("View documents in docview");
 		search.ViewInDocView();
 		
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 dc.getDocView_RedactIcon().Visible()  ;}}), Input.wait60);
 		dc.getDocView_RedactIcon().VisibilityOfElementExplicitWait(dc.getDocView_RedactIcon(), 2000);
+		bc.stepInfo("Adding redaction");
 		dc.getDocView_RedactIcon().Click();
 		 
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -95,13 +97,11 @@ public class TS_003_AdvanceSearch1 {
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 dc.getRedactionTag_SaveButton().Visible()  ;}}), Input.wait60);
 		dc.getRedactionTag_SaveButton().Click();
-			
 		
-
 		bc.VerifySuccessMessage("Redaction tags saved successfully.");
 		bc.passedStep("********Redaction tags are saved succesfully********");
 		
-		/*bc.VerifySuccessMessage("Redaction tags saved successfully.");*/
+		bc.VerifySuccessMessage("Redaction tags saved successfully.");
 		bc.selectproject();
 		 
 		//Validate in advance sreach under work product search
@@ -176,7 +176,7 @@ public class TS_003_AdvanceSearch1 {
 			 search.searchSavedSearch(saveSearchName);
 			 search.selectOperator("AND");
 			 search.selectAssignmentInWPS(assignMentName);
-			 softAssertion.assertEquals(3,search.serarchWP());
+			 softAssertion.assertEquals(15,search.serarchWP());
 			 bc.passedStep("********TagAndFolderANDSavedSearch Work Product search is successful********");	
 			 bc.passedStep("********pure Hit count is same as expected********");	
 			 
@@ -191,7 +191,7 @@ public class TS_003_AdvanceSearch1 {
 			 search.searchSavedSearch(saveSearchName);
 			 search.selectOperator("AND");
 			 search.selectAssignmentInWPS(assignMentName);
-			 softAssertion.assertEquals(53,search.serarchWP());
+			 softAssertion.assertEquals(87,search.serarchWP());
 			 bc.passedStep("********TagOrFolderORsavedSearchs Work Product search is successful********");
 			 bc.passedStep("********pure Hit count is same as expected********");
 			 softAssertion.assertAll();
@@ -241,7 +241,7 @@ public class TS_003_AdvanceSearch1 {
 		    		    	
 		    	bc.selectproject();
 		    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=1);
+		    	softAssertion.assertTrue(search.audioSearch("spiritual","ventures","North American English","mid")>=0);
 		    	bc.passedStep("********Audio search is successful********");	
 				 bc.passedStep("********pure Hit count is same as expected********");
 				 

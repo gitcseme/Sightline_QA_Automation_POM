@@ -41,7 +41,7 @@ public class SearchTermReportPage {
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getApplyBtn().Visible()  ;}}), Input.wait60);
 		  getApplyBtn().waitAndClick(15);
-    	  Thread.sleep(2000);
+    	  Thread.sleep(3000);
     	  bc.VerifyErrorMessage("Please select at least one search.");
     	  bc.CloseSuccessMsgpopup();
 		  

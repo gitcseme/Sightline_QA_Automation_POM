@@ -312,28 +312,31 @@ public class BaseClass {
 			public Boolean call() {
 				return getChangeRole().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
 		getChangeRole().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectRole().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Project Administrator");
 		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAvlDomain().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectProjectTo().Visible();
 			}
-		}), Input.wait30);
+		}), Input.wait60);
+		Thread.sleep(1000);
 		getSelectProjectTo().selectFromDropdown().selectByVisibleText(Input.projectName);
 
 		getSaveChangeRole().waitAndClick(5);
@@ -729,6 +732,7 @@ public class BaseClass {
 				return getSelectRole().Visible();
 			}
 		}), Input.wait60);
+		Thread.sleep(2000);
 		getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -736,6 +740,7 @@ public class BaseClass {
 				return getAvlDomain().Visible();
 			}
 		}), Input.wait30);
+		Thread.sleep(2000);
 		getAvlDomain().selectFromDropdown().selectByVisibleText(Input.domainName);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -743,7 +748,7 @@ public class BaseClass {
 				return getAvlProject().Visible();
 			}
 		}), Input.wait30);
-
+		Thread.sleep(2000);
 		getAvlProject().selectFromDropdown().selectByVisibleText(Input.projectName);
 		
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -751,7 +756,7 @@ public class BaseClass {
 				return getSelectSecurityGroup().Visible();
 			}
 		}), Input.wait30);
-
+		Thread.sleep(2000);
 		getSelectSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
 		getSaveChangeRole().Click();
 		System.out.println("Impersnated from SA to RMU");
@@ -1147,5 +1152,18 @@ public void failedStep(String message) {
     Reporter.log("<font color='red'>"+message+"</font>");
     Assert.fail(message);
     }
+
+public void waitForElement(Element element) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return element.Displayed() && element.Enabled() && element.Present();
+				}
+			}), Input.wait90);
+		} catch (Exception e) {
+			UtilityLog.info("Got exception while waiting for element");
+			e.printStackTrace();
+		}
+	}
 
 }

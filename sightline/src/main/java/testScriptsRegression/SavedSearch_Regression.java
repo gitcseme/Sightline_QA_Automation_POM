@@ -51,7 +51,8 @@ public class SavedSearch_Regression  {
 	public void preCondition() throws ParseException, InterruptedException, IOException{
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	  	
+		
+  	
     	//Open browser
 		driver = new Driver();
 		//Login as a PA
@@ -62,7 +63,6 @@ public class SavedSearch_Regression  {
 		purehits=search.basicContentSearch(Input.searchString1);
 		search.saveSearch(saveSearchName);
         search.saveSearch(SearchNamePA);
-		Thread.sleep(5000);
 		ss = new SavedSearch(driver);
         base = new BaseClass(driver);
 	}

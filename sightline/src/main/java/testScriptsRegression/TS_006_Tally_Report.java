@@ -43,10 +43,9 @@ public class TS_006_Tally_Report {
 	
 	   @BeforeClass(alwaysRun = true)
 	   public void beforeClass() throws ParseException, InterruptedException, IOException{
-		
+		   
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		/* Input in = new Input(); 
-		 in.loadEnvConfig(); */
+		
 		driver = new Driver();
 	    lp = new LoginPage(driver);
 	    baseclass = new BaseClass(driver);
@@ -75,7 +74,7 @@ public class TS_006_Tally_Report {
 			// TODO: handle exception
 		}
 	     }	   
-	@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"},priority=1)
 	public void tallyBTagandBFolder() throws InterruptedException {
 		
 		
@@ -114,11 +113,11 @@ public class TS_006_Tally_Report {
 	}
 	 
 	//Bulk Assign : create assignment then assign docs to it then verify assignment as a reviewer 
-	@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"},priority=2)
 	 public void tallyBulkAssign() throws InterruptedException {
 		 String tagName = "TallyR_tag_"+Utility.dynamicNameAppender();
 		 String codingfrom = "TallyR_CF_"+Utility.dynamicNameAppender();
-		 String assignmentName = "TallyAssign"+Utility.dynamicNameAppender();
+		 String assignmentName = "AssignTally"+Utility.dynamicNameAppender();
 		 
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 baseclass.passedStep("******Login successfull*******");
@@ -144,7 +143,7 @@ public class TS_006_Tally_Report {
 			
 			//Create assignment with newly created coding form
 			 baseclass.stepInfo("*****Creating assignment with newly created coding form*****");
-			AssignmentsPage agnmt = new AssignmentsPage(driver);
+			 AssignmentsPage agnmt = new AssignmentsPage(driver);
 			agnmt.createAssignment(assignmentName,codingfrom);
 			baseclass.passedStep("******Assignment created with newly created coding form*******");
 		
@@ -185,13 +184,14 @@ public class TS_006_Tally_Report {
 	}
 	 
 	 //Run Tally reprot and view docs in doclist and docview
-	@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"},priority=3)
 	 public void tallyViewDLandDV() throws InterruptedException {
 		 //login
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 baseclass.passedStep("******Login successfull*******");
 		 baseclass.stepInfo("Test case Id: RPMXCON-48698- TallyDocviewAndDocList");
 		 final DocListPage dp = new DocListPage(driver);
+		 DocViewPage dv= new DocViewPage(driver);
 		 //run tally report
 		 baseclass.stepInfo("****Tally Report Page*****");
 		 final TallyPage tally = new TallyPage(driver);
@@ -238,7 +238,7 @@ public class TS_006_Tally_Report {
 		 baseclass.passedStep("******Selected DocviewView successfully*******");
 		 
 		 //verify count in docview
-		 DocViewPage dv= new DocViewPage(driver);
+		
 		 //dv.getDocView_info().WaitUntilPresent();
 		 try {
 			Thread.sleep(20000);
@@ -253,7 +253,7 @@ public class TS_006_Tally_Report {
 		       
 		 //lp.logout();
 	}
-	 @Test(groups={"regression"})
+	 @Test(groups={"regression"},priority=4)
 	 public void subTallyBulkTag() throws InterruptedException {
 		 String tagName = "SubTallyR_tag_"+Utility.dynamicNameAppender();
 		 String folderName = "SubTallyR_folder_"+Utility.dynamicNameAppender();
@@ -267,11 +267,11 @@ public class TS_006_Tally_Report {
 	     final TallyPage tally = new TallyPage(driver);
 		 tally.validateTally();
 		 tally.tallyActions();
+		 Thread.sleep(1000);
 		 baseclass.stepInfo("****Selecting SubTally*****");
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					tally.getTally_actionSubTally().Visible()  ;}}), Input.wait30);
 		 tally.getTally_actionSubTally().Click();
-		 Thread.sleep(2000);
 		 tally.validateSubTally();
 		 tally.subTallyActions();
 		 
@@ -291,11 +291,11 @@ public class TS_006_Tally_Report {
 
 	}
 	 
-	@Test(groups={"smoke","regression"})
+	@Test(groups={"smoke","regression"},priority=5)
 	 public void subTallyBulkAssign() throws InterruptedException {
 		 String tagName = "SubTallyR_tag_"+Utility.dynamicNameAppender();
 		 String codingfrom = "SubTallyR_CF_"+Utility.dynamicNameAppender();
-		 String assignmentName = "SubTallyAssign"+Utility.dynamicNameAppender();
+		 String assignmentName = "AssignSubTally"+Utility.dynamicNameAppender();
 		 
 		 lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		 baseclass.passedStep("******Login successfull*******");

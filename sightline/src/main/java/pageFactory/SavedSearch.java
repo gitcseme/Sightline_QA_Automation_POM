@@ -296,10 +296,10 @@ public class SavedSearch {
 
 		ArrayList<Integer> expectCounts = new ArrayList<Integer>();
 		if (Input.numberOfDataSets == 3) {
-			expectCounts.add(240);expectCounts.add(283);
-			expectCounts.add(104);expectCounts.add(64);
-			expectCounts.add(1198);expectCounts.add(1);
-			expectCounts.add(27);expectCounts.add(13);
+			expectCounts.add(240);expectCounts.add(267);
+			expectCounts.add(106);expectCounts.add(64);
+			expectCounts.add(0);expectCounts.add(1);
+			expectCounts.add(0);expectCounts.add(13);
 			expectCounts.add(2);expectCounts.add(1);
 			expectCounts.add(0);expectCounts.add(0);
 		} else if (Input.numberOfDataSets == 1) {
@@ -322,7 +322,7 @@ public class SavedSearch {
 				return getBatchUploadButton().Visible();
 			}
 		}), Input.wait30);
-		getBatchUploadButton().Click();
+		getBatchUploadButton().waitAndClick(20);
 		System.out.println("Clicked on Upload button..");
 		UtilityLog.info("Clicked on Upload button..");
 
@@ -334,11 +334,9 @@ public class SavedSearch {
 			}
 		}), Input.wait30);
 
-		// System.getProperty("user.dir")+"\\src\\com\\stc\\ExcelFiles\\"+ExcelSheetName+
-		System.out.println(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
 		UtilityLog.info(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
 		getSelectFile().SendKeys(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
-		getSubmitToUpload().Click();
+		getSubmitToUpload().waitAndClick(10);
 
 		base.VerifySuccessMessage("File uploaded successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -380,7 +378,6 @@ public class SavedSearch {
 				return getCounts().Visible();
 			}
 		}), Input.wait30);
-		// System.out.println(getCounts().size());
 		for (int i = 1; i <= getCounts().size(); i++) {
 
 			actualCounts.add(Integer.parseInt(
@@ -400,7 +397,7 @@ public class SavedSearch {
 		getSubmitToUpload().Click();
 
 		base.VerifySuccessMessage("Save search tree node successfully deleted.");		
-		Assert.assertTrue(expectCounts.equals(actualCounts));
+		softAssertion.assertTrue(expectCounts.equals(actualCounts));
 
 	}
 
@@ -831,36 +828,32 @@ public class SavedSearch {
 	}
 
 	public void savedSearch_Searchandclick(final String searchName) {
-		
-		//Navigate to Saved Searches page and search for a Saved Search
-		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-		getSavedSearch_SearchName().SendKeys(searchName);
-		
-		//Save the table info text before applying filter
-		String gridInfoId = "SavedSearchGrid_info";
-		final String oldInfoText = driver.getWebDriver().findElement(By.id(gridInfoId)).getText();
-		
-		//Apply filter
-		getSavedSearch_ApplyFilterButton().Click();
-		
-		//Create Expected Condition - when the table info text has changed
-		ExpectedCondition<WebElement> infoTextChanged = (webDriver) -> {
-			WebElement localGridInfo = webDriver.findElement(By.id(gridInfoId));
-			String newInfoText = localGridInfo.getText();
-			boolean same = newInfoText.compareTo(oldInfoText) == 0;
-			if (same) return null; 
-			return localGridInfo;
-		};
-		
-		//Wait until Expected Condition is fulfilled
-		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-		wait.until(infoTextChanged);
-		
-		
-		//Select the Saved Search
-		WebElement savedSearchRadio = driver.getWebDriver().findElement(By.xpath("//*[@id='SavedSearchGrid']/tbody//tr[td='" + searchName + "']/td[1]/label/i"));
-		savedSearchRadio.click();
 
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSavedSearch_SearchName().Visible();
+			}
+		}), Input.wait30);
+		
+		getSavedSearch_SearchName().SendKeys(searchName);
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectWithName(searchName).Visible();
+			}
+		}), Input.wait30);
+
+		getSelectWithName(searchName).waitAndClick(10);
 	}
 
 	public void SaveSearchToBulkTag(final String searchName, String TagName) throws InterruptedException {
@@ -1057,7 +1050,7 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		System.out.println(getTermReportTitle().getText().toString());
-		Assert.assertEquals(getTermReportTitle().getText().toString(), "Saved Search");
+		softAssertion.assertEquals(getTermReportTitle().getText().toString(), "Saved Search");
 
 	}
 

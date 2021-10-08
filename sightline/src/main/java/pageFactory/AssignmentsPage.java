@@ -191,14 +191,16 @@ public class AssignmentsPage {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAssignmentActionDropdown().Visible() ;}}), Input.wait60);
-    	Thread.sleep(2000);
-    	getAssignmentActionDropdown().waitAndClick(10);
+    	bc.waitForElement(getAssignmentActionDropdown());
+    	    	getAssignmentActionDropdown().waitAndClick(10);
+    	    	Thread.sleep(2000);
     	
      	getAssignmentAction_NewAssignment().WaitUntilPresent();
-    	Thread.sleep(2000);
+    	
     	getAssignmentAction_NewAssignment().waitAndClick(20);
+    	Thread.sleep(2000);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			 getAssignmentName().Visible()  ;}}), Input.wait60);
+    			 getAssignmentName().Displayed()  ;}}), Input.wait60);
     	getAssignmentName().SendKeys(assignmentName);
     	getParentAssignmentGroupName().Displayed();
     	getSelectedClassification().selectFromDropdown().selectByVisibleText("1LR");
@@ -314,6 +316,7 @@ public class AssignmentsPage {
 		}
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getContinueBulkAssign().Visible()  ;}}), Input.wait60);
+		bc.waitForElement(getContinueBulkAssign());
     	getContinueBulkAssign().waitAndClick(10);
     
        	final BaseClass bc = new BaseClass(driver);
