@@ -109,6 +109,13 @@ public class CommunicationExplorerPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
+	
+	public Element getshowcount() {
+		return driver.FindElementById("ShowByCount");
+	}
+	public Element getshowBy() {
+		return driver.FindElementById("ShowBy");
+	}
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -159,7 +166,23 @@ public class CommunicationExplorerPage {
 			}
 		}), Input.wait30);
 		getTally_SaveSelections().waitAndClick(15);
-
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getshowcount().Visible();
+			}
+		}), Input.wait30);
+		getshowcount().selectFromDropdown().selectByVisibleText("Top 20");
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getshowBy().Visible();
+			}
+		}), Input.wait30);
+		getshowBy().selectFromDropdown().selectByVisibleText("Email Address");
+		
+		
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCommunicationExplorer_ApplyBtn().Visible();
