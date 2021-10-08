@@ -315,7 +315,7 @@ public class TagsAndFoldersPage {
     public void CreateTagwithClassification(String strtag,String classificationname) 
     {
         this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
-        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 15L);
         
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getSecutiryGroupTag().Visible()  ;}}), Input.wait30); 
@@ -332,7 +332,6 @@ public class TagsAndFoldersPage {
     	 
     	 
         getTagActionDropDownArrow().Click();
-        
         wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
         wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
         
@@ -340,7 +339,11 @@ public class TagsAndFoldersPage {
 		wait.until((WebDriver) -> {
 			 WebElement element = getTagName().getWebElement();
 			 boolean result = element != null && element.isDisplayed();
-			 if (!result) try { getAddTag().Click(); } catch (Exception e) {}
+			 if (!result) try {
+				 getAllTagRoot().Click();
+				 getTagActionDropDownArrow().Click();
+				 getAddTag().Click(); 
+			 } catch (Exception e) {}
 			 return result ? element : null;
 		});
 

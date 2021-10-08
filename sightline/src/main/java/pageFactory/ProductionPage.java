@@ -30,6 +30,7 @@ public class ProductionPage {
     public String productionname;
     public SoftAssert assertion = new SoftAssert();
     public WebDriverWait wait;
+    public WebDriverWait generateWait;
     
     public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
     public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
@@ -244,7 +245,7 @@ public class ProductionPage {
     public Element productionStateFilterDropdown() { return driver.FindElementByXPath("//select[@id='productionStateFilter']/following-sibling::div/button"); }
     public Element productionStateFilterCompleted() { return driver.FindElementByXPath("//select[@id='productionStateFilter']/following-sibling::div//input[@value='COMPLETED']"); }
     public Element productionLink(String exportname ) { return driver.FindElementByXPath("//div[@id='pName']//a[@title='"+exportname+"']");}
-    public Element ProductionSetdiv() { return driver.FindElementById("ProductionSetdiv"); }
+    public Element productionSetDiv() { return driver.FindElementById("ProductionSetdiv"); }
     public Element getUnlock(){ return driver.FindElementByXPath("//div[@id='pName']//a[text()='Unlock']"); }
     public Element gettotalCount() { return driver.FindElementById("totalProductionCount"); }
     public Element menuProductions() { return driver.FindElementByXPath("//ul[@id='LeftMenu']//a[@title='Productions']"); }
@@ -252,6 +253,7 @@ public class ProductionPage {
     public Element tagPrivileged() { return driver.FindElementByXPath("//*[@id='tagTreeTIFFComponent']//a[@data-content='Privileged']"); }
     public Element getOption(String string) { return driver.FindElementByXPath(".//option[contains(text(), '"+string+"')]"); }
     public String xpathThreeStepsUp = "./../../..";
+    public Element productionGenerateStatus() { return driver.FindElementById("prouctionGenerateStatusTxt"); }
 
     public ProductionPage(Driver driver){
         this.driver = driver;
@@ -259,6 +261,7 @@ public class ProductionPage {
         driver.waitForPageToBeReady();
         base = new BaseClass(driver);
         this.wait = new WebDriverWait(driver.getWebDriver(), 15L);
+        this.generateWait = new WebDriverWait(driver.getWebDriver(), 180L);
     }
     
     public void startProduction(String productionname) {
@@ -437,9 +440,6 @@ public class ProductionPage {
 			WebElement myTagTech = wait.until(ExpectedConditions.presenceOfElementLocated(getPriveldge_TagTree("Technical_Issue").getBy()));
 			
 			myTagTech.click();
-			
-//			getPriveldge_TagTree(tagnametech).waitAndClick(10);
-//			Thread.sleep(2000);
 			
 			getPriveldge_TagTree_SelectButton().waitAndClick(10);
 			
@@ -693,6 +693,14 @@ public class ProductionPage {
 				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
 		getbtnProductionGenerate().waitAndClick(5);
 		
+		generateWait.until(ExpectedConditions.textToBe(productionGenerateStatus().getBy(), "Reserving Bates Range Complete"));
+			System.out.println(productionGenerateStatus().getText());
+			try {
+				Boolean continuePresent = generateWait.until(ExpectedConditions.textToBe(getbtnProductionGenerate().getBy(), "Continue Generation"));
+				if (continuePresent) {
+				getbtnProductionGenerate().Click();}
+			} catch (Exception e) {};
+		
 		Reporter.log("Wait for generate to complete",true);
 		//System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
@@ -728,16 +736,15 @@ public class ProductionPage {
 		String batesno = getProd_BatesRange().getText();
 		
 		Reporter.log("Bate number "+batesno+"",true);
-		//System.out.println(batesno);
 		UtilityLog.info(batesno);
 		
 		System.out.println(batesno);
-		/*
-		 * String[] parts = batesno.split("\\s*-\\s*"); 
-		 * String a = parts[0]; 
-		 * String b = parts[1]; 
-		 * System.out.println(a);
-		 */
+		
+		  String[] parts = batesno.split("\\s*-\\s*"); 
+		  String a = parts[0]; 
+		  String b = parts[1]; 
+		  System.out.println(a);
+		 
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
@@ -763,7 +770,7 @@ public class ProductionPage {
          int Doc = Integer.parseInt(PDocCount);
          
          Reporter.log("Doc - "+Doc,true);
-         //System.out.println(Doc); 
+         System.out.println(Doc); 
          UtilityLog.info(Doc);
          
 // 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1040,6 +1047,14 @@ public class ProductionPage {
 		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
 		
+		generateWait.until(ExpectedConditions.textToBe(productionGenerateStatus().getBy(), "Reserving Bates Range Complete"));
+			System.out.println(productionGenerateStatus().getText());
+			try {
+				Boolean continuePresent = generateWait.until(ExpectedConditions.textToBe(getbtnProductionGenerate().getBy(), "Continue Generation"));
+				if (continuePresent) {
+				getbtnProductionGenerate().Click();}
+			} catch (Exception e) {};
+		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getDocumentGeneratetext().Visible()  ;}}), Input.wait120); 
 		//work on below assert..for now its ok bcz we are validating with commit button!
@@ -1097,7 +1112,7 @@ public class ProductionPage {
 			completed.click();
 		}
 		
-		driver.getWebDriver().findElement(ProductionSetdiv().getBy()).click();
+		driver.getWebDriver().findElement(productionSetDiv().getBy()).click();
 		
 		ExpectedCondition<WebElement> totalCountChanged1 = BaseClass.waitForTextToChangeCondition(By.id(totalCountId), oldtotalCountText1);
 		
@@ -1525,40 +1540,47 @@ public class ProductionPage {
   							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
   					getbtnProductionGenerate().waitAndClick(10);
   					
+  					generateWait.until(ExpectedConditions.textToBe(productionGenerateStatus().getBy(), "Reserving Bates Range Complete"));
+  					System.out.println(productionGenerateStatus().getText());
+  					try {
+  						Boolean continuePresent = generateWait.until(ExpectedConditions.textToBe(getbtnProductionGenerate().getBy(), "Continue Generation"));
+  						if (continuePresent) {
+  						getbtnProductionGenerate().Click();}
+  					} catch (Exception e) {};
   					
   					
-  					System.out.println("Wait until regenerate is enabled");
-  					for (int i = 0; i < 120; i++)
-  					{
-  						try
-  						{
-  							
-  							
-  							this.driver.getWebDriver().get(Input.url+"Production/Home");
-  					    	getProductionLink().waitAndClick(5);
-  							getbtnGenerateMarkComplete().waitAndClick(5);
-  							System.out.println("Generated");
-  							break;
-  							
-  						}
-  						catch (Exception e)
-  						{
-  							Thread.sleep(10000);
-  							driver.Navigate().refresh();
-  							
-  						
-  						}
-  					}
-  				
-  				
-  					String batesno = getProd_BatesRange().getText();
-  					System.out.println(batesno);
   					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnSummaryNext().waitAndClick(10);
-  					//Thread.sleep(10000);
+//  					System.out.println("Wait until regenerate is enabled");
+//  					for (int i = 0; i < 120; i++)
+//  					{
+//  						try
+//  						{
+//  							
+//  							
+//  							this.driver.getWebDriver().get(Input.url+"Production/Home");
+//  					    	getProductionLink().waitAndClick(5);
+//  							getbtnGenerateMarkComplete().waitAndClick(5);
+//  							System.out.println("Generated");
+//  							break;
+//  							
+//  						}
+//  						catch (Exception e)
+//  						{
+//  							Thread.sleep(10000);
+//  							driver.Navigate().refresh();
+//  							
+//  						
+//  						}
+//  					}
   				
+  				
+//  					String batesno = getProd_BatesRange().getText();
+//  					System.out.println(batesno);
+  					
+//  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//  							getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
+//  					getbtnSummaryNext().waitAndClick(10);
+  					  				
   					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   							getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
   					getConfirmProductionCommit().waitAndClick(10);
@@ -1709,6 +1731,15 @@ public class ProductionPage {
   							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
   					getbtnProductionGenerate().waitAndClick(10);
   					System.out.println("Wait until regenerate is enabled");
+  					
+  					generateWait.until(ExpectedConditions.textToBe(productionGenerateStatus().getBy(), "Reserving Bates Range Complete"));
+  					System.out.println(productionGenerateStatus().getText());
+  					try {
+  						Boolean continuePresent = generateWait.until(ExpectedConditions.textToBe(getbtnProductionGenerate().getBy(), "Continue Generation"));
+  						if (continuePresent) {
+  						getbtnProductionGenerate().Click();}
+  					} catch (Exception e) {};
+  					
 //  					for (int i = 0; i < 120; i++)
 //  					{
 //  						try
@@ -1914,7 +1945,7 @@ public class ProductionPage {
   	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
   	       		productionStateFilterCompleted().Visible()  ;}}), Input.wait30); 
   	        productionStateFilterCompleted().waitAndClick(10);
-  	        driver.getWebDriver().findElement(ProductionSetdiv().getBy()).click();
+  	        driver.getWebDriver().findElement(productionSetDiv().getBy()).click();
   	        
   	        String tileItemsOld = getProductionItemsTileItems().getText();
   	        
@@ -1947,7 +1978,7 @@ public class ProductionPage {
 	       	        
 	        if(getProductionItemsTile().size()>0)
 	        {
-	        	getArrow().waitAndClick(10);
+	        	wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
 	        	wait.until(ExpectedConditions.elementToBeClickable(getSaveTemplate().getBy())).click();
 	        	
 	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -1958,7 +1989,7 @@ public class ProductionPage {
 	        	BaseClass bc= new BaseClass(driver);
 	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
 	        	bc.CloseSuccessMsgpopup();
-	        	getManageTemplates().waitAndClick(10);
+	        	wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
 		        
 	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
 	        	ArrayList<String> tableele = new ArrayList<String>();
@@ -1985,7 +2016,7 @@ public class ProductionPage {
   	       	        
   	        if(getProductionItemsTile().size()>0)
   	        {
-  	        	getArrow().waitAndClick(10);
+  	        	wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
   	        	wait.until(ExpectedConditions.elementToBeClickable(getSaveTemplate().getBy())).click();
 //  	        	getSaveTemplate().waitAndClick(10);
   	        	
@@ -2000,7 +2031,7 @@ public class ProductionPage {
   	        	BaseClass bc= new BaseClass(driver);
   	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
   	        	bc.CloseSuccessMsgpopup();
-  	        	getManageTemplates().waitAndClick(10);
+  	        	wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
   		        	
   	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
   	        	ArrayList<String> tableele = new ArrayList<String>();
@@ -2093,7 +2124,7 @@ public class ProductionPage {
 	       		getFilterByCompleted().Visible()  ;}}), Input.wait30); 
 	        getFilterByCompleted().waitAndClick(10);
 	        
-	        ProductionSetdiv().Click();
+	        productionSetDiv().Click();
 	        String oldText = gettotalCount().getText();
 	        wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getBy(), oldText));
 	        
@@ -2101,7 +2132,7 @@ public class ProductionPage {
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
-	        getArrow().waitAndClick(10);
+	        wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getLock().Visible()  ;}}), Input.wait30); 
@@ -2123,7 +2154,7 @@ public class ProductionPage {
 		       		getFilterByCompleted().Visible()  ;}}), Input.wait30); 
 		    getFilterByCompleted().waitAndClick(10);
 		    
-		    ProductionSetdiv().Click();
+		    productionSetDiv().Click();
 
 		    String oldText2 = gettotalCount().getText();
 	        wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getBy(), oldText2));
@@ -2169,7 +2200,7 @@ public class ProductionPage {
         	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
         	bc.CloseSuccessMsgpopup();
         	
-        	getManageTemplates().waitAndClick(10);
+        	wait.until(ExpectedConditions.visibilityOfElementLocated(getManageTemplates().getBy())).click();
         	
         	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
         	
@@ -2222,14 +2253,14 @@ public class ProductionPage {
         	wait.until(ExpectedConditions.elementToBeClickable(menuProductions().getBy())).click();
   	  		wait.until(ExpectedConditions.attributeToBe(menuProductionActive().getBy(), "class", "active"));
   	  		menuProductions().Click();
-        	getManageTemplates().waitAndClick(10);
+  	  		wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
         	
             wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy())).click();
         	getOkButton().Click();
         	bc.VerifySuccessMessage("Custom Template deleted successfully");
         	bc.CloseSuccessMsgpopup();
         	
-        	wait.until(ExpectedConditions.elementToBeClickable(menuProductions().getBy())).click();
+        	menuProductions().Click();
   	  		wait.until(ExpectedConditions.attributeToBe(menuProductionActive().getBy(), "class", "active"));
   	  		menuProductions().Click();
   	  		wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
@@ -2271,8 +2302,7 @@ public class ProductionPage {
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
+	        wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getTileDelete().Visible()  ;}}), Input.wait30); 
@@ -2394,9 +2424,7 @@ public class ProductionPage {
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getDelete().Visible()  ;}}), Input.wait30); 
 	        getDelete().waitAndClick(10);
-//	        Thread.sleep(1000);
 	        wait.until(ExpectedConditions.elementToBeClickable(getOK().getBy())).click();
-//	        Thread.sleep(1000);
 	        BaseClass bc= new BaseClass(driver);
 	      	bc.VerifySuccessMessage("Production deleted successfully");
 	      	bc.CloseSuccessMsgpopup();
