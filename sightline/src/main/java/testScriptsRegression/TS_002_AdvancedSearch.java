@@ -354,7 +354,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(50,search.serarchWP());
+		 softAssertion.assertEquals(15,search.serarchWP());
 		 
 		 
 		 
