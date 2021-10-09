@@ -32,8 +32,8 @@ import testScriptsSmoke.Input;
 	String productionname;
 	String productionname1= "P1"+Utility.dynamicNameAppender();
 	String exportname= "EXP"+Utility.dynamicNameAppender();
-	String PrefixID = "A_"+Utility.dynamicNameAppender();;
-	String SuffixID = "_P"+Utility.dynamicNameAppender();;
+	String PrefixID;
+	String SuffixID;
 	String foldername;
 	String templatername = "TempProd"+Utility.dynamicNameAppender(); 
 	String Tagname;
@@ -80,6 +80,8 @@ import testScriptsSmoke.Input;
 	@BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		productionname= "P"+Utility.dynamicNameAppender();
+		PrefixID = "A_"+Utility.dynamicNameAppender();;
+		SuffixID = "_P"+Utility.dynamicNameAppender();
 		System.out.println("------------------------------------------");
 	    System.out.println("Executing method : " + testMethod.getName());  
 //	    lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -104,14 +106,14 @@ import testScriptsSmoke.Input;
 	  
 	  }
 
-	    @Test(groups={"regression"},priority=3)
+//	    @Test(groups={"regression"},priority=3)
 	    public void ExportwithpriorProduction() throws ParseException, InterruptedException, IOException {
 	    	
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 	    page.ExportwithpriorProduction(exportname, PrefixID, SuffixID, foldername);
    	  }
 	   
-	    @Test(groups={"regression"},priority=4)
+//	    @Test(groups={"regression"},priority=4)
 		 public void ProductionwithNatives() throws Exception {
 			 bc.stepInfo("Test Case Id : RPMXCON-56149 'Verify that for Native section should be displayed message"
 			 		+ " which will inform the user about the privileged and redacted docs from Production'"); 
@@ -119,7 +121,7 @@ import testScriptsSmoke.Input;
 		 page.ProductionwithNatives(productionname,productionname1, PrefixID, SuffixID, foldername,templatername);
 	  }
 		 
-	    @Test(groups={"regression"},priority=5)
+//	    @Test(groups={"regression"},priority=5)
 		 public void ProductionwithTechIssuetags() throws ParseException, InterruptedException, IOException {
 			 bc.stepInfo("Test Case Id : RPMXCON-56106 'Verify the error message for TIFF/PDF component when 'Enable redaction without selecting redaction tag''");
 		 System.out.println("******Execution started for ProductionwithTechIssuetags********");
@@ -130,7 +132,7 @@ import testScriptsSmoke.Input;
 	  }
 	 	
 	   //added by Narendra	
-		@Test(groups={"regression"},priority=6)
+//		@Test(groups={"regression"},priority=6)
 	    public void Filter() throws ParseException, InterruptedException, IOException {
 	    	
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -138,7 +140,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 	   
-		@Test(groups={"regression"},priority=7)
+//		@Test(groups={"regression"},priority=7)
 	    public void Sort() throws ParseException, InterruptedException, IOException {
 	    	bc.stepInfo("Test Case Id : RPMXCON-55624 'To Verify ProjectAdmin will be able to sort by Production Name, Status, Locked, UserName,Production Date'");	
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -146,7 +148,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 	  
-		@Test(groups={"regression"},priority=8)
+//		@Test(groups={"regression"},priority=8)
 	   public void Grid() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-55620 'To Verify Admin will be able to view the production sets and productions in a grid view'");
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -154,7 +156,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 	    
-		@Test(groups={"regression"},priority=9)
+//		@Test(groups={"regression"},priority=9)
 	   public void VerifyTemplate() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-55622 'To Verify ProjectAdmin will be able to select a previous production configuration created and save it as a template'");	
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -163,7 +165,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 	   
-		@Test(groups={"regression"},priority=10)
+//		@Test(groups={"regression"},priority=10)
 	   public void DeleteTemplate() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-55623 'To Verify ProjectAdmin be able to manage (delete) the custom templates that has been created'");	  
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -172,7 +174,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 	   
-		@Test(groups={"regression"},priority=11)
+//		@Test(groups={"regression"},priority=11)
 	   public void VerifyProductionSet() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-55621 'To Verify ProjectAdmin will be able to create one or more production sets'");
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -183,7 +185,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
       
-		@Test(groups={"regression"},priority=12)
+//		@Test(groups={"regression"},priority=12)
 	   public void LockProduction() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-47726 'To Verify Admin will be able to flag a production as ‘Locked’ only for Production in 'Complete' State'");  
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -191,7 +193,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 		
-		@Test(groups={"regression"},priority=13)
+//		@Test(groups={"regression"},priority=13)
 	   public void CustomizedTemplate() throws ParseException, InterruptedException, IOException {
 		   bc.stepInfo("Test Case Id : RPMXCON-55625 'To Verify ProjectAdmin while creating "
 		   		+ "a production configuration,can select one of the templates, or can customize it and save it as a custom production template'");  
@@ -201,7 +203,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 		
-		@Test(groups={"regression"},priority=14)
+//		@Test(groups={"regression"},priority=14)
 		   public void ProductionDeleteCheck() throws ParseException, InterruptedException, IOException {
 			   bc.stepInfo("Test Case Id : RPMXCON-55658 'To Verify Production with Completed Status has the "
 			   		+ "'Delete' option disabled under the Action drop down menu.(in both Tiles/Grid View)'");
@@ -210,7 +212,7 @@ import testScriptsSmoke.Input;
 		  
 		  }
 	
-		@Test(groups={"regression"},priority=15)
+//		@Test(groups={"regression"},priority=15)
 		   public void TiffVerification() throws ParseException, InterruptedException, IOException {
 			   
 			System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -221,7 +223,7 @@ import testScriptsSmoke.Input;
 		  }
 		
 		
-		@Test(groups={"regression"},priority=16)
+//		@Test(groups={"regression"},priority=16)
 		   public void ProductionDelete() throws ParseException, InterruptedException, IOException {
 			   bc.stepInfo("Test Case Id : RPMXCON-55652 'To verify Delete option and verify the status of the Draft Production'");
 			System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");

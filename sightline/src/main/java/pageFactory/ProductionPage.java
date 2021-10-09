@@ -1989,7 +1989,7 @@ public class ProductionPage {
 	        	BaseClass bc= new BaseClass(driver);
 	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
 	        	bc.CloseSuccessMsgpopup();
-	        	wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
+	        	getManageTemplates().Click();
 		        
 	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
 	        	ArrayList<String> tableele = new ArrayList<String>();
@@ -2031,7 +2031,7 @@ public class ProductionPage {
   	        	BaseClass bc= new BaseClass(driver);
   	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
   	        	bc.CloseSuccessMsgpopup();
-  	        	wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
+  	        	getManageTemplates().Click();
   		        	
   	        	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
   	        	ArrayList<String> tableele = new ArrayList<String>();
@@ -2200,7 +2200,7 @@ public class ProductionPage {
         	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
         	bc.CloseSuccessMsgpopup();
         	
-        	wait.until(ExpectedConditions.visibilityOfElementLocated(getManageTemplates().getBy())).click();
+        	getManageTemplates().Click();
         	
         	wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy()));
         	
@@ -2253,7 +2253,7 @@ public class ProductionPage {
         	wait.until(ExpectedConditions.elementToBeClickable(menuProductions().getBy())).click();
   	  		wait.until(ExpectedConditions.attributeToBe(menuProductionActive().getBy(), "class", "active"));
   	  		menuProductions().Click();
-  	  		wait.until(ExpectedConditions.elementToBeClickable(getManageTemplates().getBy())).click();
+  	  		getManageTemplates().Click();
         	
             wait.until(ExpectedConditions.elementToBeClickable(getDeleteTemplate().getBy())).click();
         	getOkButton().Click();

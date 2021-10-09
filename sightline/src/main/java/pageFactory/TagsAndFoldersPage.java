@@ -201,19 +201,18 @@ public class TagsAndFoldersPage {
          
        getFolderActionDropDownArrow().Click();
        
-       wait.until(ExpectedConditions.visibilityOfElementLocated(getAddFolder().getBy()));
-       wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
+//       wait.until(ExpectedConditions.visibilityOfElementLocated(getAddFolder().getBy()));
+//       wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
        
-       try {
-		wait.until((WebDriver) -> {
-		   	 WebElement element = getFolderName().getWebElement();
-		   	 boolean result = element != null && element.isDisplayed();
-		   	 if (!result) getAddFolder().Click();
-		   	 return result ? element : null;
-		   });
-	} catch (Exception e) {
-		// Do nothing
-}
+       wait.until((WebDriver) -> {
+			 try {
+				 Thread.sleep(500);
+				 if(getAddFolder().Visible()) getAddFolder().Click(); 
+			 } catch (Exception e) {}
+			 WebElement element = getFolderName().getWebElement();
+			 return element != null && element.isDisplayed() ? element : null;
+		});
+
        
        getFolderName().SendKeys(strFolder);
             
@@ -335,23 +334,20 @@ public class TagsAndFoldersPage {
     	 
     	 
         getTagActionDropDownArrow().Click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
-        wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
+        //wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
         
         
 		wait.until((WebDriver) -> {
-			 WebElement element = getTagName().getWebElement();
-			 boolean result = element != null && element.isDisplayed();
-			 if (!result) try {
-				 getAllTagRoot().Click();
-				 getTagActionDropDownArrow().Click();
-				 getAddTag().Click(); 
+			 try {
+				 Thread.sleep(500);
+				 if(getAddTag().Visible()) getAddTag().Click(); 
 			 } catch (Exception e) {}
-			 return result ? element : null;
+			 WebElement element = getTagName().getWebElement();
+			 return element != null && element.isDisplayed() ? element : null;
 		});
-
-        
-        getTagName().SendKeys(strtag);
+      
+       getTagName().SendKeys(strtag);
         
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			 getTagClassification().Visible()  ;}}), Input.wait30); 
