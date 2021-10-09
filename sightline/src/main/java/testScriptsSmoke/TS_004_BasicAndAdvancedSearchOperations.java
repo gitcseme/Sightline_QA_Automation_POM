@@ -424,8 +424,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		return new Object[][] { 
 			{ "\"illustratin* since Q499\"~20", 1,1,"RPMXCON-57331"}, 
 			{ "\"**elief that the rights\"", 1,1,"RPMXCON-57307"},
-			{ "\"very long\"", 1,1,"RPMXCON-57307"},
-			{ "\"illustratin* since Q499\"~50", 1,1,"RPMXCON-57307"},
+			{ "\"very long\"", 1,2,"RPMXCON-57307"},
+			{ "\"illustratin* since Q499\"~50", 1,2	,"RPMXCON-57307"},
 			{ "\"**elief that the rights\"" + Keys.ENTER + "OR" + Keys.ENTER+ "\"illustratin* since Q499\"~50", 2,1,"RPMXCON-57304"},
 			{ "\"**elief that + the rights\"", 1,1,"RPMXCON-57309"},
 			{ "\"**elief that - the rights\"", 1,1,"RPMXCON-57309"},
@@ -433,10 +433,10 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			{ "\"**elief that && the rights\"", 1,1,"RPMXCON-57311"},
 			{ "\"**elief that || the rights\"", 1,1,"RPMXCON-57312"},
 			{ "\"**elief that < the rights\"", 1,1,"RPMXCON-57313"},
-			{ "\"**elief that! the rights\"", 0,1,"RPMXCON-57314"},
-			{ proximity10Instance1, 120,1,"RPMXCON-48798"},
-			{ proximity10Instance2, 0,1 ,"RPMXCON-48798"},
-			{ proximity10Instance3, 120,1,"RPMXCON-48797"}
+			{ "\"**elief that! the rights\"", 0,0,"RPMXCON-57314"},
+			{ proximity10Instance1, 120,1134,"RPMXCON-48798"},
+			{ proximity10Instance2, 0,0 ,"RPMXCON-48798"},
+			{ proximity10Instance3, 120,1134,"RPMXCON-48797"}
 
 		};
 	}
@@ -455,12 +455,12 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2}, 
 			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1},
 			//All Operators Missed
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 2},
-			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 0},
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",3},
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",2},
-			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",116},
-			{ "Allen" + Keys.ENTER + "NOT" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",122}			
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 40},
+			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 5},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",50},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",35},
+			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",1150},
+			{ "Allen" + Keys.ENTER + "NOT" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",1152}			
 
 		};
 	}
@@ -478,7 +478,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			{"CreateDate", "RANGE", "2000-10-18", "2010-10-18",85,314},
 			{"EmailSentDate", "IS", "1990-05-05", null,0,0},
 			{"EmailSentDate", "RANGE", "1990-05-05", "2000-05-05",0,0},
-			{"AppointmentStartDate", "IS", "1990-05-05", null,0,1},
+			{"AppointmentStartDate", "IS", "1990-05-05", null,0,0},
 			{"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05",0,0}
 
 		};
