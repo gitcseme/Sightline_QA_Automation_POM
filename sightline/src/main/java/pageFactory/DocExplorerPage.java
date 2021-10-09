@@ -78,7 +78,8 @@ public class DocExplorerPage {
         assertion = new SoftAssert();
         doclist = new DocListPage(driver);
         search = new SessionSearch(driver);
-
+        this.driver.getWebDriver().get(Input.url+ "DocExplorer/Explorer");
+        
     }
 
     public void HeaderFilter(String Filtertype) throws InterruptedException, ParseException {

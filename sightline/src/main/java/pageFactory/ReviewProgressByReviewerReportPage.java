@@ -2,6 +2,8 @@ package pageFactory;
 
 import java.text.ParseException;
 import java.util.concurrent.Callable;
+
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -12,6 +14,7 @@ import testScriptsSmoke.Input;
 public class ReviewProgressByReviewerReportPage {
 
     Driver driver;
+    BaseClass bc;
    
     public Element getReviewerProgressReportButton(){ return driver.FindElementByXPath(".//*[@id='collapseOne']//a[@href='/Review/ReviewerProgressReport']"); }
     public Element getReviewerProgressReport_Expand(){ return driver.FindElementByXPath(".//*[@id='divreviewer']/div/a[2]"); }
@@ -53,7 +56,7 @@ public class ReviewProgressByReviewerReportPage {
 
     	this.driver = driver;
         this.driver.getWebDriver().get(Input.url+ "Report/ReportsLanding");
-        
+        bc = new BaseClass(driver);
         //This initElements method will create all WebElements
         //PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -115,11 +118,8 @@ public class ReviewProgressByReviewerReportPage {
 			   
 			   getSchedulerForm_btnSubmit().Click();
 			   
-			   successMsgConfirmation("Record scheduled successfully"); 
-		/*	   
-			   SchedulesPage page1 = new SchedulesPage(driver);
-			   page1.checkStatusComplete("Review Progress by Reviewer Report"); 	*/	
-	   
+			   bc.VerifySuccessMessage("Record scheduled successfully"); 
+			 	   
 		//share
 		 LoginPage p1 = new LoginPage(driver);
 			 p1.getSignoutMenu().Click();
@@ -155,13 +155,16 @@ public class ReviewProgressByReviewerReportPage {
 		 //text area to enter mail id is getting blocked
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getEmailAddress().Visible() ;}}), Input.wait30);
+		 Actions ac=new Actions(driver.getWebDriver());
+		 Thread.sleep(1000);
+		 ac.moveToElement(getEmailAddress().getWebElement()).build().perform();
 		 getEmailAddress().SendKeys(usertosharewith);
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 				 getReports_ShareBtn().Enabled() ;}}), Input.wait30);
 		 getReports_ShareBtn().Click();
 		 
-		  successMsgConfirmation("Your Report has been successfully shared with others."); 
+		  bc.VerifySuccessMessage("Your Report has been successfully shared with others."); 
 		   
 		 
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
@@ -188,21 +191,14 @@ public class ReviewProgressByReviewerReportPage {
 				 getSharedBy().Visible() ;}}), Input.wait30);
 		 Assert.assertEquals(getSharedBy().getText(), projectAdminName);
 		 
-
+		  
+		   SchedulesPage page1 = new SchedulesPage(driver);
+		   page1.checkStatusComplete("Review Progress by Reviewer Report"); 	
 		
 		 
 	
 	  }
-    
-    public void successMsgConfirmation(String msg) {
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getSuccessMsgHeader().Visible()  ;}}), Input.wait60); 
-    	Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
-    	Assert.assertEquals(msg, getSuccessMsg().getText().toString());
-    	System.out.println("Success msg passed");
-    	
-	}
-   
+       
  
      
 }

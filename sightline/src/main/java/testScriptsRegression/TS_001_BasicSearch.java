@@ -42,22 +42,19 @@ public class TS_001_BasicSearch {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
     	
 		
-		softAssertion= new SoftAssert();
-//		Input in = new Input(); in.loadEnvConfig();
 		
 		driver = new Driver();
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);//modified here
 		bc = new BaseClass(driver);
 		ss= new SessionSearch(driver);
-	
+		softAssertion= new SoftAssert();
 
 	}
 	@Test(groups={"regression"},priority=1)
 	public void copySearchTextToNewSearch(){
-		lp.logout();
+		
 		bc.passedStep("********logged in succesfully as RMU user********");
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc.passedStep("********logged in succesfully as PA user********");
 		bc.stepInfo("Test Case Id : RPMXCON-57088 To verify as an user login into the Application, User will be able to copy the text query from search text box in basic search page via Clipboard & same text user will be able to copy in the new search box in basic search");
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
@@ -138,7 +135,7 @@ public class TS_001_BasicSearch {
 
 	}
 	
-	@Test(groups={"regression"},priority=0)
+	@Test(groups={"regression"},priority=4)
 	public void conceptuallySimilar() throws InterruptedException {
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -160,7 +157,7 @@ public class TS_001_BasicSearch {
 	
 
 	
-   @Test(groups={"regression"},priority=6)
+   @Test(groups={"regression"},priority=5)
    public void existingBulkTag() throws InterruptedException {
 	   String Tag = "ATag"+Utility.dynamicNameAppender(); 
 		//Login as PA
@@ -195,21 +192,22 @@ public class TS_001_BasicSearch {
 		 
 	}
 
-    @Test(groups={"smoke","regression"},priority=7)
+    @Test(groups={"smoke","regression"},priority=6)
 	public void starSearch() {
-
+    	
 		bc.stepInfo("Test Case Id : RPMXCON-57275 Verify that belly band message appears when user tries to search proximity which contains wildcard * in Basic Search Query Screen.");
-	  	sessionSearch = new SessionSearch(driver);
+	  	bc.selectproject();
+		sessionSearch = new SessionSearch(driver);
 	  	Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
 	  	bc.passedStep("********pureHit Count is same as Expected count********");
 
 	  	
 	}
-	@Test(groups={"regression"},priority=8)
+	@Test(groups={"regression"},priority=7)
     public void bulkUnTag() throws InterruptedException {
 		bc.stepInfo("Test Case Id : RPMXCON-57178 Verify that UnTag works properly using Bulk Tag Action in Basic Search Screen");
 	   String tagName = "tagName"+Utility.dynamicNameAppender();
-
+        bc.selectproject();
 	   //perform search
 	   sessionSearch = new SessionSearch(driver);
 	   sessionSearch.basicContentSearch(Input.searchString1);
@@ -237,7 +235,7 @@ public class TS_001_BasicSearch {
       
    }
 
-	@Test(groups={"regression"},priority=9)
+	@Test(groups={"regression"},priority=8)
 	public void bulkUnFolder() throws InterruptedException {
 	
 		bc.stepInfo("Test Case Id : RPMXCON-57179 Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
@@ -271,7 +269,7 @@ public class TS_001_BasicSearch {
 
 	}
 	
-	@Test(dataProvider="metaDataSearch",groups={"regression"},priority=10)
+	@Test(dataProvider="metaDataSearch",groups={"regression"},priority=9)
 	public void metaDataSearchsBS(String TestCaseId,int Expected_count, String metaDataName,String IS_or_Range,String
 			first_input, String second_input) {
 		SoftAssert softAssertion= new SoftAssert();

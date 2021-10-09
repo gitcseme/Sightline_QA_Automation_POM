@@ -47,9 +47,7 @@ public class TS_012_ValidateReportsFunctionality {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		// Input in = new Input();
-		// in.loadEnvConfig();
-		
+	
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
@@ -63,12 +61,27 @@ public class TS_012_ValidateReportsFunctionality {
 	 * report, validate the count in doclist!
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" })
+	@Test(groups = { "smoke", "regression" },priority=1)
 	public void tallySubTally() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		report.TallyReportButton();
 		TallyPage tally = new TallyPage(driver);
 		tally.ValidateTallySubTally();
+
+	}
+	
+	/*
+	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
+	 * Modified by: Description :
+	 * 
+	 */
+	@Test(groups = { "smoke", "regression" },priority=2)
+	public void reviewProgressByRevReport() throws InterruptedException, ParseException {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		ReviewProgressByReviewerReportPage reviewreport = new ReviewProgressByReviewerReportPage(driver);
+		System.out.println("Sharing with " + Input.rev1userName);
+		UtilityLog.info("Sharing with " + Input.rev1userName);
+		reviewreport.ValidateReviewProgressReportShareandSchdule(Input.rev1userName);
 
 	}
 
@@ -78,7 +91,7 @@ public class TS_012_ValidateReportsFunctionality {
 	 * report, validate the count in doclist!
 	 * 
 	 */
-	@Test(groups = { "regression" })
+	@Test(groups = { "regression" },priority=3)
 	public void communicationExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		CommunicationExplorerPage commreport = new CommunicationExplorerPage(driver);
@@ -92,30 +105,15 @@ public class TS_012_ValidateReportsFunctionality {
 	 * validate the count in doclist!
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" })
+	@Test(groups = { "smoke", "regression" },priority=4)
 	public void conceptExplorer() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		ConceptExplorerPage conceptreport = new ConceptExplorerPage(driver);
 		conceptreport.ValidateConceptExplorerreport();
 
 	}
-
-	/*
-	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-	 * Modified by: Description :
-	 * 
-	 */
-	@Test(groups = { "smoke", "regression" })
-	public void reviewProgressByRevReport() throws InterruptedException, ParseException {
-		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-		ReviewProgressByReviewerReportPage reviewreport = new ReviewProgressByReviewerReportPage(driver);
-		System.out.println("Sharing with " + Input.rev1userName);
-		UtilityLog.info("Sharing with " + Input.rev1userName);
-		reviewreport.ValidateReviewProgressReportShareandSchdule(Input.rev1userName);
-
-	}
-
-	@Test(groups = { "regression" })
+   
+	@Test(groups = { "regression" },priority=5)
 	public void customDDRExportAfterSwap() throws InterruptedException, ParseException, IOException {
 		// Columns to be selected
 		String[] metaDataFields = { "AllCustodians", "CreateDate", "DocDate", "EmailAllDomains", "FamilyID",
@@ -178,7 +176,7 @@ public class TS_012_ValidateReportsFunctionality {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
+		//ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)
