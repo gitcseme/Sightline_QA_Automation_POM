@@ -22,6 +22,7 @@ import testScriptsSmoke.Input;
 public class BatchPrint_Regression {
 	Driver driver;
 	LoginPage lp;
+	SessionSearch search;
 	String searchText;
 	String searchname= "BP"+Utility.dynamicNameAppender();
 	String searchnameMP3= "BP"+Utility.dynamicNameAppender();
@@ -30,7 +31,6 @@ public class BatchPrint_Regression {
 	String orderType = "Asc";
 	String SearchNameIngestion;
 	BaseClass bc;
-	
 	BatchPrintPage bp;
 
 	
@@ -43,11 +43,13 @@ public class BatchPrint_Regression {
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-	
+		search = new SessionSearch(driver);
+		bp = new BatchPrintPage(driver);
+		bc= new BaseClass(driver);
 	    }
 		
 		
-	     @Test(groups={"regression"})
+	     @Test(groups={"regression"},priority=1)
 		 public void BatchPrintWitExceptionalFile() throws InterruptedException {
 			  
 			 bc.stepInfo("Test Case id:RPMXCON-47464-BatchPrintWitExceptionalFile");
@@ -106,24 +108,21 @@ public class BatchPrint_Regression {
 			Thread.sleep(2000);
 			System.out.println(SearchNameIngestion);
 			
-			SessionSearch search = new SessionSearch(driver);
+			
 			driver.getWebDriver().get(Input.url+ "Search/Searches");
 			search.basicMetaDataSearch("IngestionName", null, SearchNameIngestion, null);
 			search.saveSearch(searchnameExcep); 
 			
-			bp = new BatchPrintPage(driver);
 			bp.BatchPrintWitExceptionalFile(searchnameExcep);
 			bc.passedStep("verified user can view details in Exceptional files");
 			
 		   }
 		
-		 @Test(groups={"regression"})
+		 @Test(groups={"regression"},priority=2)
 		 public void BatchPrintWitMP3() throws InterruptedException {
 			
 	     bc.stepInfo("Test Case id:RPMXCON-47481-BatchPrintWitMP3");
-			 
-		 SessionSearch search = new SessionSearch(driver);
-		 driver.getWebDriver().get(Input.url+ "Search/Searches");
+	     bc.selectproject();
 		 search.audioSearch("morning", "North American English");
 		 search.saveSearchAdvanced(searchnameMP3); 
 		
@@ -135,10 +134,10 @@ public class BatchPrint_Regression {
 		
 		   }
 		 
-		 @Test(groups={"regression"})
+		 @Test(groups={"regression"},priority=3)
 		 public void BatchPrintWithProduction() throws InterruptedException {
 			 
-		 SessionSearch search = new SessionSearch(driver);
+		 bc.selectproject();
 		 searchText =Input.searchString1;
 		 search.basicContentSearch(searchText);
 		 search.saveSearch(searchname);
