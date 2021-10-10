@@ -89,7 +89,7 @@ import testScriptsSmoke.Input;
 	 }
 
 	
-	    @Test(groups={"regression"},priority=1)
+//	    @Test(groups={"regression"},priority=1)
 	    public void AddNewProduction() throws ParseException, InterruptedException, IOException {
 	    	bc.stepInfo("Test Case Id : RPMXCON-55716 'To Verify that End-to-end productions functionality is working properly'");
 	    System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -98,7 +98,7 @@ import testScriptsSmoke.Input;
 	  }
       
 	    
-	    @Test(groups={"regression"},priority=2)
+//	    @Test(groups={"regression"},priority=2)
 	   public void Productionwithallredaction() throws Exception {
 	    	bc.stepInfo("Test Case Id : RPMXCON-56118 RPMXCON-56119 RPMXCON-56120");
 	   System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
@@ -203,7 +203,7 @@ import testScriptsSmoke.Input;
 	  
 	  }
 		
-//		@Test(groups={"regression"},priority=14)
+		@Test(groups={"regression"},priority=14)
 		   public void ProductionDeleteCheck() throws ParseException, InterruptedException, IOException {
 			   bc.stepInfo("Test Case Id : RPMXCON-55658 'To Verify Production with Completed Status has the "
 			   		+ "'Delete' option disabled under the Action drop down menu.(in both Tiles/Grid View)'");

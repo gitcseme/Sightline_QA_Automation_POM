@@ -204,14 +204,16 @@ public class TagsAndFoldersPage {
 //       wait.until(ExpectedConditions.visibilityOfElementLocated(getAddFolder().getBy()));
 //       wait.until(ExpectedConditions.elementToBeClickable(getAddFolder().getBy())).click();
        
-       wait.until((WebDriver) -> {
-			 try {
-				 Thread.sleep(500);
-				 if(getAddFolder().Visible()) getAddFolder().Click(); 
-			 } catch (Exception e) {}
-			 WebElement element = getFolderName().getWebElement();
-			 return element != null && element.isDisplayed() ? element : null;
-		});
+       BaseClass.openMenu(getAddFolder().getWebElement(), getFolderName().getWebElement());
+       
+//       wait.until((WebDriver) -> {
+//			 try {
+//				 Thread.sleep(500);
+//				 if(getAddFolder().Visible()) getAddFolder().Click(); 
+//			 } catch (Exception e) {}
+//			 WebElement element = getFolderName().getWebElement();
+//			 return element != null && element.isDisplayed() ? element : null;
+//		});
 
        
        getFolderName().SendKeys(strFolder);

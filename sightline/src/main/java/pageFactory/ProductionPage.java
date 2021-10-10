@@ -1825,6 +1825,8 @@ public class ProductionPage {
   			getBasicInfoNext();
   			fillingDATSection();
   			fillingNativeSection();
+  			fillTIFFFields("Priviledged");
+  			fillTechIssues("Technical_Issue");
   			driver.scrollPageToTop();
   			FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
   			System.out.println("....executed Filling all section production......");
@@ -2260,7 +2262,7 @@ public class ProductionPage {
         	bc.VerifySuccessMessage("Custom Template deleted successfully");
         	bc.CloseSuccessMsgpopup();
         	
-        	menuProductions().Click();
+        	wait.until(ExpectedConditions.elementToBeClickable(menuProductions().getBy())).click();
   	  		wait.until(ExpectedConditions.attributeToBe(menuProductionActive().getBy(), "class", "active"));
   	  		menuProductions().Click();
   	  		wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
@@ -2287,22 +2289,37 @@ public class ProductionPage {
   	  }
 
   	    public void ProductionDeletionCheck() throws InterruptedException{
+  	    	
 	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    			getFilterByButton().Visible()  ;}}), Input.wait30);
 	    	getFilterByButton().waitAndClick(10);
+	    	
+	    	Thread.sleep(2000);
+	    	
 	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
+	       		getFilter(i).waitAndClick(10);
 	       	}
 	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		getFilterByCompleted().Visible()  ;}}), Input.wait30); 
-	        getFilterByCompleted().waitAndClick(10);
-	        
+//	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//	       		getFilterByCompleted().Visible()  ;}}), Input.wait30); 
+//	        getFilterByCompleted().waitAndClick(10);
+	       	
+	       	wait.until(ExpectedConditions.elementToBeClickable(getFilterByCompleted().getBy())).click();
+	       	driver.getWebDriver().findElement(productionSetDiv().getBy()).click();
+	       	
+	       	final String oldText = gettotalCount().getWebElement().getText();
+	       	wait.until(BaseClass.waitForTextToChangeCondition(gettotalCount().getWebElement(), oldText));
+	       		       	
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getRefreshButton().Visible()  ;}}), Input.wait30);
 	        getRefreshButton().waitAndClick(10);
 	        
 	        wait.until(ExpectedConditions.elementToBeClickable(getArrow().getBy())).click();
+	        
+	        
+	        
+	        
+	        BaseClass.openMenu(getArrow().getWebElement(), getTileDelete().getWebElement());
 	        
 	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	        		getTileDelete().Visible()  ;}}), Input.wait30); 

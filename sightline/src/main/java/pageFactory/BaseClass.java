@@ -37,7 +37,8 @@ public class BaseClass {
 	public static String tooltipmsg;
 	SoftAssert softAssertion;
 	ProductionPage page;
-
+	public static WebDriverWait wait;
+	
 	public Element getBGnotificationCount1() {
 		return driver.FindElementByXPath("//b[@class='badge']");
 	}
@@ -171,6 +172,7 @@ public class BaseClass {
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 		softAssertion = new SoftAssert();
+		this.wait = new WebDriverWait(driver.getWebDriver(), 15L);
 	}
 
 	public int initialBgCount() {
@@ -1124,6 +1126,15 @@ UtilityLog.info(values);
 	    return condition;
 	}
     
+    static WebElement openMenu(WebElement menu, WebElement menuItem) { wait.until((WebDriver) -> {
+		 try {
+			 Thread.sleep(500);
+			 if(menu.isDisplayed()) menu.click(); 
+		 } catch (Exception e) {}
+		 return menuItem != null && menuItem.isDisplayed() ? menuItem : null;
+		});
+	    return menuItem;
+	}
 
 
 //
