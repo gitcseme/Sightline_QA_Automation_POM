@@ -1126,14 +1126,15 @@ UtilityLog.info(values);
 	    return condition;
 	}
     
-    static WebElement openMenu(WebElement menu, WebElement menuItem) { wait.until((WebDriver) -> {
+    static WebElement openMenu(By menuLocator, By menuItemLocator) { return wait.until((webDriver) -> {
 		 try {
 			 Thread.sleep(500);
+			 WebElement menu = webDriver.findElement(menuLocator);
 			 if(menu.isDisplayed()) menu.click(); 
 		 } catch (Exception e) {}
+		 WebElement menuItem = webDriver.findElement(menuItemLocator);
 		 return menuItem != null && menuItem.isDisplayed() ? menuItem : null;
-		});
-	    return menuItem;
+	  });
 	}
 
 
