@@ -35,7 +35,8 @@ public class TS_005_BasicAndAdvanceAlerts {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-    
+     Input in = new Input();
+     in.loadEnvConfig();
 		
 		driver = new Driver();
 		lp = new LoginPage(driver);
@@ -44,23 +45,9 @@ public class TS_005_BasicAndAdvanceAlerts {
 		sessionSearch = new SessionSearch(driver);
 
 	}
-		
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 	 }
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
+	
      
-    @Test(dataProvider = "special chars",groups= {"regression"})
+    @Test(dataProvider = "special chars",groups= {"regression"},priority=1)
     public void BSphraseAndProximitySearchWrongQueryAlert(String data) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
@@ -68,7 +55,7 @@ public class TS_005_BasicAndAdvanceAlerts {
    		sessionSearch.wrongQueryAlertBasicSaerch(data, 1,"non fielded", null, "TestcaseId");
 	} 
     
-    @Test(dataProvider = "special chars",groups= {"regression"})
+    @Test(dataProvider = "special chars",groups= {"regression"},priority=2)
     public void ASphraseAndProximitySearchWrongQueryAlert(String data) {
     	driver.getWebDriver().navigate().refresh();
     	bc.selectproject();
@@ -76,7 +63,7 @@ public class TS_005_BasicAndAdvanceAlerts {
    		sessionSearch.wrongQueryAlertAdvanceSaerch(data, 1,"non fielded", null, "TestcaseId");
 	} 
     
-    @Test(dataProvider =  "reservedWords",groups= {"regression"})
+    @Test(dataProvider =  "reservedWords",groups= {"regression"},priority=3)
     public void reserveredWordsAsearchNonFielded(String data, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
 		// TODO Auto-generated method stub
 		driver.getWebDriver().navigate().refresh();
@@ -85,7 +72,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider ="reservedWords1",groups= {"regression"})
+	@Test(dataProvider ="reservedWords1",groups= {"regression"},priority=4)
 	public void reserveredWordsASeachfielded(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 		// TODO Auto-generated method stub
@@ -95,8 +82,8 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "reservedWords2",groups= {"regression"})
-	public void reserveredWordsBsearchNonFielded(String data) {
+	@Test(dataProvider = "reservedWords2",groups= {"regression"},priority=5)
+	public void reserveredWordsBsearchNonFielded(String data, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
 
 		driver.getWebDriver().navigate().refresh();
 		bc.selectproject();
@@ -104,7 +91,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider ="reservedWords3",groups = {"regression"})
+  @Test(dataProvider ="reservedWords3",groups = {"regression"},priority=6)
 	public void reserveredWordsBSeachfielded(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 
@@ -114,7 +101,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 		sessionSearch.wrongQueryAlertBasicSaerch(data, 2,"fielded", "CustodianName", "TestCaseId");
 
 	}
-	@Test(dataProvider = "dateSearches", groups = { "regression" })
+	@Test(dataProvider = "dateSearches", groups = {"regression" },priority=7)
 	public void dateandOtherSeachesInBSP(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 
@@ -137,7 +124,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "warningMessagesbasicsearch", groups = { "regression" })
+	@Test(dataProvider = "warningMessagesbasicsearch", groups = { "regression" },priority=8)
 	public void otherWarningMessagesbasicsearch(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 		driver.getWebDriver().navigate().refresh();
@@ -386,6 +373,21 @@ public class TS_005_BasicAndAdvanceAlerts {
 				{ "discrepan? scripts", 10, "non fielded", null, "RPMXCON-47271" } };
 	}
 
+	
+	 @BeforeMethod
+	 public void beforeTestMethod(Method testMethod){
+		System.out.println("------------------------------------------");
+	    System.out.println("Executing method : " + testMethod.getName());       
+	 }
+    @AfterMethod(alwaysRun = true)
+	 public void takeScreenShot(ITestResult result) {
+	 if(ITestResult.FAILURE==result.getStatus()){
+		Utility bc = new Utility(driver);
+		bc.screenShot(result);
+	 }
+	 System.out.println("Executed :" + result.getMethod().getMethodName());
+	
+    }
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{
@@ -394,7 +396,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 		}finally {
 			lp.quitBrowser();
 		}
-		LoginPage.clearBrowserCache();
+		
 	}
 
 }
