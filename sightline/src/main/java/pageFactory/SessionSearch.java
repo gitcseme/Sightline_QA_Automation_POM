@@ -166,7 +166,8 @@ public class SessionSearch {
     public Element getTallyContinue(){ return driver.FindElementByXPath("//*[@id='bot1-Msg1']"); } 
     
     
-    //search query alerts
+    //search query 
+	s
     public Element getQueryAlertGetText(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/div[1]"); } 
     public Element getQueryAlertGetTextSingleLine(){ return driver.FindElementByXPath("//*[@id='Msg1']/div/p"); } 
     
@@ -396,19 +397,21 @@ public class SessionSearch {
 
         //Click on Search button
     	getSearchButton().Click();
+	    try {
+    			Thread.sleep(1500);
+    		} catch (InterruptedException e) {
+    			
+    			e.printStackTrace();
+    		}
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	    	getQueryAlertGetText().Visible() ;}}), 10);
     	//System.out.println(getQueryAlertGetText().getText());  
     	if(MessageNumber == 1)
-     		Assert.assertEquals("1. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value .\r\n"
-     				+ "    		If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4.\r\n"
-     				+ "    		Note there is no space before or after the tilde.\r\n"
-     				+ "\r\n"
-     				+ "    		2. Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).\r\n"
-     				+ "\r\n"
-     				+ "    		Does your query reflect your intent?\r\n"
-     				+ "    		Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
+     		Assert.assertEquals("Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. "gas transportation"~4 finds all documents where the word gas and transportation are within 4 words of each other.)
+
+Does your query reflect your intent?
+Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
     	  	
     		//Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
     	if(MessageNumber == 2){
@@ -496,15 +499,21 @@ public class SessionSearch {
 
             //Click on Search button
         	getQuerySearchButton().Click();
+	      try {
+        			Thread.sleep(1500);
+        		} catch (InterruptedException e) {
+        	
+        			e.printStackTrace();
+        		}
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	    	getQueryAlertGetText().Visible() ;}}), 10);
-        	System.out.println(getQueryAlertGetText().getText());  
+        	//System.out.println(getQueryAlertGetText().getText());  
         	if(MessageNumber == 1)
-        		assertion.assertEquals("Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)\r\n"
-        				+ "\r\n"
-        				+ "Does your query reflect your intent?\r\n"
-        				+ "Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
+        		assertion.assertEquals("Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. "gas transportation"~4 finds all documents where the word gas and transportation are within 4 words of each other.)
+
+Does your query reflect your intent?
+Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
         	
         	//Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
         	if(MessageNumber == 2){
