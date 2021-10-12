@@ -1103,8 +1103,7 @@ softAssertion.assertTrue(getCodingForm_MandField().Displayed());
 										String getErrorMessageTxt = getErrorMessage().GetAttribute("Value");
 										softAssertion.assertEquals(getErrorMessageTxt,expectedGErrorMsgText);
 										System.out.println("Verified Responsive Group");
-										Thread.sleep(3000);
-										
+																				
 										getupClick3().waitAndClick(10);
 										String getRTagLabelTxt = getRTagLabel().GetAttribute("Value");
 										softAssertion.assertEquals(getRTagLabelTxt,expectedRTagLabelText );

@@ -11,6 +11,7 @@ import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
@@ -18,6 +19,7 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import automationLibrary.ElementCollection;
+import ch.qos.logback.core.joran.action.Action;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
@@ -545,8 +547,10 @@ public class SavedSearch {
 				return getShareSaveBtn().Visible() && getShareSaveBtn().Enabled();
 			}
 		}), Input.wait30);
-		getShareSaveBtnNew().Click();
-
+		getShareSaveBtnNew().waitForElement(getShareSaveBtnNew());
+		new Actions(driver.getWebDriver()).moveToElement(getShareSaveBtnNew().getWebElement()).click();
+		  
+	
 		// getShareSaveBtn().waitAndClick(5);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");
 		

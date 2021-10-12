@@ -235,7 +235,7 @@ public class BatchPrintPage {
 		
 		base.VerifySuccessMessage("Successfully initiated the batch print. You will be prompted with notification once completed.");
 		
-		for (int i=0;i<30;i++) {
+		for (int i=0;i<120;i++) {
 			try {	
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				getbackgroundDownLoadLink().Visible() && getbackgroundDownLoadLink().Enabled() ;}}), Input.wait120); 

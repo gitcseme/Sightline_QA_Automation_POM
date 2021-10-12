@@ -596,7 +596,7 @@ public void audioReduction() throws InterruptedException, ParseException {
      
      //verify success message
      base.CloseSuccessMsgpopup();
-     base.VerifySuccessMessage("Record added Successfully");
+     base.VerifySuccessMessageB("Record added Successfully");
 	 System.out.println("Redaction added successfully");
 	 UtilityLog.info("Redaction added successfully");
 }
@@ -1159,6 +1159,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   
 		   getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(10);	
 		   
+		   base.CloseSuccessMsgpopup();
 		   base.VerifySuccessMessage("Code Same has been successfully removed");
 		   base.CloseSuccessMsgpopup();
 		   Thread.sleep(2000);

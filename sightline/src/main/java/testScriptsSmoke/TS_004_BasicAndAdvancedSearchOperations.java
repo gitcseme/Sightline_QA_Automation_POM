@@ -422,8 +422,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@DataProvider(name = "ProxAndRegx")
 	public Object[][] proximityAndRegex() {
 		return new Object[][] { 
-			{ "\"illustratin* since Q499\"~20", 1,1,"RPMXCON-57331"}, 
-			{ "\"**elief that the rights\"", 1,1,"RPMXCON-57307"},
+			{ "\"illustratin* since Q499\"~20", 1,2,"RPMXCON-57331"}, 
+			{ "\"**elief that the rights\"", 1,2,"RPMXCON-57307"},
 			{ "\"very long\"", 1,2,"RPMXCON-57307"},
 			{ "\"illustratin* since Q499\"~50", 1,2	,"RPMXCON-57307"},
 			{ "\"**elief that the rights\"" + Keys.ENTER + "OR" + Keys.ENTER+ "\"illustratin* since Q499\"~50", 2,1,"RPMXCON-57304"},

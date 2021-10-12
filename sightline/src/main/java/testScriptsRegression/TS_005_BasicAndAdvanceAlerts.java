@@ -35,9 +35,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-     Input in = new Input();
-     in.loadEnvConfig();
-		
+    	
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -133,7 +131,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 
 	}
 
-	@Test(dataProvider = "warningMessagesadvancesearch", groups = { "regression" })
+	@Test(dataProvider = "warningMessagesadvancesearch", groups = { "regression" },priority=9)
 	public void otherWarningMessagesadvancesearch(String data, int MessageNumber, String fielded, String fieldName,
 			String TestCaseId) {
 		driver.getWebDriver().navigate().refresh();
@@ -144,9 +142,28 @@ public class TS_005_BasicAndAdvanceAlerts {
     
     @DataProvider(name = "special chars")
     public Object[][] dataProviderMethod() {
-        return new Object[][] { 
+        return new Object[][] { {"\"discrepa* scripts\""},
+        	{"\"*screpancy in\""},
+        	{"\"discre*cy in\""},
+        	{"\"discrepancy i*\""},
+        	{"\"discrepancy *n\""},
+        	{"\"discr*ancy in\""},
+        	{"\"discrepan* i*\""},
+        	{"\"discrepan* script*\""},
+        	{"\"discrepan* scripts\""},
+        	{"\"discrepan* script*\""},
+        	{"\"discrepan* scripts\""},
         	{"\"*screpancy scripts\"~3"},
         	{"\"discre*y scripts\"~3"},
+        	{"\"*screpancy org*\""},
+        	{"\"discre*y org\""},
+        	{"\"discrepa* org\""},
+        	{"\"*screpancy and*\""},
+        	{"\"discre*y and\""},
+        	{"\"discrepa* and\""},
+        	{"\"*screpancy not*\""},
+        	{"\"discre*y not*\""},
+        	{"\"discrepa* not*\""},
         	{"\"discrepan* scripts\"~3"},
         	{"\"*screpancy scripts\"~3"},
         	{"\"discre*y scripts\"~3"},
@@ -189,24 +206,53 @@ public class TS_005_BasicAndAdvanceAlerts {
         	{"\"?screpancy not?\"~3"},
         	{"\"discre?y not?\"~3"},
         	{"\"discrepa? not?\"~3"},
+        	{"\"discrepa? scripts\""},
+        	{"\"?screpancy in\""},
+        	{"\"discre?cy in\""},
+        	{"\"discrepancy i?\""},
+        	{"\"discrepancy ?n\""},
+        	{"\"discr*ancy in\""},
+        	{"\"discrepan? i?\""},
+        	{"\"discrepan? script*\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? script*\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
+        	{"\"discrepan? scripts\""},
         	{"\"?screpancy scripts\"~3"},
         	{"\"discre*y scripts\"~3"},
+        	{"\"?screpancy org?\""},
+        	{"\"discre?y org\""},
+        	{"\"discrepa? org\""},
+        	{"\"?screpancy and?\""},
+        	{"\"discre?y and\""},
+        	{"\"discrepa? and\""},
+        	{"\"?screpancy not?\""},
+        	{"\"discre?y not?\""},
+        	{"\"discrepa? not?\""},
         	{"\"discrepan* script?\"~3"},
         	{"\"discre*y scripts\"~3"},
         	{"\"*screpancy scripts\"~3"},
         	{"(\"?screpancy org?” OR \"*screpancy org*\" ) NOT \"discre?y org\"~3"},
         	{"\"discrepan? script*\"~3"},
+        	{"\"*screpancy scripts\""},
+        	{"\"discre*y scripts\""},
         	{"(\"?screpancy org?” OR \"*screpancy or\" ) NOT ((\"?screpancy and\" OR \"*screpancy and *\" ) AND (\"?screpancy not?\" OR \"*screpancy not\" ) ) OR "
         			+ "( \"?screpancy and?\"~3 OR \"?screpancy or?\"~3 OR \"?screpancy not\"~3)"},
         	{"\"?screpancy  and  scripts\" OR ( \"?screpancy  or scripts\" NOT \"*screpancy  not scripts\")"},
         	{"CustodianName: (Andrew)OR(\"?screpancy and scripts\" OR (\"?screpancy or scripts\")NOT(\"*screpancy not scripts\" )) AND \"?screpancy not?\"~3"},
-        	
+        	{"\"discrepan* i?\""},
+        	{"\"discrepan* script?\""},
         	{"\"discrepancy in\" OR \"discrepancy scripts\"~3"},
         	{"\"discrepancy scripts\"~3 OR \"discrepanc* in\"~3"},
         	{"\"discrepanc* in\"~3"},
-        	{" stock investment\"~5"},
-        	{"stock investment~5"},
         	
+        	//new scenarios
+        	/*{"stock investment~5"},
+        	{"\"stock investment~5"},
+        	{" stock investment\"~5"},
+        	{"\"stock investment~5\""}*/
         };
     }
     
