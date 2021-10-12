@@ -717,22 +717,10 @@ public class IngestionPage {
     	
     	//copy
     	getRefreshButton().waitAndClick(10);
-    	    		
-       /* getIngestionName().waitAndClick(Input.wait30);
-
-        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getRunCopying().Visible()  ;}}),Input.wait30);
-    	Thread.sleep(6000);
-    	getRunCopying().ScrollTo();
-        getRunCopying().waitAndClick(10); */
-        
-       // base.VerifySuccessMessage("Ingestion copy has Started.");
+    	
         UtilityLog.info(dataset+"'s copying is started.");
     	
-    /*	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCloseButton().Enabled()  ;}}), Input.wait30); 
-    	getCloseButton().waitAndClick(10);	
-    	*/
+   
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
     	getFilterByButton().waitAndClick(10);
@@ -776,7 +764,7 @@ public class IngestionPage {
     	    		
        getIngestionName().waitAndClick(Input.wait30);
        
-       //driver.scrollingToElementofAPage(getMP3Count());
+       
        
        if(dataset.contains("Automation_AllSources")) {
        
@@ -795,7 +783,6 @@ public class IngestionPage {
     			getRunIndexing().Visible()  ;}}),Input.wait60); 
         getRunIndexing().waitAndClick(10);
         
-       // base.VerifySuccessMessage("Ingestion Indexing has Started.");
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getCloseButton().Enabled()  ;}}), Input.wait30); 
@@ -840,28 +827,8 @@ public class IngestionPage {
     }
     	
     	Thread.sleep(5000);
-    	//Approve
-    /*	getIngestionName().waitAndClick(Input.wait30);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getActionDropdownArrow().Visible()  ;}}),Input.wait60); 
-    	getActionDropdownArrow().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getActionApprove().Visible()  ;}}),Input.wait60); 
-    	getActionApprove().waitAndClick(10);
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
-    	getApproveMessageOKButton().waitAndClick(10);
-    	
-    	//base.VerifySuccessMessage("Approve started successfully");
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getCloseButton().Visible()  ;}}), Input.wait30); 
-    	getCloseButton().waitAndClick(10);	
-    	
-    	*/
+   
+    
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getFilterByButton().Visible()  ;}}), Input.wait30); 
     	getFilterByButton().waitAndClick(10);
@@ -920,7 +887,7 @@ public class IngestionPage {
     		try
     		{
     			
-    			getPublishIngestionStatus().Displayed();
+    			getcurrentPublishIngestionStatus().Displayed();
     			UtilityLog.info(dataset+" published.");
     			break;
     		}
