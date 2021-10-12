@@ -40,11 +40,7 @@ public class ProjectFields {
 	        
 	        this.driver.getWebDriver().get(Input.url+ "ProjectFields/ProjectFieldsList");
 	        driver.waitForPageToBeReady();
-	        //This initElements method will create all WebElements
-	        //assertion = new SoftAssert();
-	        //search = new SessionSearch(driver);
-	       // docview = new DocViewPage(driver);
-	        //fieldname =Input.Projectfieldname;
+	       
 	        
 
 	    }
