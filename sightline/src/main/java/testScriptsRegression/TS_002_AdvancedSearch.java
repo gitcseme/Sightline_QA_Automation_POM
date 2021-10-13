@@ -752,9 +752,8 @@ public class TS_002_AdvancedSearch {
      	  
      		}
      		
-     	  lp.logout();
-     		
      	}
+  
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

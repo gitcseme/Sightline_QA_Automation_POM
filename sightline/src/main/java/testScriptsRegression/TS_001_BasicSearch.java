@@ -290,6 +290,7 @@ public class TS_001_BasicSearch {
 		softAssertion.assertAll();
 
 	}
+	
 	@Test(groups={"regression"},priority=12)
 	public void creditcardsearch() {
 		
@@ -302,8 +303,8 @@ public class TS_001_BasicSearch {
 		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=1);
 		bc.passedStep("******** Search is successfully done********");
 		
-		
-	}	
+	}
+	
 	@Test(groups={"regression"},priority=13)
 	public void basicsearchCustomField() throws InterruptedException {
 		try {
@@ -350,8 +351,6 @@ public class TS_001_BasicSearch {
 				bc.passedStep("*******Basic Search for CustomField date/time field with 'Is' operator is created*********");
 	  
 		}
-		
-
 		
 	}
 	
