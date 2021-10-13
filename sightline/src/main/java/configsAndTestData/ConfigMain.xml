@@ -57,6 +57,7 @@
     <Collection1KSourceDatField2>DocID</Collection1KSourceDatField2>
     <FamilySourceDatField2>DocID</FamilySourceDatField2>
     <AllSourcesSourceDatField2>ProdBeg</AllSourcesSourceDatField2>
+     <SourceDatFieldCustom>MasterDate</SourceDatFieldCustom>
     <!-- Ingestion Related data END -->
     
 </ConfigMain>

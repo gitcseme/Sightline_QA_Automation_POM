@@ -122,6 +122,8 @@ public class Input {
 	public static String MasterPDF2location;
 	public static String iCESmokeFolderPath;
 	public static String prodPath;
+	public static String SourceDatFieldCustom;
+	public static String CustomFieldname;
 
 
 	@BeforeSuite(alwaysRun=true)
@@ -182,6 +184,7 @@ public class Input {
 		AllSourcesTextFile = config.getAllSourcesTextFile();
 		FamilyNativeFile = config.getFamilyNativeFile();
 		AllSourcesNativeFile = config.getAllSourcesNativeFile();
+		SourceDatFieldCustom =config.getSourceDatFieldCustom();
 		
 		//Environment data-------------------------------------------------------------
 		url=envConfig.getUrl();
@@ -234,6 +237,7 @@ public class Input {
 		totalNumberOfDocsincludeadvoption = testData.getTotalNumberOfDocsincludeadvoption();
 		MasterPDF1location = testData.getMasterPDF1location();
 		MasterPDF2location = testData.getMasterPDF2location();
+		CustomFieldname = testData.CustomFieldname;
 		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

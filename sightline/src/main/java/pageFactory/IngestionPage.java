@@ -54,6 +54,7 @@ public class IngestionPage {
     public Element getMappingSOURCEFIELD14(){ return driver.FindElementById("SF_14"); }
     public Element getMappingSOURCEFIELD25(){ return driver.FindElementById("SF_25"); }
     
+    public Element getMappingFIELDCAT2(){ return driver.FindElementById("TY_2"); }
     public Element getMappingFIELDCAT5(){ return driver.FindElementById("TY_5"); }
     public Element getMappingFIELDCAT6(){ return driver.FindElementById("TY_6"); }
     public Element getMappingFIELDCAT7(){ return driver.FindElementById("TY_7"); }
@@ -126,6 +127,7 @@ public class IngestionPage {
     public Element getIndexedIngestionStatus(){ return driver.FindElementByXPath("//strong[contains(.,'Indexed')]"); }
     public Element getApproveIngestionStatus(){ return driver.FindElementByXPath("//strong[contains(.,'Approved')]"); }
     public Element getPublishIngestionStatus(){ return driver.FindElementByXPath("//strong[contains(.,'Published')]"); }
+    public Element getcurrentPublishIngestionStatus(){ return driver.FindElementByXPath("//ul[@class='cards']/li[1]//strong[contains(.,'Published')]"); }
     public Element getFilterByButton(){ return driver.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']"); }
     public Element getFilterByDRAFT(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='DRAFT']"); }
     public Element getFilterByFAILED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='FAILED']"); }
@@ -600,7 +602,320 @@ public class IngestionPage {
 		Thread.sleep(2000);
 		System.out.println(IngestionName);
       }
+
+    public void ReIngestionofDataWithOverlay(String dataset, String fieldname) throws InterruptedException {
+       	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getAddanewIngestionButton().Displayed()  ;}}), Input.wait60); 
+       	
+       	getAddanewIngestionButton().waitAndClick(10); 
+       	
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSpecifySourceFolder().Visible()   ;}}), Input.wait30); 
+    	 getIngestion_IngestionType().selectFromDropdown().selectByVisibleText("Overlay Only");
+       	
+     
+       	 
+       	 driver.scrollingToBottomofAPage(); 
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getSpecifyLocation().Visible()  ;}}), Input.wait60); 
+
+    			getSpecifyLocation().selectFromDropdown().selectByVisibleText(Input.SourceLocation);
+    	
+    	
+    			getSpecifySourceFolder().VisibilityOfElementExplicitWait(getSpecifySourceFolder(), 90);
+    	
+    			getSpecifySourceFolder().selectFromDropdown().selectByVisibleText(Input.Collection1KFolder);
+    			
+       	 
+       	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			 getSourceSelectionDATLoadFile().Visible()   ;}}), Input.wait60); 
+       	 getSourceSelectionDATLoadFile().selectFromDropdown().selectByVisibleText(Input.Collection1KDATFile);
+       	 
+        Thread.sleep(2000);
+       	getSourceSelectionDATKey().ElementToBeClickableExplicitWait(getSourceSelectionDATKey(), 60);
+    		 getSourceSelectionDATKey().selectFromDropdown().selectByVisibleText(Input.Collection1KSourceDatField2);
+    		
+    	  	
+    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        			getDateFormat().Visible()  ;}}), Input.wait30); 
+        	getDateFormat().selectFromDropdown().selectByVisibleText("YYYY/MM/DD HH:MM:SS");
+        	
+    	
+           driver.scrollPageToTop();
+       	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getNextButton().Visible()  ;}}), Input.wait30); 
+       	getNextButton().waitAndClick(10);
+       	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getMappingSOURCEFIELD2().Visible()  ;}}), Input.wait60); 
+       	
+       	getMappingSOURCEFIELD2().selectFromDropdown().selectByVisibleText(Input.SourceDatFieldCustom);
+       	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getMappingFIELDCAT2().Visible()  ;}}), Input.wait30); 
+       	getMappingFIELDCAT2().selectFromDropdown().selectByVisibleText("CUSTOM");
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+       			getMappingDESTINATIONFIELD2().Visible()  ;}}), Input.wait30);
+       	getMappingDESTINATIONFIELD2().selectFromDropdown().selectByVisibleText(fieldname);
+       	
+       	
+       	driver.scrollPageToTop();
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getPreviewRun().Visible()  ;}}), Input.wait30); 
+    	getPreviewRun().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getApproveMessageOKButton().Visible()  ;}}), Input.wait30); 
+    	getApproveMessageOKButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getbtnRunIngestion().Visible()  ;}}), Input.wait30); 
+    	getbtnRunIngestion().waitAndClick(10);
+    	
+    	
+       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCATALOGED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCATALOGED().waitAndClick(10);
+    	
+    	//catlogging
+    	for (int i = 0; i < 40; i++)
+    	{
+    		try{	
+    			getCatalogedIngestionStatus().Displayed();
+    			UtilityLog.info(dataset+" cataloged.");
+    			break;
+    		}catch (Exception e) {
+    					
+    				try
+    				{
+    					Thread.sleep(5000);
+    					getRefreshButton().waitAndClick(10);
+    				   if(getFailedIngestionStatus().Displayed()){ 
+    					    System.out.println("Execution aborted!");
+    						UtilityLog.info("Execution aborted!");
+    						System.out.println(dataset+" is failed in catalog stage. Take a look and continue!");
+    						UtilityLog.info(dataset+" is failed in catalog stage. Take a look and continue!");
+    						System.exit(1);
+    					
+    						}
+    				}
+    				catch (Throwable e1)
+    				{
+    					System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+    				}
+    		}
+    }
+    	
+    	//copy
+    	getRefreshButton().waitAndClick(10);
+    	
+        UtilityLog.info(dataset+"'s copying is started.");
+    	
+   
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByCOPIED().Visible()  ;}}), Input.wait30); 
+    	getFilterByCOPIED().waitAndClick(10);
+    	
+    	
+    	for (int i = 0; i < 120; i++)
+    	{
+    			try{
+    				getCopiedIngestionStatus().Displayed();
+    				UtilityLog.info(dataset+" copied.");
+    				break;
+    			}catch (Exception e) {
+    			
+    			try
+    			{
+    				Thread.sleep(5000);
+    				getRefreshButton().waitAndClick(10);
+    				if(getFailedIngestionStatus().Displayed()){
+    					    System.out.println("Execution aborted!");
+    						UtilityLog.info("Execution aborted!");
+    						System.out.println(dataset+" is failed in copying stage. Take a look and continue!");
+    						UtilityLog.info(dataset+" is failed in copying stage. Take a look and continue!");
+    						System.exit(1);
+    			
+    				}
+    			}
+    			catch (Throwable e1)
+    			{
+    				System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+    			}
+    		
+    		}
+    	}
+    	
+    	//Indexing
+    	getRefreshButton().waitAndClick(10);
+    	    		
+       getIngestionName().waitAndClick(Input.wait30);
+       
+       
+       
+       if(dataset.contains("Automation_AllSources")) {
+       
+       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    		   getIsAudioCheckbox().Visible()  ;}}),Input.wait60); 
+        getIsAudioCheckbox().waitAndClick(10);
+    	
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+        		getLanguage().Visible()  ;}}),Input.wait60); 
+        getLanguage().selectFromDropdown().selectByVisibleText("North American English");
+       }
+       else {
+    	   System.out.println("No need to select for other datasets");
+       }
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getRunIndexing().Visible()  ;}}),Input.wait60); 
+        getRunIndexing().waitAndClick(10);
+        
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getCloseButton().Enabled()  ;}}), Input.wait30); 
+    	getCloseButton().waitAndClick(10);	
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByINDEXED().Visible()  ;}}), Input.wait30); 
+    	getFilterByINDEXED().waitAndClick(10);
+    	
+    	
+    	for (int i = 0; i < 120; i++)
+    	{
+    		
+    		try{
+    			getIndexedIngestionStatus().Displayed();
+    			UtilityLog.info(dataset+" indexed.");
+    			break;
+    		}catch (Exception e) {
+    			
+    		try
+    		{
+    			Thread.sleep(10000);
+    			getRefreshButton().waitAndClick(10);
+    			if(getFailedIngestionStatus().Displayed()){
+    				    System.out.println("Execution aborted!");
+    					UtilityLog.info("Execution aborted!");
+    					System.out.println(dataset+" is failed in indexing stage. Take a look and continue!");
+    					UtilityLog.info(dataset+" is failed in indexing stage. Take a look and continue!");
+    					System.exit(1);
+    			
+    			}
+    		}
+    			catch (Throwable e1)
+    		{
+    			System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+    		}
+    	}
+    }
+    	
+    	Thread.sleep(5000);
+   
     
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByButton().Visible()  ;}}), Input.wait30); 
+    	getFilterByButton().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByAPPROVED().Visible()  ;}}), Input.wait30); 
+    	getFilterByAPPROVED().waitAndClick(10);
+    	
+    	
+    	for (int i = 0; i < 30; i++)
+    	{
+    		try
+    		{
+    			getApproveIngestionStatus().Displayed();
+    			UtilityLog.info(dataset+" approved.");
+    			break;
+    			
+    		}
+    		catch (Exception e)
+    		{
+    			try
+    			{
+    				Thread.sleep(5000);
+    				getRefreshButton().waitAndClick(10);
+    				if(getFailedIngestionStatus().Displayed()){
+    					    System.out.println("Execution aborted!");
+    						UtilityLog.info("Execution aborted!");
+    						System.out.println(dataset+" is failed in approving stage. Take a look and continue!");
+    						UtilityLog.info(dataset+" is failed in approving stage. Take a look and continue!");
+    						System.exit(1);
+    				
+    					}
+    			}
+    			catch (Throwable e1)
+    			{
+    				System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+    			}
+
+    		}
+    }
+
+    	Thread.sleep(5000); 
+     
+    try {
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getFilterByPUBLISHED().Visible()  ;}}), Input.wait30); 
+    	getFilterByPUBLISHED().waitAndClick(10);
+    }
+    catch (Exception e) {
+    	System.out.println("Not able to select Published. Pleasae check!!");
+    }
+    	
+
+    	for (int i = 0; i < 10; i++)
+    	{
+    		try
+    		{
+    			
+    			getcurrentPublishIngestionStatus().Displayed();
+    			UtilityLog.info(dataset+" published.");
+    			break;
+    		}
+    		catch (Exception e)
+    		{
+    			try
+    			{
+    				Thread.sleep(5000);
+    				getRefreshButton().waitAndClick(10);
+    				if(getFailedIngestionStatus().Displayed()){
+    					System.out.println("Execution aborted!");
+    					UtilityLog.info("Execution aborted!");
+    					System.out.println(dataset+" is failed in publishing stage. Take a look and continue!");
+    					UtilityLog.info(dataset+" is failed in publishing stage. Take a look and continue!");
+    					System.exit(1);
+    				
+    					}
+    			}
+    			catch (Throwable e1)
+    			{
+    				System.out.println("Task in Progress : "+i);UtilityLog.info("Task in Progress : "+i);
+    			}
+    			
+    		}
+    		
+    	} 
+        }
+          
     
     public void IngestionCatlogtoPublish(String dataset) throws InterruptedException {
     	

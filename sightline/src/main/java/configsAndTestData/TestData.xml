@@ -19,6 +19,8 @@
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
 	<totalNumberOfDocsincludeadvoption>103
 	</totalNumberOfDocsincludeadvoption>
+	<CustomFieldname>Customfield</CustomFieldname>
+
 
 	<!-- Production path for redaction master doc -->
 	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf

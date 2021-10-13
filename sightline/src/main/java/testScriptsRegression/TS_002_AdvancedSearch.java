@@ -17,7 +17,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
+import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFields;
 import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -36,6 +38,9 @@ public class TS_002_AdvancedSearch {
 	SoftAssert softAssertion;
 	int pureHit;
 	BaseClass bc;
+	String CustomFieldname;
+	ProjectFields pf;
+	IngestionPage ip;
 	//
 	/*
 	 * Author : Suresh Bavihalli
@@ -61,8 +66,12 @@ public class TS_002_AdvancedSearch {
 		
 		bc = new BaseClass(driver);
 		bc.passedStep("********logged in succesfully as PA user********");
+		pf = new ProjectFields(driver);
+		ip =new IngestionPage(driver);
+		CustomFieldname = Input.CustomFieldname;
 		searchText =Input.searchString1;
 		search = new SessionSearch(driver);
+		
     	
     
 	}
@@ -683,7 +692,57 @@ public class TS_002_AdvancedSearch {
 	 		 search.advContentSearchwithoptions(Input.searchString2);
 	 		 bc.passedStep("********Content with Advance Search options is successful********");
 	 		
-	    }	 	
+	    }
+     	 @Test(groups={"regression"},priority=16)
+     	public void advancedsearchCustomField() throws InterruptedException {
+     		try {
+    			lp.logout();
+    		}
+    		catch(Exception e) {}
+     		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+     		bc.passedStep("********logged in succesfully as PA user********");
+     		bc.selectproject();
+     		 String fieldname = CustomFieldname;
+     		 SoftAssert softAssertion= new SoftAssert();
+     		 bc.stepInfo("Test Case Id :RPMXCON-49177 : Verify that Advanced Search works properly for CustomField date/time field with 'Is' operator");
+     		 bc.stepInfo("********Verify that CustomField date/time field is created and perform Advanced search********");
+     		 String Verifyfield = pf.VerifyCustomfield(fieldname);
+     		 
+     		if(!Verifyfield.equalsIgnoreCase(fieldname))
+     				 {
+     		 
+     		  bc.stepInfo("********Create CustomField date/time field********"); 
+     	      pf.CreateProjectField(fieldname);
+     	      bc.passedStep("********CustomField date/time field is created********");
+     	      bc.stepInfo("********Ingestion of metadata with Custom date/time field********");
+     	      driver.getWebDriver().get(Input.url+ "Ingestion/Home");
+     	  
+     	    ip.ReIngestionofDataWithOverlay(Input.Collection1KFolder,fieldname);
+     	     bc.passedStep("********Ingestion of metadata with Custom date/time field is completed********");
+     	     SessionSearch ss = new SessionSearch(driver);
+     		 driver.getWebDriver().get(Input.url+ "Search/Searches"); 
+     		
+     		bc.passedStep("******** Search page is successfully opened********");
+     		bc.stepInfo("*******Advanced Search for CustomField date/time field with 'Is' operator*********");
+     		softAssertion.assertTrue(ss.advancedMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
+     		bc.passedStep("*******Advanced Search for CustomField date/time field with 'Is' operator is created*********");
+     		
+     				 }
+     				 
+     		else {
+     			    SessionSearch ss = new SessionSearch(driver);
+     				driver.getWebDriver().get(Input.url+ "Search/Searches"); 
+     				
+     				bc.passedStep("******** Search page is successfully opened********");
+     				bc.stepInfo("*******Advanced Search for CustomField date/time field with 'Is' operator*********");
+     				softAssertion.assertTrue(ss.advancedMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
+     				bc.passedStep("*******Advanced Search for CustomField date/time field with 'Is' operator is created*********");
+     	  
+     		}
+     		
+     	  lp.logout();
+     		
+     	}
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
