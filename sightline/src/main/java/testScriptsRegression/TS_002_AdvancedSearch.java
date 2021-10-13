@@ -708,7 +708,8 @@ public class TS_002_AdvancedSearch {
      	 @Test(groups={"regression"},priority=17)
      	public void advancedsearchCustomField() throws InterruptedException {
      		try {
-    			lp.logout();
+    			
+     			lp.logout();
     		}
     		catch(Exception e) {}
      		lp.loginToSightLine(Input.pa1userName, Input.pa1password);

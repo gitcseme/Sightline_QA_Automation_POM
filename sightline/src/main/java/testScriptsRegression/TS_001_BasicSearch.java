@@ -308,6 +308,7 @@ public class TS_001_BasicSearch {
 	@Test(groups={"regression"},priority=13)
 	public void basicsearchCustomField() throws InterruptedException {
 		try {
+			
 			lp.logout();
 		}
 		catch(Exception e) {}
