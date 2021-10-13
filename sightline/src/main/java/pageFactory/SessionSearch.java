@@ -833,6 +833,41 @@ public class SessionSearch {
     	return pureHit;
 
 	}
+public int audioSearch(String SearchString1,String SearchString2, String SearchString3 , String SearchString4, String language) throws InterruptedException {
+    	
+    	getAdvancedSearchLink().Click();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_Audio().Visible()  ;}}), Input.wait30); 
+    	getAs_Audio().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_AudioLanguage().Visible()  ;}}), Input.wait30); 
+    	getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
+    	 //Enter seatch string
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_AudioText().Visible()  ;}}), Input.wait30); 
+    	getAs_AudioText().SendKeys(SearchString1+Keys.ENTER+SearchString2+Keys.ENTER+SearchString3+Keys.ENTER+SearchString4+Keys.ENTER) ;
+
+    	//Select term operator 
+    	getAudioTermOperator().selectFromDropdown().selectByVisibleText("ALL");
+    	//Select location
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAudioLocation().Visible()  ;}}), Input.wait30); 
+    	Thread.sleep(2000);
+    	
+        //Click on Search button
+    	getQuerySearchButton().Click();
+    	
+    	//verify counts for all the tiles
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+    	
+    	int pureHit = Integer.parseInt(getPureHitsCount().getText());
+    	System.out.println("Audio Serach is done for "+SearchString1+" "+SearchString2+" "+SearchString3+" and "+SearchString4+" PureHit is: "+pureHit);
+    	
+    	return pureHit;
+
+	}
     
     public int conceptualSearch(String SearchString, String Percetage) {
     	getAdvancedSearchLink().Click();

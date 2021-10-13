@@ -693,7 +693,19 @@ public class TS_002_AdvancedSearch {
 	 		 bc.passedStep("********Content with Advance Search options is successful********");
 	 		
 	    }
+     	 
      	 @Test(groups={"regression"},priority=16)
+    	public void Audiosearchwithmultipletearms() throws ParseException, InterruptedException {
+    		
+    		 bc.stepInfo("Test case Id: RPMXCON-56906 - Audio Proximity searches in Sightline should allow the user to specify more than two search terms");
+    		 bc.stepInfo("*****Verify Audio search with more than two terms*****");
+    		 SessionSearch search = new SessionSearch(driver);
+    		 SoftAssert softAssertion= new SoftAssert();
+    		 softAssertion.assertTrue(search.audioSearch("morning","nation" ,"tonight" ,"this" ,"North American English") >=1);
+    		bc.passedStep("*****Audio search successfull*****");
+     	 }
+     	 
+     	 @Test(groups={"regression"},priority=17)
      	public void advancedsearchCustomField() throws InterruptedException {
      		try {
     			lp.logout();

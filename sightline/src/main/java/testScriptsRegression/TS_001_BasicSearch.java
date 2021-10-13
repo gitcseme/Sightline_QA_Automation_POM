@@ -299,7 +299,7 @@ public class TS_001_BasicSearch {
 		bc.selectproject();
 		bc.passedStep("******** Search page is successfully opened********");
 		bc.stepInfo("Test Case Id : RPMXCON-59636 Verify Search result should work correctly for Credit card number");
-		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=0);
+		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=1);
 		bc.passedStep("******** Search is successfully done********");
 		
 		
