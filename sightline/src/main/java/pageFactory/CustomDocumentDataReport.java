@@ -112,7 +112,7 @@ public class CustomDocumentDataReport {
 	    
   public void validateColumnsInExport(ArrayList expected) throws IOException {
 	          ArrayList<String> actual = new ArrayList();
-	    	  File root = new File(System.getProperty("user.dir")+Input.batchFilesPath+"BatchPrintFiles/downloads/");
+	    	  File root = new File("C://BatchPrintFiles//downloads");
 	          File[] list = root.listFiles();
 	    	  System.out.println(list.length);
 	    	  UtilityLog.info(list.length);
@@ -131,8 +131,8 @@ public class CustomDocumentDataReport {
 				      for (String cell : nextRecord) { 
 				        
 				    	  actual.add(cell.toString().trim().replaceAll("ï»¿\"",""));
-				          //System.out.println(cell.toString());
-				          //System.out.println(cell.toString().replaceAll("ï»¿\"",""));
+				          System.out.println(cell.toString());
+				          System.out.println(cell.toString().replaceAll("ï»¿\"",""));
 						
 				      } 
 				    

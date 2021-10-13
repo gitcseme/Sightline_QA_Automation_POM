@@ -14,7 +14,6 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -37,8 +36,7 @@ public class BaseClass {
 	public static String tooltipmsg;
 	SoftAssert softAssertion;
 	ProductionPage page;
-	public static WebDriverWait wait;
-	
+
 	public Element getBGnotificationCount1() {
 		return driver.FindElementByXPath("//b[@class='badge']");
 	}
@@ -172,7 +170,6 @@ public class BaseClass {
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 		softAssertion = new SoftAssert();
-		this.wait = new WebDriverWait(driver.getWebDriver(), 15L);
 	}
 
 	public int initialBgCount() {
@@ -421,8 +418,8 @@ public class BaseClass {
 	public void VerifySuccessMessage(String ExpectedMsg) {
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[starts-with(@id,'bigBoxColor')]//span")));					
-		Assert.assertEquals(getSuccessMsgHeader().getText().toString(), "Success !");
-		Assert.assertEquals(getSuccessMsg().getText().toString(), ExpectedMsg);
+		Assert.assertEquals("Success !", getSuccessMsgHeader().getText().toString());
+		Assert.assertEquals(ExpectedMsg, getSuccessMsg().getText().toString());
 		UtilityLog.info("Expected message - "+ExpectedMsg);
 		Reporter.log("Expected message - "+ExpectedMsg,true);	
 
@@ -1080,61 +1077,6 @@ UtilityLog.info(values);
     	driver.FindElementByCssSelector("i.fa-bullhorn").WaitUntilPresent().Click();
     	return notifications.size();
     	
-	}
-    
-    //Added by Lyudmila
-    
-    static ExpectedCondition<WebElement> waitForTextToChangeCondition(By by, final String oldText) {
-    	ExpectedCondition<WebElement> condition = (webDriver) -> {
-			WebElement element = webDriver.findElement(by);
-			String newText = element.getText();
-			boolean same = newText.compareTo(oldText) == 0;
-			if (same) return null; 
-			return element;
-		};
-		return condition;
-	}
-
-    static ExpectedCondition<WebElement> waitForTextToChangeCondition(WebElement element, final String oldText) {
-    	ExpectedCondition<WebElement> condition = (webDriver) -> {
-			String newText = element.getText();
-			boolean same = newText.compareTo(oldText) == 0;
-			if (same) return null; 
-			return element;
-		};
-		return condition;
-	}
-    
-    
-    static ExpectedCondition<String> waitForTextToLoad(By textLocator) {
-     	ExpectedCondition<String> condition = (webDriver) -> {
-    		WebElement element = webDriver.findElement(textLocator);
-			String text = element.getText();
-			if (text == null || text.length() == 0) return null; 
-			return text;
-    	};
-		return condition;
-	}
-    
-    static ExpectedCondition<WebElement> waitForAttributeToChange(By locator, String attributeName, String oldText) {
-	    ExpectedCondition<WebElement> condition = (webDriver) -> {
-	    	WebElement element = webDriver.findElement(locator);
-			String attributeText = element.getAttribute(attributeName);
-			if (oldText.equals(attributeText)) return null; 
-			return element;
-	    };
-	    return condition;
-	}
-    
-    static WebElement openMenu(By menuLocator, By menuItemLocator) { return wait.until((webDriver) -> {
-		 try {
-			 Thread.sleep(500);
-			 WebElement menu = webDriver.findElement(menuLocator);
-			 if(menu.isDisplayed()) menu.click(); 
-		 } catch (Exception e) {}
-		 WebElement menuItem = webDriver.findElement(menuItemLocator);
-		 return menuItem != null && menuItem.isDisplayed() ? menuItem : null;
-	  });
 	}
 
 

@@ -4,13 +4,9 @@ import java.util.List;
 
 
 import java.util.concurrent.Callable;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
@@ -30,7 +26,7 @@ public class SessionSearch {
     SoftAssert assertion;
   
     //public Element getNewSearch(){ return driver.FindElementByXPath("//button[@id='add_tab']"); }
-    public Element getEnterSearchString(){ return driver.FindElementByXPath("//*[@id='xEdit']/li[last()]/input"); }
+    public Element getEnterSearchString(){ return driver.FindElementByXPath(".//*[@id='xEdit']/li/input"); }
     public Element getSearchButton(){ return driver.FindElementById("btnBasicSearch"); }
     public Element getQuerySearchButton(){ return driver.FindElementById("qSearch"); }
     public Element getSaveAsNewSearchRadioButton(){ return driver.FindElementByXPath("//*[@id='saveAsNewSearchRadioButton']/following-sibling::i"); }
@@ -405,7 +401,12 @@ public class SessionSearch {
     	    	getQueryAlertGetText().Visible() ;}}), 10);
     	//System.out.println(getQueryAlertGetText().getText());  
     	if(MessageNumber == 1)
-    		Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
+     		Assert.assertEquals("Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)\r\n"
+     				+ "\r\n"
+     				+ "Does your query reflect your intent?\r\n"
+     				+ "Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
+    	  	
+    		//Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
     	if(MessageNumber == 2){
     		String msg= "Your query contains at least one lowercase \"and\", \"or\" or \"not\" word. In Sightline, lowercase \"and\", \"or\" or \"not\" are treated as terms, whereas capitalized \"AND\", \"OR\" or \"NOT\" are treated as operators.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
@@ -494,49 +495,54 @@ public class SessionSearch {
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	    	getQueryAlertGetText().Visible() ;}}), 10);
-        	//System.out.println(getQueryAlertGetText().getText());  
+        	System.out.println(getQueryAlertGetText().getText());  
         	if(MessageNumber == 1)
-        	Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
+        		assertion.assertEquals("Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)\r\n"
+        				+ "\r\n"
+        				+ "Does your query reflect your intent?\r\n"
+        				+ "Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.",getQueryAlertGetText().getText()); 
+        	
+        	//Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
         	if(MessageNumber == 2){
         		String msg= "Your query contains at least one lowercase \"and\", \"or\" or \"not\" word. In Sightline, lowercase \"and\", \"or\" or \"not\" are treated as terms, whereas capitalized \"AND\", \"OR\" or \"NOT\" are treated as operators.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
+        		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
         	}
         	if(MessageNumber == 3){
         		String msg= "Your query contains an argument that may be intended to look for dates within any body content or metadata attribute. Please be advised that the search engine interprets dash - or slash / characters in non-fielded arguments as implied OR statement. For example, 1980/01/02 is treated by the search engine as 1980 OR 01 OR 02. The same is true of 1980-01-02. You can add quotation marks around a query to treat the dash or slash argument as a string. For example, \"1980/01/02\" is treated as is. The same is true of \"1980-01-02\".Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
         	 
-        	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
+        		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
         	}
         	if(MessageNumber == 4)
-                Assert.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
+        		assertion.assertEquals("YOUR QUERY CONTAINS A HYPHEN CHARACTER \"-\" THAT IS INTERPRETED IN DIFFERENT WAYS BY THE SEARCH ENGINE DEPENDING ON ITS USE IN THE QUERY\n\nIf the hyphen character is part of a string that is enveloped within quotations, such as â€œbi-weekly reportâ€, the hyphen character is treated literally, returning documents that hit on that exact phrase.\n\nIf the hyphen character is not part of a string enveloped in quotations, and is preceded or succeeded by a space, then the hyphen character will be interpreted as a space, which is an implied OR operator (ex. bi - weekly will be interpreted as bi OR weekly).\n\nIf the hyphen character is not part of a string enveloped in quotations, and is the first character of an argument (ie. not separated by a space from an argument), then the search engine will interpret the hyphen as a NOT operator (ex. bi -weekly is interpreted as bi NOT weekly)\n\nBased on this information, is your query what you intended? If this is what you intended, please click YES to execute your search. If this is not what you intended, please click NO and correct your query.",getQueryAlertGetText().getText()); 
               
         	if(MessageNumber == 5){
             	String msg= "Invalid parenthesis balance, please ensure all the braces have proper parenthesis balance.";
             	 
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            	assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	if(MessageNumber == 6){
             		String msg= "One or more of your Proximity Queries has only a single Term. This could be as a result of extra Double Quotes around terms or the use of Parentheses which group multiple values as a single term.";
             	
                 
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	if(MessageNumber == 7){
             		String msg= "Your query may contain an invalid Proximity Query. Any Double Quoted phrases as part of a Proximity Query must also be wrapped in Parentheses, e.g. \"Term1 (\"Specific Phrase\")\"~4.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	if(MessageNumber == 8){
             	String msg= "Your query has multiple potential syntax issues.1. Your query contains a ~ (tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)2. Your query contains the ~ (tilde) character which does not immediately follow a double-quoted set of terms or is not immediately followed by a numeric value . If you are trying to run a proximity search, please use appropriate proximity query syntax e.g. \"Term1 Term2\"~4. Note there is no space before or after the tilde.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            	assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	
         	if(MessageNumber == 9){
             	String msg= "There is a trailing operator not followed by an argument, please verify the search syntax.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            	assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetTextSingleLine().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	
         	if(MessageNumber == 10){
             	String msg= "Your query contains two or more arguments that do not have an operator between them. In Sightline, each term without an operator between them will be treated as A OR B, not \"A B\" as an exact phrase. If you want to perform a phrase search, wrap the terms in quotations (ex. \"A B\" returns all documents with the phrase A B).Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
-            	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
+            	assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n","")); 
             	}
         	
 				/*
@@ -555,6 +561,7 @@ public class SessionSearch {
     	getTallyContinue().Click();
         else*/
         driver.getWebDriver().navigate().refresh();	
+        assertion.assertAll();
     	
 
 	}
@@ -567,7 +574,7 @@ public class SessionSearch {
     	driver.waitForPageToBeReady();
         //Enter seatch string
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30);
+    			getEnterSearchString().Visible()  ;}}), Input.wait30); 
     	getEnterSearchString().SendKeys(SearchString) ;
 
         //Click on Search button
@@ -590,30 +597,6 @@ public class SessionSearch {
     	Reporter.log("Search is done for "+SearchString+" and PureHit is : "+pureHit,true);
     	return pureHit;
    }
-    
-    public void basicContentSearchWithExistingSearch(String SearchString){
-
-    	//To make sure we are in basic search page
-    	driver.getWebDriver().get(Input.url+ "Search/Searches");
-    	WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
-		wait.until(ExpectedConditions.visibilityOf(driver.getWebDriver().findElement(By.id("xEdit"))));
-    	WebElement field = driver.getWebDriver().findElement(By.xpath("//ul[@id='xEdit']/li[last()]/input"));
-    	
-    	new Actions(driver.getWebDriver()).moveToElement(field);
-    	field.click();
-    	field.sendKeys(Keys.BACK_SPACE);
-    	field.sendKeys(Keys.DELETE);
-    	
-    	
-        //Enter search string
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    			getEnterSearchString().Visible()  ;}}), Input.wait30);
-    	getEnterSearchString().SendKeys(SearchString) ;
-
-        //Click on Search button
-    	getSearchButton().Click();
-    }
-    
     //Function to perform content search for a given search string
       public int advancedContentSearch(String SearchString){
     	
@@ -782,6 +765,7 @@ public class SessionSearch {
     public int audioSearch(String SearchString, String language) {
     	this.driver.getWebDriver().get(Input.url+ "Search/Searches");
     	
+    	base.waitForElement(getAdvancedSearchLink());
     	getAdvancedSearchLink().waitAndClick(20);
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAs_Audio().Visible()  ;}}), Input.wait30); 

@@ -47,24 +47,24 @@ public class DocExplorer_Regression {
 		
 	 	//Open browser
 		driver = new Driver();
-		//bc = new BaseClass(driver);
-		//docexp = new DocExplorerPage(driver);
-		//Login as a PA
+				//Login as a PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
 		bc = new BaseClass(driver);
-		bc.selectproject();
+		//bc.selectproject();
 		
 		search= new SessionSearch(driver);
 		
 		purehits=search.basicContentSearch(Input.searchString1); 
 		//search.bulkFolderExisting("Confidential");
 		search.bulkTagExisting("Confidential");
-		docexp = new DocExplorerPage(driver);
+		bc.selectproject();
 		search.basicContentSearch("*");
 		//search.bulkFolderExisting("Attorney_Client");
 		search.bulkTagExisting("Attorney_Client"); 
+		docexp = new DocExplorerPage(driver);
+		
 		
 	}
 	

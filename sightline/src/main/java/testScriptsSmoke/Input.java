@@ -57,6 +57,7 @@ public class Input {
 			
 	//Environment data---------------------------------------------
 	public static String url;
+	public static String prodpath;
 	public static String projectName;
 	public static String sa1password;
 	public static String sa1userName;
@@ -122,8 +123,6 @@ public class Input {
 	public static String MasterPDF2location;
 	public static String iCESmokeFolderPath;
 	public static String prodPath;
-	public static String SourceDatFieldCustom;
-	public static String CustomFieldname;
 
 
 	@BeforeSuite(alwaysRun=true)
@@ -184,7 +183,6 @@ public class Input {
 		AllSourcesTextFile = config.getAllSourcesTextFile();
 		FamilyNativeFile = config.getFamilyNativeFile();
 		AllSourcesNativeFile = config.getAllSourcesNativeFile();
-		SourceDatFieldCustom =config.getSourceDatFieldCustom();
 		
 		//Environment data-------------------------------------------------------------
 		url=envConfig.getUrl();
@@ -211,7 +209,7 @@ public class Input {
 		pa2FullName= envConfig.getPa2FullName();
 		rmu2FullName= envConfig.getRmu2FullName();
 		rev2FullName= envConfig.getRev2FullName();
-		prodPath= envConfig.getProdpath();
+		prodpath= envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
 		ICEProjectName = envConfig.getICEProjectName();
 
@@ -237,7 +235,6 @@ public class Input {
 		totalNumberOfDocsincludeadvoption = testData.getTotalNumberOfDocsincludeadvoption();
 		MasterPDF1location = testData.getMasterPDF1location();
 		MasterPDF2location = testData.getMasterPDF2location();
-		CustomFieldname = testData.CustomFieldname;
 		
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
@@ -394,7 +391,7 @@ public void loadSuiteTestData() throws IOException {
 	else if(Input.suite.equalsIgnoreCase("smoke") && numberOfDataSets == 3)	
 	   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
 	else if(Input.suite.equalsIgnoreCase("Regression") && numberOfDataSets==3)
-		   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
+	   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
         
 	FileOutputStream Fwrite=new FileOutputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData.xml") ; 
     int c; 

@@ -41,12 +41,12 @@ public class CommunicationExplorerPage {
 		return driver.FindElementById("btn_applychanges");
 	}
 
-	public ElementCollection getfindAllNodes() {
-		return driver.FindElementsByCssSelector("div[id='wrapper-graph']  g  text[class='nodetext']");
+	public Element getfindAllNodes() {
+		return driver.FindElementByCssSelector("div[id='wrapper-graph']  g  text[class='nodetext']");
 	}
 
 	public Element getCommunicationExplorer_TotalDocCount_OnHover() {
-		return driver.FindElementByCssSelector(".count-total");
+		return driver.FindElementByXPath("//*[@class='mail-count']");
 	}
 
 	public Element getCommunicationExplorer_Graph_Action_DropDownBtn() {
@@ -109,6 +109,12 @@ public class CommunicationExplorerPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
+	public Element getshowbycount() {
+		return driver.FindElementById("ShowByCount");
+	}
+	public Element getshowby() {
+		return driver.FindElementById("ShowBy");
+	}
 
 	public CommunicationExplorerPage(Driver driver) {
 
@@ -159,7 +165,22 @@ public class CommunicationExplorerPage {
 			}
 		}), Input.wait30);
 		getTally_SaveSelections().waitAndClick(15);
-
+		
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getshowbycount().Visible();
+			}
+		}), Input.wait30);
+		getshowbycount().selectFromDropdown().selectByVisibleText("Top 20");
+		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getshowby().Visible();
+			}
+		}), Input.wait30);
+		getshowby().selectFromDropdown().selectByVisibleText("Email Address");
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCommunicationExplorer_ApplyBtn().Visible();
@@ -174,12 +195,10 @@ public class CommunicationExplorerPage {
 			}
 		}), Input.wait30);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return getTally_LoadingScreen().Stale();
-			}
-		}), Input.wait30);
-
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() { public Boolean call() throws
+		 * Exception { return getTally_LoadingScreen().Stale(); } }), Input.wait30);
+		 */
 		driver.scrollingToBottomofAPage();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -187,20 +206,9 @@ public class CommunicationExplorerPage {
 				return getfindAllNodes().Exists();
 			}
 		}), Input.wait30);
-		for (WebElement ele : getfindAllNodes().FindWebElements()) {
-			// System.out.println(Configuration.getData("ShareTo")+" -
-			// "+ele.getText().trim());
-			if (ele.getText().trim().equalsIgnoreCase("symphonyteleca...")) {
-				ele.click();
-				break;
-			}
-		}
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getCommunicationExplorer_ApplyBtn().Visible();
-			}
-		}), Input.wait30);
+		
+		 getfindAllNodes().waitAndClick(10);
+				
 		String actHoverDocCount = getCommunicationExplorer_TotalDocCount_OnHover().getText();
 		System.out.println(actHoverDocCount);
 		UtilityLog.info(actHoverDocCount);

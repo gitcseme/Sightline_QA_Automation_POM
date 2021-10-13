@@ -681,13 +681,8 @@ private   Driver driver;
 		   return element;
 	   }
      
-
-     public By getBy() {
-    	 return by;
-     }
-
      public  Element VisibilityOfElementExplicitWait(Element element,int seconds) {
-
+    	
     	new WebDriverWait(driver.getWebDriver(),seconds).until(ExpectedConditions.visibilityOf(element.getWebElement()));//added here
     	return element;
      }
@@ -696,7 +691,6 @@ private   Driver driver;
      	new WebDriverWait(driver.getWebDriver(),seconds).until(ExpectedConditions.elementToBeClickable(element.getWebElement()));
      	return element;
       }
-
    
      public Select selectFromDropdown() {
     	 AssertExists(); //this updates element !
