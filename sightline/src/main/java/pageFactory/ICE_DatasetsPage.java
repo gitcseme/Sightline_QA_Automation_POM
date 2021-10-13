@@ -234,7 +234,7 @@ public class ICE_DatasetsPage {
 				
 				bc.getYesBtn().waitAndClick(10);
 				
-				bc.VerifySuccessMessage("Dataset Deleted Successfully");
+				bc.VerifySuccessMessageB("Dataset Deleted Successfully");
 				
 				driver.scrollPageToTop();
 				

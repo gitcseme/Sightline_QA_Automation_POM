@@ -2,45 +2,32 @@
 <LD9PT>
         <url>https://sightlinept.consilio.com/</url>
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
-        <SourceLocation>IngestionTestData\Automation</SourceLocation>
-        <domainName>WeeklyExecution</domainName>             
-        <projectName>Weekly_Regression_DND</projectName>
+        <SourceLocation>IngestionTestData\Automation</SourceLocation>             
+        <domainName>Automation_Regression</domainName>
+        <projectName>RegressionDataSet_Hema_DND</projectName>
+           <ICEProjectName>ICETest</ICEProjectName>
         
-        <!-- Provide ICE Project Name -->
-        <ICEProjectName>ICETest2</ICEProjectName>
-                     
+         <da1userName>rmu.serconsilio@gmail.com</da1userName>
+        <da1password>Sightline@123</da1password>
+         
         <!-- User Name : SA QA -->    
-        <sa1userName>qasa1@consilio.com</sa1userName> 
-        <sa1password>TestCons!082021</sa1password> 
-                  
-        <!-- Consilio PAU Automation   -->
-        <pa1FullName>Consilio PAU1 Automation</pa1FullName>
-        <pa1userName>qapau1@Consilio.com</pa1userName>
-        <pa1password>Q@test_15</pa1password>       
-        
-        <pa2FullName>Consilio PAU2 Automation</pa2FullName>
-        <pa2userName>qapau2@Consilio.com</pa2userName>
-        <pa2password>Q@test_15</pa2password>
-        
+        <sa1userName>c.on.silio.reviewer@gmail.com</sa1userName> 
+        <sa1password>Sightline@123</sa1password> 
+     
+        <!-- Consilio PAU Automation -->
+        <pa1FullName>ICE pa1</pa1FullName>
+        <pa1userName>c.onsilio.reviewer@gmail.com</pa1userName>
+        <pa1password>Sightline@123</pa1password> 
+                
         <!--Consilio RMU Automation  -->
-        <rmu1FullName>Consilio RMU1 Automation</rmu1FullName>
-        <rmu1userName>qarmu1@consilio.com</rmu1userName>
-        <rmu1password>Q@test_20</rmu1password>
+        <rmu1FullName>ICE rmu1</rmu1FullName>
+        <rmu1userName>c.o.nsilio.reviewer@gmail.com</rmu1userName>
+        <rmu1password>Sightline@123</rmu1password>
         
-        <rmu2FullName>Consilio RMU2 Automation</rmu2FullName>
-        <rmu2userName>qarmu2@consilio.com</rmu2userName>
+        <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
+        <rmu2userName>QARMU2@Consilio.com</rmu2userName>
         <rmu2password>Q@test_15</rmu2password>
-        
-        <!-- Consilio REVU Automation -->
-        <rev1FullName>Consilio REV1 Automation</rev1FullName>
-        <rev1userName>qarev1@Consilio.com</rev1userName>
-        <rev1password>Q@test_20</rev1password>
-        
-        <rev2FullName>Consilio REV2 Automation</rev2FullName>
-        <rev2userName>qarev2@consilio.com</rev2userName>
-        <rev2password>Q@test_15</rev2password>
-        
-        <shareTo>CPA2 PA2</shareTo>
-       
+		
+	
        
 </LD9PT>

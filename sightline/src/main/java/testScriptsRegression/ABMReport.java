@@ -55,7 +55,7 @@ public class ABMReport {
 
 		dp.DoclisttobulkAssign(assignmentName,"10");
 
-		asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form", purehits);
+		asgnmp.assignDocstoNewAssgn(assignmentName, "Default Project Coding Form", 10);
 
 	}
 

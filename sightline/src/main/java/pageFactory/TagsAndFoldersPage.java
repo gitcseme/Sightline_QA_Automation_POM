@@ -782,10 +782,10 @@ public class TagsAndFoldersPage {
         getAddTag().waitAndClick(10);
    
      
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getTagName().Visible()  ;}}), Input.wait30);
-		 //driver.scrollingToElementofAPage(getTagName());
-	     getTagName().SendKeys("");
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getTagName().Visible()  ;}}), Input.wait30); 
+		 new Actions(driver.getWebDriver()).sendKeys("").perform();
+	  
 	     
 	     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 	    		 getCancelTag().Visible()  ;}}), Input.wait30); 

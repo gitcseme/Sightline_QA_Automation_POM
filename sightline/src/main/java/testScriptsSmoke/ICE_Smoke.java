@@ -38,8 +38,8 @@ import pageFactory.Utility;
 public class ICE_Smoke {
 	Driver driver;
 	LoginPage lp;
-	SoftAssert sa = new SoftAssert();
-	BaseClass bc = new BaseClass(driver);
+	SoftAssert sa;
+	BaseClass bc;
 	
 
 	@SuppressWarnings("static-access")
@@ -49,42 +49,48 @@ public class ICE_Smoke {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		driver = new Driver();
 		lp = new LoginPage(driver);
-		lp.clearBrowserCache();
+	    bc = new BaseClass(driver);
+	    sa = new SoftAssert();
 	}
 
-	 @Test(groups={"smoke","regression"},priority=1)
+	// @Test(groups={"smoke","regression"},priority=1)
 	public void SystemAdminUserVerifications() throws InterruptedException {
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		driver.waitForPageToBeReady();
 		ManageUsersPage muPage = new ManageUsersPage(driver);
 		muPage.getProjectListByProjectName(Input.ICEProjectName);
 		// Test Case No: 9450: Priority 1
-		Assert.assertTrue(muPage.getICEProjectStatuslabel().getText().toString().equalsIgnoreCase("ICE PROJECT STATUS"));
+		sa.assertTrue(muPage.getICEProjectStatuslabel().getText().toString().equalsIgnoreCase("ICE PROJECT STATUS"));
 		// Test Case No: 9451: Priority 1
-		Assert.assertTrue(muPage.getICEProjectStatus().getText().toString().trim().equalsIgnoreCase("ACTIVE"));
+		sa.assertTrue(muPage.getICEProjectStatus().getText().toString().trim().equalsIgnoreCase("ACTIVE"));
 		
 		BaseClass bc = new BaseClass(driver);
 		bc.impersonateSAtoPAICE();
 		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
 		// Test case No: 9533: Priority 1
-		Assert.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
+		sa.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
 		dp.getdatasetleftmenuBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		// Test Case No: 9548, Priority 2
-		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Published"));
+		sa.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Published"));
 		bc.impersonatePAtoRMUICE();
 		// Test case No: 9533: Priority 1
-		Assert.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
+		sa.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
 		dp.getdatasetleftmenuBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		// Test Case No: 9548, Priority 2
-		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
+		sa.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
+		
 		lp.logout();
+		sa.assertAll();
 	}
 
-	@Test(groups = { "smoke", "regression" }, priority = 2)
+	//@Test(groups = { "smoke", "regression" }, priority = 2)
 	public void PMUploadAndInitiate() throws InterruptedException {
 		// The below line of codes will make sure the RMU user has access to dataset
 		// option.
@@ -106,7 +112,7 @@ public class ICE_Smoke {
 			 test1.add(menuposition.get(i).getText());
 			 if(test1.contains("DATASETS"))
 			 {
-			 Assert.assertTrue(test1.contains("DATASETS"));
+			 sa.assertTrue(test1.contains("DATASETS"));
 			 System.out.println(position);
 			 menuposition.get(i).click();
 			 break;
@@ -114,7 +120,7 @@ public class ICE_Smoke {
 			 }
 		 }
 	
-		 Assert.assertEquals(position, 2);
+		 sa.assertEquals(position, 2);
 		
 		 Reporter.log("Dataset menu option avilable under doc explorer");
 		 UtilityLog.info("Dataset menu option avilable under doc explorer");
@@ -126,20 +132,20 @@ public class ICE_Smoke {
 		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
 		// Test Case No: 9460, Priority 2
-		Assert.assertEquals(dp.getDatasetPageTitle(), "Datasets");
+		sa.assertEquals(dp.getDatasetPageTitle(), "Datasets");
 		// Test Case No: 11090, Priority 2
-		Assert.assertTrue(dp.getShowDropDown().Visible());
-		Assert.assertTrue(dp.getSearchByBox().Visible());
-		Assert.assertTrue(dp.getSortBy().Visible());
+		sa.assertTrue(dp.getShowDropDown().Visible());
+		sa.assertTrue(dp.getSearchByBox().Visible());
+		sa.assertTrue(dp.getSortBy().Visible());
 		// Test Case No: 11090, Priority 2 Ends
-		Assert.assertTrue(dp.isDatasetActive());
+		sa.assertTrue(dp.isDatasetActive());
 		// Test Case NO: 9547, Priority 2
-		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Published"));
+		sa.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Published"));
 		dp.getShowDropDown().Click();
 		// Test Case No: 11089, Priority 2
 		//Assert.assertTrue(dp.getShowDropDown().FindElementBycssSelector("option").Selected());
 		String showdrpdown = dp.getShowDropDown().selectFromDropdown().getFirstSelectedOption().getText();
-		Assert.assertEquals(showdrpdown, "All Datasets");
+		sa.assertEquals(showdrpdown, "All Datasets");
 		
 		
 		DatasetDetails testdd = new DatasetDetails();
@@ -167,7 +173,7 @@ public class ICE_Smoke {
 
 		fileCountBeforeUpload = mup.getUploadCount();
 		// Test Case No: 11069, Priority 2
-		Assert.assertTrue(mup.getDropZoneLink().Displayed());
+		sa.assertTrue(mup.getDropZoneLink().Displayed());
 		// Test Case No: 10840, Priority 2
 	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
 	//			"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
@@ -176,24 +182,24 @@ public class ICE_Smoke {
 			    
 		
 		// Test Case no: 10827, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
+		sa.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
 		fileuploaded = mup.uploadFilesByFolder(testFolderPath);
 		// Test Case no: 10791, Priority 1 & 10998, Priority 2
-		Assert.assertTrue(mup.getUploadCount() == (fileCountBeforeUpload + fileuploaded));
+		sa.assertTrue(mup.getUploadCount() == (fileCountBeforeUpload + fileuploaded));
 		// Test Case no: 10827, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Files Uploaded, Initiate Processing >"));
+		sa.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Files Uploaded, Initiate Processing >"));
 		Thread.sleep(2000);
 		mup.getUploadFilesBtn().waitAndClick(10);
 		// Test Case No: 10861, Priority 2
 		
 		mup.getInitatePopup().WaitUntilPresent();
-		Assert.assertTrue(mup.getInitatePopup().Displayed());
-		Assert.assertEquals(mup.getInitatePopupMessage().getText(),
+		sa.assertTrue(mup.getInitatePopup().Displayed());
+		sa.assertEquals(mup.getInitatePopupMessage().getText(),
 				"Are you sure you want to initiate processing for this dataset?");
 		mup.getInitatePopupNoBtn().Click();
 		driver.waitForPageToBeReady();
 		// Test Case No: 10858, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().Enabled());
+		sa.assertTrue(mup.getUploadFilesBtn().Enabled());
 		
 		final BaseClass bc = new BaseClass(driver);
         final int Bgcount = bc.initialBgCount();
@@ -205,7 +211,7 @@ public class ICE_Smoke {
 			}
 		}), Input.wait90);
 		// Test Case No: 10859, Priority 2
-		Assert.assertTrue(driver.FindElementByCssSelector("#lblProjectTitle").Visible());
+		sa.assertTrue(driver.FindElementByCssSelector("#lblProjectTitle").Visible());
 		ICE_DatasetProgressStatusPage dpdp = new ICE_DatasetProgressStatusPage(driver, testdd.getDatasetName(), false);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -213,24 +219,24 @@ public class ICE_Smoke {
 		
 		driver.Navigate().refresh();
 		// Test Case No: 9518, Priority 1
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableHeader().equalsIgnoreCase("TYPE FILE COUNT TOTAL SIZE (MB)"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableHeader().equalsIgnoreCase("TYPE FILE COUNT TOTAL SIZE (MB)"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
         
 		ICE_DatasetSummaryPage dsumpage = new ICE_DatasetSummaryPage(driver, testdd.getDatasetName());
 		sa.assertTrue(dsumpage.isDatasetSummaryPageLoaded());
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
 
 		
 		// Test Case No: 9527, Priority 1
 		sa.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
 
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");}}), 1800000);
+			public Boolean call() {return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");}}), 5000);
 
-		Assert.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
-
+		sa.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
+		/*
 		  
   	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120); 
@@ -244,15 +250,17 @@ public class ICE_Smoke {
 				return bc.getBckTask_selecttask().Visible();}}), Input.wait30);
 		System.out.println( bc.getBckTask_selecttask().getText());
 	 String actualtext = bc.getBckTask_selecttask().getText();
-	 Assert.assertEquals("The dataset "+dname+" has been processed successfully.", actualtext);
+	 sa.assertEquals("The dataset "+dname+" has been processed successfully.", actualtext);
   	 UtilityLog.info("Processing is completed");
-  	 Reporter.log("Processing is completed",true);
+  	 Reporter.log("Processing is completed",true); */
 
 		bc.impersonatePAtoRMUICE();
 
 		// Test Case No: 9529, Priority 1
 		sa.assertTrue(dp.getdatasetleftmenuBtn().Displayed());
+	
 		lp.logout();
+		sa.assertAll();
 
 	}
 
@@ -318,7 +326,7 @@ public class ICE_Smoke {
 			 test1.add(menuposition.get(i).getText());
 			 if(test1.contains("DATASETS"))
 			 {
-			 Assert.assertTrue(test1.contains("DATASETS"));
+			 sa.assertTrue(test1.contains("DATASETS"));
 			 System.out.println(position);
 			 menuposition.get(i).click();
 			 break;
@@ -326,7 +334,7 @@ public class ICE_Smoke {
 			 }
 		 }
 	
-		 Assert.assertEquals(position, 3);
+		 sa.assertEquals(position, 3);
 		
 		
 		// Test Case No: 11055, Priority 2
@@ -340,23 +348,23 @@ public class ICE_Smoke {
 		// Test Case No: 9460, Priority 2
 
 		// Test Case No: 9460,10981, Priority 2
-		Assert.assertEquals(dp.getDatasetPageTitle(), "Datasets");
+		sa.assertEquals(dp.getDatasetPageTitle(), "Datasets");
 		// Test Case No: 11090, Priority 2
-		Assert.assertTrue(dp.getShowDropDown().Visible());
-		Assert.assertTrue(dp.getSearchByBox().Visible());
-		Assert.assertTrue(dp.getSortBy().Visible());
+		sa.assertTrue(dp.getShowDropDown().Visible());
+		sa.assertTrue(dp.getSearchByBox().Visible());
+		sa.assertTrue(dp.getSortBy().Visible());
 		// Test Case No: 11090, Priority 2 Ends
 		// Test Case No: 10973, Priority 2
-		Assert.assertTrue(dp.getCreateNewUploadSetLink().Displayed());
+		sa.assertTrue(dp.getCreateNewUploadSetLink().Displayed());
 		// Test Case NO: 9546 Priority 2
-		Assert.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
+		sa.assertTrue(dp.getTotalDocumentsEl().getText().equals("Total Documents Released"));
 		dp.getShowDropDown().Click();
 		// Test Case No: 11089, Priority 2
 		//Assert.assertTrue(dp.getShowDropDown().FindElementBycssSelector("option").Selected());
 
 		
 		String showdrpdown = dp.getShowDropDown().selectFromDropdown().getFirstSelectedOption().getText();
-		Assert.assertEquals(showdrpdown, "All Datasets");
+		sa.assertEquals(showdrpdown, "All Datasets");
 		
 		
 		DatasetDetails testdd = new DatasetDetails();
@@ -381,7 +389,7 @@ public class ICE_Smoke {
 		String testFolderPath = System.getProperty("user.dir") + Input.iCESmokeFolderPath;
 		fileCountBeforeUpload = mup.getUploadCount();
 		// Test Case No: 11069, Priority 2
-		Assert.assertTrue(mup.getDropZoneLink().Displayed());
+		sa.assertTrue(mup.getDropZoneLink().Displayed());
 		// Test Case No: 10840, Priority 2
 	//	Assert.assertTrue(mup.getDropZoneStaticText().getText().trim().contains(
 	//			"* Please ensure that the names of files being uploaded are unique in a Dataset. If a file being uploaded has the same name as an already uploaded file, it will overwrite the file which was uploaded earlier.Also, we recommend zipping/compressing files prior to upload for faster transmittal over the Internet."));
@@ -392,22 +400,22 @@ public class ICE_Smoke {
 		
 		
 		// Test Case no: 10827, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
+		sa.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Upload Files"));
 		fileuploaded = mup.uploadFilesByFolder(testFolderPath);
 		// Test Case no: 10791, Priority 1 & 10996, Priority 2
-		Assert.assertTrue(mup.getUploadCount() == (fileCountBeforeUpload + fileuploaded));
+		sa.assertTrue(mup.getUploadCount() == (fileCountBeforeUpload + fileuploaded));
 		// Test Case no: 10827, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Files Uploaded, Initiate Processing >"));
+		sa.assertTrue(mup.getUploadFilesBtn().getText().equalsIgnoreCase("Files Uploaded, Initiate Processing >"));
 		Thread.sleep(2000);
 		mup.getUploadFilesBtn().Click();
 		// Test Case No: 10855, Priority 2
-		Assert.assertTrue(mup.getInitatePopup().Displayed());
-		Assert.assertEquals(mup.getInitatePopupMessage().getText(),
+		sa.assertTrue(mup.getInitatePopup().Displayed());
+		sa.assertEquals(mup.getInitatePopupMessage().getText(),
 				"Are you sure you want to initiate processing for this dataset?");
 		mup.getInitatePopupNoBtn().Click();
 		driver.waitForPageToBeReady();
 		// Test Case No: 10853, Priority 2
-		Assert.assertTrue(mup.getUploadFilesBtn().Enabled());
+		sa.assertTrue(mup.getUploadFilesBtn().Enabled());
 		mup.InitiateProcessing();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -415,7 +423,7 @@ public class ICE_Smoke {
 			}
 		}), Input.wait90);
 		// Test Case No: 10854, Priority 2
-		Assert.assertTrue(driver.FindElementByCssSelector("#lblProjectTitle").Visible());
+		sa.assertTrue(driver.FindElementByCssSelector("#lblProjectTitle").Visible());
 		ICE_DatasetProgressStatusPage dpdp = new ICE_DatasetProgressStatusPage(driver, testdd.getDatasetName(), false);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -425,22 +433,22 @@ public class ICE_Smoke {
 		}), 10000);
 		driver.Navigate().refresh();
 		// Test Case No: 9572,9573, Priority 1
-		Assert.assertTrue(
+		sa.assertTrue(
 				dpdp.getEntireProjectSummaryTableHeader().equalsIgnoreCase("TYPE FILE COUNT TOTAL SIZE (MB)"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
-		Assert.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Excluded"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Processed"));
+		sa.assertTrue(dpdp.getEntireProjectSummaryTableValues().contains("Duplicates"));
 
 		// Test Case No: 9572,9574, Priority 1
-		Assert.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
+		sa.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");
 			}
-		}), 1800000);
+		}), 5000);
 
-		Assert.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
+		sa.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
 
 		
 		dp.getdatasetleftmenuBtn().Click();
@@ -454,8 +462,9 @@ public class ICE_Smoke {
 		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
 		dp.viewSetInTallyByName(dname);
-
+	
 		lp.logout();
+		sa.assertAll();
 
 	}
 
@@ -478,12 +487,14 @@ public class ICE_Smoke {
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				mup.getConfirmNavigationPopup().Visible() ;}}),Input.wait60);
-		Assert.assertTrue(mup.getConfirmNavigationPopup().Displayed());
-		Assert.assertTrue(mup.getConfirmNavigationPopupNoBtn().Enabled());
-		Assert.assertTrue(mup.getConfirmNavigationPopupYesBtn().Enabled());
+		sa.assertTrue(mup.getConfirmNavigationPopup().Displayed());
+		sa.assertTrue(mup.getConfirmNavigationPopupNoBtn().Enabled());
+		sa.assertTrue(mup.getConfirmNavigationPopupYesBtn().Enabled());
 		mup.getConfirmNavigationPopupYesBtn().Click();
 		driver.waitForPageToBeReady();
+		
 		lp.logout();
+		sa.assertAll();
 	}
 
 	@BeforeMethod
@@ -502,6 +513,7 @@ public class ICE_Smoke {
 			 */
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
+	
 
 	}
 
