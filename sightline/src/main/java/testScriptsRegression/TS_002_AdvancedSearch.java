@@ -695,56 +695,7 @@ public class TS_002_AdvancedSearch {
     		bc.passedStep("*****Audio search successfull*****");
      	 }
      	 
-     	 @Test(groups={"regression"},priority=17)
-     	public void advancedsearchCustomField() throws InterruptedException {
-     		try {
-    			
-     			lp.logout();
-    		}
-    		catch(Exception e) {}
-     		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-     		bc.passedStep("********logged in succesfully as PA user********");
-     		bc.selectproject();
-     		 String fieldname = CustomFieldname;
-     		 SoftAssert softAssertion= new SoftAssert();
-     		 bc.stepInfo("Test Case Id :RPMXCON-49177 : Verify that Advanced Search works properly for CustomField date/time field with 'Is' operator");
-     		 bc.stepInfo("********Verify that CustomField date/time field is created and perform Advanced search********");
-     		 String Verifyfield = pf.VerifyCustomfield(fieldname);
-     		 
-     		if(!Verifyfield.equalsIgnoreCase(fieldname))
-     				 {
-     		 
-     		  bc.stepInfo("********Create CustomField date/time field********"); 
-     	      pf.CreateProjectField(fieldname);
-     	      bc.passedStep("********CustomField date/time field is created********");
-     	      bc.stepInfo("********Ingestion of metadata with Custom date/time field********");
-     	      driver.getWebDriver().get(Input.url+ "Ingestion/Home");
-     	  
-     	    ip.ReIngestionofDataWithOverlay(Input.Collection1KFolder,fieldname);
-     	     bc.passedStep("********Ingestion of metadata with Custom date/time field is completed********");
-     	     SessionSearch ss = new SessionSearch(driver);
-     		 driver.getWebDriver().get(Input.url+ "Search/Searches"); 
-     		
-     		bc.passedStep("******** Search page is successfully opened********");
-     		bc.stepInfo("*******Advanced Search for CustomField date/time field with 'Is' operator*********");
-     		softAssertion.assertTrue(ss.advancedMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
-     		bc.passedStep("*******Advanced Search for CustomField date/time field with 'Is' operator is created*********");
-     		
-     				 }
-     				 
-     		else {
-     			    SessionSearch ss = new SessionSearch(driver);
-     				driver.getWebDriver().get(Input.url+ "Search/Searches"); 
-     				
-     				bc.passedStep("******** Search page is successfully opened********");
-     				bc.stepInfo("*******Advanced Search for CustomField date/time field with 'Is' operator*********");
-     				softAssertion.assertTrue(ss.advancedMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
-     				bc.passedStep("*******Advanced Search for CustomField date/time field with 'Is' operator is created*********");
-     	  
-     		}
-     		
-     	}
-}
+     	 
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
