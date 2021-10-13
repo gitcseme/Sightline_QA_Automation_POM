@@ -212,7 +212,22 @@ public class TS_001_BasicSearch {
 		    bc.passedStep("********FolderCount is displayed under tags and folder page as expected********");
 		    bc.passedStep(folderName+" could be seen under tags and folder page");
 
-		}
+	}
+	
+	@Test(groups={"regression"},priority=12)
+	public void creditcardsearch() {
+		
+		SoftAssert softAssertion= new SoftAssert();
+		
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+		bc.selectproject();
+		bc.passedStep("******** Search page is successfully opened********");
+		bc.stepInfo("Test Case Id : RPMXCON-59636 Verify Search result should work correctly for Credit card number");
+		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=1);
+		bc.passedStep("******** Search is successfully done********");
+		
+	}
+	
 		
 		@Test(groups={"regression"},priority=7)
 		public void emailInclusive() {
@@ -252,7 +267,6 @@ public class TS_001_BasicSearch {
 	    	bc.passedStep("********Actual pureHit count is same as expected********");
 
 		}
-
 	
 	
 	@Test(groups={"regression"},priority=9)
