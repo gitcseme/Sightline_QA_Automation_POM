@@ -57,7 +57,6 @@ public class Input {
 			
 	//Environment data---------------------------------------------
 	public static String url;
-	public static String prodpath;
 	public static String projectName;
 	public static String sa1password;
 	public static String sa1userName;
@@ -209,7 +208,7 @@ public class Input {
 		pa2FullName= envConfig.getPa2FullName();
 		rmu2FullName= envConfig.getRmu2FullName();
 		rev2FullName= envConfig.getRev2FullName();
-		prodpath= envConfig.getProdpath();
+		prodPath= envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
 		ICEProjectName = envConfig.getICEProjectName();
 
@@ -391,7 +390,7 @@ public void loadSuiteTestData() throws IOException {
 	else if(Input.suite.equalsIgnoreCase("smoke") && numberOfDataSets == 3)	
 	   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
 	else if(Input.suite.equalsIgnoreCase("Regression") && numberOfDataSets==3)
-	   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
+		   Fread =new FileInputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData_Regression.xml"); 
         
 	FileOutputStream Fwrite=new FileOutputStream(System.getProperty("user.dir")+"/src/main/java/configsAndTestData/"+"TestData.xml") ; 
     int c; 

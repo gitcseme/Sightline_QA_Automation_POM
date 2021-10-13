@@ -7,10 +7,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.asserts.SoftAssert;
 
@@ -40,7 +44,7 @@ public class TagsAndFoldersPage {
     public Element getAddTag(){ return driver.FindElementById("aAddTag"); }
     public Element getTagName(){ return driver.FindElementById("txtTagName"); }
     public Element getSaveTag(){ return driver.FindElementById("btnAddTag"); }
-    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath(".//*[@id='tabs-a']/div[1]/div/button[2]"); }
+    public Element getTagActionDropDownArrow(){ return driver.FindElementByXPath("//div[@id='tabs-a']//div/button[@data-toggle='dropdown']"); }
     public Element getFoldersTab(){ return driver.FindElementByXPath("//*[@class='tags-folders']//a[contains(text(),'Folders')]"); }
     public Element getTagsTab(){ return driver.FindElementById("ui-id-1"); }
     public Element getAllFolderRoot(){ return driver.FindElementByXPath("//a[contains(text(),'All Folders')]"); }
@@ -48,7 +52,7 @@ public class TagsAndFoldersPage {
     public Element getAddFolder(){ return driver.FindElementById("aAddFolder"); }
     public Element getFolderName(){ return driver.FindElementById("txtFolderName"); }
     public Element getSaveFolder(){ return driver.FindElementById("btnAddFolder"); }
-    public Element getFolderActionDropDownArrow(){ return driver.FindElementByXPath("//*[@id='tabs-b']/div[1]/div/button[2]"); }
+    public Element getFolderActionDropDownArrow(){ return driver.FindElementByXPath("//div[@id='tabs-b']//div/button[@data-toggle='dropdown']"); }
  
     //added on 4th feb
     public Element getTagName(String TagName){ return driver.FindElementByXPath("//a[contains(text(),'"+TagName+"')]"); }
@@ -99,6 +103,9 @@ public class TagsAndFoldersPage {
     public ElementCollection getTagGroup(){ return driver.FindElementsByXPath("//a[contains(@class,'jstree-anchor tag-groups')]"); }
     public Element getEditTag(){ return driver.FindElementById("aEditTagTagGroup"); }
     
+    //added by Lyudmila
+    public Element liAddFolder(){ return driver.FindElementById("liAddFolder"); }
+    public Element liAddTag(){ return driver.FindElementById("liAddTag"); }
     
     public Element getTagGroupName(){ return driver.FindElementById("txtTagGroupName"); }
 
@@ -187,26 +194,18 @@ public class TagsAndFoldersPage {
 
          driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         		 getAllFolderRoot().Visible()  ;}}), Input.wait30); 
-         Thread.sleep(3000);
+         //Thread.sleep(3000);
          getAllFolderRoot().waitAndClick(10);
-         Thread.sleep(3000);
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getFolderActionDropDownArrow().Visible()  ;}}), Input.wait30); 
-         getFolderActionDropDownArrow().waitAndClick(30);
-        Thread.sleep(2000);
-	    
-         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        		 getAddFolder().Visible()  ;}}), Input.wait30); 
-         getAddFolder().waitAndClick(10);
-     
-     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getFolderName().Visible()  ;}}), Input.wait30); 
-    //  new Actions(driver.getWebDriver()).sendKeys(strFolder).perform();
-     getFolderName().SendKeys(strFolder);
-     
-     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    		 getSaveFolder().Visible()  ;}}), Input.wait30); 
-     getSaveFolder().waitAndClick(10);
+         
+         WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 10L);
+         
+       getFolderActionDropDownArrow().Click();
+       
+       BaseClass.openMenu(getAddFolder().getBy(), getFolderName().getBy());
+
+       getFolderName().SendKeys(strFolder);
+            
+      wait.until(ExpectedConditions.elementToBeClickable(getSaveFolder().getBy())).click();
      
      base.VerifySuccessMessage("Folder added successfully");
      base.CloseSuccessMsgpopup();
@@ -307,6 +306,7 @@ public class TagsAndFoldersPage {
     public void CreateTagwithClassification(String strtag,String classificationname) 
     {
         this.driver.getWebDriver().get(Input.url+"TagsAndFolders/TagsAndFolders");
+        WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 15L);
         
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			 getSecutiryGroupTag().Visible()  ;}}), Input.wait30); 
@@ -320,16 +320,24 @@ public class TagsAndFoldersPage {
     			 getTagActionDropDownArrow().Visible()  ;}}), Input.wait30); 
     	
     	 driver.scrollPageToTop();
-        getTagActionDropDownArrow().waitAndClick(10);
-     
-        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        		getAddTag().Visible()  ;}}), Input.wait30); 
-        getAddTag().waitAndClick(10);
-   
-       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-			 getTagName().Visible()  ;}}), Input.wait60); 
+    	 
+    	 
+        getTagActionDropDownArrow().Click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(getAddTag().getBy()));
+        //wait.until(ExpectedConditions.elementToBeClickable(getAddTag().getBy())).click();
+        
+        BaseClass.openMenu(getAddTag().getBy(), getTagName().getBy());
+//		wait.until((WebDriver) -> {
+//			 try {
+//				 Thread.sleep(500);
+//				 if(getAddTag().Visible()) getAddTag().Click(); 
+//			 } catch (Exception e) {}
+//			 WebElement element = getTagName().getWebElement();
+//			 return element != null && element.isDisplayed() ? element : null;
+//		});
+      
        getTagName().SendKeys(strtag);
-       
+        
        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
      			 getTagClassification().Visible()  ;}}), Input.wait30); 
        getTagClassification().selectFromDropdown().selectByVisibleText(classificationname);
@@ -340,6 +348,13 @@ public class TagsAndFoldersPage {
      
       base.VerifySuccessMessage("Tag added successfully");
       Reporter.log("Tag "+strtag+" is as/under "+classificationname,true);
+      
+      try {
+		Thread.sleep(10);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
       base.CloseSuccessMsgpopup();
      
     }
