@@ -214,19 +214,7 @@ public class TS_001_BasicSearch {
 
 	}
 	
-	@Test(groups={"regression"},priority=12)
-	public void creditcardsearch() {
-		
-		SoftAssert softAssertion= new SoftAssert();
-		
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-		bc.selectproject();
-		bc.passedStep("******** Search page is successfully opened********");
-		bc.stepInfo("Test Case Id : RPMXCON-59636 Verify Search result should work correctly for Credit card number");
-		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=1);
-		bc.passedStep("******** Search is successfully done********");
-		
-	}
+	
 	
 		
 		@Test(groups={"regression"},priority=7)
@@ -288,6 +276,68 @@ public class TS_001_BasicSearch {
    softAssertion.assertAll();
 	}
 	
+	@Test(groups={"regression"},priority=12)
+	public void creditcardsearch() {
+		
+		SoftAssert softAssertion= new SoftAssert();
+		
+		driver.getWebDriver().get(Input.url+ "Search/Searches");
+		bc.selectproject();
+		bc.passedStep("******** Search page is successfully opened********");
+		bc.stepInfo("Test Case Id : RPMXCON-59636 Verify Search result should work correctly for Credit card number");
+		softAssertion.assertTrue(ss.basicContentSearch("##[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{2,4}")>=1);
+		bc.passedStep("******** Search is successfully done********");
+		
+	}
+	
+	public void basicsearchCustomField() throws InterruptedException {
+try {
+
+lp.logout();
+}
+catch(Exception e) {}
+
+lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+bc.passedStep("********logged in succesfully as PA user********");
+bc.selectproject();
+String fieldname = CustomFieldname;
+SoftAssert softAssertion= new SoftAssert();
+bc.stepInfo("Test Case Id :RPMXCON-49165 :Verify that Basic Search works properly for CustomField date/time field with 'Is' operator");
+bc.stepInfo("********Verify that CustomField date/time field is created and perform Basic search********");
+String Verifyfield = pf.VerifyCustomfield(fieldname);
+
+if(!Verifyfield.equalsIgnoreCase(fieldname))
+{
+bc.stepInfo("********Create CustomField date/time field********");
+pf.CreateProjectField(fieldname);
+bc.passedStep("********CustomField date/time field is created********");
+bc.stepInfo("********Ingestion of metadata with Custom date/time field********");
+driver.getWebDriver().get(Input.url+ "Ingestion/Home");
+
+ip.ReIngestionofDataWithOverlay(Input.Collection1KFolder,fieldname);
+bc.passedStep("********Ingestion of metadata with Custom date/time field is completed********");
+SessionSearch ss = new SessionSearch(driver);
+driver.getWebDriver().get(Input.url+ "Search/Searches");
+
+bc.passedStep("******** Search page is successfully opened********");
+bc.stepInfo("*******Basic Search for CustomField date/time field with 'Is' operator*********");
+softAssertion.assertTrue(ss.basicMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
+bc.passedStep("*******Basic Search for CustomField date/time field with 'Is' operator is created*********");
+
+}
+
+else {
+
+driver.getWebDriver().get(Input.url+ "Search/Searches");
+SessionSearch ss = new SessionSearch(driver);
+bc.passedStep("******** Search page is successfully opened********");
+bc.stepInfo("*******Basic Search for CustomField date/time field with 'Is' operator*********");
+softAssertion.assertTrue(ss.basicMetaDataSearch(fieldname,"IS","2000-01-04 19:39:00","")>=1);
+bc.passedStep("*******Basic Search for CustomField date/time field with 'Is' operator is created*********");
+
+}
+
+}
 
 	
   
