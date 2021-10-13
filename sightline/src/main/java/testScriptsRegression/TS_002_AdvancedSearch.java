@@ -17,7 +17,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
+import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
+import pageFactory.ProjectFields;
 import pageFactory.RedactionPage;
 import pageFactory.SavedSearch;
 import pageFactory.SecurityGroupsPage;
@@ -36,6 +38,9 @@ public class TS_002_AdvancedSearch {
 	SoftAssert softAssertion;
 	int pureHit;
 	BaseClass bc;
+	String CustomFieldname;
+	ProjectFields pf;
+	IngestionPage ip;
 	//
 	/*
 	 * Author : Suresh Bavihalli
@@ -61,8 +66,12 @@ public class TS_002_AdvancedSearch {
 		
 		bc = new BaseClass(driver);
 		bc.passedStep("********logged in succesfully as PA user********");
+		pf = new ProjectFields(driver);
+		ip =new IngestionPage(driver);
+		CustomFieldname = Input.CustomFieldname;
 		searchText =Input.searchString1;
 		search = new SessionSearch(driver);
+		
     	
     
 	}
@@ -354,7 +363,7 @@ public class TS_002_AdvancedSearch {
 		 search.selectSecurityGinWPS(securitygroupname);
 		 search.selectOperator("AND");
 		 search.searchSavedSearch(saveSearchName);
-		 softAssertion.assertEquals(15,search.serarchWP());
+		 softAssertion.assertEquals(50,search.serarchWP());
 		 
 		 
 		 
@@ -682,10 +691,11 @@ public class TS_002_AdvancedSearch {
 		   	 bc.selectproject();
 	 		 search.advContentSearchwithoptions(Input.searchString2);
 	 		 bc.passedStep("********Content with Advance Search options is successful********");
-	 		   }
+	 		
+	    }
      	 
      	 @Test(groups={"regression"},priority=16)
-    	public void Audiosearchwithmultipletearms() throws ParseException, InterruptedException {
+    	public void Audiosearchwithmultipleterms() throws ParseException, InterruptedException {
     		
     		 bc.stepInfo("Test case Id: RPMXCON-56906 - Audio Proximity searches in Sightline should allow the user to specify more than two search terms");
     		 bc.stepInfo("*****Verify Audio search with more than two terms*****");
@@ -744,7 +754,8 @@ public class TS_002_AdvancedSearch {
      		}
      		
      	}
-}
+  
+     	 
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");
