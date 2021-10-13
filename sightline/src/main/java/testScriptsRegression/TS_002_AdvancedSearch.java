@@ -705,6 +705,7 @@ public class TS_002_AdvancedSearch {
     		bc.passedStep("*****Audio search successfull*****");
      	 }
      	 
+
      	 @Test(groups={"regression"},priority=17)
      	public void advancedsearchCustomField() throws InterruptedException {
      		try {
@@ -755,6 +756,7 @@ public class TS_002_AdvancedSearch {
      		
      	}
   
+
      	 
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){

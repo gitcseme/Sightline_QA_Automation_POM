@@ -304,6 +304,7 @@ public class TS_001_BasicSearch {
 		bc.passedStep("******** Search is successfully done********");
 		
 	}
+
 	
 	@Test(groups={"regression"},priority=13)
 	public void basicsearchCustomField() throws InterruptedException {
@@ -354,6 +355,7 @@ public class TS_001_BasicSearch {
 		}
 		
 	}
+
 	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
