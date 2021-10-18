@@ -453,25 +453,6 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
     			 getAdvancedSearchAudioRemarkIcon().Visible() ;}}), Input.wait30);
     	 getAdvancedSearchAudioRemarkIcon().waitAndClick(30);
         
-         try {
-           	 //Delete any existing remarks if any
-        	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			 getDocView_AudioRemark_DeleteButton().Enabled() ;}}), Input.wait30);
-        	 getDocView_AudioRemark_DeleteButton().Click();
-            
-        	 //click on yes button
-    		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-    		 getDocview_ButtonYes().Click();
-    	    
-    		 base.VerifySuccessMessage("Record Deleted Successfully");
-        	 Thread.sleep(10000);
-               }
-         catch (Exception e)
-         {
-        	 System.out.println("No Remarks exist'");
-        	 UtilityLog.info("No Remarks exist'");
-         }
 			
 		//click on + icon to add remarks
          getAdvancedSearchAudioRemarkPlusIcon().Click();
@@ -512,42 +493,52 @@ public void audioRemark(String remark) throws InterruptedException, ParseExcepti
          base.VerifySuccessMessage("Record added Successfully");
         	 
          }
-public void audioReduction() throws InterruptedException, ParseException {
+
+public void deleteRemark(String remark) throws InterruptedException, ParseException {
+	
+    //adding remarks
+	 
+	  //click on remarks button
+	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			 getAdvancedSearchAudioRemarkIcon().Visible() ;}}), Input.wait30);
+	 getAdvancedSearchAudioRemarkIcon().waitAndClick(30);
+    
+     try {
+       	 //Delete any existing remarks if any
+    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			 getDocView_AudioRemark_DeleteButton().Enabled() ;}}), Input.wait30);
+    	 getDocView_AudioRemark_DeleteButton().Click();
+    	 
+    	//click on No button
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 base.getNoBtn().Visible() ;}}),Input.wait30);
+		 base.getNoBtn().waitAndClick(10);
+    	 
+    	 //click on yes button
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
+		 getDocview_ButtonYes().Click();
+	    
+		 base.VerifySuccessMessage("Record Deleted Successfully");
+     }
+     catch (Exception e)
+     {
+    	 System.out.println("No Remarks exist'");
+    	 UtilityLog.info("No Remarks exist'");
+     }
+		
+}
+public void audioRedaction() throws InterruptedException, ParseException {
 	//adding redactions
 	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			getDocview_RedactionsTab().Visible() ;}}), Input.wait30);
 	getDocview_RedactionsTab().waitAndClick(30);
 	
 	
-	 try {
-       	 //Delete any existing redaction if any
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocview_Redactionstags_Delete().Visible() ;}}),Input.wait30);
-		 getDocview_Redactionstags_Delete().Click();
-	    	
-     	 //click on No button
-	/*	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocview_ButtonNO().Visible() ;}}),Input.wait30);
-		 getDocview_ButtonNO().Click();
-	*/    
-		 //click on yes button
-		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
-		 getDocview_ButtonYes().waitAndClick(10);
-	    
-		 base.VerifySuccessMessage("Record Deleted Successfully");
-		 base.CloseSuccessMsgpopup();
-           }
-     catch (Exception e)
-     {
-    	 System.out.println("No Redactions exist'");
-    	 UtilityLog.info("No Redactions exist'");
-     }
-	 
 	//click on + icon to add redactions
 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			 getDocview_RedactionsTab_Add().Visible() ;}}), Input.wait30);
-	 getDocview_RedactionsTab_Add().Click();
+	getDocview_RedactionsTab_Add().waitAndClick(20);
     
      //Get Audio duration start and End time first
      String Audiostarttime=getDocview_Audio_StartTime().getText();
@@ -601,6 +592,39 @@ public void audioReduction() throws InterruptedException, ParseException {
 	 UtilityLog.info("Redaction added successfully");
 }
 
+public void deleteRedaction() throws InterruptedException, ParseException {
+	//adding redactions
+	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+			getDocview_RedactionsTab().Visible() ;}}), Input.wait30);
+	getDocview_RedactionsTab().waitAndClick(30);
+	
+	
+	 try {
+       	 //Delete any existing redaction if any
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocview_Redactionstags_Delete().Visible() ;}}),Input.wait30);
+		 getDocview_Redactionstags_Delete().Click();
+	    	
+     	 //click on No button
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocview_ButtonNO().Visible() ;}}),Input.wait30);
+		 getDocview_ButtonNO().waitAndClick(10);
+	    
+		 //click on yes button
+		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+				 getDocview_ButtonYes().Visible() ;}}),Input.wait30);
+		 getDocview_ButtonYes().waitAndClick(10);
+	    
+		 base.VerifySuccessMessage("Record Deleted Successfully");
+		 base.CloseSuccessMsgpopup();
+           }
+     catch (Exception e)
+     {
+    	 System.out.println("No Redactions exist'");
+    	 UtilityLog.info("No Redactions exist'");
+     }
+}
+
 public void audioComment(String comments) {
 	//adding comments
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -623,7 +647,7 @@ public void audioDownload() {
     
     driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    		 getDocview_Audio_DownloadFile().Visible() ;}}),Input.wait30);
-    getDocview_Audio_DownloadFile().Click();
+    getDocview_Audio_DownloadFile().waitAndClick(10);
 
 }
     	
@@ -1379,8 +1403,9 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 	        		getDocView_Historydropdown().Visible() ;}}),Input.wait30);
 		    getDocView_Historydropdown().waitAndClick(10);
 		    
-		    Assert.assertTrue(getDocView_TextFileType().Enabled());
-            Assert.assertEquals(getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		    softAssertion.assertTrue(getDocView_TextFileType().Enabled());
+		    softAssertion.assertEquals(getDocView_TextFileType().getText().toString(), "MP3 VERSION");
+		    softAssertion.assertAll();
 	    }
 	   
 	    public void getDocView_AnalyticsEmail() throws InterruptedException {

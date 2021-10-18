@@ -29,18 +29,17 @@ public class DocViewAudio_Regression {
 	String Comments = "Audio comment";
 	DocViewPage docview ;
 	BaseClass baseclass;
+	SessionSearch search;
 	
 	@BeforeClass(alwaysRun = true)
 	public void before() throws InterruptedException, ParseException, IOException {
 		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-	
+	 
 		driver = new Driver();
 		lp = new LoginPage(driver);
-		baseclass = new BaseClass(driver);
-		
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-	
+		baseclass = new BaseClass(driver);
 		
 		//add comment field
     	CommentsPage comments = new CommentsPage(driver);
@@ -49,7 +48,6 @@ public class DocViewAudio_Regression {
     	//Create coding for for assignment
 		CodingForm cf = new CodingForm(driver);
 		cf.createCodingform(codingfrom);
-		//Thread.sleep(10000);
 		cf.CodingformToSecurityGroup(codingfrom);
 		
 		RedactionPage redpage = new RedactionPage(driver);
@@ -60,20 +58,17 @@ public class DocViewAudio_Regression {
 		
 		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 		docview = new DocViewPage(driver);
-		SessionSearch search = new SessionSearch(driver);
+		search = new SessionSearch(driver);
 		search.audioSearch("morning", "North American English");
 		search.ViewInDocView();
-		
-		
-
 	}
 	
-	  @Test(priority=1,groups={"smoke","regression"})
+	  @Test(priority=1,groups={"regression"})
 		public void Verifyaudiodocthruhistorydropdown() throws ParseException, InterruptedException {
 		  baseclass.stepInfo("Test case Id: RPMXCON-51835 - Verify if user select Audio documents from Doc View History, document should be loaded immediately ");
 		  baseclass.stepInfo("*****Select Audio Doc through history dropdown*****");	
-			docview.audiodocthruhistorydropdown();
-			baseclass.passedStep("*****Audio Doc Selected through history dropdown successfully*****");		
+		  docview.audiodocthruhistorydropdown();
+		  baseclass.passedStep("*****Audio Doc Selected through history dropdown successfully*****");		
 		}
 	
 	@Test(priority=2,groups={"smoke","regression"})
@@ -97,30 +92,28 @@ public class DocViewAudio_Regression {
 	@Test(priority=4,groups={"smoke","regression"})
 	public void addRemark() throws ParseException, InterruptedException {
 		baseclass.stepInfo("Test case Id: RPMXCON-46857 -  Verify RMU/Reviewer can add remarks for audio files on doc view");	
-		baseclass.stepInfo("*****Add/delete Audio remark*****");
+		baseclass.stepInfo("*****Add Audio remark*****");
 		docview.audioRemark(remark);
-		baseclass.passedStep("*****Audio remark deleted and added successfully*****");
+		baseclass.passedStep("*****Audio remark added successfully*****");
 	}
 	
 	@Test(priority=5,groups={"smoke","regression"})
+	public void DeleteRemark() throws ParseException, InterruptedException {
+		baseclass.stepInfo("Test case Id: RPMXCON-46866 - To verify that remark can be deleted by reviewers in audio doc view");	
+		baseclass.stepInfo("*****Delete Audio remark*****");
+		docview.deleteRemark(remark);
+		baseclass.passedStep("*****Audio remark deleted successfully*****");
+	}
+	
+	@Test(priority=6,groups={"smoke","regression"})
 	public void addComment() throws ParseException, InterruptedException {
-		baseclass.stepInfo("Test case Id: RPMXCON- - audio add comment");
+		baseclass.stepInfo("Test case Id: RPMXCON-59815 -  Verify that User can add comments and Save Video file documents inside Doc view screen");
 		baseclass.stepInfo("*****Add Audio coments*****");
 		docview.audioComment(remark);
 		baseclass.passedStep("*****Audio coments added successfully*****");
 	}
 	
-	
 	@Test(priority=7,groups={"smoke","regression"})
-	public void addreduction() throws ParseException, InterruptedException {
-		baseclass.stepInfo("Test case Id: RPMXCON-46859 - Verify RMU/Reviewer can redact an audio file in security group");
-		baseclass.stepInfo("*****Verify Audio Reduction*****");
-		docview.audioReduction();
-		baseclass.passedStep("*****Audio Reduction successfull*****");
-	
-	}
-	
-	@Test(priority=6,groups={"smoke","regression"})
 	public void AudioDownload() throws ParseException, InterruptedException {
 		 baseclass.stepInfo("Test case Id: RPMXCON-51110 - Verify user should be able to click the download icon of audio file in doc view");
 		 baseclass.stepInfo("*****Verify Audio download*****");
@@ -128,6 +121,24 @@ public class DocViewAudio_Regression {
 		baseclass.passedStep("*****Audio download successfull*****");
 	
 	}
+	
+	@Test(priority=8,groups={"smoke","regression"})
+	public void addredaction() throws ParseException, InterruptedException {
+		baseclass.stepInfo("Test case Id: RPMXCON-46859 - Verify RMU/Reviewer can redact an audio file in security group");
+		baseclass.stepInfo("*****Verify adding audio Redaction*****");
+		docview.audioRedaction();
+		baseclass.passedStep("*****Audio Redaction added successfully*****");
+	}
+	
+	@Test(priority=9,groups={"smoke","regression"})
+	public void Deleteredaction() throws ParseException, InterruptedException {
+		baseclass.stepInfo("Test case Id: RPMXCON-46861 - Verify user can delete the redactions in a audio file");
+		baseclass.stepInfo("*****Verify deleteing audio Redaction*****");
+		docview.deleteRedaction();
+		baseclass.passedStep("*****Audio Redaction deleted successfully*****");
+	}
+	
+	
 	 @BeforeMethod
 	 public void beforeTestMethod(Method testMethod){
 		System.out.println("------------------------------------------");

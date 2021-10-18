@@ -164,7 +164,9 @@ public class BaseClass {
 	  //added by shilpi on 24/06/2021
 	public Element getBckTask_selecttask() {return driver.FindElementByXPath("//*[@id='bgTask']//li[1]//a");}
 
-	
+	public Element getNoBtn() {
+		return driver.FindElementById("btnNo");
+	}
 	
 	public BaseClass(Driver driver) {
 

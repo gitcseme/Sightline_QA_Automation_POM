@@ -88,7 +88,7 @@ public class TS_018_DocViewAudio {
 	@Test(groups = { "smoke", "regression" })
 	public void addreduction() throws ParseException, InterruptedException {
 
-		docview.audioReduction();
+		docview.audioRedaction();
 
 	}
 
