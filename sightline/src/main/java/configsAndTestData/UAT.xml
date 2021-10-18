@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LD9PT>
+        <url>https://sightlineuat.consiliotest.com/</url>
+        <prodpath>Productions PT WorkSpace\Automation</prodpath>
+        <SourceLocation>IngestionTestData\Automation</SourceLocation>             
+        <domainName>AutomationDomain_DND</domainName>
+        <projectName>Deeksha_Automation_DND</projectName>
+           <ICEProjectName>ICETest2</ICEProjectName>
+        
+         <da1userName>rmu.serconsilio@gmail.com</da1userName>
+        <da1password>Sightline@123</da1password>
+         
+        <!-- User Name : SA QA -->    
+        <sa1userName>smangal@consilio.com</sa1userName> 
+        <sa1password>Sightline@12345</sa1password> 
+     
+        <!-- Consilio PAU Automation -->
+        <pa1FullName>Shilpi PA1</pa1FullName>
+        <pa1userName>r.muserconsilio@gmail.com</pa1userName>
+        <pa1password>Sightline@123</pa1password> 
+        
+        <pa2FullName>shilpi pa2</pa2FullName>
+        <pa2userName>rmuse.rconsilio@gmail.com</pa2userName>
+        <pa2password>Sightline@123</pa2password>
+        
+        <!--Consilio RMU Automation  -->
+        <rmu1FullName>shilpi rmu1</rmu1FullName>
+        <rmu1userName>rm.userconsilio@gmail.com</rmu1userName>
+        <rmu1password>Sightline@123</rmu1password>
+        
+        <rmu2FullName>Consilio RMU3 Automation</rmu2FullName>
+        <rmu2userName>QARMU2@Consilio.com</rmu2userName>
+        <rmu2password>Q@test_10</rmu2password>
+        
+        <!-- Consilio REVU Automation -->
+        <rev1FullName>shilpi rev1</rev1FullName>
+        <rev1userName>rmus.erconsilio@gmail.com</rev1userName>
+        <rev1password>Sightline@123</rev1password>
+        
+        <rev2FullName>Consilio REVU2 Automation</rev2FullName>
+        <rev2userName>QAREV2@Consilio.com</rev2userName>
+        <rev2password>Q@test_12</rev2password>
+
+
+        <shareTo>PTPA2 PA2</shareTo>
+       
+       
+</LD9PT>
