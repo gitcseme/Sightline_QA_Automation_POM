@@ -1267,7 +1267,7 @@ public void NonAudioRemarkAddEditDeletebyReviewer(String remark) throws Interrup
 		   
 	   }
 	   
-	   public void MiniDoclistFolderAction(String foldername) throws InterruptedException {
+	   public void MiniDoclistFolderActionfromchildwind(String foldername) throws InterruptedException {
 		   	
 		   driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 					getDocView_EditMode().Displayed()  ;}}), Input.wait30);   
