@@ -3,14 +3,17 @@
         <url>https://sightlinept.consilio.com/</url>
         <prodpath>Productions PT WorkSpace\Automation</prodpath>
         <SourceLocation>IngestionTestData\Automation</SourceLocation>             
-        <domainName>Hema_auto_DND</domainName>
+
+        <domainName>Automation_Regression</domainName>
         <projectName>RegressionDataSet_Hema_DND</projectName>
-           <ICEProjectName>ICETest2</ICEProjectName>
+           <ICEProjectName>ICETest</ICEProjectName>
+
         
          <da1userName>rmu.serconsilio@gmail.com</da1userName>
         <da1password>Sightline@123</da1password>
          
         <!-- User Name : SA QA -->    
+
         <sa1userName>smangal@consilio.com</sa1userName> 
         <sa1password>Sightline@123456</sa1password> 
      
@@ -44,5 +47,6 @@
 
         <shareTo>PTPA2 PA2</shareTo>
        
+
        
 </LD9PT>

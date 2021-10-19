@@ -406,11 +406,13 @@ public class SessionSearch {
     	
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     	    	getQueryAlertGetText().Visible() ;}}), 10);
+
     	System.out.println(getQueryAlertGetText().getText());  
     	if(MessageNumber == 1) {
     		String msg="Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
         	Assert.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
             	} 
+
     	  	
     		//Assert.assertEquals("Wildcard characters in proximity searches and in phrase searches are not supported. Please contact your project manager to help structure your search needs.",getQueryAlertGetText().getText()); 
     	if(MessageNumber == 2){
@@ -511,11 +513,12 @@ public class SessionSearch {
         	
         	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
         	    	getQueryAlertGetText().Visible() ;}}), 10);
+System.out.println(getQueryAlertGetText().getText());  
         	if(MessageNumber == 1) {
         		String msg="Your query contains a ~(tilde) character, which does not invoke a stemming search as dtSearch in Relativity does. If you want to perform a stemming search, use the trailing wildcard character (ex. cub* returns cubs, cubicle, cubby, etc.). To perform a proximity search in Sightline, use the ~ (tilde) character (ex. \"gas transportation\"~4 finds all documents where the word gas and transportation are within 4 words of each other.)Does your query reflect your intent?Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
         		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
                 	} 
-        
+             
         	if(MessageNumber == 2){
         		String msg= "Your query contains at least one lowercase \"and\", \"or\" or \"not\" word. In Sightline, lowercase \"and\", \"or\" or \"not\" are treated as terms, whereas capitalized \"AND\", \"OR\" or \"NOT\" are treated as operators.Does your query reflect your intent? Click YES to continue with your search as is, or NO to cancel your search so you can edit the syntax.";
         		assertion.assertEquals(msg.replaceAll(" ", ""),getQueryAlertGetText().getText().replaceAll(" ", "").replaceAll("\n",""));
@@ -852,6 +855,41 @@ public class SessionSearch {
     	
     	int pureHit = Integer.parseInt(getPureHitsCount().getText());
     	System.out.println("Audio Serach is done for "+SearchString1+" and "+SearchString2 +" PureHit is : "+pureHit);
+    	
+    	return pureHit;
+
+	}
+public int audioSearch(String SearchString1,String SearchString2, String SearchString3 , String SearchString4, String language) throws InterruptedException {
+    	
+    	getAdvancedSearchLink().Click();
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_Audio().Visible()  ;}}), Input.wait30); 
+    	getAs_Audio().waitAndClick(10);
+    	
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_AudioLanguage().Visible()  ;}}), Input.wait30); 
+    	getAs_AudioLanguage().selectFromDropdown().selectByVisibleText(language);
+    	 //Enter seatch string
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAs_AudioText().Visible()  ;}}), Input.wait30); 
+    	getAs_AudioText().SendKeys(SearchString1+Keys.ENTER+SearchString2+Keys.ENTER+SearchString3+Keys.ENTER+SearchString4+Keys.ENTER) ;
+
+    	//Select term operator 
+    	getAudioTermOperator().selectFromDropdown().selectByVisibleText("ALL");
+    	//Select location
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    			getAudioLocation().Visible()  ;}}), Input.wait30); 
+    	Thread.sleep(2000);
+    	
+        //Click on Search button
+    	getQuerySearchButton().Click();
+    	
+    	//verify counts for all the tiles
+    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+    	getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+    	
+    	int pureHit = Integer.parseInt(getPureHitsCount().getText());
+    	System.out.println("Audio Serach is done for "+SearchString1+" "+SearchString2+" "+SearchString3+" and "+SearchString4+" PureHit is: "+pureHit);
     	
     	return pureHit;
 

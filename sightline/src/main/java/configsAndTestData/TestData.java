@@ -32,4 +32,5 @@ public class TestData {
 		public int totalNumberOfDocsincludeadvoption;
 		public String MasterPDF1location;
 		public String MasterPDF2location;
+		public String CustomFieldname;
 }

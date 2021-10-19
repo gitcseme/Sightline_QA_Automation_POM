@@ -35,9 +35,7 @@ public class TS_005_BasicAndAdvanceAlerts {
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-     Input in = new Input();
-     in.loadEnvConfig();
-		
+
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -78,8 +76,7 @@ public class TS_005_BasicAndAdvanceAlerts {
    
    		sessionSearch.wrongQueryAlertAdvanceSaerch(data, 11,"non fielded", null, "TestcaseId");
 	} 
-    
-    
+
     @Test(dataProvider =  "reservedWords",groups= {"regression"},priority=3)
     public void reserveredWordsAsearchNonFielded(String data, int MessageNumber, String fielded, String fieldName,String TestCaseId) {
 		// TODO Auto-generated method stub
@@ -355,17 +352,17 @@ public class TS_005_BasicAndAdvanceAlerts {
 		System.out.println("------------------------------------------");
 	    System.out.println("Executing method : " + testMethod.getName());       
 	 }
-	   @AfterMethod(alwaysRun = true)
-		 public void takeScreenShot(ITestResult result) {
-	 	 if(ITestResult.FAILURE==result.getStatus()){
-	 		 
-	 		Utility bc = new Utility(driver);
-	 		bc.screenShot(result);
-	 		
-	 	}
-	 	 System.out.println("Executed :" + result.getMethod().getMethodName());
-	 	
-	     }
+
+    @AfterMethod(alwaysRun = true)
+	 public void takeScreenShot(ITestResult result) {
+	 if(ITestResult.FAILURE==result.getStatus()){
+		Utility bc = new Utility(driver);
+		bc.screenShot(result);
+	 }
+	 System.out.println("Executed :" + result.getMethod().getMethodName());
+	
+    }
+
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{
