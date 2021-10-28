@@ -340,7 +340,7 @@ public class SavedSearch {
 		getSelectFile().SendKeys(System.getProperty("user.dir") + Input.batchFilesPath + batchFile);
 		getSubmitToUpload().waitAndClick(10);
 
-		base.VerifySuccessMessage("File uploaded successfully");
+		base.VerifySuccessMessageB("File uploaded successfully");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return bc.initialBgCount() == Bgcount + 12;
@@ -544,11 +544,10 @@ public class SavedSearch {
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
-				return getShareSaveBtn().Visible() && getShareSaveBtn().Enabled();
+				return getShareSaveBtnNew().Visible();
 			}
 		}), Input.wait30);
-		getShareSaveBtnNew().waitForElement(getShareSaveBtnNew());
-		new Actions(driver.getWebDriver()).moveToElement(getShareSaveBtnNew().getWebElement()).click();
+		getShareSaveBtnNew().waitAndClick(10);
 		  
 	
 		// getShareSaveBtn().waitAndClick(5);
@@ -670,13 +669,12 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		getShare_SecurityGroup(securitygroupname).waitAndClick(60);
-
-		// driver.WaitUntil((new Callable<Boolean>() {public Boolean
-		// call(){return
-		// getShareSaveBtn().Visible() ;}}), Input.wait30);
-		// getShareSaveBtn().javascriptclick();
-
-		getShareSaveBtnNew().waitAndClick(30);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getShareSaveBtnNew().Visible();
+			}
+		}), Input.wait30);
+		getShareSaveBtnNew().waitAndClick(10);
 
 		// getShareSaveBtn().waitAndClick(10);
 		base.VerifySuccessMessage("Share saved search operation successfully done.");

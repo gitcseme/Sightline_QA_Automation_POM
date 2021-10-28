@@ -53,6 +53,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -78,10 +79,10 @@ public class TS_007_SavedSearchShareSchedule {
 	BaseClass baseClass;
 	public static int purehits;
 	
-	//String searchText = "test";
 	String saveSearchName = "test013"+Utility.dynamicNameAppender();
 	String SearchNameRMU = "RMU"+Utility.dynamicNameAppender();
 	String SearchNamePA = "PA"+Utility.dynamicNameAppender();
+	String SearchNameRev = "Rev"+Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException{
@@ -90,7 +91,6 @@ public class TS_007_SavedSearchShareSchedule {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		
-		//Open browser
 		driver = new Driver();
 		
 		//Login as a PA
@@ -135,42 +135,45 @@ public class TS_007_SavedSearchShareSchedule {
 	  
 	  }
 	 
-	  @Test(groups={"smoke","regression"},priority=3) public void scheduleSavedSearch() throws
-	  ParseException, InterruptedException {
+	  @Test(groups={"smoke","regression"},priority=3) 
+	  public void scheduleSavedSearch() throws   ParseException, InterruptedException {
 	  
 	  //Schedule the saved search
 	  sessionSearch.scheduleSavedSearch(saveSearchName); SchedulesPage sp = new
 	  SchedulesPage(driver); sp.checkStatusComplete(saveSearchName); }
 	  		 
 	
-	@Test(groups={"smoke","regression"},priority=4)
-	  public void shareSavedSearch() throws ParseException, InterruptedException {
+	 @Test(dataProvider="SavedSearchwithUsers",groups={"smoke","regression"},priority=4)
+	  public void shareSavedSearch(String user,String password,String usertype) throws ParseException, InterruptedException {
 		
+		loginPage.logout();
+		loginPage.loginToSightLine(user, password);
+		if(usertype=="PA") {
 		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
-	  	loginPage.logout();
-	  	
-	  	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		}
+		else if(usertype=="RMU") {
 	  	baseClass.selectsecuritygroup("Default Security Group");
 	  	search.basicContentSearch(Input.searchString1);
 	  	search.saveSearch(SearchNameRMU);
 	  	sessionSearch.shareSavedSearchRMU(SearchNameRMU,"Default Security Group");
+		}
+	  	else if(usertype=="Rev") {
+		  //	baseClass.selectsecuritygroup("Default Security Group");
+		  	search.basicContentSearch(Input.searchString1);
+		  	search.saveSearch(SearchNameRev);
+		  	sessionSearch.shareSavedSearchRMU(SearchNameRev,"Default Security Group");
+		}
 	  	
 	  	}
 	
-	@Test(groups={"smoke","regression"},priority=5)
-	  public void shareSavedSearchRev() throws ParseException, InterruptedException {
-		
-		sessionSearch.shareSavedSearchPA(SearchNamePA,"Default Security Group");
-	  	loginPage.logout();
-	  	
-	  	loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
-	  	baseClass.selectsecuritygroup("Default Security Group");
-	  	search.basicContentSearch(Input.searchString1);
-	  	search.saveSearch(SearchNameRMU);
-	  	
-	  	
-	  	}
-		 
+	
+
+	@DataProvider(name = "SavedSearchwithUsers")
+	public Object[][] SavedSearchwithUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password,"PA" },{ Input.rmu1userName, Input.rmu1password ,"RMU"},
+				{ Input.rev1userName, Input.rev1password ,"Rev"} };
+		return users;
+	}
 
 	  @BeforeMethod(alwaysRun = true)
 		public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {

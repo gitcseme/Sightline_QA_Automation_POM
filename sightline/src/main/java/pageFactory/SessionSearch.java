@@ -1342,7 +1342,7 @@ public void bulkRelease(final String SecGroup) throws InterruptedException {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
-	 
+	 base.waitForElement(getBulkActionButton());
 	 getBulkActionButton().waitAndClick(10);
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);

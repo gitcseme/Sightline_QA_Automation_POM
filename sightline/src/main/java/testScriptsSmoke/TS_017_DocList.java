@@ -45,7 +45,10 @@ public class TS_017_DocList {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-
+       
+		Input in = new Input();
+		in.loadEnvConfig();
+		
 		driver = new Driver();
 		
 		// loginPage as a PA
