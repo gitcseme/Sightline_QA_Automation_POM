@@ -160,7 +160,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 		
 	  	driver = new Driver();
-	
+	  	  		
 		// Login as a PA
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -171,7 +171,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 
 		UtilityLog.info("Logged in as Project Admin user");
 		Reporter.log("Logged in as Project Admin user");
-			baseClass = new BaseClass(driver);
+		baseClass = new BaseClass(driver);
 		sessionSearch = new SessionSearch(driver);
 
 	}
@@ -211,7 +211,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * @param expectedCount
 	 */
 	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke","regression" }, priority=2) 
-	public void contentSearchWithOperatorsInBasicSearch(String searchString, int expectedCount) {
+	public void contentSearchWithOperatorsInBasicSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
 			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
@@ -221,18 +221,23 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		}
 		baseClass.selectproject(); driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount = sessionSearch.basicContentSearch(searchString);
-		Reporter.log("Searched '"+searchString+"' expected and actual counts are  "+expectedCount+" and "+ actualCount);
-		AssertJUnit.assertEquals(expectedCount,actualCount);  	
+		if(Input.numberOfDataSets==1){
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are  "
+					+smokeExpectedCount+" and "+ actualCount);
+			AssertJUnit.assertEquals(smokeExpectedCount, actualCount);
+		}else{
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are  "
+					+regressionExpectedCount+" and "+ actualCount);
+			AssertJUnit.assertEquals(regressionExpectedCount, actualCount); }		
 
 	}
-
 
 	/**
 	 * @param searchString
 	 * @param expectedCount
 	 */
 	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke", "regression" }, priority=3) 
-	public void contentSearchWithOperatorsInAdvanceSearch(String searchString, int expectedCount) {
+	public void contentSearchWithOperatorsInAdvanceSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
 			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
@@ -243,8 +248,14 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 		baseClass.selectproject(); 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount = sessionSearch.advancedContentSearch(searchString);
-		Reporter.log("Searched '"+searchString+"' expected and actual counts are - "+expectedCount+" : "+ actualCount);
-		AssertJUnit.assertEquals(expectedCount,actualCount);  
+		if(Input.numberOfDataSets==1){
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are  "
+					+smokeExpectedCount+" and "+ actualCount);
+			AssertJUnit.assertEquals(smokeExpectedCount, actualCount);
+		}else{
+			Reporter.log("Searched '"+searchString+"' expected and actual counts are  "
+					+regressionExpectedCount+" and "+ actualCount);
+			AssertJUnit.assertEquals(regressionExpectedCount, actualCount); }		  
 	}
 
 
@@ -451,21 +462,22 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public Object[][] contentWithOps() {
 		return new Object[][] { 
 
-			{ Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString2, Input.searchString1ANDsearchString2},
-			{ Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString1, Input.searchString1ANDsearchString2}, 
-			{ Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER+ Input.searchString2, Input.searchString1ORsearchString2}, 
-			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2}, 
-			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1},
+			{ Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString2, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2},
+			{ Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString1, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2}, 
+			{ Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER+ Input.searchString2, Input.searchString1ORsearchString2,Input.searchString1ORsearchString2}, 
+			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2,Input.searchString1NOTsearchString2}, 
+			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1,Input.searchString2NOTsearchString1},
 			//All Operators Missed
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 40},
-			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists", 5},
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",50},
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",35},
-			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",1150},
-			{ "Allen" + Keys.ENTER + "NOT" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",1152}			
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",2,40},
+			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",0,5},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",3,50},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",2,35},
+			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",116,1150},
+			{ "Allen" + Keys.ENTER + "NOT" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",122,1152}			
 
 		};
 	}
+	
 	//Meta data name, option IS or Range, first input, second input, smoke expected pure hit, regression expected pure hit
 	/**
 	 * @return
