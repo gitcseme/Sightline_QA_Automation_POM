@@ -93,7 +93,7 @@ public class TS_007_SavedSearchShareSchedule {
 		
 		driver = new Driver();
 		
-		//Login as a PA
+		
 		loginPage = new LoginPage(driver);
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		

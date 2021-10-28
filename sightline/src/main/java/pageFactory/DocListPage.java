@@ -308,6 +308,7 @@ public class DocListPage {
     	     getDocList_QuickBatch().waitAndClick(10);
     	     
     	     System.out.println("performing quick batch");
+    	     //test
     	  }
       
 }
