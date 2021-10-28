@@ -70,6 +70,8 @@ public class DocListPage {
     public Element getDocList_QuickBatch(){ return driver.FindElementByXPath("//a[contains(text(),'Quick Batch')]"); }
     public Element getDocList_Preview_CloseButton(){ return driver.FindElementByXPath("//span[@id='ui-id-1']/following-sibling::button"); }
     public Element getrowColumnText(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]"); }
+    public Element getrowColumncheckbox(int row, int col){ return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr["+row+"]/td["+col+"]//i"); }
+    
     
   
     
@@ -306,6 +308,7 @@ public class DocListPage {
     	     getDocList_QuickBatch().waitAndClick(10);
     	     
     	     System.out.println("performing quick batch");
+    	     //test
     	  }
       
 }

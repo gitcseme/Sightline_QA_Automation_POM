@@ -64,7 +64,7 @@ public class SessionSearch {
     public Element getContinueCount(){ return driver.FindElementByXPath("//div[@class='bulkActionsSpanLoderTotal']"); }
     public Element getContinueButton(){ return driver.FindElementByXPath(".//*[@id='divBulkAction']//button[contains(.,'Continue')]"); }
     //public Element getContinueButton(){ return driver.FindElementById("btnAdd"); }
-    //public Element getContinueButton(){ return driver.FindElementByXPath("//*[@id=\"btnAdd\"]"); }
+   
     public Element getFinalCount(){ return driver.FindElementByXPath("//span[@id='spanTotal']"); }
     public Element getFinalizeButton(){ return driver.FindElementById("btnfinalizeAssignment"); }
     public Element getFolderTab(){ return driver.FindElementByXPath("//a[contains(text(),'Folders')]"); }
@@ -1342,7 +1342,7 @@ public void bulkRelease(final String SecGroup) throws InterruptedException {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
-	 
+	 base.waitForElement(getBulkActionButton());
 	 getBulkActionButton().waitAndClick(10);
 	 try{
 		 getBulkReleaseAction().waitAndClick(10);

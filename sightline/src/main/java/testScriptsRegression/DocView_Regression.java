@@ -1,6 +1,7 @@
 package testScriptsRegression;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
