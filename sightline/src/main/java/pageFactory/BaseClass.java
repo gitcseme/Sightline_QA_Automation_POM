@@ -1122,4 +1122,25 @@ public void waitForElement(Element element) {
 		}
 	}
 
+public void selectprojectICE() {
+	driver.scrollPageToTop();
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getProjectNames().Visible();
+		}
+	}), Input.wait3);
+	driver.scrollPageToTop();
+	// Select project if required one is not seletced
+	getProjectNames().waitAndClick(3);
+
+	driver.WaitUntil((new Callable<Boolean>() {
+		public Boolean call() {
+			return getSelectICEProject().Visible();
+		}
+	}), Input.wait3);
+	getSelectICEProject().waitAndClick(3);
+	driver.waitForPageToBeReady();
+	
+}
+
 }

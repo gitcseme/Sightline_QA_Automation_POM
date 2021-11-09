@@ -215,6 +215,7 @@ public class Input {
 		prodpath= envConfig.getProdpath();
 		SourceLocation = envConfig.getSourceLocation();
 		ICEProjectName = envConfig.getICEProjectName();
+		da1userName = envConfig.getDa1userName();
 
 		//Test data-------------------------------------------------------------
 		

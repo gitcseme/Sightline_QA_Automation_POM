@@ -38,10 +38,10 @@ public class ICE_Regression {
    @BeforeClass(alwaysRun = true)
      public void before() throws ParseException, InterruptedException, IOException {
     	System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-    	Input in = new Input();
-		in.loadEnvConfig();
 	
+    	Input in = new Input();
+    	in.loadEnvConfig();
+    			
           	driver = new Driver();
     	    lp = new LoginPage(driver);
     		//lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
@@ -50,7 +50,7 @@ public class ICE_Regression {
     	     	    
 	}
    
-   @Test(groups={"regression"},priority=1)
+     @Test	(groups={"regression"},priority=1)
 	public void VerifyEditUserHasDatasetOption() throws Exception
 	{
    	
@@ -68,6 +68,7 @@ public class ICE_Regression {
 		sa.assertTrue(mupage.getDatasetOptionInFunctionalityTabCheck().Displayed());
 		mupage.getEditUserCancelBtn().Click();
 		driver.waitForPageToBeReady();
+		Thread.sleep(2000);
 		
 		mupage.getUserList(Input.da1userName);
 		mupage.editSAUserBtn().Click();
@@ -81,7 +82,7 @@ public class ICE_Regression {
 		mupage.getEditUserCancelBtn().Click();
 		driver.waitForPageToBeReady();
 		
-
+		Thread.sleep(2000);
 		mupage.getUserList(Input.pa1userName);
 		mupage.editSAUserBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
@@ -94,7 +95,7 @@ public class ICE_Regression {
 		mupage.getEditUserCancelBtn().Click();
 		driver.waitForPageToBeReady();
 
-
+		Thread.sleep(2000);
 		mupage.getUserList(Input.rmu1userName);
 		mupage.editSAUserBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
@@ -107,7 +108,8 @@ public class ICE_Regression {
 		mupage.getEditUserCancelBtn().Click();
 		driver.waitForPageToBeReady();
 
-				mupage.getUserList(Input.rev1userName);
+		Thread.sleep(2000);
+		mupage.getUserList(Input.rev1userName);
 		mupage.editSAUserBtn().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() throws Exception{return 
 	    		mupage.getEditUserFunctionality().Displayed()  ;}}),Input.wait90);
@@ -122,12 +124,13 @@ public class ICE_Regression {
 		lp.logout();	
 	}
 
-    
+  
    //Test Case No: 10803(RPMXCON-50398)	
-    @Test(groups={"regression"},priority=2)
+     @Test	(groups={"regression"},priority=2)
   	public void PMUploadAndDeleteFile() throws InterruptedException
   	{
     	lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);
+    	bc.selectprojectICE();
   		ICE_DatasetsPage dp = new ICE_DatasetsPage(driver);
   		dp.getdatasetleftmenuBtn().waitAndClick(10);
   		driver.waitForPageToBeReady();
@@ -160,22 +163,23 @@ public class ICE_Regression {
   	  	
         driver.scrollPageToTop();
   		dp.getdatasetleftmenuBtn().Click();
-  		//mup.AcceptNavigation();
+  		mup.AcceptNavigation();
   		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 			dp.getDatasets().getFirstElement().Displayed();	}}),Input.wait90);
   		dp.DeleteUploadedDatasetByName(testdd.getDatasetName());
   		lp.logout();
   	}
     
-    @Test(groups={"regression"},priority=3)
+   @Test	(groups={"regression"},priority=3)
     public void datasetOptionDisplayedIfChecked()
     {
-		final ManageUsersPage mupage;
-		ICE_DatasetsPage dp;
+		
 		
 		//login as system admin and select dataset option if not checked
 		lp.loginToSightLineICE(Input.sa1userName, Input.sa1password);
 		driver.waitForPageToBeReady();
+		final ManageUsersPage mupage;
+		ICE_DatasetsPage dp;
 		mupage=new ManageUsersPage(driver);
 		
 		mupage.selectdatasetoption(Input.rmu1userName);
@@ -217,8 +221,8 @@ public class ICE_Regression {
 		sa.assertTrue(dp.getDatasetBtnLMenu()==null);
 		lp.logout();
    }
-    
-    @Test(groups={"regression"},priority=4)
+   
+   @Test	(groups={"regression"},priority=4)
     public void BulkUserAccessControlHasDatasetOption() throws InterruptedException
     {
     	ICE_DatasetsPage dp;
@@ -319,7 +323,7 @@ public class ICE_Regression {
 				driver.FindElementByCssSelector("#lblProjectTitle").Visible(); }}),Input.wait90);
 		ICE_DatasetProgressStatusPage dpdp = new ICE_DatasetProgressStatusPage(driver,dset.getDatasetName(),false);
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"); }}),1800000);
+				dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"); }}),180000);
 		lp.logout();
 		
 		driver.waitForPageToBeReady();
@@ -361,13 +365,14 @@ public class ICE_Regression {
 		
 		dp.getdatasetleftmenuBtn().waitAndClick(10);
 		driver.waitForPageToBeReady();
-			
+		/*	
 		dp.viewSetInDocListByName(dset.getDatasetName(),true);
 		DocListPage dlpage= new DocListPage(driver);
 		String coltext = dlpage.getrowColumnText(1, 8).getText();
 		System.out.println(coltext);
 		
 		sa.assertTrue(coltext.contains(dupeDset.getCustodianName()));
+		*/
 		
 		lp.logout();	
 		
@@ -402,11 +407,11 @@ public class ICE_Regression {
 			sa.assertEquals(fileUploadCount1, fileUploadedCount1);
 
 			lp.logout();
-			driver.waitForPageToBeReady();
+			//driver.waitForPageToBeReady();
 			
 			
 			lp.loginToSightLineICE(Input.pa2userName, Input.pa2password);
-			driver.waitForPageToBeReady();
+			//driver.waitForPageToBeReady();
 			
 			dp=new ICE_DatasetsPage(driver);
 			dp.getdatasetleftmenuBtn().waitAndClick(20);
@@ -499,7 +504,7 @@ public class ICE_Regression {
 		
 		//Start to create a dataset for error documents, where we have some survival document.
 		bc = new BaseClass(driver);
-		String testFolderPath = System.getProperty("user.dir")+"\\ICETestData\\Errordoc";
+		String testFolderPath = System.getProperty("user.dir")+"\\ICETestData\\ErrorFilesFolder";
 		lp.loginToSightLineICE(Input.pa1userName, Input.pa1password);	
 		ICE_DatasetsPage dp=new ICE_DatasetsPage(driver);
 		ICE_ManageUploadPage mup;
@@ -513,7 +518,7 @@ public class ICE_Regression {
 		dp.setdatasetdetails(dname,dcustodian, ddisc);
 		driver.waitForPageToBeReady();
 		
-		dp.getdatasetleftmenuBtn().waitAndClick(30);
+		//dp.getdatasetleftmenuBtn().waitAndClick(30);
 		mup = new ICE_ManageUploadPage(driver, testdd.getDatasetName());
 		mup.uploadFilesByFolder(testFolderPath);
 		mup.InitiateProcessing();
@@ -527,16 +532,18 @@ public class ICE_Regression {
 		//Here we start to verify accessing error page from Manage dataset tile.
 		dp.getdatasetleftmenuBtn().Click();
 		driver.waitForPageToBeReady();
-		
+			
 		//tc - 10794(RPMXCON-50391),
 		dp.getDatasetByName(dname);
 		int ErrorCount= GenFunc.StringToInt(dp.geterrorcount().getText());
-				
+			
 		//click on dataset name link
 		dp.getdatasetnamelink(dname).waitAndClick(20);
+	
 		driver.waitForPageToBeReady();
 		
 		ICE_DatasetSummaryPage summarypage = new ICE_DatasetSummaryPage(driver,testdd.getDatasetName());
+	
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				summarypage.getExcludeFilesLink().Displayed(); }}),Input.wait90);
@@ -555,11 +562,11 @@ public class ICE_Regression {
 		
 		sa.assertEquals("Errors & Exceptions", pagetitle);
 		
-		eep.getIncludedDocsWithErrorsTab().waitAndClick(10);
+		//eep.getIncludedDocsWithErrorsTab().waitAndClick(10);
 		
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				eep.getIncludedDocsWithErrors().Displayed(); }}),Input.wait90);
-		int expcount = GenFunc.StringToInt(eep.getIncludedDocsWithErrors().getText());
+				eep.getExcludedDocsWithErrors1().Displayed(); }}),Input.wait90);
+		int expcount = eep.getExcludedDocsListCount();
 		System.out.println(expcount);
 		
 		//tc - 10795(RPMXCON-50392),10796(RPMXCON-50393),
@@ -616,7 +623,7 @@ public class ICE_Regression {
  		Utility bc = new Utility(driver);
  		bc.screenShot(result);
 		
-		lp.logout();
+	//	lp.logout();
 	
 
  	}
