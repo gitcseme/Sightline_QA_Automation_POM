@@ -49,16 +49,13 @@ public class ICE_Smoke {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		Input in = new Input();
-		in.loadEnvConfig();
-		
 		driver = new Driver();
 		lp = new LoginPage(driver);
 	    bc = new BaseClass(driver);
 	    sa = new SoftAssert();
 	}
 
-	// @Test(groups={"smoke","regression"},priority=1)
+	 @Test(groups={"smoke","regression"},priority=1)
 	public void SystemAdminUserVerifications() throws InterruptedException {
 		lp.loginToSightLine(Input.sa1userName, Input.sa1password);
 		driver.waitForPageToBeReady();
@@ -90,7 +87,7 @@ public class ICE_Smoke {
 		sa.assertAll();
 	}
 
-	//@Test(groups = { "smoke", "regression" }, priority = 2)
+	@Test(groups = { "smoke", "regression" }, priority = 2)
 	public void PMUploadAndInitiate() throws InterruptedException {
 		// The below line of codes will make sure the RMU user has access to dataset
 		// option.
@@ -233,10 +230,10 @@ public class ICE_Smoke {
 		sa.assertTrue(dpdp.isWorkLoadEntireProjectDisplayed());
 
 		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");}}), 5000);
+			public Boolean call() {return dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE");}}), 1800000);
 
 		sa.assertTrue(dpdp.getProcessingStatus().equalsIgnoreCase("PUBLISHCOMPLETE"));
-		/*
+		
 		  
   	 	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
    			bc.initialBgCount() == Bgcount+1  ;}}), Input.wait120); 
@@ -252,7 +249,7 @@ public class ICE_Smoke {
 	 String actualtext = bc.getBckTask_selecttask().getText();
 	 sa.assertEquals("The dataset "+dname+" has been processed successfully.", actualtext);
   	 UtilityLog.info("Processing is completed");
-  	 Reporter.log("Processing is completed",true); */
+  	 Reporter.log("Processing is completed",true); 
 
 		bc.impersonatePAtoRMUICE();
 

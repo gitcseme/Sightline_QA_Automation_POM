@@ -287,6 +287,7 @@ public class ManageUsersPage {
        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
        			getBulkUserProject().Visible()  ;}}), Input.wait30); 
       	getBulkUserProject().selectFromDropdown().selectByVisibleText(Input.ICEProjectName);
+      	Thread.sleep(2000);
       	
       	if(role.equalsIgnoreCase("Review Manager"))
       	{
@@ -361,6 +362,13 @@ public class ManageUsersPage {
 		getEditUserFunctionality().Click();
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return 
 				getDatasetOptionInFunctionalityTabCheck().Displayed() ;}}),Input.wait30);
+		
+		//WebElement checkbox = driver.findElement(By.id("checkboxId"));
+
+		//If the checkbox is unchecked then isSelected() will return false 
+		//and NOT of false is true, hence we can click on checkbox
+		//if(!checkbox.isSelected())
+		//	checkbox.click();
 	
 		boolean isChecked = getDatasetOptionInFunctionalityTab().getWebElement().getAttribute("checked").equals("checked");
 
