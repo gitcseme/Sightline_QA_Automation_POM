@@ -21,6 +21,7 @@ import automationLibrary.Driver;
 import executionMaintenance.ExtentTestManager;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
+import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -33,6 +34,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	int pureHit;
 	String searchText ="test";
 	Logger log;
+	BaseClass bc;
 	
 	
 	String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -62,7 +64,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
     		sessionSearch = new SessionSearch(driver);
-    	   		
+    	   		bc= new BaseClass(driver);
     	//Search for any content on basic search screen
      	sessionSearch.advancedContentSearch(searchText);
      	ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+searchText);
@@ -81,7 +83,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	@Test(groups={"smoke","regression"})
 	   public void bulkTagInAdvancedSearch() throws InterruptedException {
 		
-	//Create Bulk Tag   
+	  bc.stepInfo("\"RPMXCON-46862 - Verify that Bulk Tag Action is working properly on Advanced Search result Screen");   
 		   sessionSearch.bulkTag(tagName);
 	       final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -107,7 +109,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInAdvancedSearch() throws InterruptedException {
 		
-		//Create Bulk Folder   
+		bc.stepInfo("RPMXCON-57079	- Verify that Bulk Folder Action is working properly on Advanced Search result Screen"); 
 		sessionSearch.bulkFolder(folderName);
 		ExtentTestManager.getTest().log(Status.INFO, "Folder Key Word Is : "+folderName);
         
