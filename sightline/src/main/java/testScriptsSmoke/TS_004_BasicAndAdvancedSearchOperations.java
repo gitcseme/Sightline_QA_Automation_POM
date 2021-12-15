@@ -191,7 +191,8 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			ExtentTestManager.getTest().log(Status.INFO,"Search/Parameter Key Word Is : "+searchString);
 			ExtentTestManager.getTest().log(Status.INFO,"Test Case ID : "+BasicTestCaseID);
 		}
-
+		baseClass.stepInfo(BasicTestCaseID);
+		baseClass.stepInfo("RPMXCON-57378- Verify that basic search for Proximity with Phrase Complex Query is working properly(Proximity with Phrase 10+ Instances only)");
 		baseClass.selectproject();
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount =  sessionSearch.basicContentSearch(searchString); 
@@ -211,14 +212,15 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * @param expectedCount
 	 */
 	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke","regression" }, priority=2) 
-	public void contentSearchWithOperatorsInBasicSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount) {
+	public void contentSearchWithOperatorsInBasicSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount,String testcaseid) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
 			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: contentSearchWithOperatorsInBasicSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search/Parameter Key Word Is : "+searchString);
-			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
+			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID :"+ testcaseid);
 		}
+		baseClass.stepInfo(testcaseid);
 		baseClass.selectproject(); driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount = sessionSearch.basicContentSearch(searchString);
 		if(Input.numberOfDataSets==1){
@@ -237,7 +239,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	 * @param expectedCount
 	 */
 	@Test(dataProvider = "contentSearchwithOperators", groups = { "smoke", "regression" }, priority=3) 
-	public void contentSearchWithOperatorsInAdvanceSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount) {
+	public void contentSearchWithOperatorsInAdvanceSearch(String searchString, int smokeExpectedCount, int regressionExpectedCount,String testcaseid) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
 			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
@@ -246,6 +248,7 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
 		}
 		baseClass.selectproject(); 
+		baseClass.stepInfo(testcaseid);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount = sessionSearch.advancedContentSearch(searchString);
 		if(Input.numberOfDataSets==1){
@@ -270,14 +273,15 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@Test(dataProvider = "metaDataSearch", groups = { "smoke", "regression" }, priority=4)
 	public void metaDataSearch(String metaDataName, String IS_or_Range, String
 			first_input, String second_input, int smokeExpectedCount, int
-			regressionExpectedCount) {
+			regressionExpectedCount,String testcaseid) {
 		if(Input.extentReportMethodWise) {
 			ExtentTestManager.getTest().log(Status.INFO, "Test Started");
 			ExtentTestManager.getTest().log(Status.INFO, "Logged in as :"+Input.pa1userName);
 			ExtentTestManager.getTest().log(Status.INFO, "Class Name: "+this.getClass().getSimpleName()+"/ Method Name: metaDataSearch");
 			ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+metaDataName + " "+ IS_or_Range +" "+ first_input + second_input);
-			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID : RPMXCON-48798");
+			ExtentTestManager.getTest().log(Status.INFO, "Test Case ID :"+ testcaseid);
 		}
+		baseClass.stepInfo(testcaseid);
 		baseClass.selectproject(); 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		int actualCount =sessionSearch.basicMetaDataSearch(metaDataName,IS_or_Range,first_input,second_input);
@@ -462,15 +466,15 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	public Object[][] contentWithOps() {
 		return new Object[][] { 
 
-			{ Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString2, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2},
-			{ Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString1, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2}, 
-			{ Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER+ Input.searchString2, Input.searchString1ORsearchString2,Input.searchString1ORsearchString2}, 
-			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2,Input.searchString1NOTsearchString2}, 
-			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1,Input.searchString2NOTsearchString1},
+			{ Input.searchString1 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString2, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2,"RPMXCON-46853"},
+			{ Input.searchString2 + Keys.ENTER + "AND" + Keys.ENTER+ Input.searchString1, Input.searchString1ANDsearchString2,Input.searchString1ANDsearchString2,"RPMXCON-46853"}, 
+			{ Input.searchString1 + Keys.ENTER + "OR" + Keys.ENTER+ Input.searchString2, Input.searchString1ORsearchString2,Input.searchString1ORsearchString2,"RPMXCON-46852"}, 
+			{ Input.searchString1 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString2, Input.searchString1NOTsearchString2,Input.searchString1NOTsearchString2,"RPMXCON-57035"}, 
+			{ Input.searchString2 + Keys.ENTER + "NOT" + Keys.ENTER+ Input.searchString1, Input.searchString2NOTsearchString1,Input.searchString2NOTsearchString1,"RPMXCON-57035"},
 			//All Operators Missed
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",2,40},
-			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",0,5},
-			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",3,50},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",2,40,"RPMXCON-57066"},
+			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "AND" + Keys.ENTER + "Comments" + Keys.ENTER + "NOT" + Keys.ENTER + "Exists",0,5,"RPMXCON-57066"},
+			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",3,50,"RPMXCON-56987"},
 			{ "Allen" + Keys.ENTER + "AND" + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",2,35},
 			{ "Allen" + Keys.ENTER + "OR"  + Keys.ENTER + "Test"  + Keys.ENTER + "NOT" + Keys.ENTER + "Comments",116,1150},
 			{ "Allen" + Keys.ENTER + "NOT" + Keys.ENTER + "Test"  + Keys.ENTER + "OR"  + Keys.ENTER + "Comments",122,1152}			
@@ -485,15 +489,15 @@ public class TS_004_BasicAndAdvancedSearchOperations {
 	@DataProvider(name = "metaDataSearch")
 	public Object[][] metaData() {
 		return new Object[][] { 
-			{"CustodianName", null,Input.metaDataCN,null,Input.metaDataCNcount,Input.metaDataCNcount}, 
-			{"MasterDate", "IS", "2010-04-06 22:18:00", null,1,1},
-			{"MasterDate", "RANGE", "1986-04-06", "2010-04-06",116,1087},
-			{"CreateDate", "IS", "2010-10-18", null,85,85},
-			{"CreateDate", "RANGE", "2000-10-18", "2010-10-18",85,314},
-			{"EmailSentDate", "IS", "1990-05-05", null,0,0},
-			{"EmailSentDate", "RANGE", "1990-05-05", "2000-05-05",0,0},
-			{"AppointmentStartDate", "IS", "1990-05-05", null,0,0},
-			{"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05",0,0}
+			{"CustodianName", null,Input.metaDataCN,null,Input.metaDataCNcount,Input.metaDataCNcount,"RPMXCON-57032"}, 
+			{"MasterDate", "IS", "2010-04-06 22:18:00", null,1,1,"RPMXCON-49145"},
+			{"MasterDate", "RANGE", "1986-04-06", "2010-04-06",116,1087,"RPMXCON-49146"},
+			{"CreateDate", "IS", "2010-10-18", null,85,85,"RPMXCON-49147"},
+			{"CreateDate", "RANGE", "2000-10-18", "2010-10-18",85,314,"RPMXCON-49148"},
+			{"EmailSentDate", "IS", "1990-05-05", null,0,0,"RPMXCON-49149"},
+			{"EmailSentDate", "RANGE", "1990-05-05", "2000-05-05",0,0,"RPMXCON-49150"},
+			{"AppointmentStartDate", "IS", "1990-05-05", null,0,0,"RPMXCON-49142"},
+			{"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05",0,0,"RPMXCON-49143"}
 
 		};
 	}

@@ -33,7 +33,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.TallyPage;
-
+import pageFactory.BaseClass;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -47,6 +47,7 @@ public class TS_003_BulkActionsFromBasicSearch {
 	SessionSearch sessionSearch;	
 	static int pureHit;	
 	SoftAssert softAssertion;
+	BaseClass bc;
 	TagsAndFoldersPage tagsAndFolderPage;
 	String tagName = "tagName"+Utility.dynamicNameAppender();
 	String folderName = "folderName1"+Utility.dynamicNameAppender();
@@ -66,6 +67,7 @@ public class TS_003_BulkActionsFromBasicSearch {
 	
     	loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 				sessionSearch = new SessionSearch(driver);
+		 		bc= new BaseClass(driver);
     	 tagsAndFolderPage = new TagsAndFoldersPage(driver);
     	//Search for any content on basic search screen
      	sessionSearch.basicContentSearch(Input.searchString2);
@@ -81,18 +83,17 @@ public class TS_003_BulkActionsFromBasicSearch {
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInBasicSearch() throws InterruptedException {
 		
-		//Create Bulk Folder 
+		bc.stepInfo("RPMXCON-57210	- Verify that Bulk Folder functionality is working correctly through Advanced Search Screen");
 		driver.getWebDriver().get(Input.url+ "Search/Searches");
 		sessionSearch.bulkFolder(folderName);
-        
-	}
+ 	}
 
 	/*
 	 * Description : As a Project Admin user validate bulk tag in baisc search  
 	 */	
 	@Test(groups={"smoke","regression"})
    public void bulkTagInBasicSearch() throws InterruptedException {
-	   //Create Bulk Tag   
+	   bc.stepInfo("RPMXCON-57209	Verify that Bulk Tag functionality is working correctly through Advanced Search Screen");   
 	   driver.getWebDriver().get(Input.url+ "Search/Searches");
 	   sessionSearch.bulkTag(tagName);
       
@@ -117,6 +118,8 @@ public class TS_003_BulkActionsFromBasicSearch {
 	 */	
 	@Test(groups={"smoke","regression"})
 	public void viewInDoclistInBasicSearch() throws InterruptedException {
+		
+		bc.stepInfo("RPMXCON-47947 -Verify that correct number of documents appears when user Selects \"View In DocList\" action from Basic Search Screen");
 	   //navigate to Doclist
        driver.getWebDriver().get(Input.url+"Search/Searches");
        sessionSearch.ViewInDocList();
@@ -133,7 +136,8 @@ public class TS_003_BulkActionsFromBasicSearch {
 	 */
 	@Test(groups={"smoke","regression"})
    public void viewInDocViewInBasicSearch() throws InterruptedException {
-	   //DocView
+
+       bc.stepInfo("RPMXCON-47948 - Verify that correct number of documents appears when user Selects \"View In DocView\" action from Basic Search Screen");
        driver.getWebDriver().get(Input.url+"Search/Searches");
        sessionSearch.ViewInDocView();
        DocViewPage dv= new DocViewPage(driver);
@@ -152,7 +156,8 @@ public class TS_003_BulkActionsFromBasicSearch {
 	@Test(groups={"smoke","regression"})
    public void viewInTallyResultsInBasicSearch() throws InterruptedException {
 		
-	   TallyPage tp = new TallyPage(driver);
+	 bc.stepInfo("RPMXCON-47949	Verify that correct number of documents appears when user Selects \"Tally\" action from Basic Search Screen");
+		TallyPage tp = new TallyPage(driver);
 	   //Tally Results
        sessionSearch.tallyResults();
      
