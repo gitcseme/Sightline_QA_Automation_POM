@@ -203,6 +203,10 @@ public class SearchTermReportPage {
 		return driver.FindElementByXPath("(//table[@id='searchtermTable']//thead/tr/th[text()='UNIQUE FAMILY HITS'])");
 	}
 
+	//Added By Jeevitha
+	public Element getHitsCount() {
+        return driver.FindElementByXPath("//label[@id='lblHitsCount']/font/b");
+    }
 	
 	public SearchTermReportPage(Driver driver) {
 		this.driver = driver;
@@ -486,7 +490,7 @@ public class SearchTermReportPage {
 	 * @author Jayanthi.ganesan
 	 * @param eleValue
 	 * @param ele
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	public void verifyColumnSorting(String eleValue, Element ele) throws InterruptedException {
 		int i = getIndex(eleValue);
@@ -530,52 +534,77 @@ public class SearchTermReportPage {
 		int i = getIndex("SEARCH NAME");
 		List<String> searchList = new ArrayList<>();
 		List<String> searchListActual = Arrays.asList(saerchlist);
-		searchList=bc.getAvailableListofElements(getColumnValues(i)); 
-		if(searchList.size()>0) {
+		searchList = bc.getAvailableListofElements(getColumnValues(i));
+		if (searchList.size() > 0) {
 			bc.passedStep("Report generated for the documents in the selected searches");
-		System.out.println(searchList.size());
-		System.out.println(searchListActual.size());
-		softAssertion.assertTrue(searchListActual.containsAll(searchList));	
-		softAssertion.assertAll();
-		bc.passedStep("Generated report contains all searches selected.");}
-		else {
+			System.out.println(searchList.size());
+			System.out.println(searchListActual.size());
+			softAssertion.assertTrue(searchListActual.containsAll(searchList));
+			softAssertion.assertAll();
+			bc.passedStep("Generated report contains all searches selected.");
+		} else {
 			bc.failedStep("Report not generated for all searches.");
 		}
 		return searchList;
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param Node
 	 * @param search
 	 */
-	public void verifySTRForSearchFromSSPage(String Node,String search) {
+	public void verifySTRForSearchFromSSPage(String Node, String search) {
 		driver.waitForPageToBeReady();
 		String currentUrl = driver.getWebDriver().getCurrentUrl();
 		softAssertion.assertEquals(Input.url + "DataAnalysisReport/SearchTermReport", currentUrl);
 		bc.stepInfo("Landed on Search Term Report Page : " + currentUrl);
-		
+
 		bc.waitForElement(getNodeCheckBox(Node));
-		if(getNodeCheckBox(Node).isElementAvailable(4)) {
-			System.out.println(Node+ " : is present And Selected");
-			bc.stepInfo(Node+ " : is present And Selected");
-		}else {
-			bc.stepInfo(Node+ " : is Not present And Selected");
+		if (getNodeCheckBox(Node).isElementAvailable(4)) {
+			System.out.println(Node + " : is present And Selected");
+			bc.stepInfo(Node + " : is present And Selected");
+		} else {
+			bc.stepInfo(Node + " : is Not present And Selected");
 		}
-		
+
 		bc.waitForElement(getNodeCheckBox(search));
-		if(getNodeCheckBox(search).isElementAvailable(4)) {
-			System.out.println(search+ " : is present And Selected");
-			bc.stepInfo(search+ " : is present And Selected");
-		}else {
-			bc.stepInfo(search+ " : is Not present And Selected");
+		if (getNodeCheckBox(search).isElementAvailable(4)) {
+			System.out.println(search + " : is present And Selected");
+			bc.stepInfo(search + " : is present And Selected");
+		} else {
+			bc.stepInfo(search + " : is Not present And Selected");
 		}
-		
+
 		if (getSTReport().isDisplayed()) {
 			bc.stepInfo("Report generated sucessfull");
 		} else {
 			bc.failedStep("Report not generated sucessfull");
 		}
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 */
+	public int verifyaggregateCount(String hits) {
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DataAnalysisReport/SearchTermReport", currentUrl);
+		bc.stepInfo("Landed on Search Term Report Page : " + currentUrl);
+		int sumofCount = 0;
+		if (getSTReport().isDisplayed()) {
+			int i = getIndex(hits);
+			List<Integer> Hits = new ArrayList<>();
+			Hits = getColumn(getColumnValues(i));
+			System.out.println(Hits);
+			sumofCount = sumUsingList(Hits);
+			bc.stepInfo("Search Term Report generated sucessfully");
+			bc.stepInfo("Sum Of searches " + hits + " Count is : " + sumofCount);
+
+		} else {
+			bc.failedStep("Search Term Report is not generated sucessfully");
+		}
+		return sumofCount;
 
 	}
 }
