@@ -1077,7 +1077,9 @@ public Element getSecondSearchIcon() {
 		public Element imagesIconDocView() {
 			return driver.FindElementById("liDocumentProductionView");
 		}
-		
+//Added by jayanthi		
+		public Element getOnDemandSearchBtn() {
+			return driver.FindElementByXPath("//div[@class='searchOnDemand']//div[@class='searchIcon']//i[@class='fa fa-search']");}
 		
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
@@ -2967,4 +2969,34 @@ public Element getSecondSearchIcon() {
 		}), Input.wait30);
 		imagesIconDocView().waitAndClick(30);	
 }
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws Exception
+	 */
+	public void verifyHighlightedText_withclick() throws Exception {
+		base = new BaseClass(driver);
+		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		base.waitForElement(searchTextIcon());
+		searchTextIcon().waitAndClick(10);
+
+		set_searchText().getWebElement().sendKeys("S");
+		getOnDemandSearchBtn().waitAndClick(10);
+		
+		Thread.sleep(4000); // needed here implicitly
+
+		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
+		String hex = Color.fromString(color).asHex(); // #dc5252
+		System.out.println(hex);
+
+		if (hex.equalsIgnoreCase(Input.colorCodeHighlight)) // #dc5252
+		{
+			System.out.println("The color for the Highlighted text is verfied- Successfully");
+			base.passedStep("The color for the Highlighted text is verfied- Successfully");
+		} else {
+			System.out.println("The color for the Highlighted text is not-verfied - Failed");
+			base.failedStep("The color for the Highlighted text is not-verfied - Failed");
+		}
+
+	}
 }

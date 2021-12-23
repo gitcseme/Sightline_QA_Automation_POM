@@ -8287,6 +8287,46 @@ public class SessionSearch {
 		
 		
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param SearchString
+	 * @param Operator
+	 * @param Searchtext2
+	 * @return
+	 */
+	public String basicContentSearchUsingOperator(String SearchString,String Operator,String Searchtext2) {
+		// To make sure we are in basic search page
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		// Enter search string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getEnterSearchString().Visible();
+			}
+		}), Input.wait60);
+		getEnterSearchString().SendKeys(SearchString+Keys.ENTER+Operator+Keys.ENTER+Searchtext2+Keys.ENTER);
+
+		// Click on Search button
+		getSearchButton().waitAndClick(10);
+		// handle pop confirmation for regex and proximity queries
+		if (getYesQueryAlert().isElementAvailable(8))
+			try {
+				getYesQueryAlert().waitAndClick(8);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		getPureHitsCount().waitAndClick(20);
+		String pureHit = getPureHitsCount().getText();
+		
+		UtilityLog.info("Search is done for " + SearchString + " "+Operator +" "+ Searchtext2+" and PureHit is : " + pureHit);
+		Reporter.log("Search is done for " + SearchString + "  "+Operator +"  "+ Searchtext2+" and PureHit is : " + pureHit, true);
+		return pureHit;
+	}
 
 
 
