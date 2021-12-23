@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TestData {
 
-	// search
+	// search 
 	public String searchString1;
 	public String searchString2;
 	public int pureHitSeachString1;
