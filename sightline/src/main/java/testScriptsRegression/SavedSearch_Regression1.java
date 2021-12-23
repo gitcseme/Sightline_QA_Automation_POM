@@ -75,7 +75,7 @@ public class SavedSearch_Regression1 {
 		baseClass.stepInfo("Test case Id: RPMXCON-48481");
 		utility = new Utility(driver);
 		baseClass.stepInfo("#### Verify that 'Count' display as BLANK in Saved Search Screen when user saved a ERROR Query through Batch Search Upload. ####");
-		 
+		  
 		saveSearch = new SavedSearch(driver);
 		
 		baseClass.stepInfo("Navigate To Saved Search Page");
