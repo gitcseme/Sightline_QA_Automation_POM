@@ -202,6 +202,24 @@ public class SearchTermReportPage {
 	public Element getUniqueFamilyHits() {
 		return driver.FindElementByXPath("(//table[@id='searchtermTable']//thead/tr/th[text()='UNIQUE FAMILY HITS'])");
 	}
+	
+	public Element getActionBulkRelease() {
+		return driver.FindElementByXPath("//a[text()='Bulk Release']");
+	}
+	
+	public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG) {
+		return driver.FindElementByXPath("//form[@id='Edit User Group']//div[text()='" + SG + "']/../div[1]/label/i");
+	}
+
+	public Element getTotalSelectedDocs() {
+		return driver.FindElementByXPath("//span[@id='spanTotal']");
+	}
+	public Element getBulkRelease_ButtonRelease() {
+		return driver.FindElementById("btnRelease");
+	}
+	public Element getFinalizeButton() {
+		return driver.FindElementById("btnfinalizeAssignment");
+	}
 
 	//Added By Jeevitha
 	public Element getHitsCount() {
@@ -583,6 +601,7 @@ public class SearchTermReportPage {
 
 	}
 
+
 	/**
 	 * @Author Jeevitha
 	 */
@@ -607,4 +626,40 @@ public class SearchTermReportPage {
 		return sumofCount;
 
 	}
+
+	/** @author Jayanthi.ganesan
+	 * @param eleValue
+	 * @param searchName
+	 * @return
+	 */
+	
+	public String getHitsValueFromRow(String eleValue,String searchName) {
+		int i = bc.getIndex(gettableHeaders(),eleValue);
+		System.out.println(i);
+		String pureHits = getRowValue(searchName, i).getText();
+		return pureHits;
+	
+	}
+	
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public String bulkRelease(String SG) {
+		bc.waitForElement(getActionButton());
+		getActionButton().Click();
+		getActionBulkRelease().waitAndClick(30);
+		bc.stepInfo("Navigating from Search term report page to Security Groups doc release popup.");
+		getBulkRelDefaultSecurityGroup_CheckBox(SG).Click();
+		bc.waitForElement(getBulkRelease_ButtonRelease());
+		getBulkRelease_ButtonRelease().waitAndClick(20);
+		bc.waitForElement(getTotalSelectedDocs());
+		String TotalDocs = getTotalSelectedDocs().getText();
+		bc.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(20);
+		bc.VerifySuccessMessageB("Records saved successfully");
+		bc.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
+		return TotalDocs;
+}
+
 }
