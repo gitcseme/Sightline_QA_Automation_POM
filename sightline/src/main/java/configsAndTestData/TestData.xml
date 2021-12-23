@@ -347,4 +347,8 @@
 	<tiffPageCountNam>TIFFPageCount</tiffPageCountNam>
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
 	
+	<!-- Added by Gopinath Created date - 22/12/2021 -->
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
+	<invalidNameText>Invalid Name</invalidNameText>
+	
 </TestData>

@@ -1337,7 +1337,11 @@ public class SessionSearch {
 	public Element getSaveSearchTextField() {
 		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
-
+	
+	//Added by Gopinath - 23/12/2021
+	public Element getSaveButton() {
+		return driver.FindElementByXPath("//a[@id='qModifySearch']//..//a[@id='qSave']");
+	}
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -8262,6 +8266,222 @@ public class SessionSearch {
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
 	}
 
+	/**
+	 * @author Gopinath
+	 * Description : this method insert the Query for draft save.
+	 */
+	public void basicMetaDataDraftSearch(String metaDataField, String option, String val1, String val2) {
+		
+		try {     
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			getBasicSearch_MetadataBtn().Click();
+			base.waitTime(3);
+			getSelectMetaData().isElementAvailable(10);
+			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			if (option == null) {
+	
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("IS")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("RANGE")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+				getMetaDataSearchText2().SendKeys(val2 + Keys.TAB);
+	
+			}
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+    
+	/**
+	 * @author Gopinath
+	 * Description : this function will enter the search string into input text field
+	 *               and will not Seaech the input 
+	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	 */
+	public void basicContentDraftSearch(String SearchString) {
+		try {
+			// To make sure we are in basic search page
+				driver.getWebDriver().get(Input.url + "Search/Searches");
+				// Enter seatch string
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getEnterSearchString().Visible();
+					}
+				}), Input.wait60);
+				getEnterSearchString().SendKeys(SearchString);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while enter the search string into input text field and will not Seaech the input"+e.getLocalizedMessage());
+		}
+				
+		
+	}
 
+
+
+/**
+	 * @author Gopinath
+	 * Description : this function will navigate to Advanced search page and enter the search string into input text field
+	 *               the search string into input text filed and will not Search the input 
+	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	 */
+	public void advanedContentDraftSearch(String SearchString) {
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedSearchLink().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedSearchLink().Click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getContentAndMetaDatabtn().Visible();
+				}
+			}), Input.wait30);
+			getContentAndMetaDatabtn().Click();
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedContentSearchInput().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedContentSearchInput().SendKeys(SearchString);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigate to Advanced search page and enter the search string into input text field "+e.getLocalizedMessage());
+		}
+
+	}
+
+
+
+
+	/**
+     * @author Gopinath
+     * Description : This function will save the advanced search
+     * @param searchName : searchName is string value that search value need to enter in search field.
+     */
+	public void saveSearchadvanced(String searchName) {
+		try {
+			if(getSaveButton().isElementAvailable(2)) {
+				driver.WaitUntil((new Callable<Boolean>() {
+		
+				public Boolean call() {
+				return getSaveButton().Visible() && getSaveButton().Enabled();
+				}
+				}), Input.wait30);
+				base.waitForElement(getSaveButton());
+				getSaveButton().waitAndClick(5);
+			}else {
+				getAdvanceSearch_DraftQuerySave_Button().Click();
+			}
+			if (getYesQueryAlert().isElementAvailable(2)) {
+				try {
+					getYesQueryAlert().waitAndClick(8);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+	
+			if(getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+				driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+				return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+				}
+				}), Input.wait30);
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+			} else {
+				System.out.println("Radio button already selected");
+				UtilityLog.info("Radio button already selected");
+			}
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+	
+			public Boolean call() {
+			return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
+			}
+			}), Input.wait30);
+			getSavedSearch_MySearchesTab().Click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+			return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+			}
+			}), Input.wait30);
+			getSaveSearch_Name().SendKeys(searchName);
+			driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+			return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+			}
+			}), Input.wait30);
+			getSaveSearch_SaveButton().Click();
+			base.VerifySuccessMessage("Saved search saved successfully");
+	               	Reporter.log("Saved the search with name '" + searchName + "'", true);
+			UtilityLog.info("Saved search with name - " + searchName);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while will save the advanced search. "+e.getLocalizedMessage());
+		}
+	}
+	/**
+     * @author Gopinath
+     * @Description : Method for advanced meta data for draft.
+     */
+	public void advancedMetaDataForDraft(String metaDataField, String option, String val1, String val2) {
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedSearchLink().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedSearchLink().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getContentAndMetaDatabtn().Visible();
+				}
+			}), Input.wait30);
+			getContentAndMetaDatabtn().Click();
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvanceSearch_MetadataBtn().Visible();
+				}
+			}), Input.wait30);
+			getAdvanceSearch_MetadataBtn().Click();
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			if (option == null) {
+
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("IS")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("RANGE")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+				getMetaDataSearchText2().SendKeys(val2 + Keys.TAB);
+
+			}
+			getMetaDataInserQuery().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while performing advanced meta data draft "+e.getLocalizedMessage());
+		}
+	}
 
 }
