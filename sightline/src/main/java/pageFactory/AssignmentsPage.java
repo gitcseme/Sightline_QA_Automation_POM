@@ -1009,7 +1009,12 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.rmu2userName + "')]/div/label");
 	}
-
+	
+	public Element getManageAssignmnets() {
+		return driver.FindElementByXPath("//h1[text()='Manage Assignments']");
+	}
+	
+	
 	// Added by Raghuram
 	public Element getSortByMetaDataType() {
 		return driver.FindElementByXPath("//select[@id='ddlMetaDataDirection']");
