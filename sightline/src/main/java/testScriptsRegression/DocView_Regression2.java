@@ -447,7 +447,34 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 	}
-	
+
+	/**
+	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51566
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =11)
+	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51566");
+		baseClass.stepInfo("Verify user can distinguish this on-demand search highlights with the highlights from the keyword"
+				+ " group and persistent search hit highlights");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Search with text 'test' completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Purehits viewed in DocView");
+		baseClass.waitTime(2);
+		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.stepInfo("DocView screen  displayed and keywords are highlighted on\r\n"
+				+ "	doc view as per the assigned color for the keyword group");
+		docViewRedact.verifyHighlightedText_withclick();
+		baseClass.stepInfo("On demand search text searched and application highlight the text  and highlights are"
+				+ " light red in color as exepcted.");
+	}
+
 	
 
 	@AfterMethod(alwaysRun = true)
