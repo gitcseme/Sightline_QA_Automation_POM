@@ -844,6 +844,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getAddFieldButtonInDAT() {
+		return driver.FindElementByXPath("//div//button[@class='btn btn-primary btn-add-row datAddNewRow']");
+	}
+
 
 	public Element getClkBtnDownloadDATFiles() {
 		return driver.FindElementByXPath("(//span[contains(text(),'Download DAT file')])[1]");
@@ -12820,6 +12824,61 @@ public class ProductionPage {
 		}
 
 	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 */
+	public void fillingDATWithMultipleDropDown() {
+
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().Click();
+
+		base.waitForElement(getDATTab());
+		getDATTab().Click();
+
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+
+		base.waitForElement(getDAT_SourceField1());
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+
+		base.waitForElement(getDAT_DATField1());
+		getDAT_DATField1().SendKeys("BatesNumber");
+
+		base.stepInfo("Dat section is filled with BATES");
+
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification2().ScrollTo();
+//		getDAT_FieldClassification2().waitAndClick(5);
+		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
+
+		base.waitForElement(getDAT_SourceField2());
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
+
+		base.waitForElement(getDAT_DATField2());
+		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+		
+		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
+		
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification3().ScrollTo();
+		getDAT_FieldClassification3().waitAndClick(5);
+		getDAT_FieldClassification3().selectFromDropdown().selectByVisibleText("Doc Basic");
+
+		base.waitForElement(getDAT_SourceField3());
+		getDAT_SourceField3().selectFromDropdown().selectByVisibleText("DocID");
+
+		base.waitForElement(getDAT_DATField3());
+		getDAT_DATField3().SendKeys("DOCID");
+		
+		base.stepInfo("Dat section is filled with DOCID");
+
+	}
+
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
