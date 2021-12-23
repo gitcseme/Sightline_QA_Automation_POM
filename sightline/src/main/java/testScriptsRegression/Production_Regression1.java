@@ -5643,6 +5643,139 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	page.verifyingNativelyProducedToggle();
 	}
 	
+    
+    /**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-49236
+	 * @Description:To verify that in Production, from Document Selection tab, on
+	 *                 clicking on document count link it should redirect to Doc
+	 *                 List page with correct document count
+	 */
+    @Test(groups = { "regression" }, priority = 64)
+	public void verifyNavigationToDocListPageFromDocumentSelectionTab() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49236 -Production Sprint 08");
+
+		String testData1 = Input.testData1;
+		String foldername = Input.randomText + Utility.dynamicNameAppender();
+		String productionname = Input.randomText + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create  folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+
+		base.stepInfo("Navigating to doclist page");
+		String docCount = page.navigatingToDocViewPage();
+
+		DocListPage doc = new DocListPage(driver);
+		base.stepInfo("Navigated  to doclist page and verifying the DocCount");
+		String DocumentCount = doc.verifyingDocCount();
+
+		base.stepInfo("Navigated back to Production page");
+		page.verifyNavigationToProductionPage();
+		base.textCompareEquals(docCount, DocumentCount, "The document count is equal as expected",
+				"The document count is not equal as expected");
+
+	}
+
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-49239
+	 * @Description:To verify that after selecting the Next BatesNumbers, value should be auto-populated
+	 */
+	@Test(groups = { "regression" }, priority = 65)
+      	 public void SelectNextBatesNumberAndVerifyingAutoPopulatedValue() throws Exception {
+      	 UtilityLog.info(Input.prodPath);
+         base.stepInfo("RPMXCON-49239 -Production Sprint 08");
+         String testData1 = Input.testData1;
+ 		 String foldername = Input.randomText + Utility.dynamicNameAppender();
+ 		 String productionname = Input.randomText + Utility.dynamicNameAppender();
+ 		 
+         TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+ 		 tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+ 		 // search for folder
+ 		 SessionSearch sessionSearch = new SessionSearch(driver);
+ 		 sessionSearch = new SessionSearch(driver);
+ 		 sessionSearch.basicContentSearch(testData1);
+ 		 sessionSearch.bulkFolderExisting(foldername);
+         
+         ProductionPage page = new ProductionPage(driver);
+ 		 productionname = "p" + Utility.dynamicNameAppender();
+ 		 page.selectingDefaultSecurityGroup();
+ 		 page.addANewProduction(productionname);
+ 		 page.fillingDATSection();
+ 		 page.navigateToNextSection();
+ 		 page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		 page.navigateToNextSection();
+		 page.fillingDocumentSelectionPage(foldername);
+		 page.navigateToNextSection();
+		 page.fillingPrivGuardPage();
+		 page.fillingProductionLocationPage(productionname);
+		 page.navigateToNextSection();
+		 page.fillingSummaryAndPreview();
+		 page.navigatingBackToNumberingAndSortingPage();
+ 		 page.SelectNextBatesNumber();
+	}
+
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-49241
+	 * @Description:To verify that 'Click here to View and select the bates number(S)' link should not be available in Mark Complete mode.
+	 */
+	@Test(groups = { "regression" }, priority = 66)
+      	 public void verifyClickHerelinkNotAvailableInMarkComplete() throws Exception {
+      	 UtilityLog.info(Input.prodPath);
+         base.stepInfo("RPMXCON-49241 -Production Sprint 08");
+         
+         ProductionPage page = new ProductionPage(driver);
+ 		 productionname = "p" + Utility.dynamicNameAppender();
+ 		 page.selectingDefaultSecurityGroup();
+ 		 page.addANewProduction(productionname);
+ 		 page.fillingDATSection();
+ 		 page.navigateToNextSection();
+ 		 page.verifyClickHereLinkNotAvailableAtMarkComplete();
+	}
+        
+	
+	
+	
+	/**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-49243
+	 * @Description:To verify that after clicking on 'Mark InComplete' button , ''Click here to View and select the bates number(S)''
+	 *  should be available and user can select the bates numbers
+	 */
+	@Test(groups = { "regression" }, priority = 67)
+      	 public void verifyClickHerelinkAvailableInMarkInComplete() throws Exception {
+      	 UtilityLog.info(Input.prodPath);
+         base.stepInfo("RPMXCON-49243 -Production Sprint 08");
+         
+         ProductionPage page = new ProductionPage(driver);
+ 		 productionname = "p" + Utility.dynamicNameAppender();
+ 		 page.selectingDefaultSecurityGroup();
+ 		 page.addANewProduction(productionname);
+ 		 page.fillingDATSection();
+ 		 page.navigateToNextSection();
+ 		 page.verifyClickHereLinkNotAvailableAtMarkComplete();
+ 		 page.getMarkInCompleteBtn().waitAndClick(10);
+ 		 page.enteringNewNextBatesNumber();
+ 		 
+	}
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
