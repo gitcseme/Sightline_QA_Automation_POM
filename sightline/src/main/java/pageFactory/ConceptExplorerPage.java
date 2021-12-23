@@ -6,6 +6,7 @@ import javax.management.ListenerNotFoundException;
 
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -15,6 +16,7 @@ import testScriptsSmoke.Input;
 public class ConceptExplorerPage {
 
 	Driver driver;
+	BaseClass bc;
 
 	public Element getReports_ConceptExplorer() {
 		return driver.FindElementByXPath("//*[@id='collapseOne']//a[contains(.,'Concept Explorer Report')]");
@@ -99,12 +101,20 @@ public class ConceptExplorerPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
-
+	//added by jayanthi
+	public Element getfilterDocumentsBy() {
+		return driver.FindElementByXPath("//a[@id='lnk_collapsID']/parent::h4");
+	}
+	public Element getfilterOptions() {
+		return driver.FindElementByXPath("//ul[@id='optionFilters']");
+	}
+	
+	
 	public ConceptExplorerPage(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
-
+		//this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		bc = new BaseClass(driver);
 		// This initElements method will create all WebElements
 		// PageFactory.initElements(driver.getWebDriver(), this);
 
@@ -195,6 +205,26 @@ public class ConceptExplorerPage {
 		 * substring(19, 21),actHoverDocCount);
 		 * System.out.println("Expected docs are shown in doclist");
 		 */
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void navigateToConceptExplorerPage() {
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		String expectedURL = Input.url + "DataAnalysisReport/ConceptExplorer";
+		bc.waitForElement(getReports_ConceptExplorer());
+		if (getReports_ConceptExplorer().isDisplayed()) {
+			bc.passedStep("Concept Explorer Report link is displayed in reports landing page");
+			getReports_ConceptExplorer().Click();
+			SoftAssert softAssertion = new SoftAssert();
+			driver.waitForPageToBeReady();
+			softAssertion.assertEquals(expectedURL, driver.getUrl());
+			softAssertion.assertAll();
+			bc.passedStep("Sucessfully navigated to Concept Explorer Report Page");
+		} else {
+			bc.failedStep("Concept Explorer Report link is not  displayed in reports landing page");
+		}
 	}
 
 }

@@ -7,7 +7,6 @@ import java.util.concurrent.Callable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Reporter;
-import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -20,11 +19,9 @@ public class RedactionPage {
 
     Driver driver;
     BaseClass bc;
-    SoftAssert softassert;
   
     public Element getAllRedactionRootNode(){ return driver.FindElementById("-1_anchor"); }
     public Element getAddRedactionTag(){ return driver.FindElementById("aAddRedactionTag"); }
-    public Element getRedactionTagName(){ return driver.FindElementById("txtRedactionNew"); }
     public Element getRedactionEdit(){ return driver.FindElementById("aEditRedactionTag"); }
     public Element getRedactionDelete(){ return driver.FindElementById("aDeleteRedactionTag"); }
     public Element getRedactionEditTagName(){ return driver.FindElementById("txtRedactionTagName"); }
@@ -35,6 +32,24 @@ public class RedactionPage {
     public Element getSecurityGrp(){ return driver.FindElementById("ddlSecurityGroupRedaction"); }
     public ElementCollection getredactiontags(){ return driver.FindElementsByXPath("//*[@id='tagsJSTree']//a"); }
     
+ // added by sowndarya on 9/21/21
+    public Element getRedactionTagName(){ return driver.FindElementByXPath("//input[@id='txtRedactionNew']"); }
+ 	public Element getselectAllRedactionTag() {
+ 		return driver.FindElementByXPath(" //div[@id='tagsJSTree']//ul/li/a[text()='All Redaction Tags']");
+ 	}
+
+ 	public Element getselectActionToggle() {
+ 		return driver.FindElementByXPath("//button[@class='btn btn-defualt dropdown-toggle']");
+ 	}
+
+ 	public Element getselectNewFromDropdown() {
+ 		return driver.FindElementByXPath(" //ul//li/a[text()='New']");
+ 	}
+
+	public Element getDefaultSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='ddlSecurityGroupRedaction']//option[text()='Default Security Group']");
+	}
+
     
 
     public RedactionPage(Driver driver){
@@ -43,7 +58,6 @@ public class RedactionPage {
         this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
         driver.waitForPageToBeReady();
         bc = new BaseClass(driver);
-        softassert = new SoftAssert();
        }
 
     public void AddRedaction(String RedactName,String usertype) 
@@ -127,51 +141,48 @@ public class RedactionPage {
     	bc.CloseSuccessMsgpopup();
     	
      } 
-     
-     public void DeleteRedaction(String redactName) throws InterruptedException {
- 		
-    	 this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
-     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-     			getSelectredaction(redactName).Visible()  ;}}),Input.wait30); 
-     	getSelectredaction(redactName).waitAndClick(10);
-     	
-     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-     			getactionDropDown().Visible()  ;}}),Input.wait30); 
-     	getactionDropDown().Click();
-     	Thread.sleep(2000);
-     	
-     	getRedactionDelete().waitAndClick(10);
-     	
-     	bc.waitForElement(bc.getNOBtn());
-     	bc.getNOBtn().waitAndClick(10);
-     	
-     	getSelectredaction(redactName).WaitUntilPresent();
-     	softassert.assertTrue(getSelectredaction(redactName).Displayed());
-     	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-     			getactionDropDown().Visible()  ;}}),Input.wait30); 
-     	getactionDropDown().waitAndClick(10);
-     	Thread.sleep(2000);
-     	
-     	getRedactionDelete().waitAndClick(10);
-     	     	
-     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-     			bc.getYesBtn().Visible()  ;}}),Input.wait30); 
-     	bc.getYesBtn().waitAndClick(10);
-     	
-     	bc.VerifySuccessMessage("Redaction label deleted successfully");
-     	bc.CloseSuccessMsgpopup();
-     	
-     	
-     	 try{
-     		getSelectredaction(redactName).Displayed();
-		           Assert.assertFalse(1==0);
-		     }catch (org.openqa.selenium.NoSuchElementException e) {
-		               System.out.println(" 'Redaction' is not displayed");
-		 }
-     }
- 
-     
+     //modified by jayanthi
+     public void DeleteRedaction(String redactName) {
+         
+         this.driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+                 getSelectredaction(redactName).Visible()  ;}}),Input.wait30);
+         getSelectredaction(redactName).waitAndClick(10);
+        
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+                 getactionDropDown().Visible()  ;}}),Input.wait30);
+         getactionDropDown().Click();
+         //added on 25/8/21
+        bc.waitForElement(getRedactionDelete());
+         getRedactionDelete().waitAndClick(10);
+        
+         bc.getNOBtn().waitAndClick(10);
+        
+         getSelectredaction(redactName).WaitUntilPresent();
+         Assert.assertTrue(getSelectredaction(redactName).Displayed());
+        
+        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+                 getactionDropDown().Visible()  ;}}),Input.wait30);
+         getactionDropDown().waitAndClick(10);
+       //  added  on 25/8/21
+         bc.waitForElement(getRedactionDelete());
+         getRedactionDelete().waitAndClick(10);
+                 
+         driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+                 bc.getYesBtn().Visible()  ;}}),Input.wait30);
+         bc.getYesBtn().waitAndClick(10);
+        
+         bc.VerifySuccessMessage("Redaction label deleted successfully");
+         bc.CloseSuccessMsgpopup();
+        
+        
+          try{
+             getSelectredaction(redactName).isDisplayed();
+                   Assert.assertFalse(1==0);
+             }catch (org.openqa.selenium.NoSuchElementException e) {
+                       System.out.println(" 'Redaction' is not displayed");
+         }
+     }     
      public void findredaction()
      {
     	 String expvalues[] = {"Default Redaction Tag","Redacted Privacy","Redacted Privilege","All Redaction Tags"};
@@ -191,4 +202,79 @@ public class RedactionPage {
     	 
     	 
      }
+     
+
+  	/**
+  	 * @throws InterruptedException 
+  	 * @Author:Sowndarya.Velraj
+  	 */
+  	public void selectDefaultSecurityGroup() throws InterruptedException {
+  		try {
+ 			driver.WaitUntil((new Callable<Boolean>() {
+ 				public Boolean call() {
+ 					return
+
+ 							getSecurityGrp().Enabled();
+ 				}
+ 			}), Input.wait30);
+
+ 			getSecurityGrp().waitAndClick(10);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			getSecurityGrp().waitAndClick(10);
+ 		}
+  		try {
+ 			driver.WaitUntil((new Callable<Boolean>() {
+ 				public Boolean call() {
+ 					return
+
+ 							getDefaultSecurityGroup().Enabled();
+ 				}
+ 			}), Input.wait30);
+
+ 			getDefaultSecurityGroup().waitAndClick(10);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			getDefaultSecurityGroup().waitAndClick(10);
+ 		}
+  	}
+  	/**
+	 * @Author:Sowndarya.Velraj
+	 */
+	public void manageRedactionTagsPage(String Tag) throws InterruptedException {
+
+
+			driver.waitForPageToBeReady();
+		
+			bc.waitForElement(getselectAllRedactionTag());
+			getselectAllRedactionTag().waitAndClick(10);
+
+			bc.waitForElement(getselectActionToggle());
+			getselectActionToggle().waitAndClick(10);
+
+
+			bc.waitForElement(getselectNewFromDropdown());
+			getselectNewFromDropdown().waitAndClick(10);
+
+			bc.waitForElement(getRedactionTagName());
+			getRedactionTagName().SendKeys(Tag);
+
+
+			bc.waitForElement(getSaveBtn());
+			getSaveBtn().waitAndClick(10);
+		} 
+
+	 /** 
+     * @author Gopinath
+     * @Description : Method for navigating to redactions page.
+     */               
+     public void navigateToRedactionsPageURL() {
+     	try {
+     		 driver.getWebDriver().get(Input.url+"Redaction/Redaction");
+     	}catch(Exception e) {
+     		e.printStackTrace();
+     		bc.failedStep("Exception occured while navigating to redaction page is failed"+e.getMessage());
+     	}
+     }
+
  }

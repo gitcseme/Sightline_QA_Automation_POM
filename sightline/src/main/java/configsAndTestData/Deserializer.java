@@ -1,6 +1,5 @@
 package configsAndTestData;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +13,6 @@ import com.google.gson.JsonElement;
 
 public class Deserializer {
 	
-	/*
-	 * Enable while using Json File
-	 * 
 	public static <T> ArrayList<T> getJSONModelDeserializer(String input, Class<T> typetest)
 	{
 		
@@ -43,7 +39,7 @@ public class Deserializer {
 			throw new IllegalArgumentException("Error: The input string is not a JSON, please provide a valid input for deserialization.");
 		}
 		return (ArrayList<T>) classArray;
-	}*/
+	}
 	
 	public static <T> T getXMLModelDeserializer(String input, Class<T> typetest)
 	{

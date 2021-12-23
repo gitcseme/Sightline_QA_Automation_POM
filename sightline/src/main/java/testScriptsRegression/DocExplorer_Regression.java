@@ -47,25 +47,19 @@ public class DocExplorer_Regression {
 		
 	 	//Open browser
 		driver = new Driver();
-				//Login as a PA
+		bc = new BaseClass(driver);
+		docexp = new DocExplorerPage(driver);
+		//Login as a PA
 		lp=new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-		
-		bc = new BaseClass(driver);
-		//bc.selectproject();
-		
 		search= new SessionSearch(driver);
-		
-		purehits=search.basicContentSearch(Input.searchString1); 
+		purehits=search.basicContentSearch(Input.searchString1);
 		//search.bulkFolderExisting("Confidential");
 		search.bulkTagExisting("Confidential");
 		bc.selectproject();
 		search.basicContentSearch("*");
 		//search.bulkFolderExisting("Attorney_Client");
-		search.bulkTagExisting("Attorney_Client"); 
-		docexp = new DocExplorerPage(driver);
-		
-		
+		search.bulkTagExisting("Attorney_Client");
 	}
 	
 	/*
@@ -159,7 +153,7 @@ public class DocExplorer_Regression {
 	@Test(groups={"regression"},priority=7)
 	public void EmailAuthorNameFilter() throws InterruptedException {
 		
-		docexp.EmailAuthorNameFilter("Phillip.Allen@consilio.com","Amit.Bandal@symphonyteleca.com");
+		docexp.EmailAuthorNameFilter("jawahar","amit");
     }
 	
 	/*
@@ -172,7 +166,7 @@ public class DocExplorer_Regression {
 	@Test(groups={"regression"},priority=8)
 	public void EmailRecipientNameFilter() throws InterruptedException {
 		
-		docexp.EmailRecipientNameFilter("Robert.Superty@consilio.com","amol.gawande@consilio.com");
+		docexp.EmailRecipientNameFilter("allen","amol");
     }
 	
 
@@ -186,7 +180,7 @@ public class DocExplorer_Regression {
 	@Test(groups={"regression"},priority=9)
 	public void EmailAuthorDomainFilter() throws InterruptedException {
 		
-		docexp.EmailAuthorDomainFilter("consilio.com","hotmail.com");
+		docexp.EmailAuthorDomainFilter("consilio.com","gmail.com");
     }
 	
 
@@ -211,33 +205,23 @@ public class DocExplorer_Regression {
 	 * Modified by:
 	 * Description : Verify that “Assignments” (Only For RMU) filter with "Include" and "Exclude" functionality is working correctly on Doc Explorer list.
 	 */
-	@Test(groups={"regression"},priority=11)
+	@Test(groups={"regression"},priority=10)
 	public void AssignmentsFilter() throws InterruptedException {
 		
 		lp.logout();
-		
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		bc.stepInfo("*****Login Successfull*****");
 		AssignmentsPage assgn = new AssignmentsPage(driver);
 		DocListPage doclist = new DocListPage(driver);
 		search.basicContentSearch(Input.searchString1);
 		search.ViewInDocList();
-		bc.stepInfo("*****Assign Docs to Assignment1*****");
 		doclist.DoclisttobulkAssign(assignmentName1,"10");
-		assgn.assignDocstoNewAssgn(assignmentName1, null,10);
+		assgn.assignDocstoNewAssgn(assignmentName1, null,purehits);
 		search.ViewInDocList();
 		doclist.Selectpagelength("100");
-		bc.stepInfo("*****Assign Docs to Assignment2*****");
 		doclist.DoclisttobulkAssign(assignmentName2,"100");
-		assgn.assignDocstoNewAssgn(assignmentName2, null,52);
-		 bc.stepInfo("Test case Id: RPMXCON-54678 - Verify  Assignments Filter with Exclude functionality is working correctly on Doc Explorer list.");
-		bc.stepInfo("*****Include Assignment Filter*****");
+		assgn.assignDocstoNewAssgn(assignmentName2, null,purehits);
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"include");
-		bc.passedStep("*****Include Assignment Filter successfully*****");
-		 bc.stepInfo("Test case Id: RPMXCON-54696 - AssignmentsFilter");
-		bc.stepInfo("*****Exclude Assignment Filter*****");
 		docexp.AssignmentFilter(assignmentName1, assignmentName2,"exclude");
-		 bc.passedStep("*****Exclude Assignment Filter successfully*****");
   }
 	
 	

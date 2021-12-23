@@ -7,6 +7,7 @@ import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import testScriptsSmoke.Input;
 
+
 public class ClientsPage {
 
     Driver driver;
@@ -24,7 +25,15 @@ public class ClientsPage {
     public Element getFiler_Clientname(){ return driver.FindElementByXPath("//*[@id='EntityDataTable']//td[1]"); }
     public Element getEntityServerPath(){ return driver.FindElementByXPath("//*[@id='ddlEntityWS']/option[1]"); }
  
- 
+    //added by jayanthi 30/8/21
+    public Element getSelectManageBtn(){ return driver.FindElementByCssSelector("a[name='Manage'] i"); }
+    public Element getClient_clientPg(){ return driver.FindElementByCssSelector("a[name='Entity'] i"); }
+    public Element databaseHelpIcon_clientPg(){ return driver.FindElementByXPath("//label[text()='Initial Size of Project Database: ']//i"); }
+    public Element databaseHelpIconPopOver_clientPg(){ return driver.FindElementByXPath("//label[text()='Initial Size of Project Database: ']//a[contains(@aria-describedby,'popover')]"); }
+    public Element createClientHelpIcon_clientPg(){ return driver.FindElementByXPath("//span[text()='Create Client']//i"); }
+    public Element createClientHelpIconPopOver_clientPg(){ return driver.FindElementByXPath("//span[text()='Create Client']//a[contains(@aria-describedby,'popover')]"); }
+    public Element dataBaseTitle(){ return driver.FindElementByXPath("//strong[text()='Database ']"); }
+
   
     //Annotation Layer added successfully
     public ClientsPage(Driver driver){
@@ -140,7 +149,63 @@ public class ClientsPage {
     	Assert.assertEquals(getFiler_Clientname().getText(), Clientnamedomain);
      	    	
     }
-    
      
+     /**
+     * @author Jayanthi.ganesan
+     * @throws InterruptedException
+     * @description This method will create new client with entity type as Domain.
+     */
+    public void addNewClientWithDomainType() throws InterruptedException{
+		 this.driver.getWebDriver().get(Input.url+ "Entity/Entity");
+		 bc.waitForElement(getAddEntity());
+		 getAddEntity().waitAndClick(3);
+		 bc.waitForElement(getEntitytype());
+		 getEntitytype().selectFromDropdown().selectByVisibleText("Domain");
+	 }
+    /**
+     *@author Jayanthi.ganesan
+     *@description This method will verifies whether Help text doesn't appear when we hover near the Initial size of Project
+     *             DataBase Help icon in client page
+     */
+	 public void verifyHelpTextPopUpWhenHovering() throws InterruptedException{
+		 
+		 addNewClientWithDomainType();
+		 bc.waitForElement(databaseHelpIcon_clientPg());
+		 databaseHelpIcon_clientPg().ScrollTo();
+		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==false) {
+			 bc.passedStep("Help popup is not appeared while hovering on help icon");
+		 }else {
+			 bc.failedStep("Help popup is appeared while hovering on help icon");
+			 Assert.fail();
+		 }
+		 
+	 }
+	 /**
+	     *@author Jayanthi.ganesan
+	     *@description This method will verifies whether Help text is appeared or not when we click on the Initial size of Project
+	     *             DataBase Help icon in client page.
+	     */
+	 public void verifyHelpTextPopUpWhenClicking() throws InterruptedException{
+		 addNewClientWithDomainType();
+		 bc.waitForElement(databaseHelpIcon_clientPg());
+		 databaseHelpIcon_clientPg().Click();
+		 bc.stepInfo("Help icon is clicked");
+		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==true) {
+			 bc.passedStep("Help popup appeared when we click on help icon");
+		 }else {
+			 bc.failedStep("Help popup is not appeared");
+			 Assert.fail();
+		 }
+		 dataBaseTitle().Click();
+		 bc.stepInfo("Other than help icon is clicked");
+		 if(databaseHelpIconPopOver_clientPg().isElementPresent()==false) {
+			 bc.passedStep("Help popover is disappeared");
+		 }else {
+			 bc.failedStep("Help popup not disappeared");
+			 Assert.fail();
+		 }
+		 
+	 }
+	     
  
  }

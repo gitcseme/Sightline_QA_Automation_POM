@@ -13,10 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import junit.framework.Assert;
 import pageFactory.BaseClass;
@@ -30,9 +27,9 @@ import pageFactory.Utility;
 public class TS_017_DocList {
 
 	Driver driver;
-	LoginPage loginPage;
-	SessionSearch sessionSearch;
-	BaseClass baseClass;
+	LoginPage lp;
+	SessionSearch ss;
+	BaseClass bc;
 	public static int purehits;
 
 	String tagName = "tagSearch" + Utility.dynamicNameAppender();
@@ -45,17 +42,17 @@ public class TS_017_DocList {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-       
-		Input in = new Input();
-		in.loadEnvConfig();
+
+		// Open browser
 		
+		// Input in = new Input(); in.loadEnvConfig();
+		 
 		driver = new Driver();
-		
-		// loginPage as a PA
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		baseClass = new BaseClass(driver);
-		sessionSearch = new SessionSearch(driver);
+		bc = new BaseClass(driver);
+		ss = new SessionSearch(driver);
+		// Login as a PA
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 	}
 
 	/*
@@ -66,80 +63,84 @@ public class TS_017_DocList {
 		String bulkTagName = "A_DocListBulkTag" + Utility.dynamicNameAppender();
 		String bulkFolderName = "A_DocListBulkFolder" + Utility.dynamicNameAppender();
 
-		baseClass.selectproject();
+		bc.selectproject();
 		// search for string
-		sessionSearch.basicContentSearch(Input.searchString1);
+		ss.basicContentSearch(Input.searchString1);
 
 		// view in doclist
-		sessionSearch.ViewInDocList();
+		ss.ViewInDocList();
 		final DocListPage dl = new DocListPage(driver);
 
 		// Select all docs and perform bulk tag and bulk folder
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {
 				return dl.getSelectAll().Visible();}}), Input.wait30);
-		dl.getSelectAll().waitAndClick(3);		
-		dl.getPopUpOkBtn().waitAndClick(3);
+		dl.getSelectAll().waitAndClick(10);
 
-		sessionSearch.bulkTag(bulkTagName);
+		// dl.getYesAllPageDocs().waitAndClick(10);
+		dl.getPopUpOkBtn().waitAndClick(10);
+
+		ss.bulkTag(bulkTagName);
 
 		// Select all docs and perform bulk tag and bulk folder
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {return dl.getSelectAll().Visible();}}), Input.wait30);
-		dl.getSelectAll().waitAndClick(5);
-		dl.getPopUpOkBtn().waitAndClick(5);
+		dl.getSelectAll().waitAndClick(10);
 
-		sessionSearch.bulkFolder(bulkFolderName);
+		dl.getPopUpOkBtn().waitAndClick(10);
+
+		ss.bulkFolder(bulkFolderName);
 
 		// Validate tag and folder in workproduct search
-		baseClass.selectproject();
-		sessionSearch.switchToWorkproduct();
-		sessionSearch.selectTagInASwp(bulkTagName);
-		Assert.assertTrue(sessionSearch.serarchWP()>=1);
+		bc.selectproject();
+		ss.switchToWorkproduct();
+		ss.selectTagInASwp(bulkTagName);
+		// Assert.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
+		Assert.assertTrue(ss.serarchWP() == Input.pureHitSeachString1);
 
-		baseClass.selectproject();
-		sessionSearch.switchToWorkproduct();
-		sessionSearch.selectFolderInASwp(bulkFolderName);
-		Assert.assertTrue(sessionSearch.serarchWP()>=1);
+		bc.selectproject();
+		ss.switchToWorkproduct();
+		ss.selectFolderInASwp(bulkFolderName);
+		// Assert.assertEquals(Input.pureHitSeachString1, ss.serarchWP());
+		Assert.assertTrue(ss.serarchWP() == Input.pureHitSeachString1);
 	}
 
 	/*
 	 * To verify navigation from doclist to docview
 	 */
-		
 	@Test(groups = { "smoke", "regression" }, priority = 2)
 	public void doclistToDocView() throws InterruptedException {
 		// search for string
-		baseClass.selectproject();
-		purehits = sessionSearch.basicContentSearch(Input.searchString1);
+		bc.selectproject();
+		purehits = ss.basicContentSearch(Input.searchString1);
 
 		// view in doclist
-		sessionSearch.ViewInDocList();
+		ss.ViewInDocList();
 		final DocListPage dl = new DocListPage(driver);
 
 		// Select all docs and view in docView
 		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return dl.getSelectAll().Visible();}}), Input.wait30);
-		dl.getSelectAll().waitAndClick(3);
+		dl.getSelectAll().waitAndClick(10);
 
-		dl.getPopUpOkBtn().waitAndClick(3);
+		dl.getPopUpOkBtn().waitAndClick(10);
 
-		sessionSearch.ViewInDocView();
+		ss.ViewInDocView();
 
 		// validate count
 		DocViewPage dv = new DocViewPage(driver);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return dv.getDocView_info().Visible();}}), Input.wait30);
+		// Select all docs and view in docView
+		driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return dv.getDocView_info().Visible();}}), Input.wait60);
 
 		Assert.assertTrue(dv.getDocView_info().Displayed());
 		System.out.println("Expected docs(" + purehits + ") are shown in docView");
 		UtilityLog.info("Expected docs(" + purehits + ") are shown in docView");
 
-	} 
+	}
 
 	/*
 	 * Create one security group and release docs to it, Validate docs in SG
 	 * through work product search
 	 */
-	
-	@Test(groups = { "smoke", "regression" }, priority = 3)
+	@Test(groups = { "smoke", "regression" })
 	public void doclistBulkRelease() throws InterruptedException {
 
 		// Create Security group
@@ -150,11 +151,11 @@ public class TS_017_DocList {
 		UtilityLog.info("Security Group Successful");
 
 		// search for string
-		baseClass.selectproject();
-		purehits = sessionSearch.basicContentSearch(Input.searchString1);
+		bc.selectproject();
+		purehits = ss.basicContentSearch(Input.searchString1);
 
 		// view in doclist
-		sessionSearch.ViewInDocList();
+		ss.ViewInDocList();
 		final DocListPage dl = new DocListPage(driver);
 
 		// Select all docs and do bulk release
@@ -163,12 +164,14 @@ public class TS_017_DocList {
 				return dl.getSelectAll().Visible();
 			}
 		}), Input.wait30);
-		dl.getSelectAll().waitAndClick(3);
-		dl.getPopUpOkBtn().waitAndClick(3);
+		dl.getSelectAll().waitAndClick(10);
+		// dl.getYesAllPageDocs().waitAndClick(10);
+		dl.getPopUpOkBtn().waitAndClick(10);
 
-		// bulk release to Security Group
-		sessionSearch.bulkRelease(securitygroupname);
-	} 
+		// bulk release to SG
+		ss.bulkRelease(securitygroupname);
+
+	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
@@ -176,7 +179,6 @@ public class TS_017_DocList {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -184,20 +186,21 @@ public class TS_017_DocList {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility basicClass = new Utility(driver);
-			basicClass.screenShot(result);
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
 
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());		
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
-	
 	@AfterClass(alwaysRun = true)
 	public void close() {
+
 		try {
-			//driver.scrollPageToTop();
-			loginPage.logout();	
+			driver.scrollPageToTop();
+
+			// lp.quitBrowser();
 		} finally {
-			loginPage.closeBrowser();
+			lp.quitBrowser();
 			LoginPage.clearBrowserCache();
 		}
 	}

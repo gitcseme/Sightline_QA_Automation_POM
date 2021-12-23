@@ -1,6 +1,33 @@
-12/10/2021 23:54:48 devpinoyLogger *****************************************************
-12/10/2021 23:54:48 devpinoyLogger Running scripts on LD9PT Environment
-12/10/2021 23:54:48 devpinoyLogger Test data is copied to TestData.xml
-12/10/2021 23:54:48 devpinoyLogger *****************************************************
-12/10/2021 23:54:48 devpinoyLogger Running on exsiting project : RegressionDataSet_Hema_DND
-12/10/2021 23:54:48 devpinoyLogger Choosen not to perform any ingestion
+12/08/2021 13:03:55 devpinoyLogger *****************************************************
+12/08/2021 13:03:55 devpinoyLogger Running scripts on LD9PT Environment
+12/08/2021 13:03:55 devpinoyLogger Test data is copied to TestData.xml
+12/08/2021 13:03:55 devpinoyLogger *****************************************************
+12/08/2021 13:03:55 devpinoyLogger Running on exsiting project : Indium_Regression
+12/08/2021 13:03:55 devpinoyLogger Choosen not to perform any ingestion
+12/08/2021 13:03:55 devpinoyLogger *****************************************************
+12/08/2021 13:03:55 devpinoyLogger Running scripts on LD9PT Environment
+12/08/2021 13:03:55 devpinoyLogger Test data is copied to TestData.xml
+12/08/2021 13:03:55 devpinoyLogger *****************************************************
+12/08/2021 13:03:55 devpinoyLogger Running on exsiting project : Indium_Regression
+12/08/2021 13:03:55 devpinoyLogger Choosen not to perform any ingestion
+12/08/2021 13:03:59 devpinoyLogger ******Execution started for ModifySearchInAdvancedSearch_Regression********
+12/08/2021 13:03:59 devpinoyLogger Started Execution for prerequisite
+12/08/2021 13:04:14 devpinoyLogger Login success!
+12/08/2021 13:04:14 devpinoyLogger Logged in as RMU user
+12/08/2021 13:04:14 devpinoyLogger ****************************************************************************************
+12/08/2021 13:04:14 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - verifyEditASearchResultInWPSavedSearch  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+12/08/2021 13:04:14 devpinoyLogger ****************************************************************************************
+
+12/08/2021 13:04:14 devpinoyLogger #### Verify Modify search Results in SavedSearch(WP) ####
+12/08/2021 13:04:24 devpinoyLogger Serach is done for allen NOT excel and PureHit is : 993
+12/08/2021 13:04:27 devpinoyLogger Executed :verifyEditASearchResultInWPSavedSearch
+12/08/2021 13:04:27 devpinoyLogger ****************************************************************************************
+12/08/2021 13:04:27 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - verifyEditASearchResultInWP_Redactions  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+12/08/2021 13:04:27 devpinoyLogger ****************************************************************************************
+
+12/08/2021 13:04:29 devpinoyLogger User is not PA
+12/08/2021 13:04:33 devpinoyLogger Executed :verifyEditASearchResultInWP_Redactions
+12/08/2021 13:04:33 devpinoyLogger ****************************************************************************************
+12/08/2021 13:04:33 devpinoyLogger $$$$$$$$$$$$$$$$$$$$$  Executing - validateEditSearchResults_WPAssignments  ,  MTM TC IDs:  null       $$$$$$$$$$$$$$$$$$$$$$$$$
+12/08/2021 13:04:33 devpinoyLogger ****************************************************************************************
+

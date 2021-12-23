@@ -36,24 +36,8 @@
     <classes>
         <class name="testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations" ></class>  
     </classes>
-	</test>  
-	
-	<!-- 
-	 <test name="RMUBasicAndAdvancedSearchOperations">
- 	 <groups><run><include name="smoke" /></run></groups>
-    <classes>
-        <class name="testScriptsSmoke.TS_0020_ReviewManagerSearch" ></class>  
-    </classes>
-	</test>  
-	
-	 <test name="ReviewerBasicAndAdvancedSearchOperations">
- 	 <groups><run><include name="smoke" /></run></groups>
-    <classes>
-        <class name="testScriptsSmoke.TS_0019_ReviewerSearch" ></class>  
-    </classes>
 	</test>   
-	 -->
-	 
+	
 	<test name="TS_017_DocList">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
@@ -112,15 +96,13 @@
     </test> 
     -->
     
-    <!-- 
 	 <test name="DocView - Non Audio">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>
         <class name="testScriptsSmoke.TS_011_DocViewNonAudioReviewer" ></class>  
     </classes>
 	</test> 
-	  -->
-	  
+	 
 	<test name="Reports">
 	 <groups><run><include name="smoke" /></run></groups>
     <classes>

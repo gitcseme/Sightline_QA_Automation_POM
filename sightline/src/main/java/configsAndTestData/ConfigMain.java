@@ -57,8 +57,4 @@ public class ConfigMain {
 	public String JiraProject;
 	public String TestingBuild;
 	public String ICESmokeFolderPath;
-	public boolean HeadlessMode;
-	public String SourceDatFieldCustom; 
-	
 }
-

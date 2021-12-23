@@ -10,11 +10,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
@@ -39,6 +35,9 @@ public class TS_018_DocViewAudio {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
+
+		// Input in = new Input();
+		// in.loadEnvConfig();
 
 		driver = new Driver();
 		lp = new LoginPage(driver);
@@ -88,7 +87,7 @@ public class TS_018_DocViewAudio {
 	@Test(groups = { "smoke", "regression" })
 	public void addreduction() throws ParseException, InterruptedException {
 
-		docview.audioRedaction();
+		docview.audioReduction();
 
 	}
 
@@ -105,7 +104,6 @@ public class TS_018_DocViewAudio {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -118,7 +116,6 @@ public class TS_018_DocViewAudio {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-	//	ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

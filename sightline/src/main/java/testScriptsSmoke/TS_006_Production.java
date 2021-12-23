@@ -14,10 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.DocListPage;
 import pageFactory.LoginPage;
@@ -49,21 +46,19 @@ public class TS_006_Production {
 		
 		//Input in = new Input();
 		//in.loadEnvConfig();
-	
 		
+	
+	
 	}
 		
 	@Test(groups={"smoke","regression"})
 	public void  AddNewProduction() throws Exception {
 		//Pre-requisites
-		//Just for Initial verification shall be replaced by global wait time.
-		
 		driver = new Driver();
 		lp = new LoginPage(driver);
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		
 		TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
-		Thread.sleep(3000);
 		tp.CreateFolder(foldername,"Default Security Group");
 		SessionSearch ss = new SessionSearch(driver);
 		ss.basicContentSearch("crammer");
@@ -86,7 +81,6 @@ public class TS_006_Production {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
 	@AfterMethod(alwaysRun = true)

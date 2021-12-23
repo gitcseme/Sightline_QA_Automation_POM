@@ -1,9 +1,15 @@
 package pageFactory;
 
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
@@ -26,7 +32,7 @@ public class UserManagement {
 	    public Element getSelectLanguage(){ return driver.FindElementByXPath("//*[@tabindex='6']"); }
 	    public Element getSelectDomain(){ return driver.FindElementByXPath("//*[@tabindex='8']"); }
 	    public Element getSelectProject(){ return driver.FindElementByXPath("//*[@tabindex='7']"); }
-	    public Element getSecurityGroup(){ return driver.FindElementByXPath("//*[@id='ddlSysAdminSecGroup']"); }
+	    public Element getSecurityGroup(){ return driver.FindElementByXPath("(//*[@tabindex='8'])"); }
 	    public Element getSave(){ return driver.FindElementById("SaveUser"); }
 	    
 	    //set password
@@ -90,16 +96,19 @@ public class UserManagement {
 	    public Element getLock(){ return driver.FindElementByXPath("//div[@class='tab-pane fade in active']//div[10]//div[1]//label[1]//i[1]"); }
 	    public Element getRMUasPASecurityGroup(){ return driver.FindElementByXPath("(//*[@id='SysAdminSecGroup'][@tabindex='7'])"); }
 	    public Element getRMUasRMUSecurityGroup(){ return driver.FindElementByXPath("(//*[@id='SysAdminSecGroup'][@tabindex='6'])"); }
+	    public Element manageBtn() {return driver.FindElementByXPath("//*[@id=\"2\"]/i");}
+	 	public Element manageUser() {return driver.FindElementByXPath("//*[@id=\"LeftMenu\"]/li[3]/ul/li[6]/a");}
+	 	public Element userTextInput() {return driver.FindElementByXPath("//*[@id=\"txtsearchUser\"]");}
+	 	public Element userFiletersBtn() {return driver.FindElementByXPath("//*[@id=\"btnAppyFilter\"]");}
+	 	public Element userEditBtn() {return driver.FindElementByXPath("//table[@id='dtUserList']//tr[1]//td[7]//a[text()='Edit']");}
+	 	public Element userSelectSecurityGroup() {return driver.FindElementByXPath("//select[@id='ddlSg']");}
 	    
-	    
-	    
-	   
 	    public UserManagement(Driver driver){
 
 	        this.driver = driver;
 	        bc = new BaseClass(driver);
 	        softAssertion= new SoftAssert(); 
-	        this.driver.getWebDriver().get(Input.url+ "User/UserListView");
+	    //    this.driver.getWebDriver().get(Input.url+ "User/UserListView");
 	    }
 		 public void findUsers(String name,String role, String userSate) {
 			 
@@ -161,7 +170,7 @@ public void setPassword(String pwd) {
 		 
 	}
 	
- public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) throws InterruptedException {
+ public void createUser(String firstName, String lastName, String role, String emailId, String domain, String project) {
 		
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getAddUserBtn().Visible() ;}}), Input.wait30);
@@ -185,13 +194,7 @@ public void setPassword(String pwd) {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSelectProject().Visible() ;}}), Input.wait30);
 		 //getSelectDomain().SendKeys(domain);
-		 if(project.length()>19) {
-			 project=project.substring(0, 20);
-			 project=project+"...";
-//			 System.out.println(project);
-			 getSelectProject().selectFromDropdown().selectByVisibleText(project);
-		 }
-		
+		 getSelectProject().selectFromDropdown().selectByVisibleText(project);
 		 }
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSecurityGroup().Visible() ;}}), Input.wait30);
@@ -203,12 +206,10 @@ public void setPassword(String pwd) {
 		}
 		 if(role.equalsIgnoreCase("Review Manager")
 					||role.equalsIgnoreCase("Reviewer")){
-			 
-		 getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");
+		 getSecurityGroup().selectFromDropdown().selectByVisibleText("Default Security Group");;
 		 
 		 }
 		 getSave().Click();
-		 Thread.sleep(2000);
 		 bc.VerifySuccessMessage("User profile was successfully created");
 		 
 	}
@@ -308,9 +309,7 @@ public void setPassword(String pwd) {
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSelectProject().Visible() ;}}), Input.wait30);
 		 //getSelectDomain().SendKeys(domain);
-	
-			 getSelectProject().selectFromDropdown().selectByVisibleText(project);
-		
+		 getSelectProject().selectFromDropdown().selectByVisibleText(project);
 		 }
 		 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 				 getSecurityGroup().Visible() ;}}), Input.wait30);
@@ -588,5 +587,44 @@ public void setPassword(String pwd) {
 					 
 		}
 	    
+		/**
+		 * @author Indium-Baskar date: 30/9/2021 Modified date: 6/12/2021
+		 * @modified By Jeevitha
+		 * @Description: this method used for giving access to security group
+		 */
+		public void assignAccessToSecurityGroups(String SgName, String username) throws Exception {
+
+			WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
+			Actions actions = new Actions(driver.getWebDriver());
+			driver.scrollPageToTop();
+			Thread.sleep(3000);// Required
+			wait.until(ExpectedConditions.elementToBeClickable(manageBtn().getWebElement()));
+			actions.moveToElement(manageBtn().getWebElement());
+			actions.click().build().perform();
+			wait.until(ExpectedConditions.elementToBeClickable(manageUser().getWebElement()));
+			actions.moveToElement(manageUser().getWebElement());
+			actions.click().build().perform();
+			actions.moveToElement(userTextInput().getWebElement());
+			actions.click();
+			actions.sendKeys(username);
+			actions.build().perform();
+			actions.moveToElement(userFiletersBtn().getWebElement());
+			actions.click().build().perform();
+			Thread.sleep(4000);
+			wait.until(ExpectedConditions.elementToBeClickable(userEditBtn().getWebElement()));
+			actions.moveToElement(userEditBtn().getWebElement());
+			actions.click();
+			actions.build().perform();
+			Thread.sleep(4000);// Required
+			driver.scrollingToBottomofAPage();
+			Select assignSG1 = new Select(userSelectSecurityGroup().getWebElement());
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_CONTROL);
+			assignSG1.selectByVisibleText(SgName);
+			robot.keyRelease(KeyEvent.VK_CONTROL);
+			Thread.sleep(2000);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+		}
 	   
 }

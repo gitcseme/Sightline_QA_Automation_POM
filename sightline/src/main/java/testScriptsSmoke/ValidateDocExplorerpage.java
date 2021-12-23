@@ -10,11 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -49,9 +45,9 @@ public class ValidateDocExplorerpage {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		///Input in = new Input();
-		///in.loadEnvConfig();
-		
+		Input in = new Input();
+		in.loadEnvConfig();
+
 		// Open browser
 		driver = new Driver();
 		bc = new BaseClass(driver);
@@ -94,7 +90,7 @@ public class ValidateDocExplorerpage {
 
 	/*
 	 * Author : Shilpi Mangal Created date: Modified date: Modified by:
-	 * Description : Verify that CustodianName Filter with Include
+	 * Description : Verify that “CustodianName” Filter with "Include"
 	 * functionality is working correctly on Doc Explorer list.
 	 */
 	@Test(groups = { "regression,smoke" }, priority = 3)
@@ -125,7 +121,6 @@ public class ValidateDocExplorerpage {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -137,7 +132,6 @@ public class ValidateDocExplorerpage {
 
 		}
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}
 
 	@AfterClass(alwaysRun = true)

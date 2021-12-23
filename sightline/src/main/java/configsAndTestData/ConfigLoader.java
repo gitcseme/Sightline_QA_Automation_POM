@@ -1,6 +1,5 @@
 package configsAndTestData;
 
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,11 +12,6 @@ public class ConfigLoader {
 	// public ConfigMain commonConfig;
 	
 	StringBuilder sb;
-	/**
-	 * @Description Loads Data to XML File
-	 * @param dataXml
-	 * @return
-	 */
 	public Object load(String dataXml) {
 	
 	try{
@@ -37,8 +31,7 @@ public class ConfigLoader {
 		return Deserializer.getXMLModelDeserializer(sb.toString(),ConfigMain.class);
 	else if(dataXml.equalsIgnoreCase("DE")||dataXml.equalsIgnoreCase("LD9PT")||dataXml.equalsIgnoreCase("QA")||dataXml.equalsIgnoreCase("US_CM")
 			||dataXml.equalsIgnoreCase("Chicago")||dataXml.equalsIgnoreCase("UK")||dataXml.equalsIgnoreCase("US")
-			||dataXml.equalsIgnoreCase("LD5QA")||dataXml.equalsIgnoreCase("CA")||dataXml.equalsIgnoreCase("HK")
-			||dataXml.equalsIgnoreCase("UAT"))
+			||dataXml.equalsIgnoreCase("LD5QA"))
 		return Deserializer.getXMLModelDeserializer(sb.toString(),Environment.class);
 	else if(dataXml.equalsIgnoreCase("TestData"))
 		return Deserializer.getXMLModelDeserializer(sb.toString(),TestData.class);

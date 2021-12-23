@@ -1,20 +1,29 @@
 package automationLibrary;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver.Options;
+
+import executionMaintenance.UtilityLog;
+import pageFactory.BaseClass;
+import testScriptsSmoke.Input;
 
 public class ElementCollection implements Iterable<Element> {
 	private WebElement element = null;
     private Driver driver;
     private By by;
     private List<WebElement> elements = null;
+    BaseClass base;
  
     
 		 
@@ -23,6 +32,7 @@ public class ElementCollection implements Iterable<Element> {
 	            this.driver = driver;
 	            this.by = by;
 	            this.element = element;
+	            base = new BaseClass(driver);
 	        }
 
 	        public Element getElementByIndex(int index)
@@ -141,13 +151,6 @@ public class ElementCollection implements Iterable<Element> {
 				}
 				return elementList.iterator();
 			}
-			
-			public void remove(Element element)
-			{
-				AssertExists();
-				int indexValue = elements.indexOf(element);
-				elements.remove(indexValue);
-			}
 
 			  public Boolean Displayed()
 			     {
@@ -171,20 +174,61 @@ public class ElementCollection implements Iterable<Element> {
 			          return true;
 			         
 			     }
-			     
-			     public Element getLastElement()
-			        {
-			                AssertExists();
-			                return new Element(driver, elements.get(elements.size()-1));
-			         }
-			        
-			        
-			        public Element getFirstElement()
-			        {
-			                AssertExists();
-			                return new Element(driver, elements.get(0));
-			         }
-			   
+			     /**
+			      * author name-Jayanthi
+			      * 
+			      */
+			     public boolean isElementPresent() {
+			 		  try {
+			 			  return this.Exists();
+			 		  }
+			 		catch (org.openqa.selenium.NoSuchElementException e) {
+			 		    return false;
+			 		  }
+			 		}
+			     public Boolean isElementAvailable(int timeOut) {
+			 		StringWriter sw = new StringWriter();
+			 		PrintWriter pw = new PrintWriter(sw);
+			 		base.implicitWait(0);
+			 		for (int iteration = 1; iteration <= timeOut; iteration++) {
+			 			try {
+			 				element = driver.getWebDriver().findElement(by);
+			 				base.implicitWait(30);
+			 				return true;
+			 			} catch (StaleElementReferenceException E) {
+			 				base.waitTime(1);
+			 				if(iteration==timeOut) {
+			 					E.printStackTrace(pw);
+			 					UtilityLog.info(sw.toString());
+			 					}else {
+			 						continue;
+			 					}
+			 			} catch (NoSuchElementException E) {
+			 				base.waitTime(1);
+			 				if(iteration==timeOut) {
+			 					E.printStackTrace(pw);
+			 					UtilityLog.info(sw.toString());
+			 					}else {
+			 						continue;
+			 					}					
+			 			} catch (WebDriverException E) {
+			 				base.waitTime(1);
+			 				if(iteration==timeOut) {
+			 					E.printStackTrace(pw);
+			 					UtilityLog.info(sw.toString());
+			 					}else {
+			 						continue;
+			 					}						
+			 			}
+			 		}
+			 		base.implicitWait(30);
+			 		return false;
+			 		
+			 		
+			 	}
+
+
+	     
      }
 
 	

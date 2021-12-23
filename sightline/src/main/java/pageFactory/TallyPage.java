@@ -2,7 +2,6 @@ package pageFactory;
 
 import java.util.concurrent.Callable;
 
-
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import automationLibrary.Driver;
@@ -195,11 +194,101 @@ public class TallyPage {
 		return driver.FindElementByXPath("(//a[contains(text(),'Quick Batch')])[" + i + "]");
 	}
 
+	// Added by Gopinath
+	public Element getProjectSource() {
+		return driver.FindElementByXPath("//strong[text()='Projects']");
+	}
+
+	public Element getProjectCheckbox() {
+		return driver.FindElementByXPath("//ul[@class='list-unstyled select-project project']//i");
+	}
+
+	public Element getProjectSaveButton() {
+		return driver.FindElementByXPath("//button[@id='project']");
+	}
+
+	public Element getSubTallyField() {
+		return driver.FindElementByXPath("//div[@id='metadataDiv2']//button");
+	}
+
+	public Element getSubTallyApplyButton() {
+		return driver.FindElementById("btnSubTallyApply");
+	}
+
+	public Element getSubTagsCheckBox() {
+		return driver.FindElementByXPath("//strong[text()='Tags']//..//..//input[@name='sub-metadata']//..//i");
+	}
+
+	public Element getSubTagByName(String tagName) {
+		return driver.FindElementByXPath("//a[@data-content = '" + tagName + "']");
+	}
+
+	public Element getDocumentsCount() {
+		return driver.FindElementByXPath("//table[@class='table table-striped dataGrid']/tbody[1]/tr[1]/td[2]");
+	}
+
+	public Element getTagsBoard() {
+		return driver.FindElementById("_subtagsTree");
+	}
+
+	// Added by Gopinath - 06/10/2021
+	public Element getTallyTagRadioButton() {
+		return driver.FindElementByXPath("//input[@id='tags']/following-sibling::i");
+	}
+
+	public Element getTag(String tagName) {
+		return driver.FindElementByXPath("//a[@data-content='" + tagName + "']");
+	}
+
+	public Element getTallyChartRectbar() {
+		return driver.FindElementByCssSelector("rect:nth-child(1)");
+	}
+
+	// Added by raghu
+	public Element getTallyCount() {
+		return driver.FindElementByXPath("(//*[name()='svg']//*[name()='text' and @dy='70'])[last()]");
+	}
+
+	// Added by Jayanthi
+	public Element getTallyReport() {
+		return driver.FindElementByXPath("//div[@id='collapseOne']//a[contains(.,'Tally Report')]");
+	}
+
+	public Element getTally_Searches() {
+		return driver.FindElementByXPath("//strong[text()='Searches']/parent::a//span[@class='fa fa-plus']");
+	}
+
+	public Element getTally_SelectSearches(String searchName) {
+		return driver.FindElementByXPath(
+				"//a[@class='jstree-anchor' and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getTally_SearchSaveSelections() {
+		return driver.FindElementByXPath("//button[@id='search']");
+	}
+
+	public Element getTallyBulkReleaseAction() {
+		return driver.FindElementByXPath(
+				"//button[@id='tallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
+	}
+
+	public Element getBulkRelease_ButtonRelease() {
+		return driver.FindElementById("btnRelease");
+	}
+
+	public Element getBulkRelDefaultSecurityGroup_CheckBox(String SG) {
+		return driver.FindElementByXPath("//form[@id='Edit User Group']//div[text()='" + SG + "']/../div[1]/label/i");
+	}
+
+	public Element getTotalSelectedDocs() {
+		return driver.FindElementByXPath("//span[@id='spanTotal']");
+	}
+
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
 		dp = new DocListPage(driver);
-		this.driver.getWebDriver().get(Input.url + "Report/Tally");
+	//	this.driver.getWebDriver().get(Input.url + "Report/Tally");
 
 		base = new BaseClass(driver);
 
@@ -271,13 +360,13 @@ public class TallyPage {
 
 		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
-
+        driver.scrollingToElementofAPage(getTally_tallyactionbtn());
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_tallyactionbtn().Visible();
 			}
 		}), Input.wait30);
-		getTally_tallyactionbtn().Click();
+		getTally_tallyactionbtn().waitAndClick(10);
 	}
 
 	public void bulkAssign(final int tally1subtally2) {
@@ -425,10 +514,9 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_SourceSubTally().Visible();
 			}
-		}), Input.wait60);
-		
-		
-		getTally_SourceSubTally().waitAndClick(10);
+		}), Input.wait30);
+		Thread.sleep(3000);
+		getTally_SourceSubTally().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -458,7 +546,6 @@ public class TallyPage {
 	}
 
 	public void subTallyActions() {
-		getTally_btnSubTallyAll().ElementToBeClickableExplicitWait(getTally_btnSubTallyAll(), 60);
 		getTally_btnSubTallyAll().waitAndClick(30);
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -628,49 +715,49 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_SelectSource().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SelectSource().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SecurityGroupsButton().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SecurityGroupsButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SelectSecurityGroup().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SelectSecurityGroup().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SaveSelections().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SaveSelections().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SelectaTallyFieldtoruntallyon().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SelectaTallyFieldtoruntallyon().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_Metadataselect().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_Metadataselect().selectFromDropdown().selectByVisibleText("CustodianName");
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_btnTallyApply().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_btnTallyApply().Click();
 
 		base.yesPopUp();
@@ -679,7 +766,7 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_btnTallyAll().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 
 		getTally_btnTallyAll().ScrollTo();
 		getTally_btnTallyAll().waitAndClick(30);
@@ -688,47 +775,43 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_tallyactionbtn().Visible();
 			}
-		}), Input.wait60);
-		getTally_tallyactionbtn().VisibilityOfElementExplicitWait(getTally_tallyactionbtn(), 60);
+		}), Input.wait30);
 		getTally_tallyactionbtn().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_actionSubTally().Visible();
 			}
-		}), Input.wait60);
-		getTally_actionSubTally().VisibilityOfElementExplicitWait(getTally_actionSubTally(), 60);
-		getTally_actionSubTally().waitAndClick(15);
-		
+		}), Input.wait30);
+		getTally_actionSubTally().Click();
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_SourceSubTally().Visible();
 			}
-		}), Input.wait60);
-//		Thread.sleep(2000);
-		getTally_SourceSubTally().ElementToBeClickableExplicitWait(getTally_SourceSubTally(), 60);
-//		Element.VisibilityOfElementExplicitWait(getTally_SourceSubTally(), 60);
-		getTally_SourceSubTally().waitAndClick(15);
+		}), Input.wait30);
+		Thread.sleep(3000);
+		getTally_SourceSubTally().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_subMetadata().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_subMetadata().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_submetadataselect().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_submetadataselect().selectFromDropdown().selectByVisibleText("DocFileExtension");
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTally_btnSubTallyApply().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_btnSubTallyApply().Click();
 
 		base = new BaseClass(driver);
@@ -740,16 +823,240 @@ public class TallyPage {
 			public Boolean call() {
 				return getTally_SubTallyActionButton().Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 		getTally_SubTallyActionButton().Click();
 
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getQuickBatchAction(2).Visible();
 			}
-		}), Input.wait60);
+		}), Input.wait30);
 
 		getQuickBatchAction(2).waitAndClick(10);
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for selecting source by project..
+	 */
+	public void selectSourceByProject() {
+		try {
+			getTally_SelectSource().Click();
+			getProjectSource().Click();
+			for (int i = 0; i < 20; i++) {
+				try {
+					getProjectCheckbox().Click();
+					break;
+				} catch (Exception e) {
+					base.waitForElement(getProjectCheckbox());
+				}
+			}
+			getProjectSaveButton().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting project in tally page" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for selecting tally by meta data field..
+	 * @param fieldName : (fieldName is the name of meta data field)
+	 */
+	public void selectTallyByMetaDataField(String fieldName) {
+		try {
+			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
+			getTally_SelectaTallyFieldtoruntallyon().Click();
+			base.waitForElement(getTally_Metadataselect());
+			base.waitTillElemetToBeClickable(getTally_Metadataselect());
+			getTally_Metadataselect().selectFromDropdown().selectByVisibleText(fieldName);
+			base.waitForElement(getTally_btnTallyApply());
+			base.waitTillElemetToBeClickable(getTally_btnTallyApply());
+			getTally_btnTallyApply().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for selecting subtally from action dropdown..
+	 */
+	public void selectSubTallyFromActionDropDown() {
+		try {
+			base.waitForElement(getTally_actionSubTally());
+			base.waitTillElemetToBeClickable(getTally_actionSubTally());
+			getTally_actionSubTally().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting sub tally from action drop down" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for selecting subtally field from tally..
+	 * @param tagName : (tagName is a string value that name of tag)
+	 */
+	public void applyingSubTallyField(String tagName) {
+		try {
+			base.waitForElement(getSubTallyField());
+			base.waitTillElemetToBeClickable(getSubTallyField());
+			getSubTallyField().Click();
+			base.waitTillElemetToBeClickable(getSubTagsCheckBox());
+			getSubTagsCheckBox().Click();
+			base.waitForElement(getTagsBoard());
+			getTagsBoard().Click();
+			base.waitForElement(getSubTagByName(tagName));
+			base.waitTillElemetToBeClickable(getSubTagByName(tagName));
+			getSubTagByName(tagName).Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getSubTallyApplyButton());
+			base.waitTillElemetToBeClickable(getSubTallyApplyButton());
+			getSubTallyApplyButton().Click();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while applying sub tally field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying documents count by tag name subtally..
+	 * @param tagName : (tagName is a string value that name of tag)
+	 */
+	public void verifyDocumentsCountByTagNameSubTally(String tagName) {
+		try {
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getDocumentsCount());
+			int count = Integer.parseInt(getDocumentsCount().getWebElement().getText().trim());
+			String tag = getDocumentsCount().getWebElement().getAttribute("data-y").trim();
+			if (count > 0) {
+				base.passedStep("Tag : " + tag + " with document count : " + count);
+			} else {
+				base.failedStep("Failed to get count of documents");
+			}
+
+			if (tag.equalsIgnoreCase(tagName)) {
+				base.passedStep("Tag : " + tag + " with document count : " + count + " displayed successfully");
+			} else {
+				base.failedStep(tagName + " with count is not displayed");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying documents count by tagname subtally" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for selecting tally by tag name..
+	 * @param tagName : (tagName is the name of meta data field)
+	 */
+	public void selectTallyByTagName(String tagName) {
+		try {
+			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
+			getTally_SelectaTallyFieldtoruntallyon().Click();
+			base.waitForElement(getTallyTagRadioButton());
+			base.waitTillElemetToBeClickable(getTallyTagRadioButton());
+			getTallyTagRadioButton().Click();
+			base.waitForElement(getTag(tagName));
+			base.waitTillElemetToBeClickable(getTag(tagName));
+			getTag(tagName).Click();
+			base.waitForElement(getTally_btnTallyApply());
+			base.waitTillElemetToBeClickable(getTally_btnTallyApply());
+			getTally_btnTallyApply().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting tally by meta data field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verify tally chart rect is displayed or not..
+	 * @param flag : (flag is the boolean value that tally chart neeed to display or
+	 *             not).
+	 */
+	public void verifyTallyChartRectIsDisplayed(boolean flag) {
+		try {
+			base.waitForElement(getTallyChartRectbar());
+			base.waitTillElemetToBeClickable(getTallyChartRectbar());
+			getTallyChartRectbar().Displayed();
+			try {
+				if (getTallyChartRectbar().Displayed() && flag) {
+					base.passedStep("Tally chart rect displayed successfully");
+					base.passedStep("Filter applied successfully");
+				}
+			} catch (Exception e) {
+				if (flag == false) {
+					base.passedStep("Tally chart rect not displayed successfully");
+				} else {
+					base.failedStep("Tally chart rect not displayed");
+					base.failedStep("Falied to apply filters");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying tally chart rect is displayed or not" + e.getMessage());
+		}
+
+	}
+/**
+ * @author Jayanthi.ganesan
+ */
+	public void navigateTo_Tallypage() {
+		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		base.waitForElement(getTallyReport());
+		getTallyReport().Click();
+		base.stepInfo("Navigating to tally page");
+		driver.waitForPageToBeReady();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SelectSource_SavedSearch(String saveSearch) {
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Searches());
+		getTally_Searches().Click();
+		driver.scrollingToElementofAPage(getTally_SelectSearches(saveSearch));
+		getTally_SelectSearches(saveSearch).waitAndClick(5);
+		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+		base.waitForElement(getTally_SearchSaveSelections());
+		getTally_SearchSaveSelections().Click();
+		base.stepInfo("Selected "+saveSearch+" as source to generate tally report");
+	}
+	 /**
+	  * @author Jayanthi.ganesan
+	  */
+	public String bulkRelease(String SG) {
+		base.waitForElement(getTallyBulkReleaseAction());
+		getTallyBulkReleaseAction().Click();
+		System.out.println("performing bulk assign");
+		getBulkRelDefaultSecurityGroup_CheckBox(SG).Click();
+		base.waitForElement(getBulkRelease_ButtonRelease());
+		getBulkRelease_ButtonRelease().waitAndClick(20);
+		base.waitForElement(getTotalSelectedDocs());
+		String TotalDocs = getTotalSelectedDocs().getText();
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(20);
+		base.VerifySuccessMessageB("Records saved successfully");
+		base.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
+		return TotalDocs;
 
 	}
 

@@ -1,7 +1,6 @@
 package pageFactory;
 
 import java.util.concurrent.Callable;
-
 import automationLibrary.Driver;
 import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
@@ -32,7 +31,50 @@ public class ProjectPage {
     public Element getSearchProjectName(){ return driver.FindElementById("txtProjectLabel"); }
     public Element getProjectFilterButton(){ return driver.FindElementById("btnFilter"); }
     public Element getProjectName(String projectname){ return driver.FindElementByXPath(".//*[@id='ProjectDataTable']/tbody/tr[td='"+projectname+"']"); }
-    
+    public Element getManageBtn() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-users']//following::label[text()='Manage']");
+	}
+
+	public Element getManageProjectBtn() {
+		return driver.FindElementByXPath("//a[@name='Project']");
+	}
+
+	public Element getAddProjectButton() {
+		return driver.FindElementByXPath("//a[@id='btnAddProjectField']");
+	}
+
+	public Element getProjectFiledName() {
+		return driver.FindElementById("FieldName");
+	}
+
+	public Element getPresentationField() {
+		return driver.FindElementById("FieldLabel");
+	}
+
+	public Element getFieldClassificationDropDown() {
+		return driver.FindElementById("ddlFieldClassification");
+	}
+
+	public Element getFieldDataTypeDropdown() {
+		return driver.FindElementById("ddlProjectFieldGroupCode");
+	}
+
+	public Element getSearchableCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsSearchable']/parent::label");
+	}
+
+	public Element getEditableCheckBox() {
+		return driver.FindElementByXPath("//input[@id='IsEditable']/parent::label");
+	}
+
+	public Element getFieldLengthDropDown() {
+		return driver.FindElementById("ddlDataTypeColumnLengthCode");
+	}
+
+	public Element getSaveBtn() {
+		return driver.FindElementById("btnProjectFieldAddSave");
+	}
+
   
  
    
@@ -40,12 +82,12 @@ public class ProjectPage {
     public ProjectPage(Driver driver){
 
         this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Project/Project");
+  //      this.driver.getWebDriver().get(Input.url+"Project/Project");
         driver.waitForPageToBeReady();
         bc = new BaseClass(driver);
     }
 
-    public void AddDomainProject(String projectname,String clientname) throws InterruptedException {
+    public void AddDomainProject(String projectname,String clientname) {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddProjectBtn().Visible()  ;}}), Input.wait30); 
@@ -101,7 +143,7 @@ public class ProjectPage {
  	       
 	}
     
-       public void AddNonDomainProject(String projectname,String hcode) throws InterruptedException{
+       public void AddNonDomainProject(String projectname,String hcode) {
 		
     	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
     			getAddProjectBtn().Visible()  ;}}), Input.wait30); 
@@ -191,6 +233,127 @@ public class ProjectPage {
  	   
        
 	}
+
+	/**
+	 * @author Indium-Baskar date: 10/8/2021 Modified date: 23/8/2021 Modified by:Baskar.
+	 * @Description:project field creation with INT Datatype
+	 */
+
+   	public void addCustomFieldProjectDataType(String projectName, String dataType) {
+   		bc.waitForElement(getManageBtn());
+   		bc.waitTillElemetToBeClickable(getManageBtn());
+   		getManageBtn().Click();
+   		bc.waitForElement(getManageProjectBtn());
+   		bc.waitTillElemetToBeClickable(getManageProjectBtn());
+   		getManageProjectBtn().Click();
+   		bc.waitForElement(getAddProjectButton());
+   		bc.waitTillElemetToBeClickable(getAddProjectButton());
+   		getAddProjectButton().Click();
+   		bc.waitForElement(getProjectFiledName());
+   		getProjectFiledName().SendKeys(projectName);
+   		bc.waitForElement(getPresentationField());
+   		getPresentationField().SendKeys(projectName);
+   		bc.waitForElement(getFieldClassificationDropDown());
+   		getFieldClassificationDropDown().selectFromDropdown().selectByVisibleText("Doc Basic");
+   		bc.waitForElement(getFieldDataTypeDropdown());
+   		getFieldDataTypeDropdown().selectFromDropdown().selectByVisibleText(dataType);
+   		bc.waitForElement(getFieldLengthDropDown());
+   		getFieldLengthDropDown().selectFromDropdown().selectByVisibleText("Small - 50 Characters");
+   		bc.waitForElement(getSearchableCheckBox());
+   		bc.waitTillElemetToBeClickable(getSearchableCheckBox());
+   		getSearchableCheckBox().Click();
+   		bc.waitForElement(getEditableCheckBox());
+   		bc.waitTillElemetToBeClickable(getEditableCheckBox());
+   		getEditableCheckBox().Click();
+   		bc.waitForElement(getSaveBtn());
+   		bc.waitTillElemetToBeClickable(getSaveBtn());
+   		getSaveBtn().Click();
+	}
+
+	/**
+	 * @author Indium-Baskar date: 29/10/2021 Modified date: 23/8/2021 Modified by:Baskar.
+	 * @Description:project field creation with Datatype
+	 */
+
+   	public void addCustomFieldDataType(String projectName, String dataType) {
+   		bc.waitForElement(getManageBtn());
+   		bc.waitTillElemetToBeClickable(getManageBtn());
+   		getManageBtn().Click();
+   		bc.waitForElement(getManageProjectBtn());
+   		bc.waitTillElemetToBeClickable(getManageProjectBtn());
+   		getManageProjectBtn().Click();
+   		bc.waitForElement(getAddProjectButton());
+   		bc.waitTillElemetToBeClickable(getAddProjectButton());
+   		getAddProjectButton().Click();
+   		bc.waitForElement(getProjectFiledName());
+   		getProjectFiledName().SendKeys(projectName);
+   		bc.waitForElement(getPresentationField());
+   		getPresentationField().SendKeys(projectName);
+   		bc.waitForElement(getFieldClassificationDropDown());
+   		getFieldClassificationDropDown().selectFromDropdown().selectByVisibleText("Doc Basic");
+   		bc.waitForElement(getFieldDataTypeDropdown());
+   		getFieldDataTypeDropdown().selectFromDropdown().selectByVisibleText(dataType);
+   		bc.waitForElement(getSearchableCheckBox());
+   		bc.waitTillElemetToBeClickable(getSearchableCheckBox());
+   		getSearchableCheckBox().Click();
+   		bc.waitForElement(getEditableCheckBox());
+   		bc.waitTillElemetToBeClickable(getEditableCheckBox());
+   		getEditableCheckBox().Click();
+   		bc.waitForElement(getSaveBtn());
+   		bc.waitTillElemetToBeClickable(getSaveBtn());
+   		getSaveBtn().Click();
+	}
+   	
+   	
+	/**
+	 * @author Indium-Baskar date: 11/24/2021 Modified date: N/AModified by:Baskar.
+	 */
+//    Reusable method for clicking projectfield
+   	public void clickingManageButton() {
+   		driver.waitForPageToBeReady();
+   		bc.waitForElement(getManageBtn());
+   		bc.waitTillElemetToBeClickable(getManageBtn());
+   		getManageBtn().Click();
+   		bc.waitForElement(getManageProjectBtn());
+   		bc.waitTillElemetToBeClickable(getManageProjectBtn());
+   		getManageProjectBtn().Click();
+   		driver.waitForPageToBeReady();
+   	}
+   	
+   	/**
+	 * @author Indium-Baskar date: 11/24/2021 Modified date: N/AModified by:Baskar.
+	 * @Description:project field creation with INT Datatype using integer
+	 */
+   	
+	public void addMetaDataFieldUsingIntergerType(String projectName, String dataType, String classify,
+			String integerType) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getAddProjectButton());
+		bc.waitTillElemetToBeClickable(getAddProjectButton());
+		getAddProjectButton().Click();
+		bc.waitForElement(getProjectFiledName());
+		getProjectFiledName().SendKeys(projectName);
+		bc.waitForElement(getPresentationField());
+		getPresentationField().SendKeys(projectName);
+		bc.waitForElement(getFieldClassificationDropDown());
+		getFieldClassificationDropDown().selectFromDropdown().selectByVisibleText(classify);
+		bc.waitForElement(getFieldDataTypeDropdown());
+		getFieldDataTypeDropdown().selectFromDropdown().selectByVisibleText(dataType);
+		bc.waitForElement(getFieldLengthDropDown());
+		getFieldLengthDropDown().selectFromDropdown().selectByVisibleText(integerType);
+		bc.waitForElement(getSearchableCheckBox());
+		bc.waitTillElemetToBeClickable(getSearchableCheckBox());
+		getSearchableCheckBox().Click();
+		bc.waitForElement(getEditableCheckBox());
+		bc.waitTillElemetToBeClickable(getEditableCheckBox());
+		getEditableCheckBox().Click();
+		bc.waitForElement(getSaveBtn());
+		bc.waitTillElemetToBeClickable(getSaveBtn());
+		getSaveBtn().Click();
+		bc.CloseSuccessMsgpopup();
+		driver.waitForPageToBeReady();
+	}
+}
     
     
- }
+ 

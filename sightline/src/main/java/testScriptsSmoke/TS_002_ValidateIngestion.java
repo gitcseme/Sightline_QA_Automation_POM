@@ -6,7 +6,6 @@ import java.text.ParseException;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import automationLibrary.Driver;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;

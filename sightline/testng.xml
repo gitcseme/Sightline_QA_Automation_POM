@@ -5,16 +5,16 @@
 <suite name="Sightline QA automation">
 
 <suite-files>
-
   <listeners>
-        <listener class-name="executionMaintenance.TestListener"></listener>
+        <listener class-name="executionMaintenance.AnnotationTransformer"/>
  </listeners>   
-	
-	<!-- Consilio Smoke Test -->
-    <!--  <suite-file path="./smokeSuite.xml"/> -->
-    <!-- Consilio Regression Test --> 
-  	<suite-file path="./regressionSuite.xml" />
-  	
- </suite-files>
+ 
+    
+    <suite-file path="./smokeSuite.xml"/> 
+
+  	<!--<suite-file path="./failed.xml"/>  -->
+	<!--  <suite-file path="./regressionSuite.xml" /> 
+ -->
+	</suite-files>
 
 </suite>

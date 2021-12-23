@@ -1,7 +1,7 @@
 package testScriptsRegression;
 
+import java.awt.AWTException;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
 import org.openqa.selenium.WebElement;
@@ -10,9 +10,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import automationLibrary.Driver;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -36,10 +34,7 @@ import testScriptsSmoke.Input;
 	TagsAndFoldersPage page;
 	AssignmentsPage agnmt;
 	HomePage hm;
-	BaseClass bc;//changes here
-	DocListPage dp;
-	SessionSearch search;
-
+	BaseClass bc;
 	
 	String Remark= "Re"+Utility.dynamicNameAppender();
 	String newTag = "newtag"+Utility.dynamicNameAppender();
@@ -88,7 +83,7 @@ import testScriptsSmoke.Input;
 		
 	
 		//Search docs and assign to newly created assignment
-		search = new SessionSearch(driver);
+		SessionSearch search = new SessionSearch(driver);
 		search.basicContentSearch(Input.searchString2);
 		search.bulkAssign();
 		agnmt.assignDocstoExisting(assignmentName);
@@ -119,28 +114,26 @@ import testScriptsSmoke.Input;
         
 	}
 	
-      	@Test(groups={"regression"},priority=1)
+   	@Test(groups={"regression"},priority=1)
 		public void  VerifyPersistentHit() throws InterruptedException {
  		
    		 System.out.println("******Execution started for Persistent Hits********");
-   		 bc.stepInfo("Test CaseId : RPMXCON-51010, To verify the details by clicking on Persistent search icon.");
-		
+			SessionSearch search = new SessionSearch(driver);
 			search.basicContentSearch(Input.searchString1);
 			search.ViewInDocView();
 			docView.VerifyPersistentHit(Input.searchString1);
 	
 		}
- 
-	@Test(groups={"regression"},priority=2)
-	public void VerifyTextTab() throws InterruptedException {
-		bc.stepInfo("******Execution started forverify text tab********");
-		bc.stepInfo("Test CaseId : RPMXCON-50911,To verify when user can view the document in Text tab");
-		bc.stepInfo("Test CaseId : RPMXCON-50913,To verify when user enters the document number in Text view");
-		
-		search.basicContentSearch(Input.searchString1);
-		bc.passedStep("*********Basic content search is done********");
-		search.ViewInDocView();
-		bc.passedStep("*********Document seen in doc view********");
+ 	
+ 	@Test(groups={"regression"},priority=2)
+	public void VerifyFoldertab() throws InterruptedException {
+ 		System.out.println("******Execution started for Verify folder tab********");
+		docView.VerifyFolderTab(folderName,2);
+    
+	}
+	@Test(groups={"regression"},priority=3)
+	public void VerifyTextTab() {
+		System.out.println("******Execution started forverify text tab********");
 		docView.ViewTextTab();
 	}
 	
@@ -151,9 +144,91 @@ import testScriptsSmoke.Input;
 		docView.NonAudioAnnotation();
 	}
 	
+	
+	
+	
+	@Test(groups={"regression"},priority=6)
+	public void VerifyAnalyticsEmailInclusive() throws InterruptedException
+	{
+		System.out.println("******Execution started for VerifyAnalyticsEmailInclusive********");
+		 BaseClass bc = new BaseClass(driver);
+		 bc.selectproject();
+		SessionSearch search = new SessionSearch(driver);
+		search.basicContentSearch(Input.searchString2);
+		//  search.Removedocsfromresults();
+		search.getThreadedAddButton().waitAndClick(20);
+		search.getBulkActionButton().waitAndClick(10);
+		search.getDocViewAction().waitAndClick(10);
+		docView.getDocView_AnalyticsEmail();
+		
+	}
+	
+	@Test(groups={"regression"},priority=7)
+		public void VerifyAnalyticsThreaded() throws InterruptedException
+		{
+		System.out.println("******Execution started for VerifyAnalyticsThreaded********");
+		 BaseClass bc = new BaseClass(driver);
+		 bc.selectproject();
+			SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString1);
+			search.getPureHitAddButton().waitAndClick(20);
+			search.getBulkActionButton().waitAndClick(10);
+			search.getDocViewAction().waitAndClick(10);
+			docView.AnalyticsThreadedNoDocument();
+	    }
+		
+	   @Test(groups={"regression"},priority=8)
+		public void VerifyAnalyticsChildWinodw() throws InterruptedException
+		{
+			System.out.println("******Execution started for VerifyAnalyticsChildWinodw********");
+			 driver.getWebDriver().navigate().refresh();
+			BaseClass bc = new BaseClass(driver);
+		 
+			 bc.selectproject();
+			SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString2);
+			search.getFamilyAddButton().waitAndClick(20);
+			search.getBulkActionButton().waitAndClick(10);
+			search.getDocViewAction().waitAndClick(10);
+			docView.AnalyticsCodeSameAs();
+	    }
+	 
+	  @Test(groups={"regression"},priority=9)
+		public void VerifyNearDupesCompwinodw() throws InterruptedException
+		{
+			System.out.println("******Execution started for VerifyNearDupesCompwinodw********");
+		  BaseClass bc = new BaseClass(driver);
+		  driver.getWebDriver().navigate().refresh();
+			 bc.selectproject();
+			SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString1);
+			search.Removedocsfromresults();
+			search.getNearDupesAddButton().waitAndClick(20);
+			search.getBulkActionButton().waitAndClick(10);
+			search.getDocViewAction().waitAndClick(10);
+			docView.NearDupesCompwinodw();
+	            final DocListPage dp = new DocListPage(driver);
+		    dp.getDocList_info().WaitUntilPresent();
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+		    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 1 of 1 entries");
+		    System.out.println("Expected docs '1' is shown in doclist");
 
-	
-	
+	 }
+	  @Test(groups={"regression"},priority=10)
+		public void VerifyThreadedChildWinodw() throws InterruptedException
+		{
+		  System.out.println("******Execution started for VerifyThreadedChildWinodw********");
+		  BaseClass bc = new BaseClass(driver);
+		  driver.getWebDriver().navigate().refresh();
+			 bc.selectproject();
+	        SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString2);
+			search.getThreadedAddButton().waitAndClick(20);
+			search.getBulkActionButton().waitAndClick(10);
+			search.getDocViewAction().waitAndClick(10);
+			docView.AnalyticsActions();
+	    }
 
 	@Test(groups={"regression"},priority=11)
 		public void NonAudioRemarkAddEditDeletebyReviewer()
@@ -161,6 +236,138 @@ import testScriptsSmoke.Input;
 		  System.out.println("******Execution started for NonAudioRemarkAddEditDeletebyReviewer********");
 			docView.addRemarkNonAudioDoc(Remark);
 		}
+
+	  
+		@Test(groups={"regression"},priority=12)
+		public void VerifyAnalytics_FamilyActions() throws InterruptedException, AWTException
+		{
+			
+			  System.out.println("******Execution started for VerifyAnalytics_FamilyActions********");
+			driver.getWebDriver().navigate().refresh();
+			lp.logout();
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			page = new TagsAndFoldersPage(driver);
+			page.CreateFolder(folderName1,"Default Security Group");
+	    	
+		    SessionSearch search = new SessionSearch(driver);
+			search.basicContentSearch(Input.searchString2);
+			search.getFamilyAddButton().waitAndClick(20);
+			search.getBulkActionButton().waitAndClick(10);
+			search.getDocViewAction().waitAndClick(10);
+			docView.Analytics_FamilyActions(folderName1);
+			final DocListPage dp = new DocListPage(driver);
+		    dp.getDocList_info().WaitUntilPresent();
+		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    		   !dp.getDocList_info().getText().isEmpty()  ;}}),Input.wait60);
+		    Assert.assertEquals(dp.getDocList_info().getText().toString().replaceAll(",", ""),"Showing 1 to 1 of 1 entries");
+		    System.out.println("Expected docs '1' is shown in doclist");
+
+			 final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
+		  	   tf.getFoldersTab().waitAndClick(10);
+		       tf.getFolder_ToggleDocCount().waitAndClick(10);
+		       tf.getFolderandCount(folderName1, 1).WaitUntilPresent();
+		       Assert.assertTrue(tf.getFolderandCount(folderName1, 1).Displayed());
+		       System.out.println(folderName1+" could be seen under tags and folder page");
+		}
+		
+		 @Test(groups={"regression"},priority=13)
+			public void VerifyMiniDoclistFolderAction() throws InterruptedException, AWTException
+			{
+			  System.out.println("******Execution started for VerifyMiniDoclistFolderAction********");
+			 	driver.getWebDriver().navigate().refresh();
+			 	 BaseClass bc = new BaseClass(driver);
+				 bc.selectproject();
+				SessionSearch search = new SessionSearch(driver);
+				search.basicContentSearch(Input.searchString2);
+				search.getPureHitAddButton().waitAndClick(20);
+				search.getBulkActionButton().waitAndClick(10);
+				search.getDocViewAction().waitAndClick(10);
+				docView.MiniDoclistFolderAction(folderName2);
+		    }
+		 
+		
+	    
+	  
+	    @Test(groups={"regression"},priority=14)
+		public void VerifyTabswhenAllprefEnabled() throws InterruptedException
+		{
+	    	  System.out.println("******Execution started for VerifyTabswhenAllprefEnabled********");
+	    	 driver.getWebDriver().navigate().refresh();
+			agnmt.editAssignment(assignmentName);
+			agnmt.AssgnToggleButtons();
+			agnmt.getAssignment_BackToManageButton().waitAndClick(10);
+			agnmt.getAssignmentActionDropdown().waitAndClick(10);
+			agnmt.getAssignmentAction_ViewinDocView().waitAndClick(5);
+			docView.VerifyTabswhenAllprefEnabled();
+	    }
+
+	 	
+		 @Test(groups={"regression"},priority=15)
+		public void getPersistentHit() throws InterruptedException {
+			  System.out.println("******Execution started for getPersistentHit********");
+			 driver.getWebDriver().navigate().refresh();
+			 agnmt = new AssignmentsPage(driver);
+			 agnmt.SelectAssignmentToViewinDocview(assignmentName);
+		     docView.VerifyPersistentHit(Input.searchString1);
+	    }
+
+			//@Test(groups={"regression"},priority=16)
+			public void VerifyTooltipsforIcons() throws InterruptedException {
+				driver.getWebDriver().navigate().refresh();
+				AssignmentsPage agnmt = new AssignmentsPage(driver);
+				agnmt.SelectAssignmentToViewinDocview(assignmentName);
+				docView=new DocViewPage(driver); 
+				docView.VerifyTooltipsforallIconsEnglish();
+				
+				System.out.println("Verify tooltip for German language................");
+				  
+				lp.getSignoutMenu().waitAndClick(5);
+				lp.getEditProfile().waitAndClick(10);
+		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		    			lp.getSelectLanguage().Visible()  ;}}), Input.wait30); 
+		    	lp.getSelectLanguage().selectFromDropdown().selectByVisibleText("German - Germany");
+		    	lp.getEditprofilesave().waitAndClick(10);
+		    	
+		    	hm = new HomePage(driver);
+			    for (WebElement element : hm.getAssignmentsList().FindWebElements()) {
+					if(element.getText().equalsIgnoreCase(assignmentName)){
+						System.out.println(assignmentName +"is assigned to reviewer successfully");
+						element.click();
+						break;
+					}
+				}	
+		      docView.VerifyTooltipsforallIconsGerman();     
+		      lp.getSignoutMenu().waitAndClick(5);
+				lp.getEditProfile().waitAndClick(10);
+		  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+		  			lp.getSelectLanguage().Visible()  ;}}), Input.wait30); 
+		  	lp.getSelectLanguage().selectFromDropdown().selectByVisibleText("English - United States");
+		  	lp.getEditprofilesave().waitAndClick(10);
+		  	driver.Navigate().refresh();
+				
+			}
+
+			  @Test(groups={"regression"},priority=17)
+				public void VerifyAnalyticsthrAssignment() throws InterruptedException
+				{
+				  System.out.println("******Execution started for VerifyAnalyticsthrAssignment********");
+				  driver.getWebDriver().navigate().refresh();
+				  BaseClass bc = new BaseClass(driver);
+					 bc.selectproject();
+					SessionSearch search = new SessionSearch(driver);
+					search.basicContentSearch(Input.searchString2);
+					// search.Removedocsfromresults();
+					search.getThreadedAddButton().waitAndClick(20);
+					agnmt = new AssignmentsPage(driver);
+					search.bulkAssign();
+					
+					agnmt.assignDocstoExisting(assignmentName);
+					agnmt.SelectAssignmentToViewinDocview(assignmentName);
+					
+					docView.AnalyticsCodeSameAs();
+			    }
 			  
 			@Test(groups={"regression"},priority=18)
 			public void VerifyTabswhenAllprefDisabled() throws InterruptedException
@@ -194,13 +401,22 @@ import testScriptsSmoke.Input;
 		   docView.MiniDoclistConifgSortOrder();
 		}
 		
+	  	 @Test(groups={"regression"},priority=21)
+	 	public void VerifyAnalyticsConceptual() throws InterruptedException
+	 	{
+	  		 System.out.println("******Execution started for VerifyAnalyticsConceptual********");
+	  		 BaseClass bc = new BaseClass(driver);
+			 bc.selectproject();
+	 		SessionSearch search = new SessionSearch(driver);
+	 		search.basicContentSearch(Input.searchString2);
+	 	    search.getConceptuallyPlayButton().waitAndClick(20);
+	 	    search.getConceptAddButton().waitAndClick(60);
+	 		search.getBulkActionButton().waitAndClick(10);
+	 		search.getDocViewAction().waitAndClick(10);
+	 		docView.getDocView_AnalyticsEmail();
+	 		
+	 	}
 	  	
-	  	 @BeforeMethod
-		 public void beforeTestMethod(Method testMethod){
-			System.out.println("------------------------------------------");
-		    System.out.println("Executing method : " + testMethod.getName());       
-		 }
-
 	  @AfterMethod(alwaysRun = true)
 		 public void takeScreenShot(ITestResult result) {
 	   	 if(ITestResult.FAILURE==result.getStatus()){

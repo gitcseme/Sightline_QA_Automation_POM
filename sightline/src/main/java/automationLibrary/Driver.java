@@ -36,8 +36,6 @@ import com.gargoylesoftware.htmlunit.javascript.host.html.Option;
 
 import configsAndTestData.ConfigLoader;
 import configsAndTestData.ConfigMain;
-import executionMaintenance.UtilityLog;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import testScriptsSmoke.Input;
 
 /// <summary>
@@ -59,7 +57,7 @@ public  class Driver  {
 	      this.driver.get(Input.url);
 	      System.out.println(Input.browserName + "is opned and loading application");
 	      waitForPageToBeReady();
-	        
+	      
 	   }  
 	   
 	
@@ -113,6 +111,17 @@ public  class Driver  {
 		   return driver.getWindowHandle();
 	   }
 	   
+	   /**
+	    * @author Mohan Indium
+	    * @Description To return the Child Window
+	    * @return
+	    */
+	   public Set<String> WindowHandles(){
+	         
+           Set<String> childWindow = driver.getWindowHandles();
+          
+          return childWindow;
+      }
     	/// <summary>
     	/// Collection of Id's of the windows
     	/// </summary>
@@ -256,41 +265,39 @@ public  class Driver  {
 	   } 
 
 	   private WebDriver chromeDriver() { 
-	      
-	      try { 
-	    	  	
-	    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
-	    	    ChromeOptions options = new ChromeOptions();
+		      
+		      try { 
+		    	
+		    	  
+		    	  System.setProperty("webdriver.chrome.silentOutput", "true");
+		    	    System.setProperty("webdriver.chrome.driver",System.getProperty("user.dir")+ "//BrowserDrivers//chromedriver.exe");
+					ChromeOptions options = new ChromeOptions();
+					options.addArguments("chrome.switches","--disable-extensions");
+					
+					new DesiredCapabilities();
+					DesiredCapabilities caps = DesiredCapabilities.chrome();
+					caps.setCapability(ChromeOptions.CAPABILITY, options);
+					
+					Map<String, Object> prefs = new HashMap<String, Object>();
 				
-				options.addArguments("chrome.switches","--disable-extensions");
-				
-				if(Input.headlessMode) {
-					//options.addArguments("--headless","--window-size=1920,1080");
-					options.addArguments("--headless");
-				}
-				new DesiredCapabilities();
-				DesiredCapabilities caps = DesiredCapabilities.chrome();
-				caps.setCapability(ChromeOptions.CAPABILITY, options);
-				
-				Map<String, Object> prefs = new HashMap<String, Object>();
+					prefs.put("profile.default_content_settings.popups", 0);
+					prefs.put("download.prompt_for_download", "false");
+					prefs.put("download.default_directory", "C:\\BatchPrintFiles\\downloads");
+					
+					
+					prefs.put("credentials_enable_service", false);
+					prefs.put("profile.password_manager_enabled", false);
+					options.setExperimentalOption("prefs", prefs);
+					//Added by : Raghuram A - to disable "Chrome is being controlled by Automated software" while execution
+					options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
 			
-				prefs.put("profile.default_content_settings.popups", 0);
-				prefs.put("download.prompt_for_download", "false");
-				prefs.put("download.default_directory", "C:\\BatchPrintFiles\\downloads");
-				
-				
-				prefs.put("credentials_enable_service", false);
-				prefs.put("profile.password_manager_enabled", false);
-				options.setExperimentalOption("prefs", prefs);
-				
-				//WebDriverManager.chromedriver().setup();
-				
-				//WebDriver  driver = new ChromeDriver(options);
-				
-				driver = new ChromeDriver(caps);
-				driver.manage().window().maximize();
-				return driver;	
-	      } 
+					driver = new ChromeDriver(caps);
+					driver.manage().window().maximize();
+					driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
+					driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+					
+					return driver;	
+		      } 
 
 	      catch (Exception ex) { 
 	        ex.printStackTrace();
@@ -299,35 +306,19 @@ public  class Driver  {
 	      } 
 	   } 
 	  
-	   
 	   private WebDriver edgeDriver() { 
 		      
 		      try { 
-		    		
-		    	  // Edge Driver
-		    	  WebDriverManager.edgedriver().setup();
-		    	  
-		    	  EdgeOptions options = new EdgeOptions(); 
-		    	 
-		    	  DesiredCapabilities capabilities = DesiredCapabilities.edge();
-		    	  capabilities.setCapability(EdgeOptions.CAPABILITY, options);
-		    	  capabilities.setCapability("ignore-certificate-errors", true);
-		    	  capabilities.setCapability("UseChromium", true);
-		    	  capabilities.setCapability("InPrivate", true);
-		    	 
-		    	  /**
-		    	   * This works With higher version of selenium
-		    	   * ToDO
-		    	   */
-		    	/*  if (Input.headlessMode) {
-		    		    options.AddArguments("--headless");
-		    		 }
-		    	 */
+		    		System.setProperty("webdriver.edge.driver",System.getProperty("user.dir")+ "//BrowserDrivers//msedgedriver.exe");
+		    		DesiredCapabilities m_capability = DesiredCapabilities.chrome();
+		    		m_capability.setCapability(CapabilityType.BROWSER_NAME, BrowserType.CHROME);
 
-		    	  //Start Edge Session
-		    	  EdgeDriver driver = new EdgeDriver(capabilities);
-		    	  driver.manage().window().maximize();
-		    	  return driver;	
+		    		m_capability = DesiredCapabilities.edge();
+		    		WebDriver driver = new EdgeDriver(m_capability);
+		    		
+		    		//Start Edge Session
+		    		driver.manage().window().maximize();
+					return driver;	
 		      } 
 
 		      catch (Exception ex) { 
@@ -509,6 +500,10 @@ public  class Driver  {
     {
         return driver.switchTo();
     }
+ 	 public void get(String url){
+		    driver.get(url);
+	   }
+
 	
 	   
 	}

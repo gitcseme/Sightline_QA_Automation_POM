@@ -3,23 +3,14 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testScriptsRegression.TS_001_BasicSearch">
+      <class name="testScriptsRegression.DocView_AnalyticsPanelEmailThreadMap">
         <methods>
-          <include name="conceptuallySimilar"/>
-          <include name="existingBulkTag"/>
-          <include name="bulkUnFolder"/>
-          <include name="emailInclusive"/>
-          <include name="exsitingBulkFolder"/>
-          <include name="copySearchTextToNewSearch"/>
-          <include name="starSearch"/>
-          <include name="autoSuggest"/>
+          <include name="verifyDocumentFromAnalyticsPanelWithEmailThreadMap"/>
           <include name="preCondition"/>
-          <include name="beforeTestMethod"/>
-          <include name="metaDataSearchsBS"/>
-          <include name="bulkUnTag"/>
+          <include name="close"/>
           <include name="takeScreenShot"/>
         </methods>
-      </class> <!-- testScriptsRegression.TS_001_BasicSearch -->
+      </class> <!-- testScriptsRegression.DocView_AnalyticsPanelEmailThreadMap -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

@@ -7,6 +7,7 @@ import java.text.ParseException;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import automationLibrary.Driver;
+import junit.framework.Assert;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.LoginPage;
@@ -24,140 +25,124 @@ public class SystemTemplate_Regression {
 	@BeforeClass(alwaysRun = true)
 	public void before() throws ParseException, InterruptedException, IOException {
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-		
 	 	driver = new Driver();
 		lp = new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc = new BaseClass(driver);
-		
 		
 	}
 	
 	@Test(priority =1,groups={"smoke","regression"})
 	public void provisionedTags_8633_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tnfpage = new TagsAndFoldersPage(driver);
 	    tnfpage.provisionedTags();
+	    lp.logout();
 	}
 	
 	@Test(priority =2,groups={"smoke","regression"})
-	public void tagsClassifications_8657_1() throws InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52927-tagsClassifications");
-        tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.tagsClassifications();
-		bc.passedStep("Verified Tag Classification under All Tags");
+	public void provisionedTags_8633_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedTagsAsRMU();
+	    lp.logout();
 	}
 	
 	@Test(priority =3,groups={"smoke","regression"})
-	public void layerAnnotations_8660_1() throws InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52930-layerAnnotations");
-     	tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.layerAnnotations();
-		bc.passedStep("Verified provisioned Annotation Layer is available in Default Security Group");
+	public void tagsClassifications_8657_1() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.tagsClassifications();
+	    lp.logout();
+	
 	}
 	
 	@Test(priority =4,groups={"smoke","regression"})
-	public void provisionedFolder_8661_1() throws  InterruptedException {
-	
-		bc.stepInfo("Test case Id:RPMXCON-52931-provisionedFolder");
-
+	public void tagsClassifications_8657_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.provisionedFolder();
-		bc.passedStep("Verified Productions is available under All Folders ");
+	    tnfpage.tagsClassificationsAsRMU();
+	    lp.logout();
+	
 	}
 	
 	@Test(priority =5,groups={"smoke","regression"})
-	public void redactionTags_8663_1() throws  InterruptedException {
-	
-		bc.stepInfo("Test case Id:RPMXCON-52933-redactionTags");
+	public void layerAnnotations_8660_1() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.redactionTags();
-		bc.passedStep("Verified provisioned Redaction Tags are available under Default Security Group ");
-		
+	    tnfpage.layerAnnotations();
+	    lp.logout();
+	
 	}
 	
 	@Test(priority =6,groups={"smoke","regression"})
-	public void provisionedFolderGroup_9028() throws InterruptedException {
-	
-		bc.stepInfo("Test case Id:RPMXCON-53129-provisionedFolderGroup");
+	public void layerAnnotations_8660_2() throws InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.provisionedFolderGroup();
-		bc.passedStep("Productions is available under Default Security Group");
-		lp.logout();
-	}
+	    tnfpage.layerAnnotationsAsRMU();
+	    lp.logout();
 	
+	}
 	
 	@Test(priority =7,groups={"smoke","regression"})
-	public void provisionedTags_8633_2() throws InterruptedException {
-		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		bc.stepInfo("Test case Id:RPMXCON-52910-provisionedTagsAsRMU");
-        tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.provisionedTagsAsRMU();
-		bc.passedStep("Verified provisioned Tags are available under Default Tags as RMU User");
-		
+	public void provisionedFolder_8661_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedFolder();
+	    lp.logout();
+	
 	}
-	
-	
 	
 	@Test(priority =8,groups={"smoke","regression"})
-	public void tagsClassifications_8657_2() throws InterruptedException {
-		//lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		bc.stepInfo("Test case Id:RPMXCON-52927-tagsClassificationsAsRMU");
+	public void provisionedFolder_8661_2() throws  InterruptedException {
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.tagsClassificationsAsRMU();
-		bc.passedStep("Verified Tag Classification under All Tags for RMU User");
-		//lp.logout();
-
+	    tnfpage.provisionedFolderAsRMU();
+	    lp.logout();
+	
 	}
-	
-
-	
 	
 	@Test(priority =9,groups={"smoke","regression"})
-	public void layerAnnotations_8660_2() throws InterruptedException {
-			bc.stepInfo("Test case Id:RPMXCON-52930-layerAnnotationsAsRMU");
+	public void redactionTags_8663_1() throws  InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.layerAnnotationsAsRMU();
-		bc.passedStep("Verified provisioned Annotation Layer is available in the Project as RMU User");
-		
-	}
+	    tnfpage.redactionTags();
+	    lp.logout();
 	
-
+	}
 	
 	@Test(priority =10,groups={"smoke","regression"})
-	public void provisionedFolder_8661_2() throws  InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52931-provisionedFolderAsRMU");
-		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.provisionedFolderAsRMU();
-		bc.passedStep("Verified Productions is available under under All Folders as RMU User ");
-			}
-	
-	
-	@Test(priority =11,groups={"smoke","regression"})
 	public void redactionTags_8663_2() throws  InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52933-redactionTagsAsRMU");
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		tnfpage = new TagsAndFoldersPage(driver);
-		tnfpage.redactionTagsAsRMU();
-		bc.passedStep("Verified provisioned Redaction Tags are available in the Project as RMU User");
-
+	    tnfpage.redactionTagsAsRMU();
+	    lp.logout();
+	
 	}
 	
+	@Test(priority =11,groups={"smoke","regression"})
+	public void provisionedFolderGroup_9028() throws InterruptedException {
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		tnfpage = new TagsAndFoldersPage(driver);
+	    tnfpage.provisionedFolderGroup();
+	    lp.logout();
 	
+	}
 	
 	@Test(priority =12,groups={"smoke","regression"})
 	public void codingForm_8719() throws InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52971-codingForm");
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		cf = new CodingForm(driver);
-		cf.codingForm();
-		bc.passedStep("Verified provisioned CF is available in the Project");
-		}
+	    cf.codingForm();
+	    lp.logout();
+	
+	}
 	
 	@Test(priority =13,groups={"smoke","regression"})
 	public void codingFormTagsOrder_8720() throws InterruptedException {
-		bc.stepInfo("Test case Id:RPMXCON-52972-codingFormTagsOrder");
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		cf = new CodingForm(driver);
-		cf.codingFormTagsOrder();
-		bc.passedStep("Verified provisioned CF with Specific Tags and Order is  available in the Project- RMU");
+	    cf.codingFormTagsOrder();
+	    lp.logout();
 	}
 	
 	

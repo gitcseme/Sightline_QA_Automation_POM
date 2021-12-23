@@ -16,7 +16,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import automationLibrary.Driver;
-import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.LoginPage;
 import pageFactory.UserManagement;
@@ -26,7 +25,7 @@ import testScriptsSmoke.Input;
 public class UserManagementScripts {
 	Driver driver;
 	LoginPage lp;
-	BaseClass bc;
+	
 	
 	 @BeforeClass(alwaysRun = true)
 	public void preConditions() throws InterruptedException, ParseException, IOException {
@@ -35,45 +34,31 @@ public class UserManagementScripts {
 		//Open browser
 		this.driver = new Driver();
 		lp=new LoginPage(driver);
-		 bc=new BaseClass(driver);
 		
     }
 	
 
 	   @Test(groups={"regression"},priority=1)
 	   public void searchUsersusingUserFilter() throws InterruptedException {
-		   bc.stepInfo("Test CaseId : RPMXCON-53176, Verify when user enters part of First name OR Last Name or Email Address to search from Manage Users page and clicks to Apply");
-		    lp.loginToSightLine(Input.pa1userName, Input.pa1password); 
-		    bc.passedStep("*********logged in as a PA user********");
+		    lp.loginToSightLine(Input.pa1userName, Input.pa1password);   
 			this.driver.getWebDriver().get(Input.url+ "User/UserListView#");
 			final UserManagement um= new UserManagement(driver);
 			um.findUsers("PA1","Project Administrator","active");
-			 bc.passedStep("*********Project Administrator active users verified********");
 			um.findUsers("0QA","Review Manager","active");
-			 bc.passedStep("*********active Review Manager users verified********");
 			um.findUsers("","Reviewer","inactive");
-			 bc.passedStep("*********active Reviewer  users verified********");
 			lp.logout();
-			bc.passedStep("*********logged out of the application successfully********");
 			
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password); 
-			bc.passedStep("*********logged in as a PA user********");
+			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);   
 			this.driver.getWebDriver().get(Input.url+ "User/UserListView#");
 			um.findUsers("0QA","Review Manager","active");
-			bc.passedStep("*********active Review Manager users verified********");
 			um.findUsers("","Reviewer","inactive");
-			 bc.passedStep("*********active Reviewer  users verified********");
 			lp.logout();
-			bc.passedStep("*********logged out of the application successfully********");
 			
 			lp.loginToSightLine(Input.sa1userName, Input.sa1password);   
-			bc.passedStep("*********logged in as a system user********");
 			this.driver.getWebDriver().get(Input.url+ "User/UserListView#");
 			um.findUsers("0QA","Review Manager","active");
-			bc.passedStep("*********active Reviewer  users verified********");
 			
 			lp.logout();
-			bc.passedStep("*********logged out of the application successfully********");
 		  }
 	   
 	  /* @DataProvider(name = "users")
@@ -85,14 +70,11 @@ public class UserManagementScripts {
 	    }
 	  */// @Test(groups={"regression"},priority=1)
 	   public void userFilterCombinations() {
-		   bc.stepInfo("Test CaseId : RPMXCON-53180, Verify when user enters Last Name, select the role to search in 'Filter by user name' text box and hits enter key");
 		   lp.loginToSightLine(Input.pa1FullName, Input.pa1password);
-		   bc.passedStep("*********logged in as a PA user********");
+		   
 		   UserManagement um = new UserManagement(driver);
 		   um.getUserNameFilter().SendKeys("PA");
-		   bc.passedStep("*********PA users filtered********");
 		   um.getSelectRole().selectFromDropdown().selectByVisibleText("Review Manager");
-		   bc.passedStep("*********Reviewe manager role selected********");
 			
 		   //lp.logout();
 			

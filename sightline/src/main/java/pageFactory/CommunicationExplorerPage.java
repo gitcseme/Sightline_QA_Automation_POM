@@ -1,11 +1,20 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import javax.management.ListenerNotFoundException;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+import com.sun.org.apache.bcel.internal.util.BCELComparator;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -16,6 +25,7 @@ import testScriptsSmoke.Input;
 public class CommunicationExplorerPage {
 
 	Driver driver;
+	BaseClass base;
 
 	public Element getReports_CommunicationsExplorer() {
 		return driver.FindElementByCssSelector("a[href*='CommunicationExplorerReport']");
@@ -36,17 +46,20 @@ public class CommunicationExplorerPage {
 	public Element getTally_SaveSelections() {
 		return driver.FindElementByXPath("//button[@id='secgroup']");
 	}
+	public Element getTally_SaveSelections_Search() {
+		return driver.FindElementByXPath("//button[@id='search']");
+	}
 
 	public Element getCommunicationExplorer_ApplyBtn() {
 		return driver.FindElementById("btn_applychanges");
 	}
 
-	public Element getfindAllNodes() {
-		return driver.FindElementByCssSelector("div[id='wrapper-graph']  g  text[class='nodetext']");
+	public ElementCollection getfindAllNodes() {
+		return driver.FindElementsByCssSelector("div[id='wrapper-graph']  g  text[class='nodetext']");
 	}
 
 	public Element getCommunicationExplorer_TotalDocCount_OnHover() {
-		return driver.FindElementByXPath("//*[@class='mail-count']");
+		return driver.FindElementByCssSelector(".count-total");
 	}
 
 	public Element getCommunicationExplorer_Graph_Action_DropDownBtn() {
@@ -109,16 +122,88 @@ public class CommunicationExplorerPage {
 	public ElementCollection getElements() {
 		return driver.FindElementsByXPath("//*[@class='a-menu']");
 	}
-	public Element getshowbycount() {
-		return driver.FindElementById("ShowByCount");
+	//added by jayanthi
+	public Element getReportSaveBtn() {
+		return driver.FindElementByXPath("//i[@id='saveReport']");
 	}
-	public Element getshowby() {
-		return driver.FindElementById("ShowBy");
+	public Element getSaveReport_TextField() {
+		return driver.FindElementByXPath("//input[@id='txtReportname']");}
+	
+	public Element getsaveBtn_SavePopUp() {
+		return driver.FindElementByXPath("//button[@id='saveXML']");}	
+	
+	public ElementCollection getFilterByTagsList() {
+		return driver.FindElementsByXPath("//ul[@id='select2-Tags-results']/li");}
+	public  Element  getFilterDocumentsBy_options(String optionName) {
+		return  driver.FindElementByXPath("//ul[@id='optionFilters']//li[text()='"+optionName+"']");
+	}
+	public Element searchCriteriaTextBox() {
+		return  driver.FindElementByXPath("//ul[@class='select2-selection__rendered']/li/input");
+	}
+	public Element getSelectResourcesOption(String option) {
+		return driver.FindElementByXPath("//a[@class='accordion-toggle']//strong[text()='" + option + "']");
 	}
 
+	public Element getNodeMySavedSearchCheckBox() {
+		return driver.FindElementByXPath(
+				"//a[@class='jstree-anchor' and text()='My Saved Search']//i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getAutosuggestElement(String eleName) {
+		return driver.FindElementByXPath("//ul[@id='select2-Tags-results']/li[text()='" + eleName + "']");
+	}
+
+	public Element getUpdateFiltersElement() {
+		return driver.FindElementByXPath("(//a[text()='Update Filter'])[1]");
+	}
+
+	public Element getActiveFiltersElement() {
+		return driver.FindElementByXPath("//div[@id='activeFilters']//li[1]");
+	}
+
+	public Element getViewInDocList() {
+		return driver.FindElementByXPath("//a[contains(text(),'View All in DocList')]");
+	}
+
+	public Element getActionBtn() {
+		return driver.FindElementByXPath("//span[@class='fa fa-chevron-down']");
+	}
+
+	public Element getVisualizedReportDisplay() {
+		return driver.FindElementByCssSelector("g[class='graph']>g[Class='node normal-node']");
+	}
+	public Element getIncludeRadioBtn() {
+		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[1])");
+	}
+
+	public Element getExcludeRadioBtn() {
+		return driver.FindElementByXPath("(//*[@id='rbIncExclude']/label[2])");
+	}
+	public Element getAddToFilter() {
+		return driver.FindElementByXPath("(//*[contains(text(),' Add to Filter')])");
+	}
+	public Element getUpdateFilter() {
+		return driver.FindElementByXPath("(//*[contains(text(),'Update Filter')])");
+	}
+	public Element getCommunicationExplorer_Result() {
+		return driver.FindElementByXPath("(//div[@class='font-lg col-md-8']//strong)[last()]");
+	}
+	public Element getViewInDocView() {
+		return driver.FindElementByXPath("//a[contains(text(),'View All in DocView')]");
+	}
+	public Element getMailCountOFSelectedReport() {
+		return driver.FindElementByCssSelector("g>[class='node normal-node node-active']>text>tspan[class='mail-count']");
+	}
+	public ElementCollection metaDataslist_reviewerPg() {
+		return driver.FindElementsByXPath("//div[@id='SearchDataTable_wrapper']//tr[@role='row']/td[position()=2]");
+	}
+	public Element getCommunicationExplorer_ApplyResult() {
+		return driver.FindElementByXPath("//div[@class='font-lg col-md-8']//strong");
+	}
 	public CommunicationExplorerPage(Driver driver) {
 
 		this.driver = driver;
+		base = new BaseClass(driver);
 		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 
 		// This initElements method will create all WebElements
@@ -165,22 +250,7 @@ public class CommunicationExplorerPage {
 			}
 		}), Input.wait30);
 		getTally_SaveSelections().waitAndClick(15);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getshowbycount().Visible();
-			}
-		}), Input.wait30);
-		getshowbycount().selectFromDropdown().selectByVisibleText("Top 20");
-		
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getshowby().Visible();
-			}
-		}), Input.wait30);
-		getshowby().selectFromDropdown().selectByVisibleText("Email Address");
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getCommunicationExplorer_ApplyBtn().Visible();
@@ -195,10 +265,12 @@ public class CommunicationExplorerPage {
 			}
 		}), Input.wait30);
 
-		/*
-		 * driver.WaitUntil((new Callable<Boolean>() { public Boolean call() throws
-		 * Exception { return getTally_LoadingScreen().Stale(); } }), Input.wait30);
-		 */
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getTally_LoadingScreen().Stale();
+			}
+		}), Input.wait30);
+
 		driver.scrollingToBottomofAPage();
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -206,9 +278,20 @@ public class CommunicationExplorerPage {
 				return getfindAllNodes().Exists();
 			}
 		}), Input.wait30);
-		
-		 getfindAllNodes().waitAndClick(10);
-				
+		for (WebElement ele : getfindAllNodes().FindWebElements()) {
+			// System.out.println(Configuration.getData("ShareTo")+" -
+			// "+ele.getText().trim());
+			if (ele.getText().trim().equalsIgnoreCase("symphonyteleca...")) {
+				ele.click();
+				break;
+			}
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCommunicationExplorer_ApplyBtn().Visible();
+			}
+		}), Input.wait30);
 		String actHoverDocCount = getCommunicationExplorer_TotalDocCount_OnHover().getText();
 		System.out.println(actHoverDocCount);
 		UtilityLog.info(actHoverDocCount);
@@ -244,7 +327,226 @@ public class CommunicationExplorerPage {
 		Assert.assertEquals(dp.getDocList_info().getText().toString().substring(19, 21), actHoverDocCount);
 		System.out.println("Expected docs are shown in doclist");
 		UtilityLog.info("Expected docs are shown in doclist");
+	}
+	/** 
+	 * @author Jayanthi.Ganesan
+	 * @throws InterruptedException 
+	 * @description Thsi method will generate report by selecting default security group as selected source.
+	 */
+
+	public void generateReportusingDefaultSG() throws InterruptedException {
+		base.waitForElement(getReports_CommunicationsExplorer());
+		getReports_CommunicationsExplorer().waitAndClick(15);
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().waitAndClick(25);
+		driver.waitForPageToBeReady();
+		try {
+			base.waitForElement(getTally_SecurityGroupsButton());
+			Actions action = new Actions(driver.getWebDriver());
+			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();	
+		} catch (Exception e) {
+			base.waitForElement(getTally_SecurityGroupsButton());
+			base.waitTillElemetToBeClickable(getTally_SecurityGroupsButton());
+			Actions action = new Actions(driver.getWebDriver());
+			action.moveToElement(getTally_SecurityGroupsButton().getWebElement()).click().perform();
+			getTally_SecurityGroupsButton().waitAndClick(30);
+		}
+		base.waitForElement(getTally_SelectSecurityGroup());
+		getTally_SelectSecurityGroup().waitAndClick(10);
+		base.waitForElement(getTally_SaveSelections());
+		getTally_SaveSelections().waitAndClick(15);
+		base.waitForElement(getCommunicationExplorer_ApplyBtn());
+		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getTally_LoadingScreen().Stale();
+			}
+		}), Input.wait30);
+	}
+	/** 
+	 * @author Jayanthi.Ganesan
+	 * @description  This method will save the report as custom report after report generated.
+	 */
+	public void saveReport(String ReportNameToBeSaved) {
+		try {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getReportSaveBtn());
+		base.waitTillElemetToBeClickable(getReportSaveBtn());
+		//getReportSaveBtn().ScrollTo();
+		getReportSaveBtn().waitAndClick(5);}
+		catch(Exception e) {
+			Actions action = new Actions(driver.getWebDriver());
+			action.moveToElement(getReportSaveBtn().getWebElement()).click().perform();
+		}
+		base.waitForElement(getSaveReport_TextField());
+		getSaveReport_TextField().SendKeys(ReportNameToBeSaved);
+		getsaveBtn_SavePopUp().waitAndClick(10);
+		base.VerifySuccessMessageB("Report save successfully");
+		base.stepInfo("Generated Report saved sucessfully with name --"+ReportNameToBeSaved);
+		base.CloseSuccessMsgpopup();
+	}
+	/** 
+	 * @author Jayanthi.Ganesan
+	 */
+	public void verifyFilters(String options, boolean status, String TagName) throws InterruptedException {
+		getFilterDocumentsBy_options(options).waitAndClick(10);
+		searchCriteriaTextBox().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		Thread.sleep(1000);
+		List<String> elementNames = new ArrayList<>();
+		elementNames = base.getAvailableListofElements(getFilterByTagsList());
+		System.out.println(elementNames.size());
+		if (status == true) {
+			if (elementNames.contains(TagName)) {
+				base.stepInfo("Created Tag Reflected in reports Page.");
+				System.out.println(elementNames);
+			}
+			else {
+				base.stepInfo("Created Tag Not Reflected in reports Page.");
+				System.out.println(elementNames);
+			}
+		}
+		else if (status == false) {
+			if (elementNames.contains(TagName)) {
+				System.out.println(elementNames);
+				base.failedStep("Deleted Tag Reflected in reports Page.");
+			} else {
+				System.out.println(elementNames);
+				base.passedStep("Deleted Tag not reflected in reports Page.");
+			}
+		}		}
+
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param data
+	 * @param options
+	 * @param data1
+	 * @param include
+	 */
+
+	public void include(String data, String options, String data1, boolean include) {
+		getFilterDocumentsBy_options(options).waitAndClick(10);
+		driver.waitForPageToBeReady();
+		if (include == true) {
+			base.waitForElement(getIncludeRadioBtn());
+			getIncludeRadioBtn().Click();
+		} else {
+			base.waitForElement(getExcludeRadioBtn());
+			getExcludeRadioBtn().Click();
+		}
+		driver.waitForPageToBeReady();
+		searchCriteriaTextBox().SendKeys(data);
+		base.waitForElement(getAutosuggestElement(data));
+		getAutosuggestElement(data).waitAndClick(20);
+		if (data1 != null) {
+			driver.waitForPageToBeReady();
+			searchCriteriaTextBox().SendKeys(data1);
+			base.waitForElement(getAutosuggestElement(data1));
+			getAutosuggestElement(data1).waitAndClick(20);
+		}
+		base.waitForElement(getAddToFilter());
+		getAddToFilter().waitAndClick(20);
+		base.stepInfo("Filters Applied.");
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void excludeAfterInclude() {
+		base.waitForElement(getActiveFiltersElement());
+		getActiveFiltersElement().waitAndClick(10);
+		getExcludeRadioBtn().waitAndClick(10);
+		base.waitTillElemetToBeClickable(getUpdateFilter());
+		base.waitForElement(getUpdateFilter());
+		getUpdateFilter().waitAndClick(20);
 
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void clickReport() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getVisualizedReportDisplay());
+		getVisualizedReportDisplay().ScrollTo();
+		base.waitTillElemetToBeClickable(getVisualizedReportDisplay());
+		getVisualizedReportDisplay().waitAndClick(30);
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void viewinDoclist() {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getActionBtn());
+		getActionBtn().waitAndClick(10);
+		base.waitForElement(getAction_ViewInDoclistButton());
+		getAction_ViewInDoclistButton().waitAndClick(10);
+		base.stepInfo("Navigated to docListPage.");
+	}
+	
+	public String VerifyTaggedDocsCountDisplay() {
+		String resultValue=getCommunicationExplorer_Result().getText();
+		ArrayList<String> result = new ArrayList<String>(Arrays.asList(resultValue.split(" ")));
+		System.out.println(result.get(0));
+		return result.get(0).trim();
+	}
+
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void viewinDocView() {
+		driver.scrollPageToTop();
+		if (getViewInDocView().isElementPresent()) {
+			base.passedStep("View in Doc View option is displayed under action "
+					+ "dropdown in Communication exp reporta page");
+			base.waitForElement(getActionBtn());
+			getActionBtn().ScrollTo();
+			getActionBtn().waitAndClick(10);
+			base.waitForElement(getAction_ViewInDoclistButton());
+			if (getViewInDocView().isElementPresent()) {
+				base.passedStep("View in Doc View option is displayed under action "
+						+ "dropdown in Communication exp reporta page");
+			base.waitForElement(getAction_ViewInDoclistButton());
+			getViewInDocView().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.stepInfo("Navigated to docViewPage.");
+		} else {
+			base.failedStep("View in doc view option is not displayed");
+
+		}
+	}}
+	
+
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+	public void generateReportusingSearch() throws InterruptedException {
+		base.waitForElement(getReports_CommunicationsExplorer());
+		getReports_CommunicationsExplorer().waitAndClick(15);
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().waitAndClick(25);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getSelectResourcesOption("Searches"));
+		getSelectResourcesOption("Searches").waitAndClick(5);
+		base.stepInfo("Selected searches as source.");
+		base.waitForElement(getNodeMySavedSearchCheckBox());
+		getNodeMySavedSearchCheckBox().Click();
+		driver.scrollingToBottomofAPage();		
+		base.waitForElement(getTally_SaveSelections_Search());
+		getTally_SaveSelections_Search().ScrollTo();
+		Actions action = new Actions(driver.getWebDriver());
+		action.moveToElement(getTally_SaveSelections_Search().getWebElement()).click().perform();	
+		driver.scrollPageToTop();
+		base.waitForElement(getCommunicationExplorer_ApplyBtn());
+		getCommunicationExplorer_ApplyBtn().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return getTally_LoadingScreen().Stale();
+			}
+		}), Input.wait30);
+	}
 }

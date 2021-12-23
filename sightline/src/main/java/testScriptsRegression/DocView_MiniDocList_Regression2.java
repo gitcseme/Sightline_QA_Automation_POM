@@ -1,0 +1,359 @@
+package testScriptsRegression;
+
+import java.awt.AWTException;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
+import pageFactory.BaseClass;
+import pageFactory.CodingForm;
+import pageFactory.DocViewPage;
+import pageFactory.KeywordPage;
+import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
+import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
+import pageFactory.SessionSearch;
+import pageFactory.Utility;
+import testScriptsSmoke.Input;
+
+/*
+ * Author :Vijaya.Rani
+ */
+
+public class DocView_MiniDocList_Regression2 {
+	Driver driver;
+	LoginPage loginPage;
+	BaseClass baseClass;
+	MiniDocListPage miniDocListpage;
+	SessionSearch sessionSearch;
+	SoftAssert softAssertion;
+	DocViewPage docViewPage;
+	AssignmentsPage assignmentPage;
+	ReusableDocViewPage reusableDocViewPage;
+	SavedSearch savedSearch;
+	KeywordPage keywordPage;
+	CodingForm codingForm;
+
+	String assignmentNew = "Assignment06" + Utility.dynamicNameAppender();
+	String assignmentComplete = "Assignment" + Utility.dynamicNameAppender();
+
+	@BeforeMethod(alwaysRun = true)
+	private void TestStart() throws Exception, InterruptedException, IOException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		// Open browser
+		Input in = new Input();
+		in.loadEnvConfig();
+		driver = new Driver();
+		baseClass = new BaseClass(driver);
+		loginPage = new LoginPage(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		keywordPage = new KeywordPage(driver);
+		codingForm = new CodingForm(driver);
+		softAssertion = new SoftAssert();
+
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(Method testMethod) {
+		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 16/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify on click of 'Cancel' button configure mini doc list pop
+	 * up should be closed.'RPMXCON-51333' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	public void verifyToClickGearIconInMiniDocListPopupClosed() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51333");
+		baseClass.stepInfo("Verify on click of 'Cancel' button configure mini doc list pop up should be closed");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+
+		// Click gear icon open popup window and cancel
+		miniDocListpage.performGesrIconCancelBtn();
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		// Click gear icon open popup window and cancel
+		miniDocListpage.performGesrIconCancelBtn();
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		// Click gear icon open popup window and cancel
+		miniDocListpage.performGesrIconCancelBtn();
+
+	}
+
+	
+	/**
+	 * Author : Vijaya.Rani date: 16/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify sorting from mini doc list when redirected to doc view
+	 * outside of an assignment.'RPMXCON-51431' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifySortingFromMiniDocListRedirectedToDocView() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51431");
+		baseClass.stepInfo(
+				"Verify user can apply coding stamp for the document once marked as un-complete in an assignment");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.performSortDocIdMiniDocList();
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.performSortDocIdMiniDocList();
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.performSortDocIdMiniDocList();
+		
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 17/12/21 NA Modified date: NA Modified by:NA
+	 * Description Verify on click of 'Save Configuration' mini doc list should be
+	 * displayed with the selected webfields for Optimized Sort
+	 * Order.'RPMXCON-51334' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyToClickGearIconInMiniListDisplayOptimizedSort() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51334");
+		baseClass.stepInfo(
+				"Verify on click of 'Save Configuration' mini doc list should be displayed with the selected webfields for Optimized Sort Order");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+
+		miniDocListpage.selectSourceDocIdInAvailableField();
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.selectSourceDocIdInAvailableField();
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.selectSourceDocIdInAvailableField();
+
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 17/12/21 NA Modified date: NA Modified by:NA
+	 * Description Verify that EmailAuthorNameAndAddress field should not be displayed on the configure
+	 *  mini doc list optimized sort tab.'RPMXCON-51524' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyEmailAuthorAndAddressNotDisplayInOptimizedSortTab() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51524");
+		baseClass.stepInfo(
+				"Verify that EmailAuthorNameAndAddress field should not be displayed on the configure mini doc list optimized sort tab");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		miniDocListpage.viewInDocView();
+		
+		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
+		loginPage.logout();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		baseClass.stepInfo("Basic Search is done successfully");
+
+		// View in DocView
+		miniDocListpage.viewInDocView();
+		baseClass.stepInfo("Doc are viewed in Docview successfully");
+
+		miniDocListpage.performReviewModeGearIconCheckEmailAuthorAndAddress();
+		
+	}
+
+	
+	@AfterMethod(alwaysRun = true)
+	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
+		baseClass = new BaseClass(driver);
+		Reporter.setCurrentTestResult(result);
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+		}
+		try {
+			loginPage.logout();
+			loginPage.quitBrowser();
+		} catch (Exception e) {
+			loginPage.quitBrowser();
+			LoginPage.clearBrowserCache();
+		}
+	}
+
+	@AfterClass(alwaysRun = true)
+
+	public void close() {
+		System.out.println("******TEST CASES FOR DOCVIEV & DOCVIEW/REDACTIONS EXECUTED******");
+		try {
+			loginPage.clearBrowserCache();
+		} catch (Exception e) {
+			// no session avilable
+
+		}
+	}
+
+}

@@ -3,7 +3,9 @@ package testScriptsSmoke;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.concurrent.Callable;
 
+import org.openqa.selenium.Keys;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -13,14 +15,21 @@ import org.testng.annotations.Test;
 
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
 import pageFactory.BatchPrintPage;
 import pageFactory.LoginPage;
+import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
+import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
+import pageFactory.WorkflowPage;
 
 public class TS_006_ValidateBatchPrint {
 	Driver driver;
-	LoginPage lp;	
+	LoginPage lp;
+	
 	 
 	 /*
 	 * Author : Suresh Bavihalli
@@ -31,14 +40,8 @@ public class TS_006_ValidateBatchPrint {
 	 * Perform batch print with the saved search and validated the documents order!
 	 *   
 	 */	 
-	/**
-	 * @throws ParseException
-	 * @throws InterruptedException
-	 * @throws IOException
-	 */
 	@Test(groups={"smoke","regression"})
 	public void BatchPrintWithNative() throws ParseException, InterruptedException, IOException {
-		
 		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
 		UtilityLog.info("******Execution started for "+this.getClass().getSimpleName()+"********");
 		//Input in = new Input();
@@ -58,28 +61,19 @@ public class TS_006_ValidateBatchPrint {
 		
 	    BatchPrintPage page1 = new BatchPrintPage(driver);
      	page1.BatchPrintWithNative("search",searchname,orderCriteria, orderType);
-		page1.checkForOrderInPDF("DocID:", orderType);		
+		page1.checkForOrderInPDF("DocID:", orderType);
+		
 		
 }
 	
-	/**
-	 * @param result
-	 * @param testMethod
-	 * @throws IOException
-	 */
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
-	/**
-	 * @param result
-	 * @param testMethod
-	 */
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
@@ -89,12 +83,9 @@ public class TS_006_ValidateBatchPrint {
 			bc.screenShot(result);
 
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());		
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
 
-	/**
-	 * Logout from the functionality and close the browser
-	 */
 	@AfterClass(alwaysRun = true)
 	public void close(){
 		try{ 

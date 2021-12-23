@@ -1,12 +1,32 @@
 package pageFactory;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
@@ -16,915 +36,3043 @@ import testScriptsSmoke.Input;
 
 public class ProductionPage {
 
-    Driver driver;
-    BaseClass base;
-    public String ProdPathallredact;
-    public String ProdPathsomeredact;
- 
-    
-    public Element getAddNewProductionbutton(){ return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]"); }
-    public Element getProductionName(){ return driver.FindElementById("ProductionName"); }
-    public Element getProductionDesc(){ return driver.FindElementById("ProductionDescription"); }
-    public Element getBasicInfoMarkComplete(){ return driver.FindElementById("BasicInfoMarkComplete"); }
-    public Element getBasicInfoSave(){ return driver.FindElementById("BasicInfoSave"); }
-    public Element getBasicInfoNext(){ return driver.FindElementById("BasicInfoNext"); }
-   
-    public Element getDAT_FieldClassification1(){ return driver.FindElementById("TY_0"); }
-    public Element getDAT_FieldClassification2(){ return driver.FindElementById("TY_1"); }
-    public Element getDAT_FieldClassification3(){ return driver.FindElementById("TY_1"); }
-    public Element getDAT_SourceField1(){ return driver.FindElementById("SF_0"); }
-    public Element getDAT_SourceField2(){ return driver.FindElementById("SF_1"); }
-    public Element getDAT_SourceField3() { return driver.FindElementById("SF_2"); }
-    public Element getDAT_DATField1(){ return driver.FindElementById("DATFL_0"); }
-    public Element getDAT_DATField2(){ return driver.FindElementById("DATFL_1"); }
-    public Element getDAT_DATField3(){ return driver.FindElementById("DATFL_2"); }
-    public Element getTIFF_CenterHeaderBranding(){ return driver.FindElementById("CenterHeaderBranding"); }
-    public Element getPDF_InsertMetadataField(){ return driver.FindElementById("LaunchPDFeditor_0"); }
-    public Element getPDF_CenterHeaderBranding(){ return driver.FindElementById("PDFCenterHeaderBranding"); }
-    public Element getTIFF_CenterFooterBranding(){ return driver.FindElementById("CenterFooterBranding"); }
-    public Element getTIFF_InsertMetadataField(){ return driver.FindElementById("Launcheditor_0"); }
-    public Element getTIFF_selectedMetadataField(){ return driver.FindElementById("selectedMetadataField"); }
-    public Element getTIFF_selectedMetadataField_Ok(){ return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']"); }
-    
-    public Element getComponentsMarkComplete(){ return driver.FindElementById("ComponentsMarkComplete"); }
-    public Element getComponentsMarkNext(){ return driver.FindElementById("ComponentsNext"); }
-    public Element getBeginningBates(){ return driver.FindElementById("txtBeginningBatesID"); }
-    public Element gettxtBeginningBatesIDPrefix(){ return driver.FindElementById("txtBeginningBatesIDPrefix"); }
-    public Element gettxtBeginningBatesIDSuffix(){ return driver.FindElementById("txtBeginningBatesIDSuffix"); }
-    public Element gettxtBeginningBatesIDMinNumLength(){ return driver.FindElementById("txtBeginningBatesIDMinNumLength"); }
-    public Element getlstSortingMetaData(){ return driver.FindElementById("lstSortingMetaData"); }
-    public Element getlstSortingOrder(){ return driver.FindElementById("lstSortingOrder"); }
-    public Element getlstSubSortingMetaData(){ return driver.FindElementById("lstSubSortingMetaData"); }
-    public Element getlstSubSortingOrder(){ return driver.FindElementById("lstSubSortingOrder"); }
-    public Element getNumAndSortMarkComplete(){ return driver.FindElementById("NumAndSortMarkComplete"); }
-    public Element getNumAndSortNext(){ return driver.FindElementById("NumAndSortNext"); }
-    public Element getbtnDocumentsSelectionMarkComplete(){ return driver.FindElementById("btnDocumentsSelectionMarkComplete"); }
-    public Element getbtnDocumentsSelectionNext(){ return driver.FindElementById("btnDocumentsSelectionNext"); }
-    public Element getbtnProductionGuardMarkComplete(){ return driver.FindElementById("btnProductionGuardMarkComplete"); }
-    public Element getbtnProductionGuardNext(){ return driver.FindElementById("btnProductionGuardNext"); }
-    public Element getOkButton(){ return driver.FindElementById("bot1-Msg1"); }
-    public Element getlstProductionRootPaths(){ return driver.FindElementById("lstProductionRootPaths"); }
-    public Element getProductionOutputLocation_ProductionDirectory(){ return driver.FindElementById("ProductionOutputLocation_ProductionDirectory"); }
-    public Element getbtnProductionLocationMarkComplete(){ return driver.FindElementById("btnProductionLocationMarkComplete"); }
-    public Element getbtnProductionLocationNext(){ return driver.FindElementById("btnProductionLocationNext"); }
-    public Element getbtnProductionSummaryMarkComplete(){ return driver.FindElementById("btnProductionSummaryMarkComplete"); }
-    public Element getbtnProductionSummaryNext(){ return driver.FindElementById("btnProductionSummaryNext"); }
-    public Element getbtnProductionGenerate(){ return driver.FindElementById("btnProductionGenerate"); }
-    public Element getProductionSettxt(){ return driver.FindElementById("ProductionSettxt"); }
-    public Element getbtnGenerateMarkComplete(){ return driver.FindElementByXPath("//*[@id='btnGenerateMarkComplete']"); }
-    public Element getbtnReGenerateMarkComplete(){ return driver.FindElementById("btnProductionReGenerate"); }
-    public Element getbtnSummaryNext(){ return driver.FindElementById("btnGenerateNext"); }
-    
-    
-    public Element getDATChkBox(){ return driver.FindElementByXPath("//input[@name='IsDATSelected']/following-sibling::i"); }
-    public Element getDATTab(){ return driver.FindElementByXPath("//a[@href='#DATContainer']"); }
-    public Element getDAT_AddField(){ return driver.FindElementByXPath(".//*[@id='DATContainer']//button[contains(.,'Add Field')]"); }
-    public Element getNativeChkBox(){ return driver.FindElementByXPath("//input[@name='IsNativeSelected']/following-sibling::i"); }
-    public Element getNativeTab(){ return driver.FindElementByXPath("//a[@href='#NativeContainer']"); }
-    public Element getNative_SelectAllCheck(){ return driver.FindElementByXPath(".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i"); }
-    public Element getNative_GenerateLoadFileLST(){ return driver.FindElementByXPath(".//*[@id='NativeContainer']//input[@name='ProduceLoadFile']/following-sibling::i"); }
-    public Element getTIFFChkBox(){ return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i"); }
-    public Element getTIFFTab(){ return driver.FindElementByXPath("//a[@href='#TIFFContainer']"); }
-    public Element getTIFF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
-    public Element getTIFF_InsertMetadataFieldOKButton(){ return driver.FindElementByXPath(".//*[@id='MetadataPopup']//button[contains(.,'OK')]"); }
-    public Element getTIFF_EnableforPrivilegedDocs(){ return driver.FindElementByXPath(".//*[@id='TIFFContainer']//input[@name='CommonTIFFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i"); }
-    public Element getPDF_EnterBranding(){ return driver.FindElementByXPath(".//*[@id='divPDFCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']"); }
-    
-    public Element getTextChkBox(){ return driver.FindElementByXPath(".//*[@id='accordion']//input[@name='IsTextSelected']/following-sibling::i"); }
-    public Element getTextTab(){ return driver.FindElementByXPath("//a[@href='#TextContainer']"); }
-    public Element getPDFChkBox(){ return driver.FindElementByXPath(".//*[@id='accordion']//input[@name='IsPDFSelected']/following-sibling::i"); }
-    public Element getPDFTab(){ return driver.FindElementByXPath(".//*[@id='accordion']//a[@href='#PDFContainer']"); }
-    public Element getKeepFamiliesTogether(){ return driver.FindElementByXPath(".//*[@id='divSortByMetadata_1']//input[@name='ProductionSortingSettings.SortByIsKeepFamiliesTogether']/following-sibling::i"); }
-    public Element getSelectFolder(String foldername){ return driver.FindElementByXPath("//*[@id='folderTree']//ul[@class='jstree-children']//a[contains(.,'"+foldername+"')]"); }
-  
-    public Element getFolderRadioButton(){ return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i"); }
-    
-    public Element getIncludeFamilies(){ return driver.FindElementByXPath(".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i"); }
-    public Element getBackButton(){ return driver.FindElementByXPath("//a[@onclick='return LoadSummaryView()' and contains(.,'Back')]"); }
-    public Element getMarkpopup(){ return driver.FindElementByXPath("//*[@id='AlwayShowButton']/span"); }
-    public Element getProdExportSet(){ return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a new production/export set')]"); }
-    public Element getProductionLink(){ return driver.FindElementByXPath("(.//*[@id='pName']/a)[1]"); }
-    public Element getConfirmProductionCommit(){ return driver.FindElementByXPath(".//*[@id='btnProductionConfirmation']"); }
-    public Element getProductionDocCount(){ return driver.FindElementByXPath(".//*[@class='drk-gray-widget']/span[1]"); }
-    public Element getReviewproductionButton(){ return driver.FindElementByXPath("//a[contains(text(),'Review Production')]"); }
-    public Element getDestinationPathText(){ return driver.FindElementById("DestinationPathToCopy"); }
-    
-    //addition on 08/04
-    public Element getPriveldge_SelectTagButton(){ return driver.FindElementById("btnSelectPrevTags"); }
-    public Element getPriveldge_SelectPDFTagButton(){ return driver.FindElementById("btnSelectPDFPrevTags"); }
-    public Element getPriveldge_TagTree(String tag){ return driver.FindElementByXPath("(//*[@id='tagTreeTIFFComponent']//a[contains(text(),'"+tag+"')])[2]"); }
-    public Element getPriveldge_PDFTagTree(String tag){ return driver.FindElementByXPath("(//*[@id='tagTreePDFComponent']//a[contains(text(),'"+tag+"')])[2]"); }
-    public Element getPriveldge_TagTree_SelectButton(){ return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionTIFF']"); }
-    public Element getPriveldge_PDFTagTree_SelectButton(){ return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionPDF']"); }
-    public Element getPriveldge_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFPrevDocPlaceHolderText']/preceding-sibling::div"); }
-    public Element getPriveldge_PDFTextArea(){ return driver.FindElementByXPath("//textarea[@class='PDFPrevDocPlaceHolderText']/preceding-sibling::div"); }
-   
-    //addition on 23/04
-    public Element getProdExportSetRadioButton(){ return driver.FindElementByXPath(".//*[@id='productionSet']//input[@id='IsExportSet']/following-sibling::i"); }
-    public Element getProdExport_SaveButton(){ return driver.FindElementByXPath("//button[contains(.,'Save')]"); }
-    public Element getProdExport_ProductionSets(){ return driver.FindElementById("ProductionSets"); }
-    public Element getProdExport_AddaNewExportSet(){ return driver.FindElementByXPath(".//*[@id='cardGrid']//a[contains(.,'Add a New Export')]"); }
-    public Element getProdExport_Priorprodtoggle(){ return driver.FindElementByXPath("//*[@id='ProductionListDiv']/label[2]/i"); }
-    public Element getProdExport_SelectProductionSet(){ return driver.FindElementById("ProductionSetLst"); }
-    public Element getProd_BatesRange(){ return driver.FindElementById("lblGeneratedBatesRange"); }
-    public Element getPreviewprod(){ return driver.FindElementById("btnPreview"); }   
-    public Element getNative_AdvToggle(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[@class='advanced-dd-toggle']"); }   
-    public Element getProdStateFilter(){ return driver.FindElementById("productionStateFilter"); }   
-    //added by shilpi on 29/04/2020
-    public Element getPDF_SpecifyRedactText(){ return driver.FindElementByXPath("//*[@class='PDF-TIFF-Config']//a[@class='add-redaction-logic']"); }
-    public Element getPDF_BurnRedtoggle(){ return driver.FindElementByXPath("//*[@id='chkPDFBurnRedactions']/following-sibling::i"); }
-    public Element getPDF_SelectRedtagbuton(){ return driver.FindElementById("btnPdfRedTAG_0"); }   
-    public Element getPDF_SelectRedtags(){ return driver.FindElementByXPath("//*[@id='PDFRedactionTagsTree']//a[contains(text(),'R2')]"); }   
-    public Element getPDF_SelectRedtags_SelectButton(){ return driver.FindElementByXPath("//*[@id='myPDFModal']//button[@title='Select']"); }   
-    public Element getPDF_Red_Placeholdertext(){ return driver.FindElementByXPath("//*[@id='divPDFRedaction']//div[@class='redactor-editor']/p"); }   
-    public Element getProdname_Gearicon(String prodname){ return driver.FindElementById(".//*[@id='pName']/a[@title='"+prodname+"']/following-sibling::div"); }   
-    public Element getTIFF_BurnRedtoggle(){ return driver.FindElementByXPath("//*[@id='chkBurnRedactions']/following-sibling::i"); }
-    public Element getTIFF_SpecifyRedactText(){ return driver.FindElementByXPath("//*[@id='c7']//a[@class='add-redaction-logic']"); }
-    public Element getTIFF_SelectRedtagbuton(){ return driver.FindElementById("btnTiffRedTAG_0"); }   
-    public Element getTIFF_SelectRedtags(){ return driver.FindElementByXPath("//*[@id='RedactionTagsTree']//a[contains(text(),'R2')]"); }   
-    public Element getTIFF_SelectRedtags_SelectButton(){ return driver.FindElementByXPath("//*[@id='myModal']//button[@title='Select']"); }   
-    public Element getTIFF_Red_Placeholdertext(){ return driver.FindElementByXPath("//*[@id='divRedaction']//div[@class='redactor-editor']/p"); }   
-    public Element getTIFF_SelectRed_Radiobutton(){ return driver.FindElementByXPath("//*[@id='chkTIFFSpecifytRedactions']/following-sibling::i"); }   
-    public Element getPDF_SelectRed_Radiobutton(){ return driver.FindElementByXPath("//*[@id='chkPDFSPecifytRedactions']/following-sibling::i"); }   
-        
-    public Element getDoc_Count(){ return driver.FindElementByXPath("//*[@id='frmProductionConfirmation']//div[@class='drk-gray-widget']/span[1]"); }   
-    public Element getProd_Uncommitbutton(){ return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]"); }   
-    //added by shilpi
-    public Element getTextcomponent_text(){ return driver.FindElementByXPath("//*[@id='TextContainer']//p"); }
-    public Element getTiff_placeholdertext(){ return driver.FindElementByXPath("//*[@class='col-md-12 tiff-img-logic']/label[2]"); }
-    public Element getTiff_NativeDoc(){ return driver.FindElementByXPath("//*[@class='add-tiff-img-logic']"); }
-    public Element getTiff_NativeDoc_FileType(){ return driver.FindElementByXPath("//*[@id='divImageTIFFPHImage_0']/div[1]/div[1]/label[1]"); }
-    public Element getTiff_redactiontext(){ return driver.FindElementByXPath("//*[@class='col-md-12 tiff-redaction-logic']/label[2]"); }
-    public Element getpdf_placeholdertext(){ return driver.FindElementByXPath("//*[@class='col-md-12 pdf-img-logic']/label[2]"); }
-    public Element getpdf_NativeDoc(){ return driver.FindElementByXPath("//*[@class='add-pdf-img-logic']"); }
-    public Element getpdf_NativeDoc_FileType(){ return driver.FindElementByXPath("//*[@id='divImagePDFPHImage_0']/div[1]/div[1]/label[1]"); }
-    public Element getpdf_redactiontext(){ return driver.FindElementByXPath("//*[@class='col-md-12 pdf-redaction-logic']/label[2]"); }
-    public Element getNative_text(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong"); }
-    public Element getNative_text_Color(){ return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p"); }
-    public Element getMarkCompleteLink() {return driver.FindElementByXPath("//a[text()='Mark Complete']");}
-	public Element getNextButton() {return driver.FindElementByXPath("//button[text()='Next']");}
-	public Element getprod_ActionButton(){ return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]"); }
-	public Element getprod_Action_SaveTemplate(){ return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]"); }
-	public Element getprod_Templatetext(){ return driver.FindElementById("templatesettxt"); }
-	public Element getprod_LoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
-	public Element getTechissue_toggle(){ return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i"); }
-	public Element getTechissue_SelectTagButton(){ return driver.FindElementById("btnSelectTechIssueTags"); }
-    public Element getTechissue_TextArea(){ return driver.FindElementByXPath("//textarea[@class='TIFFTechIssueDocPlaceHolderText']/preceding-sibling::div"); }
-    
-   
-    //added by Narendra
-    public ElementCollection getFilterOptions(){ return driver.FindElementsByXPath("//div[@class='col-md-9']//select//option"); }
-    public Element getFilter(int i){ return driver.FindElementByXPath("//div[@class='col-md-5']//li["+i+"]//a[1]"); }
-    public Element getFilterByButton(){ return driver.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']"); }
-    public Element getFilterByDRAFT(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='DRAFT']"); }
-    public Element getFilterByINPROGRESS(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']"); }
-    public Element getFilterByFAILED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='FAILED']"); }
-    public Element getFilterByCOMPLETED(){ return driver.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='COMPLETED']"); }
-    public Element getRefreshButton(){ return driver.FindElementById("refresh"); }  
-    public Element getSortByButton(){ return driver.FindElementById("SortBy"); }
-    public Element getGridView(){ return driver.FindElementById("GridView"); }
-    public ElementCollection getProductionItemsTile(){ return driver.FindElementsByXPath("//div[@id='cardCanvas']//li/div[1]/a[1]"); }
-    public ElementCollection getProductionItemsGrid(){ return driver.FindElementsByXPath("//table[@id='ProductionListGridViewTable']//tr"); }
-    public Element getProductionItemsTileItems(){ return driver.FindElementById("totalProductionCount"); }
-    public Element getProductionItemsGridItems(){ return driver.FindElementById("ProductionListGridViewTable_info"); }
-    public Element getArrow(){ return driver.FindElementByXPath("//div[@id='pName']//div//a[1]"); }
-    public Element getSaveTemplate(){ return driver.FindElementByXPath("//*[@class='dropdown-menu']//a[contains(text(),'Save as Template')]"); }
-    public Element getTemplateName(){ return driver.FindElementById("templatesettxt"); }
-    public Element getCustomTemplateName(String tempName){ return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[1][contains(text(),'"+tempName+"')]"); }
-    public Element getSave(){ return driver.FindElementByXPath("//button[@class='btn-primary']"); }
-    public Element getManageTemplates(){ return driver.FindElementByXPath("//li[@class='ui-tabs-tab ui-corner-top ui-state-default ui-tab']//a[@class='ui-tabs-anchor']"); }
-    public ElementCollection getCustomTemplates(){ return driver.FindElementsByXPath("//table[@id='customTemplatesDatatable']//tr//td[1]"); }
-    public Element getDeleteTemplate(){ return driver.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[9]//a[contains(text(),'Delete')]"); }
-    public Element getOK(){ return driver.FindElementById("bot1-Msg1"); }
-    public Element getCreateProductionSet(){ return driver.FindElementByXPath("//div[@id='tabs-a']/div[@class='col-md-12']/div[@class='col-md-5']/a[1]"); }
-    public Element getSaveSet(){ return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']"); }
-    public Element getCancelSet(){ return driver.FindElementByXPath("//button[@class='btn btn-default btn-sm']"); }
-    public Element getSetName(){ return driver.FindElementById("ProductionSettxt"); }
-    public Element getDeleteProd(){ return driver.FindElementById("DeleteProd"); }
-    public Element getLock(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Lock')]"); }
-    public Element getDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
-    public Element getTileDelete(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]"); }
-    public Element getAction(){ return driver.FindElementByXPath(" //span[@class='fa fa-chevron-down']"); }
-    public Element getLockIcon(){ return driver.FindElementByXPath("//i[@class='fa fa-lock']"); }
-    public Element getOpenWizard(){ return driver.FindElementByXPath("//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Open In Wizard')]"); }
-    public Element getLoadTemplate(){ return driver.FindElementById("ddlTemplate"); }
-    public Element getGridDelete(){ return driver.FindElementById("Delete"); }    
-    public Element getPRODUCTIONSSETName(){ return driver.FindElementByXPath("//div[@class='col-md-12 productionSummary']//span[@class='font-lg']"); }
-    public Element getProductionListGridViewTable(){ return driver.FindElementByXPath("//table[@id='ProductionListGridViewTable']//tbody//tr[1]"); }
-    public Element getPRODUCTIONSEXPORTSTabs(){ return driver.FindElementById("ui-id-1"); }
-    public Element getadvance(){ return driver.FindElementByXPath("//div[@class='panel-body']//div[@class='col-md-12']//i[@class='fa fa-chevron-right']"); }
-    public Element getGenerateLoadFile(){ return driver.FindElementByXPath("//div[@class='panel-body']//div[@class='col-md-12']//div[@class='col-md-4']//i[@class='pull-right']"); }
-    public Element getSlipSheets(){ return driver.FindElementByXPath("//div[@class='form-group col-md-12 wrapperNew no-padding']//i[@class='pull-left']"); }
-    public Element getAvailableFields(int i){ return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style']//li["+i+"]//a"); }
-    public Element getTIFF_InsertMetadataFieldClick(){ return driver.FindElementByXPath("//div[@class='col-md-8 tiff-logic insertPopup']//a[@class='LaunchPopup']"); }
-    
-    //added by shilpi on 08/17
-    public Element getCopyPath() { return driver.FindElementByXPath("//a[@title='Copy Path']"); }
-    public Element getDocumentGeneratetext() { return driver.FindElementByXPath("//span[contains(text(),'Documents Generated')]"); }
-    public Element getQC_backbutton() { return driver.FindElementByXPath("//a[contains(@class,'btn btn-default')]"); }
-    public Element getQC_Download() { return driver.FindElementByXPath("//a[text()='Download']"); }
-    public Element getQC_Downloadbutton_allfiles() { return driver.FindElementByXPath("(//a[@title='Download All files'])[1]"); }
-    
+	Driver driver;
+	BaseClass base;
 
+	public String ProdPathallredact;
+	public String ProdPathsomeredact;
+	String searchString2 = Input.searchString2;
+	String searchString3 = Input.searchString3;
+	String searchString4 = Input.searchString4;
+	String tagNamePrev = Input.tagNamePrev;
+	String tagNameTechnical = Input.tagNameTechnical;
+	String documentID = Input.documentID;
+	SoftAssert softAssertion = new SoftAssert();
+	String num;
+	String num1;
 
-    public ProductionPage(Driver driver){
+	public Element getAddNewProductionbutton() {
+		return driver.FindElementByXPath("//a[contains(.,'Add a New Production')]");
+	}
 
-        this.driver = driver;
-        this.driver.getWebDriver().get(Input.url+"Production/Home");
-        driver.waitForPageToBeReady();
-        base = new BaseClass(driver);
-    }
-    
-    public void CreateProduction(String productionname,String PrefixID,String SuffixID,final String foldername,String tagname) 
-    		throws InterruptedException{
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-		getAddNewProductionbutton().waitAndClick(10);
+	public Element getProductionName() {
+		return driver.FindElementById("ProductionName");
+	}
+
+	public Element getProductionDesc() {
+		return driver.FindElementById("ProductionDescription");
+	}
+
+	public Element getBasicInfoMarkComplete() {
+		return driver.FindElementById("BasicInfoMarkComplete");
+	}
+
+	public Element getBasicInfoSave() {
+		return driver.FindElementById("BasicInfoSave");
+	}
+
+	public Element getBasicInfoNext() {
+		return driver.FindElementById("BasicInfoNext");
+	}
+
+	public Element getDAT_FieldClassification1() {
+		return driver.FindElementById("TY_0");
+	}
+
+	public Element getDAT_FieldClassification2() {
+		return driver.FindElementById("TY_1");
+	}
+
+	public Element getDAT_FieldClassification3() {
+		return driver.FindElementById("TY_1");
+	}
+
+	public Element getDAT_SourceField1() {
+		return driver.FindElementById("SF_0");
+	}
+
+	public Element getDAT_SourceField2() {
+		return driver.FindElementById("SF_1");
+	}
+
+	public Element getDAT_SourceField3() {
+		return driver.FindElementById("SF_2");
+	}
+
+	public Element getDAT_DATField1() {
+		return driver.FindElementById("DATFL_0");
+	}
+
+	public Element getDAT_DATField2() {
+		return driver.FindElementById("DATFL_1");
+	}
+
+	public Element getDAT_DATField3() {
+		return driver.FindElementById("DATFL_2");
+	}
+
+	public Element getTIFF_CenterHeaderBranding() {
+		return driver.FindElementById("CenterHeaderBranding");
+	}
+
+	public Element getPDF_InsertMetadataField() {
+		return driver.FindElementById("Launcheditor_0");
+	}
+
+	public Element getPDF_CenterHeaderBranding() {
+		return driver.FindElementById("CenterHeaderBranding");
+	}
+
+	public Element getTIFF_CenterFooterBranding() {
+		return driver.FindElementById("CenterFooterBranding");
+	}
+
+	public Element getTIFF_InsertMetadataField() {
+		return driver.FindElementById("Launcheditor_0");
+	}
+
+	public Element getTIFF_selectedMetadataField() {
+		return driver.FindElementById("selectedMetadataField");
+	}
+
+	public Element getTIFF_selectedMetadataField_Ok() {
+		return driver.FindElementByXPath("//*[@onclick='return AddToRedactor()']");
+	}
+
+	public Element getComponentsMarkComplete() {
+		return driver.FindElementById("ComponentsMarkComplete");
+	}
+
+	public Element getComponentsMarkNext() {
+		return driver.FindElementById("ComponentsNext");
+	}
+
+	public Element getBeginningBates() {
+		return driver.FindElementById("txtBeginningBatesID");
+	}
+
+	public Element gettxtBeginningBatesIDPrefix() {
+		return driver.FindElementById("txtBeginningBatesIDPrefix");
+	}
+
+	public Element gettxtBeginningBatesIDSuffix() {
+		return driver.FindElementById("txtBeginningBatesIDSuffix");
+	}
+
+	public Element gettxtBeginningBatesIDMinNumLength() {
+		return driver.FindElementById("txtBeginningBatesIDMinNumLength");
+	}
+
+	public Element getlstSortingMetaData() {
+		return driver.FindElementById("lstSortingMetaData");
+	}
+
+	public Element getlstSortingOrder() {
+		return driver.FindElementById("lstSortingOrder");
+	}
+
+	public Element getlstSubSortingMetaData() {
+		return driver.FindElementById("lstSubSortingMetaData");
+	}
+
+	public Element getlstSubSortingOrder() {
+		return driver.FindElementById("lstSubSortingOrder");
+	}
+
+	public Element getNumAndSortMarkComplete() {
+		return driver.FindElementById("NumAndSortMarkComplete");
+	}
+
+	public Element getNumAndSortNext() {
+		return driver.FindElementById("NumAndSortNext");
+	}
+
+	public Element getbtnDocumentsSelectionMarkComplete() {
+		return driver.FindElementById("btnDocumentsSelectionMarkComplete");
+	}
+
+	public Element getbtnDocumentsSelectionNext() {
+		return driver.FindElementById("btnDocumentsSelectionNext");
+	}
+
+	public Element getbtnProductionGuardMarkComplete() {
+		return driver.FindElementById("btnProductionGuardMarkComplete");
+	}
+
+	public Element getbtnProductionGuardNext() {
+		return driver.FindElementById("btnProductionGuardNext");
+	}
+
+	public Element getOkButton() {
+		return driver.FindElementById("bot1-Msg1");
+	}
+
+	public Element getlstProductionRootPaths() {
+		return driver.FindElementById("lstProductionRootPaths");
+	}
+
+	public Element getProductionOutputLocation_ProductionDirectory() {
+		return driver.FindElementById("ProductionOutputLocation_ProductionDirectory");
+	}
+
+	public Element getbtnProductionLocationMarkComplete() {
+		return driver.FindElementById("btnProductionLocationMarkComplete");
+	}
+
+	public Element getbtnProductionLocationNext() {
+		return driver.FindElementById("btnProductionLocationNext");
+	}
+
+	public Element getbtnProductionSummaryMarkComplete() {
+		return driver.FindElementById("btnProductionSummaryMarkComplete");
+	}
+
+	public Element getbtnProductionSummaryNext() {
+		return driver.FindElementById("btnProductionSummaryNext");
+	}
+
+	public Element getbtnProductionGenerate() {
+		return driver.FindElementById("btnProductionGenerate");
+	}
+
+	public Element getProductionSettxt() {
+		return driver.FindElementById("ProductionSettxt");
+	}
+
+	public Element getbtnGenerateMarkComplete() {
+		return driver.FindElementByXPath("//*[@id='btnGenerateMarkComplete']");
+	}
+
+	public Element getbtnReGenerateMarkComplete() {
+		return driver.FindElementById("btnProductionReGenerate");
+	}
+
+	public Element getbtnRegenerate() {
+		return driver.FindElementByXPath("//button[contains(text(),'Regenerate')]");
+	}
+
+	public Element getbtnSummaryNext() {
+		return driver.FindElementById("btnGenerateNext");
+	}
+
+	public Element getDATChkBox() {
+		return driver.FindElementByXPath("//input[@name='IsDATSelected']/following-sibling::i");
+	}
+
+	public Element getDATTab() {
+		return driver.FindElementByXPath("//a[@href='#DATContainer']");
+	}
+
+	public Element getDAT_AddField() {
+		return driver.FindElementByXPath(".//*[@id='DATContainer']//button[contains(.,'Add Field')]");
+	}
+
+	public Element getNativeChkBox() {
+		return driver.FindElementByXPath("//input[@name='IsNativeSelected']/following-sibling::i");
+	}
+
+	public Element getNativeTab() {
+		return driver.FindElementByXPath("//a[@href='#NativeContainer']");
+	}
+
+	public Element getNative_SelectAllCheck() {
+		return driver.FindElementByXPath(
+				".//*[@id='native-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i");
+	}
+
+	public Element getNative_GenerateLoadFileLST() {
+		return driver
+				.FindElementByXPath(".//*[@id='NativeContainer']//input[@name='ProduceLoadFile']/following-sibling::i");
+	}
+
+	public Element getTIFFChkBox() {
+		return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i");
+	}
+
+	public Element getTIFFTab() {
+		return driver.FindElementByXPath("//a[@href='#TIFFContainer']");
+	}
+
+	public Element getTIFF_EnterBranding() {
+		return driver.FindElementByXPath(
+				".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
+	}
+
+	public Element getTIFF_InsertMetadataFieldOKButton() {
+		return driver.FindElementByXPath(".//*[@id='MetadataPopup']//button[contains(.,'OK')]");
+	}
+
+	public Element getTIFF_EnableforPrivilegedDocs() {
+		return driver.FindElementByXPath(
+				".//*[@id='TIFFContainer']//input[@name='CommonTIFFSettings.PlaceHolderImageSettings.EnabledforPrivDocs']/following-sibling::i");
+	}
+
+	public Element getPDF_EnterBranding() {
+		return driver.FindElementByXPath(
+				".//*[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
+	}
+
+	public Element getTextChkBox() {
+		return driver.FindElementByXPath(".//*[@id='accordion']//input[@name='IsTextSelected']/following-sibling::i");
+	}
+
+	public Element getTextTab() {
+		return driver.FindElementByXPath("//a[@href='#TextContainer']");
+	}
+
+	public Element getPDFChkBox() {
+		return driver.FindElementByXPath("//input[@name='IsTIFFSelected']/following-sibling::i");
+	}
+
+	public Element getPDFTab() {
+		return driver.FindElementByXPath("//a[contains( text(),' TIFF / PDF ')]");
+	}
+
+	public Element getPDFGenerateRadioButton() {
+		return driver.FindElementByXPath(
+				"//a[text()=' TIFF / PDF ']//following::*[normalize-space(text())='Generate PDF']//ancestor::label");
+	}
+
+	public Element getKeepFamiliesTogether() {
+		return driver.FindElementByXPath(
+				".//*[@id='divSortByMetadata_1']//input[@name='ProductionSortingSettings.SortByIsKeepFamiliesTogether']/following-sibling::i");
+	}
+
+	public Element getSelectFolder(String foldername) {
+		return driver.FindElementByXPath(
+				"//ul[@class='jstree-container-ul jstree-children']//a[contains(.,'" + foldername + "')]");
+	}
+
+	public Element getFolderRadioButton() {
+		return driver.FindElementByXPath(".//*[@id='rdbFolders']/following-sibling::i");
+	}
+
+	public Element getIncludeFamilies() {
+		return driver.FindElementByXPath(
+				".//*[@id='frmDocumentsSelection']//input[@name='ProductionDocumentsSelection.ToIncludeFamilies']/following-sibling::i");
+	}
+
+	public Element getBackButton() {
+		return driver.FindElementByXPath("//a[@class='btn btn-default' and contains(.,'Back')]");
+	}
+
+	public Element getMarkpopup() {
+		return driver.FindElementByXPath("//*[@id='AlwayShowButton']/span");
+	}
+
+	public Element getProdExportSet() {
+		return driver.FindElementByXPath(".//*[@id='tabs-a']//a[contains(.,'Create a new production/export set')]");
+	}
+
+	public Element getProductionLink() {
+		return driver.FindElementByXPath("(.//*[@id='pName']/a)[1]");
+	}
+
+	public Element getConfirmProductionCommit() {
+		return driver.FindElementByXPath(".//*[@id='btnProductionConfirmation']");
+	}
+
+	public Element getProductionDocCount() {
+		return driver.FindElementByXPath(".//*[@class='drk-gray-widget']/span[1]");
+	}
+
+	public Element getReviewproductionButton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Review Production')]");
+	}
+
+	public Element getDestinationPathText() {
+		return driver.FindElementById("DestinationPathToCopy");
+	}
+
+	// addition on 08/04
+	public Element getPriveldge_SelectTagButton() {
+		return driver.FindElementById("btnSelectPrevTags");
+	}
+
+	public Element getPriveldge_SelectPDFTagButton() {
+		return driver.FindElementById("btnSelectPDFPrevTags");
+	}
+
+	public Element getPriveldge_TagTree(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[contains(text(),'" + tag + "')]");
+	}
+
+	public Element getSelectTechnicalIssueTag() {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//a[contains(text(),'Technical_Issue')]");
+	}
+
+	public Element getPriveldged_TagTree(String tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag + "']");
+	}
+
+	public Element getPriveldge_PDFTagTree(String tag) {
+		return driver.FindElementByXPath("(//*[@id='tagTreePDFComponent']//a[contains(text(),'" + tag + "')])[2]");
+	}
+
+	public Element getPriveldge_TagTree_SelectButton() {
+		return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionTIFF']");
+	}
+
+	public Element getPriveldge_PDFTagTree_SelectButton() {
+		return driver.FindElementByXPath("//*[@class='btn btn-primary btn-sm submitSelectionPDF']");
+	}
+
+	public Element getPriveldge_TextArea() {
+		return driver.FindElementByXPath("//textarea[@class='TIFFPrevDocPlaceHolderText']/preceding-sibling::div");
+	}
+
+	public Element getPriveldge_PDFTextArea() {
+		return driver.FindElementByXPath("//textarea[@class='PDFPrevDocPlaceHolderText']/preceding-sibling::div");
+	}
+
+	// addition on 23/04
+	public Element getProdExportSetRadioButton() {
+		return driver.FindElementByXPath(".//*[@id='productionSet']//input[@id='IsExportSet']/following-sibling::i");
+	}
+
+	public Element getProdExport_SaveButton() {
+		return driver.FindElementByXPath("//button[contains(.,'Save')]");
+	}
+
+	public Element getProdExport_ProductionSets() {
+		return driver.FindElementById("ProductionSets");
+	}
+
+	public Element getProdExport_AddaNewExportSet() {
+		return driver.FindElementByXPath(".//*[@id='cardGrid']//a[contains(.,'Add a New Export')]");
+	}
+
+	public Element getProdExport_Priorprodtoggle() {
+		return driver.FindElementByXPath("//*[@id='ProductionListDiv']/label[2]/i");
+	}
+
+	public Element getProdExport_SelectProductionSet() {
+		return driver.FindElementById("ProductionSetLst");
+	}
+
+	public Element getProd_BatesRange() {
+		return driver.FindElementById("lblGeneratedBatesRange");
+	}
+
+	public Element getPreviewprod() {
+		return driver.FindElementById("btnPreview");
+	}
+
+	public Element getNative_AdvToggle() {
+		return driver.FindElementByXPath("//*[@id='NativeContainer']//div[@class='advanced-dd-toggle']");
+	}
+
+	public Element getProdStateFilter() {
+		return driver.FindElementById("productionStateFilter");
+	}
+
+	// added by shilpi on 29/04/2020
+	public Element getPDF_SpecifyRedactText() {
+		return driver.FindElementByXPath("//*[@class='PDF-TIFF-Config']//a[@class='add-redaction-logic']");
+	}
+
+	public Element getPDF_BurnRedtoggle() {
+		return driver.FindElementByXPath("//*[@id='chkPDFBurnRedactions']/following-sibling::i");
+	}
+
+	public Element getPDF_SelectRedtagbuton() {
+		return driver.FindElementById("btnPdfRedTAG_0");
+	}
+
+	public Element getPDF_SelectRedtags() {
+		return driver.FindElementByXPath("//*[@id='PDFRedactionTagsTree']//a[contains(text(),'R2')]");
+	}
+
+	public Element getPDF_SelectRedtags_SelectButton() {
+		return driver.FindElementByXPath("//*[@id='myPDFModal']//button[@title='Select']");
+	}
+
+	public Element getPDF_Red_Placeholdertext() {
+		return driver.FindElementByXPath("//*[@id='divPDFRedaction']//div[@class='redactor-editor']/p");
+	}
+
+	public Element getProdname_Gearicon(String prodname) {
+		return driver.FindElementById(".//*[@id='pName']/a[@title='" + prodname + "']/following-sibling::div");
+	}
+
+	public Element getTIFF_BurnRedtoggle() {
+		return driver.FindElementByXPath("//*[@id='chkBurnRedactions']/following-sibling::i");
+	}
+
+	public Element getTIFF_SpecifyRedactText() {
+		return driver.FindElementByXPath("//*[@id='c7']//a[@class='add-redaction-logic']");
+	}
+
+	public Element getTIFF_SelectRedtagbuton() {
+		return driver.FindElementById("btnTiffRedTAG_0");
+	}
+
+	public Element getTIFF_SelectRedtags() {
+		return driver.FindElementByXPath("//*[@id='RedactionTagsTree']//a[contains(text(),'R2')]");
+	}
+
+	public Element getTIFF_SelectRedtags_SelectButton() {
+		return driver.FindElementByXPath("//*[@id='myModal']//button[@title='Select']");
+	}
+
+	public Element getTIFF_Red_Placeholdertext() {
+		return driver.FindElementByXPath("//*[@id='divRedaction']//div[@class='redactor-editor']/p");
+	}
+
+	public Element getTIFF_SelectRed_Radiobutton() {
+		return driver.FindElementByXPath("//*[@id='chkTIFFSpecifytRedactions']/following-sibling::i");
+	}
+
+	public Element getPDF_SelectRed_Radiobutton() {
+		return driver.FindElementByXPath("//*[@id='chkPDFSPecifytRedactions']/following-sibling::i");
+	}
+
+	public Element getDoc_Count() {
+		return driver.FindElementByXPath("//*[@id='frmProductionConfirmation']//div[@class='drk-gray-widget']/span[1]");
+	}
+
+	public Element getProd_Uncommitbutton() {
+		return driver.FindElementByXPath("//strong[contains(text(),'Uncommit Production')]");
+	}
+
+	// added by shilpi
+	public Element getTextcomponent_text() {
+		return driver.FindElementByXPath("//*[@id='TextContainer']//p");
+	}
+
+	public Element getTiff_placeholdertext() {
+		return driver.FindElementByXPath("//*[@class='col-md-12 tiff-img-logic']/label[2]");
+	}
+
+	public Element getTiff_NativeDoc() {
+		return driver.FindElementByXPath("//*[@class='add-tiff-img-logic']");
+	}
+
+	public Element getTiff_NativeDoc_FileType() {
+		return driver.FindElementByXPath("//*[@id='divImageTIFFPHImage_0']/div[1]/div[1]/label[1]");
+	}
+
+	public Element getTiff_redactiontext() {
+		return driver.FindElementByXPath("//*[@class='col-md-12 tiff-redaction-logic']/label[2]");
+	}
+
+	public Element getpdf_placeholdertext() {
+		return driver.FindElementByXPath("//*[@class='col-md-12 pdf-img-logic']/label[2]");
+	}
+
+	public Element getpdf_NativeDoc() {
+		return driver.FindElementByXPath("//*[@class='add-pdf-img-logic']");
+	}
+
+	public Element getpdf_NativeDoc_FileType() {
+		return driver.FindElementByXPath("//*[@id='divImagePDFPHImage_0']/div[1]/div[1]/label[1]");
+	}
+
+	public Element getpdf_redactiontext() {
+		return driver.FindElementByXPath("//*[@class='col-md-12 pdf-redaction-logic']/label[2]");
+	}
+
+	public Element getNative_text() {
+		return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p/strong");
+	}
+
+	public Element getNative_text_Color() {
+		return driver.FindElementByXPath("//*[@id='NativeContainer']//div[1]/p");
+	}
+
+	public Element getMarkCompleteLink() {
+		return driver.FindElementByXPath("//a[text()='Mark Complete']");
+	}
+
+	public Element getNextButton() {
+		return driver.FindElementByXPath("//button[text()='Next']");
+	}
+
+	public Element getprod_ActionButton() {
+		return driver.FindElementByXPath("(//*[@class='fa fa-lg fa-gear'])[1]");
+	}
+
+	public Element getprod_Action_SaveTemplate() {
+		return driver.FindElementByXPath("//*[@id='pName']//a[contains(.,'Save as Template')]");
+	}
+
+	public Element getprod_Templatetext() {
+		return driver.FindElementById("templatesettxt");
+	}
+
+	public Element getprod_LoadTemplate() {
+		return driver.FindElementById("ddlTemplate");
+	}
+
+	public Element getTechissue_toggle() {
+		return driver.FindElementByXPath("//*[@id='chkEnabledforExceptionDocs']/following-sibling::i");
+	}
+
+	public Element getTechissue_SelectTagButton() {
+		return driver.FindElementById("btnSelectTechIssueTags");
+	}
+
+	public Element getTechissue_TextArea() {
+		return driver.FindElementByXPath("//textarea[@class='TIFFTechIssueDocPlaceHolderText']/preceding-sibling::div");
+	}
+
+	// added by Narendra
+	public ElementCollection getFilterOptions() {
+		return driver.FindElementsByXPath("//div[@class='col-md-9']//select//option");
+	}
+
+	public Element getFilter(int i) {
+		return driver.FindElementByXPath("//div[@class='col-md-5']//li[" + i + "]//a[1]");
+	}
+
+	public Element getFilterByButton() {
+		return driver
+				.FindElementByXPath(".//*[@id='cardGrid']/div[1]//button[@class='multiselect dropdown-toggle btn']");
+	}
+
+	public Element getFilterByDRAFT() {
+		return driver
+				.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='DRAFT']");
+	}
+
+	public Element getFilterByINPROGRESS() {
+		return driver.FindElementByXPath(
+				".//*[@class='multiselect-container dropdown-menu']//label/input[@value='INPROGRESS']");
+	}
+
+	public Element getFilterByFAILED() {
+		return driver
+				.FindElementByXPath(".//*[@class='multiselect-container dropdown-menu']//label/input[@value='FAILED']");
+	}
+
+	public Element getFilterByCOMPLETED() {
+		return driver.FindElementByXPath(
+				".//*[@class='multiselect-container dropdown-menu']//label/input[@value='COMPLETED']");
+	}
+
+	public Element getRefreshButton() {
+		return driver.FindElementById("refresh");
+	}
+
+	public Element gettxtProdGenerationFailed() {
+		return driver
+				.FindElement(By.xpath("//div[@id='ProgressBar_118']//span[contains(text(),'Prod Generation Failed')]"));
+	}
+
+	public Element gettxtReservingBatesFailed() {
+		return driver.FindElement(
+				By.xpath("//div[@id='ProgressBar_483']//span[contains(text(),'Reserving Bates Range Failed')]"));
+	}
+
+	public Element getFilterDropDown() {
+		return driver.FindElement(By.xpath("//button[@class='multiselect dropdown-toggle btn']"));
+	}
+
+	public Element getSortByButton() {
+		return driver.FindElementById("SortBy");
+	}
+
+	public Element getGridView() {
+		return driver.FindElementById("GridView");
+	}
+
+	public ElementCollection getProductionItemsTile() {
+		return driver.FindElementsByXPath("//div[@id='cardCanvas']//li/div[1]/a[1]");
+	}
+
+	public ElementCollection getProductionItemsGrid() {
+		return driver.FindElementsByXPath("//table[@id='ProductionListGridViewTable']//tr");
+	}
+
+	public Element getProductionItemsTileItems() {
+		return driver.FindElementById("totalProductionCount");
+	}
+
+	public Element getProductionItemsGridItems() {
+		return driver.FindElementById("ProductionListGridViewTable_info");
+	}
+
+	public Element getArrow() {
+		return driver.FindElementByXPath("//div[@id='pName']//div//a[1]");
+	}
+
+	public Element getSaveTemplate() {
+		return driver.FindElementByXPath("//*[@class='dropdown-menu']//a[contains(text(),'Save as Template')]");
+	}
+
+	public Element getTemplateName() {
+		return driver.FindElementById("templatesettxt");
+	}
+
+	public Element getCustomTemplateName(String tempName) {
+		return driver.FindElementByXPath(
+				"//table[@id='customTemplatesDatatable']//tr//td[1][contains(text(),'" + tempName + "')]");
+	}
+
+	public Element getSave() {
+		return driver.FindElementByXPath("//button[@class='btn-primary']");
+	}
+
+	public Element getManageTemplates() {
+		return driver.FindElementByXPath(
+				"//li[@class='ui-tabs-tab ui-corner-top ui-state-default ui-tab']//a[@class='ui-tabs-anchor']");
+	}
+
+	public ElementCollection getCustomTemplates() {
+		return driver.FindElementsByXPath("//table[@id='customTemplatesDatatable']//tr//td[1]");
+	}
+
+	public Element getDeleteTemplate() {
+		return driver
+				.FindElementByXPath("//table[@id='customTemplatesDatatable']//tr//td[9]//a[contains(text(),'Delete')]");
+	}
+
+	public Element getOK() {
+		return driver.FindElementById("bot1-Msg1");
+	}
+
+	public Element getCreateProductionSet() {
+		return driver.FindElementByXPath("//div[@id='tabs-a']/div[@class='col-md-12']/div[@class='col-md-5']/a[1]");
+	}
+
+	public Element getSaveSet() {
+		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm']");
+	}
+
+	public Element getCancelSet() {
+		return driver.FindElementByXPath("//button[@class='btn btn-default btn-sm']");
+	}
+
+	public Element getSetName() {
+		return driver.FindElementById("ProductionSettxt");
+	}
+
+	public Element getDeleteProd() {
+		return driver.FindElementById("DeleteProd");
+	}
+
+	public Element getLock() {
+		return driver.FindElementByXPath(
+				"//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Lock')]");
+	}
+
+	public Element getDelete() {
+		return driver.FindElementByXPath(
+				"//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]");
+	}
+
+	public Element getTileDelete() {
+		return driver.FindElementByXPath(
+				"//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Delete')]");
+	}
+
+	public Element getAction() {
+		return driver.FindElementByXPath(" //span[@class='fa fa-chevron-down']");
+	}
+
+	public Element getLockIcon() {
+		return driver.FindElementByXPath("//i[@class='fa fa-lock']");
+	}
+
+	public Element getOpenWizard() {
+		return driver.FindElementByXPath(
+				"//div[@class='dropdown pull-right actionBtn font-xs open']//a[contains(text(),'Open In Wizard')]");
+	}
+
+	public Element getLoadTemplate() {
+		return driver.FindElementById("ddlTemplate");
+	}
+
+	public Element getGridDelete() {
+		return driver.FindElementById("Delete");
+	}
+
+	public Element getPRODUCTIONSSETName() {
+		return driver.FindElementByXPath("//div[@class='col-md-12 productionSummary']//span[@class='font-lg']");
+	}
+
+	public Element getProductionListGridViewTable() {
+		return driver.FindElementByXPath("//table[@id='ProductionListGridViewTable']//tbody//tr[1]");
+	}
+
+	public Element getPRODUCTIONSEXPORTSTabs() {
+		return driver.FindElementById("ui-id-1");
+	}
+
+	public Element getadvance() {
+		return driver.FindElementByXPath(
+				"//div[@class='panel-body']//div[@class='col-md-12']//i[@class='fa fa-chevron-right']");
+	}
+
+	public Element getGenerateLoadFile() {
+		return driver.FindElementByXPath(
+				"//div[@class='panel-body']//div[@class='col-md-12']//div[@class='col-md-4']//i[@class='pull-right']");
+	}
+
+	public Element getSlipSheets() {
+		return driver.FindElementByXPath(
+				"//div[@class='form-group col-md-12 wrapperNew no-padding']//i[@class='pull-left']");
+	}
+
+	public Element getAvailableFields(int i) {
+		return driver.FindElementByXPath("//ul[@class='nav nav-tabs tab-style']//li[" + i + "]//a");
+	}
+
+	public Element getTIFF_InsertMetadataFieldClick() {
+		return driver.FindElementByXPath("//div[@class='col-md-8 tiff-logic insertPopup']//a[@class='LaunchPopup']");
+	}
+
+	// added by shilpi on 08/17
+	public Element getCopyPath() {
+		return driver.FindElementByXPath("//a[@title='Copy Path']");
+	}
+
+	public Element getDocumentGeneratetext() {
+		return driver.FindElementByXPath("//span[contains(text(),'Documents Generated')]");
+	}
+
+	public Element getQC_backbutton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Back')]");
+	}
+
+	public Element getQC_Download() {
+		return driver.FindElementByXPath("//a[text()='Download']");
+	}
+
+	public Element getQC_Downloadbutton_allfiles() {
+		return driver.FindElementByXPath("(//a[@title='Download All files'])[1]");
+	}
+
+	// added by sowndariya
+
+	public Element getClkBtnDownloadDATFiles() {
+		return driver.FindElementByXPath("(//span[contains(text(),'Download DAT file')])[1]");
+	}
+
+	public Element getRegenerateBtn() {
+		return driver.FindElementByXPath("//button[text()='Regenerate']");
+	}
+
+	public Element getErrorMsgInDATWithoutSelectingDAT() {
+		return driver.FindElementByXPath(
+				"//*[@id='divbigBoxes']//p[contains(text(),'Selection of the DAT component is mandatory for a production.')]");
+	}
+
+	public Element getErrorMsgInDATWithoutAddingBates() {
+		return driver.FindElementByXPath(
+				"//*[@id='divbigBoxes']//p[contains(text(),'Bates Number must be selected in the DAT for a production.')]");
+	}
+
+	public Element getErrorMsgInDATWithOtherCharacter() {
+		return driver.FindElementByXPath(
+				"//*[@id='divbigBoxes']//p[contains(text(),'DAT field names must begin with an alphabet. Please check.')]");
+	}
+
+	public Element getErrorMsgInDATWithSpecialCharacter() {
+		return driver.FindElementByXPath(
+				"//*[@id='divbigBoxes']//p[contains(text(),'Special characters other than underscore (_) are not allowed in the  DAT field names. Please check.')]");
+	}
+
+	public Element getErrorMsgInDATForSameDatField() {
+		return driver.FindElementByXPath(
+				"//*[@id='divbigBoxes']//p[contains(text(),'Multiple project fields are not allowed to be mapped to the same field in DAT. Please check.')]");
+	}
+
+	public Element getBtnAddFieldInDAt() {
+		return driver.FindElementByXPath("//button[contains(text(),'Add Field')]");
+	}
+
+	public Element getErrorMsgPopupInDAT() {
+		return driver.FindElementByXPath("//div[@id='MsgBoxBack']//p");
+	}
+
+	public Element getErrorMsgInDAT() {
+		return driver.FindElementByXPath(
+				"//div[@id='divbigBoxes']//p[text()='No fields are added in the DAT section. Please complete before navigating to the next step.']");
+	}
+
+	public Element getGearIconForProdName(String productionname) {
+		return driver.FindElementByXPath("//a[@title='" + productionname + "']/..//i[@class='fa fa-lg fa-gear']");
+	}
+
+	public Element getPostGenGearIcon() {
+		return driver.FindElementByXPath(
+				"(//span[text()='Post-Gen QC Checks Complete'])[1]/../../..//i[@class='fa fa-lg fa-gear']");
+	}
+
+	public Element getbtnGenMarkIncomplete() {
+		return driver.FindElementById("btnGenerateMarkInComplete");
+	}
+
+	public Element getVerifyGenStatus(String progressLvl) {
+		return driver.FindElementByXPath("//label[contains(text(),'" + progressLvl + "')]");
+	}
+
+	public Element getTagRadioButton() {
+		return driver.FindElementByXPath("//*[@id='rdbTags']/following-sibling::i");
+	}
+
+	public Element getBtnMarkIncomplete() {
+		return driver.FindElementByXPath("btnGenerateMarkInComplete");
+	}
+
+	public Element getprod_Action_SaveTemplate_Reusable(String productionname) {
+		return driver.FindElementByXPath("//a[@title='" + productionname + "']/..//a[contains(.,'Save as Template')]");
+	}
+
+	public Element getViewTemplate(String TempName) {
+		return driver.FindElementByXPath("//a[contains(@onclick,'" + TempName + "')]");
+	}
+
+	public Element getadvanceOnManageTemplate() {
+		return driver.FindElementByXPath("//div[@class='advanced-production-toggle col-md-12']//h2[@class='col-md-8']");
+	}
+
+	public Element getMP3CheckBoxToggle() {
+		return driver.FindElementByXPath("//a[text()='MP3 Files ']");
+	}
+
+	public Element getMP3CheckReductionBoxEnable() {
+		return driver.FindElementByXPath("//div[@class='mp3-conf']//i[@class='pull-left']");
+	}
+
+	public Element getMP3RatiobtnRedactiontag() {
+		return driver.FindElementByXPath("//div[@id='divMP3Redactions']//label[2]");
+	}
+
+	public Element getMP3SelectDefaultRedactiontag() {
+		return driver.FindElementByXPath("(//*[@id='1_anchor'])[5]");
+	}
+
+	public Element checkMp3ReductionTagDisable() {
+		return driver.FindElementByXPath("//*[@id='1_anchor']");
+	}
+
+	public Element getProductionHomePage() {
+		return driver.FindElementByXPath("//a[@title='Productions']");
+	}
+
+	public Element getprod_ActionButton_Reusable(String productionname) {
+		return driver.FindElementByXPath("//a[@title='" + productionname + "']/..//i[@class='fa fa-lg fa-gear']");
+	}
+
+	public Element manageTemplateLastPage() {
+		return driver.FindElementByXPath("//*[@id=\"customTemplatesDatatable_paginate\"]/ul/li[8]/a");
+	}
+
+	public Element getSelect_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']");
+	}
+
+	public Element getSelect_Beep_RedactionStyle_Dropdown() {
+		return driver.FindElementByXPath("//select[@id='lstFillerAudio']//option[text()='Beep']");
+	}
+
+	public Element getNumber_of_natives_count() {
+		return driver.FindElementByXPath("(//*[@id='frmProductionSummary']//label)[9]");
+	}
+
+	public Element getChkBoxNativeOthers() {
+		return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[2]");
+	}
+
+	public Element getChkBoxNative_WordTextFiles() {
+		return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[3]");
+	}
+
+	public Element getChkBoxNative_SpreadSheets() {
+		return driver.FindElementByXPath("(//*[@id='NativeContainer']//label[@class='checkbox']//i)[4]");
+	}
+
+	public Element getSelectedTechIssueTags() {
+		return driver.FindElementByXPath("//span[@id='TechIssueTagsLabel']");
+	}
+
+	public Element getProductionFromHomePage(String productionName) {
+		return driver
+				.FindElementByXPath("//a[@title='" + productionName + "']//..//..//span[@class='progressBarText']");
+	}
+
+	public Element gettxtPreGenChecks() {
+		return driver.FindElementByXPath("//span[contains(text(),'Pre-Gen Checks')]");
+	}
+
+	public Element getCancelBtn() {
+
+		return driver.FindElementByXPath("(//button[@id='btnTagCancel'])[2]");
+	}
+
+	public Element getLeftSpecifyBrandingBySelectingTag() {
+		return driver.FindElementByXPath("(//a[@class='add-logic'])[1]");
+	}
+
+	public Element getLeftHeaderBranding() {
+
+		return driver.FindElementById("LeftHeaderBranding");
+	}
+
+	public Element getVolumeToggleInPLPage() {
+		return driver.FindElementByXPath("//*[@id='ProductionOutputLocation_IsVolumeIncluded']");
+	}
+
+	public Element gettxtPostGenCompleted() {
+		return driver.FindElementByXPath("(//span[text()='Post-Gen QC Checks Complete'])[1]");
+	}
+
+	public Element gettxtStatusInQCPage() {
+		return driver.FindElementByXPath("//label[text()='Status:']");
+	}
+
+	public Element getConfirmProductionUnCommit() {
+		return driver.FindElementByXPath("//div[@class='drk-gray-widget']//a[@id='btnProductionUnCommitBates']");
+	}
+
+	public Element getBckBtn() {
+		return driver.FindElementByXPath(".//div[@class='buttons pull-right']//a[text()='Back']");
+	}
+
+	public Element getVerifyingQCPage() {
+		return driver.FindElementByXPath("//label[text()='Post-Generation QC Checks Complete']");
+	}
+
+	public Element getClkCheckBoxRedactionTag(String Tag) {
+
+		return driver.FindElementByXPath(
+
+				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='" + Tag + "']");
+	}
+
+	public Element getClkCheckBoxRedactionTags(String nextTag) {
+
+		return driver.FindElementByXPath(
+
+				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='" + nextTag + "']");
+
+	}
+
+	public Element getDocCount() {
+
+		return driver.FindElementByXPath("//label[@class='col-sm-6 labelAlign'][text()='2']");
+
+	}
+
+	public Element getclkNativelyProducedDocumentLnk() {
+		return driver.FindElementByXPath("//a[@class='add-tiff-img-logic']");
+	}
+
+	public Element getFillingPlaceHolder() {
+		return driver.FindElementByXPath(
+				"//div[@placeholder='Enter placeholder text for the docs of the selected file types']");
+	}
+
+	public Element getErrorMsgPopupInTiffSection() {
+		return driver.FindElementByXPath(
+				"//p[text()='In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.']");
+	}
+
+	public Element getErrorMsgPopup() {
+		return driver.FindElementByXPath(
+				"//p[text()='To export natives, you must select at least a file group type or a tag in the Native section.']");
+	}
+
+	public Element getSecurityGroupDropDown() {
+		return driver.FindElementById("SecurityGrpList");
+	}
+
+	public Element getDefaultSecurityGroup() {
+		return driver.FindElementByXPath("//select[@id='SecurityGrpList']//option[text()='Default Security Group']");
+	}
+
+	public Element getSelectDownloadBtn() {
+
+		return driver.FindElementByXPath("//a[text()='Download']");
+
+	}
+
+	public Element getSelectSharableLinks() {
+
+		return driver.FindElementByXPath(
+				"//div[@class='popover-content']//a[@id='btnGetShareableLinks']/child::span[text()='Get Shareable Links']");
+
+	}
+
+	public Element getAssertOnPassword() {
+
+		return driver.FindElementByXPath("//label[@id='lblShareableLinksPassword']");
+
+	}
+
+	public Element getAssertAllFile() {
+
+		return driver.FindElementByXPath("//b//span[text()='All Files']");
+
+	}
+
+	public Element getAssertDATFile() {
+
+		return driver.FindElementByXPath("//b//span[text()='DAT File Only']");
+
+	}
+
+	public Element getAssertCommitBtn() {
+
+		return driver.FindElementByXPath("//a[@id='btnProductionConfirmation']");
+
+	}
+
+	public Element getAssertCopyPathBtn() {
+
+		return driver.FindElementByXPath("//a[@title='Copy Path']");
+
+	}
+
+	public Element gettxtProdGenerationInProgress() {
+		return driver.FindElement(
+				By.xpath("//div[@id='ProgressBar_59']//span[contains(text(),'Post-Gen QC Checks Complete')]"));
+	}
+
+	public Element getStatusDraftTxt() {
+		return driver.FindElementByXPath("//label[@id='prouctionGenerateStatusTxt']");
+	}
+
+	public Element getbtnPopupPreviewMarkComplete() {
+		return driver.FindElementById("AlwayShowButton");
+	}
+
+	public Element gettxtLoadFiles() {
+		return driver.FindElementByXPath("//input[@id='ProductionComponentsFolderDetails_FolderName_LoadFiles']");
+	}
+
+	public Element getAdvancedProductionComponents(String productionName) {
+		return driver.FindElementByXPath("//h2[text()=' Advanced Production Components ']");
+	}
+
+	public Element getMP3ChkBox(String productionName) {
+		return driver.FindElementByXPath("//input[@id='chkIsMP3Selected']/following-sibling::i");
+	}
+
+	public Element getTranslationsChkBox(String productionName) {
+		return driver.FindElementByXPath("//input[@id='chkIsTranslation']/following-sibling::i");
+	}
+
+	public Element getStatusSuccessTxt() {
+		return driver.FindElementByXPath("//span[@class='text-success']");
+	}
+
+	public Element getTIFF_MultiPage_RadioButton() {
+		return driver.FindElementByXPath("//input[@id='rbdMultiPageType']//following-sibling::i");
+	}
+
+	public Element getNumbering_Document_RadioButton() {
+		return driver.FindElementByXPath("//input[@id='rdbDocumentLevel']//following-sibling::i");
+	}
+
+	public Element getbtnPreview() {
+		return driver.FindElementByXPath("//a[@id='btnPreview']");
+	}
+
+	public Element getNumbering_Document_BeginningBates_Text() {
+		return driver.FindElementById("txtSubbatesNumber");
+	}
+
+	public Element getGearIcon() {
+		return driver.FindElementByXPath(
+				"(//div[@class='dropdown pull-right actionBtn font-xs']//a[@class='dropdown-toggle']//i[@class='fa fa-lg fa-gear'])[1]");
+	}
+
+	public Element getbtnRegenerateContinue() {
+		return driver.FindElementById("ProductionRegeneration");
+	}
+
+	public Element gettxtPleaseSpecifySubbatesNumberError() {
+		return driver.FindElementById("txtSubbatesNumber-error");
+	}
+
+	public Element getbtnRegenerateCancel() {
+		return driver.FindElementByXPath("//div[@id='RegeneratePopup']//div//input[@name='ok']");
+	}
+
+	public Element getOptionExportSet() {
+		return driver.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'Export Set')]");
+	}
+
+	public Element getAddNewExport() {
+		return driver.FindElementByXPath("//a[text()='Add a New Export']");
+	}
+
+	public Element getPriviledgedDocumunentsHelpIcon() {
+		return driver.FindElementByXPath(
+				"//label[text()='Privileged Documents: ']//a[@class='helptip fa fa-question-circle']");
+	}
+
+	public Element getNativeAdvanced_Text() {
+		return driver.FindElementByXPath(
+				"//div[@class='col-md-12 advanced-dropdown']//p[contains( text(),'redacted documents, and parents of privileged and redacted documents.')]");
+	}
+
+	public Element getPriviledgedToolTip_Text() {
+		return driver.FindElementByXPath("//div[@id='popover447544']//div[@class='popover-content']" + "");
+	}
+
+	public Element getbtnCustomTemplateView() {
+		return driver.FindElementByXPath("//a[text()='View']");
+	}
+
+	public Element getbtnTemplateGuardNext() {
+		return driver.FindElementById("TemplateGuardNext");
+	}
+
+	public Element getbtnProductions() {
+		return driver.FindElementByXPath("//label[text()='Productions']");
+	}
+
+	public Element getBrandingBySelectingTags() {
+		return driver.FindElementByXPath(".//a[@class='add-logic'][1]");
+	}
+
+	public Element getbtnSelectTags() {
+		return driver.FindElementByXPath(".//button[@id='STAG_1']");
+	}
+
+	public Element getChkBoxSelect(String tag) {
+		return driver
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'" + tag + "')]");
+	}
+
+	public Element getbtnSelect() {
+		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm submitSelectionTIFF']");
+	}
+
+	public Element gettxtBrandingPlaceholder() {
+		return driver.FindElementByXPath("//div[@placeholder='Enter branding text for the selected tags']");
+	}
+
+	public Element getbtnComponentsMarkIncomplete() {
+		return driver.FindElementById("ComponentsMarkInComplete");
+	}
+
+	public Element getChk_burnReductiontoggle() {
+		return driver.FindElementByXPath(
+				"//label[contains(text(),'Burn Redactions')]/following-sibling::label[contains(@class,'toggle col-md')]/input[@id='chkBurnRedactions']");
+	}
+
+	public Element getClk_burnReductiontoggle() {
+		return driver.FindElementByXPath(
+				"//label[contains(text(),'Burn Redactions')]/following-sibling::label[contains(@class,'toggle col-md')]/input[@id='chkBurnRedactions']/../i");
+	}
+
+	public Element getClkRadioBtn_selectRedactionTags() {
+		return driver.FindElementByXPath(
+				"//label[contains(text(),'Burn Redactions')]/../following::label[contains(text(),'Specify Redactions')]/../div/label/input[@id='chkTIFFSpecifytRedactions']/../i");
+	}
+
+	public Element getClkCheckBox_defaultRedactionTag() {
+		return driver.FindElementByXPath(
+				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='Default Redaction Tag']");
+	}
+
+	public Element getClkLink_selectingRedactionTags() {
+		return driver.FindElementByXPath("//a[contains(text(),'Specify Redaction Text by Selecting Redaction Tags')]");
+	}
+
+	public Element getClkBtn_selectingRedactionTags() {
+		return driver
+				.FindElementByXPath("//div[contains(@id,'divRedaction')]//button[text()='Select Redaction Tag(s)']");
+	}
+
+	public Element getClkCheckBox_selectingRedactionTags() {
+		return driver.FindElementByXPath(
+				// "//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='New Redaction
+				// Tag']/i[@class='jstree-icon jstree-checkbox']");
+				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getClk_selectBtn() {
+		return driver.FindElementByXPath(
+				"//div[@class='modal fade in']//header[contains(text(),'Select Tags')]/..//button[@title='Select']");
+	}
+
+	public Element gettextRedactionPlaceHolder() {
+		return driver.FindElementByXPath("//div[@class='redactor-editor']");
+	}
+
+	public Element getPriviledgedPopOverContent() {
+		return driver.FindElementByXPath("(//div[@class='popover-content'])[2]");
+	}
+
+	public Element getSelectNextRedactionTags() {
+		return driver.FindElementByXPath(
+				"//div[@id='divRedaction']//div[contains(@name,'TIFFComponentModelData')]/preceding-sibling::button");
+	}
+
+	public Element getDisabledSelectRedactionTags() {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getBeginningSubBatesNumber() {
+		return driver.FindElementById("txtSubbatesNumber");
+	}
+
+	public Element getExportPrefixId() {
+		return driver.FindElementById("txtUserMetadataFieldPrefix");
+	}
+
+	public Element getExportSuffixId() {
+		return driver.FindElementById("txtUserMetadataFieldSuffix");
+	}
+
+	public Element getbtnNextSelectTags() {
+		return driver.FindElementByXPath(".//button[@id='STAG_2']");
+	}
+
+	public Element getRedactionWithoutRedactionTagsCheckbox() {
+		return driver.FindElementByXPath(
+				"//form[contains(@class,'client-form')]//label[text()='Redactions without Redaction Tags']/..//i");
+	}
+
+	public Element getRedactedTagTextArea() {
+		return driver.FindElementByXPath("//div[@class='redactor-editor']");
+	}
+
+	public Element getSelectTagsRadioButton() {
+		return driver.FindElementByXPath("//input[@id='rdbTags']/..//i");
+	}
+
+	public Element getSelectTag(String tagname) {
+		return driver
+				.FindElementByXPath("//div[@id='tagTree']//a[text()='" + tagname + "']/i[contains(@class,'checkbox')]");
+	}
+
+	public Element getAllTags() {
+		return driver.FindElementByXPath("//a[@data-content='All Tags']/i[contains(@class,'checkbox')]");
+	}
+
+	public Element getDefaultRedactionTag() {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getClkNativelyProducedDocument() {
+		return driver.FindElementByXPath("//a[@class='add-tiff-img-logic']");
+	}
+
+	public Element getclkSelectTag() {
+		return driver.FindElementByXPath("//button[@id='btnTIFFPHSelectTags_0']");
+	}
+
+	public Element getCheckBox() {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']//ul/li/ul/li/a[text()='Patch2432759']");
+	}
+
+	public Element getClkSelect() {
+		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm submitSelectionTIFF']");
+	}
+
+	public Element getEnterPlaceholderTextBox() {
+		return driver.FindElementByXPath(
+				"//div[@placeholder='Enter placeholder text for the docs of the selected file types']");
+	}
+
+	public Element getClkBtn_selectingSecondRedactionTags() {
+		return driver.FindElementByXPath(
+				"//div[contains(@id,'divRedaction')]//button[text()='Select Redaction Tag(s)' and @id='btnTiffRedTAG_1']");
+	}
+
+	public Element getbtnContinueGeneration() {
+		return driver.FindElementByXPath("//button[contains(text(),'Continue Generation')] ");
+	}
+
+	public Element getDocumentSelectionHeader() {
+		return driver.FindElementByXPath("//h2[normalize-space(text())='Document Selection']");
+	}
+
+	public Element getSelectTagsHeader() {
+		return driver.FindElementByXPath("//div[@aria-hidden='false']//header[normalize-space(text())='Select Tags']");
+	}
+
+	public Element getSelectDropDown() {
+		return driver.FindElementByXPath("//Select[@id='lstTIFFRedactionStyle']");
+	}
+
+	public Element getpopupAssert() {
+		return driver.FindElementByXPath(
+				"//a[contains(@data-content,'the configured redaction text will be applied to the burned')]");
+	}
+
+	public Element getredactionsWithRedactionTags() {
+		return driver.FindElementByXPath("//div[contains(text(),'the configured redaction text will be applied')]");
+	}
+
+	public Element getAddRuleBtn() {
+		return driver.FindElementByXPath("//button[text()='Add Rule']");
+	}
+
+	public Element getTagsBtn() {
+		return driver.FindElementByXPath("//button[@id='tagsHelper']");
+	}
+
+	public Element getTagsHeader() {
+		return driver.FindElementByXPath("//h4[text()='Tags']");
+	}
+
+	public Element getPrivGuardAllTags() {
+		return driver.FindElementByXPath(
+				"//div[contains(@class,'scrollList')]//a[text()='All Tags']/i[contains(@class,'checkbox')]");
+	}
+
+	public Element selectPrivGuardTag(String tagname) {
+		return driver.FindElementByXPath(
+				"//div[contains(@class,'scrollList')]//a[text()='" + tagname + "']/i[contains(@class,'checkbox')]");
+	}
+
+	public Element getCheckForMatchingDocuments() {
+		return driver.FindElementByXPath("//button[text()='Check for Matching Documents']");
+	}
+
+	public Element getInsertQueryBtn() {
+		return driver.FindElementByXPath("//a[@id='insertQueryBtn']");
+	}
+
+//    Added by baskar
+	public Element getPopUpOkButtonInserMetaData() {
+		return driver.FindElementByXPath("//button[@onclick='return AddToRedactor()']");
+	}
+
+	public Element getVerifyTextBoxInserMetaData() {
+		return driver.FindElementByXPath("//*//p[text()='$BatesNumber$']");
+	}
+
+	public Element getTiffAdvancedLink() {
+		return driver.FindElementByXPath("//*[@id='TIFFContainer']//div[@class='col-md-12 advanced-dropdown']");
+	}
+
+	public Element getTiffAdvancedSlipSheetToggle() {
+		return driver.FindElementByXPath(
+				"//strong[text()='Slip Sheets:']//following::label//input[@name='IsSlipSheetEnabled']//following-sibling::i");
+	}
+
+	public Element getAdvancedProductionComponent() {
+		return driver.FindElementByXPath("//h2[text()=' Advanced Production Components ']");
+	}
+
+	public Element getMP3CheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkIsMP3Selected']/following-sibling::i");
+	}
+
+	public Element getVerifyPreviewButton() {
+		return driver.FindElementByXPath("//a[@class='btn btn-primary col-md-5 pull-right']");
+	}
+
+	public Element getAnsiRadioBtn() {
+		return driver.FindElementByXPath("//input[@id='rdbANSIType']//following-sibling::i");
+	}
+
+	public Element getAnsiDrpDwn() {
+		return driver.FindElementByXPath("//select[@id='lstTextANSIType']");
+	}
+
+	public Element getPageLevelTextComponent() {
+		return driver.FindElementByXPath("//p[text()='Level: ']");
+	}
+
+	public Element getDownLoadButton() {
+		return driver.FindElementById("popoverElement");
+	}
+
+	public Element getSlipCalculatedTabSelection() {
+		return driver.FindElementByXPath("//span[text()='CALCULATED']//parent::a");
+	}
+
+	public Element getCalculatedCheckBoxSelection(String fieldValue) {
+		return driver.FindElementByXPath("//strong[text()='" + fieldValue + "']//parent::label//following-sibling::i");
+	}
+
+	public Element getAddSelected() {
+		return driver.FindElementByXPath("//div//a[text()='Add to Selected']");
+	}
+
+	public Element getSearchRadioButton() {
+		return driver.FindElementByXPath(".//*[@id='rdbSearches']/following-sibling::i");
+	}
+
+	public Element getSelectSearches(String searchname) {
+		return driver
+				.FindElementByXPath("//a[starts-with(text(),'" + searchname + "')]/i[contains(@class,'checkbox')]");
+	}
+
+	public Element get_MySearchesNewNode(String getNewNode) {
+		return driver
+				.FindElementByXPath("//a[starts-with(text(),'" + getNewNode + "')]/i[contains(@class,'checkbox')]");
+	}
+
+	public Element get_dropdownNewNode() {
+		return driver.FindElementByXPath("(//i[@class='jstree-icon jstree-ocl'])[2]");
+	}
+
+	// Jagadeesh.Jana
+	public Element getPreviewButton() {
+		return driver.FindElementByXPath("//a[@id='btnPreview']");
+	}
+
+	// Jagadeesh.Jana
+	public Element getRedactionText() {
+		return driver.FindElementByXPath("(//div[@class='col-md-8'])[14]");
+	}
+
+	// Jagadeesh.Jana
+	public Element getRedactionTextExclamationIcon() {
+		return driver.FindElementByXPath("//div[@class='col-md-8']/label/i");
+	}
+
+	// Jagadeesh.Jana
+	public Element getClk_SelectRedactionTagsRadio() {
+		return driver.FindElementByXPath("(//div[@class='row']/div/label[2])[1]");
+	}
+
+	// Jagadeesh.Jana
+	public Element getRedWithoutRedCheckbox() {
+		return driver.FindElementByXPath("//i[@id='NoRedactionTag']");
+	}
+
+	// added by sowndarya.Velraj
+	public Element getbtnMP3BurnRedaction() {
+		return driver.FindElementByXPath("(//input[@id='chkMP3BurnRedactions']//following::i)[1]");
+	}
+
+	public Element getbtnMP3BurnRedactionTab() {
+		return driver.FindElementByXPath("//div[@id='advanced-production-accordion']//a[text()='MP3 Files ']");
+	}
+
+	public Element getbtnMP3SelectRedactionTags() {
+		return driver.FindElementByXPath("//input[@id='chkMP3SPecifytRedactions']//following::i");
+	}
+
+	public Element getWarningMessage() {
+		return driver.FindElementById("divbigBoxes");
+	}
+
+	public Element getclklinkSpecifyRedactionText() {
+		return driver.FindElementByXPath("//a[@class='add-redaction-logic']");
+	}
+
+	public Element getbtnEnableForTechIssue() {
+		return driver.FindElementByXPath("(//input[@id='chkEnabledforExceptionDocs']//following::i)[1]");
+	}
+
+	public Element getAllTagsInPriviledgeDoc() {
+		return driver.FindElementByXPath(
+				"(//div[@id='tagTreeTIFFComponent']//a[@class='jstree-anchor jstree-non-prevtag'])[1]");
+	}
+
+	public Element getAdvancedTabInTIFF() {
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[3]");
+	}
+
+	public Element getLoadFileTypeInTIFF() {
+		return driver.FindElementById("LoadFileType");
+	}
+
+	public Element getOPTInLoadFileType() {
+		return driver.FindElementByXPath("//option[text()='OPT']");
+	}
+
+	public Element getMultiPageRadioButtonInTIFF() {
+		return driver.FindElementByXPath("//label[@class='radio']//span[contains(text(),'Multi-page')]");
+	}
+
+	public Element getExportBatesTextInGeneratePage() {
+		return driver.FindElementByXPath("//button[text()='Export Bates']");
+
+	}
+
+	public Element getAdvancedTabInNative() {
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[2]");
+	}
+
+	public Element getAdvancedTabInText() {
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[4]");
+	}
+
+	public Element getAdvancedTabInMP3() {
+		return driver.FindElementByXPath("(//div[@class='advanced-dd-toggle'])[5]");
+	}
+
+	public Element getMP3Tab() {
+		return driver.FindElementByXPath("//div[@class='panel-heading']//a[@data-index='5']");
+	}
+
+	public Element getGenerateLoadFileToggleInNative() {
+		return driver.FindElementByXPath("(//input[@id='chkProduceLoadFile']//following-sibling::i)[1]");
+	}
+
+	// Added by Gopinath - 12/10/2021
+	public Element getBrandingText() {
+		return driver.FindElementByXPath(
+				"//div[@id='divLeftHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
+	}
+
+	// Added By Jeevitha
+	public Element getProdExport_SelectValueFromDD(String Export) {
+		return driver.FindElementByXPath("//select[@id='ProductionSets']//option[contains(text(),'" + Export + "')]");
+	}
+
+	public Element getDATRedactionsCBox() {
+		return driver.FindElementByXPath("//label[@class='checkbox check-redacted']//i");
+	}
+
+	public Element getTIFFDefaultAnnotaionCBox() {
+		return driver.FindElementByXPath("//label[@id='TIFFAnnotationLayerLabel']//i");
+	}
+
+	public Element getPlaceholderText() {
+		return driver.FindElementByXPath("//label//strong[text()='Placeholders:']");
+	}
+
+	public Element getRedactionTxt() {
+		return driver.FindElementByXPath("(//label//strong[text()='Redactions:'])[1]");
+	}
+
+	public Element getLocation() {
+		return driver.FindElementByXPath("(//div[@id='divBrandingLocation']//div)[1]");
+	}
+
+	public Element getTechIssueCheckBox(String Tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li//a[text()='" + Tag + "']");
+	}
+
+	public Element getTechIssuePlaceHolder() {
+		return driver.FindElementByXPath(
+				"//div[@class='redactor-box']//div[@placeholder='Enter placeholder text for the Tech Issue docs']");
+	}
+
+	public Element getBurnRedtoggle() {
+		return driver.FindElementByXPath("//*[@id='chkBurnRedactions']/following-sibling::i");
+	}
+
+	public Element getSpecifyBrandingBySelectingTag() {
+		return driver.FindElementByXPath("(//a[@class='add-logic'])[5]");
+	}
+
+	public Element getBrandingBySelectingTagPlaceholder() {
+		return driver.FindElementByXPath(
+				"//fieldset//div[@class='redactor-box']//div[@placeholder='Enter branding text for the selected tags']");
+	}
+
+	public Element getNativeDocsPlaceholder() {
+		return driver
+				.FindElementByXPath("//div[@id='divImagePHImage']//div[@class='redactor-editor redactor-placeholder']");
+	}
+
+	public Element getPriviledgedDoogle() {
+		return driver.FindElementById("chkEnabledforPrivDocs");
+	}
+
+	public Element getBurnRedactionsToogle() {
+		return driver.FindElementById("chkMP3BurnRedactions");
+	}
+
+	// Added by Gopinath - 18/10/2021
+	public Element getAllRedactionsAnnotaionLayer() {
+		return driver.FindElementByXPath("//label[@id='TIFFAnnotationLayerLabel']//i");
+	}
+
+	// Added by Gopinath - 19/10/2021
+	public Element getRedactDATCheckBox() {
+		return driver.FindElementByXPath("//input[@id='ChkRedacted_0']/following-sibling:: i");
+	}
+
+	public Element getExportBatesButton() {
+		return driver.FindElementById("btnProductionGeneratedBatesRangeExport");
+	}
+
+	public Element getSelectedDocCount() {
+		return driver.FindElementByXPath("(//div[@class='drk-gray-widget']//span[1])[1]");
+	}
+
+	public Element getProduction() {
+		return driver.FindElementById("ProductionLabel");
+	}
+
+	public Element getCompletedStatus() {
+		return driver.FindElementByXPath("//input[@value='COMPLETED']");
+	}
+
+	public Element getProductionByWizard(String production) {
+		return driver.FindElementByXPath("//td[text()='" + production + "']");
+	}
+
+	public Element getOpenInWizard() {
+		return driver.FindElementById("OpenInWizard");
+	}
+
+	public Element getUncommitBatesButton() {
+		return driver.FindElementById("btnProductionUnCommitBates");
+	}
+
+	public Element getCentreBrandingPlaceHolder() {
+		return driver.FindElementByXPath(
+				"//div[@id='divCenterHeaderBranding']//div[@class='redactor-editor redactor-placeholder']");
+	}
+
+	public Element getClickHereLink() {
+		return driver.FindElementByXPath("//a[contains(text(),'Click here')]");
+	}
+
+	public Element getNextBatesNumber() {
+		return driver.FindElementByXPath("(//button[contains(text(),'Select')])[1]");
+	}
+
+	public Element getMarkInCompleteBtn() {
+		return driver.FindElementByXPath("//a[text()='Mark Incomplete']");
+	}
+
+	public Element getUncommitbutton() {
+		return driver.FindElementByXPath("//a[contains(text(),'Uncommit')]");
+	}
+
+	// Added by Gopinath- 25/10/2021
+	public Element getNativeSelectTags() {
+		return driver.FindElementById("btnSelectNativeTags");
+	}
+
+	public Element getNativeCheckBox(String Tag) {
+		return driver.FindElementByXPath("//div[@id='tagTreeNativeComponent']/ul/li//a[text()='" + Tag + "']");
+	}
+
+	public Element getNativeSelect() {
+		return driver.FindElementByXPath("//button[@class='btn btn-primary btn-sm submitNativeSelection']");
+	}
+
+	public Element getCheckBoxRedactionTag(String Tag) {
+		return driver.FindElementByXPath("//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='" + Tag + "']");
+	}
+
+	public ElementCollection TotalRowsInRedactions() {
+		return driver.FindElementsByXPath("//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a");
+	}
+
+	public Element getTextMp3File() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number of MP3 Files:')]/following-sibling::label");
+	}
+
+	public Element getShortByMetaData() {
+		return driver.FindElementByXPath("//input[@id='rdbSortByField']/following-sibling::i");
+	}
+
+	public Element getKeepFamiliyTogetherCheckBox() {
+		return driver.FindElementByXPath("//input[@id='chkSortByIsKeepFamiliesTogether']/following-sibling::i");
+	}
+
+	public Element getKeepDocsMasterDate() {
+		return driver.FindElementByXPath(
+				"//select[@id='lstSortByKeepDocsWithNoMasterDate']//option[text()='At the beginning']");
+	}
+
+	public Element getAdvancedProductionToggle() {
+		return driver.FindElementByXPath("//div[@class='advanced-production-toggle col-md-12']//i");
+	}
+
+	public Element getTranslationsTab() {
+		return driver.FindElementByXPath("//input[@id='chkIsTranslation']//following-sibling::i");
+	}
+
+	public Element getTranslationsCheckBox() {
+		return driver
+				.FindElementByXPath("//div[@id='advanced-production-accordion']//a[contains(text(),'Translations')]");
+	}
+
+	public Element getSelectDatabaseFiles() {
+		return driver.FindElementByXPath(
+				"//input[@class='clsTranslationFileLst']//following::td[contains(text(),'Database Files')]/..//i");
+	}
+
+	public Element getDocumentsOfOCR() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents to OCR:')]//following-sibling::label");
+	}
+
+	public Element getDocumentsOfTIFF() {
+		return driver.FindElementByXPath("//label[contains(text(),'Documents to TIFF: ')]//following-sibling::label");
+	}
+
+	public Element redactionTagInBurnRedactionCheckBox(String RedactionTag1) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
+				+ RedactionTag1 + "']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element redactionTagInBurnRedaction2CheckBox(String RedactionTag2) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='"
+				+ RedactionTag2 + "']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	// Added by Gopinath- 29-10-2021
+	public Element getAllFilesLink() {
+		return driver.FindElementById("txtShareableLinksAllFilesPath");
+	}
+
+	public Element getShareLinkPassword() {
+		return driver.FindElementById("lblShareableLinksPassword");
+	}
+
+	public Element getSharableLinkCloseButton() {
+		return driver.FindElementByXPath("//button[@class='ui-dialog-titlebar-close']");
+	}
+
+	public Element getEnterPasswordTextField() {
+		return driver.FindElementById("Passcode");
+	}
+
+	public Element getDownloadButton() {
+		return driver.FindElementById("btnSubmit");
+	}
+
+	// Added by Gopinath
+	public Element getAdvancedProductionComponents() {
+		return driver.FindElementByXPath("//h2[text()=' Advanced Production Components ']");
+	}
+
+	public Element getMP3ChkBox() {
+		return driver.FindElementByXPath("//input[@id='chkIsMP3Selected']/following-sibling::i");
+	}
+
+	public Element getSelectPageTagName(String foldername) {
+		return driver.FindElementByXPath(
+				"//ul[@class='jstree-container-ul jstree-children']//a[contains(.,'" + foldername + "')]");
+	}
+
+	// Added by Gopinath - 02/11/2021
+	public Element getRightHeaderBranding() {
+		return driver.FindElementById("RightHeaderBranding");
+	}
+
+	public Element getDisabledSpecifyBrandingSelectTags(String Tag) {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeTIFFComponent']//ul/li//ul//li//a[@data-content='Privileged']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getNextSelectBtnInSpecifyBrandingSelectTags() {
+		return driver.FindElementByXPath("//button[text()='Select Tags'][@id='STAG_1']");
+	}
+
+	public Element getSpecifyBrandingBySelectingTagLink() {
+		return driver.FindElementByXPath("(//a[@class='add-logic'])[3]");
+	}
+
+	public Element getClkCheckBox_selectingRedactionTags(String tag) {
+		return driver.FindElementByXPath(
+				"//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[@data-content='Default Redaction Tag']/i[@class='jstree-icon jstree-checkbox']");
+	}
+
+	public Element getRotationLandScapeDropdown() {
+		return driver.FindElementByXPath(
+				"//select[@id='dldPageRotatePreference']//option[text()='Rotate 90 degrees clock-wise']");
+	}
+
+	public Element getFileTypeNativelyProducedDocs() {
+		return driver
+				.FindElementByXPath("(//select[@name='TIFFFileTypesList']/option[contains(text(),'Text Files')])[1]");
+	}
+
+	// Added Gopinath - 10/11/2021
+	public Element getRegenerateContinueButton() {
+		return driver.FindElementByXPath("//button[text()='Continue Generation']");
+	}
+
+	public Element getTechIssueCheckbox(String tag) {
+		return driver.FindElementByXPath("(//a[text()='" + tag + "']//i)[3]");
+	}
+
+	public Element getDATContinueBtn() {
+		return driver.FindElementByXPath("//div[@class='MessageBoxButtonSection']//button[@id='bot1-Msg1']");
+	}
+
+	public Element getVerifygQCPage() {
+		return driver.FindElementById("prouctionGenerateStatusTxt");
+	}
+
+	// Added by Gopinath - 17/11/2021
+
+	public Element getDropDownToggle(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[@class='dropdown-toggle']");
+	}
+
+	public Element getSaveAsTemplate(String ProductionName) {
+		return driver.FindElementByXPath("//a[@title='" + ProductionName + "']//..//a[text()='Save as Template']");
+	}
+
+	public Element getNextBtn() {
+		return driver.FindElementByXPath(
+				"//a[text()='Next']/parent::li[@id='customTemplatesDatatable_next']/preceding-sibling::li[1]/a");
+	}
+
+	public Element getViewBtn(String Templatename) {
+		return driver.FindElementByXPath("//td[text()='" + Templatename + "']/..//td//a[text()='View']");
+	}
+
+	public Element getLoadTempDropDwn(String Templatename) {
+		return driver.FindElementByXPath("//select//option[contains(text(),'" + Templatename + "')]");
+	}
+
+	public Element getSaveBtn() {
+		return driver.FindElementByXPath("//button[text()='Save']");
+	}
+
+	public Element getCloseBtn() {
+		return driver.FindElementByXPath("//button[text()='Close']");
+	}
+
+	public Element getCloseBtnInProductionPage() {
+		return driver.FindElementById("botClose3");
+	}
+
+	// Added by Gopinath-22/11/2021
+	public Element getInsertMetadataField() {
+		return driver.FindElementByXPath("//div[@id='divLeftHeaderBranding']//a[@id='Launcheditor_0']");
+	}
+
+	public Element getBatesNumberinTiff() {
+		return driver.FindElementByXPath("//select[@id='selectedMetadataField']//option[text()='BatesNumber']");
+	}
+
+	public Element getCustodianNameinTiff() {
+		return driver.FindElementByXPath("//select[@id='selectedMetadataField']//option[text()='CustodianName']");
+	}
+
+	public Element getOkBtn() {
+		return driver.FindElementByXPath("//div[@id='MetadataPopup']//button");
+	}
+
+	public Element getDocumentRadioBtn() {
+		return driver.FindElementByXPath("//label//input[@id='rdbDocumentLevel']/following-sibling::i");
+	}
+
+	public Element getBeginningSubBatesNum() {
+		return driver.FindElementByXPath("//input[@id='txtSubbatesNumber']");
+	}
+
+	public Element getChkBoxSelect2(String tag2) {
+		return driver.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li//a[text()='" + tag2 + "']");
+	}
+
+	// Added by Gopinath-23/11/2021
+	public Element getVolumeIncluded() {
+		return driver.FindElementByXPath("//input[@id='ProductionOutputLocation_IsVolumeIncluded']/..//i");
+	}
+
+	public Element getDATPrivledgedCheckbox() {
+		return driver.FindElementByXPath("//input[@id='ChkPrev_0']/parent::label/i");
+	}
+
+	// Added by Aathith
+	public Element getStatusInGridView(String productionName) {
+		return driver.FindElementByXPath("(//td[text()='" + productionName + "']/following-sibling::td)[1]");
+	}
+
+	public Element getbtnContinueGenerate() {
+		return driver.FindElementByXPath("//button[text()='Continue Generation']");
+	}
+
+	public Element getTranslationsChkBox() {
+		return driver.FindElementByXPath("//input[@id='chkIsTranslation']/following-sibling::i");
+	}
+
+	public Element getTranslation_SelectAllCheck() {
+		return driver.FindElementByXPath(
+				"//*[@id='translation-table']//input[@name='IsSelectAllFileTypes']/following-sibling::i");
+	}
+
+	public Element getTranslationComponent() {
+		return driver.FindElementByXPath("//input[@class='clsTranslationFileLst'][contains(@value,'Word')]/../i");
+	}
+
+	public Element getNaivePathInMetaData() {
+		return driver.FindElementByXPath("//select[@id='selectedMetadataField']//option[text()='NativePath']");
+	}
+
+	public Element gettxtReservingBatesFailedAt1stProdShown() {
+		return driver.FindElementByXPath("(//span[contains(text(),'Reserving Bates Range Failed')])[1]");
+	}
+
+	public Element getMp3GenerateLoadFile() {
+		return driver.FindElementByXPath("//div[@class='mp3-conf']/..//i[@class='pull-right']");
+	}
+
+	public Element verifyProductionLocationSplitCount() {
+		return driver.FindElementByXPath("//input[@class='form-control valid']");
+	}
+
+	// Added by Gopinath - 25/11/2021
+	public Element getPrivInsertMetadataField() {
+		return driver.FindElementByXPath(
+				"//label[text()='Enable for Privileged Docs:']//..//..//a[text()='Insert Metadata Field']");
+	}
+
+	public Element getSourceAttachDocIDs() {
+		return driver.FindElementByXPath("//select[@id='selectedMetadataField']//option[text()='SourceAttachDocIDs']");
+	}
+
+	// nov-29
+	public Element getTechInsertMetadataField() {
+		return driver.FindElementByXPath(
+				"//label[text()='Enable for Tech Issue Docs:']//..//..//a[text()='Insert Metadata Field']");
+	}
+
+	public Element privDocInserMetaData() {
+		return driver.FindElementByXPath("(//a[text()='Insert Metadata Field'])[8]");
+	}
+
+	// Added by Gopinath - 30/11/2021
+	public Element getPreGenStatus() {
+		return driver.FindElementByXPath("//label[text()='Pre-Generation Checks In Progress']");
+	}
+
+	// Added by Brundha
+	public Element getBatesRange() {
+		return driver.FindElementByXPath("//div//label[text()='Bates Range:']//following-sibling::label");
+	}
+	public Element BurnRedactionCheckBox(String tag) {
+		return driver
+				.FindElementByXPath("//div[@id='tagTreeTIFFComponent']/ul/li/ul/li/a[contains(text(),'"+ tag +"')]");
+	}
 	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionName().Visible()  ;}}), Input.wait30); 
+	
+	//Added by Gopinath -16/12/2021
+	public ElementCollection getSelectProdcutionOptions() {
+		return driver.FindElementsByXPath("//select[@id='ProductionSets']//option");
+	}
+	public Element getDATFieldClassification3() {
+		return driver.FindElementById("TY_2");
+	}
+	
+	//Added by gopinath - 17/12/2021
+	public Element getMarkIncompleteButton() {
+		return driver.FindElementByXPath("//a[text()='Mark Incomplete']");
+	}
+	
+
+	public ProductionPage(Driver driver) {
+
+		this.driver = driver;
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.waitForPageToBeReady();
+		base = new BaseClass(driver);
+	}
+
+	public void CreateProduction(String productionname, String PrefixID, String SuffixID, final String foldername,
+			String tagname) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
 		getProductionName().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionDesc().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
 		getProductionDesc().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getBasicInfoMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getDATChkBox().waitAndClick(20);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATTab().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible();
+			}
+		}), Input.wait30);
 		getDATTab().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_SourceField1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
-		getDAT_DATField1().SendKeys("BatesNumber"+Utility.dynamicNameAppender());
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getNativeChkBox().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeTab().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
 		getNativeTab().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		Reporter.log(getNative_text().getText(),true);
-		//System.out.println(getNative_text().getText());
+
+		Reporter.log(getNative_text().getText(), true);
+		// System.out.println(getNative_text().getText());
 		UtilityLog.info(getNative_text().getText());
-		
-		//work on this assert..issue with text format!
-		/*Assert.assertEquals(getNative_text().getText(),"To produce specific docs"
-		+ " natively, please select file types and/or tags below. In addition,"
-		+ " to export placeholders for these docs, configure placeholder in the TIFF "
-		+ "or PDF section for the same selected file types and/or tags.");
-		
-		Assert.assertEquals(getNative_text_Color().GetAttribute("class"),"blue-text");*/
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-		getNative_SelectAllCheck().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-		getNative_AdvToggle().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-		getNative_GenerateLoadFileLST().waitAndClick(5);
-		
-		
+
+		// work on this assert..issue with text format!
+		/*
+		 * Assert.assertEquals(getNative_text().getText(),"To produce specific docs" +
+		 * " natively, please select file types and/or tags below. In addition," +
+		 * " to export placeholders for these docs, configure placeholder in the TIFF "
+		 * + "or PDF section for the same selected file types and/or tags.");
+		 * 
+		 * Assert.assertEquals(getNative_text_Color().GetAttribute("class"),"blue-text")
+		 * ;
+		 */
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_SelectAllCheck().Enabled();
+			}
+		}), Input.wait30);
+		getNative_SelectAllCheck().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_AdvToggle().Enabled();
+			}
+		}), Input.wait30);
+		getNative_AdvToggle().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_GenerateLoadFileLST().Enabled();
+			}
+		}), Input.wait30);
+		getNative_GenerateLoadFileLST().waitAndClick(10);
+		Thread.sleep(2000);
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().waitAndClick(5);		
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().waitAndClick(10);
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFTab().Enabled()  ;}}), Input.wait30); 
-		getTIFFTab().waitAndClick(5);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().waitAndClick(10);
+
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
-		getTIFF_CenterHeaderBranding().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_InsertMetadataFieldClick().Visible()  ;}}), Input.wait30); 
-		getTIFF_InsertMetadataFieldClick().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_selectedMetadataField_Ok().Visible()  ;}}), Input.wait30); 
-		getTIFF_selectedMetadataField_Ok().Click();;
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_EnableforPrivilegedDocs().Visible()  ;}}), Input.wait30);		    	
-    	getTIFF_EnableforPrivilegedDocs().ScrollTo();
-    	
-    	//driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				//getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-		//getTIFF_EnableforPrivilegedDocs().waitAndClick(20);		
-    		
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_InsertMetadataFieldClick().Visible();
+			}
+		}), Input.wait30);
+		getTIFF_InsertMetadataFieldClick().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_selectedMetadataField_Ok().Visible();
+			}
+		}), Input.wait30);
+		getTIFF_selectedMetadataField_Ok().waitAndClick(10);
+
+		Thread.sleep(2000);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		// getTIFF_EnableforPrivilegedDocs().Enabled() ;}}), Input.wait30);
+		// getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_SelectTagButton().Visible()  ;}}), Input.wait30);	
-		getPriveldge_SelectTagButton().waitAndClick(5);
-		
-		getPriveldge_TagTree(tagname).waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_TagTree_SelectButton().Visible()  ;}}), Input.wait30);	
-		getPriveldge_TagTree_SelectButton().waitAndClick(5);
-				
+
+		getPriveldge_SelectTagButton().waitAndClick(10);
+		Thread.sleep(2000);
+
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+		Thread.sleep(2000);
+
+		getPriveldge_TagTree_SelectButton().waitAndClick(10);
+		Thread.sleep(2000);
+
 		String expplaceholdertexttiff = getTiff_placeholdertext().getText();
 		System.out.println(expplaceholdertexttiff);
 		UtilityLog.info(expplaceholdertexttiff);
-		Assert.assertEquals(expplaceholdertexttiff, "TIFF / PDFs are generated and exported "
-				+ "for all documents by default. To export placeholders for docs "
-				+ "that are Privileged Withhold, Tech Issue or Produced Natively,"
-				+ " please configure the placeholder section below.");
-		
-		
-		
+		Assert.assertEquals(expplaceholdertexttiff,
+				"TIFF / PDFs are generated and exported "
+						+ "for all documents by default. To export placeholders for docs "
+						+ "that are Privileged Withhold, Tech Issue or Produced Natively,"
+						+ " please configure the placeholder section below.");
+
 //		Assert.assertEquals(getTiff_NativeDoc().getText(),"Enable for Natively Produced Documents:");
-		
+
 //		Assert.assertEquals(getTiff_NativeDoc_FileType().getText(),"Select File Types and/or Tags:");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-		
+
 		getPriveldge_TextArea().SendKeys("testing");
-		
-		Assert.assertEquals(getTiff_redactiontext().getText(),"To burn redactions, select specific redactions"
-		+ " or all redactions (annotation layer). Specify the redaction text for each"
-		+ " selected redaction.");
-		
-				
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTextChkBox().Enabled()  ;}}), Input.wait30); 
+
+		Assert.assertEquals(getTiff_redactiontext().getText(),
+				"To burn redactions, select specific redactions"
+						+ " or all redactions (annotation layer). Specify the redaction text for each"
+						+ " selected redaction.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getTextChkBox().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTextTab().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextTab().Enabled();
+			}
+		}), Input.wait30);
 		getTextTab().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTextcomponent_text().Displayed()  ;}}), Input.wait30); 
-	
-		String exptext= getTextcomponent_text().getText();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextcomponent_text().isDisplayed();
+			}
+		}), Input.wait30);
+
+		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		Assert.assertEquals(exptext, "Redacted documents are automatically OCRed"
-			+ " to export the text. Original extracted text is exported for natively "
-			+ "produced documents (file based placeholdering). "
-			+ "For exception and privileged placeholdered docs, "
-			+ "the placeholder text is exported."+" The configured format is applicable only to OCRed text and production generated text"
-			+ ", and not to ingested text.");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getComponentsMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
-		getComponentsMarkNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBeginningBates().Enabled()  ;}}), Input.wait30); 
+		Assert.assertEquals(exptext,
+				"Redacted documents are automatically OCRed"
+						+ " to export the text. Original extracted text is exported for natively "
+						+ "produced documents (file based placeholdering). "
+						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
+						+ " The configured format is applicable only to OCRed text and production generated text"
+						+ ", and not to ingested text.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getComponentsMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().Enabled();
+			}
+		}), Input.wait30);
+		getComponentsMarkNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled();
+			}
+		}), Input.wait30);
 		getBeginningBates().SendKeys("100");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDMinNumLength().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSubSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-		getKeepFamiliesTogether().waitAndClick(5);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
+		getKeepFamiliesTogether().waitAndClick(10);
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-		getNumAndSortMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getNumAndSortMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getFolderRadioButton().Visible() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
 		getFolderRadioButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
 		getSelectFolder(foldername).waitAndClick(5);
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
 		getIncludeFamilies().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOkButton().Visible()  ;}}), Input.wait30); 
-		getOkButton().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
+		getOkButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardNext().waitAndClick(5);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
-		try{
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
+		try {
 			getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-		}catch (Exception e) {
-			//if passed production path is wrong! go by index and then select 
+		} catch (Exception e) {
+			// if passed production path is wrong! go by index and then select
 			getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
 		}
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
 		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionLocationMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionLocationNext().waitAndClick(5);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationNext().waitAndClick(10);
+
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
+		 * getPreviewprod().Enabled() ;}}), Input.wait30);
+		 * getPreviewprod().waitAndClick(10);
 		 */
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-		getbtnProductionSummaryMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnProductionSummaryNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-		getbtnProductionGenerate().waitAndClick(5);
-		
-		Reporter.log("Wait for generate to complete",true);
-		//System.out.println("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+
+		Reporter.log("Wait for generate to complete", true);
+		// System.out.println("Wait for generate to complete");
 		UtilityLog.info("Wait for generate to complete");
-				
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDocumentGeneratetext().Visible()  ;}}), Input.wait120); 
-		//work on below assert..for now its ok bcz we are validating with commit button!
-		//Assert.assertTrue(getDocumentGeneratetext().Displayed());
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDocumentGeneratetext().Displayed() ;}}), Input.wait120); 	
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
-		getQC_backbutton().waitAndClick(5);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible();
+			}
+		}), Input.wait120);
+		// work on below assert..for now its ok bcz we are validating with commit
+		// button!
+		// Assert.assertTrue(getDocumentGeneratetext().isDisplayed());
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_backbutton().Enabled();
+			}
+		}), Input.wait30);
+		getQC_backbutton().waitAndClick(15);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProd_BatesRange().Enabled();
+			}
+		}), Input.wait30);
 		String batesno = getProd_BatesRange().getText();
-		
-		Reporter.log("Bate number "+batesno,true);
-		//System.out.println(batesno);
+
+		Reporter.log("Bate number " + batesno, true);
+		// System.out.println(batesno);
 		UtilityLog.info(batesno);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().waitAndClick(5);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getCopyPath().Visible()  ;}}), Input.wait30); 
-		getCopyPath().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getQC_Download().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnSummaryNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().Visible();
+			}
+		}), Input.wait30);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().Enabled();
+			}
+		}), Input.wait30);
 		getQC_Download().waitAndClick(10);
 		getQC_Downloadbutton_allfiles().waitAndClick(10);
 		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
-	
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled();
+			}
+		}), Input.wait30);
 		getConfirmProductionCommit().waitAndClick(10);
-		
-		 String PDocCount = getProductionDocCount().getText();
-         int Doc = Integer.parseInt(PDocCount);
-         
-         Reporter.log("Doc - "+Doc,true);
-         //System.out.println(Doc); 
-         UtilityLog.info(Doc);
-		
-		
-    	}
-    
-    public void ExportwithpriorProduction(String exportname,String PrefixID,String SuffixID,final String foldername) 
-    		throws InterruptedException{
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExportSet().Visible()  ;}}), Input.wait30); 
+
+		String PDocCount = getProductionDocCount().getText();
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		// System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+	}
+
+	public void ExportwithpriorProduction(String exportname, String PrefixID, String SuffixID, final String foldername)
+			throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExportSet().Visible();
+			}
+		}), Input.wait30);
 		getProdExportSet().waitAndClick(10);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionSettxt().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionSettxt().Visible();
+			}
+		}), Input.wait30);
 		getProductionSettxt().SendKeys(exportname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExportSetRadioButton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExportSetRadioButton().Visible();
+			}
+		}), Input.wait30);
 		getProdExportSetRadioButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExport_SaveButton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExport_SaveButton().Visible();
+			}
+		}), Input.wait30);
 		getProdExport_SaveButton().waitAndClick(10);
-		
+
 		base.VerifySuccessMessage("Export Set Added Successfully");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExport_ProductionSets().Visible();
+			}
+		}), Input.wait30);
 		getProdExport_ProductionSets().selectFromDropdown().selectByIndex(1);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExport_AddaNewExportSet().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExport_AddaNewExportSet().Visible();
+			}
+		}), Input.wait30);
 		getProdExport_AddaNewExportSet().waitAndClick(10);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionName().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
 		getProductionName().SendKeys(exportname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionDesc().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
 		getProductionDesc().SendKeys(exportname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExport_Priorprodtoggle().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExport_Priorprodtoggle().Visible();
+			}
+		}), Input.wait30);
 		getProdExport_Priorprodtoggle().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProdExport_SelectProductionSet().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProdExport_SelectProductionSet().Visible();
+			}
+		}), Input.wait30);
 		getProdExport_SelectProductionSet().selectFromDropdown().selectByIndex(1);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getBasicInfoMarkComplete().waitAndClick(10);
-				
+
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //				getBasicInfoNext().Enabled() ;}}), Input.wait30); 
 //		getBasicInfoNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATTab().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible();
+			}
+		}), Input.wait30);
 		getDATTab().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_DATField1().SendKeys("BatesNumberExp");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkComplete().waitAndClick(20);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkNext().waitAndClick(20);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getFolderRadioButton().Visible() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
 		getFolderRadioButton().waitAndClick(10);
-		
+
 		Thread.sleep(5000);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
 		getSelectFolder(foldername).waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOkButton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
 		getOkButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
 		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
 		getProductionOutputLocation_ProductionDirectory().SendKeys(exportname);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
-	
-		for (int i = 0; i < 120; i++)
-		{
-			try
-			{
-				
-				this.driver.getWebDriver().get(Input.url+"Production/Home");
-		    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getProdExport_ProductionSets().Visible()  ;}}), Input.wait30); 
+
+		for (int i = 0; i < 120; i++) {
+			try {
+
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getProdExport_ProductionSets().Visible();
+					}
+				}), Input.wait30);
 				getProdExport_ProductionSets().selectFromDropdown().selectByIndex(1);
 				getProdStateFilter().WaitUntilPresent();
 				getProdStateFilter().selectFromDropdown().selectByVisibleText("COMPLETED");
-		    	getProductionLink().waitAndClick(5);
-		    	 //Thread.sleep(5000);
+				getProductionLink().waitAndClick(5);
+				// Thread.sleep(5000);
 				getbtnGenerateMarkComplete().waitAndClick(5);
 				System.out.println("Generated");
 				break;
-				
-			}
-			catch (Exception e)
-			{
+
+			} catch (Exception e) {
 				Thread.sleep(10000);
 				driver.Navigate().refresh();
-				
-			
+
 			}
 		}
-	
-	
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnSummaryNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnSummaryNext().waitAndClick(10);
-		//Thread.sleep(10000);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
+		// Thread.sleep(10000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getReviewproductionButton().Visible();
+			}
+		}), Input.wait30);
 		getReviewproductionButton().waitAndClick(10);
-		
+
 		String location = getDestinationPathText().getText();
-        System.out.println(location);
-        Thread.sleep(7000);
-        
-        String doccount = getDoc_Count().getText();
-        System.out.println(doccount);
-        
-        base.isFileDownloaded(location+"\\VOL0001"+"\\Text"+"\\0001",3);
-		
-	    }
-      
-    public void Productionwithallredactions(String productionname,String PrefixID,String SuffixID,final String foldername,String tagname) 
-    		throws Exception{
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
+		System.out.println(location);
+		Thread.sleep(7000);
+
+		String doccount = getDoc_Count().getText();
+		System.out.println(doccount);
+
+		base.isFileDownloaded(location + "\\VOL0001" + "\\Text" + "\\0001", 3);
+
+	}
+
+	public void Productionwithallredactions(String productionname, String PrefixID, String SuffixID,
+			final String foldername, String tagname) throws Exception {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
 		getAddNewProductionbutton().waitAndClick(10);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionName().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
 		getProductionName().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionDesc().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
 		getProductionDesc().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getBasicInfoMarkComplete().waitAndClick(10);
-						
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getDATChkBox().waitAndClick(20);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATTab().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible();
+			}
+		}), Input.wait30);
 		getDATTab().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Production");
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_SourceField1().Visible()  ;}}), Input.wait30);
-		
-		
-		for(WebElement listsecfiled:getDAT_SourceField1().selectFromDropdown().getOptions())
-		{
-			String fieldexp[]= {"TIFFPageCount","VolumeName"};
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible();
+			}
+		}), Input.wait30);
+
+		for (WebElement listsecfiled : getDAT_SourceField1().selectFromDropdown().getOptions()) {
+			String fieldexp[] = { "TIFFPageCount", "VolumeName" };
 			System.out.println(listsecfiled.getText());
-			if(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"))
-			Assert.assertTrue(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"));
+			if (listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"))
+				Assert.assertTrue(listsecfiled.getText().equalsIgnoreCase("TIFFPageCount"));
 			else
 				System.out.println("Element not matching");
-			
+
 		}
-    	
-		BaseClass bc= new BaseClass(driver);
-	//	bc.comparearraywithlist(fieldexp, elelist);
-	
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
+
+		BaseClass bc = new BaseClass(driver);
+		// bc.comparearraywithlist(fieldexp, elelist);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_SourceField1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
-		getDAT_DATField1().SendKeys("BatesNumber"+Utility.dynamicNameAppender());
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getNativeChkBox().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeTab().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
 		getNativeTab().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_SelectAllCheck().Enabled();
+			}
+		}), Input.wait30);
 		getNative_SelectAllCheck().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_AdvToggle().Enabled();
+			}
+		}), Input.wait30);
 		getNative_AdvToggle().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_GenerateLoadFileLST().Enabled();
+			}
+		}), Input.wait30);
 		getNative_GenerateLoadFileLST().waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().waitAndClick(10);		
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().waitAndClick(10);
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFTab().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
 		getTIFFTab().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
 		getTIFF_CenterHeaderBranding().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_EnterBranding().Enabled()  ;}}), Input.wait30); 
-	
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-		//getTIFF_EnterBranding().waitAndClick(10);
-    	getTIFF_EnterBranding().SendKeys("Test");
-    	Thread.sleep(2000);
-    	
-    	getTIFF_EnableforPrivilegedDocs().ScrollTo();
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-		//getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
-		
+		// getTIFF_EnterBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys("Test");
+		Thread.sleep(2000);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		// getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
+
 		driver.scrollingToBottomofAPage();
-		
+
 		getPriveldge_SelectTagButton().waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_TagTree(tagname).waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 		Thread.sleep(2000);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-		
+
 		getPriveldge_TextArea().SendKeys("testing");
-		
-	    getTIFF_BurnRedtoggle().waitAndClick(10);
-		
-		/*getTIFF_SpecifyRedactText().waitAndClick(10);
-		
-		
-		getTIFF_SelectRedtagbuton().waitAndClick(10);
-		Thread.sleep(5000);
-		
-		getTIFF_SelectRedtags("R1").waitAndClick(10);
-	
-		getTIFF_SelectRedtags_SelectButton().waitAndClick(10);	
-		System.out.println(getTIFF_Red_Placeholdertext().getText());
-		
-		Assert.assertEquals(getTIFF_Red_Placeholdertext().getText(),"REDACTED");*/
-		
+
+		getTIFF_BurnRedtoggle().waitAndClick(10);
+
+		/*
+		 * getTIFF_SpecifyRedactText().waitAndClick(10);
+		 * 
+		 * 
+		 * getTIFF_SelectRedtagbuton().waitAndClick(10); Thread.sleep(5000);
+		 * 
+		 * getTIFF_SelectRedtags("R1").waitAndClick(10);
+		 * 
+		 * getTIFF_SelectRedtags_SelectButton().waitAndClick(10);
+		 * System.out.println(getTIFF_Red_Placeholdertext().getText());
+		 * 
+		 * Assert.assertEquals(getTIFF_Red_Placeholdertext().getText(),"REDACTED");
+		 */
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTextChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getTextChkBox().waitAndClick(10);
-		
+
 //		driver.scrollingToBottomofAPage();
 //				
 //		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -982,194 +3130,279 @@ public class ProductionPage {
 //		Assert.assertEquals(getPDF_Red_Placeholdertext().getText(),"REDACTED");*/
 //		
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled();
+			}
+		}), Input.wait30);
 		getBeginningBates().SendKeys("100");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDMinNumLength().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSubSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
 		getKeepFamiliesTogether().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getFolderRadioButton().Visible() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
 		getFolderRadioButton().waitAndClick(10);
-		
+
 		Thread.sleep(5000);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
 		getSelectFolder(foldername).waitAndClick(5);
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
 		getIncludeFamilies().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOkButton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
 		getOkButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardNext().waitAndClick(5);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
 		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
 		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationNext().waitAndClick(10);
-		
+
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
+		 * getPreviewprod().Enabled() ;}}), Input.wait30);
+		 * getPreviewprod().waitAndClick(10);
 		 */
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
-		for (int i = 0; i < 120; i++)
-		{
-			try
-			{			
-				this.driver.getWebDriver().get(Input.url+"Production/Home");
-			    getProductionLink().waitAndClick(5);
+		for (int i = 0; i < 120; i++) {
+			try {
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				getProductionLink().waitAndClick(5);
 				getbtnGenerateMarkComplete().waitAndClick(5);
 				System.out.println("Generated");
 				break;
-				
-			}
-			catch (Exception e)
-			{
+
+			} catch (Exception e) {
 				Thread.sleep(10000);
 				driver.Navigate().refresh();
-				
-			
+
 			}
-			
+
 		}
-	
-	
+
 		String batesno = getProd_BatesRange().getText();
 		System.out.println(batesno);
 		String[] parts = batesno.split("\\s*-\\s*");
 		String a = parts[0];
 		String b = parts[1];
 		System.out.println(a);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().waitAndClick(10);
-		//Thread.sleep(10000);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
-		getConfirmProductionCommit().waitAndClick(10);
-		
-		 String PDocCount = getProductionDocCount().getText();
-         int Doc = Integer.parseInt(PDocCount);
-         System.out.println(Doc); 
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().waitAndClick(10);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnSummaryNext().Click();
+		// Thread.sleep(10000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled();
+			}
+		}), Input.wait30);
+		getConfirmProductionCommit().Click();
+
+		String PDocCount = getProductionDocCount().getText();
+		int Doc = Integer.parseInt(PDocCount);
+		System.out.println(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getReviewproductionButton().Visible();
+			}
+		}), Input.wait30);
+		getReviewproductionButton().Click();
+
 		String location = getDestinationPathText().getText();
-        System.out.println(location);
-        Thread.sleep(7000);
-        String doccount = getDoc_Count().getText();
-        System.out.println(doccount);
-        
-        ProdPathallredact= location+"\\VOL0001"+"\\PDF"+"\\0001"+"\\"+""+a+".pdf";
-        System.out.println(ProdPathallredact);
-      
-        
-         base.isFileDownloaded(location+"\\VOL0001"+"\\PDF"+"\\0001",1);
-        		/*
+		System.out.println(location);
+		Thread.sleep(7000);
+		String doccount = getDoc_Count().getText();
+		System.out.println(doccount);
+
+		ProdPathallredact = location + "\\VOL0001" + "\\PDF" + "\\0001" + "\\" + "" + a + ".pdf";
+		System.out.println(ProdPathallredact);
+
+		base.isFileDownloaded(location + "\\VOL0001" + "\\PDF" + "\\0001", 1);
+		/*
 		 * this.driver.getWebDriver().get(Input.url+"Production/Home");
 		 * 
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
@@ -1178,915 +3411,3296 @@ public class ProductionPage {
 		 * Thread.sleep(5000);
 		 * 
 		 * //getProdname_Gearicon(productionname).waitAndClick(10);
-		 */		
-	    }
-     
-    public void Productionwithsomeredactions(String productionname,String PrefixID,String SuffixID,final String foldername,String redname) 
-    		throws Exception{
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-		getAddNewProductionbutton().waitAndClick(10);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionName().Visible()  ;}}), Input.wait30); 
+		 */
+	}
+
+	public void Productionwithsomeredactions(String productionname, String PrefixID, String SuffixID,
+			final String foldername, String redname) throws Exception {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
 		getProductionName().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionDesc().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
 		getProductionDesc().SendKeys(productionname);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-		getBasicInfoMarkComplete().waitAndClick(10);
-		
-		getBasicInfoNext().waitAndClick(10);
-				
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATChkBox().Enabled()  ;}}), Input.wait30); 
-		getDATChkBox().waitAndClick(20);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDATTab().Visible()  ;}}), Input.wait30); 
-		getDATTab().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().Click();
+
+		getBasicInfoNext().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getDATChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible();
+			}
+		}), Input.wait30);
+		getDATTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Production");
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_SourceField1().Visible()  ;}}), Input.wait30);
-		String fieldexp[]= {"TIFFPageCount","VolumeName"};
-		BaseClass bc= new BaseClass(driver);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible();
+			}
+		}), Input.wait30);
+		String fieldexp[] = { "TIFFPageCount", "VolumeName" };
+		BaseClass bc = new BaseClass(driver);
 		bc.getallselectele(getDAT_SourceField1().selectFromDropdown());
-	
-		//Assert.assertEquals("", expected);(result.getText().equalsIgnoreCase("TIFFPageCount"));
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_FieldClassification1().Visible()  ;}}), Input.wait30); 
+
+		// Assert.assertEquals("",
+		// expected);(result.getText().equalsIgnoreCase("TIFFPageCount"));
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_SourceField1().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible();
+			}
+		}), Input.wait30);
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getDAT_DATField1().Visible()  ;}}), Input.wait30); 
-		getDAT_DATField1().SendKeys("BatesNumber"+Utility.dynamicNameAppender());
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-		getNativeChkBox().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNativeTab().Enabled()  ;}}), Input.wait30); 
-		getNativeTab().waitAndClick(10);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getNativeChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
+		getNativeTab().Click();
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-		getNative_SelectAllCheck().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-		getNative_AdvToggle().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-		getNative_GenerateLoadFileLST().waitAndClick(10);
-		Thread.sleep(2000);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_SelectAllCheck().Enabled();
+			}
+		}), Input.wait30);
+		getNative_SelectAllCheck().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_AdvToggle().Enabled();
+			}
+		}), Input.wait30);
+		getNative_AdvToggle().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_GenerateLoadFileLST().Enabled();
+			}
+		}), Input.wait30);
+		getNative_GenerateLoadFileLST().Click();
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-		getTIFFChkBox().waitAndClick(10);		
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().Click();
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFFTab().Enabled()  ;}}), Input.wait30); 
-		getTIFFTab().waitAndClick(10);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().Click();
+
 		driver.scrollPageToTop();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
 		getTIFF_CenterHeaderBranding().waitAndClick(10);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_EnterBranding().Enabled()  ;}}), Input.wait30); 
-	
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
 		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-		//getTIFF_EnterBranding().waitAndClick(10);
-    	getTIFF_EnterBranding().SendKeys("Test");
-    	Thread.sleep(2000);
-    	
-    	getTIFF_EnableforPrivilegedDocs().ScrollTo();
-    	
-    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTIFF_EnableforPrivilegedDocs().Enabled()  ;}}), Input.wait30); 
-		//getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
-		
+		// getTIFF_EnterBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys("Test");
+		Thread.sleep(2000);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		// getTIFF_EnableforPrivilegedDocs().waitAndClick(20);
+
 		driver.scrollingToBottomofAPage();
-		
+
 		getPriveldge_SelectTagButton().waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_TagTree("Privileged").waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_TagTree_SelectButton().waitAndClick(10);
 		Thread.sleep(2000);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-		
+
 		getPriveldge_TextArea().SendKeys("testing");
-		
-	    getTIFF_BurnRedtoggle().waitAndClick(10);
-		
-		//getTIFF_SpecifyRedactText().waitAndClick(10);
-		
-		
-		//getTIFF_SelectRedtagbuton().waitAndClick(10);
-	    getTIFF_SelectRed_Radiobutton().waitAndClick(10);
-	    Thread.sleep(2000);
-		
+
+		getTIFF_BurnRedtoggle().waitAndClick(10);
+
+		// getTIFF_SpecifyRedactText().waitAndClick(10);
+
+		// getTIFF_SelectRedtagbuton().waitAndClick(10);
+		getTIFF_SelectRed_Radiobutton().waitAndClick(10);
+		Thread.sleep(2000);
+
 		getTIFF_SelectRedtags().waitAndClick(10);
-	
-		//getTIFF_SelectRedtags_SelectButton().waitAndClick(10);	
-		//System.out.println(getTIFF_Red_Placeholdertext().getText());
-		
-	//	Assert.assertEquals(getTIFF_Red_Placeholdertext().getText(),"REDACTED");
-		
+
+		// getTIFF_SelectRedtags_SelectButton().waitAndClick(10);
+		// System.out.println(getTIFF_Red_Placeholdertext().getText());
+
+		// Assert.assertEquals(getTIFF_Red_Placeholdertext().getText(),"REDACTED");
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getTextChkBox().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
 		getTextChkBox().waitAndClick(10);
-		
+
 		driver.scrollingToBottomofAPage();
-				
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPDFChkBox().Enabled() ;}}), Input.wait30); 
-		getPDFChkBox().waitAndClick(10);		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPDFTab().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getPDFChkBox().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFTab().Enabled();
+			}
+		}), Input.wait30);
 		getPDFTab().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
 		getPDF_CenterHeaderBranding().ScrollTo();
 		getPDF_CenterHeaderBranding().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
-	
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
 		new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).click();
 		getPDF_EnterBranding().SendKeys("Test");
-    	Thread.sleep(2000);
-    	
-    	driver.scrollingToBottomofAPage();
-		
+		Thread.sleep(2000);
+
+		driver.scrollingToBottomofAPage();
+
 		getPriveldge_SelectPDFTagButton().waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_PDFTagTree("Privileged").waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPriveldge_PDFTagTree_SelectButton().waitAndClick(5);
 		Thread.sleep(2000);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
 		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).click();
-		
+
 		getPriveldge_PDFTextArea().SendKeys("testing");
-		
+
 		getPDF_BurnRedtoggle().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
-		//getPDF_SpecifyRedactText().waitAndClick(10);
-		
-		
+		// getPDF_SpecifyRedactText().waitAndClick(10);
+
 		getPDF_SelectRed_Radiobutton().waitAndClick(10);
 		Thread.sleep(2000);
-		
+
 		getPDF_SelectRedtags().waitAndClick(10);
-		
-	//	getPDF_SelectRedtags_SelectButton().waitAndClick(10);
-	//	System.out.println(getPDF_Red_Placeholdertext().getText()); 
-		
-	//	Assert.assertEquals(getPDF_Red_Placeholdertext().getText(),"REDACTED");
-		
+
+		// getPDF_SelectRedtags_SelectButton().waitAndClick(10);
+		// System.out.println(getPDF_Red_Placeholdertext().getText());
+
+		// Assert.assertEquals(getPDF_Red_Placeholdertext().getText(),"REDACTED");
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().Enabled();
+			}
+		}), Input.wait30);
 		getComponentsMarkNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getBeginningBates().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled();
+			}
+		}), Input.wait30);
 		getBeginningBates().SendKeys("100");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				gettxtBeginningBatesIDMinNumLength().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
 		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstSubSortingOrder().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
 		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
 		getKeepFamiliesTogether().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getNumAndSortNext().Enabled() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
 		getNumAndSortNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getFolderRadioButton().Visible() ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
 		getFolderRadioButton().waitAndClick(10);
-		
+
 		Thread.sleep(5000);
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
 		getSelectFolder(foldername).waitAndClick(5);
-		
+
 		driver.scrollingToBottomofAPage();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getIncludeFamilies().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
 		getIncludeFamilies().waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnDocumentsSelectionNext().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardMarkComplete().waitAndClick(5);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getOkButton().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
 		getOkButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionGuardNext().waitAndClick(5);
-		
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
 		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
 		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
-		
+
 		driver.scrollPageToTop();
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionLocationNext().waitAndClick(10);
-		
+
 		/*
 		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
-		 * getPreviewprod().Enabled() ;}}), Input.wait30); getPreviewprod().waitAndClick(10);
+		 * getPreviewprod().Enabled() ;}}), Input.wait30);
+		 * getPreviewprod().waitAndClick(10);
 		 */
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryMarkComplete().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
 		getbtnProductionSummaryNext().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
 		getbtnProductionGenerate().waitAndClick(10);
 		System.out.println("Wait until regenerate is enabled");
-		for (int i = 0; i < 120; i++)
-		{
-			try
-			{
-				
-				
-				this.driver.getWebDriver().get(Input.url+"Production/Home");
-		    	//Thread.sleep(5000);
-		    	getProductionLink().waitAndClick(5);
-		    	 //Thread.sleep(5000);
+		for (int i = 0; i < 120; i++) {
+			try {
+
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				// Thread.sleep(5000);
+				getProductionLink().waitAndClick(5);
+				// Thread.sleep(5000);
 				getbtnGenerateMarkComplete().waitAndClick(5);
 				System.out.println("Generated");
 				break;
-				
-			}
-			catch (Exception e)
-			{
+
+			} catch (Exception e) {
 				Thread.sleep(10000);
 				driver.Navigate().refresh();
-				
-			
+
 			}
 		}
-	
-	
+
 		String batesno = getProd_BatesRange().getText();
 		System.out.println(batesno);
 		String[] parts = batesno.split("\\s*-\\s*");
 		String a = parts[0];
 		String b = parts[1];
 		System.out.println(a);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-		getbtnSummaryNext().waitAndClick(10);
-		//Thread.sleep(10000);
-	
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
-		getConfirmProductionCommit().waitAndClick(10);
-		
-		 String PDocCount = getProductionDocCount().getText();
-         int Doc = Integer.parseInt(PDocCount);
-         System.out.println(Doc); 
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-		getReviewproductionButton().waitAndClick(10);
-		
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnSummaryNext().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled();
+			}
+		}), Input.wait30);
+		getConfirmProductionCommit().Click();
+
+		String PDocCount = getProductionDocCount().getText();
+		int Doc = Integer.parseInt(PDocCount);
+		System.out.println(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getReviewproductionButton().Visible();
+			}
+		}), Input.wait30);
+		getReviewproductionButton().Click();
+
 		String location = getDestinationPathText().getText();
-        System.out.println(location);
-        Thread.sleep(7000);
-        String doccount = getDoc_Count().getText();
-        System.out.println(doccount);
-        
-         base.isFileDownloaded(location+"\\VOL0001"+"\\PDF"+"\\0001",4);
-         ProdPathsomeredact= location+"\\VOL0001"+"\\PDF"+"\\0001"+"\\"+""+a+".pdf";
-         System.out.println(ProdPathsomeredact);
-        
-	    }
-    
-  	public void addANewProduction(String productionName) throws InterruptedException {
-    	
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-  		getAddNewProductionbutton().waitAndClick(10);
+		System.out.println(location);
+		Thread.sleep(7000);
+		String doccount = getDoc_Count().getText();
+		System.out.println(doccount);
 
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  				getProductionName().Visible()  ;}}), Input.wait30); 
-  		getProductionName().SendKeys(productionName);
-  		
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  				getProductionDesc().Visible()  ;}}), Input.wait30); 
-  		getProductionDesc().SendKeys(productionName);
-  		
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-  		getBasicInfoMarkComplete().waitAndClick(10);
-  	    }
-  	    
-  	    public void fillingDATSection() {
+		base.isFileDownloaded(location + "\\VOL0001" + "\\PDF" + "\\0001", 4);
+		ProdPathsomeredact = location + "\\VOL0001" + "\\PDF" + "\\0001" + "\\" + "" + a + ".pdf";
+		System.out.println(ProdPathsomeredact);
 
-  			driver.WaitUntil((new Callable<Boolean>() {
-  			public Boolean call() {return getDATChkBox().Enabled();}}), Input.wait30);
-  			getDATChkBox().waitAndClick(10);
+	}
 
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call() {return getDATTab().Visible();}}), Input.wait30);
-  			getDATTab().waitAndClick(10);
+	/**
+	 * @Modified Indium-Sowndarya.Velraj
+	 */
+	public void addANewProduction(String productionName) throws InterruptedException {
 
-  			driver.WaitUntil((new Callable<Boolean>() {
-  			public Boolean call() {return getDAT_FieldClassification1().Visible();}}), Input.wait30);
-  			getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible() && getAddNewProductionbutton().Enabled();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().Click();
 
-  			driver.WaitUntil((new Callable<Boolean>() {
-  			public Boolean call() {return getDAT_SourceField1().Visible();}}), Input.wait30);
-  			getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible() && getProductionName().Enabled();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(productionName);
 
-  			driver.WaitUntil((new Callable<Boolean>() {
-  			public Boolean call() {return getDAT_DATField1().Visible();}}), Input.wait30);
-  			getDAT_DATField1().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
-  		}
-  		
-  			public void fillingNativeSection() throws InterruptedException{
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Enabled() && getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(productionName);
 
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getNativeChkBox().Enabled()  ;}}), Input.wait30); 
-  			getNativeChkBox().waitAndClick(10);
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getNativeTab().Enabled()  ;}}), Input.wait30); 
-  			getNativeTab().waitAndClick(10);
-  			
-  			driver.scrollPageToTop();
-  			
-  			System.out.println(getNative_text().getText());
-  			Assert.assertEquals(getNative_text().getText(),"To produce specific docs"
-  			+ " natively, please select file types and/or tags below. In addition,"
-  			+ " to export placeholders for these docs, configure placeholder in the TIFF "
-  			+ "or PDF section for the same selected file types and/or tags.");
-  			
-  			Assert.assertEquals(getNative_text_Color().GetAttribute("class"),"blue-text");
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getNative_SelectAllCheck().Enabled()  ;}}), Input.wait30); 
-  			getNative_SelectAllCheck().waitAndClick(10);
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getNative_AdvToggle().Enabled()  ;}}), Input.wait30); 
-  			getNative_AdvToggle().waitAndClick(10);
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getNative_GenerateLoadFileLST().Enabled()  ;}}), Input.wait30); 
-  			getNative_GenerateLoadFileLST().waitAndClick(10);
-  			Thread.sleep(2000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible() && getBasicInfoMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().Click();
+		base.stepInfo("New production is added");
+	}
 
-  			 
-  			}
-  			
-  			public void fillingTIFFSection(String tagnameprev,String tagnametech) throws InterruptedException{
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void addANewExport(String exportname) throws InterruptedException {
 
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFFChkBox().Enabled() ;}}), Input.wait30);
-  			getTIFFChkBox().waitAndClick(10);
-  						
- 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFFTab().Enabled() ;}}), Input.wait30);
-  		    getTIFFTab().waitAndClick(10);
-  			
-  		    driver.scrollPageToTop();
-  		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30);
-  		    getTIFF_CenterHeaderBranding().waitAndClick(10);
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getTIFF_EnterBranding().Enabled() ;}}), Input.wait30);
-  				
-  			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
-  			getTIFF_EnterBranding().SendKeys("Test");
-  		    Thread.sleep(2000);
-  		    
-  		    driver.scrollingToBottomofAPage();
-  			
-  			getPriveldge_SelectTagButton().waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			getPriveldge_TagTree(tagnameprev).waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			getPriveldge_TagTree_SelectButton().waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
-  			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-  			
-  		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getPriveldge_TextArea().Enabled() ;}}), Input.wait30);
-  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-  	    	getPriveldge_TextArea().SendKeys("testing");
-  	    	
-            driver.scrollingToBottomofAPage();
-            
-            driver.WaitUntil((new Callable<Boolean>() {public Boolean call()
-            {return getTechissue_toggle().Visible() ;}}), Input.wait30);
-            getTechissue_toggle().waitAndClick(10);
-    		  
-  			getTechissue_SelectTagButton().waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			getPriveldge_TagTree(tagnametech).waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			getPriveldge_TagTree_SelectButton().waitAndClick(10);
-  			Thread.sleep(2000);
-  			
-  			
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
-  			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-  			
-  		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getPriveldge_TextArea().Enabled() ;}}), Input.wait30);
-  		    new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
-  	    	getPriveldge_TextArea().SendKeys("testing");
-  			
-  			}
-  			
-  			public void fillingPDFSection(String prefixId, String suffixId, String tagname) throws InterruptedException{
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getTextChkBox().Enabled()  ;}}), Input.wait30); 
-  				getTextChkBox().waitAndClick(10);
-  						
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getPDFChkBox().Enabled() ;}}), Input.wait30); 
-  				getPDFChkBox().waitAndClick(10);		
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getPDFTab().Enabled()  ;}}), Input.wait30); 
-  				getPDFTab().waitAndClick(10);
-  				
-  				driver.scrollPageToTop();
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getPDF_CenterHeaderBranding().Visible() &&  getTIFF_CenterHeaderBranding().Enabled() ;}}), Input.wait30); 
-  				getPDF_CenterHeaderBranding().ScrollTo();
-  				getPDF_CenterHeaderBranding().waitAndClick(10);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getPDF_EnterBranding().Enabled()  ;}}), Input.wait30); 
-  			
-  				new Actions(driver.getWebDriver()).moveToElement(getPDF_EnterBranding().getWebElement()).click();
-  				getPDF_EnterBranding().SendKeys("Test");
-  		    	Thread.sleep(2000);
-  		    	
-  		    	driver.scrollingToBottomofAPage();
-  				
-  		    	
-  				getPriveldge_SelectPDFTagButton().waitAndClick(10);
-  				Thread.sleep(2000);
-  				
-  				getPriveldge_PDFTagTree(tagname).waitAndClick(10);
-  				Thread.sleep(2000);
-  				
-  				getPriveldge_PDFTagTree_SelectButton().waitAndClick(5);
-  				Thread.sleep(2000);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getPriveldge_TextArea().Enabled()  ;}}), Input.wait30); 
-  				new Actions(driver.getWebDriver()).moveToElement(getPriveldge_PDFTextArea().getWebElement()).click();
-  				
-  				getPriveldge_PDFTextArea().SendKeys("testing");
-  			
-  				driver.scrollPageToTop();
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-  				getComponentsMarkComplete().waitAndClick(10);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
-  				getComponentsMarkNext().waitAndClick(10);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getBeginningBates().Enabled()  ;}}), Input.wait30); 
-  				getBeginningBates().SendKeys("100");
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
-  				gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
-  				gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						gettxtBeginningBatesIDMinNumLength().Enabled()  ;}}), Input.wait30); 
-  				gettxtBeginningBatesIDMinNumLength().SendKeys("10");
-  				
-  				driver.scrollingToBottomofAPage();
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
-  				getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getlstSortingOrder().Enabled()  ;}}), Input.wait30); 
-  				getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
-  				getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getlstSubSortingOrder().Enabled()  ;}}), Input.wait30); 
-  				getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-  				
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-  				getKeepFamiliesTogether().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewExport().Visible() && getAddNewExport().Enabled();
+			}
+		}), Input.wait30);
+		getAddNewExport().Click();
 
-  			}
-  			
-  			public void navigateToNextSection(){
-  				
-  				driver.scrollPageToTop();
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getMarkCompleteLink().Enabled() ;}}), Input.wait30);
-  				getMarkCompleteLink().waitAndClick(10);
-  				
-  				System.out.println("Clicked on Mark Complete Button..");
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return getNextButton().Enabled()  ;}}), Input.wait30); 
-  				getNextButton().waitAndClick(10);
-  			
-  				}
-  				
-  				public void generateExport(String foldername, String exportDirectory, String setName) throws InterruptedException{
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getFolderRadioButton().Visible() ;}}), Input.wait30); 
-  					getFolderRadioButton().waitAndClick(10);
-  					
-  					Thread.sleep(5000);
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
-  					getSelectFolder(foldername).waitAndClick(5);
-  					
-  					driver.scrollingToBottomofAPage();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-  					getIncludeFamilies().waitAndClick(10);
-  					
-  					driver.scrollPageToTop();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnDocumentsSelectionNext().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGuardMarkComplete().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getOkButton().Visible()  ;}}), Input.wait30); 
-  					getOkButton().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionGuardNext().waitAndClick(5);
-  					
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
-  					getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
-  					getProductionOutputLocation_ProductionDirectory().SendKeys(exportDirectory);
-  					
-  					driver.scrollPageToTop();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionLocationMarkComplete().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionLocationNext().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getPreviewprod().Enabled()  ;}}), Input.wait30); 
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryMarkComplete().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryNext().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGenerate().waitAndClick(10);
-  					
-  					
-  					
-  					System.out.println("Wait until regenerate is enabled");
-  					for (int i = 0; i < 120; i++)
-  					{
-  						try
-  						{
-  							
-  							
-  							this.driver.getWebDriver().get(Input.url+"Production/Home");
-  					    	getProductionLink().waitAndClick(5);
-  							getbtnGenerateMarkComplete().waitAndClick(5);
-  							System.out.println("Generated");
-  							break;
-  							
-  						}
-  						catch (Exception e)
-  						{
-  							Thread.sleep(10000);
-  							driver.Navigate().refresh();
-  							
-  						
-  						}
-  					}
-  				
-  				
-  					String batesno = getProd_BatesRange().getText();
-  					System.out.println(batesno);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnSummaryNext().waitAndClick(10);
-  					//Thread.sleep(10000);
-  				
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getConfirmProductionCommit().Enabled()  ;}}), Input.wait30); 
-  					getConfirmProductionCommit().waitAndClick(10);
-  					
-  					 String PDocCount = getProductionDocCount().getText();
-  			         int Doc = Integer.parseInt(PDocCount);
-  			         System.out.println(Doc); 
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getReviewproductionButton().Visible()  ;}}), Input.wait30); 
-  					getReviewproductionButton().waitAndClick(10);
-  					
-  					String location = getDestinationPathText().getText();
-  			        System.out.println(location);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible() && getProductionName().Enabled();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(exportname);
 
-  								
-  				}
-  				
-  	   public void FillingallsectionsProduction(String productionname,String PrefixID,String SuffixID,final String foldername) 
-  			    		throws InterruptedException{
-  					
-				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  							getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-				  	getComponentsMarkComplete().waitAndClick(10);
-				  					
-				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  						getComponentsMarkNext().Enabled()  ;}}), Input.wait30); 
-				  	getComponentsMarkNext().waitAndClick(10);
-				  					
-				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  							getBeginningBates().Enabled()  ;}}), Input.wait30); 
-				  	getBeginningBates().SendKeys("100");
-				  					
-				  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				  				gettxtBeginningBatesIDPrefix().Enabled()  ;}}), Input.wait30); 
-				  	gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							gettxtBeginningBatesIDSuffix().Enabled()  ;}}), Input.wait30); 
-  					gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							gettxtBeginningBatesIDMinNumLength().Enabled()  ;}}), Input.wait30); 
-  					gettxtBeginningBatesIDMinNumLength().SendKeys("10");
-  					
-  					driver.scrollingToBottomofAPage();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
-  					getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstSortingOrder().Enabled()  ;}}), Input.wait30); 
-  					getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstSortingMetaData().Enabled()  ;}}), Input.wait30); 
-  					getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstSubSortingOrder().Enabled()  ;}}), Input.wait30); 
-  					getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
-  					
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getKeepFamiliesTogether().Visible()  ;}}), Input.wait30); 
-  					getKeepFamiliesTogether().waitAndClick(10);
-  					
-  					driver.scrollPageToTop();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getNumAndSortMarkComplete().Enabled()  ;}}), Input.wait30); 
-  					getNumAndSortMarkComplete().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getNumAndSortNext().Enabled() ;}}), Input.wait30); 
-  					getNumAndSortNext().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getFolderRadioButton().Visible() ;}}), Input.wait30); 
-  					getFolderRadioButton().waitAndClick(10);
-  					
-  					Thread.sleep(5000);
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getSelectFolder(foldername).Visible() ;}}), Input.wait30); 
-  					getSelectFolder(foldername).waitAndClick(5);
-  					
-  					driver.scrollingToBottomofAPage();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getIncludeFamilies().Visible()  ;}}), Input.wait30); 
-  					getIncludeFamilies().waitAndClick(10);
-  					
-  					driver.scrollPageToTop();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnDocumentsSelectionMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnDocumentsSelectionNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnDocumentsSelectionNext().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGuardMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGuardMarkComplete().waitAndClick(5);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getOkButton().Visible()  ;}}), Input.wait30); 
-  					getOkButton().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGuardNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionGuardNext().waitAndClick(5);
-  					
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getlstProductionRootPaths().Visible()  ;}}), Input.wait30); 
-  					getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getProductionOutputLocation_ProductionDirectory().Visible()  ;}}), Input.wait30); 
-  					getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
-  					
-  					driver.scrollPageToTop();
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionLocationMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionLocationMarkComplete().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionLocationNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionLocationNext().waitAndClick(10);
-  					
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Enabled() && getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(exportname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible() && getBasicInfoMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().Click();
+		base.stepInfo("New Export is added");
+	}
+
+	/**
+	 * @Modified Indium-Sowndarya.Velraj.Modified on 10/27/2021
+	 */
+	public void fillingDATSection() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getDATChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible() && getDATTab().Enabled();
+			}
+		}), Input.wait30);
+		getDATTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible() && getDAT_FieldClassification1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible() && getDAT_SourceField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible() && getDAT_DATField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().waitAndClick(10);
+		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
+		base.stepInfo("Dat section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingDATSectionWithBates(String field_classification, String source_field, String Dat_field) {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getDATChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Visible() && getDATTab().Enabled();
+			}
+		}), Input.wait30);
+		getDATTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Visible() && getDAT_FieldClassification1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(field_classification);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Visible() && getDAT_SourceField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(source_field);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Visible() && getDAT_DATField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().SendKeys(Dat_field);
+		base.stepInfo("Dat section is filled");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void datMetaDataTiffPageCount() {
+		addNewFieldOnDAT();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(Input.Production);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText(Input.TIFFPageCount);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
+
+	}
+
+	/**
+	 * 
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * 
+	 * @Description: Method for entering redaction tag and generate production.
+	 *
+	 * 
+	 * 
+	 */
+
+	public void fillingTIFFFSectionWithRedactionTags(String redactiontag1) throws InterruptedException {
+
+		try {
+
+			base.waitForElement(getTIFFChkBox());
+
+			getTIFFChkBox().Click();
+
+			base.waitForElement(getTIFFTab());
+
+			getTIFFTab().Click();
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getPDFGenerateRadioButton());
+
+			getPDFGenerateRadioButton().Click();
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+
+			base.waitForElement(getClk_burnReductiontoggle());
+
+			getClk_burnReductiontoggle().Click();
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+
+			driver.waitForPageToBeReady();
+
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+			base.waitForElement(getClkLink_selectingRedactionTags());
+
+			getClkLink_selectingRedactionTags().isDisplayed();
+
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+
+			getClkBtn_selectingRedactionTags().isDisplayed();
+
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
+
+			redactionTagInBurnRedactionCheckBox(redactiontag1).ScrollTo();
+
+			redactionTagInBurnRedactionCheckBox(redactiontag1).isDisplayed();
+
+			driver.waitForPageToBeReady();
+
+			redactionTagInBurnRedactionCheckBox(redactiontag1).waitAndClick(10);
+
+			base.waitForElement(getClk_selectBtn());
+
+			getClk_selectBtn().isDisplayed();
+
+			getClk_selectBtn().waitAndClick(10);
+
+			base.waitForElement(gettextRedactionPlaceHolder());
+
+			gettextRedactionPlaceHolder().isDisplayed();
+
+			gettextRedactionPlaceHolder().waitAndClick(10);
+
+			gettextRedactionPlaceHolder().SendKeys(searchString4);
+
+		} catch (Exception e) {
+
+			base.failedStep("Exception occcured while filling burnredaction" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+	}
+
+	/**
+	 * 
+	 * @author Gopinath
+	 * 
+	 * @description :verifying tag selected in the specify branding at left Header
+	 *              branding
+	 *
+	 * 
+	 * 
+	 */
+
+	public void verifyTheTagOnLeftBranding(String Tag, String Test) throws InterruptedException {
+
+		try {
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getTIFFChkBox());
+
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+
+			getTIFFTab().waitAndClick(10);
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getLeftHeaderBranding());
+
+			getLeftHeaderBranding().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+
+			getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+			getLeftSpecifyBrandingBySelectingTag().ScrollTo();
+
+			base.waitTillElemetToBeClickable(getLeftSpecifyBrandingBySelectingTag());
+
+			getLeftSpecifyBrandingBySelectingTag().waitAndClick(10);
+
+			getbtnSelectTags().Enabled();
+
+			getbtnSelectTags().waitAndClick(10);
+
+			Thread.sleep(2000);
+
+			getChkBoxSelect(Tag).ScrollTo();
+
+			base.waitForElement(getChkBoxSelect(Tag));
+
+			getChkBoxSelect(Tag).waitAndClick(10);
+
+			base.waitForElement(getbtnSelect());
+
+			getbtnSelect().waitAndClick(10);
+
+			Thread.sleep(5000);
+
+			base.waitForElement(getBrandingBySelectingTagPlaceholder());
+
+			getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+
+		} catch (Exception e) {
+//			base.failedStep("Exception occcured while verifying tag selected in the  specify branding at left Header branding"+ e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	public void againSelectingLeftHeaderBranding(String Tag) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(10);
+		base.waitForElement(getLeftHeaderBranding());
+		getLeftHeaderBranding().waitAndClick(10);
+		getLeftSpecifyBrandingBySelectingTag().ScrollTo();
+		base.waitForElement(getLeftSpecifyBrandingBySelectingTag());
+		getLeftSpecifyBrandingBySelectingTag().waitAndClick(10);
+		base.waitForElement(getNextSelectBtnInSpecifyBrandingSelectTags());
+		getNextSelectBtnInSpecifyBrandingSelectTags().isDisplayed();
+		getNextSelectBtnInSpecifyBrandingSelectTags().waitAndClick(10);
+
+		boolean flag;
+		base.waitForElement(getCancelBtn());
+		base.waitTillElemetToBeClickable(getCancelBtn());
+		getCancelBtn().waitAndClick(10);
+		Thread.sleep(5000);
+		base.waitForElement(getNextSelectBtnInSpecifyBrandingSelectTags());
+		getNextSelectBtnInSpecifyBrandingSelectTags().isDisplayed();
+		getNextSelectBtnInSpecifyBrandingSelectTags().waitAndClick(10);
+		base.waitForElement(getDisabledSpecifyBrandingSelectTags(Tag));
+		flag = getDisabledSpecifyBrandingSelectTags(Tag).GetAttribute("class").contains("disabled");
+
+		if (!flag) {
+
+			Assert.assertTrue(true);
+			base.passedStep("ClickMarkIncomplete Disables already selected left header specify branding tag");
+		} else {
+			Assert.assertTrue(false);
+			base.failedStep("ClickMarkIncomplete enables already selected left header specify branding tag");
+		}
+	}
+
+	/**
+	 * @Modified Indium-Sowndarya.Velraj
+	 */
+	public void fillingNativeSection() throws InterruptedException {
+		SoftAssert softAssertion = new SoftAssert();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getNativeChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
+		getNativeTab().Click();
+
+		String expected = "To produce specific docs natively, please select file types and/or tags below. "
+				+ "In addition, to export placeholders for these docs, configure placeholder in the TIFF/PDF section"
+				+ " for the same selected file types and/or tags." + "\r\n" + "\r\n"
+				+ "For native only productions, please make sure to exclude the Privileged documents from the selected production corpus, "
+				+ "in order to avoid the Privileged natives from being exported.";
+
+		// added thread.sleep to avoid exception while running in batch
+		Thread.sleep(1000);
+		String actual = getNative_text().getWebElement().getText();
+
+		softAssertion.assertEquals(actual, expected);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_SelectAllCheck().isDisplayed() && getNative_SelectAllCheck().Enabled();
+			}
+		}), Input.wait30);
+		getNative_SelectAllCheck().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_AdvToggle().isDisplayed();
+			}
+		}), Input.wait120);
+		getNative_AdvToggle().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_GenerateLoadFileLST().isDisplayed();
+			}
+		}), Input.wait30);
+		getNative_GenerateLoadFileLST().waitAndClick(10);
+
+		String Expect = "Note that, if Privileged Placeholdering and Burn Redactions are enabled in the TIFF/PDF section, natives are not produced by default for privileged documents, redacted documents, and parents of privileged and redacted documents.";
+
+		String Actual = getNativeAdvanced_Text().getWebElement().getText();
+
+		softAssertion.assertEquals(Actual, Expect);
+		driver.scrollingToBottomofAPage();
+
+		base.stepInfo("Native section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 11/1/2021
+	 */
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 11/1/2021
+	 */
+	public void fillingTIFFSection(String tagname, String tagnametech) throws InterruptedException {
+
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnterBranding());
+			new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+			getTIFF_EnterBranding().SendKeys(searchString4);
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().isDisplayed();
+
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+			base.stepInfo("TIFF section is filled");
+		} catch (InterruptedException e) {
+
+			driver.scrollingToElementofAPage(getPriveldge_TagTree(tagname));
+
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			Thread.sleep(5000);
+			getPriveldge_TagTree(tagname).waitAndClick(20);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+			driver.scrollingToBottomofAPage();
+		}
+	}
+
+	/**
+	 * 
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFSectionwithNativelyPlaceholder(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		// clicking enable for natively placeholder
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFSectionwithBurnRedaction(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithBurningRedactionsAndPreviouslySelectedTagDisabled(String tagname) {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getSelectNextRedactionTags());
+		getSelectNextRedactionTags().isDisplayed();
+		getSelectNextRedactionTags().waitAndClick(10);
+
+		// asserting for disabled tag
+
+		boolean flag;
+		base.waitForElement(getDisabledSelectRedactionTags());
+		flag = getDisabledSelectRedactionTags().GetAttribute("class").contains("disabled");
+		driver.waitForPageToBeReady();
+		if (!flag) {
+			softAssertion.assertTrue(true);
+			base.passedStep("ClickMarkIncomplete enables ALready burn redaction Tags");
+
+		} else {
+			softAssertion.assertTrue(false);
+			base.failedStep("ClickMarkIncomplete Disables ALready burn redaction Tags");
+		}
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithSelectingBrandingSelectionTags(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		base.waitTillElemetToBeClickable(getBrandingBySelectingTags());
+		getBrandingBySelectingTags().Click();
+
+		base.waitForElement(getbtnSelectTags());
+		getbtnSelectTags().Click();
+
+		base.waitForElement(getChkBoxSelect(tagname));
+		getChkBoxSelect(tagname).Enabled();
+		getChkBoxSelect(tagname).waitAndClick(5);
+
+		base.waitForElement(getbtnSelect());
+		getbtnSelect().Enabled();
+		getbtnSelect().waitAndClick(10);
+
+		base.waitForElement(gettxtBrandingPlaceholder());
+		gettxtBrandingPlaceholder().isDisplayed();
+		gettxtBrandingPlaceholder().SendKeys(searchString4);
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithBrandingSelectionTagsAndPreviouslySelectedTagDisabled(String tagname)
+			throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		base.waitTillElemetToBeClickable(getBrandingBySelectingTags());
+		getBrandingBySelectingTags().waitAndClick(5);
+
+		base.waitForElement(getbtnNextSelectTags());
+		getbtnNextSelectTags().waitAndClick(5);
+
+		boolean flag;
+		base.waitForElement(getChkBoxSelect(tagname));
+		flag = getChkBoxSelect(tagname).GetAttribute("Class").contains("disabled");
+		driver.waitForPageToBeReady();
+		if (!flag) {
+			Assert.assertTrue(false);
+
+			System.out.println("tag is enabled");
+			base.failedStep("ClickMarkIncomplete Disables ALready Selected Tags");
+
+		} else {
+
+			System.out.println(true);
+			base.passedStep("ClickMarkIncomplete enables ALready Selected Tags");
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithBurnRedactionAndSelectingOneTag() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		// clicking Radion button Select Redaction Tags
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		// selecting the checkbox-Default Redaction Tag
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		// clicking link again
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		// clicking select Redaction Tags button
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().Click();
+
+		base.waitForElement(getRedactionWithoutRedactionTagsCheckbox());
+		getRedactionWithoutRedactionTagsCheckbox().Click();
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().isDisplayed();
+		Thread.sleep(1000);
+		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithRedactionAndSelectingDoubleTags() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		// add the pop link
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getRedactionWithoutRedactionTagsCheckbox());
+		getRedactionWithoutRedactionTagsCheckbox().Click();
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().isDisplayed();
+		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
+
+		Thread.sleep(5000);
+
+		// add the pop link
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingSecondRedactionTags().isDisplayed();
+		getClkBtn_selectingSecondRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getSelectTagsHeader());
+		getSelectTagsHeader().isDisplayed();
+
+		base.hitTabKey(4);
+
+		base.waitForElement(getDefaultRedactionTag());
+		getDefaultRedactionTag().waitAndClick(5);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().waitAndClick(5);
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().SendKeys("REDACTED");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingPDFSection(String tagname, String tagnameprev) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getPDFChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFTab().Enabled();
+			}
+		}), Input.wait30);
+		getPDFTab().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFGenerateRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getPDFGenerateRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getTIFF_EnterBranding().SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		getPriveldge_SelectTagButton().Click();
+
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		Thread.sleep(3000);
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("PDF section is filled");
+
+	}
+
+	/**
+	 * Author Indium Sowndarya.Velraj
+	 */
+	public void fillingPDFWithMultiPage(String tagname) {
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getPDFChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFTab().Enabled();
+			}
+		}), Input.wait30);
+		getPDFTab().Click();
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getPDFGenerateRadioButton());
+		new Actions(driver.getWebDriver()).moveToElement(getPDFGenerateRadioButton().getWebElement()).click();
+		getPDFGenerateRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_MultiPage_RadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_MultiPage_RadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		// getTIFF_EnterBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+
+		getPriveldge_SelectTagButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TagTree(tagname).Enabled() && getPriveldge_TagTree(tagname).isDisplayed();
+			}
+		}), Input.wait30);
+		getPriveldge_TagTree(tagname).Click();
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(tagname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("PDF section is filled with multi page option");
+
+	}
+
+	/**
+	 * Author Indium Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithMultiPage(String tagname) {
+
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_MultiPage_RadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_MultiPage_RadioButton().Click();
+
+		// disabling privilegeDocs
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+//		getPriveldge_SelectTagButton().Click();
+//
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return getPriveldge_TagTree(tagname).Enabled() && getPriveldge_TagTree(tagname).isDisplayed();
+//			}
+//		}), Input.wait30);
+//		getPriveldge_TagTree(tagname).Click();
+//
+//		getPriveldge_TagTree_SelectButton().Click();
+//
+//		base.waitForElement(getPriveldge_TextArea());
+//		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+//
+//		getPriveldge_TextArea().SendKeys(tagname);
+
+		base.stepInfo("TIFF section is filled with multi page option");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingPDFSectionwithNativelyPlaceholder(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		driver.waitForPageToBeReady();
+		getPDFGenerateRadioButton().ScrollTo();
+		base.clickButton(getPDFGenerateRadioButton());
+
+		driver.waitForPageToBeReady();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.clickButton(getTIFF_EnableforPrivilegedDocs());
+
+		// clicking enable for natively placeholder
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(tagname));
+		getPriveldged_TagTree(tagname).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		Thread.sleep(Input.wait30 / 10);
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(tagname);
+	}
+
+	/**
+	 * Author Indium Sowndarya.Velraj
+	 */
+	public void fillingTIFFSectionwithFontColour(String tagname, String fontColor) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+		driver.waitForPageToBeReady();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectDropDown().Visible();
+			}
+		}), Input.wait30);
+		getSelectDropDown().selectFromDropdown().selectByVisibleText(fontColor);
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
+	}
+
+	/**
+	 * Author Indium Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithSinglePage(String tagname) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		// getTIFF_EnterBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+
+		getPriveldge_SelectTagButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TagTree(tagname).Enabled() && getPriveldge_TagTree(tagname).isDisplayed();
+			}
+		}), Input.wait30);
+		getPriveldge_TagTree(tagname).Click();
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+		driver.scrollPageToTop();
+		base.stepInfo("TIFF section is filled with multi page option");
+
+	}
+
+	/**
+	 * @Author Indium Sowndarya.Velraj
+	 */
+	public void fillingPDFForRedaction() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		base.waitForElement(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().ScrollTo();
+		base.clickButton(getPDFGenerateRadioButton());
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		// add the pop link
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+//		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+//		getClkCheckBox_selectingRedactionTags().Click();
+
+		base.waitForElement(getRedactionWithoutRedactionTagsCheckbox());
+		getRedactionWithoutRedactionTagsCheckbox().Click();
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().isDisplayed();
+		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
+
+		Thread.sleep(5000);
+
+		// add the pop link
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		base.clickButton(getClkLink_selectingRedactionTags());
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingSecondRedactionTags().isDisplayed();
+		getClkBtn_selectingSecondRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getSelectTagsHeader());
+		getSelectTagsHeader().isDisplayed();
+
+		base.hitTabKey(4);
+
+		base.waitForElement(getDefaultRedactionTag());
+		getDefaultRedactionTag().Click();
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().SendKeys("REDACTED");
+
+	}
+
+	/**
+	 * @Author Indium Sowndarya.Velraj
+	 */
+	public void fillingTextSection() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTextChkBox().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextTab().Enabled();
+			}
+		}), Input.wait30);
+		getTextTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextcomponent_text().isDisplayed();
+			}
+		}), Input.wait30);
+		getTextcomponent_text().isElementAvailable(15);
+		base.waitTime(3);
+		String exptext = getTextcomponent_text().getText();
+		System.out.println(exptext);
+		UtilityLog.info(exptext);
+		Assert.assertEquals(exptext,
+				"Redacted documents are automatically OCRed"
+						+ " to export the text. Original extracted text is exported for natively "
+						+ "produced documents (file based placeholdering). "
+						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
+						+ " The configured format is applicable only to OCRed text and production generated text"
+						+ ", and not to ingested text.");
+
+		base.stepInfo("Text section is filled");
+
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * Author Indium Sowndarya.Velraj
+	 */
+	public void fillingAdvancedProductionComponents(String productionname) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedProductionComponents(productionname).Enabled();
+			}
+		}), Input.wait30);
+		getAdvancedProductionComponents(productionname).Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getMP3ChkBox(productionname).Enabled();
+			}
+		}), Input.wait30);
+		getMP3ChkBox(productionname).Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTranslationsChkBox(productionname).Enabled();
+			}
+		}), Input.wait30);
+		getTranslationsChkBox(productionname).Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Advanced production section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingNumberingAndSortingPage(String prefixId, String suffixId) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled() && getBeginningBates().isDisplayed();
+			}
+		}), Input.wait30);
+
+		driver.waitForPageToBeReady();
+		num = getRandomNumber(2);
+		System.out.println(num);
+		getBeginningBates().SendKeys(num);
+//		getBeginningBates().SendKeys(getRandomNumber(2));
+//
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDPrefix().SendKeys(prefixId);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDSuffix().SendKeys(suffixId);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
+		num1 = getRandomNumber(1);
+		System.out.println(num1);
+		gettxtBeginningBatesIDMinNumLength().SendKeys(num1);
+//		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
+		getKeepFamiliesTogether().Click();
+		driver.scrollPageToTop();
+		base.stepInfo("Numbering and sorting section is filled");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingExportNumberingAndSortingPage(String prefixId, String suffixId) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled() && getBeginningBates().isDisplayed();
+			}
+		}), Input.wait30);
+
+		driver.waitForPageToBeReady();
+		getBeginningSubBatesNumber().SendKeys(getRandomNumber(2));
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getExportPrefixId().Enabled();
+			}
+		}), Input.wait30);
+		getExportPrefixId().SendKeys(prefixId);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getExportSuffixId().Enabled();
+			}
+		}), Input.wait30);
+		getExportSuffixId().SendKeys(suffixId);
+
+		base.stepInfo("Export Numbering and sorting section is filled");
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingNumberingPageWithDocumentAndPassingNullSubBatesSuccess() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_RadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_RadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_BeginningBates_Text().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_BeginningBates_Text().SendKeys(searchString3);
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingNumberingPageWithDocumentAndPassingNullSubBatesError() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_RadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_RadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumbering_Document_BeginningBates_Text().Enabled();
+			}
+		}), Input.wait30);
+		getNumbering_Document_BeginningBates_Text().SendKeys(searchString3);
+
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().Click();
+
+		base.waitForElement(gettxtPleaseSpecifySubbatesNumberError());
+
+		String actualText = gettxtPleaseSpecifySubbatesNumberError().getText();
+		System.out.println(actualText);
+		String expectedText = "Please specify SubBates Number";
+
+		softAssertion.assertEquals(actualText, expectedText);
+		base.passedStep("Error Line Displayed");
+
+	}
+
+	/**
+	 * @throws InterruptedException 
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingDocumentSelectionPage(String foldername) throws InterruptedException {
+		
+		base.waitForElement(getFolderRadioButton());
+		getFolderRadioButton().waitAndClick(10);
+
+		getSelectFolder(foldername).ScrollTo();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait120);
+		getSelectFolder(foldername).waitAndClick(10);
+		
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getIncludeFamilies());
+		getIncludeFamilies().Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Document Selection Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingDocumentSelectionPageExcludingFamilies(String foldername) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getFolderRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(foldername).Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Document Selection Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 10/27/2021
+	 * @param Selects Document by choosing "select Tags" Radio button.
+	 */
+	public void fillingSelectDocumentUsingTags(String tagname) throws InterruptedException {
+
+		base.waitForElement(getDocumentSelectionHeader());
+		getDocumentSelectionHeader().isDisplayed();
+
+		base.waitForElement(getSelectTagsRadioButton());
+		getSelectTagsRadioButton().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		getSelectTag(tagname).ScrollTo();
+		base.waitForElement(getSelectTag(tagname));
+		getSelectTag(tagname).waitAndClick(5);
+
+		base.stepInfo("Document is selected by select tags option");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 10/27/2021.
+	 * @param Fills the priviledge guard page either by selecting "OK" or "Mark
+	 *              Complete"
+	 */
+	public void fillingPrivGuardPage() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardMarkComplete().waitAndClick(5);
+
+		if(getOkButton().isElementAvailable(3)) {
+			getOkButton().waitAndClick(5);
+		} else {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnPopupPreviewMarkComplete().Enabled();
+				}
+			}), Input.wait30);
+			getbtnPopupPreviewMarkComplete().waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardNext().waitAndClick(5);
+		base.stepInfo("Priv Guard Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingProductionLocationPage(String productionname) {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Enabled();
+			}
+		}), Input.wait30);
+
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Enabled();
+			}
+		}), Input.wait90);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("production location Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingExportLocationPage(String exportname) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Enabled();
+			}
+		}), Input.wait30);
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Enabled();
+			}
+		}), Input.wait30);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(exportname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("Export location Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingProductionLocationPageAndPassingText(String productionname) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Enabled();
+			}
+		}), Input.wait30);
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Enabled();
+			}
+		}), Input.wait30);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtLoadFiles().Enabled();
+			}
+		}), Input.wait30);
+		gettxtLoadFiles().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+		base.stepInfo("Production Location Page And Passing Text Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingSummaryAndPreview() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryNext().Click();
+		base.stepInfo("summary and preview section is filled");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void viewingToolTipInSummaryAndPreview() {
+
+		SoftAssert softAssertion = new SoftAssert();
+
+		base.waitForElement(getPriviledgedDocumunentsHelpIcon());
+		getPriviledgedDocumunentsHelpIcon().waitAndClick(10);
+
+		String expected = "Number of documents in the selected production documents having at least one Privileged tag specified in the TIFF/PDF section.";
+
+		String actual = getPriviledgedPopOverContent().getText();
+		softAssertion.assertTrue(actual.contains(expected));
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().Click();
+
+		System.out.println("tool tip displayed");
+		base.stepInfo("viewing priviledged tooltip successfully");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void viewingPreviewInSummaryTab() throws InterruptedException {
+
+		base.waitForElement(getbtnPreview());
+		getbtnPreview().Enabled();
+		getbtnPreview().waitAndClick(10);
+		base.stepInfo("clicking preview to get the documents in pdf files");
+
+	}
+
+//	public void fillingGeneratePage() throws InterruptedException {
+//
+//		 
+//
+//        SoftAssert softAssertion = new SoftAssert();
+//
+//        String expectedText = "Success";
+//
+//
+//
+//        driver.WaitUntil((new Callable<Boolean>() {
+//
+//               public Boolean call() {
+//
+//                     return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+//
+//               }
+//
+//        }), Input.wait30);
+//
+//        getbtnProductionGenerate().Click();
+//
+//
+//
+//        Reporter.log("Wait for generate to complete", true);
+//
+//        System.out.println("Wait for generate to complete");
+//
+//        UtilityLog.info("Wait for generate to complete");
+//
+//
+//
+//        driver.WaitUntil((new Callable<Boolean>() {
+//
+//               public Boolean call() {
+//
+//                     return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+//
+//               }
+//
+//        }), Input.wait120);
+//
+//        String actualText = getStatusSuccessTxt().getText();
+//
+//        System.out.println(actualText);
+//
+//
+//
+//        softAssertion.assertTrue(actualText.contains(expectedText));
+//
+//        base.passedStep("Documents Generated successfully");
+//
+//
+//
+//        driver.WaitUntil((new Callable<Boolean>() {
+//
+//               public Boolean call() {
+//
+//                     return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+//
+//               }
+//
+//        }), Input.wait60);
+//
+//
+//
+//        // added thread.sleep to avoid exception while executing in batch
+//
+//        //Thread.sleep(2000);
+//
+//        Boolean status=getConfirmProductionCommit().isElementPresent();
+//
+//        while(status!=true) {
+//               status=getConfirmProductionCommit().isElementPresent();
+//        }
+//
+//        getConfirmProductionCommit().waitAndClick(10);
+//
+//
+//
+//        String PDocCount = getProductionDocCount().getText();
+//
+//        // added thread.sleep to avoid exception while executing in batch
+//
+//        Thread.sleep(1000);
+//
+//        System.out.println(PDocCount);
+//
+//        int Doc = Integer.parseInt(PDocCount);
+//
+//
+//
+//        Reporter.log("Doc - " + Doc, true);
+//
+//        System.out.println(Doc);
+//
+//        UtilityLog.info(Doc);
+//
+//
+//
+//        driver.WaitUntil((new Callable<Boolean>() {
+//
+//               public Boolean call() {
+//
+//                     return getCopyPath().isDisplayed();
+//
+//               }
+//
+//        }), Input.wait60);
+//
+//        getCopyPath().waitAndClick(10);
+//
+//
+//
+//        driver.WaitUntil((new Callable<Boolean>() {
+//
+//               public Boolean call() {
+//
+//                     return getQC_Download().isDisplayed();
+//
+//               }
+//
+//        }), Input.wait30);
+//
+//
+//
+//        getQC_Download().waitAndClick(10);
+//
+//        getQC_Downloadbutton_allfiles().waitAndClick(10);
+//
+//        base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+//
+//        base.stepInfo("Generate production page is filled");
+//
+// }
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingGeneratePageAndRegeneratingAgain() {
+
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		// Get Documents Generated Text
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().isElementAvailable(860);
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		String expectedText = "Success";
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+		base.stepInfo("Generation completed");
+
+		base.waitForElement(getQC_backbutton());
+		getQC_backbutton().waitAndClick(10);
+
+		base.waitForElement(getBtnMarkIncomplete());
+		getBtnMarkIncomplete().Enabled();
+		base.clickButton(getBtnMarkIncomplete());
+		base.stepInfo("Going back to generate Page from QC Page");
+
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().isElementPresent();
+		getbtnProductionGenerate().waitAndClick(10);
+		base.stepInfo("Regenerate Button is clicked");
+
+		base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().waitAndClick(10);
+		base.stepInfo("Regenerating the production");
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingGeneratePage() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().isElementAvailable(540);
+			}
+		}), Input.wait120);
+
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+//			}
+//		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(5000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj.Modified on 10/28/2021
+	 */
+	public void fillingGeneratePageWithContinueGenerationPopup() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getbtnContinueGeneration().isElementAvailable(150);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(2000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void navigateToNextSection() throws InterruptedException {
+
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+
+		System.out.println("Clicked on Mark Complete Button..");
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getNextButton());
+		getNextButton().Enabled();
+		getNextButton().waitAndClick(10);
+
+		base.stepInfo("Navigate to next page");
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void InsertingDataFromNumberingToGenerateWithContinuePopup(String prefixID, String suffixID,
+			String foldername, String productionname) throws InterruptedException {
+
+		fillingNumberingAndSortingPage(prefixID, suffixID);
+		navigateToNextSection();
+		fillingDocumentSelectionPage(foldername);
+		navigateToNextSection();
+		fillingPrivGuardPage();
+		fillingProductionLocationPageAndPassingText(productionname);
+		navigateToNextSection();
+		fillingSummaryAndPreview();
+		fillingGeneratePageWithContinueGenerationPopup();
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingDocumentSelectionPageWithTag(String tag1, String tag2) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getTagRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(tag1).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(tag1).waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(tag2).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(tag2).waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Document Selection Page section is filled");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTheTIFFSection() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+//		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		// Assertion:
+		base.waitForElement(getpopupAssert());
+		getpopupAssert().isDisplayed();
+		getpopupAssert().waitAndClick(10);
+
+		Thread.sleep(5000);
+		String actualText = getredactionsWithRedactionTags().getText();
+
+		driver.waitForPageToBeReady();
+		System.out.println(actualText);
+		String expectedText = "When this is checked, the configured redaction text will be applied to the burned redactions that do not have any redaction tags associated with them. If this is not checked, the default text “Redacted” will be applied to the redactions without any redaction tags.";
+
+		// softAssert
+		SoftAssert softAssertion = new SoftAssert();
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Error Line Displayed");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public String getRandomNumber(int stringLength) {
+		String randomNumber = null;
+		Random random = new Random();
+		String Number = "0123456789";
+		try {
+			StringBuilder buffer = new StringBuilder(stringLength);
+			for (int i = 0; i < stringLength; i++) {
+				int index = (int) (random.nextFloat() * Number.length());
+				buffer.append(Number.charAt(index));
+			}
+			randomNumber = buffer.toString();
+		} catch (Exception e) {
+
+		}
+		return randomNumber;
+	}
+
+	public void generateExport(String foldername, String exportDirectory, String setName) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
+		getFolderRadioButton().waitAndClick(10);
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(foldername).waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().waitAndClick(10);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionNext().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardMarkComplete().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
+		getOkButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardNext().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(exportDirectory);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPreviewprod().Enabled();
+			}
+		}), Input.wait30);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+
+		System.out.println("Wait until regenerate is enabled");
+		for (int i = 0; i < 120; i++) {
+			try {
+
+				this.driver.getWebDriver().get(Input.url + "Production/Home");
+				getProductionLink().waitAndClick(5);
+				getbtnGenerateMarkComplete().waitAndClick(5);
+				System.out.println("Generated");
+				break;
+
+			} catch (Exception e) {
+				Thread.sleep(10000);
+				driver.Navigate().refresh();
+
+			}
+		}
+
+		String batesno = getProd_BatesRange().getText();
+		System.out.println(batesno);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnSummaryNext().waitAndClick(10);
+		// Thread.sleep(10000);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled();
+			}
+		}), Input.wait30);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		int Doc = Integer.parseInt(PDocCount);
+		System.out.println(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getReviewproductionButton().Visible();
+			}
+		}), Input.wait30);
+		getReviewproductionButton().waitAndClick(10);
+
+		String location = getDestinationPathText().getText();
+		System.out.println(location);
+
+	}
+
+	public void FillingallsectionsProduction(String productionname, String PrefixID, String SuffixID,
+			final String foldername) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getComponentsMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().Enabled();
+			}
+		}), Input.wait30);
+		getComponentsMarkNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled();
+			}
+		}), Input.wait30);
+		getBeginningBates().SendKeys("100");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDPrefix().SendKeys(PrefixID);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDMinNumLength().SendKeys("10");
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
+		getKeepFamiliesTogether().waitAndClick(10);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getNumAndSortMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
+		getNumAndSortNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
+		getFolderRadioButton().waitAndClick(10);
+
+		Thread.sleep(5000);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(foldername).waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().waitAndClick(10);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionMarkComplete().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionNext().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardMarkComplete().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
+		getOkButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardNext().waitAndClick(5);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
+		getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationNext().waitAndClick(10);
+
 //  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 //  							getPreviewprod().Enabled()  ;}}), Input.wait30); 
 //  					getPreviewprod().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionSummaryMarkComplete().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryMarkComplete().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionSummaryNext().Enabled()  ;}}), Input.wait30); 
-  					getbtnProductionSummaryNext().waitAndClick(10);
-  					
-  					driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  							getbtnProductionGenerate().Visible()  ;}}), Input.wait30); 
-  					getbtnProductionGenerate().waitAndClick(10);
-  					System.out.println("Wait until regenerate is enabled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+		System.out.println("Wait until regenerate is enabled");
 //  					for (int i = 0; i < 120; i++)
 //  					{
 //  						try
@@ -2128,598 +6742,7508 @@ public class ProductionPage {
 //  					String location = getDestinationPathText().getText();
 //  			        System.out.println(location);
 //  			        Thread.sleep(2000);
-  			        
-  			    	}
-  	
-  	   public void savetemplate(String templatename)
-  	   {
-  		 this.driver.getWebDriver().get(Input.url+"Production/Home");
+
+	}
+
+	public void savetemplate(String templatename) {
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
 		getProdStateFilter().WaitUntilPresent();
 		getProdStateFilter().selectFromDropdown().selectByVisibleText("COMPLETED");
-	    getprod_ActionButton().waitAndClick(20);
-	    getprod_Action_SaveTemplate().waitAndClick(10);
-	    	
-	    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-						getprod_Templatetext().Visible()  ;}}), Input.wait30); 
-	    getprod_Templatetext().SendKeys(templatename);
-	    getProdExport_SaveButton().waitAndClick(5);
-	    base.VerifySuccessMessage("Production Saved as a Custom Template.");
-	   }
+		getprod_ActionButton().waitAndClick(20);
+		getprod_Action_SaveTemplate().waitAndClick(10);
 
-  		public void ProductionwithNatives(String productionname,String PrefixID,
-  				String SuffixID,final String foldername,String templatename) 
-  				throws InterruptedException 
-	
-  		{
-  			 addANewProduction(productionname);
-  			 getBasicInfoNext();
-   			 fillingDATSection();
-   			 fillingNativeSection();
-  			 driver.scrollPageToTop();
-   			 FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
-   			System.out.println("....executed Filling all section production......");
-  			 savetemplate(templatename);
-  			System.out.println("....hsyudhus......");
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				 getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-  	  		getAddNewProductionbutton().waitAndClick(10);
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getProductionName().Visible()  ;}}), Input.wait30); 
-  	  		getProductionName().SendKeys(productionname);
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getProductionDesc().Visible()  ;}}), Input.wait30); 
-  	  		getProductionDesc().SendKeys(productionname);
-  	  	  getprod_LoadTemplate().selectFromDropdown().selectByVisibleText("Template (Production)");
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-  	  		getBasicInfoMarkComplete().waitAndClick(10);
-  	  	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getComponentsMarkComplete().Enabled()  ;}}), Input.wait30); 
-       getComponentsMarkComplete().waitAndClick(10);
-  	  	    }
-		
-  		public void ProductionwithTechIssuetags(String productionname,String PrefixID,
-  				String SuffixID,final String foldername,String Tagnametech,String Tagnameprev) 
-  				throws InterruptedException 
-	
-  		{
-  			 addANewProduction(productionname);
-  			 getBasicInfoNext();
-  			 fillingDATSection();
-  			 fillingTIFFSection(Tagnameprev, Tagnametech);
-  			 
-  			 driver.scrollingToBottomofAPage();
-  			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  					getTextChkBox().Enabled()  ;}}), Input.wait30); 
-  			getTextChkBox().waitAndClick(10);
-  			 driver.scrollPageToTop();
-  			 FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
-  				
-  	  	    }
-  			 
-  		//added by Narendra
-  	    public void ProductionFilter(){
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
-  	       	for(int i=1; i<getFilterOptions().size(); i++) {
-  	       	getFilter(i).waitAndClick(10);
-  	       	}
-  	          	    
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
-  	    	getFilterByDRAFT().waitAndClick(10);
-  	    	getRefreshButton().waitAndClick(10);
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
-  	    	getFilterByDRAFT().waitAndClick(10);
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
-  	    	getFilterByINPROGRESS().waitAndClick(10);
-  	    	getRefreshButton().waitAndClick(10);
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
-  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByINPROGRESS().Visible()  ;}}), Input.wait30); 
-  	        getFilterByINPROGRESS().waitAndClick(10);
-  	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        		getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-  	        getFilterByFAILED().waitAndClick(10);
-   	    	getRefreshButton().waitAndClick(10);
-   	    	
-   	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
-  	    	 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-   	        		getFilterByFAILED().Visible()  ;}}), Input.wait30); 
-   	        getFilterByFAILED().waitAndClick(10);
-  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-  	        getFilterByCOMPLETED().waitAndClick(10);
-  	        getRefreshButton().waitAndClick(10);
-  	        System.out.println("Verified Production Filer");
-  	    }
-  	    
-  	    public void ProductionSort(){
-  		  	getSortByButton().selectFromDropdown().selectByVisibleText("Production Date");
-	        getRefreshButton().waitAndClick(10);
-	        
-	        getSortByButton().selectFromDropdown().selectByVisibleText("Locked");
-	        getRefreshButton().waitAndClick(10);
-	        
-	        getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
-	        getRefreshButton().waitAndClick(10);
-	        
-	        getSortByButton().selectFromDropdown().selectByVisibleText("User Name");
-	        getRefreshButton().waitAndClick(10);
-	        
-	        getSortByButton().selectFromDropdown().selectByVisibleText("Status");
-	        getRefreshButton().waitAndClick(10);
-	        
-	        System.out.println("Verified Production Sort");
-	    }
-	
-  	    public void GridView() throws InterruptedException{
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getprod_Templatetext().Visible();
+			}
+		}), Input.wait30);
+		getprod_Templatetext().SendKeys(templatename);
+		getProdExport_SaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Production Saved as a Custom Template.");
+	}
 
-  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-  	        getFilterByCOMPLETED().waitAndClick(10);
-  	        getRefreshButton().waitAndClick(10);
+	public void ProductionwithNatives(String productionname, String PrefixID, String SuffixID, final String foldername,
+			String templatename) throws InterruptedException
 
-  	        String tileitems = getProductionItemsTileItems().getText();
-  	        System.out.println(tileitems);
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getGridView().Visible()  ;}}), Input.wait30);
-  	    	getGridView().waitAndClick(10);
-  	    	getRefreshButton().waitAndClick(10);
-  	    	Thread.sleep(3000);
-  	    	String griditems = getProductionItemsGridItems().getText();
-  	    	System.out.println(griditems);
-  	    	Assert.assertTrue(griditems.contains(tileitems));
-	   		System.out.println("Verified Tile Production and Grid Production are eqal");
-	   		
-  	    }
+	{
+		addANewProduction(productionname);
+		getBasicInfoNext();
+		fillingDATSection();
+		fillingNativeSection();
+		driver.scrollPageToTop();
+		FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
+		System.out.println("....executed Filling all section production......");
+		savetemplate(templatename);
+		System.out.println("....hsyudhus......");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(productionname);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(productionname);
+		getprod_LoadTemplate().selectFromDropdown().selectByVisibleText("Template (Production)");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getComponentsMarkComplete().waitAndClick(10);
+	}
 
-  	    public void SaveTemplate(final String tempName) throws InterruptedException{
-  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
+	public void ProductionwithTechIssuetags(String productionname, String PrefixID, String SuffixID,
+			final String foldername, String Tagnametech, String Tagnameprev) throws InterruptedException
 
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-	        getFilterByCOMPLETED().waitAndClick(10);
-	        getRefreshButton().waitAndClick(10);
-	        
-	        //System.out.println("Number of records in a current page : "+getProductionItemsTile().size());
-	       	        
-	        if(getProductionItemsTile().size()>0)
-	        {
-	        	getArrow().waitAndClick(10);
-	        	getSaveTemplate().waitAndClick(10);
-	        	
-	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        			getTemplateName().Visible()  ;}}), Input.wait30); 
-	        	getTemplateName().SendKeys(tempName);
-	        	
-	        	getSave().waitAndClick(10);
-	        	BaseClass bc= new BaseClass(driver);
-	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
-	        	bc.CloseSuccessMsgpopup();
-	        	getManageTemplates().waitAndClick(10);
-		        	
-	        	ArrayList<String> tableele = new ArrayList<String>();
-		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
-				for (int i = 1; i<getCustomTemplates().size();i++) {
-					tableele.add(table.get(i).getText());
-	   		 	}
-				Assert.assertTrue(tableele.contains(tempName));
-				System.out.println("Verified saved template under Custom template");
-	        }
-  	  }
+	{
+		addANewProduction(productionname);
+		getBasicInfoNext();
+		fillingDATSection();
+		fillingTIFFSection(Tagnameprev, Tagnametech);
 
-  	    public void DeleteTemplate(final String tempName) throws InterruptedException{
-    		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-  	    	getFilterByButton().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTextChkBox().waitAndClick(10);
+		driver.scrollPageToTop();
+		FillingallsectionsProduction(productionname, PrefixID, SuffixID, foldername);
 
-  	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-  	        getFilterByCOMPLETED().waitAndClick(10);
-  	        getRefreshButton().waitAndClick(10);
-  	        
-  	        System.out.println("Number of records in a current page : "+getProductionItemsTile().size());
-  	       	        
-  	        if(getProductionItemsTile().size()>0)
-  	        {
-  	        	getArrow().waitAndClick(10);
-  	        	getSaveTemplate().waitAndClick(10);
-  	        	
-  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        			getTemplateName().Visible()  ;}}), Input.wait30); 
-  	        	getTemplateName().SendKeys(tempName);
-  	        	
-  	        	getSave().waitAndClick(10);
-  	        	BaseClass bc= new BaseClass(driver);
-  	        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
-  	        	bc.CloseSuccessMsgpopup();
-  	        	getManageTemplates().waitAndClick(10);
-  		        	
-  	        	ArrayList<String> tableele = new ArrayList<String>();
-  		   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
-  				for (int i = 1; i<getCustomTemplates().size();i++) {
-  					tableele.add(table.get(i).getText());
-  	   		 	}
-  				//System.out.println(tableele);
-  				Assert.assertTrue(tableele.contains(tempName));
-  				
-  				 driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getCustomTemplateName(tempName).Visible()  ;}}), Input.wait30); 
-  				getCustomTemplateName(tempName).waitAndClick(10);
-  				
-  				driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  						getDeleteTemplate().Visible()  ;}}), Input.wait30); 
-  				getDeleteTemplate().waitAndClick(10);
-  				
-  				getOK().waitAndClick(10);
-  				bc.VerifySuccessMessage("Custom Template deleted successfully");
-  				
-  				System.out.println("Verified saved template got deleted successfully under Custom template");
-  	        }
-    	  }
+	}
 
-  	    public void CreateProductionSets(final String prodsetName) throws InterruptedException{
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getCreateProductionSet().Visible()  ;}}), Input.wait30);
-    			getCreateProductionSet().waitAndClick(10);
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void prodGenerationFailedInProgressBar() throws InterruptedException {
 
-  	        	
-  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        			getSetName().Visible()  ;}}), Input.wait30); 
-  	        	getSetName().SendKeys("Demo");
-  	        	
-  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        			getCancelSet().Visible()  ;}}), Input.wait30); 
-  	        	getCancelSet().waitAndClick(10);
-  	    	
-    			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-    				getCreateProductionSet().Visible()  ;}}), Input.wait30);
-    			getCreateProductionSet().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByButton().Click();
+		base.stepInfo("Filtering the failed production");
 
-  	        	
-  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        			getSetName().Visible()  ;}}), Input.wait30); 
-  	        	getSetName().SendKeys(prodsetName);
-  	        	
-  	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	        			getSaveSet().Visible()  ;}}), Input.wait30); 
-  	        	getSaveSet().waitAndClick(10);
-  	        	BaseClass bc= new BaseClass(driver);
-  	        	Thread.sleep(3000);
-  	        	bc.VerifySuccessMessage("Production Set Added Successfully");
-  	        	bc.CloseSuccessMsgpopup();
-  	        	Thread.sleep(3000);	        	
-  				System.out.println("Verified created production set");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().Click();
+		base.stepInfo("Removing filter by draft");
 
-    	  }
-  	    
-  	    public void DeleteteProductionSets(final String prodsetName) throws InterruptedException{
-	    	
-  	    		getProdExport_ProductionSets().waitAndClick(10);
-	        	
-	        	String myString = prodsetName.concat(" (Production Set)");
-	        			
-	        	getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(myString);	
-	        	
-	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        			getDeleteProd().Visible()  ;}}), Input.wait60); 
-	        	getDeleteProd().waitAndClick(10);
-				
-				getOK().waitAndClick(30);
-				BaseClass bc= new BaseClass(driver);
-				Thread.sleep(3000);
-				bc.VerifySuccessMessage("Production Set has been deleted successfully.");
-				bc.CloseSuccessMsgpopup();
-				System.out.println("Verified deleted production set");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().Click();
+		base.stepInfo("Removing filter by in progress");
 
-  	  }
-  	  
-  	    public void ProductionLock() throws InterruptedException{
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-	        getFilterByCOMPLETED().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getLock().Visible()  ;}}), Input.wait30); 
-	        getLock().waitAndClick(10);
-	        Thread.sleep(1000);
-	        getOK().waitAndClick(10);
-	        Thread.sleep(1000);
-	        BaseClass bc= new BaseClass(driver);
-        	bc.VerifySuccessMessage("Production Lock Successfully.");
-        	bc.CloseSuccessMsgpopup();
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-        	
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-		    getFilterByCOMPLETED().waitAndClick(10);
-		    
-		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        Thread.sleep(1000);
-        	String locktxt = getLockIcon().GetAttribute("class");
-        	Assert.assertTrue(locktxt.contains("lock"));
-        	System.out.println("Verified Lock Production");
-	    }
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterDropDown().Enabled();
+			}
+		}), Input.wait30);
+		getFilterDropDown().Click();
 
-  	    public void CustomizeTemplate(final String tempName, String productionName) throws InterruptedException{
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-	        getFilterByCOMPLETED().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return gettxtProdGenerationFailed().Enabled();
+				}
+			}), Input.wait30);
+			base.stepInfo("Failed production displays");
 
-	        getArrow().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getSaveTemplate().Visible()  ;}}), Input.wait30); 
-	        getSaveTemplate().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getTemplateName().Visible()  ;}}), Input.wait30); 
-        	getTemplateName().SendKeys(tempName);
-        	
-        	getSave().waitAndClick(10);
-        	BaseClass bc= new BaseClass(driver);
-        	bc.VerifySuccessMessage("Production Saved as a Custom Template.");
-        	bc.CloseSuccessMsgpopup();
-        	
-        	getManageTemplates().waitAndClick(10);
-        	
-        	ArrayList<String> tableele = new ArrayList<String>();
-	   		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
-			for (int i = 1; i<getCustomTemplates().size();i++) {
+			String failedMsg = gettxtProdGenerationFailed().getText();
+			base.passedStep("verifing the failed status :" + failedMsg);
+			Assert.assertTrue(true, failedMsg);
+		} catch (Exception e) {
+			base.passedStep("No failed production occurs");
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void prodGenerationInProgressStatus() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(5);
+		base.stepInfo("Filtering the failed production");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(5);
+		base.stepInfo("Removing filter by draft");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByFAILED().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByFAILED().waitAndClick(5);
+		base.stepInfo("Removing filter by failed");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterDropDown().Enabled();
+			}
+		}), Input.wait30);
+		getFilterDropDown().waitAndClick(5);
+
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return gettxtPostGenCompleted().Enabled();
+				}
+			}), Input.wait30);
+			base.stepInfo("In Progress production displays");
+
+			String InProgressMsg = gettxtProdGenerationFailed().getText();
+			base.passedStep("verifing the In Progress status :" + InProgressMsg);
+			Assert.assertTrue(true, InProgressMsg);
+		} catch (Exception e) {
+			base.passedStep("No InProgress production occurs");
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void prodReservingBatesRangeFailedProduction() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByButton().Click();
+		base.stepInfo("Filtering the failed production");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().Click();
+		base.stepInfo("Removing filter by draft");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().Click();
+		base.stepInfo("Removing filter by in progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterDropDown().Enabled();
+			}
+		}), Input.wait30);
+		getFilterDropDown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtReservingBatesFailed().Enabled();
+			}
+		}), Input.wait30);
+		base.stepInfo("Reserving Bates Range Failed production displays");
+
+		if (gettxtReservingBatesFailed().Enabled()) {
+			String batesFailedMsg = gettxtReservingBatesFailed().getText();
+			base.passedStep("verifing the failed status :" + batesFailedMsg);
+			Assert.assertTrue(true, batesFailedMsg);
+		} else {
+			base.passedStep("No Reserving Bates Range failed production occurs");
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGearIcon().Enabled() && getGearIcon().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getGearIcon().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getOpenWizard().Click();
+
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(5);
+
+		base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().Click();
+
+		base.waitForElement(getbtnRegenerateCancel());
+		getbtnRegenerateCancel().Click();
+
+	}
+
+	public void ProductionSort() {
+		getSortByButton().selectFromDropdown().selectByVisibleText("Production Date");
+		getRefreshButton().waitAndClick(10);
+
+		getSortByButton().selectFromDropdown().selectByVisibleText("Locked");
+		getRefreshButton().waitAndClick(10);
+
+		getSortByButton().selectFromDropdown().selectByVisibleText("Production Name");
+		getRefreshButton().waitAndClick(10);
+
+		getSortByButton().selectFromDropdown().selectByVisibleText("User Name");
+		getRefreshButton().waitAndClick(10);
+
+		getSortByButton().selectFromDropdown().selectByVisibleText("Status");
+		getRefreshButton().waitAndClick(10);
+
+		System.out.println("Verified Production Sort");
+	}
+
+	public void GridView() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+		getRefreshButton().waitAndClick(10);
+
+		String tileitems = getProductionItemsTileItems().getText();
+		System.out.println(tileitems);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGridView().Visible();
+			}
+		}), Input.wait30);
+		getGridView().waitAndClick(10);
+		getRefreshButton().waitAndClick(10);
+		Thread.sleep(3000);
+		String griditems = getProductionItemsGridItems().getText();
+		System.out.println(griditems);
+		Assert.assertTrue(griditems.contains(tileitems));
+		System.out.println("Verified Tile Production and Grid Production are eqal");
+
+	}
+
+	public void SaveTemplate(final String tempName) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+		getRefreshButton().waitAndClick(10);
+
+		// System.out.println("Number of records in a current page :
+		// "+getProductionItemsTile().size());
+
+		if (getProductionItemsTile().size() > 0) {
+			getArrow().waitAndClick(10);
+			getSaveTemplate().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTemplateName().Visible();
+				}
+			}), Input.wait30);
+			getTemplateName().SendKeys(tempName);
+
+			getSave().waitAndClick(10);
+			BaseClass bc = new BaseClass(driver);
+			bc.VerifySuccessMessage("Production Saved as a Custom Template.");
+			bc.CloseSuccessMsgpopup();
+			getManageTemplates().waitAndClick(10);
+
+			ArrayList<String> tableele = new ArrayList<String>();
+			java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
+			for (int i = 1; i < getCustomTemplates().size(); i++) {
 				tableele.add(table.get(i).getText());
-   		 	}
+			}
 			Assert.assertTrue(tableele.contains(tempName));
 			System.out.println("Verified saved template under Custom template");
-	        
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getPRODUCTIONSEXPORTSTabs().Visible()  ;}}), Input.wait30); 
-			getPRODUCTIONSEXPORTSTabs().waitAndClick(10);
-			
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-        			getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-        	getAddNewProductionbutton().waitAndClick(10);
-        	
-        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getProductionName().Visible()  ;}}), Input.wait30); 
-  	  		getProductionName().SendKeys(productionName);
-  	  		
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getProductionDesc().Visible()  ;}}), Input.wait30); 
-  	  		getProductionDesc().SendKeys(productionName);
-  	  		
-  	  		String myString = tempName.concat(" (Production)");
-  	  		getLoadTemplate().selectFromDropdown().selectByVisibleText(myString);
-  	  		
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  			getBasicInfoSave().Visible()  ;}}), Input.wait30); 
-  	  		getBasicInfoSave().waitAndClick(10);
-  	  		
-  	  		this.driver.getWebDriver().get(Input.url+"Production/Home");
-  	  		
-  	  		getArrow().waitAndClick(10);
-  	  		
-  	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	  				getOpenWizard().Visible()  ;}}), Input.wait30); 
-  	  		getOpenWizard().waitAndClick(10);
-  	  	
-        	System.out.println("Verified Customized Template");
-    	  }
+		}
+	}
 
-  	    public void VerifyProductionSet(final String prodsetName) throws InterruptedException{
-	    	
-	  	    	getProdExport_ProductionSets().waitAndClick(10);
-	        	
-	        	String myString = prodsetName.concat(" (Production Set)");
-	        			
-	        	getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(myString);
-	        	
-	        	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        			getPRODUCTIONSSETName().Visible()  ;}}), Input.wait30); 
-	        	String myprodsetname = getPRODUCTIONSSETName().getText();
-	        	
+	public void DeleteTemplate(final String tempName) throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+		getRefreshButton().waitAndClick(10);
+
+		System.out.println("Number of records in a current page : " + getProductionItemsTile().size());
+
+		if (getProductionItemsTile().size() > 0) {
+			getArrow().waitAndClick(10);
+			getSaveTemplate().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTemplateName().Visible();
+				}
+			}), Input.wait30);
+			getTemplateName().SendKeys(tempName);
+
+			getSave().waitAndClick(10);
+			BaseClass bc = new BaseClass(driver);
+			bc.VerifySuccessMessage("Production Saved as a Custom Template.");
+			bc.CloseSuccessMsgpopup();
+			getManageTemplates().waitAndClick(10);
+
+			ArrayList<String> tableele = new ArrayList<String>();
+			java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
+			for (int i = 1; i < getCustomTemplates().size(); i++) {
+				tableele.add(table.get(i).getText());
+			}
+			// System.out.println(tableele);
+			Assert.assertTrue(tableele.contains(tempName));
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCustomTemplateName(tempName).Visible();
+				}
+			}), Input.wait30);
+			getCustomTemplateName(tempName).waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDeleteTemplate().Visible();
+				}
+			}), Input.wait30);
+			getDeleteTemplate().waitAndClick(10);
+
+			getOK().waitAndClick(10);
+			bc.VerifySuccessMessage("Custom Template deleted successfully");
+
+			System.out.println("Verified saved template got deleted successfully under Custom template");
+		}
+	}
+
+	public void CreateProductionSets(final String prodsetName) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCreateProductionSet().Visible();
+			}
+		}), Input.wait30);
+		getCreateProductionSet().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSetName().Visible();
+			}
+		}), Input.wait30);
+		getSetName().SendKeys("Demo");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCancelSet().Visible();
+			}
+		}), Input.wait30);
+		getCancelSet().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCreateProductionSet().Visible();
+			}
+		}), Input.wait30);
+		getCreateProductionSet().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSetName().Visible();
+			}
+		}), Input.wait30);
+		getSetName().SendKeys(prodsetName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveSet().Visible();
+			}
+		}), Input.wait30);
+		getSaveSet().waitAndClick(10);
+		BaseClass bc = new BaseClass(driver);
+		Thread.sleep(3000);
+		bc.VerifySuccessMessage("Production Set Added Successfully");
+		bc.CloseSuccessMsgpopup();
+		Thread.sleep(3000);
+		System.out.println("Verified created production set");
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void InsertingDataFromNumberingToGenerate(String prefixID, String suffixID, String foldername,
+			String productionname) throws InterruptedException {
+
+		fillingNumberingAndSortingPage(prefixID, suffixID);
+		navigateToNextSection();
+		fillingDocumentSelectionPage(foldername);
+		navigateToNextSection();
+		fillingPrivGuardPage();
+		fillingProductionLocationPageAndPassingText(productionname);
+		navigateToNextSection();
+		fillingSummaryAndPreview();
+		fillingGeneratePage();
+	}
+
+	public void DeleteteProductionSets(final String prodsetName) throws InterruptedException {
+
+		getProdExport_ProductionSets().waitAndClick(10);
+
+		String myString = prodsetName.concat(" (Production Set)");
+
+		getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(myString);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDeleteProd().Visible();
+			}
+		}), Input.wait60);
+		getDeleteProd().waitAndClick(10);
+
+		getOK().waitAndClick(30);
+		BaseClass bc = new BaseClass(driver);
+		Thread.sleep(3000);
+		bc.VerifySuccessMessage("Production Set has been deleted successfully.");
+		bc.CloseSuccessMsgpopup();
+		System.out.println("Verified deleted production set");
+
+	}
+
+	public void ProductionLock() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		for (int i = 1; i < getFilterOptions().size(); i++) {
+			getFilter(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+
+		Thread.sleep(1000);
+		getArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getLock().Visible();
+			}
+		}), Input.wait30);
+		getLock().waitAndClick(10);
+		Thread.sleep(1000);
+		getOK().waitAndClick(10);
+		Thread.sleep(1000);
+		BaseClass bc = new BaseClass(driver);
+		bc.VerifySuccessMessage("Production Lock Successfully.");
+		bc.CloseSuccessMsgpopup();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		for (int i = 1; i < getFilterOptions().size(); i++) {
+			getFilter(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+		Thread.sleep(1000);
+		String locktxt = getLockIcon().GetAttribute("class");
+		Assert.assertTrue(locktxt.contains("lock"));
+		System.out.println("Verified Lock Production");
+	}
+
+	public void CustomizeTemplate(final String tempName, String productionName) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		for (int i = 1; i < getFilterOptions().size(); i++) {
+			getFilter(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+
+		getArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSaveTemplate().Visible();
+			}
+		}), Input.wait30);
+		getSaveTemplate().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTemplateName().Visible();
+			}
+		}), Input.wait30);
+		getTemplateName().SendKeys(tempName);
+
+		getSave().waitAndClick(10);
+		BaseClass bc = new BaseClass(driver);
+		bc.VerifySuccessMessage("Production Saved as a Custom Template.");
+		bc.CloseSuccessMsgpopup();
+
+		getManageTemplates().waitAndClick(10);
+
+		ArrayList<String> tableele = new ArrayList<String>();
+		java.util.List<WebElement> table = getCustomTemplates().FindWebElements();
+		for (int i = 1; i < getCustomTemplates().size(); i++) {
+			tableele.add(table.get(i).getText());
+		}
+		Assert.assertTrue(tableele.contains(tempName));
+		System.out.println("Verified saved template under Custom template");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPRODUCTIONSEXPORTSTabs().Visible();
+			}
+		}), Input.wait30);
+		getPRODUCTIONSEXPORTSTabs().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(productionName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(productionName);
+
+		String myString = tempName.concat(" (Production)");
+		getLoadTemplate().selectFromDropdown().selectByVisibleText(myString);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoSave().Visible();
+			}
+		}), Input.wait30);
+		getBasicInfoSave().waitAndClick(10);
+
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+
+		getArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOpenWizard().Visible();
+			}
+		}), Input.wait30);
+		getOpenWizard().waitAndClick(10);
+
+		System.out.println("Verified Customized Template");
+	}
+
+	public void VerifyProductionSet(final String prodsetName) throws InterruptedException {
+
+		getProdExport_ProductionSets().waitAndClick(10);
+
+		String myString = prodsetName.concat(" (Production Set)");
+
+		getProdExport_ProductionSets().selectFromDropdown().selectByVisibleText(myString);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPRODUCTIONSSETName().Visible();
+			}
+		}), Input.wait30);
+		String myprodsetname = getPRODUCTIONSSETName().getText();
+
 //	        	Assert.assertEquals(prodsetName, myprodsetname);
 
-  	  }
+	}
 
-  	    public void ProductionDeletionCheck() throws InterruptedException{
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		getFilterByCOMPLETED().Visible()  ;}}), Input.wait30); 
-	        getFilterByCOMPLETED().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getTileDelete().Visible()  ;}}), Input.wait30); 
-       
-	      	String deletetiletxt = getTileDelete().GetAttribute("class");
-	      	Assert.assertTrue(deletetiletxt.contains("disable"));
-	      	
-	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getGridView().Visible()  ;}}), Input.wait30);
-  	    	getGridView().waitAndClick(10);
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-  	    	getRefreshButton().waitAndClick(10);
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getProductionListGridViewTable().Visible()  ;}}), Input.wait30);
-  	    	getProductionListGridViewTable().waitAndClick(10);
-  	    	
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getAction().Visible()  ;}}), Input.wait30);
-  	    	getAction().waitAndClick(10);
-  	    	
-  	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-  	    			getGridDelete().Visible()  ;}}), Input.wait30); 
-       
-	      	String deletegridtxt = getGridDelete().GetAttribute("class");
-	      	Assert.assertTrue(deletegridtxt.contains("disable"));
-	
-	      	System.out.println("Verified Production Deletion is disable");
-	    }
-  	    
-  	    public void TiffPDF(String productionName) throws InterruptedException{
-			
-	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	      			getAddNewProductionbutton().Visible()  ;}}), Input.wait30); 
-	      	getAddNewProductionbutton().waitAndClick(10);
-	      	
-	      	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	  				getProductionName().Visible()  ;}}), Input.wait30); 
-	  		getProductionName().SendKeys(productionName);
-	  		
-	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	  				getProductionDesc().Visible()  ;}}), Input.wait30); 
-	  		getProductionDesc().SendKeys(productionName);
-	  		
-	  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getBasicInfoMarkComplete().Visible()  ;}}), Input.wait30); 
-			getBasicInfoMarkComplete().waitAndClick(10);
-			
-			Thread.sleep(5000);
-	  		
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getTIFFChkBox().Enabled() ;}}), Input.wait30); 
-			getTIFFChkBox().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getTIFFTab().Enabled()  ;}}), Input.wait30); 
-			getTIFFTab().waitAndClick(10);
-			
-			driver.scrollingToBottomofAPage();
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getadvance().Visible()  ;}}), Input.wait30); 
-			getadvance().waitAndClick(10);
-			
-			driver.scrollingToBottomofAPage();
-			
-			System.out.println("Verified Advance Show/Hide Button wworking as expected");
-			
-			Assert.assertTrue(getGenerateLoadFile().Enabled());
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getGenerateLoadFile().Enabled() ;}}), Input.wait30); 
-			getGenerateLoadFile().waitAndClick(10);
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getGenerateLoadFile().Visible() ;}}), Input.wait30); 
-			getGenerateLoadFile().waitAndClick(10);
-	  		
-			System.out.println("Verified Generate Load File (LST) with Toggle button");
-			
-			driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-					getSlipSheets().Visible() ;}}), Input.wait30); 
-			getSlipSheets().waitAndClick(10);
-			
-			for(int i=1;i<=3;i++)
-			{
-			getAvailableFields(i).waitAndClick(10);
+	public void ProductionDeletionCheck() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
 			}
-	  			  	
-	  		System.out.println("Verified METADATA/WORKPRODUCT & CALCULATED Tabs");
-  	  }
-  	    
-  	    public void DeleteProduction() throws InterruptedException{
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			getFilterByButton().Visible()  ;}}), Input.wait30);
-	    	getFilterByButton().waitAndClick(10);
-	       	for(int i=1; i<getFilterOptions().size(); i++) {
-	       	getFilter(i).waitAndClick(10);
-	       	}
-	      
-	       	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       			getFilterByDRAFT().Visible()  ;}}), Input.wait30); 
-	       	getFilterByDRAFT().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getRefreshButton().Visible()  ;}}), Input.wait30);
-	        getRefreshButton().waitAndClick(10);
-	        
-	        Thread.sleep(1000);
-	        getArrow().waitAndClick(10);
-	        
-	        driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	        		getDelete().Visible()  ;}}), Input.wait30); 
-	        getDelete().waitAndClick(10);
-	        Thread.sleep(1000);
-	        getOK().waitAndClick(10);
-	        Thread.sleep(1000);
-	        BaseClass bc= new BaseClass(driver);
-	      	bc.VerifySuccessMessage("Production deleted successfully");
-	      	bc.CloseSuccessMsgpopup();
-	      	
-	      	System.out.println("Verified deleted Production");
-	    }
-  	    
-}
-    
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		for (int i = 1; i < getFilterOptions().size(); i++) {
+			getFilter(i).waitAndClick(10);
+		}
 
-   
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByCOMPLETED().Visible();
+			}
+		}), Input.wait30);
+		getFilterByCOMPLETED().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+
+		Thread.sleep(1000);
+		getArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTileDelete().Visible();
+			}
+		}), Input.wait30);
+
+		String deletetiletxt = getTileDelete().GetAttribute("class");
+		Assert.assertTrue(deletetiletxt.contains("disable"));
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGridView().Visible();
+			}
+		}), Input.wait30);
+		getGridView().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionListGridViewTable().Visible();
+			}
+		}), Input.wait30);
+		getProductionListGridViewTable().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAction().Visible();
+			}
+		}), Input.wait30);
+		getAction().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGridDelete().Visible();
+			}
+		}), Input.wait30);
+
+		String deletegridtxt = getGridDelete().GetAttribute("class");
+		Assert.assertTrue(deletegridtxt.contains("disable"));
+
+		System.out.println("Verified Production Deletion is disable");
+	}
+
+	public void TiffPDF(String productionName) throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Visible();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Visible();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(productionName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Visible();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(productionName);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getadvance().Visible();
+			}
+		}), Input.wait30);
+		getadvance().waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		System.out.println("Verified Advance Show/Hide Button wworking as expected");
+
+		Assert.assertTrue(getGenerateLoadFile().Enabled());
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGenerateLoadFile().Enabled();
+			}
+		}), Input.wait30);
+		getGenerateLoadFile().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGenerateLoadFile().Visible();
+			}
+		}), Input.wait30);
+		getGenerateLoadFile().waitAndClick(10);
+
+		System.out.println("Verified Generate Load File (LST) with Toggle button");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSlipSheets().Visible();
+			}
+		}), Input.wait30);
+		getSlipSheets().waitAndClick(10);
+
+		for (int i = 1; i <= 3; i++) {
+			getAvailableFields(i).waitAndClick(10);
+		}
+
+		System.out.println("Verified METADATA/WORKPRODUCT & CALCULATED Tabs");
+	}
+
+	public void DeleteProduction() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Visible();
+			}
+		}), Input.wait30);
+		getFilterByButton().waitAndClick(10);
+		for (int i = 1; i < getFilterOptions().size(); i++) {
+			getFilter(i).waitAndClick(10);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Visible();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRefreshButton().Visible();
+			}
+		}), Input.wait30);
+		getRefreshButton().waitAndClick(10);
+
+		Thread.sleep(1000);
+		getArrow().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDelete().Visible();
+			}
+		}), Input.wait30);
+		getDelete().waitAndClick(10);
+		Thread.sleep(1000);
+		getOK().waitAndClick(10);
+		Thread.sleep(1000);
+		BaseClass bc = new BaseClass(driver);
+		bc.VerifySuccessMessage("Production deleted successfully");
+		bc.CloseSuccessMsgpopup();
+
+		System.out.println("Verified deleted Production");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void CreateNewProduction(String productionname, String PrefixID, String SuffixID, final String foldername,
+			String tagname) throws InterruptedException {
+
+		base.selectproject();
+		driver.getWebDriver().get(Input.url + "Production/Home");
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAddNewProductionbutton().Enabled();
+			}
+		}), Input.wait30);
+		getAddNewProductionbutton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionName().Enabled();
+			}
+		}), Input.wait30);
+		getProductionName().SendKeys(productionname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionDesc().Enabled();
+			}
+		}), Input.wait30);
+		getProductionDesc().SendKeys(productionname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBasicInfoMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getBasicInfoMarkComplete().Click();
+
+		base.stepInfo("New Production  is created");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getDATChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDATTab().Enabled();
+			}
+		}), Input.wait30);
+		getDATTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification1().Enabled() && getDAT_FieldClassification1().isDisplayed();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText("Bates");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText("BatesNumber");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField1().Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField1().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("DAT field filled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getNativeChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
+		getNativeTab().Click();
+
+		driver.scrollPageToTop();
+
+		Reporter.log(getNative_text().getText(), true);
+		// System.out.println(getNative_text().getText());
+		UtilityLog.info(getNative_text().getText());
+
+		// work on this assert..issue with text format!
+		/*
+		 * Assert.assertEquals(getNative_text().getText(),"To produce specific docs" +
+		 * " natively, please select file types and/or tags below. In addition," +
+		 * " to export placeholders for these docs, configure placeholder in the TIFF "
+		 * + "or PDF section for the same selected file types and/or tags.");
+		 * 
+		 * Assert.assertEquals(getNative_text_Color().GetAttribute("class"),"blue-text")
+		 * ;
+		 */
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_SelectAllCheck().Enabled();
+			}
+		}), Input.wait30);
+		getNative_SelectAllCheck().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_AdvToggle().Enabled();
+			}
+		}), Input.wait120);
+		getNative_AdvToggle().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNative_GenerateLoadFileLST().Enabled();
+			}
+		}), Input.wait60);
+		getNative_GenerateLoadFileLST().waitAndClick(20);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("NATIVE field filled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().Click();
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+			}
+		}), Input.wait30);
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnterBranding().Enabled();
+			}
+		}), Input.wait30);
+
+		new Actions(driver.getWebDriver()).moveToElement(getTIFF_EnterBranding().getWebElement()).click();
+		// getTIFF_EnterBranding().waitAndClick(10);
+		getTIFF_EnterBranding().SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFF_EnableforPrivilegedDocs().Enabled();
+			}
+		}), Input.wait30);
+		// getTIFF_EnableforPrivilegedDocs().Click();
+
+		getPriveldge_SelectTagButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TagTree(tagname).isDisplayed();
+			}
+		}), Input.wait30);
+		getPriveldge_TagTree(tagname).Click();
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPriveldge_TextArea().Enabled();
+			}
+		}), Input.wait30);
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(searchString4);
+
+		driver.scrollingToBottomofAPage();
+
+//  		Assert.assertEquals(getTiff_redactiontext().getText(),"To burn redactions, select specific redactions"
+//  				+ " or all redactions (annotation layer). Specify the redaction text for each"
+//  				+ " selected redaction.");
+		//
+
+		base.stepInfo("TIFF field filled");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTextChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextTab().Enabled();
+			}
+		}), Input.wait30);
+		getTextTab().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTextcomponent_text().isDisplayed();
+			}
+		}), Input.wait30);
+
+//  		String exptext= getTextcomponent_text().getText();
+//  		System.out.println(exptext);
+//  		UtilityLog.info(exptext);
+//  		Assert.assertEquals(exptext, "Redacted documents are automatically OCRed"
+//  				+ " to export the text. Original extracted text is exported for natively "
+//  				+ "produced documents (file based placeholdering). "
+//  				+ "For exception and privileged placeholdered docs, "
+//  				+ "the placeholder text is exported."+" The configured format is applicable only to OCRed text and production generated text"
+//  				+ ", and not to ingested text.");
+
+		base.stepInfo("Text field filled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedProductionComponents(productionname).isDisplayed();
+			}
+		}), Input.wait30);
+		getAdvancedProductionComponents(productionname).Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getMP3ChkBox(productionname).isDisplayed();
+			}
+		}), Input.wait30);
+		getMP3ChkBox(productionname).Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTranslationsChkBox(productionname).isDisplayed();
+			}
+		}), Input.wait30);
+		getTranslationsChkBox(productionname).Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Advanced production components field filled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkComplete().isDisplayed();
+			}
+		}), Input.wait30);
+		getComponentsMarkComplete().Click();
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getComponentsMarkNext().isDisplayed();
+			}
+		}), Input.wait30);
+		getComponentsMarkNext().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getBeginningBates().Enabled();
+			}
+		}), Input.wait30);
+		getBeginningBates().SendKeys(getRandomNumber(2));
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDPrefix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDPrefix().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDSuffix().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDSuffix().SendKeys(SuffixID);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtBeginningBatesIDMinNumLength().Enabled();
+			}
+		}), Input.wait30);
+		gettxtBeginningBatesIDMinNumLength().SendKeys(getRandomNumber(1));
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingMetaData().selectFromDropdown().selectByVisibleText("DocID");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSortingMetaData().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstSubSortingOrder().Enabled();
+			}
+		}), Input.wait30);
+		getlstSubSortingOrder().selectFromDropdown().selectByVisibleText("Ascending");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getKeepFamiliesTogether().Visible();
+			}
+		}), Input.wait30);
+		getKeepFamiliesTogether().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortMarkComplete().Enabled();
+			}
+		}), Input.wait30);
+		getNumAndSortMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNumAndSortNext().Enabled();
+			}
+		}), Input.wait30);
+		getNumAndSortNext().Click();
+		base.stepInfo("Numbering and sorting field filled");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFolderRadioButton().Visible();
+			}
+		}), Input.wait30);
+		getFolderRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(foldername).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(foldername).Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Selected Documents");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnDocumentsSelectionNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnDocumentsSelectionNext().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOkButton().Visible();
+			}
+		}), Input.wait30);
+		getOkButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardNext().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getlstProductionRootPaths().Visible();
+			}
+		}), Input.wait30);
+		try {
+			getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+		} catch (Exception e) {
+			// if passed production path is wrong! go by index and then select
+			getlstProductionRootPaths().selectFromDropdown().selectByIndex(1);
+		}
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getProductionOutputLocation_ProductionDirectory().Visible();
+			}
+		}), Input.wait30);
+		getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionLocationNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionLocationNext().Click();
+		base.stepInfo("location for production is given");
+
+		/*
+		 * driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return
+		 * getPreviewprod().Enabled() ;}}), Input.wait30);
+		 * getPreviewprod().waitAndClick(10);
+		 */
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryMarkComplete().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionSummaryNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionSummaryNext().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().isElementAvailable(540);
+			}
+		}), Input.wait120);
+
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		// work on below assert..for now its ok bcz we are validating with commit
+		// button!
+//  		Assert.assertTrue(getDocumentGeneratetext().isDisplayed());
+
+//  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//  				getQC_backbutton().Enabled()  ;}}), Input.wait30); 
+//  		getQC_backbutton().waitAndClick(15);
+
+//  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//  				getProd_BatesRange().Enabled()  ;}}), Input.wait30); 
+//  		String batesno = getProd_BatesRange().getText();
+
+//  		Reporter.log("Bate number "+batesno,true);
+//  		System.out.println(batesno);
+//  		UtilityLog.info(batesno);
+
+//  		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
+//  				getbtnSummaryNext().Enabled()  ;}}), Input.wait30); 
+//  		getbtnSummaryNext().waitAndClick(10);
+
+		base.stepInfo("production generated");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled();
+			}
+		}), Input.wait30);
+		Thread.sleep(1000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().Enabled();
+			}
+		}), Input.wait30);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().Enabled();
+			}
+		}), Input.wait30);
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void selectExportSetFromDropDown() {
+		base.waitForElement(getProdExport_ProductionSets());
+		getProdExport_ProductionSets().Click();
+		base.waitForElement(getOptionExportSet());
+		getOptionExportSet().Click();
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void previewPriveldgeToolbar() {
+
+		base.waitForElement(getPriviledgedDocumunentsHelpIcon());
+		getPriviledgedDocumunentsHelpIcon().Click();
+
+		SoftAssert softAssertion = new SoftAssert();
+		String actual = getPriviledgedToolTip_Text().getWebElement().getText();
+		String expected = "Number of documents in the selected production documents having at least one Privileged tag specified in the TIFF/PDF section.";
+
+		softAssertion.assertEquals(actual, expected);
+		base.stepInfo("priviledged tooltip displayed");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void viewSaveTemplateControlForDATMapping() throws InterruptedException {
+
+		base.waitForElement(getbtnProductions());
+		getbtnProductions().Click();
+		base.waitForElement(getManageTemplates());
+		getManageTemplates().Click();
+		base.waitForElement(getbtnCustomTemplateView());
+		getbtnCustomTemplateView().Click();
+		base.waitForElement(getbtnTemplateGuardNext());
+		getbtnTemplateGuardNext().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().Click();
+		base.waitForElement(getDATTab());
+		getDATTab().Click();
+
+		base.waitForElement(getDAT_FieldClassification1());
+		if (getDAT_FieldClassification1().Enabled()) {
+			Assert.assertTrue(false);
+			base.failedStep("Specify DAT Field Mapping is enabled");
+
+		} else {
+			Assert.assertTrue(true);
+			base.passedStep("Specify DAT Field Mapping is disabled");
+		}
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void clickComponentMarkCompleteAndIncomplete() {
+
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getComponentsMarkComplete());
+		getComponentsMarkComplete().Enabled();
+		getComponentsMarkComplete().Click();
+
+		driver.waitForPageToBeReady();
+
+		driver.scrollPageToTop();
+		base.waitForElement(getbtnComponentsMarkIncomplete());
+		getbtnComponentsMarkIncomplete().Enabled();
+		getbtnComponentsMarkIncomplete().waitAndClick(10);
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTIFFWithDisablePrivilegdedDocs() {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Click();
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 10/27/2021 This method is to chec
+	 *         disabled Burn Redaction Toggle
+	 */
+	public void burnRedactionToggleDisableCheck() {
+		boolean flag;
+
+		flag = getChk_burnReductiontoggle().GetAttribute("class").contains("activeC");
+
+		if (!flag) {
+
+			Assert.assertTrue(true);
+			base.passedStep("burn reduction toggle is disabled");
+		} else {
+			Assert.assertTrue(false);
+			base.failedStep("burn reduction toggle is unabled");
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj.Modified on 10/27/2021
+	 * @param Fills Priviledge Documents by selecting a tag and passing that query
+	 *              to find the matching documents.
+	 */
+	public void priviledgeDocCheck(String tagname) throws InterruptedException {
+		base.waitForElement(getAddRuleBtn());
+		getAddRuleBtn().Click();
+
+		base.waitForElement(getTagsBtn());
+		getTagsBtn().Click();
+
+		base.hitTabKey(1);
+		base.waitForElement(getTagsHeader());
+		getTagsHeader().Click();
+
+		base.waitForElement(getPrivGuardAllTags());
+		selectPrivGuardTag(tagname).Click();
+
+		base.waitForElement(getInsertQueryBtn());
+		getInsertQueryBtn().Click();
+
+		base.waitForElement(getCheckForMatchingDocuments());
+		getCheckForMatchingDocuments().Enabled();
+
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void DraftAssertionInGeneratePage() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Draft";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusDraftTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Draft Displayed successfully");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void prodGenerationInProgressBar() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getFilterByButton().Enabled();
+
+			}
+
+		}), Input.wait30);
+
+		getFilterByButton().Click();
+
+		base.stepInfo("Filtering the failed production");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getFilterByDRAFT().Enabled();
+
+			}
+
+		}), Input.wait30);
+
+		getFilterByDRAFT().Click();
+
+		base.stepInfo("Removing filter by draft");
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getFilterByFAILED().Enabled();
+
+			}
+
+		}), Input.wait30);
+
+		getFilterByFAILED().Click();
+
+		base.stepInfo("Removing filter by in progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getFilterDropDown().Enabled();
+			}
+
+		}), Input.wait30);
+
+		getFilterDropDown().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return gettxtProdGenerationFailed().Enabled();
+
+			}
+
+		}), Input.wait30);
+
+		base.stepInfo("Failed production displays");
+
+		if (gettxtProdGenerationInProgress().isDisplayed()) {
+
+			String failedMsg = gettxtProdGenerationInProgress().getText();
+
+			base.passedStep("verifing the failed status :" + failedMsg);
+
+			Assert.assertTrue(true, failedMsg);
+
+		} else {
+
+			base.failedStep("No failed production occurs");
+
+		}
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void selectDownloadInGeneratePage() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+
+			}
+
+		}), Input.wait30);
+
+		getbtnProductionGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+
+		System.out.println("Wait for generate to complete");
+
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+
+			}
+
+		}), Input.wait120);
+
+		String actualText = getStatusSuccessTxt().getText();
+
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		Thread.sleep(5000);
+
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+
+		// added thread.sleep to avoid exception while executing in batch
+
+		Thread.sleep(1000);
+
+		System.out.println(PDocCount);
+
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+
+		System.out.println(Doc);
+
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getSelectDownloadBtn().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		getSelectDownloadBtn().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getSelectSharableLinks().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		getSelectSharableLinks().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getAssertOnPassword().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		String actualText1 = getAssertOnPassword().getText();
+
+		Assert.assertNotNull(actualText1);
+
+		System.out.println(actualText1);
+
+		base.passedStep("Passwword Generated successfully");
+
+		SoftAssert assertallfiles = new SoftAssert();
+
+		String expectedtext = "All Files";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getAssertAllFile().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		String assertallfiles1 = getAssertAllFile().getText();
+
+		System.out.println(assertallfiles1);
+
+		assertallfiles.assertTrue(assertallfiles1.contains(expectedtext));
+
+		base.passedStep("Allfile is  Displayed successfully");
+
+		SoftAssert AssertDATFile = new SoftAssert();
+
+		String expectedtextinfield = "DAT File Only";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getAssertDATFile().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		String actualTextInField = getAssertDATFile().getText();
+
+		System.out.println(actualTextInField);
+
+		AssertDATFile.assertTrue(actualTextInField.contains(expectedtextinfield));
+
+		base.passedStep("DATfile is Displayed successfully");
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void AssertionOnQCGenerationPage() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+
+			}
+
+		}), Input.wait30);
+
+		getbtnProductionGenerate().Click();
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+
+			}
+
+		}), Input.wait120);
+
+		String actualText = getStatusSuccessTxt().getText();
+
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		getConfirmProductionCommit().waitAndClick(10);
+		String PDocCount = getProductionDocCount().getText();
+
+		// added thread.sleep to avoid exception while executing in batch
+
+		Thread.sleep(1000);
+
+		System.out.println(PDocCount);
+
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+
+		System.out.println(Doc);
+
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getAssertCommitBtn().Enabled() && getAssertCommitBtn().isDisplayed();
+
+			}
+
+		}), Input.wait60);
+
+		SoftAssert verify = new SoftAssert();
+
+		expectedText = "Commit";
+
+		String actualText1 = getAssertCommitBtn().getText();
+
+		System.out.println(actualText1);
+
+		verify.assertTrue(actualText1.contains(expectedText));
+
+		base.passedStep("" + actualText1 + " is displayed  successfully");
+
+		SoftAssert copypathverification = new SoftAssert();
+
+		expectedText = "Copy Path";
+
+		String actualTextincopypathBtn = getAssertCopyPathBtn().getText();
+
+		System.out.println(actualTextincopypathBtn);
+
+		copypathverification.assertTrue(actualTextincopypathBtn.contains(expectedText));
+
+		base.passedStep("" + actualTextincopypathBtn + " is displayed  successfully");
+
+		SoftAssert downloadverification = new SoftAssert();
+
+		expectedText = "Download";
+
+		String actualTextindownloadBtn = getSelectDownloadBtn().getText();
+
+		System.out.println(actualTextindownloadBtn);
+
+		downloadverification.assertTrue(actualTextindownloadBtn.contains(expectedText));
+
+		base.passedStep("" + actualTextindownloadBtn + " is displayed  successfully");
+
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
+	 * @Description : After completing one by one page navigating to next page
+	 */
+//	Reusable method for switching to next page Button with complte and next
+	public void afterCompletingNavigatingToNextPage() {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.clickButton(getMarkCompleteLink());
+		System.out.println("Clicked on Mark Complete Button..");
+		driver.waitForPageToBeReady();
+		base.clickButton(getNextButton());
+		base.stepInfo("Navigate to next page");
+
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
+	 * @Description : verifying preview button presence when DAT only selection
+	 */
+//	Reusable method invisibility of element presence
+	public void verifyingPreviewButtonDisplayed() throws InterruptedException {
+		try {
+			if (getbtnPreview().isDisplayed() == false) {
+				System.out.println("pass");
+
+			} else {
+				System.out.println("fail");
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			base.passedStep("preview button is not disbaled");
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @author Indium-Baskar Date:30/8/2021 Modified date:N/A
+	 * @Description : TIFF Selection in branding
+	 */
+//	selecting Bates section in insertmetadata field
+	public void tiffBrandingSelection(String tagName) {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+		driver.scrollPageToTop();
+		base.waitForElement(getTIFF_InsertMetadataField());
+		getTIFF_InsertMetadataField().waitAndClick(5);
+		base.waitForElement(getTIFF_selectedMetadataField());
+		getTIFF_selectedMetadataField().waitAndClick(5);
+		getTIFF_selectedMetadataField().selectFromDropdown().selectByVisibleText("BatesNumber");
+		base.waitForElement(getPopUpOkButtonInserMetaData());
+		getPopUpOkButtonInserMetaData().waitAndClick(5);
+		String actual = "$BatesNumber$";
+		softAssertion.assertEquals(actual, getVerifyTextBoxInserMetaData().getText());
+		softAssertion.assertAll();
+		base.passedStep("Tiff branding section selected: '" + actual + "' in insert metadata field ");
+
+	}
+
+	/**
+	 * Modified by sowndarya on 22/9/2021
+	 * 
+	 * @author Indium-Baskar Date:30/8/2021 Modified date:N/A
+	 * @Description : TIFF document selection in privilege
+	 */
+//	Reusable method for Privilege document selection
+	public void tiffPrivilegeDocumentSelection(String tagName) throws InterruptedException {
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().waitAndClick(5);
+		base.waitForElement(getPriveldge_TagTree(tagName));
+		Thread.sleep(1000);
+		getPriveldge_TagTree(tagName).waitAndClick(10);
+		getPriveldge_TagTree_SelectButton().waitAndClick(10);
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+		Thread.sleep(1000);
+		getPriveldge_TextArea().SendKeys(tagNameTechnical);
+
+	}
+
+	/**
+	 * @author Indium-Baskar Date:2/9/2021 Modified date:N/A
+	 * @Description : TIFF Advanced link
+	 */
+//	Reusable method for toggle enable in slip sheet in tiff advanced link
+	public void slipSheetToggleEnable() {
+		base.waitForElement(getTiffAdvancedLink());
+		getTiffAdvancedLink().waitAndClick(5);
+		base.waitForElement(getTiffAdvancedSlipSheetToggle());
+		getTiffAdvancedSlipSheetToggle().waitAndClick(5);
+	}
+
+	/**
+	 * @author Indium-Baskar Date:2/9/2021 Modified date:N/A
+	 * @Description : Availablefieldselection in slip sheet
+	 */
+//	Reusable Method for available field selection
+	public void availableFieldSelection(String fieldValue) {
+		driver.waitForPageToBeReady();
+		base.clickButton(getSlipCalculatedTabSelection());
+		base.clickButton(getCalculatedCheckBoxSelection(fieldValue));
+		base.clickButton(getAddSelected());
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:31/8/2021 Modified date:N/A
+	 * @Description : Click preview tab button in summary and preview tab
+	 */
+//	Reusable method for clicking the preview button and visibility of element presence
+	public void viewingPreviewButtonInSummaryTab() throws InterruptedException {
+		try {
+			base.waitForElement(getbtnPreview());
+			if (getbtnPreview().Enabled() && getbtnPreview().isDisplayed()) {
+				softAssertion.assertEquals(getbtnPreview().isDisplayed().booleanValue(), true);
+				getbtnPreview().waitAndClick(10);
+				base.passedStep("clicking preview button and verifying the standard pdf format");
+			} else {
+				base.stepInfo("Preview button is not displayed in summary and preview tab");
+			}
+			driver.waitForPageToBeReady();
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			base.passedStep("Preview button is not displayed in summary and preview tab");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
+	 * @Description : Opening the download pdf and verifying the text with standard
+	 *              templeate
+	 */
+//	Reusable method for passing the pdf url and verifying with prefix suffix
+	public void verifyContentInPDf(String prefixID, String suffixID) throws InterruptedException {
+		int parseInt = Integer.parseInt(num1);
+		char c = '0';
+		String empty = "";
+		for (int i = 0; i < parseInt - 2; i++) {
+			empty = empty + c;
+		}
+		System.out.println(empty);
+		// specify the url of the pdf file
+		String fileName = prefixID + empty + num + suffixID;
+		driver.waitForPageToBeReady();
+//		Thread.sleep(5000);
+		System.out.println(fileName);
+		String url = "file:///C://BatchPrintFiles//downloads//" + fileName + ".pdf";
+		driver.get(url);
+		driver.waitForPageToBeReady();
+		try {
+			String pdfContent = readPdfContent(url);
+			System.out.println(pdfContent);
+			Assert.assertTrue(pdfContent.contains(
+					"This is sample draft document, demonstrating how sizing, branding and slipsheets configurations will be \r\n"
+							+ "applied on the produced TIFF or PDF documents. "));
+			base.passedStep(
+					"Standard Production template displayed along with Slip Sheets as TIFF is selected in production");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
+	 * @Description : Reading Pdf text
+	 */
+//	Reusable method for reading pdf text
+	public static String readPdfContent(String url) throws IOException {
+		URL pdfUrl = new URL(url);
+		InputStream in = pdfUrl.openStream();
+		BufferedInputStream bf = new BufferedInputStream(in);
+		PDDocument doc = PDDocument.load(bf);
+		PDFTextStripper pdfStrip = new PDFTextStripper();
+		pdfStrip.setStartPage(2);
+		pdfStrip.setEndPage(2);
+		String content = pdfStrip.getText(doc);
+//		doc.close();
+
+		return content;
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
+	 * @Description : Advanced production component MP3 filling
+	 */
+	public void advancedProductionComponentsMP3() {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getMP3CheckBox());
+		driver.scrollPageToTop();
+		base.stepInfo("Advanced production section MP3 files is filled");
+	}
+
+	/**
+	 * @Author @author Indium-Baskar Date:1/9/2021 Modified date:N/A
+	 * @Description : Adding encoding in Ansi
+	 */
+	public void selectFormatInTextFile() {
+		getAnsiRadioBtn().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAnsiRadioBtn());
+		base.clickButton(getAnsiDrpDwn());
+		getAnsiDrpDwn().selectFromDropdown().selectByVisibleText("Unicode (UTF-8)");
+		driver.scrollPageToTop();
+		base.stepInfo("Advanced production section MP3 files is filled");
+	}
+
+	public void fillingDocuSelectionPage(String searchname, String searchname1) {
+		try {
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSearchRadioButton().Enabled();
+				}
+			}), Input.wait30);
+			getSearchRadioButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectSearches(searchname).Visible();
+				}
+			}), Input.wait30);
+
+			if (getSelectSearches(searchname).isDisplayed()) {
+				getSelectSearches(searchname).Click();
+				System.out.println(searchname + " is Selected");
+			} else {
+				System.out.println("not Displayed");
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return get_MySearchesNewNode(searchname1).Visible();
+				}
+			}), Input.wait30);
+
+			if (get_MySearchesNewNode(searchname1).isDisplayed()) {
+
+				get_MySearchesNewNode(searchname1).Click();
+				System.out.println(searchname1 + " is Selected");
+			} else {
+				System.out.println("not Displayed");
+			}
+
+			driver.scrollingToBottomofAPage();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIncludeFamilies().Visible();
+				}
+			}), Input.wait30);
+			getIncludeFamilies().Click();
+
+			driver.scrollPageToTop();
+			System.out.println("Document Selection Page section is filled");
+			base.stepInfo("Document Selection Page section is filled");
+
+		} catch (Exception e) {
+			System.out.println("No element & node ,is not Present in Project Administration");
+			UtilityLog.info("No element & node ,is not Present in Project Administration");
+		}
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void selectingDefaultSecurityGroup() {
+		base.waitForElement(getSecurityGroupDropDown());
+		getSecurityGroupDropDown().waitAndClick(10);
+		base.waitForElement(getDefaultSecurityGroup());
+		getDefaultSecurityGroup().waitAndClick(10);
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingNativeSectionWithoutSelectingTag() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getNativeChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNativeTab().Enabled();
+			}
+		}), Input.wait30);
+		getNativeTab().Click();
+
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getMarkCompleteLink());
+		getMarkCompleteLink().Enabled();
+		getMarkCompleteLink().waitAndClick(10);
+
+		Thread.sleep(5000);
+
+		String ExpectedMsg = "To export natives, you must select at least a file group type or a tag in the Native section.";
+		String ActualMsg = getErrorMsgPopup().getText();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getErrorMsgPopup().Visible();
+			}
+		}), Input.wait30);
+		Assert.assertEquals(ActualMsg, ExpectedMsg);
+
+		UtilityLog.info("Expected message - " + ExpectedMsg);
+		Reporter.log("Expected message - " + ExpectedMsg, true);
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void AssertionInTIFFSection() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTIFFTab().Enabled();
+			}
+		}), Input.wait30);
+		getTIFFTab().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getclkNativelyProducedDocumentLnk().Enabled();
+			}
+		}), Input.wait30);
+		getclkNativelyProducedDocumentLnk().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFillingPlaceHolder().Enabled();
+			}
+		}), Input.wait30);
+		new Actions(driver.getWebDriver()).moveToElement(getFillingPlaceHolder().getWebElement()).click();
+		getFillingPlaceHolder().SendKeys("testing");
+
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getMarkCompleteLink());
+		getMarkCompleteLink().Enabled();
+		getMarkCompleteLink().waitAndClick(10);
+
+		Thread.sleep(5000);
+
+		String ExpectedMsg = "In the TIFF / PDF section, no values are specified in the placeholder configuration for the docs produced natively. Please check.";
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getErrorMsgPopupInTiffSection().Visible();
+			}
+		}), Input.wait30);
+		String ActualMsg = getErrorMsgPopupInTiffSection().getText();
+		Assert.assertEquals(ActualMsg, ExpectedMsg);
+		UtilityLog.info("Expected message - " + ExpectedMsg);
+		Reporter.log("Expected message - " + ExpectedMsg, true);
+
+	}
+
+	/**
+	 * @Author Indium-Jagadeesh.Jana
+	 */
+	public void verifyTIFFSectionRedactionsText() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		// enable burn redaction toggle button
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		String redactionTextExpected = "Redactions without redaction tags will be automatically burned with the redaction text 'REDACTED' by default. This option can be turned on/off in the 'Select Redaction Tags'. The default redaction text 'REDACTED' for this option can be changed in the 'Specify Redaction Text by Selecting Redaction Tags' below.";
+		String redactionsTextActual = getRedactionText().getText();
+		// System.out.println("Expected :" + redactionTextExpected);
+		// System.out.println("Actual :" +redactionsTextActual);
+
+		// ***validating the readaction text
+		SoftAssert softAssertion = new SoftAssert();
+		softAssertion.assertEquals(redactionsTextActual, redactionTextExpected);
+
+		// ***validating the Exclamation Icon is present or not in redaction text
+		if (getRedactionTextExclamationIcon().isDisplayed() == true) {
+			// System.out.println("Icon present");
+			softAssertion.assertTrue(true);
+			base.passedStep("Exclamation Icon is present in Redaction Text ");
+		} else {
+			// System.out.println("Icon absent");
+			softAssertion.assertTrue(false);
+			base.failedStep("Exclamation Icon is absent in Redaction Text");
+		}
+
+		softAssertion.assertAll();
+		base.passedStep("Pass- RedactionText with Exclamation Icon Verification on Tiff/PDF");
+	}
+
+	/**
+	 * @Author Indium-Jagadeesh.Jana for Story - 56119
+	 */
+	public void verifyRedactionsWithoutRedactionTagsCheckBox() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		driver.scrollingToBottomofAPage();
+		// ***enable burn redaction toggle button
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		// ***Select Redaction Tags-radio Button
+		base.waitForElement(getClk_SelectRedactionTagsRadio());
+		getClk_SelectRedactionTagsRadio().Click();
+
+		driver.scrollingToBottomofAPage();
+		// getRedWithoutRedCheckbox().ScrollTo();
+		Thread.sleep(4000);
+
+		base.waitForElement(getRedWithoutRedCheckbox());
+		getRedWithoutRedCheckbox().Click(); // to unselect (by default it was selected)
+		Thread.sleep(4000);
+
+		// ***Validating CheckBox-Redactions without Redaction Tags
+		if (getRedWithoutRedCheckbox().Selected() == false) {
+			System.out.println("Checkbox Selected ");
+			softAssertion.assertTrue(true);
+			base.passedStep(" 'Redaction without redaction tags' check box is selected by default ");
+		} else {
+			System.out.println("Checkbox Not-Selected");
+			softAssertion.assertTrue(false);
+			base.failedStep(" 'Redaction without redaction tags' check box is not-selected by default ");
+		}
+
+		softAssertion.assertAll();
+		base.passedStep(
+				"Pass- 'Redaction without redaction tags' check box is selected by default when user clicks on 'Select Redaction Tags' ");
+
+	}
+
+	/**
+	 * @Author Indium-Jagadeesh.Jan
+	 */
+	public void SummaryAndPreview_DisabledPreviewButton() {
+		SoftAssert softAssertion = new SoftAssert();
+
+		try {
+			if (getPreviewButton().isDisplayed() == false) {
+				softAssertion.assertTrue(true);
+			} else {
+				softAssertion.assertTrue(false);
+			}
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			e.printStackTrace();
+			base.passedStep("Pass - preview Button is not displayed as expected");
+
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void fillingTiffSectionBySelectingTwoRedactedTags(String Tag, String nextTag) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+
+		base.waitForElement(getClk_burnReductiontoggle());
+
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+
+		driver.waitForPageToBeReady();
+
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBoxRedactionTag(Tag));
+
+		getClkCheckBoxRedactionTag(Tag).Enabled();
+
+		getClkCheckBoxRedactionTag(Tag).Click();
+
+		base.waitForElement(getClkCheckBoxRedactionTags(nextTag));
+
+		getClkCheckBoxRedactionTags(nextTag).Enabled();
+
+		getClkCheckBoxRedactionTags(nextTag).Click();
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void SummaryAndPreviewWithAssert() throws InterruptedException {
+
+		Thread.sleep(5000);
+
+		String ExpectedMsg = "2";
+		String ActualMsg = getDocCount().getText();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+
+			public Boolean call() {
+
+				return getDocCount().Visible();
+
+			}
+
+		}), Input.wait30);
+
+		Assert.assertEquals(ActualMsg, ExpectedMsg);
+
+		System.out.println(ActualMsg);
+
+		UtilityLog.info("Expected Count Of Doc - " + ExpectedMsg);
+
+		Reporter.log("Expected Count Of Doc - " + ExpectedMsg, true);
+	}
+
+	/**
+	 * @author Gopinath Created Date : 12/10/2021 modified Date : NA
+	 * @description This method for manage template filling tiff section.
+	 */
+	public void verifyingManageTemplateFillingTiffSection() throws InterruptedException {
+		try {
+			base.waitForElement(getManageTemplates());
+			getManageTemplates().Click();
+
+			base.waitForElement(getbtnCustomTemplateView());
+			getbtnCustomTemplateView().Click();
+			base.waitForElement(getbtnTemplateGuardNext());
+			getbtnTemplateGuardNext().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getBrandingText());
+			base.waitTillElemetToBeClickable(getBrandingText());
+			getBrandingText().ScrollTo();
+			base.waitForElement(getBrandingText());
+			Assert.assertTrue(getBrandingText().isDisplayed(), "The branding text is not displayed");
+			if (getBrandingText().isDisplayed()) {
+				base.passedStep("Branding text is displayed");
+			}
+
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getPlaceholderText());
+			Assert.assertEquals(getPlaceholderText().getWebElement().isDisplayed(), true,
+					"The placeholder text is not displayed");
+			if (getPlaceholderText().isDisplayed()) {
+				base.passedStep("placeholder text is displayed");
+			}
+
+			Assert.assertEquals(getLocation().getWebElement().isDisplayed(), true,
+					"The Location in TiffSection is not displayed");
+			if (getLocation().isDisplayed()) {
+				base.passedStep("Location in TiffSection is displayed");
+			}
+
+			Assert.assertEquals(getTIFF_EnableforPrivilegedDocs().getWebElement().isDisplayed(), true,
+					"The EnableforPrivilegedDocs is not displayed");
+			if (getTIFF_EnableforPrivilegedDocs().isDisplayed()) {
+				base.passedStep("Priviledged doc toggle is displayed");
+			}
+
+			Assert.assertEquals(getTechissue_toggle().getWebElement().isDisplayed(), true,
+					"tech issue toggle is not displayed");
+			if (getTechissue_toggle().isDisplayed()) {
+				base.passedStep("tech issue toggle is displayed");
+			}
+
+			Assert.assertEquals(getBurnRedtoggle().getWebElement().isDisplayed(), true,
+					"Burnredactiontoggle is not displayed");
+			if (getBurnRedtoggle().isDisplayed()) {
+				base.passedStep("Burn redaction toggle is displayed");
+			}
+
+			Assert.assertEquals(getPriveldge_TextArea().getWebElement().isDisplayed(), true,
+					"priviledged text area  is not displayed");
+			if (getPriveldge_TextArea().isDisplayed()) {
+				base.passedStep("priviledged text area is displayed ");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while managing template filling tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Created Date : 12/10/2021 modified Date : NA
+	 * @description : This method for filling tiff section tech issue without
+	 *              entering text.
+	 * @param Text : Text is a string value that text to enter in place holder.
+	 */
+	public void fillingTiffSectionTechIssueWithoutEnteringText(String Text) throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTIFFChkBox().Enabled();
+				}
+			}), Input.wait30);
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTIFFTab().Enabled();
+				}
+			}), Input.wait30);
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTIFF_CenterHeaderBranding().Visible() && getTIFF_CenterHeaderBranding().Enabled();
+				}
+			}), Input.wait30);
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+
+			driver.waitForPageToBeReady();
+			getTechIssuePlaceHolder().ScrollTo();
+			base.waitForElement(getTechIssuePlaceHolder());
+			getTechIssuePlaceHolder().Click();
+			getTechIssuePlaceHolder().SendKeys(Text);
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getSuccessMsgHeader().Visible();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Error !", base.getSuccessMsgHeader().getText().toString());
+			base.passedStep("Got Error message :: " + base.getSuccessMsg().getText().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying error message in tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @Author Sowndarya.velraj
+	 * @param Text
+	 * @throws InterruptedException
+	 */
+	public void fillingTiffSectionTechIssueWithEnteringText(String Text, String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().waitAndClick(5);
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
+
+		base.waitForElement(getTechissue_toggle());
+		getTechissue_toggle().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getTechissue_SelectTagButton());
+		getTechissue_SelectTagButton().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectTechnicalIssueTag().Visible() && getPriveldge_TagTree(tagname).Enabled();
+			}
+		}), Input.wait90);
+
+		getSelectTechnicalIssueTag().waitAndClick(15);
+
+		base.waitForElement(getPriveldge_TagTree_SelectButton());
+		getPriveldge_TagTree_SelectButton().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		getTechIssuePlaceHolder().ScrollTo();
+		base.waitForElement(getTechIssuePlaceHolder());
+		getTechIssuePlaceHolder().Click();
+		getTechIssuePlaceHolder().SendKeys(Text);
+
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * @author Gopinath Created Date : 12/10/2021 modified Date : NA
+	 * @description : This method for filling tiff section without entering text in
+	 *              specific redaction.
+	 */
+	public void fillingTiffSectionWithoutEnteringTextInSpecifyRedaction() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_selectingRedactionTags());
+			getClkCheckBox_selectingRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+			gettextRedactionPlaceHolder().Clear();
+			driver.scrollPageToTop();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getSuccessMsgHeader().Visible();
+				}
+			}), Input.wait30);
+			Assert.assertEquals("Error !", base.getSuccessMsgHeader().getText().toString());
+			base.passedStep("Got Error message :: " + base.getSuccessMsg().getText().toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying error message in tiff section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath Created Date : 12/10/2021 modified Date : NA
+	 * @description : This method for filling tiff section without entering tag in
+	 *              specific redaction.
+	 * @param Text : Text is a string value that text to enter in place holder.
+	 */
+	public void fillingTiffSectionWithoutEnteringTagInSpecifyRedaction(String Text) throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			gettextRedactionPlaceHolder().Click();
+			gettextRedactionPlaceHolder().SendKeys(Text);
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			base.VerifyErrorMessage(
+					"You have chosen TIFF/PDF redactions but have not specified redaction tags. In the TIFF/PDF section, please specify the redaction tags for which you want redactions burned in the production.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying error message in tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the message on tiff section specify branding without
+	 *              tag.
+	 * @param Test : Test is string value that value need to pass in place holder.
+	 */
+	public void TiffSectionSpecifyBrandingWithoutTag(String Test) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTag());
+			getSpecifyBrandingBySelectingTag().Click();
+			base.waitForElement(getBrandingBySelectingTagPlaceholder());
+			getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			driver.waitForPageToBeReady();
+			base.VerifyWarningMessage(
+					"In the branding configuration of the TIFF / PDF section, tag is not specified for branding. Please check.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying error message in tiff section Specify branding without tag"
+							+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the message on tiff section specify branding without
+	 *              text
+	 * @param tag : tag is string value that name of tag that need to select.
+	 */
+	public void TiffSectionSpecifyBrandingWithTagandWithoutText(String Tag) throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getSpecifyBrandingBySelectingTag().ScrollTo();
+			base.waitForElement(getSpecifyBrandingBySelectingTag());
+			getSpecifyBrandingBySelectingTag().Click();
+			getbtnSelectTags().Enabled();
+			getbtnSelectTags().Click();
+			base.waitForElement(getChkBoxSelect(Tag));
+			getChkBoxSelect(Tag).ScrollTo();
+			base.waitTillElemetToBeClickable(getChkBoxSelect(Tag));
+			getChkBoxSelect(Tag).Click();
+			base.waitForElement(getbtnSelect());
+			getbtnSelect().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			base.VerifyWarningMessage(
+					"In the branding configuration of the TIFF / PDF section, configured text is blank. Please check.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying error message in tiff section Specify branding without text"
+							+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the message on tiff section specify branding without
+	 *              tag and text.
+	 */
+	public void TiffSectionSpecifyBrandingWithoutTagandText() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getSpecifyBrandingBySelectingTag().ScrollTo();
+			base.waitForElement(getSpecifyBrandingBySelectingTag());
+			getSpecifyBrandingBySelectingTag().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			base.VerifyWarningMessage(
+					"In the branding configuration of the TIFF / PDF section, tag and text are empty. Please check.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying error message in tiff section Specify branding without tag and text"
+							+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the tag selected in the natively produced doc is not
+	 *              enabled in specify branding.
+	 */
+	public void selectingNativelyProducedDocsAndBrandingTag(String Tag, String Test) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitForElement(getclkSelectTag());
+			getclkSelectTag().Click();
+			base.waitForElement(getPriveldged_TagTree(Tag));
+			getPriveldged_TagTree(Tag).Click();
+			base.waitForElement(getClkSelect());
+			getClkSelect().Click();
+			Thread.sleep(Input.wait30 / 10);
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(Test);
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSpecifyBrandingBySelectingTag());
+			driver.waitForPageToBeReady();
+			getSpecifyBrandingBySelectingTag().ScrollTo();
+			driver.waitForPageToBeReady();
+			Thread.sleep(Input.wait30 / 10);
+			base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTag());
+			getSpecifyBrandingBySelectingTag().Click();
+			getbtnSelectTags().Enabled();
+			base.waitForElement(getbtnSelectTags());
+			getbtnSelectTags().Click();
+			base.waitForElement(getChkBoxSelect(Tag));
+			getChkBoxSelect(Tag).ScrollTo();
+			if (getChkBoxSelect(Tag).Enabled()) {
+				base.passedStep("The tag selected in the natively produced doc is enabled in specify branding");
+			} else {
+				base.failedStep("The tag selected in the natively produced doc is not enabled in specify branding");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the natively produced doc is not enabled in specify branding"
+							+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for selecting privileged tag and enter value in
+	 *              placeholder.
+	 * @param tagName          : tagName is a string value that name of tag need to
+	 *                         be selected.
+	 * @param placeHolderValue : placeHolderValue is a string value that value need
+	 *                         to enter in place holder text field.
+	 */
+	public void selectPrivilegedTagAndEnterPlaceHolderValue(String tagName, String placeHolderValue) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			base.waitTillElemetToBeClickable(getPriveldge_SelectTagButton());
+			driver.waitForPageToBeReady();
+			if (!getPriviledgedDoogle().GetAttribute("class").contains("active")) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+				getTIFF_EnableforPrivilegedDocs().Enabled();
+				getTIFF_EnableforPrivilegedDocs().Click();
+			}
+			getPriveldge_SelectTagButton().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPriveldge_TagTree(tagName));
+			getPriveldge_TagTree(tagName).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getPriveldge_TextArea());
+			getPriveldge_TextArea().SendKeys(placeHolderValue);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the natively produced doc is not enabled in specify branding"
+							+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for verifying tag is enabled after selecting tag in
+	 *              privileged.
+	 * @param tagName : tagName is a string value that name of tag need to be
+	 *                selected.
+	 */
+	public void verifyTagEnabledAfterSelectingTagInPreviliged(String tagName) {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getBrandingBySelectingTags());
+			driver.waitForPageToBeReady();
+			getBrandingBySelectingTags().ScrollTo();
+			driver.waitForPageToBeReady();
+			Thread.sleep(Input.wait30 / 10);
+			getBrandingBySelectingTags().Click();
+			getbtnSelectTags().Enabled();
+			base.waitForElement(getbtnSelectTags());
+			getbtnSelectTags().Click();
+			base.waitForElement(getChkBoxSelect(tagName));
+			getChkBoxSelect(tagName).ScrollTo();
+			if (getChkBoxSelect(tagName).Enabled()) {
+				base.passedStep("Tag :: " + tagName + "enabled in specify branding");
+			} else {
+				base.failedStep("Tag :: " + tagName + "is not enabled in specify branding");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying enabled after selecting tag in privileged" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for verifying Warning message displayed by without
+	 *              selecting mp3 redaction tag.
+	 */
+	public void verifyWarningMessageDisplayedByWithoutSelectingMp3RedationTag() {
+		try {
+
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAdvancedProductionComponent());
+			getAdvancedProductionComponent().ScrollTo();
+			getAdvancedProductionComponent().Click();
+			getMP3CheckBox().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getbtnMP3BurnRedactionTab());
+			getbtnMP3BurnRedactionTab().Click();
+			if (!getBurnRedactionsToogle().GetAttribute("class").contains("active")) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getbtnMP3BurnRedaction());
+				getbtnMP3BurnRedaction().Click();
+			}
+
+			getbtnMP3SelectRedactionTags().Enabled();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getbtnMP3SelectRedactionTags());
+			getbtnMP3SelectRedactionTags().Click();
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkCompleteLink());
+			getMarkCompleteLink().ScrollTo();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Click();
+			base.VerifyWarningMessage(
+					"You have chosen MP3 redactions but have not specified redaction tags. In the MP3 section, please specify the redaction tags for which you want redactions burned in the production.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying Warning message displayed by without selecting mp3 redaction tag"
+							+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for adding new field on DAT.
+	 */
+	public void addNewFieldOnDAT() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDAT_AddField());
+			base.waitTillElemetToBeClickable(getDAT_AddField());
+			getDAT_AddField().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while adding new field on DAT." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for adding metadata on DAT.
+	 */
+	public void fillingMetaDataToDATFields() {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Doc Metadata");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_SourceField2().Visible() && getDAT_SourceField1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_SourceField2().selectFromDropdown().selectByVisibleText("MetadataComments");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_DATField2().Visible() && getDAT_DATField1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_DATField2().SendKeys(Input.randomText);
+			base.stepInfo("Dat section is filled with meta data");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while adding metadata on DAT." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for filling Tiff section with default annatation layer.
+	 */
+	public void fillingTIFFSectionwithBurnRedaction() throws InterruptedException {
+		try {
+
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllRedactionsAnnotaionLayer());
+			driver.waitForPageToBeReady();
+			getAllRedactionsAnnotaionLayer().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while  filling Tiff section with default annatation layer." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :filling PDF section.
+	 * @param tagname : tagname is String value that name of tag need to select.
+	 */
+	public void fillingPDFSectionwithBurnRedaction(String tagname) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFTab());
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPDFGenerateRadioButton().Enabled();
+				}
+			}), Input.wait60);
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClk_burnReductiontoggle());
+			base.waitTillElemetToBeClickable(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkCheckBox_selectingRedactionTags());
+			getClkCheckBox_selectingRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			driver.waitForPageToBeReady();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(searchString4);
+			base.stepInfo("Burn redaction PDF section is filled successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for verifying export bates button is enabled.
+	 */
+	public void verifyExportBatesButtonIsEnabled() {
+		try {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getExportBatesButton());
+			base.waitTillElemetToBeClickable(getExportBatesButton());
+			if (getExportBatesButton().Enabled()) {
+				base.passedStep("Export bates button is enabled sucessfully");
+			} else {
+				base.failedStep("Export bates button is not enabled");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying export bats button is enabled." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to navigate back from current page by clicking on back
+	 *              button.
+	 */
+	public void navigateBack() {
+		try {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getBackButton());
+			base.waitTillElemetToBeClickable(getBackButton());
+			getBackButton().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while navigating back from current page by clicking on back button."
+					+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to get document selected count.
+	 */
+	public int getDocumentSelectedCount() {
+		int count = 0;
+		try {
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getProductionDocCount());
+			base.waitTillElemetToBeClickable(getProductionDocCount());
+			String PDocCount = getProductionDocCount().getText();
+			count = Integer.parseInt(PDocCount);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while navigating back from current page by clicking on back button."
+					+ e.getMessage());
+		}
+		return count;
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to click on confirm production.
+	 */
+	public void clickOnConfirmProduction() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getConfirmProductionCommit());
+			base.waitTillElemetToBeClickable(getConfirmProductionCommit());
+			getConfirmProductionCommit().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while click on confirm production." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to get production name.
+	 */
+	public String getProductionNam() {
+		String name = null;
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getProduction());
+			base.waitTillElemetToBeClickable(getProduction());
+			name = getProduction().getText().trim();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while geting production name" + e.getMessage());
+		}
+		return name;
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to perform completed status.
+	 */
+	public void performCompletedStatus() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getCompletedStatus());
+			base.waitTillElemetToBeClickable(getCompletedStatus());
+			getCompletedStatus().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while perform completed status." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to select row by production name and open in wizard.
+	 * @param productionName : productionName is a String value that name of
+	 *                       production.
+	 */
+	public void selectRowByProductionNameAndOpenWizard(String productionName) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().Visible();
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			for (int i = 1; i < getFilterOptions().size(); i++) {
+				getFilter(i).waitAndClick(10);
+			}
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByCOMPLETED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByCOMPLETED().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRefreshButton().Visible();
+				}
+			}), Input.wait30);
+			getRefreshButton().waitAndClick(10);
+
+			Thread.sleep(Input.wait30 / 10);
+			getArrow().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTileDelete().Visible();
+				}
+			}), Input.wait30);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getGridView().Visible();
+				}
+			}), Input.wait30);
+			getGridView().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getRefreshButton().Visible();
+				}
+			}), Input.wait30);
+			getRefreshButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProductionListGridViewTable().Visible();
+				}
+			}), Input.wait30);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getProductionByWizard(productionName));
+			base.waitTillElemetToBeClickable(getProductionByWizard(productionName));
+			getProductionByWizard(productionName).Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAction().Visible();
+				}
+			}), Input.wait30);
+			getAction().waitAndClick(8);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getOpenInWizard());
+			base.waitTillElemetToBeClickable(getOpenInWizard());
+			getOpenInWizard().Click();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while select row by production name and open in wizard" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to click on uncommit bates.
+	 */
+	public void uncommitBates() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getUncommitBatesButton());
+			base.waitTillElemetToBeClickable(getUncommitBatesButton());
+			getUncommitBatesButton().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return base.getSuccessMsg().isDisplayed();
+				}
+			}), Input.wait90);
+			base.getSuccessMsg().isElementAvailable(10);
+			Assert.assertEquals(base.getSuccessMsg().getWebElement().isDisplayed(), true,
+					"Success message is not displayed");
+			if (base.getSuccessMsg().getWebElement().isDisplayed()) {
+				UtilityLog.info("Success message is displayed successfully");
+				Reporter.log("Success message is displayed successfully");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while clicking on uncommit bates.." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to fill tiff section with default branding text.
+	 * @param Text : Text is String value that default branding text.
+	 */
+	public void fillingTIFFSectionWithDefaultBrandingText(String Text) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			getCentreBrandingPlaceHolder().ScrollTo();
+			base.waitForElement(getCentreBrandingPlaceHolder());
+			getCentreBrandingPlaceHolder().Click();
+			getCentreBrandingPlaceHolder().SendKeys(Text);
+			Thread.sleep(Input.wait30 / 10);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling tiff section with default branding text" + e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to refilling the numbering and sorting page.
+	 * @param prefixID : Text is String value pre fix id text.
+	 * @param suffixID : Text is String value suffix id text.
+	 */
+	public void reFillingTheNumberingAndSortingPage(String prefixID, String suffixID) throws InterruptedException {
+		try {
+			driver.scrollPageToTop();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Enabled();
+			getMarkCompleteLink().waitAndClick(10);
+
+			System.out.println("Clicked on Mark Complete Button..");
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getMarkInCompleteBtn().Enabled();
+				}
+			}), Input.wait60);
+			getMarkInCompleteBtn().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getBeginningBates().Enabled();
+				}
+			}), Input.wait60);
+			getBeginningBates().Clear();
+			getBeginningBates().SendKeys(getRandomNumber(2));
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getClickHereLink().Enabled();
+				}
+			}), Input.wait60);
+			getClickHereLink().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getNextBatesNumber().Enabled();
+				}
+			}), Input.wait60);
+			getNextBatesNumber().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while  refilling the numbering and sorting page." + e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @param fontstyle
+	 * @param select
+	 * @param reductionTag
+	 */
+	public void fillingTIFFWithBurnRedaction(String fontstyle, String select, String reductionTag) {
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		if (select.equalsIgnoreCase("layer")) {
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+
+			getTIFFDefaultAnnotaionCBox().Click();
+			System.out.println("Selected Default Annotation Layer");
+			base.stepInfo("Selected Default Annotation Layer");
+
+			base.waitForElement(getAction());
+			getSelectDropDown().selectFromDropdown().selectByVisibleText(fontstyle);
+		} else if (select.equalsIgnoreCase("Tag")) {
+
+			getClk_SelectRedactionTagsRadio().waitAndClick(5);
+
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_selectingRedactionTags());
+			driver.waitForPageToBeReady();
+			getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+			System.out.println("Selected Redaction Tag :" + reductionTag);
+			base.stepInfo("Selected Redaction Tag :" + reductionTag);
+
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().waitAndClick(10);
+
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(Input.searchString6);
+		}
+	}
+
+	/**
+	 * @author Jeevitha
+	 */
+	public void uncommitFunction() {
+		driver.Navigate().refresh();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getUncommitbutton().Visible();
+			}
+		}), Input.wait30);
+		driver.Navigate().refresh();
+		getUncommitbutton().waitAndClick(10);
+		String ExpectedMsg = "Uncommit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.";
+		base.VerifySuccessMessage(ExpectedMsg);
+		driver.Navigate().refresh();
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @param elementName
+	 */
+	public void clickBackBtnUntilElementFound(Element elementName) {
+		boolean flag = true;
+		while (flag) {
+			try {
+				getBackButton().waitAndClick(10);
+
+				elementName.waitAndClick(20);
+				driver.scrollPageToTop();
+				flag = false;
+			} catch (Exception e) {
+				System.out.println("Expected page STill Not Visible");
+
+			}
+		}
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @param times
+	 */
+	public void clickMArkCompleteMutipleTimes(int times) {
+		for (int i = 0; i < times; i++) {
+			try {
+				navigateToNextSection();
+			} catch (InterruptedException e) {
+
+			}
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to verify native tag in TIFF section burn redaction.
+	 * @param Tagname : Tagname is String value name of tag.
+	 */
+	public void verifyingNativeTagInTIFFSectionBurnRedaction(String Tagname) {
+		try {
+			int j = 0;
+			String TagName = Tagname;
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getClk_burnReductiontoggle().ScrollTo();
+
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			List<WebElement> RowCount = TotalRowsInRedactions().FindWebElements();
+			List<String> Rowcounts = new ArrayList<String>();
+			for (j = 0; j < RowCount.size(); j++) {
+				driver.waitForPageToBeReady();
+				Rowcounts.add(RowCount.get(j).getText());
+			}
+			if (Rowcounts.contains(TagName)) {
+				base.failedStep("" + Tagname + "  is visible");
+			} else {
+				base.passedStep("" + Tagname + "  is not visible at BurnRedaction");
+			}
+			base.stepInfo("TIFF section is filled");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while fillling TIFF section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to fill native section with tags.
+	 * @param Tag : Tag is String value name of tag.
+	 */
+	public void fillingNativeSectionWithTags(String Tag) throws InterruptedException {
+		try {
+			base.waitForElement(getNativeChkBox());
+			getNativeChkBox().Click();
+			base.waitForElement(getNativeTab());
+			getNativeTab().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNative_SelectAllCheck());
+			getNative_SelectAllCheck().Click();
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			base.waitForElement(getNativeCheckBox(Tag));
+			driver.waitForPageToBeReady();
+			getNativeCheckBox(Tag).ScrollTo();
+			getNativeCheckBox(Tag).Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+			Thread.sleep(Input.wait30 / 10);
+			getNative_AdvToggle().ScrollTo();
+			base.waitForElement(getNative_AdvToggle());
+			base.waitTillElemetToBeClickable(getNative_AdvToggle());
+			getNative_AdvToggle().Click();
+			base.waitForElement(getNative_GenerateLoadFileLST());
+			getNative_GenerateLoadFileLST().Click();
+			base.stepInfo("Native section is filled");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling native section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to Filling Sorting Section.
+	 */
+	public void fillingSortingSecion() {
+
+		try {
+			base.waitForElement(getKeepDocsMasterDate());
+			getKeepDocsMasterDate().Click();
+			driver.scrollPageToTop();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while fillling sorting section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method to filling summary,preview and verifying MP3 files.
+	 */
+	public void fillingSummaryAndPreviewAndVerifyingMP3Files() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getTextMp3File());
+			String ActualText = getTextMp3File().getText();
+			System.out.println(ActualText);
+			driver.waitForPageToBeReady();
+			if (ActualText.equals("0")) {
+				base.stepInfo("Audio files are not generated");
+			} else {
+				base.passedStep("Audio files are generated in  production");
+			}
+			base.stepInfo("summary and preview section is filled");
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while fillling summary and preview section" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Methods for Filling Advanced production component in tiff
+	 *               section.
+	 */
+
+	public void fillingAdvancedProductionComponent() {
+		try {
+			driver.waitForPageToBeReady();
+			getAdvancedProductionToggle().ScrollTo();
+			base.waitForElement(getAdvancedProductionToggle());
+			getAdvancedProductionToggle().Click();
+			base.waitForElement(getTranslationsTab());
+			getTranslationsTab().Click();
+			base.waitForElement(getTranslationsCheckBox());
+			getTranslationsCheckBox().Click();
+			driver.scrollingToBottomofAPage();
+			getSelectDatabaseFiles().ScrollTo();
+			base.waitForElement(getSelectDatabaseFiles());
+			base.waitTillElemetToBeClickable(getSelectDatabaseFiles());
+			getSelectDatabaseFiles().Click();
+			driver.scrollPageToTop();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling TIFF section Advanced Production Component" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying the documents count in OCR and TIFF
+	 *               section
+	 */
+	public void OCRAndTIFFCountInSummaryAndPreview() {
+		try {
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getDocumentsOfOCR());
+			String DocumentsOfOCR = getDocumentsOfOCR().getText();
+			base.waitForElement(getDocumentsOfTIFF());
+			String DocumentsOfTIFF = getDocumentsOfTIFF().getText();
+			if ((DocumentsOfOCR).equals("0")) {
+				base.failedStep("The document count is equals to zero");
+			} else {
+				base.passedStep("The document is " + DocumentsOfOCR + " as Expected ");
+			}
+			if ((DocumentsOfTIFF).equals("0")) {
+				base.failedStep("The document count is equals to zero");
+			} else {
+				base.passedStep("The document is " + DocumentsOfTIFF + " as Expected ");
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while Verifying OCR count in summary page" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying link in numbering and sorting section.
+	 */
+	public void verifyAvailbleLinkAtNumberingAndSorting() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClickHereLink());
+			if (getClickHereLink().isDisplayed()) {
+				base.passedStep("Expected link is present at numbering and sorting section");
+			} else {
+				base.failedStep("Expected link is not present at numbering and sorting section");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying link in numbering and sorting section" + e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for fill generate page after Uncommit.
+	 */
+	public void fillingGeneratePageAFterUncommit() throws InterruptedException {
+		try {
+
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+				}
+			}), Input.wait30);
+			getbtnProductionGenerate().Click();
+
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().isElementAvailable(540);
+				}
+			}), Input.wait120);
+
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+				}
+			}), Input.wait60);
+
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			driver.waitForPageToBeReady();
+			getConfirmProductionCommit().waitAndClick(10);
+
+			String PDocCount = getProductionDocCount().getText();
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			System.out.println(PDocCount);
+			int Doc = Integer.parseInt(PDocCount);
+
+			Reporter.log("Doc - " + Doc, true);
+			System.out.println(Doc);
+			UtilityLog.info(Doc);
+			driver.waitForPageToBeReady();
+			int i;
+			for (i = 0; i < 2; i++) {
+				driver.waitForPageToBeReady();
+				driver.Navigate().refresh();
+			}
+			driver.waitForPageToBeReady();
+			base.waitForElement(getUncommitbutton());
+			base.waitTillElemetToBeClickable(getUncommitbutton());
+			getUncommitbutton().Click();
+			driver.waitForPageToBeReady();
+			base.VerifySuccessMessage(
+					"Uncommit action has been started as a background task. You will be notified upon completion. Please refresh this page to see the latest status.");
+			driver.waitForPageToBeReady();
+			for (i = 0; i < 2; i++) {
+				driver.waitForPageToBeReady();
+				driver.Navigate().refresh();
+			}
+
+			if (getConfirmProductionCommit().isDisplayed()) {
+				base.passedStep("commit is displayed");
+			} else {
+				base.failedStep("commit is not displayed");
+			}
+			softAssertion.assertAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling generate page after uncommit" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for fill PDF section with redaction tags.
+	 * @param redactiontag1 : redactiontag1 is String value that name of redaction
+	 *                      tag.
+	 * @param redactiontag2 : redactiontag2 is String value that name of another
+	 *                      redaction tag.
+	 */
+	public void fillingPDFSectionWithRedactionTags(String redactiontag1, String redactiontag2)
+			throws InterruptedException {
+
+		try {
+			base.waitForElement(getPDFChkBox());
+			getPDFChkBox().Click();
+			base.waitForElement(getPDFTab());
+			getPDFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getClk_burnReductiontoggle().ScrollTo();
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+			base.waitForElement(redactionTagInBurnRedactionCheckBox(redactiontag1));
+			redactionTagInBurnRedactionCheckBox(redactiontag1).ScrollTo();
+			redactionTagInBurnRedactionCheckBox(redactiontag1).isDisplayed();
+			driver.waitForPageToBeReady();
+			redactionTagInBurnRedactionCheckBox(redactiontag1).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(redactionTagInBurnRedaction2CheckBox(redactiontag2));
+			redactionTagInBurnRedaction2CheckBox(redactiontag2).ScrollTo();
+			redactionTagInBurnRedaction2CheckBox(redactiontag2).isDisplayed();
+			driver.waitForPageToBeReady();
+			redactionTagInBurnRedaction2CheckBox(redactiontag2).waitAndClick(10);
+
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(searchString4);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling burnredaction" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void AssertionUnCommitInQCPage() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		try {
+			// commiting the production
+			base.waitForElement(getConfirmProductionCommit());
+			getConfirmProductionCommit().waitAndClick(5);
+			Thread.sleep(5000);
+			driver.Navigate().refresh();
+
+			// uncommit
+			base.waitForElement(getConfirmProductionUnCommit());
+			getConfirmProductionUnCommit().waitAndClick(5);
+			Thread.sleep(5000);
+
+			// Go back to Quality check page
+			base.waitForElement(getBackButton());
+			getBackButton().waitAndClick(5);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
+			getConfirmProductionUnCommit().waitAndClick(5);
+			Thread.sleep(5000);
+
+			// Go back to Quality check page
+			base.waitForElement(getBackButton());
+			getBackButton().waitAndClick(5);
+		}
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Indium-Sowndarya.Velraj
+	 */
+	public void VerifyinginProductionQCMessage() throws InterruptedException {
+
+		boolean elementPresent = gettxtStatusInQCPage().isElementPresent();
+		UtilityLog.info("status bar displayed:" + elementPresent);
+
+		base.waitForElement(getVerifyingQCPage());
+
+		if (getVerifyingQCPage().isDisplayed()) {
+			base.passedStep("Post-Generation QC Checks Completed status is visible");
+		} else {
+			base.failedStep("Post-Generation QC Checks Completed status is not visible");
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verify download production using sharable link.
+	 */
+	public void verifyDownloadProductionUsingSharableLink() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getQC_Download());
+			String name = getProduction().getText().trim();
+			base.waitTillElemetToBeClickable(getQC_Download());
+			getQC_Download().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSelectSharableLinks());
+			getSelectSharableLinks().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getAllFilesLink());
+			getAllFilesLink().ScrollTo();
+			String sharableLink = getAllFilesLink().GetAttribute("value").trim();
+			String password = getShareLinkPassword().getText().trim();
+			String parentWindow = driver.getWebDriver().getWindowHandle();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+			driver.getWebDriver().switchTo().window(tabs.get(1));
+			driver.waitForPageToBeReady();
+			driver.getWebDriver().get(sharableLink);
+			base.waitForElement(getEnterPasswordTextField());
+			getEnterPasswordTextField().SendKeys(password);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDownloadButton());
+			getDownloadButton().waitAndClick(10);
+			Thread.sleep(Input.wait30 / 10);
+			String downloadsHome = "C:\\BatchPrintFiles\\downloads";
+			isFileDownloaded(downloadsHome, name);
+			driver.close();
+			driver.getWebDriver().switchTo().window(parentWindow);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying download production using sharable link." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying is element downloaded or not.
+	 * @param downloadPath : downloadPath is path of file downloded location
+	 * @param fileName     : fileName is String value that name of file.
+	 */
+	public void isFileDownloaded(String downloadPath, String fileName) {
+		try {
+			File dir = new File(downloadPath);
+			File[] dirContents = dir.listFiles();
+
+			for (int i = 0; i < dirContents.length; i++) {
+				String name = dirContents[i].getName();
+				if (dirContents[i].getName().contains(fileName)) {
+					// File has been found, it can now be deleted:
+					dirContents[i].delete();
+					base.passedStep(fileName + " is downloded successfully");
+					break;
+				}
+				if (i == dirContents.length - 1)
+					base.failedStep(fileName + " downloading failed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying is element downloded or not." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for uncommit the production.
+	 * 
+	 */
+	public void fillingGeneratePageandUncommitTheProduction() {
+		try {
+			int i;
+			for (i = 0; i < 2; i++) {
+				driver.waitForPageToBeReady();
+				driver.Navigate().refresh();
+			}
+			driver.waitForPageToBeReady();
+			base.waitForElement(getConfirmProductionUnCommit());
+			base.waitTillElemetToBeClickable(getConfirmProductionUnCommit());
+			getConfirmProductionUnCommit().Click();
+			driver.Navigate().refresh();
+			for (i = 0; i < 5; i++) {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getBckBtn());
+				getBckBtn().Click();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while again navigating back to document selection section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for navigating back to document selection.
+	 * @param tagname : tagname is a String value that name of tag.
+	 */
+	public void modifyingDocumentSelectionAndMarkcomplete(String tagname) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getMarkInCompleteBtn());
+			getMarkInCompleteBtn().Enabled();
+			getMarkInCompleteBtn().waitAndClick(10);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getSelectTagsRadioButton());
+			getSelectTagsRadioButton().Click();
+			base.waitForElement(getSelectPageTagName(tagname));
+			getSelectPageTagName(tagname).Click();
+			for (int i = 0; i < 4; i++) {
+				try {
+					base.waitForElement(getMarkCompleteLink());
+					getMarkCompleteLink().ScrollTo();
+					getMarkCompleteLink().Enabled();
+					getMarkCompleteLink().Click();
+					getNextButton().waitAndClick(5);
+					driver.waitForPageToBeReady();
+				} catch (Exception e) {
+					base.waitForElement(getOkButton());
+					getOkButton().Click();
+					base.waitForElement(getNextButton());
+					getNextButton().waitAndClick(5);
+
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling MarkComplete action" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling priv docs placeholder in tiff section.
+	 * @param tagname : tagname is aString value that name of tag.
+	 */
+	public void selectPrivDocsInTiffSection(String tagname) {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().Click();
+			base.waitForElement(getPriveldge_TagTree(tagname));
+			getPriveldge_TagTree(tagname).waitAndClick(10);
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling priv docs placeholder in tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling MP3 files in tiff section.
+	 */
+	public void selectMP3Files() {
+		try {
+			base.waitForElement(getAdvancedProductionComponents());
+			getAdvancedProductionComponents().Click();
+			base.waitForElement(getMP3ChkBox());
+			getMP3ChkBox().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while selecting MP3 files in advanced productio components" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling native docs placeholder in tiff section.
+	 * @param Tag : Tag is a string that name of tag.
+	 */
+	public void fillingTIFFWithNativelyProducedDocsAndPreviouslySelectedTagEnabled(String Tag)
+			throws InterruptedException {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitForElement(getclkSelectTag());
+			getclkSelectTag().Click();
+			base.waitForElement(getPriveldged_TagTree(Tag));
+			if (getPriveldged_TagTree(Tag).Enabled()) {
+				base.passedStep("The Tag already selected in the privledged docs is enabled on natively produced docs");
+			} else {
+				base.failedStep("The tag already selected in privledged docs is disabled on natively produced docs");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting tag in natively produced documents" + e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :verifying tag selected in the specify branding at right Header
+	 *              branding
+	 * @param Tag  : Tag is String value that name of tag.
+	 * @param Test : Test is String value that random test for entering in pleace
+	 *             holder.
+	 */
+	public void verifyTheTagOnRightBranding(String Tag, String Test) throws InterruptedException {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getRightHeaderBranding());
+			getRightHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			driver.waitForPageToBeReady();
+			getSpecifyBrandingBySelectingTagLink().ScrollTo();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getSpecifyBrandingBySelectingTagLink());
+			base.waitTillElemetToBeClickable(getSpecifyBrandingBySelectingTagLink());
+			getSpecifyBrandingBySelectingTagLink().waitAndClick(10);
+			getbtnSelectTags().Enabled();
+			getbtnSelectTags().waitAndClick(10);
+			base.waitForElement(getChkBoxSelect(Tag));
+			getChkBoxSelect(Tag).ScrollTo();
+			base.waitTillElemetToBeClickable(getChkBoxSelect(Tag));
+			getChkBoxSelect(Tag).waitAndClick(10);
+
+			base.waitForElement(getbtnSelect());
+			getbtnSelect().Click();
+
+			base.waitForElement(getBrandingBySelectingTagPlaceholder());
+			getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+			driver.waitForPageToBeReady();
+
+		} catch (Exception e) {
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the  specify branding at right Header branding"
+							+ e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for again selecting right header branding.
+	 * @param Tag : Tag is String value that name of tag.
+	 */
+	public void againSelectingRightHeaderBranding(String Tag) throws InterruptedException {
+		try {
+			boolean flag;
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			base.waitForElement(getRightHeaderBranding());
+			getRightHeaderBranding().waitAndClick(10);
+			getSpecifyBrandingBySelectingTagLink().ScrollTo();
+			base.waitForElement(getSpecifyBrandingBySelectingTagLink());
+			getSpecifyBrandingBySelectingTagLink().waitAndClick(10);
+			base.waitForElement(getNextSelectBtnInSpecifyBrandingSelectTags());
+			getNextSelectBtnInSpecifyBrandingSelectTags().isDisplayed();
+			getNextSelectBtnInSpecifyBrandingSelectTags().waitAndClick(10);
+
+			// getDisabledSelectRedactionTags().ScrollTo();
+			base.waitForElement(getDisabledSpecifyBrandingSelectTags(Tag));
+			flag = getDisabledSpecifyBrandingSelectTags(Tag).GetAttribute("class").contains("disabled");
+			if (!flag) {
+				Assert.assertTrue(true);
+				base.passedStep("ClickMarkIncomplete Disables already selected right header specify branding tag");
+			} else {
+				Assert.assertTrue(false);
+				base.failedStep("ClickMarkIncomplete enables already selected right header specify branding tag");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the  specify branding at right Header branding"
+							+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling tiff section with rotation for landscape.
+	 * @param tagname : tagname is String value that name of tag.
+	 */
+	public void fillingTIFFSectionwithRotationLandscape(String tagname) {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			getTIFF_MultiPage_RadioButton().ScrollTo();
+			base.waitTillElemetToBeClickable(getTIFF_MultiPage_RadioButton());
+			getTIFF_MultiPage_RadioButton().Click();
+			base.waitForElement(getRotationLandScapeDropdown());
+			getRotationLandScapeDropdown().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getClk_burnReductiontoggle().ScrollTo();
+			// enable burn redaction
+			base.waitForElement(getClk_burnReductiontoggle());
+			getClk_burnReductiontoggle().Click();
+			getClkRadioBtn_selectRedactionTags().ScrollTo();
+			base.waitForElement(getClkRadioBtn_selectRedactionTags());
+			getClkRadioBtn_selectRedactionTags().isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkCheckBox_defaultRedactionTag());
+			getClkCheckBox_defaultRedactionTag().isDisplayed();
+			getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().isDisplayed();
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().isDisplayed();
+			getClkBtn_selectingRedactionTags().waitAndClick(10);
+			base.waitForElement(getClkCheckBox_selectingRedactionTags(tagname));
+			getClkCheckBox_selectingRedactionTags(tagname).ScrollTo();
+			getClkCheckBox_selectingRedactionTags(tagname).isDisplayed();
+			driver.waitForPageToBeReady();
+			getClkCheckBox_selectingRedactionTags(tagname).waitAndClick(10);
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().isDisplayed();
+			getClk_selectBtn().waitAndClick(10);
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().isDisplayed();
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(searchString4);
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while filling Tiff Section" + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling tiff section with natively produced
+	 *               documents.
+	 * @param tagname : tagname is String value that name of tag.
+	 */
+	public void fillingTIFFWithNativelyProducedDocs(String Test) {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.scrollPageToTop();
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitTillElemetToBeClickable(getFileTypeNativelyProducedDocs());
+			getFileTypeNativelyProducedDocs().Click();
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(Test);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling tiff section with natively produced documents." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Gopinath
+	 */
+	public void fillingGeneratePageWithContiuneRegenerate() throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getRegenerateContinueButton().isElementAvailable(540);
+			}
+		}), Input.wait120);
+		try {
+			getRegenerateContinueButton().Click();
+		} catch (Exception e) {
+		}
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().isElementAvailable(540);
+			}
+		}), Input.wait120);
+
+//		driver.WaitUntil((new Callable<Boolean>() {
+//			public Boolean call() {
+//				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+//			}
+//		}), Input.wait120);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getStatusSuccessTxt());
+		driver.waitForPageToBeReady();
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(5000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling natively produced docs in pdf section.
+	 * @param Tag  : Tag is String value that name of tag.
+	 * @param Text : Text is String value that need to enter in place holder.
+	 */
+	public void fillingPDFWithNativelyProduceddDocs(String Tag, String Text) {
+		try {
+			base.waitForElement(getPDFChkBox());
+			getPDFChkBox().Click();
+			base.waitForElement(getPDFTab());
+			getPDFTab().Click();
+			for (int i = 0; i < 9; i++) {
+				try {
+					driver.waitForPageToBeReady();
+					getTIFF_EnableforPrivilegedDocs().ScrollTo();
+					break;
+				} catch (Exception e) {
+					driver.waitForPageToBeReady();
+				}
+			}
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTiff_NativeDoc());
+			getTiff_NativeDoc().Click();
+			base.waitForElement(getclkSelectTag());
+			getclkSelectTag().Click();
+			base.waitForElement(getPriveldged_TagTree(Tag));
+			getPriveldged_TagTree(Tag).Click();
+			base.waitForElement(getClkSelect());
+			getClkSelect().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNativeDocsPlaceholder());
+			getNativeDocsPlaceholder().SendKeys(Text);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling Natively produced docs" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling PDF section with Tech Issue Docs.
+	 * @param Tag  : Tag is String value that name of tag.
+	 * @param Text : Text is String value that need to enter in place holder.
+	 */
+	public void fillingPDFWithTechIssueDocs(String Tag, String Text) {
+		try {
+			base.waitForElement(getPDFChkBox());
+			getPDFChkBox().Click();
+			base.waitForElement(getPDFTab());
+			getPDFTab().Click();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().Click();
+			base.waitForElement(getTechissue_SelectTagButton());
+			getTechissue_SelectTagButton().Click();
+			base.waitForElement(getTechIssueCheckbox(Tag));
+			getTechIssueCheckbox(Tag).Click();
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().Click();
+			base.waitForElement(getTechissue_TextArea());
+			getTechissue_TextArea().SendKeys(Text);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling TechissueDocs" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for performing production filter.
+	 */
+	public void ProductionFilter() {
+		try {
+			driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().isElementAvailable(50);
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			for (int i = 1; i < getFilterOptions().size(); i++) {
+				getFilter(i).waitAndClick(10);
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByINPROGRESS().Visible();
+				}
+			}), Input.wait30);
+			getFilterByINPROGRESS().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByFAILED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByFAILED().waitAndClick(10);
+			getRefreshButton().waitAndClick(10);
+			System.out.println("Verified Production Filer");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while performing production filter" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for perform committing the production.
+	 */
+	public void commitTheProduction() throws InterruptedException {
+		try {
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+				}
+			}), Input.wait30);
+			getbtnProductionGenerate().Click();
+
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().isElementAvailable(540);
+				}
+			}), Input.wait120);
+
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+				}
+			}), Input.wait60);
+
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			getConfirmProductionCommit().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while committing the production" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * 
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying presence of tiff and pdf radio button.
+	 */
+
+	public void verfyingGenerateTIFFAndPDF() {
+		try {
+			base.waitForElement(getPDFChkBox());
+			getPDFChkBox().Click();
+			if (getPDFTab().isDisplayed()) {
+				base.passedStep("Generate PDF is displayed");
+			} else {
+				base.failedStep("Generate PDF is not displayed");
+			}
+			if (getTIFFChkBox().isDisplayed()) {
+				base.passedStep("Generate TIFF is displayed");
+			} else {
+				base.failedStep("Generate TIFF is not displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying the presence of  generate tiff and pdf radio button"
+					+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for verifying production status.
+	 */
+	public void verifyingProductionStatusInGenerate() throws InterruptedException {
+
+		try {
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+			base.waitForElement(getbtnProductionGenerate());
+			getbtnProductionGenerate().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().isElementAvailable(540);
+				}
+			}), Input.wait120);
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+			base.waitForElement(getConfirmProductionCommit());
+			getConfirmProductionCommit().isDisplayed();
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			driver.waitForPageToBeReady();
+			base.waitTillElemetToBeClickable(getConfirmProductionCommit());
+			base.waitForElement(getBckBtn());
+			getBckBtn().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getVerifygQCPage());
+			String Status = getVerifygQCPage().getText();
+			String ProductionStatus = "Post-Generation QC checks Complete";
+			if (Status.equals(ProductionStatus)) {
+				base.passedStep("" + Status + " and " + ProductionStatus + "is displayed as expected");
+			} else {
+				base.failedStep("" + Status + " and " + ProductionStatus + " is not displayed as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying the production status" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling DAT section.
+	 * 
+	 */
+	public void fillingDATSectionWithDiffDATField() {
+		try {
+			base.waitForElement(getDAT_AddField());
+			getDAT_AddField().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Bates");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_SourceField2().selectFromDropdown().selectByVisibleText("BatesNumber");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+				}
+			}), Input.wait30);
+
+			getDAT_DATField2().SendKeys("BatesNumber" + Utility.dynamicNameAppender());
+			driver.scrollPageToTop();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Enabled();
+			getMarkCompleteLink().waitAndClick(10);
+
+			base.waitForElement(getDATContinueBtn());
+			getDATContinueBtn().Click();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNextButton());
+			getNextButton().Enabled();
+			getNextButton().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling DAT section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling burn redaction placeholder.
+	 * 
+	 */
+
+	public void fillingPlaceholderInBurnRedaction(String Text) {
+		try {
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().ScrollTo();
+			gettextRedactionPlaceHolder().Clear();
+			gettextRedactionPlaceHolder().SendKeys(Text);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling burn redaction placeholder" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author :Sowndarya.velraj.Modified on 12/19/21
+	 * 
+	 * @Description: Method for checking status of production from homepage
+	 * @param Status: Status is String value that name of Production status on
+	 *                progress bar.
+	 */
+	public void verifyProductionStatusInHomePage(String statusMsg, String productionname) {
+		String productionFromHomePage = null;
+
+		// Verifying status of the production from home page
+		for (int i = 0; i < 500; i++) {
+			base.waitForElement(getProductionFromHomePage(productionname));
+			productionFromHomePage = getProductionFromHomePage(productionname).getText();
+			if (productionFromHomePage.contains(statusMsg)) {
+				base.passedStep(statusMsg + "status displayed");
+				break;
+			} else if (i == 499) {
+				base.failedStep(statusMsg + "status not displayed");
+				driver.waitForPageToBeReady();
+			} else {
+				driver.waitForPageToBeReady();
+				getRefreshButton().waitAndClick(5);
+			}
+		}
+		System.out.println("Preparing Data status displayed for " + productionFromHomePage);
+	}
+	/**
+	 * Author sowndarya.velraj
+	 * 
+	 * @param TempName
+	 */
+	public void saveTemplate(String TempName) {
+		getprod_Templatetext().SendKeys(TempName);
+		getProdExport_SaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Production Saved as a Custom Template.");
+	}
+
+	/**
+	 * Author sowndarya.velraj
+	 */
+	public void advancedProductionComponentsMP3WithBurnReductionTag() throws InterruptedException {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getMP3CheckBox());
+		base.clickButton(getMP3CheckBoxToggle());
+		base.clickButton(getMP3CheckReductionBoxEnable());
+		getMP3CheckReductionBoxEnable().Enabled();
+		base.clickButton(getMP3RatiobtnRedactiontag());
+		Thread.sleep(3000);
+		if (getMP3RatiobtnRedactiontag().Enabled()) {
+			base.clickButton(getMP3SelectDefaultRedactiontag());
+			driver.scrollPageToTop();
+		}
+		base.stepInfo("Advanced production section MP3 files is filled with enabling the reduction toggle button");
+	}
+
+	/**
+	 * @author Sowndarya.velraj
+	 * @description :method for asserting mp3 redaction tag
+	 * 
+	 */
+	public void mp3DisableCheck() {
+		boolean flag;
+		driver.waitForPageToBeReady();
+		flag = checkMp3ReductionTagDisable().GetAttribute("class").contains("disabled");
+		if (!flag) {
+
+			Assert.assertTrue(true);
+			base.passedStep("MP3 tag is disabled at managing template page");
+		} else {
+			Assert.assertTrue(false);
+			base.failedStep("MP3 tag is enabled at managing template page");
+		}
+
+	}
+
+	/**
+	 * @author :Sowndariya.velraj
+	 * @Description: Method for generating production without commit and with
+	 *               continue generation popup
+	 */
+	public void fillingGeneratePageWithContinueGenerationPopupWithoutCommit() throws InterruptedException {
+
+		base.waitForElement(getbtnProductionGenerate());
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getbtnContinueGeneration().isElementAvailable(220);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().Click();
+		}
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		// Get Documents Generated Text
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().isElementAvailable(860);
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		String expectedText = "Success";
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+		base.stepInfo("Generation completed");
+
+	}
+
+	/**
+	 * @author :Aathith senthilkumar
+	 * @throws InterruptedException
+	 * @Description: Method for regenerating the production from home page
+	 */
+	public void reGenarate(String prodName) throws InterruptedException {
+
+		base.waitForElement(getGearIconForProdName(prodName));
+		getGearIconForProdName(prodName).waitAndClick(5);
+
+		base.waitForElement(getOpenWizard());
+		getOpenWizard().waitAndClick(5);
+
+		base.waitForElement(getBackButton());
+		getBackButton().waitAndClick(5);
+
+		base.waitForElement(getbtnGenMarkIncomplete());
+		getbtnGenMarkIncomplete().waitAndClick(5);
+
+		base.waitForElement(getbtnGenMarkIncomplete());
+		getbtnReGenerateMarkComplete().waitAndClick(5);
+		base.stepInfo("Regenarate button clicked");
+
+		base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().waitAndClick(5);
+
+		// StatusVerification
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Preparing Data Complete").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Preparing Data Complete");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Pre-Generation Checks In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Pre-Generation Checks In Progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Reserving Bates Range Complete").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Reserving Bates Range Complete");
+
+		// continue Genaration button click
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnContinueGeneration().Enabled() && getbtnContinueGeneration().isDisplayed();
+			}
+		}), Input.wait120);
+
+		getbtnContinueGeneration().waitAndClick(10);
+
+		// after continue button status verification
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Production Generation In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Production Generation In Progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Load File Generation In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Load File Generation In Progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Exporting Files In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Exporting Files In Progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Creating Archive In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Creating Archive In Progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Creating Archive Complete/Skipped").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Creating Archive Complete/Skipped");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyGenStatus("Post-Generation QC Checks In Progress").isDisplayed();
+			}
+		}), Input.wait120);
+		verifyProductionStatusInGenPage("Post-Generation QC Checks In Progress");
+
+	}
+
+	/**
+	 * @author :Aathith senthilkumar
+	 * @throws InterruptedException
+	 * @Description: Method for checking the status of production from generate page
+	 */
+	public void verifyProductionStatusInGenPage(String statusMsg) throws InterruptedException {
+		String VerifyGenStatus = null;
+		// Verifying status of the production from generate page
+		for (int i = 0; i < 500; i++) {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getVerifyGenStatus(statusMsg));
+			VerifyGenStatus = getVerifyGenStatus(statusMsg).getText();
+			if (VerifyGenStatus.contains(statusMsg)) {
+				base.passedStep(statusMsg + "status displayed");
+				break;
+			} else if (i == 499) {
+				base.failedStep(statusMsg + "status not displayed");
+			} else {
+				// getRefreshButton().waitAndClick(5);
+				Thread.sleep(500);
+			}
+		}
+		System.out.println("Preparing Data status displayed for " + VerifyGenStatus);
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling tiff with branding
+	 * 
+	 */
+	public void fillingTiffSectionBranding() {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().waitAndClick(10);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			driver.scrollPageToTop();
+			getMarkCompleteLink().Enabled();
+			getMarkCompleteLink().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling tiff section branding" + e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for filling saved template
+	 * @param Productionname : Productionname is String value that name of
+	 *                       production.
+	 * @param Templatename   : Templatename is String value that name of template.
+	 */
+	public void selectSavedTemplateAndManageTemplate(String Productionname, String Templatename)
+			throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDropDownToggle(Productionname));
+			getDropDownToggle(Productionname).waitAndClick(10);
+			base.waitForElement(getSaveAsTemplate(Productionname));
+
+			getSaveAsTemplate(Productionname).waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getprod_Templatetext().Visible();
+				}
+			}), Input.wait30);
+			getprod_Templatetext().SendKeys(Templatename);
+			getProdExport_SaveButton().waitAndClick(5);
+			base.VerifySuccessMessage("Production Saved as a Custom Template.");
+			// getCloseBtnInProductionPage().Click();
+			driver.Navigate().refresh();
+			base.waitForElement(getManageTemplates());
+			getManageTemplates().Click();
+			Thread.sleep(Input.wait30 / 10);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getNextBtn());
+			base.waitTillElemetToBeClickable(getNextBtn());
+			getNextBtn().Click();
+
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getViewBtn(Templatename).Visible();
+				}
+			}), Input.wait30);
+			getViewBtn(Templatename).Click();
+			driver.waitForPageToBeReady();
+			// base.waitForElement(getViewBtn(Templatename));
+			// getViewBtn(Templatename).Click();
+
+			base.waitForElement(getbtnTemplateGuardNext());
+			getbtnTemplateGuardNext().Click();
+			driver.waitForPageToBeReady();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while handling saved template" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the message of tiff section.
+	 */
+	public void verifyTiffSectionIsSelected() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			if (getTIFFChkBox().Enabled()) {
+				base.passedStep("Tiff section is selected as expected");
+			} else {
+				base.failedStep("Tiff section is not selected as expected");
+			}
+			base.waitForElement(getCloseBtn());
+			getCloseBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying the tiff section checkbox" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling basic info
+	 * @param productionName : productionName is name of production.
+	 * @param Template       : Template is name of templete.
+	 */
+	public void baseInfoLoadTemplate(String productionName, String Template) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAddNewProductionbutton().Visible() && getAddNewProductionbutton().Enabled();
+				}
+			}), Input.wait30);
+			getAddNewProductionbutton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProductionName().Visible() && getProductionName().Enabled();
+				}
+			}), Input.wait30);
+			getProductionName().SendKeys(productionName);
+			base.waitForElement(getLoadTempDropDwn(Template));
+			getLoadTempDropDwn(Template).Click();
+			driver.scrollPageToTop();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			getMarkCompleteLink().Enabled();
+			getMarkCompleteLink().waitAndClick(10);
+			System.out.println("Clicked on Mark Complete Button..");
+			driver.waitForPageToBeReady();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while basic info" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the DAT and TIFF checkbox is selected are not.
+	 */
+	public void verifyDATAndTIFFField() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			Thread.sleep(Input.wait30 / 10);
+			base.waitForElement(getDATChkBox());
+			if (getDATChkBox().Enabled()) {
+				base.passedStep("DAT section is selected as expected");
+			} else {
+				base.failedStep("DAT section is not selected as expected");
+			}
+			base.waitForElement(getTIFFChkBox());
+			if (getTIFFChkBox().Enabled()) {
+				base.passedStep("Tiff section is selected as expected");
+			} else {
+				base.failedStep("Tiff section is not selected as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying production DAT And Tiff Field" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying DAT,PDF,NATIVE,TEXT are selected
+	 */
+	public void verifyPDFSectionIsSelected() {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDATChkBox());
+			if (getDATChkBox().Enabled()) {
+				base.passedStep("DAT section is selected as expected");
+			} else {
+				base.failedStep("DAT section is not selected as expected");
+			}
+
+			base.waitForElement(getPDFChkBox());
+			if (getPDFChkBox().Enabled()) {
+				base.passedStep("PDF section is selected as expected");
+			} else {
+				base.failedStep("PDF section is not selected as expected");
+			}
+
+			base.waitForElement(getNativeChkBox());
+			if (getNativeChkBox().Enabled()) {
+				base.passedStep("NATIVE section is selected as expected");
+			} else {
+				base.failedStep("NATIVE section is not selected as expected");
+			}
+			base.waitForElement(getTextChkBox());
+			if (getTextChkBox().Enabled()) {
+				base.passedStep("TEXT section is selected as expected");
+			} else {
+				base.failedStep("TEXT section is not selected as expected");
+			}
+			base.waitForElement(getCloseBtn());
+			getCloseBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured PDF section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * Author sowndarya.velraj
+	 */
+	public void fillingMP3() throws InterruptedException {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getMP3CheckBox());
+		base.clickButton(getMP3CheckBoxToggle());
+		base.clickButton(getbtnMP3BurnRedaction());
+		driver.waitForPageToBeReady();
+		base.clickButton(getSelect_RedactionStyle_Dropdown());
+		base.clickButton(getSelect_Beep_RedactionStyle_Dropdown());
+		driver.scrollPageToTop();
+	}
+
+	/**
+	 * Author sowndarya.velraj
+	 */
+	public void viewTempProductionNext() {
+
+		base.waitForElement(getbtnTemplateGuardNext());
+		getbtnTemplateGuardNext().waitAndClick(10);
+		base.waitForElement(getadvanceOnManageTemplate());
+		getadvanceOnManageTemplate().waitAndClick(10);
+		base.waitForElement(getMP3CheckBoxToggle());
+		getMP3CheckBoxToggle().waitAndClick(10);
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for verifying DAT and Pdf field.
+	 */
+	public void verifyDATAndPDFField() throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			Thread.sleep(Input.wait30 / 10);
+			base.waitForElement(getDATChkBox());
+			if (getDATChkBox().Enabled()) {
+				base.passedStep("DAT section is selected as expected");
+			} else {
+				base.failedStep("DAT section is not selected as expected");
+			}
+			base.waitForElement(getPDFChkBox());
+			if (getPDFChkBox().Enabled()) {
+				base.passedStep("PDF section is selected as expected");
+			} else {
+				base.failedStep("PDF section is not selected as expected");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying DAT and Pdf field." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :Verifying the message of tiff section.
+	 */
+	public void verifyProductionComponent() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDATChkBox());
+			getDATChkBox().Click();
+			base.waitForElement(getDATTab());
+			getDATTab().Click();
+
+			base.waitForElement(getDAT_FieldClassification1());
+			if (getDAT_FieldClassification1().Enabled()) {
+				base.failedStep("Specify DAT Field Mapping is enabled");
+
+			} else {
+				base.passedStep("Specify DAT Field Mapping is disabled");
+			}
+			driver.scrollingToBottomofAPage();
+			driver.waitForPageToBeReady();
+			getTIFFChkBox().ScrollTo();
+			base.waitForElement(getTIFFChkBox());
+			if (getTIFFChkBox().Enabled()) {
+				base.passedStep("Tiff section is selected as expected");
+			} else {
+				base.failedStep("Tiff section is not selected as expected");
+			}
+			getCloseBtn().ScrollTo();
+			base.waitForElement(getCloseBtn());
+			getCloseBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verifying the tiff section checkbox" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling PDF Section Branding
+	 */
+	public void fillingPDFSectionBranding() {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			base.waitForElement(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().waitAndClick(10);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitTillElemetToBeClickable(getMarkCompleteLink());
+			driver.scrollPageToTop();
+			getMarkCompleteLink().Enabled();
+			getMarkCompleteLink().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling tiff section branding" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling TIFF Section With Bates Number.
+	 */
+	public void fillingTIFFSectionWithBatesNumber() {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().waitAndClick(10);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getInsertMetadataField());
+			getInsertMetadataField().Click();
+			base.waitForElement(getBatesNumberinTiff());
+			getBatesNumberinTiff().Click();
+			base.waitForElement(getOkBtn());
+			getOkBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling tiff section with bates number" + e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling Numbering And Sorting Document Page.
+	 * @param prefixID : prefixID is String value that prefix id.
+	 */
+	public void fillingNumberingAndSortingDocumentPage(String prefixID) {
+		try {
+			base.waitForElement(getDocumentRadioBtn());
+			getDocumentRadioBtn().Click();
+			driver.waitForPageToBeReady();
+			num = getRandomNumber(2);
+			System.out.println(num);
+			driver.waitForPageToBeReady();
+			getBeginningSubBatesNum().SendKeys(num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling numbering and sorting document " + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :filling tag selected in the specify branding .
+	 * @param Tag1 : Tag1 is string value that name of string.
+	 * @param Tag2 : Tag2 is String value that name of string.
+	 * @param Test : Test is String value that value to enter in placeholder.
+	 */
+	public void specifyBrandingInTiffSection(String Tag1, String Tag2, String Test) throws InterruptedException {
+
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(10);
+			driver.scrollPageToTop();
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getLeftSpecifyBrandingBySelectingTag().ScrollTo();
+			base.waitTillElemetToBeClickable(getLeftSpecifyBrandingBySelectingTag());
+			getLeftSpecifyBrandingBySelectingTag().waitAndClick(10);
+
+			getbtnSelectTags().Enabled();
+			getbtnSelectTags().waitAndClick(10);
+			// getPriveldge_TagTree(Tag1).ScrollTo();
+			base.waitForElement(getPriveldge_TagTree(Tag1));
+			getPriveldge_TagTree(Tag1).waitAndClick(10);
+			base.waitForElement(getChkBoxSelect(Tag2));
+			getChkBoxSelect(Tag2).waitAndClick(10);
+			base.waitForElement(getbtnSelect());
+			getbtnSelect().waitAndClick(10);
+			base.waitForElement(getBrandingBySelectingTagPlaceholder());
+			getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the  specify branding at left Header branding"
+							+ e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for specify Branding In Tiff Section Insert MetaData
+	 *              Field
+	 * @param Tag  : Tag1 is string value that name of string.
+	 * @param Tag2 : Tag2 is String value that name of string.
+	 * @param Test : Test is String value that value to enter in placeholder.
+	 */
+	public void specifyBrandingInTiffSectionInsertMetaDataField(String Tag, String Tag2, String Test) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(10);
+			driver.scrollPageToTop();
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			getLeftSpecifyBrandingBySelectingTag().ScrollTo();
+			base.waitTillElemetToBeClickable(getLeftSpecifyBrandingBySelectingTag());
+			getLeftSpecifyBrandingBySelectingTag().waitAndClick(10);
+
+			getbtnSelectTags().Enabled();
+			getbtnSelectTags().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			// getPriveldge_TagTree(Tag).ScrollTo();
+			base.waitForElement(getPriveldge_TagTree(Tag));
+			getPriveldge_TagTree(Tag).waitAndClick(10);
+			base.waitForElement(getPriveldge_TagTree(Tag2));
+			getPriveldge_TagTree(Tag2).waitAndClick(10);
+			base.waitForElement(getbtnSelect());
+			getbtnSelect().waitAndClick(10);
+			base.waitForElement(getBrandingBySelectingTagPlaceholder());
+			getBrandingBySelectingTagPlaceholder().SendKeys(Test);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getInsertMetadataField());
+			getInsertMetadataField().Click();
+			base.waitForElement(getCustodianNameinTiff());
+			getCustodianNameinTiff().Click();
+			base.waitForElement(getOkBtn());
+			getOkBtn().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while verifying tag selected in the  specify branding and insrt metadatafield"
+							+ e.getMessage());
+
+		}
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description :method for filling prodcution selection volume included.
+	 * @param productionname : productionname is string value that name of
+	 *                       production.
+	 */
+	public void fillingProdcutionSelectionVolumeIncluded(String productionname) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getlstProductionRootPaths().Enabled();
+				}
+			}), Input.wait30);
+			getlstProductionRootPaths().selectFromDropdown().selectByVisibleText(Input.prodPath);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getProductionOutputLocation_ProductionDirectory().Enabled();
+				}
+			}), Input.wait30);
+			getProductionOutputLocation_ProductionDirectory().SendKeys(productionname);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return gettxtLoadFiles().Enabled();
+				}
+			}), Input.wait30);
+			gettxtLoadFiles().SendKeys(productionname);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getVolumeIncluded().Enabled();
+				}
+			}), Input.wait30);
+			getVolumeIncluded().waitAndClick(10);
+			// getVolumeIncluded
+			driver.scrollPageToTop();
+			base.stepInfo("Production Location Page And Passing Text Page section is filled");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling prodcution selection volume included" + e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for copy Path In QC Tab.
+	 */
+	public void copyPathInQCTab() throws InterruptedException {
+		try {
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+				}
+			}), Input.wait30);
+			getbtnProductionGenerate().Click();
+
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().isElementAvailable(540);
+				}
+			}), Input.wait120);
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+				}
+			}), Input.wait60);
+
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			getConfirmProductionCommit().waitAndClick(10);
+
+			String PDocCount = getProductionDocCount().getText();
+			// added thread.sleep to avoid exception while executing in batch
+			Thread.sleep(Input.wait30 / 10);
+			System.out.println(PDocCount);
+			int Doc = Integer.parseInt(PDocCount);
+
+			Reporter.log("Doc - " + Doc, true);
+			System.out.println(Doc);
+			UtilityLog.info(Doc);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCopyPath().isDisplayed();
+				}
+			}), Input.wait60);
+			getCopyPath().waitAndClick(10);
+			String parentWindow = driver.getWebDriver().getWindowHandle();
+			((JavascriptExecutor) driver.getWebDriver()).executeScript("window.open()");
+			ArrayList<String> tabs = new ArrayList<String>(driver.getWebDriver().getWindowHandles());
+			driver.getWebDriver().switchTo().window(tabs.get(1));
+			driver.waitForPageToBeReady();
+			Actions actions = new Actions(driver.getWebDriver());
+			actions.sendKeys(Keys.COMMAND, "v").sendKeys(Keys.ENTER).build().perform();
+			driver.close();
+			driver.getWebDriver().switchTo().window(parentWindow);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while copying Path In QC Tab." + e.getMessage());
+
+		}
+	}
+
+	/*
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * 
+	 * @Description: Method for filling priv docs placeholder in pdf section.
+	 * 
+	 * @param tagname : tagname is String value that name of tag.
+	 */
+	public void selectPrivDocsInPDFSection(String tagname) {
+		try {
+			base.waitForElement(getPDFChkBox());
+			getPDFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getPDFTab());
+			getPDFTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().Click();
+			base.waitForElement(getChkBoxSelect(tagname));
+			getChkBoxSelect(tagname).waitAndClick(10);
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+			base.waitForElement(getPriveldge_TextArea());
+			new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+			getPriveldge_TextArea().SendKeys(tagNameTechnical);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling priv docs placeholder in pdf section" + e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling DAT section privledged checkbox.
+	 */
+	public void fillingDATSectionWithPrivChecked() {
+		try {
+			base.waitForElement(getDATPrivledgedCheckbox());
+			getDATPrivledgedCheckbox().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while selecting checkbox in DAT section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Aathith Senthilkumar
+	 * @Description: Method for filling Generate section without wait.
+	 */
+	public void fillingGeneratePageWithContinueGenerationPopupWithoutWait() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnContinueGenerate().Enabled() && getbtnContinueGenerate().isDisplayed();
+			}
+		}), Input.wait60);
+		getbtnContinueGenerate().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+	}
+
+	/**
+	 * @author : Aathith Senthilkumar
+	 * @Description: Method for homepage Grid view status check.
+	 */
+	public void verifyProductionStatusInHomePageGridView(String statusMsg, String productionname)
+			throws InterruptedException {
+		String productionFromHomePage = null;
+
+		// Verifying status of the production from home page
+		for (int i = 0; i < 500; i++) {
+			// getRefreshButton().waitAndClick(5);
+			productionFromHomePage = getStatusInGridView(productionname).getText();
+			System.out.println("Preparing Data status displayed for " + productionFromHomePage);
+			if (productionFromHomePage.contains(statusMsg)) {
+				base.passedStep(statusMsg + "status displayed");
+				break;
+			} else if (i == 499) {
+				base.failedStep(statusMsg + "status not displayed");
+			} else {
+				Thread.sleep(1000);
+				getRefreshButton().waitAndClick(5);
+			}
+		}
+	}
+
+	/**
+	 * @author : Aathith Senthilkumar
+	 * @Description: Method for genarate page without wait
+	 */
+	public void clickGenarateWithoutWait() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling DAT Section With SourceID.
+	 */
+	public void fillingDATSectionWithSourceID() {
+		try {
+			base.waitForElement(getDAT_AddField());
+			getDAT_AddField().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification2().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Family");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_SourceField2().Visible() && getDAT_SourceField2().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_SourceField2().selectFromDropdown().selectByVisibleText("SourceAttachDocIDs");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_DATField2().Visible() && getDAT_DATField2().Enabled();
+				}
+			}), Input.wait30);
+
+			getDAT_DATField2().SendKeys("Family" + Utility.dynamicNameAppender());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling DAT section" + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling priv docs placeholder in tiff section.
+	 * @param tagname : tagname is String value that name of tag.
+	 * @param tag     : tag is String value that another tag name.
+	 * 
+	 */
+	public void fillingPrivTagsInTIFFSection(String tagname, String Tag) {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().Click();
+			base.waitForElement(getChkBoxSelect(tagname));
+			getChkBoxSelect(tagname).waitAndClick(10);
+			base.waitForElement(getPriveldge_TagTree(Tag));
+			getPriveldge_TagTree(Tag).waitAndClick(10);
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			base.waitForElement(getPrivInsertMetadataField());
+			getPrivInsertMetadataField().waitAndClick(5);
+			base.waitForElement(getSourceAttachDocIDs());
+			getSourceAttachDocIDs().waitAndClick(5);
+			base.waitForElement(getPopUpOkButtonInserMetaData());
+			getPopUpOkButtonInserMetaData().waitAndClick(5);
+			driver.scrollPageToTop();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling priv docs placeholder in tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for Filling Document Selection Page With Tag.
+	 * @param tagname : tagname is String value that name of tag.
+	 * @param tag     : tag is String value that another tag name.
+	 * 
+	 */
+	public void fillingDocSelectionPageWithTag(String tag1, String tag2) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTagRadioButton().Enabled();
+				}
+			}), Input.wait30);
+			getTagRadioButton().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectFolder(tag1).Visible();
+				}
+			}), Input.wait30);
+			getSelectFolder(tag1).waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectFolder(tag2).Visible();
+				}
+			}), Input.wait30);
+			getSelectFolder(tag2).waitAndClick(10);
+
+			driver.scrollingToBottomofAPage();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getIncludeFamilies().Visible();
+				}
+			}), Input.wait30);
+			getIncludeFamilies().Click();
+
+			driver.scrollPageToTop();
+			base.stepInfo("Document Selection Page section is filled");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while Filling Document Selection Page With Tag" + e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for Filling Text Section And Verfying Text.
+	 * @param expText : expText is String value that expected text need to get from
+	 *                text component.
+	 */
+	public void fillingTextSectionAndVerfyingText(String expText) {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTextChkBox().Enabled();
+				}
+			}), Input.wait30);
+			getTextChkBox().waitAndClick(5);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTextTab().Enabled();
+				}
+			}), Input.wait30);
+			getTextTab().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getTextcomponent_text().isDisplayed();
+				}
+			}), Input.wait30);
+			String actualText = getTextcomponent_text().getText();
+			System.out.println(actualText);
+			UtilityLog.info(actualText);
+			if (actualText.contains(actualText)) {
+				base.passedStep("" + actualText + " text are displayed as expected");
+			} else {
+				base.failedStep("" + actualText + " text is not displayed as expected");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while Filling Text Section And Verfying Text." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Brundha
+	 * @description : Method for adding tiffpagecount on DAT.
+	 */
+	public void fillingTiffPageCountToDATFields() {
+		try {
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_FieldClassification2().Visible() && getDAT_FieldClassification1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_SourceField2().Visible() && getDAT_SourceField1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDAT_DATField2().Visible() && getDAT_DATField1().Enabled();
+				}
+			}), Input.wait30);
+			getDAT_DATField2().SendKeys(Input.randomText);
+			base.stepInfo("Dat section is filled with Tiff page count");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while adding TIFF page count on DAT." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
+	 * @Description: Method for filling priv docs placeholder in tiff section.
+	 * @param tagname : tagname is aString value that name of tag.
+	 */
+	public void selectPrivDocsInTiffSectionWithMetaDataField(String tagname) {
+		try {
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(5);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			base.waitForElement(getPriveldge_SelectTagButton());
+			getPriveldge_SelectTagButton().Click();
+			base.waitForElement(getChkBoxSelect(tagname));
+			getChkBoxSelect(tagname).waitAndClick(10);
+			getPriveldge_TagTree_SelectButton().waitAndClick(10);
+
+			base.waitForElement(getPrivInsertMetadataField());
+			getPrivInsertMetadataField().waitAndClick(5);
+			base.waitForElement(getCustodianNameinTiff());
+			getCustodianNameinTiff().waitAndClick(5);
+			base.waitForElement(getPopUpOkButtonInserMetaData());
+			getPopUpOkButtonInserMetaData().waitAndClick(5);
+			driver.scrollPageToTop();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling priv docs placeholder in tiff section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * @description : Method for Tiff section with tech issue insert meta data
+	 *              field.
+	 */
+	public void fillingTiffSectionTechIssueMetaDataField(String tagname) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().waitAndClick(5);
+
+			driver.scrollingToBottomofAPage();
+
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().waitAndClick(5);
+
+			driver.scrollPageToTop();
+
+			base.waitForElement(getTIFF_CenterHeaderBranding());
+			getTIFF_CenterHeaderBranding().waitAndClick(10);
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().waitAndClick(5);
+
+			base.waitForElement(getTechissue_toggle());
+			getTechissue_toggle().waitAndClick(5);
+
+			driver.waitForPageToBeReady();
+
+			base.waitForElement(getTechissue_SelectTagButton());
+			getTechissue_SelectTagButton().waitAndClick(10);
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getSelectTechnicalIssueTag().Visible() && getPriveldge_TagTree(tagname).Enabled();
+				}
+			}), Input.wait90);
+
+			getSelectTechnicalIssueTag().waitAndClick(15);
+
+			base.waitForElement(getPriveldge_TagTree_SelectButton());
+			getPriveldge_TagTree_SelectButton().waitAndClick(15);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTechInsertMetadataField());
+			getTechInsertMetadataField().waitAndClick(10);
+			base.waitForElement(getCustodianNameinTiff());
+			getCustodianNameinTiff().Click();
+			base.waitForElement(getPopUpOkButtonInserMetaData());
+			getPopUpOkButtonInserMetaData().Click();
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occcured while filling Tiff section with insert meta data fied." + e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void advancedProductionComponentsTranslations() throws InterruptedException {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getTranslationsChkBox());
+		base.clickButton(getTranslationsCheckBox());
+		driver.scrollingToBottomofAPage();
+		base.clickButton(getTranslation_SelectAllCheck());
+
+		driver.scrollPageToTop();
+
+		base.stepInfo("Advanced production section Translation files is filled");
+	}
+
+	/**
+	 * @author Aathith
+	 * @description Save template and disable check
+	 * 
+	 **/
+	public void saveTemple(String TempName) {
+		getprod_Templatetext().SendKeys(TempName);
+		getProdExport_SaveButton().waitAndClick(10);
+		base.VerifySuccessMessage("Production Saved as a Custom Template.");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void translationDisableCheck() {
+		boolean flag;
+		driver.waitForPageToBeReady();
+
+		flag = getTranslationComponent().Enabled();
+
+		if (flag) {
+
+			Assert.assertTrue(true);
+			base.passedStep("Translation component is disabled at managing template page");
+		} else {
+			Assert.assertTrue(false);
+			base.failedStep("Translation component is enabled at managing template page");
+		}
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void viewTempProductionNextAdvTranslation() {
+
+		base.waitForElement(getbtnTemplateGuardNext());
+		getbtnTemplateGuardNext().waitAndClick(10);
+		base.waitForElement(getadvanceOnManageTemplate());
+		getadvanceOnManageTemplate().waitAndClick(10);
+		base.waitForElement(getTranslationsCheckBox());
+		getTranslationsCheckBox().waitAndClick(10);
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingPDFForRedaction1() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		base.waitForElement(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().ScrollTo();
+		base.clickButton(getPDFGenerateRadioButton());
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+
+		// add the pop link
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+//				base.waitForElement(getClkCheckBox_selectingRedactionTags());
+//				getClkCheckBox_selectingRedactionTags().Click();
+
+		base.waitForElement(getRedactionWithoutRedactionTagsCheckbox());
+		getRedactionWithoutRedactionTagsCheckbox().Click();
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().isDisplayed();
+		getRedactedTagTextArea().SendKeys("Updated Redaction Tag");
+
+		Thread.sleep(5000);
+
+	}
+
+	/**
+	 * @author Gopinath
+	 * @Description : Method for navigating to production page.
+	 */
+	public void navigateToProductionPage() {
+		try {
+			driver.getWebDriver().get(Input.url + "Production/Home");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating to production page" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author :Gopinath
+	 * @Description: Method for clicking generate button.
+	 */
+	public void clickOnGenerateButton() {
+		try {
+			base.waitForElement(getbtnProductionGenerate());
+			getbtnProductionGenerate().waitAndClick(10);
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while clicking generate button." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author :Gopinath
+	 * @Description: Method for clicking generate button and verify pre gen check
+	 *               status.
+	 */
+	public void clickOnGenerateButtonAndVerifyPreGenChecksStatus() {
+		try {
+			base.waitForElement(getbtnProductionGenerate());
+			getbtnProductionGenerate().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPreGenStatus().isElementAvailable(500);
+				}
+			}), Input.wait60);
+			if (getPreGenStatus().isDisplayed()) {
+				base.passedStep("Pre-gen checks is in progress is displayed in success page");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while licking generate button and verify pre gen check status."
+					+ e.getMessage());
+
+		}
+	}
+
+	/**
+	 * @author : Aathith Senthilkumar
+	 * @Description: Method for genarate page without wait
+	 */
+	public void clickGenarateWaitForRegenarate() {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnReGenerateMarkComplete().Enabled() && getbtnReGenerateMarkComplete().isDisplayed();
+			}
+		}), Input.wait60);
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void prodReservingBatesRangeFailedProduction1() throws InterruptedException {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByButton().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByButton().Click();
+		base.stepInfo("Filtering the failed production");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByDRAFT().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByDRAFT().Click();
+		base.stepInfo("Removing filter by draft");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterByINPROGRESS().Enabled();
+			}
+		}), Input.wait30);
+		getFilterByINPROGRESS().Click();
+		base.stepInfo("Removing filter by in progress");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFilterDropDown().Enabled();
+			}
+		}), Input.wait30);
+		getFilterDropDown().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return gettxtReservingBatesFailedAt1stProdShown().Enabled();
+			}
+		}), Input.wait30);
+		base.stepInfo("Reserving Bates Range Failed production displays");
+
+		if (gettxtReservingBatesFailedAt1stProdShown().Enabled()) {
+			String batesFailedMsg = gettxtReservingBatesFailedAt1stProdShown().getText();
+			base.passedStep("verifing the failed status :" + batesFailedMsg);
+			Assert.assertTrue(true, batesFailedMsg);
+		} else {
+			base.passedStep("No Reserving Bates Range failed production occurs");
+		}
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getGearIcon().Enabled() && getGearIcon().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getGearIcon().Click();
+		driver.waitForPageToBeReady();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getOpenWizard().Enabled() && getOpenWizard().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getOpenWizard().Click();
+
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().waitAndClick(5);
+
+		base.waitForElement(getbtnRegenerateContinue());
+		getbtnRegenerateContinue().Click();
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+
+		base.waitForElement(getbtnReGenerateMarkComplete());
+		getbtnReGenerateMarkComplete().Click();
+
+		base.waitForElement(getbtnRegenerateCancel());
+		getbtnRegenerateCancel().Click();
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void advancedProductionComponentsMP3DisableGenarateFileLoad() throws InterruptedException {
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.clickButton(getAdvancedProductionComponent());
+		base.clickButton(getMP3CheckBox());
+		base.clickButton(getMP3CheckBoxToggle());
+		base.clickButton(getAdvancedTabInMP3());
+		base.clickButton(getMp3GenerateLoadFile());
+		base.stepInfo("Advanced production section MP3 files is filled with disabling the genarate load file");
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingTIFFSectionWithError() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().waitAndClick(5);
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+		driver.scrollPageToTop();
+
+		base.stepInfo("TIFF section fillied without placeholder text");
+
+	}
+
+	/**
+	 * @author : Aathith Senthilkumar
+	 * @Description: Method for filling Generate wait for continue button to be
+	 *               ready.
+	 */
+	public void fillingGeneratePageWaitForContinueGeneration() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().Click();
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnContinueGenerate().Enabled() && getbtnContinueGenerate().isDisplayed();
+			}
+		}), Input.wait60);
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void splictCountCheck() {
+		boolean flag;
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		flag = verifyProductionLocationSplitCount().GetAttribute("style").contains("rgb(255, 255, 255)");
+		if (flag) {
+
+			softAssertion.assertTrue(true);
+			base.passedStep("Split sub folder button enabled");
+		} else {
+			softAssertion.assertTrue(false);
+			base.failedStep("Split sub folder button disabled");
+		}
+		flag = verifyProductionLocationSplitCount().GetAttribute("value").contains("1000");
+		if (flag) {
+
+			softAssertion.assertTrue(true);
+			base.passedStep("Split Count is 1000");
+		} else {
+			softAssertion.assertTrue(false);
+			base.failedStep("Split Count is not 1000");
+		}
+		driver.scrollPageToTop();
+
+	}
+
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingPDFSectionWithError() throws InterruptedException {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFChkBox().Enabled();
+			}
+		}), Input.wait30);
+		getPDFChkBox().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFTab().Enabled();
+			}
+		}), Input.wait30);
+		getPDFTab().Click();
+
+		driver.scrollPageToTop();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFGenerateRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getPDFGenerateRadioButton().Click();
+
+		base.stepInfo("PDF section fillied without placeholder text");
+	}
+
+	/*
+	 * @author Jeevitha
+	 */
+	public void createNewExport(String exportname) {
+		base.waitForElement(getProdExportSet());
+		getProdExportSet().waitAndClick(10);
+
+		base.waitForElement(getProductionSettxt());
+		getProductionSettxt().SendKeys(exportname);
+
+		base.waitForElement(getProdExportSetRadioButton());
+		getProdExportSetRadioButton().waitAndClick(10);
+
+		base.waitForElement(getProdExport_SaveButton());
+		getProdExport_SaveButton().waitAndClick(10);
+		base.VerifySuccessMessage("Export Set Added Successfully");
+
+		base.waitForElement(getProdExport_ProductionSets());
+		getProdExport_ProductionSets().waitAndClick(10);
+		getProdExport_SelectValueFromDD(exportname).waitAndClick(10);
+
+		base.stepInfo(exportname + " Is selected From Production/Export Set DropDown");
+	}
+
+	/*
+	 * @author Brundha
+	 */
+	public void fillingGeneratePageAndVerfyingBatesRange(String Batesvalue) throws InterruptedException {
+//generating production:
+		SoftAssert softAssertion = new SoftAssert();
+		String expectedText = "Success";
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+			}
+		}), Input.wait30);
+		getbtnProductionGenerate().waitAndClick(10);
+
+		getbtnContinueGeneration().isElementAvailable(120);
+		if (getbtnContinueGeneration().isDisplayed()) {
+			base.waitForElement(getbtnContinueGeneration());
+			getbtnContinueGeneration().waitAndClick(10);
+		}
+
+		Reporter.log("Wait for generate to complete", true);
+		System.out.println("Wait for generate to complete");
+		UtilityLog.info("Wait for generate to complete");
+		driver.waitForPageToBeReady();
+		String PrefixValue = getBatesRange().getText();
+		System.out.println(PrefixValue);
+		// String Actualtext=suffixID;
+
+		if (PrefixValue.contains(Batesvalue)) {
+			base.passedStep("Batesrange is with 50 character as expected");
+		} else {
+			base.failedStep("BatesRange is not  with 50 character as expected");
+		}
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+			}
+		}), Input.wait120);
+		String actualText = getStatusSuccessTxt().getText();
+		System.out.println(actualText);
+
+		softAssertion.assertTrue(actualText.contains(expectedText));
+		base.passedStep("Documents Generated successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getConfirmProductionCommit().Enabled() && getConfirmProductionCommit().isDisplayed();
+			}
+		}), Input.wait60);
+
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(2000);
+		getConfirmProductionCommit().waitAndClick(10);
+
+		String PDocCount = getProductionDocCount().getText();
+		// added thread.sleep to avoid exception while executing in batch
+		Thread.sleep(1000);
+		System.out.println(PDocCount);
+		int Doc = Integer.parseInt(PDocCount);
+
+		Reporter.log("Doc - " + Doc, true);
+		System.out.println(Doc);
+		UtilityLog.info(Doc);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getCopyPath().isDisplayed();
+			}
+		}), Input.wait60);
+		getCopyPath().waitAndClick(10);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getQC_Download().isDisplayed();
+			}
+		}), Input.wait30);
+
+		getQC_Download().waitAndClick(10);
+		getQC_Downloadbutton_allfiles().waitAndClick(10);
+		base.VerifySuccessMessage("Your Production Archive download will get started shortly");
+		base.stepInfo("Generate production page is filled");
+	}
+	/**
+	 * @author : Brundha
+	 * @Description: Method for adding the saved template in basic info tab.
+	 *              
+	 */
+	public void savedTemplateAndNewProdcution(String Productionname, String Templatename) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDropDownToggle(Productionname));
+			getDropDownToggle(Productionname).waitAndClick(10);
+			base.waitForElement(getSaveAsTemplate(Productionname));
+
+			getSaveAsTemplate(Productionname).waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getprod_Templatetext().Visible();
+				}
+			}), Input.wait30);
+			getprod_Templatetext().SendKeys(Templatename);
+			getProdExport_SaveButton().waitAndClick(5);
+			base.VerifySuccessMessage("Production Saved as a Custom Template.");
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while  filling template" + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		
+	}
+	/**
+	 * @author : Brundha
+	 * @Description: Method for verifying the text in prefix and suffix in numbering and sorting page
+	 *              
+	 */ 
+	public void verifyingPrefixAndSuffixText(String prefixID, String suffixID) {
+	  try {
+		base.waitForElement(getBeginningBates());
+		  driver.waitForPageToBeReady();
+		  num = getRandomNumber(2);
+		  System.out.println(num);
+		  getBeginningBates().SendKeys(num);
+          driver.waitForPageToBeReady();
+		  base.waitForElement(gettxtBeginningBatesIDPrefix());
+		  driver.waitForPageToBeReady();
+		 String Prefix= gettxtBeginningBatesIDPrefix().getText();
+		 System.out.println(Prefix);
+		 System.out.println(prefixID);
+		 if(Prefix.equals(prefixID)) {
+			 base.passedStep(""+Prefix+" and "+prefixID+"  text is as expected"); }
+		 else {base.failedStep(""+Prefix+" and "+prefixID+"  text is as expected");}
+		 driver.waitForPageToBeReady();
+		 base.waitForElement(gettxtBeginningBatesIDSuffix());
+		 String Suffix= gettxtBeginningBatesIDSuffix().getText();
+		 System.out.println(Suffix);
+		 System.out.println(suffixID);
+		 if(Suffix.equals(prefixID)) {
+			 base.passedStep(""+Suffix+" and "+suffixID+"  text is as expected"); }
+		 else {base.failedStep(""+Suffix+" and "+suffixID+"  text is as expected");}
+	} catch (Exception e) {
+		base.failedStep("Exception occcured while handling numbering and sorting tab" + e.getMessage());
+		e.printStackTrace();
+	}
+			
+	}
+	
+	/**
+	 * @author : Brundha
+	 * @Description: method for applying completed status in the production filter
+	 *             
+	 */
+	public void addProductionFilter() {
+		try {
+			driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByButton().isElementAvailable(50);
+				}
+			}), Input.wait30);
+			getFilterByButton().waitAndClick(10);
+			for (int i = 1; i < getFilterOptions().size(); i++) {
+				getFilter(i).waitAndClick(10);
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByINPROGRESS().Visible();
+				}
+			}), Input.wait30);
+			getFilterByINPROGRESS().waitAndClick(10);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByFAILED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByFAILED().waitAndClick(10);
+			
+			Thread.sleep(2000);
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getFilterByCOMPLETED().Visible();
+				}
+			}), Input.wait30);
+			getFilterByCOMPLETED().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			getRefreshButton().waitAndClick(10);
+			System.out.println("Verified Production Filter");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while performing production filter" + e.getMessage());
+		}
+
+	}
+
+
+
+	/**
+	 * @author Brundha
+	 * @description :filling PDF section.
+	 * 
+	 */
+	public void fillingPDFSection() {
+		
+			try {
+				driver.waitForPageToBeReady();
+				base.waitForElement(getTIFFChkBox());
+				base.waitTillElemetToBeClickable(getTIFFChkBox());
+				getTIFFChkBox().Click();
+				driver.scrollingToBottomofAPage();
+				driver.waitForPageToBeReady();
+				base.waitForElement(getTIFFTab());
+				base.waitTillElemetToBeClickable(getTIFFTab());
+				getTIFFTab().Click();
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				driver.waitForPageToBeReady();
+				getPDFGenerateRadioButton().ScrollTo();
+				base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+				getPDFGenerateRadioButton().Click();
+				getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			} catch (Exception e) {
+				base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
+				e.printStackTrace();
+			}
+
+	}
+	/**
+	 * @author Brundha
+	 * @description :filling burn redaction.
+	 * 
+	 */
+	public void disablePrivDocAndEnableBurnRedaction() {
+			try {
+				base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+				driver.waitForPageToBeReady();
+				getTIFF_EnableforPrivilegedDocs().Click();
+				getClk_burnReductiontoggle().ScrollTo();
+				base.waitTillElemetToBeClickable(getClk_burnReductiontoggle());
+				getClk_burnReductiontoggle().Click();
+				getClkRadioBtn_selectRedactionTags().ScrollTo();
+				driver.waitForPageToBeReady();
+				base.waitForElement(getClkRadioBtn_selectRedactionTags());
+				getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+				base.waitForElement(getClkCheckBox_defaultRedactionTag());
+				getClkCheckBox_defaultRedactionTag().isDisplayed();
+				getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+			} catch (Exception e) {
+				base.failedStep("Exception occcured while handling priv doc" + e.getMessage());
+				e.printStackTrace();
+			}
+
+	}
+	/**
+	 * @author Brundha
+	 * @description :method for filling burn redaction with redaction tag.
+	 * 
+	 */
+	public void burnRedactionWithRedactionTag(String Tag) {
+		try {
+			base.waitForElement(getClkLink_selectingRedactionTags());
+			getClkLink_selectingRedactionTags().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClkBtn_selectingRedactionTags());
+			getClkBtn_selectingRedactionTags().Click();
+			driver.waitForPageToBeReady();
+			base.waitForElement(BurnRedactionCheckBox(Tag));
+			BurnRedactionCheckBox(Tag).waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getClk_selectBtn());
+			getClk_selectBtn().waitAndClick(10);
+			driver.waitForPageToBeReady();
+			base.waitForElement(gettextRedactionPlaceHolder());
+			gettextRedactionPlaceHolder().waitAndClick(10);
+			gettextRedactionPlaceHolder().SendKeys(searchString4);
+			base.stepInfo("Burn redaction PDF section is filled successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while handling burnredaction with redaction tag" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Brundha
+	 * @description :Method for verifying hide/show of DAT checkbox.
+	 * 
+	 */
+	public void verfyingDATCheckBox() {
+		
+       try {
+    	   driver.waitForPageToBeReady();
+		   base.waitForElement(getDATTab());
+		   getDATTab().Click();
+		   base.waitForElement(getDAT_FieldClassification1());
+		   if(getDAT_FieldClassification1().isDisplayed()) {
+			   base.passedStep("DAT checkBox is shown as Expected");}
+		   else {base.failedStep("DAT checkBox is not shown  as Expected");}
+		   driver.waitForPageToBeReady();
+		   base.waitForElement(getDATTab());
+		   getDATTab().Click();
+		   base.waitForElement(getDAT_FieldClassification1());
+		   if(!getDAT_FieldClassification1().isDisplayed()) {
+			   base.passedStep("DAT checkBox is Hid as Expected");}
+		   else {base.failedStep("DAT checkBox is not hid  as Expected");}
+	} catch (Exception e) {
+		base.failedStep("Exception occcured while handling DAT section" + e.getMessage());
+		e.printStackTrace();
+	}
+
+		
+	}
+	/**
+	 * @author :Brundha
+	 * @Description: Method for checking status of production from homepage
+	 * @param Status: Status is String value that name of Production status on
+	 *                progress bar.
+	 */
+	public void verifyingProductionStatusInHomePage(String statusMsg, String productionname) {
+		String productionFromHomePage = null;
+
+		// Verifying  production status  from home page
+		for (int i = 0; i < 500; i++) {
+			productionFromHomePage = getProductionFromHomePage(productionname).getText();
+			System.out.println("Preparing Data status displayed for " + productionFromHomePage);
+			if (productionFromHomePage.equals(statusMsg)) {
+				base.passedStep(statusMsg +  "status displayed");
+				break;
+			} else if (i == 499) {
+				base.failedStep(statusMsg + "status not displayed");
+			} else {
+				driver.waitForPageToBeReady();
+				
+				getRefreshButton().waitAndClick(5);
+			}
+		}
+	}
+
+
+	/**
+	 * @author Brundha
+	 * @description :filling PDF section.
+	 * 
+	 */
+	public void SelectPDFGenerateRadioButton() {
+			try {
+				base.waitForElement(getTIFFChkBox());
+				base.waitTillElemetToBeClickable(getTIFFChkBox());
+				getTIFFChkBox().Click();
+				driver.scrollingToBottomofAPage();
+				base.waitTillElemetToBeClickable(getTIFFTab());
+				getTIFFTab().Click();
+				driver.waitForPageToBeReady();
+				driver.scrollPageToTop();
+				getPDFGenerateRadioButton().ScrollTo();
+				base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+				getPDFGenerateRadioButton().Click();
+				base.stepInfo("PDF section is filled");
+			} catch (Exception e) {
+				base.failedStep("Exception occcured while filling generate pdf radio button" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	
+	/**
+	 * @author Brundha
+	 * @description :selecting pdf generate radio button
+	 * 
+	 */
+	public void fillingPrivledgedDocForPDFSection(String tagname, String tagnameprev) {
+			try {
+				
+				getTIFF_EnableforPrivilegedDocs().ScrollTo();
+				base.waitForElement(getPriveldge_SelectTagButton());
+				getPriveldge_SelectTagButton().waitAndClick(10);
+				base.waitTillElemetToBeClickable(getPriveldge_TagTree(tagname));
+				getPriveldge_TagTree(tagname).waitAndClick(10);
+				getPriveldge_TagTree_SelectButton().Click();
+                base.waitForElement(getPriveldge_TextArea());
+				new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+				getPriveldge_TextArea().SendKeys(tagNameTechnical);
+				driver.scrollingToBottomofAPage();
+				base.stepInfo("PDF section is filled with privileged Doc");
+			} catch (Exception e) {
+				base.failedStep("Exception occcured while filling priv doc in pdf section" + e.getMessage());
+				e.printStackTrace();
+			}
+		}
+	/**
+	 * @author Brundha
+	 * @description :method for verifying the natively produced docs toggle
+	 * 
+	 */
+
+	public void verifyingNativelyProducedToggle() {
+		try {
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();		
+			String color = driver.FindElement(By.xpath("//input[@id='chkShouldSkipTIFFGeneration']//following-sibling::i")).GetCssValue("background-color");
+			System.out.println(color);
+			String ExpectedColor = Color.fromString(color).asHex();
+			System.out.println(ExpectedColor);
+			String ActualColor="#e54036";	
+			if(ActualColor.equals(ExpectedColor)) {
+				base.passedStep("Natively produced docs option is disabled  by default");
+			}else {
+				base.failedStep("Natively produced docs option is not  disabled  by default");
+				}
+		} catch (Exception e) {
+			base.failedStep("Exception occcured while verifying natively produced docs toggle" + e.getMessage());
+			e.printStackTrace();
+		}
+
+
+	}
+
+	
+	/**
+	 * @author Gopinath
+	 * @description : Method to fill native section with tags.
+	 * @param tag1 : tag1 is String value name of tag.
+	 * @param tag2  : tag2 is String value that name of tag.
+	 * 
+	 */
+	public void fillingNativeSectionWithTags(String tag1,String tag2) throws InterruptedException {
+		try {
+			base.waitForElement(getNativeChkBox());
+			getNativeChkBox().isElementAvailable(10);
+			getNativeChkBox().Click();
+			base.waitForElement(getNativeTab());
+			getNativeTab().isElementAvailable(10);
+			getNativeTab().Click();
+			driver.waitForPageToBeReady();
+			getNative_SelectAllCheck().isElementAvailable(10);
+			base.waitForElement(getNative_SelectAllCheck());
+			getNative_SelectAllCheck().Click();
+			base.waitForElement(getNativeSelectTags());
+			getNativeSelectTags().Click();
+			getNativeCheckBox(tag1).isElementAvailable(10);
+			base.waitForElement(getNativeCheckBox(tag1));
+			driver.waitForPageToBeReady();
+			getNativeCheckBox(tag1).ScrollTo();
+			getNativeCheckBox(tag1).Click();
+			driver.waitForPageToBeReady();
+			getNativeCheckBox(tag2).isElementAvailable(10);
+			getNativeCheckBox(tag2).ScrollTo();
+			getNativeCheckBox(tag2).Click();
+			driver.waitForPageToBeReady();
+			getNativeSelect().isElementAvailable(10);
+			base.waitForElement(getNativeSelect());
+			getNativeSelect().Click();
+			base.stepInfo("Native section is filled");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while filling native section" + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to navigating To Export Page.
+	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 */
+	public void navigateToExportPageByNewExportSet(String exportName) {
+		try {
+			driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getProdExportSet().isElementAvailable(15);
+			getProdExportSet().waitAndClick(10);
+			getProductionSettxt().isElementAvailable(15);
+			getProductionSettxt().SendKeys(exportName);
+			getProdExportSetRadioButton().waitAndClick(10);
+			getProdExport_SaveButton().waitAndClick(10);
+			base.VerifySuccessMessage("Export Set Added Successfully");
+			getProdExport_ProductionSets().isElementAvailable(15);
+			List<WebElement> selectProductionOptions = getSelectProdcutionOptions().FindWebElements();
+			for (WebElement option : selectProductionOptions) {
+			    if (option.getText().contains(exportName)) {
+			        option.click();
+			        break;
+			    }
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating To Export Page."+e.getMessage() );
+		}
+	}
+	
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to enter Basic Details Stage By Selecting Production.
+	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 */
+	public void enterBasicDetailsStageBySelectingProduction(String exportName,String proudctionName) {
+		try {
+			getProdExport_AddaNewExportSet().isElementAvailable(15);
+			getProdExport_AddaNewExportSet().waitAndClick(10);
+			getProductionName().isElementAvailable(10);
+			getProductionName().SendKeys(exportName);
+			getProductionDesc().SendKeys(exportName);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			getProdExport_Priorprodtoggle().waitAndClick(10);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			getProdExport_SelectProductionSet().selectFromDropdown().selectByVisibleText(proudctionName);
+			driver.scrollPageToTop();
+			getBasicInfoMarkComplete().isElementAvailable(15);
+			getBasicInfoMarkComplete().waitAndClick(10);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while entering Basic Details Stage By Selecting Production.."+e.getMessage() );
+		}
+	}
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to click On Complete And Verify Success Message.
+	 */
+	public void clickOnCompleteAndVerifySuccessMessage() throws InterruptedException {
+		try {
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+
+		System.out.println("Clicked on Mark Complete Button..");
+		base.VerifySuccessMessage("Mark Complete successful");
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getNextButton());
+		getNextButton().Enabled();
+		getNextButton().waitAndClick(10);
+
+		base.stepInfo("Navigate to next page");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured  click On Complete And Verify Success Message..."+e.getMessage() );
+		
+		}
+	}
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to add DAT field at third row.
+	 * @param fieldClassification : fieldClassification is String value that field classification need to select from drop down.
+	 * @param sourceField : sourceField is String value that source field need to select from drop down.
+	 * @param datField : datField is String value need to enter in dat text field.
+	 */
+	public void addDATFieldAtThirdRow(String fieldClassification,String sourceField,String datField) {
+		try {
+			addNewFieldOnDAT();
+			getDATFieldClassification3().isElementAvailable(10);
+			getDATFieldClassification3().selectFromDropdown().selectByVisibleText(fieldClassification);
+			getDAT_SourceField3().isElementAvailable(10);
+			getDAT_SourceField3().selectFromDropdown().selectByVisibleText(sourceField);
+			getDAT_DATField3().isElementAvailable(10);
+			getDAT_DATField3().SendKeys(datField);
+		base.stepInfo("Dat section is filled with "+sourceField);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured add DAT Field At Third Row."+e.getMessage() );
+		
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to add DAT Field At second Row.
+	 * @param fieldClassification : fieldClassification is String value that field classification need to select from drop down.
+	 * @param sourceField : sourceField is String value that source field need to select from drop down.
+	 * @param datField : datField is String value need to enter in dat text field.
+	 */
+	public void addDATFieldAtSecondRow(String fieldClassification,String sourceField,String datField) {
+		try {
+			addNewFieldOnDAT();
+			driver.waitForPageToBeReady();;
+			getDAT_FieldClassification2().isElementAvailable(10);
+			getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText(fieldClassification);
+			driver.waitForPageToBeReady();
+			getDAT_SourceField2().isElementAvailable(10);
+			getDAT_SourceField2().selectFromDropdown().selectByVisibleText(sourceField);
+			driver.waitForPageToBeReady();
+			getDAT_DATField2().isElementAvailable(10);
+			getDAT_DATField2().SendKeys(datField);
+		base.stepInfo("Dat section is filled with "+sourceField);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured add DAT Field At second Row."+e.getMessage() );
+		
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to navigating To Export Page by already existing export set.
+	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 */
+	public void navigateToExportPageByAlreadyExistingExportSet(String exportName) {
+		try {
+			driver.getWebDriver().get(Input.url + "Production/Home");
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			getProdExportSet().isElementAvailable(15);
+			getProdExport_ProductionSets().isElementAvailable(15);
+			List<WebElement> selectProductionOptions = getSelectProdcutionOptions().FindWebElements();
+			for (WebElement option : selectProductionOptions) {
+			    if (option.getText().contains(exportName)) {
+			        option.click();
+			        break;
+			    }
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigating To Export Page by already existing export set."+e.getMessage() );
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify committed production is added to export production drop down.
+	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 */
+	public void verifyCommittedProdIsAddedToExportProductionDropdown(String exportName,String proudctionName) {
+		try {
+			getProdExport_AddaNewExportSet().isElementAvailable(15);
+			getProdExport_AddaNewExportSet().waitAndClick(10);
+			getProductionName().isElementAvailable(10);
+			getProductionName().SendKeys(exportName);
+			getProductionDesc().SendKeys(exportName);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			getProdExport_Priorprodtoggle().waitAndClick(10);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			List<WebElement>  options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
+			
+			for(int i=0;i<options.size(); i++) {
+				if(options.get(i).getText().contains(proudctionName)) {
+					base.passedStep(proudctionName+" is displayed in export production drop down sucessfully");
+				}else if(i==options.size()-1) {
+					base.failedStep(proudctionName+" is not displayed in export production drop down");
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying committed production is added to export production drop down.."+e.getMessage() );
+		}
+	}
+	
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify uncommitted production is not added to export production drop down.
+	 * @param exportName : exportName is String value that name of export need to perform export production.
+	 * @param proudctionName : proudctionName is String value that already completed committed production name.
+	 */
+	public void verifyUnCommittedProdIsNotAddedToExportProdDropdown(String exportName,String proudctionName) {
+		try {
+			getProdExport_AddaNewExportSet().isElementAvailable(15);
+			getProdExport_AddaNewExportSet().waitAndClick(10);
+			getProductionName().isElementAvailable(10);
+			getProductionName().SendKeys(exportName);
+			getProductionDesc().SendKeys(exportName);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			getProdExport_Priorprodtoggle().waitAndClick(10);
+			getProdExport_Priorprodtoggle().isElementAvailable(15);
+			List<WebElement>  options = getProdExport_SelectProductionSet().selectFromDropdown().getOptions();
+			for(int i=0;i<options.size(); i++) {
+				if(options.get(i).getText().contains(proudctionName)) {
+					base.failedStep(proudctionName+" is displayed in export production drop down");
+				}
+			}
+			base.passedStep(proudctionName+" is not displayed in export production drop down sucessfully");
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying committed production is not added to export production drop down.."+e.getMessage() );
+		}
+	}
+	
+	
+	/**
+	 * @throws InterruptedException
+	 * @Author Gopinath .Modified on 10/28/2021
+	 * @Descrption : method for filling Export Generate Page With Continue Generation Popup.
+	 */
+	public void fillingExportGeneratePageWithContinueGenerationPopup() throws InterruptedException {
+		try {
+			SoftAssert softAssertion = new SoftAssert();
+			String expectedText = "Success";
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getbtnProductionGenerate().Enabled() && getbtnProductionGenerate().isDisplayed();
+				}
+			}), Input.wait30);
+			getbtnProductionGenerate().waitAndClick(10);
+	
+			getbtnContinueGeneration().isElementAvailable(150);
+			if (getbtnContinueGeneration().isDisplayed()) {
+				base.waitForElement(getbtnContinueGeneration());
+				getbtnContinueGeneration().waitAndClick(10);
+			}
+	
+			Reporter.log("Wait for generate to complete", true);
+			System.out.println("Wait for generate to complete");
+			UtilityLog.info("Wait for generate to complete");
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocumentGeneratetext().Visible() && getDocumentGeneratetext().Enabled();
+				}
+			}), Input.wait120);
+			String actualText = getStatusSuccessTxt().getText();
+			System.out.println(actualText);
+	
+			softAssertion.assertTrue(actualText.contains(expectedText));
+			base.passedStep("Documents Generated successfully");
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCopyPath().isDisplayed();
+				}
+			}), Input.wait60);
+			getCopyPath().waitAndClick(10);
+	
+			base.stepInfo("Generate Export page is filled");
+		}catch(Exception e) {
+			UtilityLog.info(e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Modified By - Gopinath Modified Date - NA
+	 * @Description  : Method to verify user not able to select documents.
+	 */
+	public void verifyUserNotAbleToSelectDocuments() {
+		try {
+			
+			getMarkIncompleteButton().isElementAvailable(13);
+			String markCompleteAttr = getMarkIncompleteButton().GetAttribute("disabled").trim();
+			if(markCompleteAttr.equalsIgnoreCase("true")) {
+				base.passedStep("Mark incomplete button is not enabled and not able to add documents");	
+			}else{
+				base.failedStep("Mark incomplete button is enabled and able to add documents");
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("verify user not able to select documents."+e.getMessage() );
+		}
+	}
+}

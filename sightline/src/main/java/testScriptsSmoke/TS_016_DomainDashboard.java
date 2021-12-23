@@ -9,7 +9,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
@@ -37,8 +36,8 @@ public class TS_016_DomainDashboard {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 
-		//Input input = new Input();
-		//input.loadEnvConfig();
+		Input input = new Input();
+		input.loadEnvConfig();
 
 		// bt = new BaseTest();
 		// Open browser

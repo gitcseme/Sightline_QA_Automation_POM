@@ -1,0 +1,2267 @@
+package testScriptsRegression;
+
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.ParseException;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import com.mysql.cj.xdevapi.SessionFactory;
+
+import automationLibrary.Driver;
+import executionMaintenance.UtilityLog;
+import pageFactory.AssignmentsPage;
+import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
+import pageFactory.LoginPage;
+import pageFactory.ReusableDocViewPage;
+import pageFactory.SessionSearch;
+import pageFactory.Utility;
+import testScriptsSmoke.Input;
+
+public class DocView_AnalyticsPanel_NewRegression {
+	Driver driver;
+	LoginPage loginPage;
+	BaseClass baseClass;
+	Input ip;
+	DocViewPage docView;
+	Utility utility;
+	SessionSearch sessionSearch;
+	SoftAssert softAssertion;
+	DocViewRedactions docViewRedact;
+	ReusableDocViewPage reusableDocViewPage;
+
+
+	@BeforeClass(alwaysRun = true)
+
+	private void TestStart() throws Exception, InterruptedException, IOException {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		// Open browser
+		Input in = new Input();
+		in.loadEnvConfig();
+		driver = new Driver();
+		baseClass = new BaseClass(driver);
+		loginPage = new LoginPage(driver);
+	}
+
+	@BeforeMethod(alwaysRun = true)
+	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException, ParseException, Exception {
+
+		System.out.println("Executing method : " + testMethod.getName());
+		UtilityLog.info("Executing method : " + testMethod.getName());
+	}
+
+	/**
+	 * Author : Mohan A date: 24/11/21 NA Modified date: NA Modified by: N/A
+	 * Description : DataProvider for Different User Login
+	 */
+	@DataProvider(name = "userDetailss")
+	public Object[][] userLoginSaPaRmu() {
+		return new Object[][] { { "rmu", Input.rmu1userName, Input.rmu1password, "rev" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rmu" },
+				{ "sa", Input.sa1userName, Input.sa1password, "rev" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rmu" },
+				{ "pa", Input.pa1userName, Input.pa1password, "rev" } };
+	}
+
+	@DataProvider(name = "userDetails")
+	public Object[][] userLoginDetails() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	@DataProvider(name = "specificUsers")
+	public Object[][] userLoginWithSpecificCredentials() {
+		return new Object[][] { { Input.pa1FullName, Input.pa1userName, Input.pa1password },
+				{ Input.rmu1FullName, Input.rmu1userName, Input.rmu1password }, };
+	}
+
+	@DataProvider(name = "multiUsers")
+	public Object[][] userLoginWithMultiCredentials() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	/**
+	 * Author : Mohan date: 24/11/21 NA Modified date: NA Modified by:NA Description
+	 * :Verify tool tip should be displayed for each column on thread
+	 * map'RPMXCON-51358' Sprint : 6
+	 * 
+	 * @throws InterruptedException
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 1)
+	public void verifyToolTipDocsTextInThreadMapTab(String fullName, String userName, String password)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51358");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+		baseClass.stepInfo("Verify tool tip should be displayed for each column on thread map");
+
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String docId = "DocID:";
+		String author = "Author:";
+		String subject = "Subject:";
+		String totalRecepitent = "Total Recipient Count:";
+		String sentDate = "Sent Date:";
+		String inclusiveMail = "Inclusive Email:";
+		String sentType = "Sent Type:";
+		String threadSequence = "Thread Sequence ID:";
+		String docsToBeSelected = "ThreadMap";
+
+		docView = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		docView.verifyThreadDocsDisplayDocsInToolTips(docId);
+		docView.verifyThreadDocsDisplayDocsInToolTips(author);
+		docView.verifyThreadDocsDisplayDocsInToolTips(subject);
+		docView.verifyThreadDocsDisplayDocsInToolTips(totalRecepitent);
+		docView.verifyThreadDocsDisplayDocsInToolTips(sentDate);
+		docView.verifyThreadDocsDisplayDocsInToolTips(inclusiveMail);
+		docView.verifyThreadDocsDisplayDocsInToolTips(sentType);
+		docView.verifyThreadDocsDisplayDocsInToolTips(threadSequence);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 24/11/2021 Modified date: NA Modified by: NA
+	 * @Description : Verify system doc id is displayed in near dupe child window
+	 *              RPMXCON-51257
+	 * 
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 2)
+	public void verifySystemDocIdDisplayedInNearDupeChildWindow(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51257");
+		baseClass.stepInfo("Verify system doc id is displayed in near dupe child window");
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Searching documents based on search string");
+		sessionSearch.basicContentSearch(searchString);
+		docView.selectNearDupePureHit();
+
+		// View NearDupe Doc in DocView
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		docView.popOutAnalyticsPanel();
+
+		// open Comparison window in NearDupes Tab
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		docView.openNearDupeComparisonWindow();
+		docView.getDocView_NearDupe_DocID().WaitUntilPresent();
+		String docidinchildwinodw = docView.getDocView_NearDupe_DocID().getText().toString();
+		baseClass.passedStep("" + docidinchildwinodw + "is present in NearDupe window");
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 24/11/21 NA Modified date: NA Modified by:NA
+	 *         Description :Verify the inclusive email docs should be identified on
+	 *         thread map panel'RPMXCON-51357' Sprint : 6
+	 * @throws InterruptedException
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	public void VerifyInclusiveEmailDocsOnThreadMapPanel(String fullName, String userName, String password)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51357");
+		baseClass.stepInfo("Verify the inclusive email docs should be identified on thread map panel");
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String documentToBeSelected = "ThreadMap";
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		// Select Docid from MiniDocList
+
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		baseClass.stepInfo("For inclusive email docs -I should be displayed on thread map tab of analytics panel");
+		docView.verifyThreadDocsDisplayDocsIrrespectiveOfInclusiveEmailValue();
+
+		String docId = docView.getdocIdText().getText();
+		if (docId.contains("-I")) {
+			baseClass.passedStep(
+					"For inclusive email docs -I is displayed on thread map tab of analytics panel successfully");
+		} else {
+			baseClass.failedStep("-I is not displayed on thread map tab of analytics panel");
+		}
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("For inclusive email docs -I should be displayed on thread map tab of analytics panel");
+		docView.verifyThreadDocsDisplayDocsIrrespectiveOfInclusiveEmailValue();
+
+		if (docId.contains("-I")) {
+			baseClass.passedStep(
+					"For inclusive email docs -I is displayed on thread map tab of analytics panel successfully");
+		} else {
+			baseClass.failedStep("-I is not displayed on thread map tab of analytics panel");
+		}
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 24/11/21 NA Modified date: NA Modified by:NA
+	 *         Description :Verify "More data exists" message should be displayed
+	 *         when more than 20 records to display on thread map'RPMXCON-51363'
+	 *         Sprint : 6
+	 * @throws InterruptedException
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
+	public void VerifyMoreDataExistsRecordsToDisplayOnThreadMap(String fullName, String userName, String password)
+			throws InterruptedException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51363");
+		baseClass.stepInfo(
+				"Verify More data exists message should be displayed when more than 20 records to display on thread map");
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String documentToBeSelected = "ThreadMap";
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.ThreadQuery);
+		sessionSearch.ViewInDocView();
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		docView.selectDocsFromMiniDocsListAndCheckTheThreadedDocuments();
+
+		baseClass.stepInfo("verifyMiniDocListIsDisplayedThreaedDocumentsSuccessfully");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 24/11/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify when user select action as 'Remove code same' for
+	 *              documents which are not marked as code same as this from
+	 *              conceptual RPMXCON-51225
+	 * 
+	 */
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
+	public void verifyConceputallyTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
+			String password) throws ParseException, InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51225");
+		baseClass.stepInfo(
+				"To verify when user select action as 'Remove code same' for documents which are not marked as code same as this from conceptual");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "Conceptually";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		// select docs and perform code same as
+		baseClass.stepInfo("Step 2: Select multiple documents from conceptual and action as 'Code same as this'");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocsFromConceptualTabAndActionCodeSame();
+
+		// select docs which are not marked as code same as
+		baseClass.stepInfo(
+				"Step 3: Select documents from conceptual which are not marked as code same and action as 'Remove code same'");
+		docView.selectConceptualDocsWhichAreNotPerformedCodeAsSame();
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 25/11/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify user can select Multiple documents in Analytics
+	 *              panel > Family Members and Select Action as 'Remove Code Same as
+	 *              this' RPMXCON-51216
+	 * 
+	 */
+	////@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51216");
+		baseClass.stepInfo(
+				"To verify user can select Multiple documents in Analytics panel > Family Members and Select Action as 'Remove Code Same as this'");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "FamilyMember";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+
+		// create Assignment and disturbute docs
+
+		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// select docs from family member and acrion as remove code same as
+		docView.selectDocsFromFamilyMemberTabAndActionRemoveCodeSame();
+
+		// logout RMU
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// select docs from family member and acrion as remove code same as
+		docView.selectDocsFromFamilyMemberTabAndActionRemoveCodeSame();
+
+		// logout RMU
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 24/11/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify when user select action as 'Remove code same' for
+	 *              documents which are not marked as code same as this from family
+	 *              member RPMXCON-51224
+	 * 
+	 */
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 7)
+	public void verifyFamilyMemberTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
+			String password) throws ParseException, InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51224");
+		baseClass.stepInfo(
+				"To verify when user select action as 'Remove code same' for documents which are not marked as code same as this from family member");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "FamilyMember";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select docs and perform code same as
+		baseClass.stepInfo("Step 2: Select multiple documents from family member and action as 'Code same as this'");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// select docs which are not marked as code same as
+		baseClass.stepInfo(
+				"Step 3: Select documents from family member which are not marked as code same and action as 'Remove code same'    ");
+		docView.selectFamilyMemberDocsWhichAreNotPerformedCodeAsSame();
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 26/11/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify user can select Multiple documents in Analytics
+	 *              panel > Thread map and Select Action as 'Remove Code Same as
+	 *              this' RPMXCON-51218
+	 * 
+	 */
+	////@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
+			throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51218");
+		baseClass.stepInfo(
+				"To verify user can select Multiple documents in Analytics panel > Thread map and Select Action as 'Remove Code Same as this'");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "ThreadMap";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.bulkAssignThreadedDocs();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo(
+				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		// select docs from family member and action as code same as
+		docView.selectDocsFromThreadMapTabAndActionCodeSame();
+
+		// select docs from family member and acrion as remove code same as
+		baseClass.stepInfo("Step 4: Select Docs from ThreadMap Tab and RemoveCodeAsSame");
+		docView.selectDocsFromThreadMapTabAndActionRemoveCodeSameAs();
+
+		// logout RMU
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo(
+				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		// select docs from ThreadMap and action as code same as
+		docView.selectDocsFromThreadMapTabAndActionCodeSame();
+
+		// select docs from ThreadMap and acrion as remove code same as
+		baseClass.stepInfo("Step 4: Select Docs from ThreadMap Tab and RemoveCodeAsSame");
+		docView.selectDocsFromThreadMapTabAndActionRemoveCodeSameAs();
+
+		// logout RMU
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 26/11/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify user can select Multiple documents in mini doc list
+	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
+			throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51217");
+		baseClass.stepInfo(
+				"To verify user can select Multiple documents in mini doc list and Select Action as 'Remove Code Same as this'");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		String searchString = Input.searchString1;
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.bulkAssign();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo("Step 3: Select docs from Mini Doc list and perform action CodeSamAs");
+		driver.waitForPageToBeReady();
+		// select docs from MiniDocList and action as code same as
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+
+		// select docs from MiniDocList and acrion as remove code same as
+		baseClass.stepInfo("Step 4: Select Docs from MiniDocList and RemoveCodeAsSame");
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+
+		// edit Coding Form and complete the principle doc
+		baseClass.stepInfo("Step 5: Edit Coding form for the principal doc and complete the docs");
+		docView.editCodingFormComplete();
+
+		// logout RMU
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo("Step 3: Select docs from Mini Doc list and perform action CodeSamAs");
+		driver.waitForPageToBeReady();
+		// select docs from MiniDocList and action as code same as
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+
+		// select docs from MiniDocList and acrion as remove code same as
+		baseClass.stepInfo("Step 4: Select Docs from MiniDocList and RemoveCodeAsSame");
+		docView.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+
+		// edit Coding Form and complete the principle doc
+		baseClass.stepInfo("Step 5: Edit Coding form for the principal doc and complete the docs");
+		docView.editCodingFormComplete();
+
+		// logout RMU
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 26/11/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify Zoom in/ Zoom out is working from near dupe child
+	 * window.'RPMXCON-51256' Sprint : 6
+	 * 
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	public void verifyZoomInZoomOutForNearDupeDocuments(String fullName, String userName, String password)
+			throws InterruptedException {
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewAnalytics = new DocViewPage(driver);
+		loginPage = new LoginPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51256");
+		baseClass.stepInfo("Verify Zoom in/ Zoom out is working from near dupe child window");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String docId = "NearDupe";
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+
+		// Select Docid from MiniDocList
+		baseClass.stepInfo("Step 3 : Docs are selected and viewed In MiniDocList successfully");
+		driver.waitForPageToBeReady();
+		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		baseClass.stepInfo("Step 4 : From Analytics panel > Near Dupe window click the icon");
+		// Open Comparison Window in NearDupes Tab
+		docViewAnalytics.openNearDupeComparisonWindow();
+		baseClass.passedStep("Comparison Window is opened Successfully");
+
+		baseClass.stepInfo("Step 5 : Click Zoom-in/Zoom-out from Near Dupe View");
+		// click zoom-in/zoom-out and reset button in Original View
+		docViewAnalytics.verifyChildWindowZoominZoomOutNearDupeDocs();
+		baseClass.passedStep("Zoom-in/Zoom-out from Near Dupe view has been clicked successfully");
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 29/11/2021 Modified date: NA Modified by: NA
+	 * @Description : Verify that on navigating to thread map tab from Near Dupe tab
+	 *              link to view more data should not be displayed RPMXCON-51571
+	 * 
+	 * 
+	 */
+	////@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 11)
+	public void verifyWhenNavigatingFromThreadMapToNearDupeTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
+			String userName, String password) throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51571");
+		baseClass.stepInfo(
+				"Verify that on navigating to thread map tab from Near Dupe tab link to view more data should not be displayed");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + fullName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "ThreadMap";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		driver.waitForPageToBeReady();
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		// verify navigate to other tab link not to be present
+		baseClass.stepInfo("Step 4: Navigate to Near Dupe tab from thread map tab and again click the thread map tab");
+		softAssertion = new SoftAssert();
+
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to NearDupe Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel parent window");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo(
+				"Step 5: Open the Analytics panel child window and Navigate to Near Dupe tab from thread map tab and again click the thread map tab");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_Analytics_NearDupeTab());
+		docView.getDocView_Analytics_NearDupeTab().waitAndClick(5);
+
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to NearDupe Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel child window");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		// logout RMU
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 29/11/2021 Modified date: NA Modified by: NA
+	 * @Description : Verify that on navigating to thread map tab from Conceptual
+	 *              Similar tab link to view more data should not be displayed
+	 *              RPMXCON-51572
+	 * 
+	 * 
+	 */
+	////@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 12)
+	public void verifyWhenNavigatingFromThreadMapToConceptualTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
+			String userName, String password) throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51572");
+		baseClass.stepInfo(
+				"Verify that on navigating to thread map tab from Conceptual Similar tab link to view more data should not be displayed");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + fullName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "ThreadMap";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewThreadedDocsInDocViews();
+		driver.waitForPageToBeReady();
+
+		// Select docs from Mini docs List and perform action
+		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		// verify navigate to other tab link not to be present
+		baseClass.stepInfo("Step 4: Navigate to Conceptual tab from thread map tab and again click the thread map tab");
+		softAssertion = new SoftAssert();
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to Conceptual Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel parent window");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo(
+				"Step 5: Open the Analytics panel child window and Navigate to Conceptual Similar tab from thread map tab and again click the thread map tab");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentConceptualSimilarab());
+		docView.getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(5);
+
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to Conceptual Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel child window");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		// logout RMU
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 29/11/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify that on navigating to thread map tab from Family member
+	 * tab link to view more data should not be displayed.'RPMXCON-51570' Sprint : 7
+	 * 
+	 * @throws Exception
+	 */
+	////@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 13)
+	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
+			String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51570");
+		baseClass.stepInfo(
+				"Verify that on navigating to thread map tab from Family member tab link to view more data should not be displayed");
+
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String documentToBeSelected = "ThreadMap";
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to Family Member Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel parent window");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo(
+				"Step 5: Open the Analytics panel child window and Navigate to Family Member tab from thread map tab and again click the thread map tab");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(5);
+
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep("Load More link is not visible when Navigated to Conceptual Tab");
+
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docView.verifyLoadMoreLinkNaviagtedToOtherTab();
+		baseClass.passedStep(
+				"Link to view more data is not be displayed when there are less than 20 rows or columns on analytics panel child window");
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 30/11/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify check mark icon should be displayed when document is
+	 * completed after selecting 'Code same as this' action' from Analytics Panel >
+	 * Near Dupe.'RPMXCON-51058' Sprint : 7
+	 * 
+	 * @throws Exception
+	 */
+	////@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51058");
+		baseClass.stepInfo(
+				" Verify check mark icon should be displayed when document is completed after selecting 'Code same as this' action' from Analytics Panel > Near Dupe");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = "NearDupe";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignNearDupeDocuments();
+
+		assignmentsPage.assignNearDupeDocstoNewAssgn(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as NearDupe Documents
+		docView.performCodeSameForNearDupeDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+		// verify Near Dupe Check Mark
+		softAssertion = new SoftAssert();
+		softAssertion.assertTrue(docView.getDocView_NearDupeCheckMark().isElementPresent());
+
+		baseClass.passedStep("check Mark Icon Is Displayed In Near Dupe Tab");
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as NearDupe Documents
+		docView.performCodeSameForNearDupeDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+		// verify Near Dupe Check Mark
+		softAssertion.assertTrue(docView.getDocView_NearDupeCheckMark().isElementPresent());
+		baseClass.passedStep("check Mark Icon Is Displayed In Near Dupe Tab");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 30/11/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify check mark icon should be displayed when document is
+	 * completed after selecting 'Code same as this' action' from Analytics Panel >
+	 * Conceptual'RPMXCON-51059' Sprint : 7
+	 * 
+	 * @throws Exception
+	 */
+	////@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51059");
+		baseClass.stepInfo(
+				" Verify check mark icon should be displayed when document is completed after selecting 'Code same as this' action' from Analytics Panel > Conceptual");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = "Conceptually";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssignConceptualDocuments();
+
+		assignmentsPage.assignNearDupeDocstoNewAssgn(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as NearDupe Documents
+		docView.performCodeSameForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+		// verify Near Dupe Check Mark
+		softAssertion = new SoftAssert();
+		softAssertion.assertTrue(docView.getDocView_ConceptuallySimilarCheckMark().isElementPresent());
+
+		baseClass.passedStep("check Mark Icon Is Displayed In ConceptuallySimilar Tab");
+		loginPage.logout();
+
+		// login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1FullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// perform code same as NearDupe Documents
+		docView.selectDocsFromConceptualTabAndActionCodeSame();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+		// verify Near Dupe Check Mark
+		softAssertion = new SoftAssert();
+		softAssertion.assertTrue(docView.getDocView_ConceptuallySimilarCheckMark().isElementPresent());
+
+		baseClass.passedStep("check Mark Icon Is Displayed In ConceptuallySimilar Tab");
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 1/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify user can select 'Remove Code Same' from analytics panel
+	 * child window'RPMXCON-51232' Sprint : 7
+	 * 
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) [Doc issue]
+	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51232");
+		baseClass.stepInfo("Verify user can select 'Remove Code Same' from analytics panel child window");
+
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String familyMemDocsId = Input.familyDocument;
+		String threadDocId = Input.threadDocId;
+		String conceptualDocId = Input.NewDocId;
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		// Search for the docs and navigate to docs view
+		baseClass.stepInfo("Step 1: Search should be performed and navigate to docview");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		docView.selectFamilyMemberPureHit();
+		docView.selectThreadMapPureHit();
+		sessionSearch.ViewConceptualDocsInDocViews();
+
+		// select docs from mini doc list
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(familyMemDocsId);
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo(
+				"Step 2 & 3: Open the Analytics panel child window and Navigate to Family Member tab and action CodeSameAs");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		String analyticsWindowID = driver.getWebDriver().getWindowHandle();
+
+		docView.performCodeSameForFamilyMembersDocuments(parentWindowID);
+
+		driver.switchTo().window(analyticsWindowID);
+		baseClass.stepInfo("Step 4: Select the documents having code same icon and action as 'Remove Code Same'");
+		docView.performRemoveCodeSameForFamilyMembersDocuments(parentWindowID);
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		baseClass.stepInfo(
+				"Step 5: Save the coding form for the principle document being viewed and click to 'Save' the coding form");
+		docView.editCodingFormSave();
+
+		driver.scrollPageToTop();
+		docView.getSaveIcon().Click();
+		driver.Navigate().refresh();
+		// select docs from mini doc list
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(threadDocId);
+
+		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo("Step 6: Select documents from thread map child window and action as 'code same as this'");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId1 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId1) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		String analyticsWindowID1 = driver.getWebDriver().getWindowHandle();
+
+		docView.performCodeSameForThreadDocuments(parentWindowID1);
+
+		driver.switchTo().window(analyticsWindowID1);
+		baseClass.stepInfo("Step 7: Select the documents having code same icon and action as 'Remove Code Same'");
+		docView.performRemoveCodeSameForThreadDocuments(parentWindowID1);
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID1);
+
+		baseClass.stepInfo(
+				"Step 8: Save the coding form for the principle document being viewed and click to 'Save' the coding form");
+		docView.editCodingFormSave();
+
+		driver.scrollPageToTop();
+		docView.getSaveIcon().Click();
+		driver.Navigate().refresh();
+		// select docs from mini doc list
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(conceptualDocId);
+
+		String parentWindowID2 = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		baseClass.stepInfo("Step 9: Select documents from conceptual child window and action as 'code same as this'");
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId2 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId2) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		String analyticsWindowID2 = driver.getWebDriver().getWindowHandle();
+
+		docView.performCodeSameForConceptualDocuments(parentWindowID2);
+
+		driver.switchTo().window(analyticsWindowID2);
+		baseClass.stepInfo("Step 10: Select the documents having code same icon and action as 'Remove Code Same'");
+		docView.performRemoveCodeSameForConceptualDocuments(parentWindowID2);
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID2);
+
+		baseClass.stepInfo(
+				"Step 11: Save the coding form for the principle document being viewed and click to 'Save' the coding form");
+		docView.editCodingFormSave();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 02/12/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify when user edits the coding form of main document and
+	 *              after saving selects action 'Code same as this' from family
+	 *              members on same documents then selects 'Remove code same as
+	 *              this' RPMXCON-51222
+	 * 
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
+			throws InterruptedException, IOException {
+		baseClass.stepInfo("Test case Id: RPMXCON-51222");
+		baseClass.stepInfo(
+				"To verify when user edits the coding form of main document and after saving selects action 'Code same as this' from family members on same documents then selects 'Remove code same as this'");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + fullName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "FamilyMember";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+		driver.waitForPageToBeReady();
+
+		// Edit coding form and save for currently viewing docs
+		baseClass.stepInfo("Step 3: Save the coding form for the document being viewed");
+		docView.editCodingFormSave();
+
+		// Select Family Member docs from mini doclist and the select docs from
+		// FamilyMember and perform code same as
+		baseClass.stepInfo("Step 4: select documents from family member and action as 'Code Same as this'");
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// Select Docs from family member and action As Remove Code Same As
+		baseClass.stepInfo("Step 5:Select the documents having code same icon and action as 'Remove Code Same'");
+		docView.selectDocsFromFamilyMemberTabAndActionRemoveCodeSame();
+
+		// Edit Coding Form and Save the priciple document being viewed
+		baseClass.stepInfo(
+				"Step 6: Save the coding form for the principle document being viewed and click to 'Save' the coding form");
+		docView.editCodingFormSave();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 03/12/2021 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51028 To verify that after impersonation user can see remarks for
+	 * selected document
+	 */
+
+	//@Test(enabled = true, groups = { "regression" }, priority = 18) // chk with mohan
+	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		UtilityLog.info("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.sa1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51008");
+		baseClass.stepInfo("To verify that after impersonation user can see remarks for selected document");
+
+		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Step 1: Impersonate SA to RMU, search docs and Search for docs");
+		baseClass.impersonateSAtoRMU();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Create new assignment and distribute docs to reviewer");
+		assignmentspage.assignmentCreation(assignmentName, Input.codeFormName);
+		assignmentspage.add3ReviewerAndDistribute();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 3: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to RMU, select assignment and go to Docview");
+		baseClass.impersonatePAtoRMU();
+		assignmentspage.selectAssignmentToViewinDocview(assignmentName);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Step 1: Impersonate PAU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonatePAtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Step 1: Impersonate RMU to Reviewer,select assignment and go to Docview");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentspage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Step 2: Select document and click to see Reviewer Remarks");
+		docViewRedact.clickingRemarksIcon();
+		docViewRedact.verifyReviewerRemarksIsPresent();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-50973 To verify that action should be disable 'View Document'
+	 * without selecting document.
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void verifyViewDocumnetDisableWithoutSelectingDocument() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50973");
+		baseClass.stepInfo("To verify that action should be disable 'View Document' without selecting document.");
+
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		baseClass.stepInfo("Step 1: Search for the doc and Go to doc view");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		baseClass.stepInfo(
+				"Step 2: Do not select any document from analytical panela and select action as View Document");
+		docViewPage.verifyViewDocumentWithoutSelectingDocs();
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 13/12/2021 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51364
+	 * 
+	 * @description: To Verify coding form, metadata from parent and child window
+	 *               when document is viewed from analytics panel
+	 */
+
+	//@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51364");
+		baseClass.stepInfo(
+				"To Verify coding form, metadata from parent and child window when document is viewed from analytics panel");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		DocViewPage docViewPage = new DocViewPage(driver);
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created successfully");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
+		docViewPage.performViewDocumentFromThreadMapTab();
+
+		baseClass.stepInfo("Step 4: Once document is loaded check the Coding Form/ metadata from respective panels");
+		docViewPage.verifyCodingFormPanelIsLoadedAfterDocsAreViewed();
+		docViewPage.verifyMetaDataPanelIsLoadedAfterDocsAreViewed();
+
+		baseClass.stepInfo(
+				"Step 5: Click the gear icon to pop out the panels and pop out coding form and metadata panel in child window  Check the coding form/metadata for the viewed document from child window");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docViewPage.popOutMetaDataPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.verifyMetaDataPanelIsLoadedAfterDocsAreViewed();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		docViewPage.popOutCodingFormPanel();
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.verifyCodingFormPanelIsLoadedAfterDocsAreViewed();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		loginPage.logout();
+
+		// login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+
+		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 3: View the document from analytics panel which is part of assignment");
+		docViewPage.performViewDocumentFromThreadMapTab();
+
+		baseClass.stepInfo("Step 4: Once document is loaded check the Coding Form/ metadata from respective panels");
+		docViewPage.verifyCodingFormPanelIsLoadedAfterDocsAreViewed();
+		docViewPage.verifyMetaDataPanelIsLoadedAfterDocsAreViewed();
+
+		baseClass.stepInfo(
+				"Step 5: Click the gear icon to pop out the panels and pop out coding form and metadata panel in child window  Check the coding form/metadata for the viewed document from child window");
+
+		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
+
+		docViewPage.popOutMetaDataPanel();
+
+		Set<String> allWindowsId1 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId1) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.verifyMetaDataPanelIsLoadedAfterDocsAreViewed();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID1);
+
+		docViewPage.popOutCodingFormPanel();
+		allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.verifyCodingFormPanelIsLoadedAfterDocsAreViewed();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID1);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that Project Admin cannot view the action 'Code Same
+	 * as This' in Analytics panel.'RPMXCON-50941' Sprint : 8
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	public void verifyCannotViewTheActionCodeSameAsNearDupes() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50941");
+		baseClass.stepInfo("To verify that Project Admin cannot view the action 'Code Same as This in Analytics panel");
+
+		// login as PA
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		UtilityLog.info("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.pa1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Manager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Searching documents based on search string");
+		sessionSearch.basicContentSearch(searchString);
+
+		// View NearDupe Doc in DocView
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		docView.checkCodeSameAsIsPresentInNearDupe();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		// popout Analytics Panel
+		docView.popOutAnalyticsPanel();
+
+		// open Comparison window in NearDupes Tab
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		docView.checkCodeSameAsIsPresentInNearDupe();
+		
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 13/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify 'Code same as this' action without selecting document
+	 * from family member should be disable.'RPMXCON-50910' Sprint : 8
+	 * 
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 22)
+	public void verifyCodeSameAsActionWithOutSelectingDocsFromFamilyMember(String fullName, String userName,
+			String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50910");
+		baseClass.stepInfo(
+				"To verify 'Code same as this' action without selecting document from family member should be disable");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo("User successfully logged into slightline webpage as Reviewer with " + fullName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+		String docsToBeSelected = "FamilyMember";
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		// select docs and perform code same as
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+
+		docView.checkCodeSameAsIsDisableFamilyMember();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 14/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify user will be able to see all the threaded documents in
+	 * the analytics panel of the main selected document in the Doc
+	 * view.'RPMXCON-50951' Sprint : 8
+	 * 
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 23)
+	public void verifySeeAllTheThreadedDocsInAnalyticsPanelSelectedDocInDocView(String fullName, String userName,
+			String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50951");
+		baseClass.stepInfo(
+				"To verify user will be able to see all the threaded documents in the analytics panel of the main selected document in the Doc view");
+
+		// Login as a Admin
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		String documentToBeSelected = "ThreadMap";
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.ThreadQuery);
+		sessionSearch.ViewInDocView();
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		docView.selectDocsFromMiniDocsListAndCheckTheThreadedDocsSize();
+
+		baseClass.stepInfo("verifyMiniDocListIsDisplayedThreaedDocumentsSuccessfully");
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 14/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify when user edits the coding form of main document and
+	 * after saving selects action 'Code same as this' from family members on same
+	 * documents.'RPMXCON-50909' Sprint : 8
+	 * 
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
+	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
+			String password) throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50909");
+		baseClass.stepInfo(
+				"To verify when user edits the coding form of main document and after saving selects action 'Code same as this' from family members on same documents");
+
+		// login as Admins
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		String searchString = Input.searchString1;
+
+		// Basic Search and select the pure hit count
+		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
+		sessionSearch.basicContentSearch(searchString);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		driver.waitForPageToBeReady();
+
+		docView.selectDocsMiniDocListAndCodingFormSaveButton();
+
+		docView.getDocView_Analytics_FamilyTab().waitAndClick(10);
+		docView.performCodeSameForFamilyMembersDocuments();
+
+		docView.selectDocsMiniDocListAndCodingFormSaveButton();
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author: Mohan Created date: 14/12/2021 Modified date: NA Modified by: NA
+	 * @Description : To verify after impersonation document opened in default
+	 *              viewer should be displayed in ''Compare Similar Documents',if
+	 *              clicks on the icon in Analytical Panel->Near Dupes.
+	 *              RPMXCON-50956
+	 */
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
+			String password, String impersonate) throws InterruptedException {
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
+		switch (impersonate) {
+		case "rmu":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoRMU();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoRMU();
+			}
+
+		case "rev":
+			if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateRMUtoReviewer();
+			}
+		}
+
+		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu") || roll.equalsIgnoreCase("rmu")) {
+
+			sessionSearch = new SessionSearch(driver);
+			docView = new DocViewPage(driver);
+			softAssertion = new SoftAssert();
+			String searchString = Input.searchString1;
+			baseClass.stepInfo("Test case Id: RPMXCON-50956");
+			baseClass.stepInfo(
+					"To verify after impersonation document opened in default viewer should be displayed in ''Compare Similar Documents',if clicks on the icon in Analytical Panel->Near Dupes.");
+
+			// Basic Search and select the pure hit count
+			baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
+			sessionSearch.basicContentSearch(searchString);
+			sessionSearch.ViewNearDupeDocumentsInDocView();
+
+			// Select docs from mini doc list having Neardupe docs
+			baseClass.stepInfo("Step 3: Select Docs from Mini DocList having Neardupe docs");
+			driver.waitForPageToBeReady();
+
+			// Open Comparison Window in NearDupes Tab
+			String parentWindowID = driver.getWebDriver().getWindowHandle();
+			docView.openNearDupeComparisonWindow();
+			baseClass.passedStep(
+					" ''Compare Similar Documents',is displayed after clicking on the icon in Analytical Panel->Near Dupes.");
+
+			driver.getWebDriver().close();
+
+			driver.switchTo().window(parentWindowID);
+			softAssertion.assertAll();
+
+		}
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Mohan date: 14/12/2021 Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51364
+	 * 
+	 * @description: Verify check mark icon should be displayed when coding stamp
+	 *               applied after selecting 'Code same as this' action' from
+	 *               Analytics Panel > Conceptual RPMXCON-51062
+	 */
+
+	//@Test(enabled = true, groups = { "regression" }, priority = 26)
+	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-51062");
+		baseClass.stepInfo(
+				"Verify check mark icon should be displayed when coding stamp applied after selecting 'Code same as this' action' from Analytics Panel > Conceptual");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		String colour = "BLUE";
+		String colourName = "colourName" + Utility.dynamicNameAppender();
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 3: Select docs from Analytics Panel > Conceptual and action as 'Code same as this'");
+		docView.performCodeSameForConceptualDocuments();
+
+		baseClass.stepInfo("Step 4: Click to apply coding stamp of the main viewing document");
+		driver.scrollPageToTop();
+		docView.editCodingFormComplete();
+		docView.stampColourSelection(colourName, colour);
+
+		baseClass.stepInfo(
+				"Step 5: Verify the check mark icon from the mini doc list by refreshing or revisiting the doc view page through the same assignment for the selected document from mini doc list and from conceptual");
+		docView.verifyCheckMark();
+
+		loginPage.logout();
+
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		baseClass.stepInfo("Step 3: Select docs from Analytics Panel > Conceptual and action as 'Code same as this'");
+		driver.waitForPageToBeReady();
+		// perform code same for conceptual documents
+		docView.performCodeSameForConceptualDocuments();
+
+		baseClass.stepInfo("Step 4: Click to apply coding stamp of the main viewing document");
+		driver.scrollPageToTop();
+		docView.editCodingFormComplete();
+		docView.stampColourSelection(colourName, colour);
+
+		baseClass.stepInfo(
+				"Step 5: Verify the check mark icon from the mini doc list by refreshing or revisiting the doc view page through the same assignment for the selected document from mini doc list and from conceptual");
+		docView.verifyCheckMark();
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Mohan date: 10/26/21 NA Modified date: NA Modified by:NA Description
+	 * : Verify that sender of each email doc should be identified with the
+	 * designated dot marker from thread map Test CaseId: 'RPMXCON-51359' Sprint : 8
+	 * 
+	 * @throws InterruptedException
+	 */
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 27)
+	public void verifyDesignatedDotMarkerInThreadMapTab(String fullName, String userName, String password)
+			throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51359");
+
+		baseClass.stepInfo(
+				"Verify that sender of each email doc should be identified with the designated dot marker from thread map");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo(
+				"Step 2 & 3 : Search for documents to get threaded documents and Drag the result to shopping cart and go to doc view  and view the document from mini doc list with threaded documents");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		baseClass.stepInfo("Step 4 : Check for the sender from thread map tab");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_Analytics_liDocumentThreadMap());
+		docView.getDocView_Analytics_liDocumentThreadMap().waitAndClick(3);
+
+		baseClass.waitForElement(docView.getDocView_Analytics_ThreadMap_DesginationMarker());
+		driver.scrollingToElementofAPage(docView.getDocView_Analytics_ThreadMap_DesginationMarker());
+		softAssertion.assertTrue(docView.getDocView_Analytics_ThreadMap_DesginationMarker().isElementAvailable(1));
+		softAssertion.assertAll();
+		baseClass.passedStep(
+				"Sender of each email doc is identified with the designated marker from thread map successfully");
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 15/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * analytics panel > conceptual.'RPMXCON-51071' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 28)
+	public void verifyCompleteLastDocsAndCodeSameAsActionConceptual() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51071");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > conceptual");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = "Conceptually";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.getConceptDocument();
+		sessionSearch.bulkAssignConceptualDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editDefaultCodingFormCompleteBtn();
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameAsForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editDefaultCodingFormCompleteBtn();
+
+		// perform code same as Conceptual Documents
+		docView.performCodeSameAsForConceptualDocuments();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+	
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 20/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify when RMU/Reviewer clicks Complete Same as Last Doc, when
+	 * preceding document is completed by selecting 'Code same as this' action from
+	 * analytics panel > family member.'RPMXCON-51070' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	//@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember()  throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51070");
+		baseClass.stepInfo(
+				"Verify when RMU/Reviewer clicks Complete Same as Last Doc, when preceding document is completed by selecting 'Code same as this' action from analytics panel > family member");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		String documentToBeSelected = "FamilyMember";
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// Edit coding Form and complete Action
+		docView.editDefaultCodingFormCompleteBtn();
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSameAsThirdDocs();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docid from MiniDocList
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		// Edit coding Form and complete Action
+		docView.editDefaultCodingFormCompleteBtn();
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSameAsThirdDocs();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// Coding Stamp Selection And code Same As Verify
+		driver.waitForPageToBeReady();
+		docView.perfromCodingStampSelection(Input.stampColour);
+
+		driver.waitForPageToBeReady();
+		docView.perfromLastCodeSameAsIcon();
+
+		// logout
+		loginPage.logout();
+	}
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result, Method testMethod) {
+		Reporter.setCurrentTestResult(result);
+		UtilityLog.logafter(testMethod.getName());
+		if (ITestResult.FAILURE == result.getStatus()) {
+			Utility baseClass = new Utility(driver);
+			baseClass.screenShot(result);
+			try { // if any tc failed and dint logout!
+				loginPage.logout();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		UtilityLog.info("Executed :" + result.getMethod().getMethodName());
+	}
+
+	@AfterClass(alwaysRun = true)
+	public void close() {
+		try {
+			loginPage.quitBrowser();
+		} finally {
+			loginPage.clearBrowserCache();
+		}
+
+	}
+
+}

@@ -11,7 +11,6 @@ import java.text.ParseException;
 
 import org.testng.ITestResult;
 import automationLibrary.Driver;
-import pageFactory.BaseClass;
 import pageFactory.CommentsPage;
 import pageFactory.LoginPage;
 import pageFactory.Utility;
@@ -22,7 +21,6 @@ public class Comments_Regression {
 	LoginPage lp;
 	CommentsPage cp;
 	String commentname = "C"+Utility.dynamicNameAppender();
-	BaseClass bc;
 	
 	/*
 	 * Author : Shilpi Mangal
@@ -43,7 +41,6 @@ public class Comments_Regression {
 		lp.loginToSightLine(Input.pa1userName, Input.pa1password);   
 		 this.driver.getWebDriver().get(Input.url+ "/Comments/CommentsList");
 		cp = new CommentsPage(driver);
-		bc = new BaseClass(driver);
     }
 	
 	   /*
@@ -55,10 +52,8 @@ public class Comments_Regression {
 		 */	
 	   @Test(groups={"smoke","regression"},priority=1)
 	   public void AddComments() throws InterruptedException {
-		
-		   bc.stepInfo("RPMXCON-52506-To verify when Project Admin creates new comment");
+		   
 			cp.AddComments(commentname);
-			bc.passedStep(commentname+ "added successfully");
 		  }
 	   
 	   /*
@@ -70,10 +65,9 @@ public class Comments_Regression {
 		 */	
 	   @Test(groups={"smoke","regression"},priority=2)
 	   public void DeleteComments() throws InterruptedException {
-		  
-		   bc.stepInfo("RPMXCON-52513-To verify when Project Admin deletes comment");
+		   
 		cp.DeleteComments(commentname);
-		bc.passedStep(commentname+ "deleted successfully");
+		
 	   }
 		   
 	@AfterMethod(alwaysRun = true)

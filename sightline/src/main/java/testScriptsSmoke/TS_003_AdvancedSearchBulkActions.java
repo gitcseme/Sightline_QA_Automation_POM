@@ -15,13 +15,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.aventstack.extentreports.Status;
-
 import automationLibrary.Driver;
-import executionMaintenance.ExtentTestManager;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
-import pageFactory.BaseClass;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -34,7 +30,6 @@ public class TS_003_AdvancedSearchBulkActions {
 	int pureHit;
 	String searchText ="test";
 	Logger log;
-	BaseClass bc;
 	
 	
 	String tagName = "tagName"+Utility.dynamicNameAppender();
@@ -56,18 +51,19 @@ public class TS_003_AdvancedSearchBulkActions {
 		
 		//Open browser
 		log = Logger.getLogger("devpinoyLogger");
-			
+
+		//Input in = new Input();
+		//in.loadEnvConfig();
 		driver = new Driver();
 		//Login as PA
 		
 		lp=new LoginPage(driver);
-	
+		sessionSearch = new SessionSearch(driver);
     	lp.loginToSightLine(Input.pa1userName, Input.pa1password);
-    		sessionSearch = new SessionSearch(driver);
-    	   		bc= new BaseClass(driver);
+    	
+    	   		
     	//Search for any content on basic search screen
      	sessionSearch.advancedContentSearch(searchText);
-     	ExtentTestManager.getTest().log(Status.INFO, "Search Key Word Is : "+searchText);
     	pureHit = Integer.parseInt(sessionSearch.getPureHitsCount().getText());
     	
     	        
@@ -83,7 +79,7 @@ public class TS_003_AdvancedSearchBulkActions {
 	@Test(groups={"smoke","regression"})
 	   public void bulkTagInAdvancedSearch() throws InterruptedException {
 		
-	  bc.stepInfo("\"RPMXCON-46862 - Verify that Bulk Tag Action is working properly on Advanced Search result Screen");   
+	//Create Bulk Tag   
 		   sessionSearch.bulkTag(tagName);
 	       final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
 	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
@@ -96,7 +92,6 @@ public class TS_003_AdvancedSearchBulkActions {
 	       //System.out.println(tagName+" could be seen under tags and folder page");
 	       log.info(tagName+" could be seen under tags and folder page");
 	       Reporter.log(tagName+" could be seen under tags and folder page",true);
-	       ExtentTestManager.getTest().log(Status.INFO, "Tag Key Word Is : "+tagName);
 	   
 	}
 	/*
@@ -109,9 +104,8 @@ public class TS_003_AdvancedSearchBulkActions {
 	@Test(groups={"smoke","regression"})
     public void bulkFolderInAdvancedSearch() throws InterruptedException {
 		
-		bc.stepInfo("RPMXCON-57079	- Verify that Bulk Folder Action is working properly on Advanced Search result Screen"); 
+		//Create Bulk Folder   
 		sessionSearch.bulkFolder(folderName);
-		ExtentTestManager.getTest().log(Status.INFO, "Folder Key Word Is : "+folderName);
         
 	}
 	@AfterClass(alwaysRun = true)
@@ -122,28 +116,25 @@ public class TS_003_AdvancedSearchBulkActions {
 			}finally {
 				lp.quitBrowser();
 				lp.clearBrowserCache();
-				
 			}	
 	}
-	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result,Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
-		UtilityLog.logBefore(testMethod.getName());		
+		UtilityLog.logBefore(testMethod.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
-		UtilityLog.logafter(testMethod.getName());		
+		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
 			Utility bc = new Utility(driver);
 			bc.screenShot(result);
+
 		}
-		
 		System.out.println("Executed :" + result.getMethod().getMethodName());
-		ExtentTestManager.getTest().log(Status.INFO, this.getClass().getSimpleName()+"/"+testMethod.getName());
 	}     
 }

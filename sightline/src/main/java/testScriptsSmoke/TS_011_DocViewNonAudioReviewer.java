@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
+
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -13,36 +14,39 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import automationLibrary.Driver;
+import configsAndTestData.ConfigLoader;
 import executionMaintenance.UtilityLog;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
 import pageFactory.CommentsPage;
+import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.HomePage;
 import pageFactory.LoginPage;
+import pageFactory.RedactionPage;
 import pageFactory.Utility;
 
 public class TS_011_DocViewNonAudioReviewer {
 	Driver driver;
-	LoginPage loginPage;
+	LoginPage lp;
 	DocViewPage docView;
 	public static int purehits;
-	SessionSearch search;
-	HomePage hm;
-	BaseClass baseClass;
+
 	String tagName = "tag" + Utility.dynamicNameAppender();
 	String folderName = "folder" + Utility.dynamicNameAppender();
-	String newTag = "newTag" + Utility.dynamicNameAppender();
+
+	HomePage hm;
+	BaseClass bc;
+	String newTag = "newtag" + Utility.dynamicNameAppender();
 	String codingfrom = "CF" + Utility.dynamicNameAppender();
-	String assignmentName = "assi" + Utility.dynamicNameAppender();
-	String commentName = "Comt" + Utility.dynamicNameAppender();
+	String assignmentName = "assi" + Utility.dynamicNameAppender();;
 	String RedactionLabel = "Default Redaction Tag";
-	
-	
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
 	 * Modified by: Description : to assign docs to reviewer, create assignment
@@ -56,85 +60,83 @@ public class TS_011_DocViewNonAudioReviewer {
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
 		// Open browser
-	 	driver = new Driver();
-		baseClass = new BaseClass(driver);
+		//Input in = new Input();
+		//in.loadEnvConfig();
+		driver = new Driver();
+		bc = new BaseClass(driver);
 		// Login as PA
-		loginPage = new LoginPage(driver);		
-
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-
+		lp = new LoginPage(driver);
 		
-		 // add tag
+
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// add tag
 		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
 		page.CreateTag(newTag, "Default Security Group");
 
-				// add comment field
+		// add comment field
 		CommentsPage comments = new CommentsPage(driver);
-		comments.AddComments(commentName);
-						
-				// Create coding for for assignment
-	   CodingForm cf = new CodingForm(driver);
+		comments.AddComments("Comment" + Utility.dynamicNameAppender());
+
+		// Create coding for for assignment
+		CodingForm cf = new CodingForm(driver);
 		cf.createCodingform(codingfrom);
 
-				// Create assignment with newly created coding form
+		// Create assignment with newly created coding form
 		AssignmentsPage agnmt = new AssignmentsPage(driver);
 		agnmt.createAssignment(assignmentName, codingfrom);
 
-				// Search docs and assign to newly created assignment
-				search = new SessionSearch(driver);
-				purehits = search.basicContentSearch(Input.searchString1);
-				search.bulkAssign();
-				agnmt.assignDocstoExisting(assignmentName);
+		// Search docs and assign to newly created assignment
+		SessionSearch search = new SessionSearch(driver);
+		purehits = search.basicContentSearch(Input.searchString1);
+		search.bulkAssign();
+		agnmt.assignDocstoExisting(assignmentName);
 
-				// Edit assignment and add reviewers
-				agnmt.editAssignment(assignmentName);
-				agnmt.addReviewerAndDistributeDocs(assignmentName, purehits);
-				loginPage.logout();
+		// Edit assignment and add reviewers
+		agnmt.editAssignment(assignmentName);
+		agnmt.addReviewerAndDistributeDocs(assignmentName, purehits);
+		lp.logout();
 
-				// login as a reviewer and select the specific assignment to review the
-				// docs
-				loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// login as a reviewer and select the specific assignment to review the
+		// docs
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
 
-				hm = new HomePage(driver);
-				Boolean found = false;
-				for (WebElement element : hm.getAssignmentsList().FindWebElements()) {
-					if (element.getText().equalsIgnoreCase(assignmentName)) {
-						found = true;
-						System.out.println(assignmentName + "is assigned to reviewer successfully");
-						UtilityLog.info(assignmentName + "is assigned to reviewer successfully");
-						element.click();
-						break;
-					}
-				}
-				Assert.assertTrue(found);
-				docView = new DocViewPage(driver);
+		hm = new HomePage(driver);
+		Boolean found = false;
+		for (WebElement element : hm.getAssignmentsList().FindWebElements()) {
+			if (element.getText().equalsIgnoreCase(assignmentName)) {
+				found = true;
+				System.out.println(assignmentName + "is assigned to reviewer successfully");
+				UtilityLog.info(assignmentName + "is assigned to reviewer successfully");
+				element.click();
+				break;
+			}
+		}
+		Assert.assertTrue(found);
 
+		docView = new DocViewPage(driver);
 	}
 
-				/*
-				 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
-				 * Modified by: Description : As a reviewer add remark to first document
-				 * 
-				 */
-				@Test(groups = {"smoke", "regression"},priority=1)
-				public void addCommentandcompleteDoc() throws Exception {
-					
-					docView.addCommentToNonAudioDoc("firstcomment");
-				}
+	/*
+	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
+	 * Modified by: Description : As a reviewer add comment to document
+	 * 
+	 */
+	@Test(groups = { "smoke", "regression" })
+	public void addCommentandcompleteDoc() {
+
+		docView.addCommentToNonAudioDoc("firstcomment");
+
+	}
 
 	/*
 	 * Author : Suresh Bavihalli Created date: April 2019 Modified date:
 	 * Modified by: Description : As a reviewer add remark to first document
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" },priority=2)
-	public void addRemarkToFirstDoc() throws InterruptedException {
-		
-		baseClass.selectproject();
-		search = new SessionSearch(driver);
-		purehits = search.basicMetaDataSearch("DocID", null, "ID00000050", null);
-		search.ViewInDocView();
-	
+	@Test(groups = { "smoke", "regression" })
+	public void addRemarkToFirstDoc() {
+
 		docView.addRemarkNonAudioDoc("FirstRemark2");
 	}
 
@@ -143,12 +145,11 @@ public class TS_011_DocViewNonAudioReviewer {
 	 * Modified by: Description : As a reviewer redact the page, search for it and delete the redaction
 	 * 
 	 */
-	@Test(groups = { "smoke", "regression" },priority=3)
+	@Test(groups = { "smoke", "regression" })
 	public void addredaction() throws InterruptedException {
 		{
            
 			docView.nonAudioPageRedaction(RedactionLabel);
-			baseClass.selectproject();
 			SessionSearch search = new SessionSearch(driver);
 	    	
 			//Validate in advance sreach under work product search
@@ -162,9 +163,9 @@ public class TS_011_DocViewNonAudioReviewer {
 		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
 		    		docView.getDocView_RedactIcon().Displayed()  ;}}), Input.wait30);   
 		    docView.getDocView_RedactIcon().waitAndClick(5);
-		    docView.getPreRedaction().waitAndClick(5);
-		    docView.getDocView_Annotate_DeleteIcon().waitAndClick(5);
-		    baseClass.VerifySuccessMessage("Redaction Removed successfully.");
+		    docView.getPreRedaction().waitAndClick(10);
+		    docView.getDocView_Annotate_DeleteIcon().waitAndClick(10);
+		    bc.VerifySuccessMessage("Redaction Removed successfully.");
 		    
 		    
 		}
@@ -177,7 +178,6 @@ public class TS_011_DocViewNonAudioReviewer {
 		System.out.println("------------------------------------------");
 		System.out.println("Executing method :  " + testMethod.getName());
 		UtilityLog.logBefore(testMethod.getName());
-		
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -185,21 +185,21 @@ public class TS_011_DocViewNonAudioReviewer {
 		Reporter.setCurrentTestResult(result);
 		UtilityLog.logafter(testMethod.getName());
 		if (ITestResult.FAILURE == result.getStatus()) {
-			Utility baseClass = new Utility(driver);
-			baseClass.screenShot(result);
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
 
 		}
-		System.out.println("Executed :" + result.getMethod().getMethodName());	
+		System.out.println("Executed :" + result.getMethod().getMethodName());
 	}
-
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			loginPage.logout();
+			lp.logout();
+			// lp.quitBrowser();
 		} finally {
-			loginPage.closeBrowser();;
-			loginPage.clearBrowserCache();
+			lp.quitBrowser();
+			lp.clearBrowserCache();
 		}
 	}
 }

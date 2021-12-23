@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>BasicAndAdvancedSearchOperations</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>21/0/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>18/3/0</td>
 </tr><tr>
-<td>Started on:</td><td>Sat Jun 05 13:48:02 IST 2021</td>
+<td>Started on:</td><td>Mon Apr 26 06:42:58 IST 2021</td>
 </tr>
-<tr><td>Total time:</td><td>382 seconds (382278 ms)</td>
+<tr><td>Total time:</td><td>520 seconds (520793 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td>smoke </td>
 </tr><tr>
@@ -67,6 +67,203 @@ function toggleAllBoxes() {
 </tr>
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()'><b>ConceptualSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
+<a href="#Output-1251219927" onClick='toggleBox("Output-1251219927", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1251219927" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1251219927">
+MTM TC IDs :3739,3740,3741<br/>
+Searched 'community' expected and actual counts are - 3 : 5<br/>
+<a href='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch2710489.png'> <img src='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--ConceptualSearch2710489.png' height='50' width='50'/> </a><br/>
+</div>
+</td>
+<td><div><pre>junit.framework.AssertionFailedError: expected:&lt;3&gt; but was:&lt;5&gt;
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.failNotEquals(Assert.java:282)
+	at junit.framework.Assert.assertEquals(Assert.java:64)
+	at junit.framework.Assert.assertEquals(Assert.java:201)
+	at junit.framework.Assert.assertEquals(Assert.java:207)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch(TS_004_BasicAndAdvancedSearchOperations.java:235)
+... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1251219927", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1251219927'><pre>junit.framework.AssertionFailedError: expected:&lt;3&gt; but was:&lt;5&gt;
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.failNotEquals(Assert.java:282)
+	at junit.framework.Assert.assertEquals(Assert.java:64)
+	at junit.framework.Assert.assertEquals(Assert.java:201)
+	at junit.framework.Assert.assertEquals(Assert.java:207)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch(TS_004_BasicAndAdvancedSearchOperations.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1204)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>44</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
+<tr>
+<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch()'><b>audioSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
+<a href="#Output-626393072" onClick='toggleBox("Output-626393072", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-626393072" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-626393072">
+MTM TC IDs :3739<br/>
+Searched 'right' expected and actual counts are - 6 : 3<br/>
+<a href='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--audioSearch6106045.png'> <img src='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--audioSearch6106045.png' height='50' width='50'/> </a><br/>
+</div>
+</td>
+<td><div><pre>junit.framework.AssertionFailedError: expected:&lt;6&gt; but was:&lt;3&gt;
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.failNotEquals(Assert.java:282)
+	at junit.framework.Assert.assertEquals(Assert.java:64)
+	at junit.framework.Assert.assertEquals(Assert.java:201)
+	at junit.framework.Assert.assertEquals(Assert.java:207)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch(TS_004_BasicAndAdvancedSearchOperations.java:212)
+... Removed 26 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace626393072", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace626393072'><pre>junit.framework.AssertionFailedError: expected:&lt;6&gt; but was:&lt;3&gt;
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.failNotEquals(Assert.java:282)
+	at junit.framework.Assert.assertEquals(Assert.java:64)
+	at junit.framework.Assert.assertEquals(Assert.java:201)
+	at junit.framework.Assert.assertEquals(Assert.java:207)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch(TS_004_BasicAndAdvancedSearchOperations.java:212)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1204)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>58</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
+<tr>
+<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()'><b>searchsavedSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
+<a href="#Output-1237144823" onClick='toggleBox("Output-1237144823", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1237144823" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1237144823">
+MTM TC IDs :3739<br/>
+Search is done for comments and PureHit is : 9<br/>
+<a href='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--searchsavedSearch5996350.png'> <img src='C:\Users\srinivas.a\git\Sightline_QA_Automation_POM_Final\sightline\Screenshots\TS_004_BasicAndAdvancedSearchOperations--searchsavedSearch5996350.png' height='50' width='50'/> </a><br/>
+</div>
+</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element is not clickable at point (873, 623)
+  (Session info: chrome=86.0.4240.198)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.18363 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 29 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LNT-HZ-NP-SQA18&apos;, ip: &apos;10.224.187.142&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_271&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\LOCAL_~1.A\Temp\scoped_dir4684_5806}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=86.0.4240.198, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 44233ab1c18eb6b21413fa51b6862ca9
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:225)
+	at pageFactory.SessionSearch.saveSearch(SessionSearch.java:329)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch(TS_004_BasicAndAdvancedSearchOperations.java:186)
+... Removed 30 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1237144823", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1237144823'><pre>org.openqa.selenium.WebDriverException: unknown error: Element is not clickable at point (873, 623)
+  (Session info: chrome=86.0.4240.198)
+  (Driver info: chromedriver=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91),platform=Windows NT 10.0.18363 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 29 milliseconds
+Build info: version: &apos;3.4.0&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LNT-HZ-NP-SQA18&apos;, ip: &apos;10.224.187.142&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_271&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91), userDataDir=C:\Users\LOCAL_~1.A\Temp\scoped_dir4684_5806}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=86.0.4240.198, platform=XP, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=false, acceptInsecureCerts=false, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=}]
+Session ID: 44233ab1c18eb6b21413fa51b6862ca9
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at automationLibrary.Element.Click(Element.java:225)
+	at pageFactory.SessionSearch.saveSearch(SessionSearch.java:329)
+	at testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch(TS_004_BasicAndAdvancedSearchOperations.java:186)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1204)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>22</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
+</table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
@@ -75,294 +272,252 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.ConceptualSearch()'><b>ConceptualSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
-<a href="#Output-1700421020" onClick='toggleBox("Output-1700421020", this, "Show output", "Hide output");'>Show output</a>
-
-<a href="#Output-1700421020" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1700421020">
-MTM TC IDs :3739,3740,3741<br/>
-Searched 'community' expected and actual counts are - 3 : 3<br/>
-</div>
-</td>
-<td></td>
-<td>17</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
-<tr>
-<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.audioSearch()'><b>audioSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
-<a href="#Output-1589466857" onClick='toggleBox("Output-1589466857", this, "Show output", "Hide output");'>Show output</a>
-
-<a href="#Output-1589466857" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1589466857">
-MTM TC IDs :3739<br/>
-Searched 'right' expected and actual counts are - 6 : 6<br/>
-</div>
-</td>
-<td></td>
-<td>14</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
-<tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()'><b>contentSearchWithOperatorsInAS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?AND?test, 1<br/>
-<a href="#Output-1092619788" onClick='toggleBox("Output-1092619788", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1388849499" onClick='toggleBox("Output-1388849499", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1092619788" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1092619788">
+<a href="#Output-1388849499" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1388849499">
 MTM TC IDs :3136,3137,3138,3139																<br/>
 Serach is done for 'comments?AND?test' and PureHit is : 1<br/>
 Searched 'comments?AND?test' expected and actual counts are - 1 : 1<br/>
 </div>
 </td>
 <td></td>
-<td>14</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>28</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()'><b>contentSearchWithOperatorsInAS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: test?AND?comments, 1<br/>
-<a href="#Output-302987494" onClick='toggleBox("Output-302987494", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-36550900" onClick='toggleBox("Output-36550900", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-302987494" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-302987494">
+<a href="#Output-36550900" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-36550900">
 MTM TC IDs :3136,3137,3138,3139																<br/>
 Serach is done for 'test?AND?comments' and PureHit is : 1<br/>
 Searched 'test?AND?comments' expected and actual counts are - 1 : 1<br/>
 </div>
 </td>
 <td></td>
-<td>13</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>18</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()'><b>contentSearchWithOperatorsInAS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?OR?test, 11<br/>
-<a href="#Output-1118414398" onClick='toggleBox("Output-1118414398", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-596333086" onClick='toggleBox("Output-596333086", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1118414398" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1118414398">
+<a href="#Output-596333086" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-596333086">
 MTM TC IDs :3136,3137,3138,3139																<br/>
 Serach is done for 'comments?OR?test' and PureHit is : 11<br/>
 Searched 'comments?OR?test' expected and actual counts are - 11 : 11<br/>
 </div>
 </td>
 <td></td>
-<td>14</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()'><b>contentSearchWithOperatorsInAS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?NOT?test, 8<br/>
-<a href="#Output-1137078855" onClick='toggleBox("Output-1137078855", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1846539844" onClick='toggleBox("Output-1846539844", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1137078855" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1137078855">
+<a href="#Output-1846539844" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1846539844">
 MTM TC IDs :3136,3137,3138,3139																<br/>
 Serach is done for 'comments?NOT?test' and PureHit is : 8<br/>
 Searched 'comments?NOT?test' expected and actual counts are - 8 : 8<br/>
 </div>
 </td>
 <td></td>
-<td>12</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>16</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInAS()'><b>contentSearchWithOperatorsInAS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: test?NOT?comments, 2<br/>
-<a href="#Output-1540476618" onClick='toggleBox("Output-1540476618", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-452457802" onClick='toggleBox("Output-452457802", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1540476618" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1540476618">
+<a href="#Output-452457802" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-452457802">
 MTM TC IDs :3136,3137,3138,3139																<br/>
 Serach is done for 'test?NOT?comments' and PureHit is : 2<br/>
 Searched 'test?NOT?comments' expected and actual counts are - 2 : 2<br/>
 </div>
 </td>
 <td></td>
-<td>13</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>16</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()'><b>contentSearchWithOperatorsInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?AND?test, 1<br/>
-<a href="#Output-827328832" onClick='toggleBox("Output-827328832", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1015799131" onClick='toggleBox("Output-1015799131", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-827328832" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-827328832">
+<a href="#Output-1015799131" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1015799131">
 MTM TC IDs :27,34,35,36<br/>
 Search is done for comments?AND?test and PureHit is : 1<br/>
 Searched 'comments?AND?test' expected and actual counts are  1 and 1<br/>
 </div>
 </td>
 <td></td>
-<td>16</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()'><b>contentSearchWithOperatorsInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: test?AND?comments, 1<br/>
-<a href="#Output-260638966" onClick='toggleBox("Output-260638966", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-143486875" onClick='toggleBox("Output-143486875", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-260638966" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-260638966">
+<a href="#Output-143486875" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-143486875">
 MTM TC IDs :27,34,35,36<br/>
 Search is done for test?AND?comments and PureHit is : 1<br/>
 Searched 'test?AND?comments' expected and actual counts are  1 and 1<br/>
 </div>
 </td>
 <td></td>
-<td>15</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()'><b>contentSearchWithOperatorsInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?OR?test, 11<br/>
-<a href="#Output-2035801202" onClick='toggleBox("Output-2035801202", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-923013679" onClick='toggleBox("Output-923013679", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-2035801202" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-2035801202">
+<a href="#Output-923013679" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-923013679">
 MTM TC IDs :27,34,35,36<br/>
 Search is done for comments?OR?test and PureHit is : 11<br/>
 Searched 'comments?OR?test' expected and actual counts are  11 and 11<br/>
 </div>
 </td>
 <td></td>
-<td>16</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()'><b>contentSearchWithOperatorsInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: comments?NOT?test, 8<br/>
-<a href="#Output-1144897090" onClick='toggleBox("Output-1144897090", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-242408359" onClick='toggleBox("Output-242408359", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1144897090" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1144897090">
+<a href="#Output-242408359" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-242408359">
 MTM TC IDs :27,34,35,36<br/>
 Search is done for comments?NOT?test and PureHit is : 8<br/>
 Searched 'comments?NOT?test' expected and actual counts are  8 and 8<br/>
 </div>
 </td>
 <td></td>
-<td>16</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.contentSearchWithOperatorsInBS()'><b>contentSearchWithOperatorsInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: test?NOT?comments, 2<br/>
-<a href="#Output-2108440536" onClick='toggleBox("Output-2108440536", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1862674654" onClick='toggleBox("Output-1862674654", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-2108440536" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-2108440536">
+<a href="#Output-1862674654" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1862674654">
 MTM TC IDs :27,34,35,36<br/>
 Search is done for test?NOT?comments and PureHit is : 2<br/>
 Searched 'test?NOT?comments' expected and actual counts are  2 and 2<br/>
 </div>
 </td>
 <td></td>
-<td>15</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()'><b>metaDataSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: CustodianName, null, P Allen, null, 121, 121<br/>
-<a href="#Output-948395645" onClick='toggleBox("Output-948395645", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1748097277" onClick='toggleBox("Output-1748097277", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-948395645" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-948395645">
+<a href="#Output-1748097277" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1748097277">
 MTM TC IDs :166,199,232,2941,2942,2943,2946<br/>
 Searched 'CustodianName' expected and actual counts are  121 and 121<br/>
 </div>
 </td>
 <td></td>
-<td>20</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>24</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()'><b>metaDataSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: MasterDate, IS, 2010-04-06 22:18:00, null, 1, 1<br/>
-<a href="#Output-1391119179" onClick='toggleBox("Output-1391119179", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1356236848" onClick='toggleBox("Output-1356236848", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1391119179" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1391119179">
+<a href="#Output-1356236848" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1356236848">
 MTM TC IDs :166,199,232,2941,2942,2943,2946<br/>
 Searched 'MasterDate' expected and actual counts are  1 and 1<br/>
 </div>
 </td>
 <td></td>
-<td>16</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>23</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()'><b>metaDataSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: MasterDate, RANGE, 1986-04-06, 2010-04-06, 116, 116<br/>
-<a href="#Output-1369468094" onClick='toggleBox("Output-1369468094", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1202081661" onClick='toggleBox("Output-1202081661", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1369468094" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1369468094">
+<a href="#Output-1202081661" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1202081661">
 MTM TC IDs :166,199,232,2941,2942,2943,2946<br/>
 Searched 'MasterDate' expected and actual counts are  116 and 116<br/>
 </div>
 </td>
 <td></td>
-<td>14</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>24</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()'><b>metaDataSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: CreateDate, IS, 2010-10-18, null, 85, 85<br/>
-<a href="#Output-2015261478" onClick='toggleBox("Output-2015261478", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-426288284" onClick='toggleBox("Output-426288284", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-2015261478" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-2015261478">
+<a href="#Output-426288284" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-426288284">
 MTM TC IDs :166,199,232,2941,2942,2943,2946<br/>
 Searched 'CreateDate' expected and actual counts are  85 and 85<br/>
 </div>
 </td>
 <td></td>
-<td>15</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>23</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.metaDataSearch()'><b>metaDataSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: CreateDate, RANGE, 2000-10-18, 2010-10-18, 85, 85<br/>
-<a href="#Output-670689666" onClick='toggleBox("Output-670689666", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1638249646" onClick='toggleBox("Output-1638249646", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-670689666" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-670689666">
+<a href="#Output-1638249646" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1638249646">
 MTM TC IDs :166,199,232,2941,2942,2943,2946<br/>
 Searched 'CreateDate' expected and actual counts are  85 and 85<br/>
 </div>
 </td>
 <td></td>
-<td>15</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>24</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS()'><b>proximityAndRegExInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: "illustratin* since Q499"~20, 1, 1<br/>
-<a href="#Output-49547843" onClick='toggleBox("Output-49547843", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-505968231" onClick='toggleBox("Output-505968231", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-49547843" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-49547843">
+<a href="#Output-505968231" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-505968231">
 MTM TC IDs :null<br/>
 Search is done for "illustratin* since Q499"~20 and PureHit is : 1<br/>
 Searched '"illustratin* since Q499"~20' expected and actual counts are - 1 : 1<br/>
 </div>
 </td>
 <td></td>
-<td>14</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>16</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS()'><b>proximityAndRegExInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: "**elief that the rights", 1, 1<br/>
-<a href="#Output-764358458" onClick='toggleBox("Output-764358458", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-1957282992" onClick='toggleBox("Output-1957282992", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-764358458" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-764358458">
+<a href="#Output-1957282992" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1957282992">
 MTM TC IDs :null<br/>
 Search is done for "**elief that the rights" and PureHit is : 1<br/>
 Searched '"**elief that the rights"' expected and actual counts are - 1 : 1<br/>
 </div>
 </td>
 <td></td>
-<td>16</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>19</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 <tr>
 <td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.proximityAndRegExInBS()'><b>proximityAndRegExInBS</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br>Parameters: "very long", 1, 1<br/>
-<a href="#Output-1009326765" onClick='toggleBox("Output-1009326765", this, "Show output", "Hide output");'>Show output</a>
+<a href="#Output-2042917213" onClick='toggleBox("Output-2042917213", this, "Show output", "Hide output");'>Show output</a>
 
-<a href="#Output-1009326765" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-1009326765">
+<a href="#Output-2042917213" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-2042917213">
 MTM TC IDs :null<br/>
 Search is done for "very long" and PureHit is : 1<br/>
 Searched '"very long"' expected and actual counts are - 1 : 1<br/>
 </div>
 </td>
 <td></td>
-<td>15</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
-<tr>
-<td title='testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations.searchsavedSearch()'><b>searchsavedSearch</b><br>Test class: testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations<br/>
-<a href="#Output-742672280" onClick='toggleBox("Output-742672280", this, "Show output", "Hide output");'>Show output</a>
-
-<a href="#Output-742672280" onClick="toggleAllBoxes();">Show all outputs</a>
-<div class='log' id="Output-742672280">
-MTM TC IDs :3739<br/>
-Search is done for comments and PureHit is : 9<br/>
-Expected message - Saved search saved successfully<br/>
-Saved the search with name 'savedSearch656015'<br/>
-Searched 'savedSearch656015' expected and actual counts are  9 : 9<br/>
-</div>
-</td>
-<td></td>
-<td>43</td>
-<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@382db087</td></tr>
+<td>17</td>
+<td>testScriptsSmoke.TS_004_BasicAndAdvancedSearchOperations@b3d7190</td></tr>
 </table><p>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SMOKE TEST DATA -->
-<TestData>
-	<!-- Serach strings and expected pure hit counts -->
-	<searchString1>comments</searchString1>
+ <TestData>
+ <!--Consilio Search strings and expected pure hit counts -->
+ 	<searchString1>comments</searchString1>
 	<searchString2>test</searchString2>
 	<pureHitSeachString1>9</pureHitSeachString1>
 	<pureHitSeachString2>3</pureHitSeachString2>
@@ -17,4 +17,100 @@
 	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>121</metaDataCNcount>
 	<totalNumberOfDocs>125</totalNumberOfDocs>
+
+	
+    <!--Indium Search strings and expected pure hit counts -->
+	<!--  Docview Analytics -->
+    <AssgnName>TDM54178</AssgnName>
+    <pureHitCount>29</pureHitCount>
+     <FolderName>01Prod</FolderName>
+    <TextValue>ajinkya.gangdhar@symphonyteleca....</TextValue>
+     <TextEmpty></TextEmpty>
+     <SavedSearch>TDM54178</SavedSearch>
+     <Panel>Conceptually Similar</Panel>
+     <pureHitCount1>267</pureHitCount1>
+     <docName>DocID</docName>
+     <MiniDocId>ID00003846</MiniDocId>
+  	   <ThreadQuery>"testing the same"</ThreadQuery>
+  	   <NewDocId>ID00000171</NewDocId>
+  	   <MetaDataId>ID00000015</MetaDataId>
+     <documentToBeScrolled>4028</documentToBeScrolled>
+     <conceptualDocument>ID00000209</conceptualDocument>
+  	   <conceptualDocumentReviewer>ID00004165</conceptualDocumentReviewer>
+  	   <threadDocId>ID00000018</threadDocId>
+  	   <principalDocId>5168</principalDocId>
+  	   <principalDocId1>5138</principalDocId1>
+  	   <principalDocId2>5161</principalDocId2>
+  	   <principalDocId3>5167</principalDocId3>
+  	   <principalDocId4>5170</principalDocId4>
+  	   <principalDocId5>5171</principalDocId5>
+  	    <principalDocId6>5169</principalDocId6>
+  	    <sourceDocId>T2548D</sourceDocId>
+  	     <sourceDocId1>T2392D</sourceDocId1>
+  	    <sourceDocId2>T2529D</sourceDocId2>
+  	    <sourceDocId3>T2545D</sourceDocId3>
+  	    <sourceDocId4>T2552D</sourceDocId4>
+  	    <sourceDocId5>T2554D</sourceDocId5>
+  	    <nearDupeDocument>ID00000189</nearDupeDocument>
+		<nearDupeDocumentForReviewer>ID00001239</nearDupeDocumentForReviewer>
+  	    		<familyDocumentForReviewer>ID00005144</familyDocumentForReviewer>
+  	   
+     
+    <!-- DocView Coding Form -->
+    <savedName>AttachData</savedName>
+    <codingFormName>Default Project Coding Form</codingFormName>
+    <assignmentSelection>DemoAssignment</assignmentSelection>
+    <stampColour>BLUE</stampColour>
+    <assignmentLevelStampOFF>codingstampoff</assignmentLevelStampOFF>
+    <searchText>Test</searchText>
+    <reviewerName>MalayalaBaskar</reviewerName>
+    <stampColours>BLACK</stampColours>
+    <stampSelection>YELLOW</stampSelection>
+   
+   <!-- Sowndarya Indium-->  
+    <!-- Sowndarya Indium -modified on sept9-->
+  
+    <searchString3></searchString3> 
+    <testData1>crammer</testData1>
+    <tagNamePrev>Privileged</tagNamePrev>
+	<tagNameTechnical> Technical_Issue</tagNameTechnical>
+	 <documentID>ID00000018</documentID>
+	 <signatureDocumentID>ID00005088</signatureDocumentID>
+	  <searchString20Docs>conceptually</searchString20Docs>
+
+	
+	<!-- Baskar Indium Audio Search to DocView MiniList  - modify on 9/01/21 -->
+    <language>North American English</language>
+    <documentIdNum>5</documentIdNum>
+    <searchStringStar>*</searchStringStar>
+    <docIDs>ID0000</docIDs>
+
+   
+     <!-- Added by Gopinath -->
+    <historyTab>History</historyTab>
+    <documentConceptualTab>liDocumentConceptualSimilar</documentConceptualTab>
+    <randomText>Test</randomText>
+    <metaDataName>CustodianName</metaDataName>
+    <is_Or_Range>range</is_Or_Range>
+    <second_Input>CustodianName</second_Input>
+    <defaultRedactionTag>Default Redaction Tag</defaultRedactionTag>
+    <fldClassification>Doc Basic</fldClassification>
+    <fldDescription>test</fldDescription>
+    <fieldType>NVARCHAR</fieldType>
+    <fieldLength>Small - 50 Characters</fieldLength>
+    <codeFormName>Default Project Coding Form</codeFormName>
+     <securityGroup>Default Security Group</securityGroup>
+         <mySavedSearch>My Saved Search</mySavedSearch>
+     
+      <!-- Raghuram Indium modified on 9/7/21 --> 
+    <docHighlightColor>#CDD9E1</docHighlightColor>
+    <sortDataBy>DocID</sortDataBy>
+    <sortType>Ascending</sortType>
+    <fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
+    
+    <!--  Added by Jeevitha -->
+    <colorCodeOfRed>#FF0000</colorCodeOfRed>
+    <crammerdocumentID>ID00001191</crammerdocumentID>
+
 </TestData>
+

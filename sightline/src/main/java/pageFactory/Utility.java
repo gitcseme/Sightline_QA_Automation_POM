@@ -1,6 +1,7 @@
 package pageFactory;
 import java.io.File;import java.util.Random;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
@@ -10,7 +11,7 @@ import testScriptsSmoke.Input;
 
 public class Utility {
 	Driver driver;
-
+ 
 	public Utility(Driver driver){
 
         this.driver = driver;
@@ -23,7 +24,13 @@ public class Utility {
 			return random.nextInt(10000000);
 		
 	}
-
+public static String randomCharacterAppender(int num) {
+		
+		String Alphabet=RandomStringUtils.randomAlphabetic(num);
+		//System.out.println(Alphabet);
+		return Alphabet;
+}
+	
  public void screenShot(ITestResult result) {
 	 if(Input.screenShotOnFail.equalsIgnoreCase("YES"))
 	 try{

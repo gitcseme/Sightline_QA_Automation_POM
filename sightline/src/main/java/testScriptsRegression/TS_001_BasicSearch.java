@@ -1,4 +1,3 @@
-
 package testScriptsRegression;
 
 import java.io.IOException;
@@ -19,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import pageFactory.BaseClass;
+import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -28,325 +28,676 @@ import testScriptsSmoke.Input;
 public class TS_001_BasicSearch {
 	Driver driver;
 	LoginPage lp;
+	SessionSearch sessionSearch;
 	int pureHit;
 	SoftAssert softAssertion;
 	SessionSearch ss;
-	
+
 	BaseClass bc;
-	String tagName = "tagName"+Utility.dynamicNameAppender();
-	String folderName = "AFolderName"+Utility.dynamicNameAppender();
-	
-	
+	String searchName = "Search" + Utility.dynamicNameAppender();
+	/*
+	 * String tagName = "tagName"+Utility.dynamicNameAppender(); String folderName =
+	 * "AFolderName"+Utility.dynamicNameAppender();
+	 */
+
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
-		System.out.println("******Execution started for "+this.getClass().getSimpleName()+"********");
-		
-		
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// Open browser
+		softAssertion = new SoftAssert();
+		Input in = new Input();
+		in.loadEnvConfig();
 		driver = new Driver();
-		lp=new LoginPage(driver);
-		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 		bc = new BaseClass(driver);
-		bc.passedStep("********logged in succesfully as PA user********");
-		
-		ss= new SessionSearch(driver);
-		softAssertion= new SoftAssert();
+		ss = new SessionSearch(driver);
 
 	}
-	
-	@Test(dataProvider="metaDataSearch",groups={"regression"},priority=1)
-	public void metaDataSearchsBS(String TestCaseId,int Expected_count, String metaDataName,String IS_or_Range,String
-			first_input, String second_input) {
-		
 
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
+	// @Test(groups={"regression"},priority=1)
+	public void copySearchTextToNewSearch() {
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
 		bc.selectproject();
-		bc.passedStep("******** Search page is successfully opened********");
-		bc.stepInfo(TestCaseId);
-		softAssertion.assertEquals(Expected_count,ss.basicMetaDataSearch(metaDataName, IS_or_Range, first_input, second_input));
-		softAssertion.assertAll();
+		softAssertion.assertEquals(Input.pureHitSeachString1, ss.basicContentSearch(Input.searchString1));
 
+		// below locators are one time use in second search
+		ss.getCopyTo().Click();
+		ss.getCopyToNewSearch().Click();
+		ss.getSecondSearchBtn().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ss.getSecondPureHit().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+
+		softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()), Input.pureHitSeachString1);
+		lp.logout();
 	}
-	
-	
-	@Test(groups={"regression"},priority=2)
+
+	// @Test(groups={"regression"},priority=2)
 	public void autoSuggest() throws InterruptedException {
-	
-		bc.passedStep("Test Case Id : RPMXCON-46873 Verify that Auto suggest functionality is working fine with CustodianName Metadata in Basic Search Screen");
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-		bc.selectproject();
-		driver.getWebDriver().get(Input.url+ "Search/Searches");
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				ss.getBasicSearch_MetadataBtn().Visible()  ;}}), Input.wait30); 
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ss.getBasicSearch_MetadataBtn().Visible();
+			}
+		}), Input.wait30);
 		ss.getBasicSearch_MetadataBtn().Click();
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				ss.getSelectMetaData().Visible()  ;}}), Input.wait30); 
-		
-	    try {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ss.getSelectMetaData().Visible();
+			}
+		}), Input.wait30);
+
+		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ss.getSelectMetaData().selectFromDropdown().selectByVisibleText("CustodianName");
-		
-			
 
-		ss.getMetaDataSearchText1().SendKeys("P Allen"+Keys.DOWN+Keys.ENTER);
-		bc.passedStep("********Search Text is selected from auto suggest successfully********");
+		ss.getMetaDataSearchText1().SendKeys("P Allen");
+		Thread.sleep(2000);
+		ss.getMetaDataSearchText1().SendKeys("" + Keys.DOWN + Keys.ENTER);
+
 		ss.getMetaDataInserQuery().Click();
-		  //Click on Search button
+		// Click on Search button
 		ss.getSearchButton().Click();
-  		try {
-				
-				ss.getTallyContinue().waitAndClick(4000);
-			} catch (Exception e) {
-				
+		try {
+
+			ss.getTallyContinue().waitAndClick(4000);
+		} catch (Exception e) {
+
+		}
+
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ss.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
 			}
-		
-		//verify counts for all the tiles
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		ss.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
+		}), Input.wait90);
 		Assert.assertEquals(ss.getPureHitsCount().getText(), "1135");
-		bc.passedStep("********Actual pureHit count is same as expected********");
+		lp.logout();
 
 	}
-	
-	 @Test(groups={"regression"},priority=3)
-	   public void existingBulkTag() throws InterruptedException {
-		   String Tag = "ATag"+Utility.dynamicNameAppender(); 
-			bc.stepInfo("Test Case Id : RPMXCON-57205 Verify that Bulk Tag functionality is working correctly through Basic Search Screen");
-		   	//create tag 
-		   	TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
-			page.CreateTag(Tag,"Default Security Group");
-			bc.passedStep("********Tag created successfuly********");
-		   	System.out.println("Tag creation is Successful : "+Tag);
-		   	bc.selectproject();
-		   	//Search and add docs to created tag 
-		   
-	    	ss.basicContentSearch(Input.searchString1);
-	    	bc.passedStep("********Basic Content Search is successfuly********");
-	    	Thread.sleep(2000);
-	    	//add docs to folder 
-			ss.bulkTagExisting(Tag);
-			bc.passedStep("********Documents are added to the Existing Tag name successfuly********");
-			
-			//check folder and count in advance search
-			
-			 bc.selectproject();
-			 ss.switchToWorkproduct();
-			 bc.passedStep("********Switched to WorkProduct successfuly********");
-			 ss.selectTagInASwp(Tag);
-			 bc.passedStep("********Selected the Existing Tag name********");
-			 softAssertion.assertEquals(Input.pureHitSeachString1,ss.serarchWP());
-			 bc.passedStep("********pureHit Count is same as Expected count********");
 
-			 
-		}
+	// @Test(groups={"regression"},priority=3)
+	public void emailInclusive() {
 
-	    @Test(groups={"smoke","regression"},priority=4)
-		public void starSearch() {
-	    	
-			bc.stepInfo("Test Case Id : RPMXCON-57275 Verify that belly band message appears when user tries to search proximity which contains wildcard * in Basic Search Query Screen.");
-		  	bc.selectproject();
-			ss = new SessionSearch(driver);
-		  	Assert.assertEquals(ss.basicContentSearch("*"), 1202);
-		  	bc.passedStep("********pureHit Count is same as Expected count********");
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
 
-		  	
-		}
-		@Test(groups={"regression"},priority=5)
-	    public void bulkUnTag() throws InterruptedException {
-			bc.stepInfo("Test Case Id : RPMXCON-57178 Verify that UnTag works properly using Bulk Tag Action in Basic Search Screen");
-		  
-	        bc.selectproject();
-		   //perform search
-		   ss = new SessionSearch(driver);
-		   ss.basicContentSearch(Input.searchString1);
-		   bc.passedStep("********Basic Content Search is successfuly********");
-		   //Bulk Tag
-		   ss.bulkTag(tagName);
-		   bc.passedStep("********Bulk Tag the documents to Tag Name is successfull********");
-		   //Untag
-		   ss.bulkUnTag(tagName);
-		   bc.passedStep("********Bulk UnTag is successfull********");
-	       final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
-	       driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	       		tf.getTag_ToggleDocCount().Visible()  ;}}),Input.wait60); 
-	       
-	       //Validate tag count in tags tab
-	       tf.getTag_ToggleDocCount().waitAndClick(20);
-	       tf.getTagandCount(tagName, 0).waitAndGet(30);
-	       System.out.println(tf.getTagandCount(tagName, 0).getText());
+		softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null) >= 1);// 1135);
+		lp.logout();
 
-	       Assert.assertTrue(tf.getTagandCount(tagName, 0).Displayed());
-	       bc.passedStep("********TagCount is displayed under tags and folder page as expected********");
-	       bc.passedStep(tagName+" could be seen under tags and folder page");
-	       
-	   }
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null) >= 1);// 1135);
 
-		@Test(groups={"regression"},priority=6)
-		public void bulkUnFolder() throws InterruptedException {
-		
-			bc.stepInfo("Test Case Id : RPMXCON-57179 Verify that UnFolder works properly using Bulk Folder Action in Basic Search Screen");
-			bc.selectproject();
-			//Perform search
-			ss.basicContentSearch(Input.searchString1);
-			bc.passedStep("********Basic Content Search is successfuly********");
-			
-			//Bulk folder
-			ss.bulkFolder(folderName);
-			bc.passedStep("********Bulk Folder the documents to Folder Name is successfull********");
-			
-			//Unfolder
-			ss.bulkUnFolder(folderName);
-			bc.passedStep("********Bulk UnFolder is successfull********");
-			final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
-		    driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-		    tf.getFoldersTab().Visible()  ;}}),Input.wait60); 
-		  	
-		    //Validate in folders tab
-		    tf.getFoldersTab().waitAndClick(10);
-		    tf.getFolder_ToggleDocCount().waitAndClick(10);
-		    tf.getFolderandCount(folderName, 0).WaitUntilPresent();
-		    
-		    System.out.println(tf.getFolderandCount(folderName, 0).getText());
-		    Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
-		    bc.passedStep("********FolderCount is displayed under tags and folder page as expected********");
-		    bc.passedStep(folderName+" could be seen under tags and folder page");
+		softAssertion.assertAll();
 
-		}
-		
-		@Test(groups={"regression"},priority=7)
-		public void emailInclusive() {
-		
-			bc.stepInfo("Test Case Id : RPMXCON-49738 Validate for Metadata searches for terms with @ including email addresses in Basic Search");
-			bc.selectproject();
-			driver.getWebDriver().get(Input.url+ "Search/Searches");
-			softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null)>=1);//1135);
-			bc.passedStep("********MetaData Search for EmailInclusiveReason is completed succesfully********");
-			lp.logout();
-			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-			bc.passedStep("********logged in succesfully as RMU user********");
-			softAssertion.assertTrue(ss.basicMetaDataSearch("EmailInclusiveReason", null, "*", null)>=1);//1135);
-			bc.passedStep("********MetaData Search for EmailInclusiveReason is completed succesfully********");
-			softAssertion.assertAll();
+		lp.logout();
+	}
 
-		}
-		
-		@Test(groups={"regression"},priority=8)
-		public void copySearchTextToNewSearch(){
-			
-			bc.stepInfo("Test Case Id : RPMXCON-57088 To verify as an user login into the Application, User will be able to copy the text query from search text box in basic search page via Clipboard & same text user will be able to copy in the new search box in basic search");
-			driver.getWebDriver().get(Input.url+ "Search/Searches");
-	    	bc.selectproject();
-	    	softAssertion.assertEquals(Input.pureHitSeachString1,ss.basicContentSearch(Input.searchString1));
-	    	bc.passedStep("********basic content Search is succesful********");
-	    	//below locators are one time use in second search
-	    	ss.getCopyTo().Click();
-	    	bc.passedStep("********Copied the query********");
-	    	ss.getCopyToNewSearch().Click();
-	    	ss.getSecondSearchBtn().Click();
-	    	bc.passedStep("********Copied query search is succesful********");
-	    	driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-	    			ss.getSecondPureHit().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
-	    	    	
-	    	softAssertion.assertEquals(Integer.parseInt(ss.getSecondPureHit().getText()),Input.pureHitSeachString1);
-	    	bc.passedStep("********Actual pureHit count is same as expected********");
-
-		}
-
-	
-	
-	@Test(groups={"regression"},priority=9)
+	// @Test(groups={"regression"},priority=4)
 	public void conceptuallySimilar() throws InterruptedException {
-		bc.passedStep("********logged in succesfully as RMU user********");
-		bc.stepInfo("Test Case Id : RPMXCON-57032 To verify as an user, Custodian Name metadata field in search is working");
-		//Impersonate as Reviewer
-		
-		bc.impersonateRMUtoReviewer();	
-		bc.passedStep("********Impersonated succesfully as Reviewer user********");
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// Impersonate as Reviewer
+		bc = new BaseClass(driver);
+		bc.impersonateRMUtoReviewer();
 		ss.advancedMetaDataSearch("CustodianName", null, Input.metaDataCN, null);
-		bc.passedStep("********Custodian MetaDataSearch is completed successfully********");
 		ss.getConceptuallyPlayButton().waitAndClick(10);
-		
-		driver.WaitUntil((new Callable<Boolean>() {public Boolean call(){return 
-				ss.getCSHitsCount().getText().matches("-?\\d+(\\.\\d+)?")  ;}}), Input.wait90);
-		softAssertion.assertTrue(Integer.parseInt(ss.getCSHitsCount().getText())>= 1);
-		bc.passedStep("********Actual pureHitCount is same as Expected********");
-   softAssertion.assertAll();
-	}
-	
 
-	
-  
-	 @BeforeMethod
-	 public void beforeTestMethod(Method testMethod){
-		System.out.println("------------------------------------------");
-	    System.out.println("Executing method : " + testMethod.getName());       
-	 }
-     @AfterMethod(alwaysRun = true)
-	 public void takeScreenShot(ITestResult result) {
- 	 if(ITestResult.FAILURE==result.getStatus()){
- 		 
- 		Utility bc = new Utility(driver);
- 		bc.screenShot(result);
- 		try{ //if any tc failed and dint logout!
- 		lp.logout();
- 		}catch (Exception e) {
-			// TODO: handle exception
-		}
- 	}
- 	 System.out.println("Executed :" + result.getMethod().getMethodName());
- 	
-     }
-     
-   
-	@AfterClass(alwaysRun = true)
-	public void close(){
-		try{ 
-			lp.logout();
-		     //lp.quitBrowser();	
-			}finally {
-				lp.quitBrowser();
-			}	
-		LoginPage.clearBrowserCache();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return ss.getCSHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		Assert.assertTrue(Integer.parseInt(ss.getCSHitsCount().getText()) >= 1);
+
+		lp.logout();
 	}
-	@DataProvider(name = "metaDataSearch")
-	public Object[][] metaData() {
-		return new Object[][] { 
-			{"Test Case Id : RPMXCON-57222 Verify that Basic Search works properly - for CreateDate time metadata - Provide only dates (not times) with Is operator",1,"CreateDate", "IS", "1993-08-11", null}, 
-			{"Test Case Id : RPMXCON-57223 Verify that Basic Search works properly - for CreateDate  time metadata - Provide only dates (not times) with Range operator",340,"CreateDate", "RANGE", "1986-01-01", "2018-01-01"},
-			{"Test Case Id : RPMXCON-57219 Verify that Basic Search works properly for CreateDate date/time field  with Range operator",170,"CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"},
-			{"Test Case Id : RPMXCON-49149 Verify that Basic Search works properly for EmailSentDate date/time field with Is operator and NOT having time components",0,"EmailSentDate", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-49150 Verify that Basic Search works properly for EmailSentDate date/time field with Range operator and NOT having time components",0,"EmailSentDate", "RANGE","1990-05-05", "2000-05-05"},
-			{"Test Case Id : RPMXCON-57135 Verify that application displays correct options for AppointmentStartDateOnly field on Basic Search screen.",0,"AppointmentStartDate", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-49143 Verify that Basic Search works properly for AppointmentStartDate  date/time field  with Range operator",0,"AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"},
-//			{null,"AppointmentEndDateOnly", "IS", "1990-05-05", null},
-//			{null,"AppointmentEndDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{"Test Case Id : RPMXCON-57125 Verify that application displays correct options for DocDateDateOnly field on Basic Search screen.",0,"DocDateDateOnly", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-57125 Verify that application displays correct options for DocDateDateOnly field on Basic Search screen.",0,"DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DateAccessedDateOnly", "IS", "1990-05-05", null},
-//			{"DateAccessedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{"Test Case Id : RPMXCON-57127 Verify that application displays correct options for DateCreatedDateOnly field on Basic Search screen.",0,"DateCreatedDateOnly", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-57127 Verify that application displays correct options for DateCreatedDateOnly field on Basic Search screen.",26,"DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DateEditedDateOnly", "IS", "1990-05-05", null},
-//			{"DateEditedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DateModifiedDateOnly", "IS", "1990-05-05", null},
-//			{"DateModifiedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DatePrintedDateOnly", "IS", "1990-05-05", null},
-//			{"DatePrintedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DateReceivedDateOnly", "IS", "1990-05-05", null},
-//			{"DateReceivedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"DateSavedDateOnly", "IS", "1990-05-05", null},
-//			{"DateSavedDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{"Test Case Id : RPMXCON-57003 Verify that Basic Search works properly for MasterDateDateOnly field",0,"MasterDateDateOnly", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-57003 Verify that Basic Search works properly for MasterDateDateOnly field",208,"MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-			{"Test Case Id : RPMXCON-57134 Verify that application displays correct options for EmailDateSentDateOnly field on Basic Search screen.",0,"EmailDateSentDateOnly", "IS", "1990-05-05", null},
-			{"Test Case Id : RPMXCON-57134 Verify that application displays correct options for EmailDateSentDateOnly field on Basic Search screen.",0,"EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"},
-//			{"AppointmentStartDateOnly", "IS", "1990-05-05", null},
-//			{"AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"},	
+
+	// @Test(groups={"regression"},priority=5)
+	public void exsitingBulkFolder() throws InterruptedException {
+		String Folder = "AFolder" + Utility.dynamicNameAppender();
+		// Login as PA
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create folder
+		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		page.CreateFolder(Folder, "Default Security Group");
+		System.out.println("Folder creation is Successful : " + Folder);
+
+		// Search and add docs to created folder
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// add docs to folder
+		sessionSearch.bulkFolderExisting(Folder);
+
+		// check folder and count in advance search
+
+		bc.selectproject();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectFolderInASwp(Folder);
+		Assert.assertEquals(Input.pureHitSeachString1, sessionSearch.serarchWP());
+		lp.logout();
+
+	}
+
+	// @Test(groups={"regression"},priority=6)
+	public void existingBulkTag() throws InterruptedException {
+		String Tag = "ATag" + Utility.dynamicNameAppender();
+		// Login as PA
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// create tag
+		TagsAndFoldersPage page = new TagsAndFoldersPage(driver);
+		page.CreateTag(Tag, "Default Security Group");
+		System.out.println("Tag creation is Successful : " + Tag);
+
+		// Search and add docs to created tag
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// add docs to folder
+		sessionSearch.bulkTagExisting(Tag);
+
+		// check folder and count in advance search
+
+		bc.selectproject();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectTagInASwp(Tag);
+		Assert.assertEquals(Input.pureHitSeachString1, sessionSearch.serarchWP());
+		lp.logout();
+	}
+
+	// @Test(groups={"smoke","regression"},priority=7)
+	public void starSearch() {
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		sessionSearch = new SessionSearch(driver);
+
+		Assert.assertEquals(sessionSearch.basicContentSearch("*"), 1202);
+	}
+
+	// @Test(groups={"regression"},priority=8)
+	public void bulkUnTag() throws InterruptedException {
+
+		String tagName = "tagName" + Utility.dynamicNameAppender();
+		// Login
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// perform search
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+		// Bulk Tag
+		sessionSearch.bulkTag(tagName);
+		// Untag
+		sessionSearch.bulkUnTag(tagName);
+		final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return tf.getTag_ToggleDocCount().Visible();
+			}
+		}), Input.wait60);
+
+		// Validate tag count in tags tab
+		tf.getTag_ToggleDocCount().waitAndClick(20);
+		tf.getTagandCount(tagName, 0).waitAndGet(30);
+		System.out.println(tf.getTagandCount(tagName, 0).getText());
+
+		Assert.assertTrue(tf.getTagandCount(tagName, 0).Displayed());
+		System.out.println(tagName + " could be seen under tags and folder page");
+
+		lp.logout();
+	}
+
+	// @Test(groups={"regression"},priority=9)
+	public void bulkUnFolder() throws InterruptedException {
+
+		String folderName = "folderName1" + Utility.dynamicNameAppender();
+		// Login
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Perform search
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString1);
+
+		// Bulk folder
+		sessionSearch.bulkFolder(folderName);
+
+		// Unfolder
+		sessionSearch.bulkUnFolder(folderName);
+		final TagsAndFoldersPage tf = new TagsAndFoldersPage(driver);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return tf.getFoldersTab().Visible();
+			}
+		}), Input.wait60);
+
+		// Validate in folders tab
+		tf.getFoldersTab().waitAndClick(10);
+		tf.getFolder_ToggleDocCount().waitAndClick(10);
+		tf.getFolderandCount(folderName, 0).WaitUntilPresent();
+
+		System.out.println(tf.getFolderandCount(folderName, 0).getText());
+		Assert.assertTrue(tf.getFolderandCount(folderName, 0).Displayed());
+
+		System.out.println(folderName + " could be seen under tags and folder page");
+		lp.logout();
+	}
+
+	// @Test(groups={"regression"},priority=10)
+	public void metaDataSearchsBS() {
+		SoftAssert softAssertion = new SoftAssert();
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		bc.selectproject();
+		softAssertion.assertEquals(1, ss.basicMetaDataSearch("CreateDate", "IS", "1993-08-11", null));
+
+		bc.selectproject();
+		softAssertion.assertEquals(340, ss.basicMetaDataSearch("CreateDate", "RANGE", "1986-01-01", "2018-01-01"));
+
+		// with time in Range
+		bc.selectproject();
+		softAssertion.assertEquals(170,
+				ss.basicMetaDataSearch("CreateDate", "RANGE", "2010-06-17 05:53:18", "2010-10-18 05:53:18"));
+
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("EmailSentDate", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("EmailSentDate", "RANGE", "1990-05-05", "2000-05-05"));
+
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("AppointmentStartDate", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion
+				.assertTrue(0 <= ss.basicMetaDataSearch("AppointmentStartDate", "RANGE", "1990-05-05", "2000-05-05"));
+		// check IS and Range options
+		/*
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("AppointmentEndDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 */
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("DocDateDateOnly", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("DocDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+
+		/*
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateAccessedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 */
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("DateCreatedDateOnly", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion
+				.assertTrue(0 <= ss.basicMetaDataSearch("DateCreatedDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		/*
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateEditedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateModifiedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DatePrintedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly",
+		 * "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateReceivedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly", "IS",
+		 * "1990-05-05", null));
+		 * 
+		 * bc.selectproject();
+		 * softAssertion.assertTrue(0<=ss.basicMetaDataSearch("DateSavedDateOnly",
+		 * "RANGE", "1990-05-05", "2000-05-05"));
+		 */
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("MasterDateDateOnly", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion
+				.assertTrue(0 <= ss.basicMetaDataSearch("MasterDateDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+
+		bc.selectproject();
+		softAssertion.assertTrue(0 <= ss.basicMetaDataSearch("EmailDateSentDateOnly", "IS", "1990-05-05", null));
+
+		bc.selectproject();
+		softAssertion
+				.assertTrue(0 <= ss.basicMetaDataSearch("EmailDateSentDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+
+		// field mapping is not done for blow meta data search
+		/*
+		 * bc.selectproject(); softAssertion.assertTrue(0<=ss.basicMetaDataSearch(
+		 * "AppointmentStartDateOnly", "IS", "1990-05-05", null));
+		 * 
+		 * bc.selectproject(); softAssertion.assertTrue(0<=ss.basicMetaDataSearch(
+		 * "AppointmentStartDateOnly", "RANGE", "1990-05-05", "2000-05-05"));
+		 */
+		softAssertion.assertAll();
+		lp.logout();
+	}
+
+	@DataProvider(name = "reservedWords")
+	public Object[][] dataProviderMethod() {
+		return new Object[][] { { "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\")", "RPMXCON-57470" },
+				{ "\"Hello U&C\"~5 OR \"U&C\"", "RPMXCON-57471" },
+				{ "( \"economy finance\"~5  ) OR (\"product@consilio.com\")", "RPMXCON-57472" },
+				{ "(( \"Hello U{C\"~5 OR \"U{C\" OR ( \"##U}C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57452" },
+				{ "(( \"Hello U|C\"~5 OR \"U|C\" OR ( \"##U|C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57453" },
+				{ "(( \"Hello U}C\"~5 OR \"U}C\" OR ( \"##U}C[0-9]{2}\" OR EmailAllDomains: ( consilio.com) ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57454" },
+				{ "\"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  )",
+						"RPMXCON-57469" },
+				{ "( \"Hello U&C\"~5 OR \"U&C\" OR ( \"##U&C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) )",
+						"RPMXCON-57468" },
+				{ "(( \"Hello U«C\"~5 OR \"U«C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57457" },
+				{ "(( \"Hello  U?C \"~5 OR \"U?C \" OR ( \"##U?C [0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57460" },
+				{ "(( \"Hello U?C\"~5 OR \"UU?C\" OR ( \"##UU?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57459" },
+				{ "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57458" },
+				{ "(( \"Hello U C\"~5 OR \"U C\" OR ( \"##U C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57461" },
+				{ "(( \"Hello U%C\"~5 OR \"U%C\" OR ( \"##U%C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57432" },
+				{ "(( \"Hello U$C\"~5 OR \"U$C\" OR ( \"##U$C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57431" },
+				{ "(( \"Hello U^C\"~5 OR \"U^C\" OR ( \"##U^C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57451" },
+				{ "(( \"Hello U\\C\"~5 OR \"U\\C\" OR ( \"##U\\C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57449" },
+				{ "(( \"Hello U?C\"~5 OR \"U?C\" OR ( \"##U?C[0-9]{2}\" OR  EmailAllDomains: ( consilio.com)  ) ) OR \"economy finance\"~5 ) AND Agi*",
+						"RPMXCON-57447" },
 
 		};
 	}
-	
+
+	/**
+	 * @author Jeevitha
+	 * 
+	 *         Description - verifies the Query .(RPMXCON-57470 ,RPMXCON-57471
+	 *         ,RPMXCON-57472,RPMXCON-57452,
+	 *         RPMXCON-57453,RPMXCON-57454,RPMXCON-57469,RPMXCON-57468,RPMXCON-57457
+	 *         RPMXCON-57460,RPMXCON-57459,RPMXCON-57458,RPMXCON-57461 ).
+	 *         RPMXCON-57432,RPMXCON-57431
+	 *         [#3]RPMXCON-57451,RPMXCON-57449,RPMXCON-57447
+	 * 
+	 */
+	@Test(dataProvider = "reservedWords", groups = { "regression" }, priority = 11)
+	public void verifyBasicSearch(String data, String TC_ID) throws ParseException, InterruptedException, IOException {
+		// login as PA
+
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo(TC_ID + "  basic  Search");
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// Verify Expanded Query
+		sessionSearchPage.wrongQueryAlertBasicSaerch(data, 11, "non fielded", null);
+		sessionSearchPage.getYesQueryAlert().waitAndClick(10);
+
+		// verify pure hit
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return sessionSearchPage.getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait120);
+		int pureHit = Integer.parseInt(sessionSearchPage.getPureHitsCount().getText());
+		System.out.println("purehit : " + pureHit);
+
+		System.out.println(" successfully Proximity Warning is diplayed for input " + data);
+		bc.stepInfo(" successfully Proximity Warning is diplayed for input " + data);
+		lp.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha Description:Verify the basic search for Near Duplicates
+	 *         Near(RPMXCON-57001)RPMXCON-57002
+	 * @throws ParseException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(groups = { "regression" }, priority = 12)
+	public void verifyCountOfSearch() throws ParseException, InterruptedException, IOException {
+		// login as PA
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-57001,RPMXCON-57002  BasicSearch ");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// Verify Duplicate count and Family members count
+		sessionSearchPage.basicContentSearch(Input.searchString1);
+
+		System.out.println("Near duplicate count : " + sessionSearchPage.verifyNearDupeCount());
+		bc.stepInfo("Near duplicate count : " + sessionSearchPage.verifyNearDupeCount());
+
+		System.out.println("Family Members count : " + sessionSearchPage.verifyFamilyount());
+		bc.stepInfo("Family Members count : " + sessionSearchPage.verifyFamilyount());
+
+		bc.getPopupYesBtn();
+		System.out.println("Succesfully Searched For Input " + Input.searchString2);
+		lp.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha Description:Basic search pin search item(RPMXCON-57030)
+	 *         Description: Verify Family Member Count (RPMXCON-47255) Decription
+	 *         :verify Conceptually similar Count(RPMXCON-47256)
+	 * @throws InterruptedException
+	 */
+
+	@Test(groups = { "regression" }, priority = 13)
+	public void verifyPinSearch() throws InterruptedException {
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		bc.stepInfo("RPMXCON-57030,47255,47256 Basic Search");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		sessionSearchPage.basicMetaDataSearch("CustodianName", null, "Andrew", null);
+		sessionSearchPage.saveSearch(searchName);
+		sessionSearchPage.getConceptuallyPlayButton().waitAndClick(10);
+		sessionSearchPage.getPinBtn(searchName).waitAndClick(10);
+
+		// Get title attribute value
+		String tooltipText = sessionSearchPage.getUnpinToolTipMsg().GetAttribute("title");
+		System.out.println("Retrieved tooltip text as :" + tooltipText);
+		bc.stepInfo("Retrieved tooltip text as :" + tooltipText);
+
+		// Verification if tooltip text is matching expected value
+		if (tooltipText.equalsIgnoreCase("Un Pin this Search")) {
+			System.out.println("Pass : Tooltip matching expected value");
+			bc.stepInfo("Pass : Tooltip matching expected value");
+
+		} else {
+			System.out.println("Fail : Tooltip NOT matching expected value");
+			bc.stepInfo("Fail : Tooltip NOT matching expected value");
+
+		}
+		System.out.println("Family Members count : " + sessionSearchPage.verifyFamilyount());
+		bc.stepInfo("Family Members count : " + sessionSearchPage.verifyFamilyount());
+
+		System.out.println("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+		bc.stepInfo("Conceptually similar count : " + sessionSearchPage.verifyConceptuallySimilarCount());
+
+		lp.logout();
+	}
+
+	/**
+	 * @author jeevitha Description : Verify that in "DocFileType" metadata session
+	 *         search, when User tries to do manually keyed terms then Auto-suggest
+	 *         value is NOT selected (Though presence of a space in Multiple
+	 *         words)(RPMXCON-46989)(RPMXCON-46990)
+	 * @throws InterruptedException
+	 */
+	@DataProvider(name = "reserveWords")
+	public Object[][] dataMethod() {
+		return new Object[][] { { "DocFileType", "oth" }, { "DocFileName", "tes" } };
+	}
+
+	@Test(dataProvider = "reserveWords", groups = { "regression" }, priority = 13)
+	public void verifyAutoSuggest(String data1, String data2) throws InterruptedException {
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		bc.stepInfo("RPMXCON-46989,RPMXCON-46990 Basic Search");
+
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		String autoSuggestedValue = sessionSearchPage.basicMetaDataAutosuggest(data1, data2, 1);
+		System.out.println(autoSuggestedValue
+				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
+		bc.stepInfo(autoSuggestedValue
+				+ " auto-suggest value is selected (presence of a space in Multiple words) then multiple values that are being selected is wrapped in double quotes.  ");
+
+		lp.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * Description : to verify as an user login into the Application, user will
+	 *             be able to search based on comments text on Content &
+	 *              Metadata in basic search(RPMXCON-47777)
+	 * @throws InterruptedException
+	 */
+	@Test(groups = { "regression" }, priority = 14)
+	public void verifyComments() throws InterruptedException {
+        String data=Input.searchString5;
+		// login as Pa
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		
+		SessionSearch sessionSearchPage = new SessionSearch(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		bc.stepInfo("RPMXCON-47777 Basic Search");
+		
+		sessionSearchPage.basicContentSearch(Input.searchString1);
+		sessionSearchPage.ViewInDocView();
+		
+		DocViewPage docview=new DocViewPage(driver);
+		
+		//Apply comments to document
+		bc.waitForElement(docview.getDocument_CommentsTextBox());
+		docview.getDocument_CommentsTextBox().SendKeys(data);
+		bc.waitForElement(docview.getCodingFormSaveBtn());
+		docview.getCodingFormSaveBtn().waitAndClick(10);
+		
+		bc.selectproject();
+		//Search COmments as RMU
+		int PureHit=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit);
+		bc.stepInfo("PureHit COunt : "+PureHit);
+
+		lp.logout();
+		//Search COmments as pa
+		lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+		int PureHit1=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit1);
+		bc.stepInfo("PureHit COunt : "+PureHit1);
+
+		lp.logout();
+		//Search COmments as REV
+		lp.loginToSightLine(Input.rev1userName, Input.rev1password);
+		int PureHit2=sessionSearchPage.getCommentsOrRemarksCount(Input.documentComments, data);
+		System.out.println("PureHit COunt : "+PureHit2);
+		bc.stepInfo("PureHit COunt : "+PureHit2);
+
+		lp.logout();
+		
+		
+	}
+
+	@BeforeMethod
+	public void beforeTestMethod(Method testMethod) {
+		System.out.println("------------------------------------------");
+		System.out.println("Executing method : " + testMethod.getName());
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void takeScreenShot(ITestResult result) {
+		if (ITestResult.FAILURE == result.getStatus()) {
+
+			Utility bc = new Utility(driver);
+			bc.screenShot(result);
+			try { // if any tc failed and dint logout!
+				lp.logout();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		System.out.println("Executed :" + result.getMethod().getMethodName());
+
+	}
+
+	@AfterClass(alwaysRun = true)
+	public void close() {
+		try {
+			lp.logout();
+			// lp.quitBrowser();
+		} finally {
+			lp.quitBrowser();
+		}
+		LoginPage.clearBrowserCache();
+	}
+
 }
