@@ -8261,6 +8261,32 @@ public class SessionSearch {
 		System.out.println("Bulk folder is done, folder is : " + folderName);
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
 	}
+	public void advancedNewContentSearch1(String SearchString) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewSearchButton().Visible() && getNewSearchButton().Enabled();
+			}
+		}), Input.wait30);
+		driver.scrollPageToTop();
+		getNewSearchButton().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDataBtn().Visible() && getContentAndMetaDataBtn().Enabled();
+			}
+		}), Input.wait30);
+		getContentAndMetaDataBtn().waitAndClick(5);
+		// Enter seatch string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedContentSearchInputAudio().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedContentSearchInputAudio().SendKeys(SearchString);
+		// Click on Search button
+		getQuerySearchBtn().Click();
+		
+		
+	}
 
 
 
