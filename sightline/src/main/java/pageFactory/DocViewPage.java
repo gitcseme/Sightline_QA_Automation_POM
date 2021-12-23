@@ -2273,6 +2273,11 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[2]//td[2]");
 	}
 
+	//Added by Vijaya.Rani
+	public Element get1stDocinMiniDoc_ChildDocs() {
+		return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]/tbody/tr[1]/td[2]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -16144,7 +16149,7 @@ public class DocViewPage {
 		}
 
 		// delete stamp Color
-		// reusableDocView.deleteStampColour(lastIcons);
+	    reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
 
 	}
@@ -16279,4 +16284,105 @@ public class DocViewPage {
 		}
 	}
 
+	/**
+	 * @Author Vijaya.Rani Created on 22/12/2021
+	 * @Description To perform Click Gear Icon Check Child Window Symbol
+	 * 
+	 */
+	public void performGearIconChildWindowSymbol() {
+
+		driver.waitForPageToBeReady();
+		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep(" Analytical panel Child window displayed for parent window");
+		
+
+		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Coding form Child window displayed for parent window");
+		
+
+		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Mini Doc List Child window displayed for parent window");
+		
+
+		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("MetaData Child window displayed for parent window");
+		
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify tick mark in minidoclist child
+	 *              window 
+	 */
+
+	public void verifyCheckMarkIconFromMiniDocListChildWindow() {
+		driver.waitForPageToBeReady();
+	     driver.scrollPageToTop();
+	     try {
+
+				base.waitForElement(getverifyCodeSameAsLast());
+				if (getverifyCodeSameAsLast().Displayed()) {
+					softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+					base.passedStep("CheckMark is displayed successfully");
+				} else {
+					base.failedStep("CheckMark is not displayed");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Check mark is not verified");
+			}
+	     
+	}
+	
+	/**
+	 * @author Vijaya.Rani 23/12/21 NA Modified date: NA Modified by:NA
+	 * @description perform copmlete Doc Not hide Docs miniDocList
+	 */
+	public void verifyPrincipalDocNotHide() {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 1; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 2; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 4; i <= 4; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+	}
 }

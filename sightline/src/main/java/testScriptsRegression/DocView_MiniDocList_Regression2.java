@@ -4,6 +4,7 @@ import java.awt.AWTException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.testng.Assert;
@@ -326,6 +327,226 @@ public class DocView_MiniDocList_Regression2 {
 		
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 22/12/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify that when mini doclist child window reloads by adding
+	 * additional docs then for completed documents checkmark with light blue
+	 * highlighting should be displayed.'RPMXCON-51643' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyMiniDocListChkCheckMarkAndBlueHighlighting() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51643");
+		baseClass.stepInfo(
+				"Verify that when mini doclist child window reloads by adding additional docs then for completed documents checkmark with light blue highlighting should be displayed");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		docViewPage.popOutMiniDocList();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docViewPage.get1stDocinMiniDoc_ChildDocs());
+		docViewPage.get1stDocinMiniDoc_ChildDocs().waitAndClick(10);
+
+		
+		driver.switchTo().window(parentWindowID);
+
+		docViewPage.editCodingFormComplete();
+
+		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
+
+		
+		Set<String> allWindowsId1 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId1) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.scrollingDocumentInMiniDocList();
+		driver.waitForPageToBeReady();
+		docViewPage.verifyCheckMarkIconFromMiniDocListChildWindow();
+
+	
+		driver.switchTo().window(parentWindowID);
+
+		docViewPage.editCodingFormComplete();
+
+		String parentWindowID2 = driver.getWebDriver().getWindowHandle();
+
+	
+		Set<String> allWindowsId2 = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId1) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		driver.waitForPageToBeReady();
+		docViewPage.verifyCheckMarkIconFromMiniDocListChildWindow();
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		// Click Gear Icon Check Child windoe Symbol
+		docViewPage.performGearIconChildWindowSymbol();
+		loginPage.logout();
+
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 22/12/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify sorting from mini doc list when redirected to doc view
+	 * in context of an assignment.'RPMXCON-51430' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifySortFromMiniDocListRedirectedToDocViewAnAssignment() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51430");
+		baseClass.stepInfo("Verify sorting from mini doc list when redirected to doc view in context of an assignment");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+		String assignmentName = "AR2Assignment" + Utility.dynamicNameAppender();
+
+		assignmentsPage.FinalizeAssignmentAfterBulkAssign();
+		assignmentsPage.createAssignment_fromAssignUnassignPopup(assignmentName, "Default Project Coding Form");
+		driver.scrollingToElementofAPage(assignmentsPage.getAssgn_DocSequence_SortbyMetadata());
+		assignmentsPage.Assgnwithdocumentsequence("CustodianName", "Descending");
+		baseClass.passedStep("Assignment is created with sort by metadata as descending order--" + assignmentName);
+		assignmentsPage.editAssignmentUsingPaginationConcept(assignmentName);
+		driver.scrollingToElementofAPage(assignmentsPage.getAssignment_ManageReviewersTab());
+		assignmentsPage.addReviewerAndDistributeDocs();
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		try {
+			assignmentsPage.verifyDescendingMetaDataSorting_DocList(assignmentName, "CustodianName");
+			softAssertion.assertAll();
+			baseClass.passedStep(
+					"sucessfully verified that whether RMU can create Assignments from assign/unassign documents"
+							+ "with descending meta data sorting");
+		} catch (Exception e) {
+			e.printStackTrace();
+			baseClass.failedStep(
+					"Exception occured,while verifying  whether RMU can create Assignments from assign/unassign documents"
+							+ "with descending meta data sorting");
+
+		}
+
+		loginPage.logout();
+	}
+
+	/**
+	 * Author : Vijaya.Rani date: 22/12/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify that Principal document should not hide under the header
+	 * from mini doc list.'RPMXCON-51640' Sprint : 8
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	public void verifyPrincipalDocsNotHideUnderMiniDocList() throws InterruptedException, AWTException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51640");
+		baseClass.stepInfo("Verify that Principal document should not hide under the header from mini doc list");
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// Login as a Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		reusableDocViewPage = new ReusableDocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		// create Assignment and disturbute docs
+		baseClass.stepInfo("Step 2: Create assignment and distribute the docs");
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// Select Docs and complete
+		docViewPage.verifyPrincipalDocNotHide();
+		
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		 
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+		baseClass.waitForElement(docViewPage.getVerifyPrincipalDocument());
+			if (docViewPage.getVerifyPrincipalDocument().Displayed()) {
+				softAssertion.assertTrue(docViewPage.getVerifyPrincipalDocument().getWebElement().isDisplayed());
+				baseClass.passedStep(" Mini doc list Completed  Principal document is displayed under the header successfully");
+			} else {
+				baseClass.failedStep("Mini doc list Completed  Principal document is not displayed under the header successfully");
+				
+			}
+	}
+		
 	
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {
