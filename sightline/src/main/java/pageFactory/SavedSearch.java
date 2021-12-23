@@ -51,7 +51,7 @@ public class SavedSearch {
 	SoftAssert softAssertion;
 	SecurityGroupsPage sg;
 	SearchTermReportPage searhTRpage;
-	DocListPage dcPage; 
+	DocListPage dcPage;  
 	ReportsPage report;
 	TagsAndFoldersPage tagsAndFolderPage;
 	LoginPage login;

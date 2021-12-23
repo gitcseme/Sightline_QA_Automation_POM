@@ -42,7 +42,7 @@ public class SessionSearch {
 	DocViewRedactions docViewRedact;
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
- 
+  
 	public Element getEnterSearchString() {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input");
 	}
