@@ -1338,6 +1338,12 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
 
+	// Added by Raghuram
+	public Element getExistingFolderSelectionCheckBox(String folderName) {
+		return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[text()='" + folderName
+				+ "']//i[@class='jstree-icon jstree-checkbox']");
+	}
+
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
 		// this.driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -1444,7 +1450,7 @@ public class SessionSearch {
 	}
 
 	public void saveSearch(String searchName) {
-		if(getSaveSearch_Button().isElementAvailable(7)) {
+		if (getSaveSearch_Button().isElementAvailable(7)) {
 
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
@@ -1462,7 +1468,7 @@ public class SessionSearch {
 			getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		}
 
-		if(getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
@@ -2229,7 +2235,7 @@ public class SessionSearch {
 	public void bulkFolder(String folderName) throws InterruptedException {
 
 		// driver.getWebDriver().get(Input.url+"Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2309,7 +2315,7 @@ public class SessionSearch {
 	public void bulkFolderExisting(final String folderName) throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(10);
 		} else {
 			// System.out.println("Pure hit block already moved to action panel");
@@ -2375,7 +2381,7 @@ public class SessionSearch {
 	public void bulkTagExisting(final String tagName) throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2448,7 +2454,7 @@ public class SessionSearch {
 	// Function to perform bulk tag with given tag name
 	public void bulkTag(String TagName) throws InterruptedException {
 		// driver.getWebDriver().get(Input.url+"Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(10);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2545,7 +2551,7 @@ public class SessionSearch {
 	public void ViewInDocList() throws InterruptedException {
 
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2576,7 +2582,7 @@ public class SessionSearch {
 	public void ViewInDocView() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2602,7 +2608,7 @@ public class SessionSearch {
 
 	public void tallyResults() throws InterruptedException {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2624,7 +2630,7 @@ public class SessionSearch {
 
 	public void bulkAssign() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2649,7 +2655,7 @@ public class SessionSearch {
 	// Bulk release to default security group
 	public void bulkRelease(final String SecGroup) {
 
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -2699,7 +2705,7 @@ public class SessionSearch {
 	public boolean bulkReleaseIngestions(final String SecGroup) {
 		boolean release = false;
 		try {
-			if(getPureHitAddButton().isElementAvailable(2)) {
+			if (getPureHitAddButton().isElementAvailable(2)) {
 				getPureHitAddButton().waitAndClick(5);
 			} else {
 				System.out.println("Pure hit block already moved to action panel");
@@ -2714,7 +2720,7 @@ public class SessionSearch {
 				e1.printStackTrace();
 			}
 
-			if(getBulkReleaseAction().isElementAvailable(10)) {
+			if (getBulkReleaseAction().isElementAvailable(10)) {
 				getBulkReleaseAction().waitAndClick(10);
 			} else {
 				getBulkReleaseActionDL().waitAndClick(10);
@@ -3098,7 +3104,7 @@ public class SessionSearch {
 		UtilityLog.info("Search is done and PureHit is : " + pureHit);
 		return pureHit;
 	}
-	
+
 	// Function to perform bulk tag from any page
 	public void BulkActions_Tag(String TagName) throws InterruptedException {
 
@@ -3187,7 +3193,7 @@ public class SessionSearch {
 
 	public void quickbatch() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -3245,7 +3251,7 @@ public class SessionSearch {
 		getQuerySearchButton().waitAndClick(10);
 
 		// look for warnings, in case of proximity search
-		if(getTallyContinue().isElementAvailable(5)) {
+		if (getTallyContinue().isElementAvailable(5)) {
 			getTallyContinue().waitAndClick(5);
 		} else {
 			System.out.println("NO pop up appears");
@@ -3866,17 +3872,17 @@ public class SessionSearch {
 	 *                   11/16/21 - added catch e1
 	 */
 	public void saveSearchDefaultTab(String searchName) {
-		if(getSaveSearch_Button().isElementAvailable(5)) {
+		if (getSaveSearch_Button().isElementAvailable(5)) {
 			getSaveSearch_Button().waitAndClick(5);
-		} else if(getAdvanceS_SaveSearch_Button().isElementAvailable(5)) {
-				getAdvanceS_SaveSearch_Button().waitAndClick(5);
+		} else if (getAdvanceS_SaveSearch_Button().isElementAvailable(5)) {
+			getAdvanceS_SaveSearch_Button().waitAndClick(5);
 		} else {
-				getBsSecondSaveSearch_Button().waitAndClick(5);
+			getBsSecondSaveSearch_Button().waitAndClick(5);
 		}
 
-		if(getSaveAsNewSearchRadioButton().isElementAvailable(2)) {
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(2)) {
 			getSaveAsNewSearchRadioButton().waitAndClick(5);
-		} else{
+		} else {
 			System.out.println("Radio button already selected");
 			UtilityLog.info("Radio button already selected");
 		}
@@ -3905,7 +3911,7 @@ public class SessionSearch {
 		// Click Save Button
 		saveSearchAction();
 
-		if(getSaveAsNewSearchRadioButton().isElementAvailable(3)) {
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(3)) {
 			getSaveAsNewSearchRadioButton().waitAndClick(5);
 		} else {
 			System.out.println("Radio button already selected");
@@ -4016,9 +4022,9 @@ public class SessionSearch {
 	 */
 	public void viewInDocView_redactions() {
 		driver.waitForPageToBeReady();
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().waitAndClick(5);
-		} else{
+		} else {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
@@ -4026,7 +4032,7 @@ public class SessionSearch {
 		base.waitForElement(getBulkActionButton());
 		getBulkActionButton().waitAndClick(10);
 
-		if(getDocViewAction().isElementAvailable(5)) {
+		if (getDocViewAction().isElementAvailable(5)) {
 			base.waitForElement(getDocViewAction());
 			getDocViewAction().waitAndClick(10);
 		} else {
@@ -4135,7 +4141,7 @@ public class SessionSearch {
 		getBulkActionButton().waitAndClick(10);
 		Thread.sleep(1000);
 
-		if(getDocViewAction().isElementAvailable(6)) {
+		if (getDocViewAction().isElementAvailable(6)) {
 			getDocViewAction().waitAndClick(10);
 		} else {
 			getDocViewActionDL().Click();
@@ -4174,7 +4180,7 @@ public class SessionSearch {
 	 */
 	public void bulkAssignNearDupeDocuments() {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
-		if(getNearDupesAddButton().isElementAvailable(5)) {
+		if (getNearDupesAddButton().isElementAvailable(5)) {
 			getNearDupesAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -4841,7 +4847,7 @@ public class SessionSearch {
 		driver.waitForPageToBeReady();
 		saveSearchAction();
 
-		if(getSaveAsNewSearchRadioButton().isElementAvailable(5)) {
+		if (getSaveAsNewSearchRadioButton().isElementAvailable(5)) {
 			// base.waitForElement(getSaveAsNewSearchRadioButton());
 			getSaveAsNewSearchRadioButton().waitAndClick(5);
 		} else {
@@ -5050,7 +5056,7 @@ public class SessionSearch {
 			}
 		}), Input.wait120);
 
-		if(getConceptPureHitsCount().isElementAvailable(2)) {
+		if (getConceptPureHitsCount().isElementAvailable(2)) {
 			getConceptPureHitsCount().waitAndClick(5);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -5814,7 +5820,7 @@ public class SessionSearch {
 	 */
 	public void ViewNearDupeDocumentsToBulkAssign() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		if(getNearDupePureHitsCount().isElementAvailable(8)) {
+		if (getNearDupePureHitsCount().isElementAvailable(8)) {
 			getNearDupePureHitsCount().waitAndClick(10);
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -5839,7 +5845,7 @@ public class SessionSearch {
 	public void bulkFolderNearDupe(String folderName) throws InterruptedException {
 		// driver.getWebDriver().get(Input.url+"Search/Searches");
 		driver.waitForPageToBeReady();
-		if(getNearDupePureHitsCount().isElementAvailable(5)) {
+		if (getNearDupePureHitsCount().isElementAvailable(5)) {
 			getNearDupePureHitsCount().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -6730,7 +6736,7 @@ public class SessionSearch {
 	 */
 	public int verifyBulkTag(String TagName) throws InterruptedException {
 		driver.waitForPageToBeReady();
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -6796,7 +6802,7 @@ public class SessionSearch {
 	 */
 	public int verifyBulkFolder(String folderName) throws InterruptedException {
 		driver.waitForPageToBeReady();
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
 		} else {
 			System.out.println("Pure hit block already moved to action panel");
@@ -7202,9 +7208,9 @@ public class SessionSearch {
 	 */
 	public void bulkAssignExistingForCopyAssignment(String assignmentName) {
 		driver.waitForPageToBeReady();
-		if(getPureHitAddButton().isElementAvailable(2)) {
+		if (getPureHitAddButton().isElementAvailable(2)) {
 			getPureHitAddButton().Click();
-		} else{
+		} else {
 			System.out.println("Pure hit block already moved to action panel");
 			UtilityLog.info("Pure hit block already moved to action panel");
 		}
@@ -8201,7 +8207,7 @@ public class SessionSearch {
 		} catch (Exception e1) {
 		}
 	}
-	
+
 	public void BulkActions_Folder(String folderName) throws InterruptedException {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -8261,6 +8267,7 @@ public class SessionSearch {
 		System.out.println("Bulk folder is done, folder is : " + folderName);
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
 	}
+
 	public void advancedNewContentSearch1(String SearchString) {
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -8284,8 +8291,7 @@ public class SessionSearch {
 		getAdvancedContentSearchInputAudio().SendKeys(SearchString);
 		// Click on Search button
 		getQuerySearchBtn().Click();
-		
-		
+
 	}
 	/**
 	 * @author Jayanthi.ganesan
@@ -8328,6 +8334,53 @@ public class SessionSearch {
 		return pureHit;
 	}
 
+	/**
+	 * @author Raghuram.A date: 12/21/2021 Modified date:N/A
+	 * @param tagName
+	 * @return
+	 * @throws InterruptedException
+	 */
+	// Function to perform bulk tag with existing tag
+	public String bulkFolderExistingWithReturn(String folderName) throws InterruptedException {
 
+		getExistingFolderSelectionCheckBox(folderName).waitAndClick(6);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContinueCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		base.waitForElement(getContinueButton());
+		getContinueButton().waitAndClick(5);
+
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getFinalCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait60);
+		String finalizeDocCount = getFinalCount().getText();
+		base.waitForElement(getFinalizeButton());
+		getFinalizeButton().waitAndClick(5);
+
+		driver.waitForPageToBeReady();
+		base.VerifySuccessMessage("Records saved successfully");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Bulk Folder is done, Tag is : " + folderName);
+		UtilityLog.info("Bulk Folder is done, Tag is : " + folderName);
+
+		// Since page is freezing after bulk actiononly in automation, lets reload page
+		// to avoid it..
+		driver.getWebDriver().navigate().refresh();
+
+		return finalizeDocCount;
+	}
 
 }

@@ -740,7 +740,6 @@ public class SavedSearch {
 	public Element getbtnDocListContinue() {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
-	
 
 	public String getLastStatus() {
 		return driver.FindElementByXPath("//table//td[6]").getText();
@@ -769,7 +768,6 @@ public class SavedSearch {
 	public Element noQueryReturnedText() {
 		return driver.FindElementByXPath("//table//td[text()='Your query returned no data']");
 	}
-
 
 	List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -6422,7 +6420,6 @@ public class SavedSearch {
 		return mySvedSearchID;
 	}
 
-	
 	/**
 	 * @author Brundha Date : 12/18/21 Description: verifySearchContents Modified on
 	 *         : N/A modified by : N/A
@@ -6503,7 +6500,6 @@ public class SavedSearch {
 
 	}
 
-	
 	/**
 	 * @author :Sowndarya.velraj
 	 * @throws InterruptedException
@@ -6522,4 +6518,26 @@ public class SavedSearch {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param specificHeaderName
+	 * @param searchName
+	 */
+	public void ApplyShowAndHideFilter(String specificHeaderName, String searchName) {
+		verifyHeaderIsPresent(specificHeaderName);
+		getHideSHowBtn().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getFieldoptions(specificHeaderName));
+		getFieldoptions_CC(specificHeaderName).waitAndClick(20);
+		base.waitTillElemetToBeClickable(getHideSHowBtn());
+		base.waitForElement(getbackGroundFilm());
+		getbackGroundFilm().waitAndClick(5);
+		driver.scrollPageToTop();
+		verifyHeaderIsPresent(specificHeaderName);
+
+		base.waitForElement(getNearDupeCount(searchName));
+		String Count = getNearDupeCount(searchName).getText();
+		base.stepInfo(specificHeaderName + "  : " + Count);
+		System.out.println(specificHeaderName + " : " + Count);
+	}
 }

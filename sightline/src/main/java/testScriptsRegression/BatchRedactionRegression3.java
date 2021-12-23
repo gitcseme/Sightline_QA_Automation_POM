@@ -1074,6 +1074,31 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @author Jeevitha
+	 * @Description : Verify that pagination should be displayed for Batch Redaction
+	 *              History for more than 10 history records [RPMXCON-53369]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 18)
+	public void verifyPaginationForBR() throws Exception {
+		String search = "Search" + Utility.dynamicNameAppender();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id: RPMXCON-53369   batch redcation Sprint-8");
+		base.stepInfo(
+				"Verify that pagination should be displayed for Batch Redaction History for more than 10 history records");
+
+		//Verify PAgination BAR And COunt
+		batch.verifyPagination();
+		
+		//Verify Previous AND Next for Each Page
+		batch.verifyPreviousAndNextBtn();
+		
+		login.logout();
+	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
