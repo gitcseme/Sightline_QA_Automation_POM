@@ -1343,6 +1343,16 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[text()='" + folderName
 				+ "']//i[@class='jstree-icon jstree-checkbox']");
 	}
+	
+	public Element getBasicSearch_MetadataBtnSec() {
+		return driver.FindElementByXPath("(//button[@id='metadataHelper'])[last()]");
+	}
+	public Element getCommentsFieldAndRemarksSec() {
+		return driver.FindElementByXPath("(//button[@id='commentsHelper'])[last()]");
+	}
+	public Element getSearchButtonSec() {
+		return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -8382,5 +8392,102 @@ public class SessionSearch {
 
 		return finalizeDocCount;
 	}
+	
+	/**
+	 * @author Iyappan.Kasinathan Description:Function to perform content search for
+	 *         a given search string
+	 */
+
+	public int advancedLastContentSearch(String SearchString) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getNewSearchButton().Visible() && getNewSearchButton().Enabled();
+			}
+		}), Input.wait30);
+		driver.scrollPageToTop();
+		getNewSearchButton().waitAndClick(5);
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getContentAndMetaDataBtn().Visible() && getContentAndMetaDataBtn().Enabled();
+			}
+		}), Input.wait30);
+		getContentAndMetaDataBtn().waitAndClick(5);
+		// Enter seatch string
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getAdvancedContentSearchInputAudio().Visible();
+			}
+		}), Input.wait30);
+		getAdvancedContentSearchInputAudio().SendKeys(SearchString);
+		// Click on Search button
+		getQuerySearchBtn().Click();
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsCount2ndSearch().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		int pureHit = Integer.parseInt(getPureHitsCount2ndSearch().getText());
+		Reporter.log("Serach is done for '" + SearchString + "' and PureHit is : " + pureHit, true);
+		UtilityLog.info("Serach is done for " + SearchString + " and PureHit is : " + pureHit);
+		return pureHit;
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	
+	public int metadataAndCommentSearch(String projectFieldINT,String metadataText,String addComment,String commentText) {
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNewSearch());
+		getNewSearch().waitAndClick(5);
+		base.waitForElement(getBasicSearch_MetadataBtnSec());
+		getBasicSearch_MetadataBtnSec().waitAndClick(10);
+		base.waitForElement(getSelectMetaData());
+		// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+		base.waitForElement(getSelectMetaData());
+		getSelectMetaData().waitAndClick(10);
+		base.waitForElement(SelectFromDropDown(projectFieldINT));
+		SelectFromDropDown(projectFieldINT).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(metadataText + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(10);
+		base.waitForElement(getCommentsFieldAndRemarksSec());
+		getCommentsFieldAndRemarksSec().waitAndClick(10);
+		base.waitForElement(SelectFromDropDown(addComment));
+		SelectFromDropDown(addComment).waitAndClick(10);
+		base.waitForElement(getMetaDataSearchText1());
+		getMetaDataSearchText1().SendKeys(commentText + Keys.TAB);
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().Click();
+		// Click on Search button
+		base.waitForElement(getSearchButtonSec());
+		getSearchButtonSec().Click();
+		// two handle twosearch strings
+		if (getTallyContinue().isElementAvailable(1)) {
+			try {
+				base.waitForElement(getTallyContinue());
+				getTallyContinue().waitAndClick(5);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		base.waitForElement(getPureHitsCount());
+		// verify counts for all the tiles
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPureHitsLastCount().getText().matches("-?\\d+(\\.\\d+)?");
+			}
+		}), Input.wait90);
+		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
+		System.out.println("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+		base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+		base.stepInfo("Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
+		return pureHit;
+	}
+	
 
 }
