@@ -1172,6 +1172,64 @@ public class Production_Test_Regression {
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	
 }
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56048
+	 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.
+	 */
+	@Test(groups = { "regression" }, priority = 20)
+	public void verifyExportinFilesStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-56048 -Production Sprint 08");
+	
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+	// Pre-requisites
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	//Verify archive status on Gen page
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+	
+	// Go To Production Home Page
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		page.getGridView().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.verifyProductionStatusInHomePageGridView("Exporting Files ", productionname);
+		base.passedStep("Verified that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)

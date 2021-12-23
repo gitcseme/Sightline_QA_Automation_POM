@@ -2272,6 +2272,16 @@ public class DocViewPage {
 	public Element getSecondDocIdOnMiniDocList() {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[2]//td[2]");
 	}
+	//Added by Aathith
+	public Element getlastDocinMiniDocView() {
+		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr/td[2])[last()]");
+	}
+	public Element getbtnDeleteEditStamp() {
+		return driver.FindElementById("btnDeleteEditStamp");
+	}
+	public Element getEditStampGearIcon() {
+		return driver.FindElementByXPath("//a[@id='stampSettings']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -16277,6 +16287,86 @@ public class DocViewPage {
 			e.printStackTrace();
 			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void markInCompletedDocEditableCheck() {
+		SoftAssert softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("enter document before");
+		String beforeText =getAddComment1().getText();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("after enter document");
+		String afterText =getAddComment1().getText();
+		driver.waitForPageToBeReady();
+		softAssertion.assertNotEquals(beforeText, afterText);
+		if (beforeText!=afterText) {
+			softAssertion.assertNotEquals(beforeText, afterText);
+			base.passedStep("InCompleted Document are Editable");
+
+		} else {
+			softAssertion.assertEquals(beforeText, afterText);
+			base.failedStep("InCompleted Document are not Editable");
+
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void codeSameAsLastDisplayCheck() {
+		base.waitForElement(getLastCodeIconWhitePencil());
+		boolean flag=getLastCodeIconWhitePencil().isDisplayed();
+		if(flag) {
+			System.out.println("code same as last code displayed");
+			base.passedStep("Code same as last code displayed");
+		}
+		else {
+			System.out.println("code same as last code is not displayed");
+			base.failedStep("Code same as last code is not displayed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void verifyThatIsLastDoc() {
+		String expectText=getlastDocinMiniDocView().getText().trim();
+		System.out.println(expectText);
+		getDocView_Last().waitAndClick(5);
+		String actualText=getDocView_CurrentDocId().getText().trim();
+		System.out.println(actualText);
+		if(expectText.equalsIgnoreCase(actualText)) {
+			softAssertion.assertEquals(actualText, expectText);
+			System.out.println("assert are equal");
+			base.stepInfo("last document navigation navigate successfully");
+		}
+		else {
+			System.out.println("assert are not equal");
+			base.stepInfo("last doc navigation failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void deleteBlueStamp() {
+		base.waitForElement(getEditStampGearIcon());
+		driver.scrollingToElementofAPage(getEditStampGearIcon());
+		getEditStampGearIcon().waitAndClick(5);
+		if(getEditStampGearIcon().Enabled()) {
+		base.waitForElement(getStampBlueColour());
+		getStampBlueColour().waitAndClick(5);
+		base.waitForElement(getbtnDeleteEditStamp());
+		getbtnDeleteEditStamp().waitAndClick(5);
+		}else {
+			base.waitForElement(getEditStampGearIcon());
+			getEditStampGearIcon().waitAndClick(5);
+			base.waitForElement(getStampBlueColour());
+			getStampBlueColour().waitAndClick(5);
+			base.waitForElement(getbtnDeleteEditStamp());
+			getbtnDeleteEditStamp().waitAndClick(5);
+		}
+		//base.VerifySuccessMessage("Coding stamp deleted successfully");
 	}
 
 }
