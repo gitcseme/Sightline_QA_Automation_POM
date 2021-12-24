@@ -77,6 +77,11 @@ public class TestData {
 	public String newNearDupeDocId;
 	public String warningDocId;
 	public String threadData1;
+	public String nearDupeBulkAssign;
+	public String nearDupeBulkAssignId;
+	public String nearDupeBulkAssignReviewer;
+	public String nearDupeBulkAssignReviewId;
+
 
 	// Baskar Indium Docview Codingform
 	public String savedName;

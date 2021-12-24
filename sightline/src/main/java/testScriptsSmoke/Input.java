@@ -169,6 +169,10 @@ public class Input {
 	public static String newNearDupeDocId;
 	public static String warningDocId;
 	public static String threadData1;
+	public static String nearDupeBulkAssign;
+	public static String nearDupeBulkAssignId;
+	public static String nearDupeBlukAssignReviewer;
+	public static String nearDupeBulkAssignReviewId;
 
 	// DocView codingform Baskar Indium
 
@@ -574,6 +578,10 @@ public class Input {
 		historyClockIconDocId = testData.getHistoryClockIconDocId();
 		warningDocId=testData.getWarningDocId();
 		threadData1=testData.getThreadData1();
+		nearDupeBulkAssign=testData.getNearDupeBulkAssign();
+		nearDupeBulkAssignId=testData.getNearDupeBulkAssignId();
+		nearDupeBlukAssignReviewer=testData.getNearDupeBulkAssignReviewer();
+		nearDupeBulkAssignReviewId=testData.getNearDupeBulkAssignReviewId();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
