@@ -12174,7 +12174,7 @@ public class DocViewPage {
 	public void verifyPanel() {
 		if (getDocView_RedactIcon().isElementPresent()) {
 			getDocView_RedactIcon().waitAndClick(10);
-			if (getDocView_RedactionPanel().isElementPresent()) {
+			if (getDocView_RedactionPanel().isElementAvailable(15)) {
 				base.stepInfo("Redaction Panel Is diplayed");
 				softAssertion.assertAll();
 			}

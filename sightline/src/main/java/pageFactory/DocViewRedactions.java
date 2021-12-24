@@ -751,19 +751,19 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("(//td[contains(text(),'ID00000663')])[1]");
 	}
 
-	public Element getHitCount() // RPMXCON-51563
+	public Element getHitCount(String text) // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//span[@id='HitCount_pipeline']");
+		return driver.FindElementByXPath("//span[@id='HitCount_"+text+"']");
 	}
 
-	public Element hitForwardIcon() // RPMXCON-51563
+	public Element hitForwardIcon(String text) // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//i[@id='NextHit_pipeline']");
+		return driver.FindElementByXPath("//i[@id='NextHit_"+text+"']");
 	}
 
-	public Element hitBackwardIcon() // RPMXCON-51563
+	public Element hitBackwardIcon(String text) // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//i[@id='PrevHit_pipeline']");
+		return driver.FindElementByXPath("//i[@id='PrevHit_"+text+"']");
 	}
 
 	public Element getHitCount1() // RPMXCON-51564
@@ -1077,7 +1077,8 @@ public Element getSecondSearchIcon() {
 		public Element imagesIconDocView() {
 			return driver.FindElementById("liDocumentProductionView");
 		}
-//Added by jayanthi		
+
+		//Added by jayanthi		
 		public Element getOnDemandSearchBtn() {
 			return driver.FindElementByXPath("//div[@class='searchOnDemand']//div[@class='searchIcon']//i[@class='fa fa-search']");}
 		
@@ -1218,9 +1219,9 @@ public Element getSecondSearchIcon() {
 			rectangleRedactionTagSelect().waitAndFind(10);	
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		redactionTag.selectByVisibleText("Default Redaction Tag");
-//		Robot robot = new Robot();
-//		robot.keyPress(KeyEvent.VK_ENTER);
-//		robot.keyRelease(KeyEvent.VK_ENTER);
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
 
 	}
 
@@ -1961,9 +1962,9 @@ public Element getSecondSearchIcon() {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		base.waitForElement(hitForwardIcon());
-		hitForwardIcon().waitAndClick(10);
-		String forwardCount = getHitCount().getText();
+		base.waitForElement(hitForwardIcon("test"));
+		hitForwardIcon("test").waitAndClick(10);
+		String forwardCount = getHitCount("test").getText();
 		System.out.println("forwardCount: " + forwardCount);
 		if (forwardCount.equals("2 of 4")) {
 			System.out.println("Traverse Forward to the hits - PASSED");
@@ -1975,9 +1976,9 @@ public Element getSecondSearchIcon() {
 			softAssertion.assertTrue(false);
 		}
 
-		base.waitForElement(hitBackwardIcon());
-		hitBackwardIcon().waitAndClick(10);
-		String backwardCount = getHitCount().getText();
+		base.waitForElement(hitBackwardIcon("test"));
+		hitBackwardIcon("test").waitAndClick(10);
+		String backwardCount = getHitCount("test").getText();
 		System.out.println("backwardCount :" + backwardCount);
 		if (backwardCount.equals("1 of 4")) {
 			System.out.println("Traverse Backward to the hits - PASSED");
@@ -2011,7 +2012,7 @@ public Element getSecondSearchIcon() {
 		base.waitForElement(getInputSearchBox());
 		getInputSearchBox().waitAndClick(30);
 
-		getInputSearchBox().SendKeys("choclate");
+		getInputSearchBox().SendKeys("chocolate");
 		base.stepInfo("Search input Text completed");
 
 
@@ -2969,7 +2970,7 @@ public Element getSecondSearchIcon() {
 		}), Input.wait30);
 		imagesIconDocView().waitAndClick(30);	
 }
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws Exception

@@ -250,6 +250,7 @@ public class SecurityGroupsPage {
 
 	}
 
+	//modified for stabilisation
 	public void AddSecurityGroup(String securitygroupname) {
 
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -288,6 +289,7 @@ public class SecurityGroupsPage {
 		 * securitygroupname);
 		 */
 	}
+
 
 	public List<String> GetSecurityGrouplist() {
 

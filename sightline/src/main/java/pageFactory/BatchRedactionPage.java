@@ -110,8 +110,7 @@ public class BatchRedactionPage {
 	}
 
 	public Element getPopupMessage() {
-		return driver.FindElementByXPath(
-				"//div[@id='Msg1']//div[@class='MessageBoxMiddle']/span/span");
+		return driver.FindElementByXPath("//div[@id='Msg1']//div[@class='MessageBoxMiddle']/span/span");
 	}
 
 //	Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions. Do you want to continue with the Batch Redaction?
@@ -449,6 +448,35 @@ public class BatchRedactionPage {
 						+ searchName + "']");
 	}
 
+	// Added by Jeevitha
+	public Element getPageNumBar() {
+		return driver.FindElementByXPath("//ul[@class='pagination pagination-sm']");
+	}
+
+	public Element getRecordCount() {
+		return driver.FindElementByXPath("//div[@id='BatchRedactionsDataTable_info']");
+	}
+
+	public Element checkPreviousBtnDisabled() {
+		return driver.FindElementByXPath("//li[@class='paginate_button previous disabled']");
+	}
+
+	public Element checkNextBtnDisabled() {
+		return driver.FindElementByXPath("//li[@class='paginate_button next disabled']");
+	}
+
+	public Element getPageNum(int num) {
+		return driver.FindElementByXPath("//li[@class='paginate_button ']//a[text()='" + num + "']");
+	}
+
+	public Element getLastPageNum() {
+		return driver.FindElementByXPath("(//li[@class='paginate_button ']//a)[last()]");
+	}
+
+	public Element getActivePage() {
+		return driver.FindElementByXPath("//li[@class='paginate_button active']");
+	}
+
 	public BatchRedactionPage(Driver driver) {
 
 		this.driver = driver;
@@ -485,7 +513,7 @@ public class BatchRedactionPage {
 
 		// Verify Analyze Report
 		final int Bgcount = base.initialBgCount();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getAnalyzeSearchForSavedSearchResult(searchname).Visible()
@@ -559,11 +587,11 @@ public class BatchRedactionPage {
 		}), Input.wait60);
 		String text = getPopupMessage().getText();
 		System.out.println(text);
-		
-		if(text.contains(Expected)) {
-		base.passedStep(text);
-		}else {
-		base.failedMessage("Expected Msg doesnt match");
+
+		if (text.contains(Expected)) {
+			base.passedStep(text);
+		} else {
+			base.failedMessage("Expected Msg doesnt match");
 		}
 	}
 
@@ -607,7 +635,7 @@ public class BatchRedactionPage {
 		final int bgCountAfter = base.initialBgCount();
 		System.out.println("Progress Completed");
 		base.stepInfo("Progress Completed");
-		
+
 		// verify View report
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
@@ -1069,11 +1097,11 @@ public class BatchRedactionPage {
 		String text = getPopupMessage().getWebElement().getText();
 
 		System.out.println(text);
-		if(text.contains(Expected)) {
+		if (text.contains(Expected)) {
 			base.passedStep(text);
-			}else {
+		} else {
 			base.failedMessage("Expected Msg doesnt match");
-			}
+		}
 	}
 
 	/**
@@ -1400,7 +1428,7 @@ public class BatchRedactionPage {
 		getMySavedSearchDropDown().waitAndClick(20);
 		getMySavedSearchTextbox(searchname).Selected();
 		base.waitForElement(getAnalyzeSearchForSavedSearchResult(searchname));
-		if (getAnalyzeSearchForSavedSearchResult(searchname).Displayed()) {
+		if (getAnalyzeSearchForSavedSearchResult(searchname).isElementAvailable(20)) {
 			getAnalyzeSearchForSavedSearchResult(searchname).waitAndClick(10);
 			softassert.assertTrue(true);
 			base.passedStep("Analyze Search for Redaction button is visible on Batch Redaction Screen.");
@@ -1538,7 +1566,7 @@ public class BatchRedactionPage {
 
 		// Click on redact button
 		base.waitForElement(getPopUpRedactButton());
-		getPopUpRedactButton().waitAndClick(5);
+		getPopUpRedactButton().waitAndClick(15);
 
 		// verify Popup Message
 		String Expected = "Please make sure that redactions are not being applied manually to the same documents while running this Batch Redaction as it can possibly create unexpected or lost redactions.";
@@ -1574,6 +1602,7 @@ public class BatchRedactionPage {
 			base.stepInfo("Clicked " + value + " Button");
 		}
 	}
+
 
 	/**
 	 * @author jeevitha Description : Verify Pre Redaction Report Link and download
@@ -1650,6 +1679,7 @@ public class BatchRedactionPage {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getProgressPercent());
 		if (getProgressPercent().isDisplayed()) {
+			getProgressPercent().isElementAvailable(15);
 			System.out.println("Percentage is : " + getProgressPercent().getText());
 			base.stepInfo("Percentage is : " + getProgressPercent().getText());
 
@@ -1747,7 +1777,7 @@ public class BatchRedactionPage {
 
 		driver.waitForPageToBeReady();
 
-		if (getManageRedactionClickedCB().isElementPresent()) {
+		if (getManageRedactionClickedCB().isElementAvailable(15)) {
 			getManageRedactionClickedCB().waitAndClick(10);
 			base.stepInfo("Disabled the Redaction Rights to : " + username);
 		} else if (getManageRedactionCB().isElementPresent()) {
@@ -1762,6 +1792,8 @@ public class BatchRedactionPage {
 
 		base.VerifySuccessMessage("User profile was successfully modified");
 	}
+
+
 
 	/**
 	 * @author Jayanthi.ganesan
@@ -1846,7 +1878,7 @@ public class BatchRedactionPage {
 		softassert.assertEquals(expURL, url);
 		base.stepInfo("Navigated to My backgroud task page.");
 		base.waitForElement(getStatusDD());
-		getStatusDD().waitAndClick(30);
+		getStatusDD().waitAndClick(40);
 		base.waitForElement(getStatusDD_options());
 		getStatusDD_options().waitAndClick(30);
 		base.waitForElement(getApplyBtnBgPage());
@@ -2310,21 +2342,95 @@ public class BatchRedactionPage {
 		base.stepInfo(" Time of search in BatchRedaction Tree : " + Timestamp);
 		return Timestamp;
 	}
-	
+
 	/**
 	 * @AUthor Jeevitha
 	 * @param searchname
 	 * @param node
 	 */
-	public void verifyViewReportBtn(String searchname,String node) {
-		if(getViewReportForSavedSearch(searchname).isElementAvailable(3)) {
-			System.out.println("View Report & Apply Redactions button is Displayed for :"+searchname);
-			base.stepInfo("View Report & Apply Redactions button is Displayed for :"+searchname);
-		}else if(getNodeViewReportBtn(node).isElementAvailable(3)) {
-			System.out.println("View Report & Apply Redactions button is Displayed for :"+node);
-			base.stepInfo("View Report & Apply Redactions button is Displayed for :"+node);
-		}else {
-			base.failedMessage("View Report & Apply Redactions button is Not Displayed" );
+	public void verifyViewReportBtn(String searchname, String node) {
+		if (getViewReportForSavedSearch(searchname).isElementAvailable(3)) {
+			System.out.println("View Report & Apply Redactions button is Displayed for :" + searchname);
+			base.stepInfo("View Report & Apply Redactions button is Displayed for :" + searchname);
+		} else if (getNodeViewReportBtn(node).isElementAvailable(3)) {
+			System.out.println("View Report & Apply Redactions button is Displayed for :" + node);
+			base.stepInfo("View Report & Apply Redactions button is Displayed for :" + node);
+		} else {
+			base.failedMessage("View Report & Apply Redactions button is Not Displayed");
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 */
+	public void verifyPagination() {
+		this.driver.getWebDriver().get(Input.url + "BatchRedaction/BatchRedaction");
+		base.waitForElement(getMySavedSearchDropDown());
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(getRecordCount());
+		String recordCount = getRecordCount().getText();
+		String expectedText = "Showing 1 to 10 of";
+
+		if (recordCount.contains(expectedText)) {
+			base.stepInfo(recordCount + " : Is Displayed");
+		}
+
+		String[] count = recordCount.split(" ");
+		int Count = Integer.parseInt(count[5]);
+		System.out.println(Count);
+
+		if (Count > 10) {
+			base.waitForElement(getPageNumBar());
+			if (getPageNumBar().isElementAvailable(Count)) {
+				System.out.println(
+						"Pagination is displayed for Batch Redaction History when records count is : " + Count);
+				base.stepInfo("Pagination is displayed for Batch Redaction History when records count is : " + Count);
+			} else {
+				base.failedMessage(
+						"Pagination is Not displayed for Batch Redaction History when records count is : " + Count);
+
+			}
+		}
+	}
+
+	/**
+	 * @Author Jeevitha
+	 */
+	public void verifyPreviousAndNextBtn() {
+		driver.scrollingToBottomofAPage();
+		String lastNum = getLastPageNum().getText();
+		System.out.println("LAst PAge No : " + lastNum);
+		String activePage = getActivePage().getText();
+		System.out.println("First Page No : " + activePage);
+		if (checkPreviousBtnDisabled().isElementAvailable(2)) {
+			base.stepInfo("Page No : " + activePage + " and Previous Button is Disabled");
+		} else {
+			base.stepInfo("Page No : " + activePage + " and Previous Button is Enabled");
+		}
+
+		if (checkNextBtnDisabled().isElementAvailable(2)) {
+			base.stepInfo("Page No : " + activePage + " and Next Button is Disabled");
+		} else {
+			base.stepInfo("Page No : " + activePage + " and Next Button is Enabled");
+		}
+
+		int totalPage = Integer.parseInt(lastNum);
+		for (int i = 2; i <= totalPage; i++) {
+			getPageNum(i).waitAndClick(3);
+			driver.waitForPageToBeReady();
+			if (checkPreviousBtnDisabled().isElementAvailable(2)) {
+				base.stepInfo("Page No : " + i + " and Previous Button is Disabled");
+			} else {
+				base.stepInfo("Page No : " + i + " and Previous Button is Enabled");
+			}
+
+			if (checkNextBtnDisabled().isElementAvailable(2)) {
+				base.stepInfo("Page No : " + i + " and Next Button is Disabled");
+			} else {
+				base.stepInfo("Page No : " + i + " and Next Button is Enabled");
+			}
 		}
 	}
 }
