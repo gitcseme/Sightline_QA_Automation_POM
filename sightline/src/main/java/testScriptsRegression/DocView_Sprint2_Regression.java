@@ -81,6 +81,8 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyRedactionasReviewer() throws Exception {
+
+		driver.Manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON 52030");
@@ -1678,6 +1680,9 @@ public class DocView_Sprint2_Regression {
 		baseClass.stepInfo("The Progress bar is Changed Successfully");
 
 		}
+
+
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

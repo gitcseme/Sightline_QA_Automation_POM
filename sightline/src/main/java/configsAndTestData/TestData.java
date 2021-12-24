@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TestData {
 
-	// search   
+	// search
 	public String searchString1;
 	public String searchString2;
 	public int pureHitSeachString1;
@@ -334,8 +334,4 @@ public class TestData {
 		public String productionText;
 		public String tiffPageCountNam;
 		public String tiffPageCountText;
-		
-		//Added by Gopinath - 22/12/2021
-		public String errorQueryFileLocation;
-		public String invalidNameText;
 }

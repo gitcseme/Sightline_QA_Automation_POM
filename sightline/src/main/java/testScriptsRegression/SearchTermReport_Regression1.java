@@ -21,6 +21,7 @@ import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -61,8 +62,8 @@ public class SearchTermReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 	 // Open browser
 		driver = new Driver();
@@ -436,6 +437,7 @@ public class SearchTermReport_Regression1 {
 		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA1+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA1));
 		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA2));
 		SoftAssertion.assertAll();
+		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
 		}
 		if(role=="RMU") {
 		st.GenerateReportWithAllSearches(savedSearchRMU);
@@ -482,6 +484,39 @@ public class SearchTermReport_Regression1 {
 			//securityPage.deleteSecurityGroups(securitygroupname);
 			softAssertion.assertAll();
 			bc.passedStep("The Search term report docs released to Security group "+securitygroupname+" is reflected as expected");
+		}
+		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
+		public void validateExportData(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56500");
+			bc.stepInfo("To verify that Action_Export Data is working on Search Term Report");
+			lp = new LoginPage(driver);
+			st = new SearchTermReportPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			lp.loginToSightLine(username, password);
+			String saveSearchName = null;
+			bc.stepInfo("Logged in as -" + role);
+			if (role == "RMU") {
+				saveSearchName = saveSearchNameRMU;
+			}
+			if (role == "PA") {
+				saveSearchName = saveSearchNamePA;
+			}
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			st.GenerateReport(saveSearchName);
+			bc.stepInfo("Report generated for selected search");
+			st.STR_ToExportData();
+			driver.waitForPageToBeReady();
+			String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+			CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+			cddr.selectMetaDataFields(metaDataFields1);
+			cddr.runReportandVerifyFileDownloaded();
+			softAssertion.assertAll();
+			bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
 		}
 
 

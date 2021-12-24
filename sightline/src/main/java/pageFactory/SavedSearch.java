@@ -28,7 +28,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -741,6 +740,7 @@ public class SavedSearch {
 	public Element getbtnDocListContinue() {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
+	
 
 	public String getLastStatus() {
 		return driver.FindElementByXPath("//table//td[6]").getText();
@@ -770,49 +770,6 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//table//td[text()='Your query returned no data']");
 	}
 
-	// Added by gopinath - 23/12/2021
-	public Element getSelectOptionsFromShowHideDropDown(String Option) {
-		return driver.FindElementByXPath("//ul[@class='ColVis_collection']/li/label/span[contains(text(),'" + Option
-				+ "')]/ancestor::label/input");
-	}
-
-	public Element getShowHideDropDown() {
-		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
-	}
-
-	public Element getNearDuplicatesCountOfSavedSearch(String SaveSearchName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[12]");
-	}
-
-	public Element getShowHideOptionList() {
-		return driver.FindElementByXPath("//ul[@class='ColVis_collection']");
-	}
-
-	public Element getPureHitCountOfSavedSearch(String SaveSearchName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[1]");
-	}
-
-	public Element getFamilyMembersCountOfSavedSearch(String SaveSearchName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[14]");
-	}
-
-	public Element getConcepuallySimilarCountOfSavedSearch(String SaveSearchName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[11]");
-	}
-
-	public Element getThreadedDocumentCountOfSavedSearch(String SaveSearchName) {
-		return driver.FindElementByXPath(
-				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[13]");
-	}
-
-	public Element getCount(String SaveSearchName) {
-		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[contains(text(),'" + SaveSearchName
-				+ "')]/following-sibling::td[1]");
-	}
 
 	List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
@@ -2440,12 +2397,12 @@ public class SavedSearch {
 	public void savedSearch_SearchandSelect(String searchName, String select) throws InterruptedException {
 
 		driver.waitForPageToBeReady();
-		//base.waitForElement(getSavedSearch_SearchName());
+		base.waitForElement(getSavedSearch_SearchName());
 		getSavedSearch_SearchName().SendKeys(searchName);
-		getSavedSearch_ApplyFilterButton().waitAndClick(5);
+		getSavedSearch_ApplyFilterButton().waitAndClick(10);
 		base.waitForElement(getSelectWithName(searchName));
 		try {
-			if (getSelectWithName(searchName).isElementAvailable(6)) {
+			if (getSelectWithName(searchName).isElementAvailable(10)) {
 				base.stepInfo("Search Found :" + searchName);
 			} else {
 				base.stepInfo("Search Not Found :" + searchName);
@@ -6465,6 +6422,7 @@ public class SavedSearch {
 		return mySvedSearchID;
 	}
 
+	
 	/**
 	 * @author Brundha Date : 12/18/21 Description: verifySearchContents Modified on
 	 *         : N/A modified by : N/A
@@ -6545,6 +6503,7 @@ public class SavedSearch {
 
 	}
 
+	
 	/**
 	 * @author :Sowndarya.velraj
 	 * @throws InterruptedException
@@ -6559,298 +6518,6 @@ public class SavedSearch {
 				break;
 			} else if (getLastStatus().contains(statusMsg)) {
 				base.passedStep(statusMsg + "status displayed");
-			}
-		}
-	}
-
-	/**
-	 * @author Gopinath
-	 * @Description : Method to open uploded batch file.
-	 * @param batchFile : batchFile is String value that name of batch upload file.
-	 */
-	public void openUplodedBatchFile(String batchFile) {
-		try {
-			driver.Navigate().refresh();
-			getMySeraches().isElementAvailable(15);
-			getMySeraches().Click();
-			getSelectUploadedFile(batchFile).isElementAvailable(15);
-			getSelectUploadedFile(batchFile).Click();
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occured while open uploded batch file." + e.getMessage());
-		}
-	}
-
-	/**
-	 * @author Gopinath
-	 * @Description : Method to delete uploded batch file.
-	 * @param batchFile : batchFile is String value that name of batch upload file.
-	 */
-	public void deleteUplodedBatchFile(String batchFile) {
-		try {
-			driver.Navigate().refresh();
-			getMySeraches().isElementAvailable(15);
-			getMySeraches().Click();
-			getSelectUploadedFile(batchFile).isElementAvailable(15);
-			getSelectUploadedFile(batchFile).Click();
-			driver.scrollPageToTop();
-			getSavedSearchDeleteButton().isElementAvailable(10);
-			getSavedSearchDeleteButton().waitAndClick(10);
-			getDeleteOkBtn().isElementAvailable(10);
-			getDeleteOkBtn().waitAndClick(10);
-			base.VerifySuccessMessage("Save search tree node successfully deleted.");
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep("Exception occured while deleting uploded batch file." + e.getMessage());
-		}
-	}
-
-	/**
-	 * @author Gopinath Description: Method for select the saved search and select
-	 *         the Near dupe count Conceptually Similar Count
-	 * @param searchname : searchname is String value that search name.
-	 */
-	public void selectSavedsearchwithNearDupeCountAndCSCount(String searchname) {
-		try {
-
-			savedSearch_Searchandclick(searchname);
-			driver.waitForPageToBeReady();
-			getChooseSearchRadiobtn(searchname).isElementAvailable(10);
-			getChooseSearchRadiobtn(searchname).Click();
-			getShowHideDropDown().isElementAvailable(10);
-			getShowHideDropDown().waitAndClick(10);
-			getSelectOptionsFromShowHideDropDown("Near Duplicate Count").isElementAvailable(10);
-			getSelectOptionsFromShowHideDropDown("Near Duplicate Count").waitAndClick(5);
-			getSelectOptionsFromShowHideDropDown("Conceptually Similar Count").isElementAvailable(10);
-			getSelectOptionsFromShowHideDropDown("Conceptually Similar Count").Click();
-			driver.scrollPageToTop();
-			getbackGroundFilm().isElementAvailable(10);
-			getbackGroundFilm().waitAndClick(7);
-			getChooseSearchRadiobtn(searchname).isElementAvailable(10);
-			scrollToElementOfPage(getChooseSearchRadiobtn(searchname));
-			base.waitForElement(getSearchStatus(searchname, "DRAFT"));
-			if (getSearchStatus(searchname, "DRAFT").isElementAvailable(10)) {
-				base.passedStep("search is completed status for the saved search is 'DRAFT'");
-			} else {
-				base.failedStep("Search  status is not displayed as expected.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "
-							+ e.getMessage());
-		}
-
-	}
-
-	/**
-	 * @author Gopinath Description: Method for count verifaction of draft basic
-	 *         MetaData search.
-	 * @param savedSearchName : savedSearchName is String value that saved search
-	 *                        name.
-	 */
-	public void countVerifactionOfDraftBasicMetaDataSearch(String savedSearchName) {
-		try {
-			getFamilyCount(savedSearchName).isElementAvailable(10);
-			String FamilyCount = getFamilyCount(savedSearchName).getText();
-			getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
-			String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
-			getNearDupeCount(savedSearchName).isElementAvailable(10);
-			String NearDupeCount = getNearDupeCount(savedSearchName).getText();
-			getThreadedCount(savedSearchName).isElementAvailable(10);
-			String ThreadedCount = getThreadedCount(savedSearchName).getText();
-			Map<String, String> CountofSearch = new HashMap<String, String>();
-			CountofSearch.put("NearDupe Count", NearDupeCount);
-			CountofSearch.put("Pureit Count", PureitCount);
-			CountofSearch.put("Threaded Count", ThreadedCount);
-			CountofSearch.put("Family member count", FamilyCount);
-			Set<String> CountKeySet = CountofSearch.keySet();
-			for (String name : CountKeySet) {
-				String count = CountofSearch.get(name);
-				if (count.equals("")) {
-					base.passedStep("The SavedSearch " + savedSearchName + " " + name + "is Blank");
-					System.out.println("The SavedSearch " + savedSearchName + " " + name + "is Blank");
-				} else {
-					base.failedStep(savedSearchName + " is having " + count + name);
-					System.out.println(savedSearchName + " is having " + count + name);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occured while  count verifaction of draft basic MetaData search." + e.getMessage());
-		}
-	}
-
-	/**
-	 * @author Gopinath Description : Scrolling to Element by getting it's location
-	 * @param element : element is scrolling to element.
-	 */
-	public void scrollToElementOfPage(Element element) {
-		try {
-			Point Location = element.getWebElement().getLocation();
-			((JavascriptExecutor) driver).executeScript("window.scrollBy" + Location);
-
-		} catch (Exception e) {
-		}
-
-	}
-
-	/**
-	 * @author Gopinath Description: Method to verify count field in saved search
-	 *         table is blank.
-	 * @param savedSearchName : savedSearchName is String value that saved search
-	 *                        name.
-	 */
-	public void verifyCountFiledIsBlank(String savedSearchName) {
-		try {
-			getSavedSearch_SearchName().isElementAvailable(10);
-			getSavedSearch_SearchName().SendKeys(savedSearchName);
-			getSavedSearch_ApplyFilterButton().waitAndClick(10);
-			base.waitTime(3);
-			getCount(savedSearchName).isElementAvailable(10);
-			String pureitCount = getCount(savedSearchName).getText();
-			if (pureitCount.contentEquals("")) {
-				base.passedStep("Count field in saved search table is blank");
-			} else {
-				base.failedStep("Count field in saved search table is not blank");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			base.failedStep(
-					"Exception occured while  count verifaction of draft basic MetaData search." + e.getMessage());
-		}
-	}
-
-	/**
-	 * @Author Jeevitha
-	 * @param specificHeaderName
-	 * @param searchName
-	 */
-	public void ApplyShowAndHideFilter(String specificHeaderName, String searchName) {
-		verifyHeaderIsPresent(specificHeaderName);
-		getHideSHowBtn().waitAndClick(10);
-		driver.scrollingToBottomofAPage();
-		base.waitForElement(getFieldoptions(specificHeaderName));
-		getFieldoptions_CC(specificHeaderName).waitAndClick(20);
-		base.waitTillElemetToBeClickable(getHideSHowBtn());
-		base.waitForElement(getbackGroundFilm());
-		getbackGroundFilm().waitAndClick(5);
-		driver.scrollPageToTop();
-		verifyHeaderIsPresent(specificHeaderName);
-
-		base.waitForElement(getNearDupeCount(searchName));
-		String Count = getNearDupeCount(searchName).getText();
-		base.stepInfo(specificHeaderName + "  : " + Count);
-		System.out.println(specificHeaderName + " : " + Count);
-	}
-
-	/**
-	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
-	 * @return
-	 * @throws InterruptedException
-	 */
-	public HashMap<String, String> bulkTagorFolderViaSS(Boolean ssPge, Boolean rootNode, String shareTo,
-			Boolean selectNode, Boolean selectSearch, String node, String searchName, String bulkAction, int loadTime,
-			String TagName, Boolean newTag, Boolean tagVerify, String folderName, Boolean newFolder,
-			Boolean folderVerify) throws InterruptedException {
-
-		search = new SessionSearch(driver);
-		HashMap<String, String> counts = new HashMap<String, String>();
-		String finalCount = null;
-		int pureHit = 0;
-		int finalCountresult;
-
-		// Landed on Saved Search
-		if (ssPge) {
-			navigateToSSPage();
-		}
-
-		if (rootNode) {
-			getSavedSearchGroupName(shareTo).waitAndClick(5);
-		}
-
-		if (bulkAction.equalsIgnoreCase("Tag")) {
-			getSavedSearchToBulkTag().Click();
-		} else if (bulkAction.equalsIgnoreCase("Folder")) {
-			getSavedSearchToBulkFolder().Click();
-		}
-
-		// Count load time check
-		loadTimeCheck(loadTime);
-
-		if (bulkAction.equalsIgnoreCase("Tag")) {
-			if (newTag) {
-				finalCount = search.bulkActions_TagSS_returnCount(TagName);
-				base.stepInfo("Completed Bulk Tag");
-			}
-			if (tagVerify) {
-				base.stepInfo(
-						"Navigating to Search >> Basic Search >> Advanced Search >> WorkProduct >> Tags (Select Same Tag which we have created in prerequesties.");
-				search.switchToWorkproduct();
-				search.selectTagInASwp(TagName);
-				pureHit = search.serarchWP();
-				finalCountresult = Integer.parseInt(finalCount);
-				base.stepInfo("Finalized Tag count : " + finalCountresult);
-				base.stepInfo("Aggreagate Tag search count : " + pureHit);
-
-			}
-
-		} else if (bulkAction.equalsIgnoreCase("Folder")) {
-			if (newFolder) {
-				finalCount = search.BulkActions_Folder_returnCount(folderName);
-				base.stepInfo("Completed Bulk Folder mapping");
-			}
-			if (folderVerify) {
-				base.stepInfo(
-						"Navigating to Search >> Basic Search >> Advanced Search >> WorkProduct >> Folder (Selected Same Folder which we have created in prerequesties.");
-				search.switchToWorkproduct();
-				search.selectFolderInASwp(folderName);
-				pureHit = search.serarchWP();
-				finalCountresult = Integer.parseInt(finalCount);
-
-			}
-
-		}
-		counts.put("Finalize Count ", finalCount);
-		counts.put("PureHit Count ", Integer.toString(pureHit));
-
-		return counts;
-	}
-
-	/**
-	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
-	 * @param time
-	 * @throws InterruptedException
-	 */
-	public void loadTimeCheck(int time) throws InterruptedException {
-
-		int latencyCheckTime = time;
-		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
-		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
-
-		// Load latency Verification
-		Element loadingElement = getTotalCountLoad();
-		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
-	}
-
-	/**
-	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
-	 * @throws InterruptedException
-	 */
-	public void searchesToVerify(Boolean verifySearches, String[] searches, Boolean verifyNodes, String[] nodes,
-			Boolean additional1, List<String> additionalList1) throws InterruptedException {
-
-		if (verifySearches) {
-			for (String searchData : searches) {
-				savedSearch_SearchandSelect(searchData, "No");
-			}
-		}
-
-		if (verifyNodes) {
-			getSavedSearchNewGroupExpand().waitAndClick(3);
-			for (String nodeDatas : nodes) {
-				verifyNodePresent(nodeDatas);
 			}
 		}
 	}

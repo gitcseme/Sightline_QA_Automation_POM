@@ -751,19 +751,19 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("(//td[contains(text(),'ID00000663')])[1]");
 	}
 
-	public Element getHitCount(String text) // RPMXCON-51563
+	public Element getHitCount() // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//span[@id='HitCount_" + text + "']");
+		return driver.FindElementByXPath("//span[@id='HitCount_pipeline']");
 	}
 
-	public Element hitForwardIcon(String text) // RPMXCON-51563
+	public Element hitForwardIcon() // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//i[@id='NextHit_" + text + "']");
+		return driver.FindElementByXPath("//i[@id='NextHit_pipeline']");
 	}
 
-	public Element hitBackwardIcon(String text) // RPMXCON-51563
+	public Element hitBackwardIcon() // RPMXCON-51563
 	{
-		return driver.FindElementByXPath("//i[@id='PrevHit_" + text + "']");
+		return driver.FindElementByXPath("//i[@id='PrevHit_pipeline']");
 	}
 
 	public Element getHitCount1() // RPMXCON-51564
@@ -966,7 +966,7 @@ public class DocViewRedactions {
 				"//div[text()='" + search + "']//..//div[@class='pull-right']//div[contains(@class,'trashCan')]");
 	}
 
-	public Element getSecondSearchIcon() {
+public Element getSecondSearchIcon() {
 		return driver.FindElementByXPath("(//i[@class='fa fa-search'])[last()]");
 	}
 
@@ -1067,22 +1067,20 @@ public class DocViewRedactions {
 		return driver.FindElementByXPath("//i[@class='fa fa-lg fa-fw fa-home']");
 	}
 
+	
 	// Addded by Sai Krishna
+	
+		public Element getConceptuallySimilarTab() {
+			return driver.FindElementById("liDocumentConceptualSimilar");
+		} 
 
-	public Element getConceptuallySimilarTab() {
-		return driver.FindElementById("liDocumentConceptualSimilar");
-	}
-
-	public Element imagesIconDocView() {
-		return driver.FindElementById("liDocumentProductionView");
-	}
-
-	// Added by jayanthi
-	public Element getOnDemandSearchBtn() {
-		return driver.FindElementByXPath(
-				"//div[@class='searchOnDemand']//div[@class='searchIcon']//i[@class='fa fa-search']");
-	}
-
+		public Element imagesIconDocView() {
+			return driver.FindElementById("liDocumentProductionView");
+		}
+//Added by jayanthi		
+		public Element getOnDemandSearchBtn() {
+			return driver.FindElementByXPath("//div[@class='searchOnDemand']//div[@class='searchIcon']//i[@class='fa fa-search']");}
+		
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
@@ -1211,13 +1209,13 @@ public class DocViewRedactions {
 	 * Description : Selecting a rectangular tag for redaction
 	 */
 	public void selectingRectangleRedactionTag() throws Exception {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return rectangleRedactionTagSelect().Visible() && rectangleRedactionTagSelect().Enabled();
-			}
-		}), Input.wait30);
-		rectangleRedactionTagSelect().waitAndFind(10);
+		
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return rectangleRedactionTagSelect().Visible() && rectangleRedactionTagSelect().Enabled();
+				}
+			}), Input.wait30);
+			rectangleRedactionTagSelect().waitAndFind(10);	
 		Select redactionTag = new Select(rectangleRedactionTagSelect().getWebElement());
 		redactionTag.selectByVisibleText("Default Redaction Tag");
 //		Robot robot = new Robot();
@@ -1512,27 +1510,25 @@ public class DocViewRedactions {
 			base.waitTillElemetToBeClickable(deleteClick());
 			actions.moveToElement(deleteClick().getWebElement());
 			actions.click().build().perform();
-			base.passedStep("The redaction tag has been deleted sucessfully");
-		} else {
-			base.passedStep("The redaction tag has was not avilable");
-		}
-
+			base.passedStep("The redaction tag has been deleted sucessfully");}
+		else {	
+			base.passedStep("The redaction tag has was not avilable");}
+		
 		base.passedStep("The redaction tag has been deleted sucessfully");
 		actions.moveToElement(redactionForwardNavigate().getWebElement());
 		actions.doubleClick().build().perform();
 		actions.moveToElement(redactionBackwardNavigate().getWebElement());
 		actions.click().build().perform();
 		base.stepInfo("Navigated to previous Redaction Successfully");
-		if (deleteClick().isDisplayed()) {
-			if (deleteClick().isDisplayed()) {
-				base.waitTillElemetToBeClickable(deleteClick());
-				actions.moveToElement(deleteClick().getWebElement());
-				actions.click().build().perform();
-				base.passedStep("The redaction tag has been deleted sucessfully");
-			} else {
-				base.passedStep("The redaction tag was not avilable");
-			}
-			Thread.sleep(3000);
+		if (deleteClick().isDisplayed()) {if (deleteClick().isDisplayed()) {
+			base.waitTillElemetToBeClickable(deleteClick());
+			actions.moveToElement(deleteClick().getWebElement());
+			actions.click().build().perform();
+			base.passedStep("The redaction tag has been deleted sucessfully");
+		} else {
+			base.passedStep("The redaction tag was not avilable");
+		}
+		Thread.sleep(3000);
 		}
 	}
 
@@ -1965,9 +1961,9 @@ public class DocViewRedactions {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 
-		base.waitForElement(hitForwardIcon("test"));
-		hitForwardIcon("test").waitAndClick(10);
-		String forwardCount = getHitCount("test").getText();
+		base.waitForElement(hitForwardIcon());
+		hitForwardIcon().waitAndClick(10);
+		String forwardCount = getHitCount().getText();
 		System.out.println("forwardCount: " + forwardCount);
 		if (forwardCount.equals("2 of 4")) {
 			System.out.println("Traverse Forward to the hits - PASSED");
@@ -1979,9 +1975,9 @@ public class DocViewRedactions {
 			softAssertion.assertTrue(false);
 		}
 
-		base.waitForElement(hitBackwardIcon("test"));
-		hitBackwardIcon("test").waitAndClick(10);
-		String backwardCount = getHitCount("test").getText();
+		base.waitForElement(hitBackwardIcon());
+		hitBackwardIcon().waitAndClick(10);
+		String backwardCount = getHitCount().getText();
 		System.out.println("backwardCount :" + backwardCount);
 		if (backwardCount.equals("1 of 4")) {
 			System.out.println("Traverse Backward to the hits - PASSED");
@@ -2015,8 +2011,9 @@ public class DocViewRedactions {
 		base.waitForElement(getInputSearchBox());
 		getInputSearchBox().waitAndClick(30);
 
-		getInputSearchBox().SendKeys("chocolate");
+		getInputSearchBox().SendKeys("choclate");
 		base.stepInfo("Search input Text completed");
+
 
 		Thread.sleep(2000); // Implicitly needed here
 		Robot robot = new Robot();
@@ -2218,13 +2215,13 @@ public class DocViewRedactions {
 	}
 
 	public void clickingRemarksIcon() throws InterruptedException {
-
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() throws Exception {
-				return remarksIcon().Visible() && remarksIcon().Enabled();
-			}
-		}), Input.wait30);
-		remarksIcon().waitAndClick(30);
+		
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() throws Exception {
+					return remarksIcon().Visible() && remarksIcon().Enabled();
+				}
+			}), Input.wait30);
+			remarksIcon().waitAndClick(30);
 
 	}
 
@@ -2722,7 +2719,7 @@ public class DocViewRedactions {
 			base = new BaseClass(driver);
 			driver.waitForPageToBeReady();
 			base.waitForElement(editRemarksIcon());
-			// editRemarksIcon().ScrollTo();
+			//editRemarksIcon().ScrollTo();
 			softAssertion.assertTrue(editRemarksIcon().isElementPresent());
 			base.passedStep("Reviewers remark is displayed successfully");
 			softAssertion.assertAll();
@@ -2781,8 +2778,7 @@ public class DocViewRedactions {
 		remarksIcon().waitAndClick(25);
 
 	}
-
-	/**
+/**
 	 * Author : Vijaya.Rani date: 8/12/21 NA Modified date: NA Modified by:NA
 	 * Description :perform The select Assignment from Dashborad
 	 *
@@ -2805,55 +2801,55 @@ public class DocViewRedactions {
 		getSelectAssignmentFromDashborad(assginmentName).waitAndClick(10);
 
 	}
-
+	
 	/**
-	 * @author Vijaya.Rani date: 18/8/2021 Modified date: NA Description:Perform
-	 *         Geer Icon Show Completed Docs
-	 * 
+	 * @author Vijaya.Rani  date: 18/8/2021 Modified date: NA Description:Perform 
+	 * Geer Icon Show Completed Docs
+	 *        
 	 */
 
 	public void performGeerIcon() {
-
+		
 		driver.waitForPageToBeReady();
 		getDocview_GearButton().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		getDocview_ShowCompletedDocs().waitAndClick(30);
 		driver.waitForPageToBeReady();
 		getDocview_GeerSaveBtn().waitAndClick(30);
-
+		
+		
+		
 	}
-
+	
+	
+	
 	/**
-	 * @author Vijaya.Rani date: 10/12/2021
+	 * @author Vijaya.Rani date: 10/12/2021 
 	 * @Description:Perform Complete Button
 	 * 
 	 */
 
 	public void performCompleteToDocs() throws InterruptedException {
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(1).waitAndClick(30);
-		getCompleteDocBtn().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(1).waitAndClick(30);
+	    getCompleteDocBtn().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(2).waitAndClick(30);
-		getCompleteDocBtn().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(2).waitAndClick(30);
+	    getCompleteDocBtn().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(3).waitAndClick(30);
-		getCompleteDocBtn().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(3).waitAndClick(30);
+	    getCompleteDocBtn().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(4).waitAndClick(30);
-		getCompleteDocBtn().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(4).waitAndClick(30);
+	    getCompleteDocBtn().waitAndClick(20);;
 		driver.scrollPageToTop();
 	}
-
+	
 	/**
-	 * @author Vijaya.Rani date: 10/12/2021
+	 * @author Vijaya.Rani date: 10/12/2021 
 	 * @Description:Perform UnComplete Button
 	 * 
 	 */
@@ -2861,80 +2857,75 @@ public class DocViewRedactions {
 	public void performUnCompleteToDocs() throws InterruptedException {
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		getDocView_MiniDoc_Selectdoc(1).waitAndClick(30);
-		getUnCompleteButton().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(1).waitAndClick(30);
+	    getUnCompleteButton().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(2).waitAndClick(30);
-		getUnCompleteButton().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(2).waitAndClick(30);
+	    getUnCompleteButton().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(3).waitAndClick(30);
-		getUnCompleteButton().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(3).waitAndClick(30);
+	    getUnCompleteButton().waitAndClick(20);;
 		driver.scrollPageToTop();
 		driver.waitForPageToBeReady();
-		getDocView_MiniDoc_Selectdoc(4).waitAndClick(30);
-		getUnCompleteButton().waitAndClick(20);
-		;
+	    getDocView_MiniDoc_Selectdoc(4).waitAndClick(30);
+	    getUnCompleteButton().waitAndClick(20);;
 		driver.scrollPageToTop();
 	}
-
 	/**
-	 * Author : Vijaya.Rani date: 2/12/21 NA
-	 *
-	 * @Modified date: 9/12/2021
-	 * @Modified by: Jeevitha.Rajendran
-	 * @Description :perform Click The Search Icon Back To original
-	 *
-	 */
-	public void performClickSearchIconAndX(String input, boolean select) throws Exception {
-
-		base = new BaseClass(driver);
-
-		base.waitForElement(getSearchIcon());
-		getSearchIcon().waitAndClick(30);
-
-		base.passedStep("successfully Clicked the Search Icon");
-
-		driver.waitForPageToBeReady();
-		base.waitForElement(getInputSearchBox());
-		getInputSearchBox().waitAndClick(30);
-
-		getInputSearchBox().SendKeys(input);
-		base.stepInfo("Search input is : " + input);
-
-		if (select) {
-			driver.waitForPageToBeReady();
-			base.waitForElement(getSecondSearchIcon());
-			getSecondSearchIcon().waitAndClick(10);
-			base.waitForElement(getHitCount_cc());
-
-			if (getHitCount_cc().isElementPresent()) {
-				String hitCount = getHitCount_cc().getText();
-				String[] count = hitCount.split(" ");
-				String doCount = null;
-				for (String ext : count) {
-					doCount = ext;
-					System.out.println(doCount);
-				}
-				base.stepInfo("Hit Count : " + hitCount);
-				base.stepInfo("Document Count : " + doCount);
-			}
-
-		} else {
-
-			driver.waitForPageToBeReady();
-			base.waitForElement(crossxIcon());
-			crossxIcon().waitAndClick(30);
-		}
-
-	}
-
-	// Added by sai krishna
-	public void navigatingDocsFromMiniDocListChildWindowandClose() throws Exception {
+ 	* Author : Vijaya.Rani date: 2/12/21 NA
+ 	*
+ 	* @Modified date: 9/12/2021
+ 	* @Modified by: Jeevitha.Rajendran
+ 	* @Description :perform Click The Search Icon Back To original
+ 	*
+ 	*/
+ 	public void performClickSearchIconAndX(String input, boolean select) throws Exception {
+ 	 
+ 	base = new BaseClass(driver);
+ 	 
+ 	base.waitForElement(getSearchIcon());
+ 	getSearchIcon().waitAndClick(30);
+ 	 
+ 	base.passedStep("successfully Clicked the Search Icon");
+ 	 
+ 	driver.waitForPageToBeReady();
+ 	base.waitForElement(getInputSearchBox());
+ 	getInputSearchBox().waitAndClick(30);
+ 	 
+ 	getInputSearchBox().SendKeys(input);
+ 	base.stepInfo("Search input is : " + input);
+ 	 
+ 	if (select) {
+ 	driver.waitForPageToBeReady();
+ 	base.waitForElement(getSecondSearchIcon());
+ 	getSecondSearchIcon().waitAndClick(10);
+ 	base.waitForElement(getHitCount_cc());
+ 	 
+ 	if (getHitCount_cc().isElementPresent()) {
+ 	String hitCount = getHitCount_cc().getText();
+ 	String[] count = hitCount.split(" ");
+ 	String doCount = null;
+ 	for (String ext : count) {
+ 	doCount = ext;
+ 	System.out.println(doCount);
+ 	}
+ 	base.stepInfo("Hit Count : " + hitCount);
+ 	base.stepInfo("Document Count : " + doCount);
+ 	}
+ 	 
+ 	} else {
+ 	 
+ 	driver.waitForPageToBeReady();
+ 	base.waitForElement(crossxIcon());
+ 	crossxIcon().waitAndClick(30);
+ 	}
+ 	 
+ 	}
+ 	
+ 	// Added by sai krishna 
+ 	public void navigatingDocsFromMiniDocListChildWindowandClose() throws Exception {
 		base = new BaseClass(driver);
 
 		String parentWindow = driver.getWebDriver().getWindowHandle();
@@ -2953,20 +2944,22 @@ public class DocViewRedactions {
 		}
 		driver.switchTo().window(parentWindow);
 
+
 	}
+ 	
 
 	public void clickingConceptuallySimilarTab() {
-		driver.WaitUntil((new Callable<Boolean>() {
+ 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return getConceptuallySimilarTab().Visible() && getConceptuallySimilarTab().Enabled();
 			}
 		}), Input.wait30);
-		driver.scrollingToElementofAPage(getConceptuallySimilarTab());
-		getConceptuallySimilarTab().waitAndClick(30);
-		driver.scrollingToBottomofAPage();
-
-	}
-
+ 		driver.scrollingToElementofAPage(getConceptuallySimilarTab());
+ 		getConceptuallySimilarTab().waitAndClick(30);
+ 		driver.scrollingToBottomofAPage();
+ 		
+ 	}
+	
 	public void clickingImagesTab() throws InterruptedException {
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -2974,9 +2967,9 @@ public class DocViewRedactions {
 				return imagesIconDocView().Visible() && imagesIconDocView().Enabled();
 			}
 		}), Input.wait30);
-		imagesIconDocView().waitAndClick(30);
-	}
-
+		imagesIconDocView().waitAndClick(30);	
+}
+	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws Exception
@@ -2989,7 +2982,7 @@ public class DocViewRedactions {
 
 		set_searchText().getWebElement().sendKeys("S");
 		getOnDemandSearchBtn().waitAndClick(10);
-
+		
 		Thread.sleep(4000); // needed here implicitly
 
 		String color = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");

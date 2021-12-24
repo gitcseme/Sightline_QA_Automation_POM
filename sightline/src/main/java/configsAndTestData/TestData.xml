@@ -5,7 +5,7 @@
 	<!-- Serach strings and expected pure hit counts -->
 	<searchString1>test</searchString1>
 	<searchString2>comments</searchString2>
-	<pureHitSeachString1>48</pureHitSeachString1>   
+	<pureHitSeachString1>48</pureHitSeachString1>
 	<pureHitSeachString2>52</pureHitSeachString2>
 	<searchString1ANDsearchString2>16</searchString1ANDsearchString2>
 	<searchString1ORsearchString2>85</searchString1ORsearchString2>
@@ -346,9 +346,5 @@
 	<productionText>Production</productionText>
 	<tiffPageCountNam>TIFFPageCount</tiffPageCountNam>
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
-	
-	<!-- Added by Gopinath Created date - 22/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
-	<invalidNameText>Invalid Name</invalidNameText>
 	
 </TestData>

@@ -96,6 +96,10 @@ public class DocView_Redactions_Regression {
 
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 2)
 	public void verifyDocViewRedactionPanel() throws Exception {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
@@ -175,12 +179,15 @@ public class DocView_Redactions_Regression {
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 1)
 
 	public void verifyBlankRedactionTag() throws Exception {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 // Adding rectangular redaction and saving-modified on 24/08/2021
 		baseClass.stepInfo("Test case Id: RPMXCON-52321, RPMXCON-52322");
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.randomText);
+		sessionsearch.basicContentSearch(Input.searchBulletDocId);
 		sessionsearch.ViewInDocView();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
@@ -266,6 +273,10 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 4)
 	public void testShareSteps() throws Exception {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 60);
@@ -321,7 +332,11 @@ public class DocView_Redactions_Regression {
 
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 5)
 	public void verifyRedactionPanel() throws Exception {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Test case Id: RPMXCON 52254");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
@@ -400,6 +415,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 6)
 	public void RedactPageRange() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Actions actions = new Actions(driver.getWebDriver());
@@ -440,6 +458,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 7)
 	public void RedactPageRangeImpersonatingUser() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51998, RPMXCON-51997");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -485,6 +506,9 @@ public class DocView_Redactions_Regression {
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 8)
 
 	public void verifyRedactionTagBlank() throws Exception {
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 // search for document
@@ -530,6 +554,8 @@ public class DocView_Redactions_Regression {
 
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 12)
 	public void persistentHitAudioDocs() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -579,8 +605,11 @@ public class DocView_Redactions_Regression {
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 14)
 	public void VerifyTextHightingNotPresent() throws Exception {
 		baseClass = new BaseClass(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Test case Id: RPMXCON-51731");
 		docViewRedact = new DocViewRedactions(driver);
+
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
@@ -598,8 +627,11 @@ public class DocView_Redactions_Regression {
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 15)
 	public void VerifyToggleONhideZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Test case Id: RPMXCON-51755");
 		docViewRedact = new DocViewRedactions(driver);
+
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
@@ -616,8 +648,11 @@ public class DocView_Redactions_Regression {
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 16)
 	public void VerifyToggleOFFshowZeroHits() throws Exception {
 		baseClass = new BaseClass(driver);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass.stepInfo("Test case Id: RPMXCON-51756");
 		docViewRedact = new DocViewRedactions(driver);
+
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Logged-in as RMU User");
 		System.out.println("Logged-in as RMU User");
@@ -633,6 +668,9 @@ public class DocView_Redactions_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 17)
 	public void VerifyColourRemarksEditing() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
@@ -698,6 +736,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 18)
 	public void VerifyMagnifyingIconInDocViewForAllUsers() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51558");
@@ -721,6 +762,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 19)
 	public void VerifyOnOffColourChangeInDocViewPage() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		Actions actions = new Actions(driver.getWebDriver());
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -751,6 +795,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 20)
 	public void verifyPersistantHitIconFromBasicSearch() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50848");
@@ -777,6 +824,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 21)
 	public void verifyHighlitesPanelisOpenWhileNavigatingFromMiniDocList() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51346");
@@ -802,6 +852,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 23)
 	public void VerifyReviewerRemarksPanel() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51345");
@@ -826,6 +879,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 24)
 	public void VerifyReviewerPersistentHitPanel() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51344");
@@ -850,6 +906,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 25)
 	public void VerifyMultiPagePopUpInput() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47034");
@@ -883,6 +942,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 26)
 	public void VerifyMultiPagePopUpInputMessage() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47033");
@@ -919,6 +981,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 27)
 	public void VerifyThisPageRedactionAfterRefresh() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
@@ -960,6 +1025,9 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 28)
 	public void verifyTextSearchAfterUserClicksX() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		loginPage = new LoginPage(driver);
@@ -999,13 +1067,18 @@ public class DocView_Redactions_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 29)
 	public void verifyMultiRecRedactionNotRemainSelected() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		DocViewPage docViewPage = new DocViewPage(driver);
 		loginPage = new LoginPage(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
+
 		String docId = Input.searchDocId;
+
 		baseClass.stepInfo("Test case Id: RPMXCON-52214");
 		baseClass.stepInfo("Verify that multiple Rectangle Redaction does not remain selected on DocView Screen");
 		sessionsearch.basicContentSearch(Input.searchDocId);
@@ -1103,6 +1176,9 @@ public class DocView_Redactions_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 30)
 	public void verifyTextSearchAfterUserNavigatesToAnotherDoc() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		loginPage = new LoginPage(driver);
@@ -1197,6 +1273,8 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 31)
 	public void verifyMultiPageRedactionPopup() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-47031");
 		baseClass.stepInfo(
@@ -1233,6 +1311,8 @@ public class DocView_Redactions_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 32)
 	public void verifyPersistentHitPanelIsRetained() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51746");
 		baseClass.stepInfo(
@@ -1273,6 +1353,9 @@ public class DocView_Redactions_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 34)
 	public void verifyPersistentHitNavigation2() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentspage = new AssignmentsPage(driver);
 		loginPage = new LoginPage(driver);
@@ -1342,6 +1425,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 33)
 	public void verifyPersistentHitNavigation() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51445");
 		baseClass.stepInfo(
@@ -1406,6 +1492,9 @@ public class DocView_Redactions_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 35)
 	public void verifyRedactionInAudioDocs() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-47723");
 		baseClass.stepInfo(
@@ -1424,6 +1513,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 36)
 	public void verifyPersistentHitsAfterReassignDocuments() throws InterruptedException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SoftAssert softAssert = new SoftAssert();
@@ -1522,6 +1614,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 37)
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearch() throws InterruptedException {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
@@ -1625,6 +1720,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 38)
 	public void verifyPersistentHitsAfterReassignDocumentsSavedSearchGroup() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
@@ -1729,6 +1827,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 39)
 	public void verifyHighlightedKeywordsForDocsSearchWithMetadata() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -1772,6 +1873,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 40)
 	public void verifyHighlightedKeywordsForDocsSearchWithCommentsRemarks() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -1814,6 +1918,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 41)
 	public void verifyHighlightedKeywordsForDocsSearchWithWorkProduct() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -1859,6 +1966,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 42)
 	public void verifyHighlightedKeywordsForDocSearchWithCommentsRemarks() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -1897,6 +2007,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 43)
 	public void verifyHighlightedKeywordsForDocSearchWithMetadata() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -1939,6 +2052,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 44)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDown() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2196,6 +2312,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 45)
 	public void verifyDocInMiniDocListChildWindowAfterScrollingDownTillLoadingTextDisplayed() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2454,6 +2573,9 @@ public class DocView_Redactions_Regression {
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 46)
 	public void verifyDocInMiniDocsAfterScrollingDownTillLoadingTextDisplayedWhenDocIsSearchedUsingDocId()
 			throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		DocViewPage docView = new DocViewPage(driver);
@@ -2629,6 +2751,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 47)
 	public void verifyPersistentHitsAfterRemoveAndReassignDocumentsSavedSearchGroup() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		SavedSearch savedSearch = new SavedSearch(driver);
@@ -2746,6 +2871,9 @@ public class DocView_Redactions_Regression {
 
 //	@Test(enabled = true, alwaysRun = true , groups = { "regression" }, priority = 48)
 	public void verifyPersistentHitsAfterCompleteDocumentsSavedSearchGroup() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionSearch = new SessionSearch(driver);	
 		SoftAssert softAssert = new SoftAssert();

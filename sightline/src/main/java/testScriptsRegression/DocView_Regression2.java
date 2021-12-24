@@ -71,11 +71,16 @@ public class DocView_Regression2 {
 
 		// Login as a PA
 		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
-//	@Test(groups = { "regression" }, priority = 0)
+	@Test(groups = { "regression" }, priority = 0)
 	public void printRedactedDocsAfterImpersonation() throws Exception {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47736");
 		baseClass.stepInfo(
@@ -125,7 +130,9 @@ public class DocView_Regression2 {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThumbnailsInDocView() throws Exception {
-		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51009");
 		baseClass.stepInfo(
@@ -202,7 +209,7 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.randomText);
 		baseClass.stepInfo("Search with text input - TEST completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
@@ -440,7 +447,6 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 	}
-	
 
 	/**
 	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51566

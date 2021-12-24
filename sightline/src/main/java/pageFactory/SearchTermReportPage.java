@@ -1,3 +1,4 @@
+
 package pageFactory;
 
 import java.awt.AWTException;
@@ -225,6 +226,9 @@ public class SearchTermReportPage {
 	public Element getHitsCount() {
         return driver.FindElementByXPath("//label[@id='lblHitsCount']/font/b");
     }
+	public Element getActionExportData() {
+		return driver.FindElementByXPath("//a[text()=' Export Data']");
+	}
 	
 	public SearchTermReportPage(Driver driver) {
 		this.driver = driver;
@@ -661,5 +665,18 @@ public class SearchTermReportPage {
 		bc.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
 		return TotalDocs;
 }
+
+    /**
+	 * @author Jayanthi.ganesan
+	 */
+	public void STR_ToExportData() {
+		bc.waitForElement(getActionButton());
+		getActionButton().Click();
+		bc.waitTime(2);
+		bc.waitForElement(getActionExportData());
+		getActionExportData().waitAndClick(10);
+		bc.stepInfo("Navigating from Search term report page to Export page.");
+	}
+
 
 }

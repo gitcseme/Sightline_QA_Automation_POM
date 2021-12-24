@@ -4518,21 +4518,5 @@ public class CodingForm {
 		base.waitForElement(getCodingForm_Validation_ButtonYes());
 		getCodingForm_Validation_ButtonYes().waitAndClick(5);
 	}
-	
-	/*
-	 * Indium-Baskar
-	 */
-	
-	public void createCommentAndMetadata(String metadata,String comment,String cfName) throws InterruptedException {
-		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
-		driver.waitForPageToBeReady();
-		addNewCodingFormButton();
-		basedOnCreatingNewObject(null, comment, null,"comment");
-		addcodingFormAddButton();
-		basedOnCreatingNewObject(null, null, metadata,"metadata");
-		addcodingFormAddButton();
-		passingCodingFormName(cfName);
-		saveCodingForm();
-	}
 
 }
