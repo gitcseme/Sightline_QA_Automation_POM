@@ -89,7 +89,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	// @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void verifyAndValidateCustomDataReport(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields = { "CustodianName" };
@@ -296,7 +296,31 @@ public class CustomDocumentDataReport_Regression1 {
 				"Custom Document Data Report generated if ‘Export Object Names’ and if 'Scrub export of special characters' option is toggled 'ON'");
 
 	}
-
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+	public void verifyRowDisplay_metadataTab(String username, String password, String role)
+			throws InterruptedException, IOException {
+		String[] workproductFields = { "All Comments", "All Folders","All Tags","All Redaction Tags", };
+		bc.stepInfo("Test case Id: RPMXCON-56939");
+		bc.stepInfo("Verify Export page shows upto 14 rows default for available objects on All reports");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		driver.waitForPageToBeReady();
+		cddr.getCustomDocumentDataReport().Click();
+		driver.waitForPageToBeReady();
+		cddr.verifyMetaFieldDisplay();
+		cddr.validateWrkprductHeaders(workproductFields);
+	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");

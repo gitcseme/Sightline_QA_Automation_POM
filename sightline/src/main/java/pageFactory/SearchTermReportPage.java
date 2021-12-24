@@ -220,6 +220,9 @@ public class SearchTermReportPage {
 	public Element getFinalizeButton() {
 		return driver.FindElementById("btnfinalizeAssignment");
 	}
+	public Element getActionExportData() {
+		return driver.FindElementByXPath("//a[text()=' Export Data']");
+	}
 
 	
 	public SearchTermReportPage(Driver driver) {
@@ -630,4 +633,16 @@ public class SearchTermReportPage {
 		bc.stepInfo("performing bulk release for "+SG+" docs count is " + TotalDocs);
 		return TotalDocs;
 }
+
+    /**
+	 * @author Jayanthi.ganesan
+	 */
+	public void STR_ToExportData() {
+		bc.waitForElement(getActionButton());
+		getActionButton().Click();
+		bc.waitTime(2);
+		bc.waitForElement(getActionExportData());
+		getActionExportData().waitAndClick(10);
+		bc.stepInfo("Navigating from Search term report page to Export page.");
+	}
 }
