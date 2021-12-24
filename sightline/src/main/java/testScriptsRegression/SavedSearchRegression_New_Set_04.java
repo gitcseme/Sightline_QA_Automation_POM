@@ -706,6 +706,105 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application displays all documents that are in the
+	 *              aggregate results set of "Shared With Project
+	 *              Administrator/Shared With Default Security Group" and User
+	 *              performs Execute option with Search groups [RPMXCON-49006]
+	 * @param username
+	 * @param password
+	 * @param fullname
+	 * @param SGtoShare
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, dataProvider = "UserAndShare", groups = { "regression" }, priority = 13)
+	public void verifyAppDispalysAggregateResult(String username, String password, String fullname, String SGtoShare)
+			throws InterruptedException {
+		int noOfNodesToCreate = 2;
+		int selectIndex = 0;
+		String node;
+		Boolean inputValue = true;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-49006 - Saved Search Sprint 08");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of \"Shared With Project Administrator/Shared With Default Security Group\" and User performs Execute option with Search groups");
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+
+		// Adding searches to the created nodes
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		saveSearch.sortedMapList(nodeSearchpair);
+
+		// verify Searches in child nodes and share to SG
+		saveSearch.navigateToSSPage();
+		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSSPage();
+		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
+		System.out.println("Final : " + node);
+		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
+
+		// Verify Search Status And Count in all nodes
+		saveSearch.verifyStatusAndCountInAllChildNode(SGtoShare, newNodeList, selectIndex, nodeSearchpair);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+		saveSearch.deleteNode(SGtoShare, newNodeList.get(0));
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that user can run any of the actions(DocList/Share),
+	 *              when the saved search is in Complete state.[RPMXCON-48911]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
+	public void verifyAppDispalysAggregateResult() throws InterruptedException, ParseException {
+		String Search1 = "search" + Utility.dynamicNameAppender();
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48911  Saved Search");
+		base.stepInfo(
+				"Verify that user can run any of the actions(DocList/Share), when the saved search is in Complete state.");
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int purehit = session.returnPurehitCount();
+		session.saveSearch(Search1);
+
+		// Get Completed Status
+		saveSearch.savedSearch_Searchandclick(Search1);
+		driver.waitForPageToBeReady();
+		String searchStatus = saveSearch.getSavedSearchStatus(Search1).getText();
+		base.stepInfo(Search1 + " Last Status is : " + searchStatus);
+		softAssertion.assertEquals(searchStatus, "COMPLETED");
+
+		// perform share Action
+		saveSearch.shareSavedSearchRMU(Search1, Input.shareSearchDefaultSG);
+
+		// Delete search
+		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+		softAssertion.assertAll();
+		login.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
