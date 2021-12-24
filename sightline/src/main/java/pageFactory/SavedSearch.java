@@ -6522,4 +6522,55 @@ public class SavedSearch {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @param SGtoShare
+	 * @param newNodeList
+	 * @param selectIndex
+	 * @param nodeSearchpair
+	 */
+	public void verifyStatusAndCountInAllChildNode(String SGtoShare, List<String> newNodeList, int selectIndex,
+			HashMap<String, String> nodeSearchpair) {
+		getSavedSearchGroupName(SGtoShare).waitAndClick(10);
+		getSavedSearchNewGroupExpand().waitAndClick(20);
+		String node = null, searchiD;
+		for (int i = 0; i <= nodeSearchpair.size() - 1; i++) {
+			node = newNodeList.get(i);
+
+			// verify id should get changed
+			try {
+				base.waitForElement(getSavedSearchGroupName(node));
+				softAssertion.assertTrue(getSavedSearchGroupName(node).isDisplayed());
+				System.out.println(node + " : Search group is Present in " + SGtoShare);
+				base.passedStep(node + " : Search group is Present in " + SGtoShare);
+				getSavedSearchGroupName(node).Click();
+				if (i >= selectIndex) {
+					savedSearch_SearchandSelect(nodeSearchpair.get(node), "No");
+					driver.waitForPageToBeReady();
+
+					// GetStatus
+					String searchStatus = getLastStatus();
+					base.stepInfo(nodeSearchpair.get(node) + " Status : " + searchStatus);
+					softAssertion.assertEquals(searchStatus, "COMPLETED");
+
+					// Result count
+					String resultCount = getSelectSearchWithResultCount(nodeSearchpair.get(node)).getText();
+					if (resultCount.length() > 0) {
+						base.stepInfo("Count Of Doc is : " + resultCount);
+					} else {
+						base.stepInfo("Count Of Doc is Empty : " + resultCount);
+					}
+
+				} else {
+					verifySavedSearch_isEmpty();
+					base.passedStep("Not the selected search group");
+				}
+				getSavedSearchNewGroupExpand().waitAndClick(20);
+			} catch (Exception e) {
+				System.out.println(node + " : Search group is not Present in " + SGtoShare);
+				base.failedStep(node + " : Search group is not Present in " + SGtoShare);
+			}
+		}
+		softAssertion.assertAll();
+	}
 }
