@@ -20,6 +20,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.RedactionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -36,6 +37,7 @@ public class Production_Test_Regression {
 	SessionSearch sessionSearch;
 	DocListPage docPage;
 	DocViewPage docViewPage;
+	ProjectFieldsPage projectField;
 	SoftAssert softAssertion;
 	String prefixID = "A_" + Utility.dynamicNameAppender();
 	String suffixID = "_P" + Utility.dynamicNameAppender();
@@ -1213,7 +1215,7 @@ public class Production_Test_Regression {
 	page.fillingProductionLocationPage(productionname);
 	page.navigateToNextSection();
 	page.fillingSummaryAndPreview();
-	page.fillingGeneratePageWithContinueGenerationPopupWithoutWait();
+	page.getbtnProductionGenerate().waitAndClick(10);
 	
 	// Go To Production Home Page
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
@@ -1228,6 +1230,78 @@ public class Production_Test_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-50017
+	 * @Description: Verify if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..
+	 */
+	@Test(groups = { "regression" }, priority = 21)
+	public void verifyAllProductionBatesRangesSearchable() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50017 -Production Sprint 09");
+		
+		ProjectFieldsPage projectField=new ProjectFieldsPage(driver);
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+	
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		sessionSearch.getBasicSearch_MetadataBtn().waitAndClick(5);
+		sessionSearch.getSelectMetaData().waitAndClick(5);
+		boolean flag=sessionSearch.getAllProductionBatesRanges().isDisplayed();
+		SoftAssert softAssertion= new SoftAssert();
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("'AllProductionBatesRanges' field is Available in Dropdown");
+		}else {
+			base.failedStep("'AllProductionBatesRanges' field is not Available in Dropdown");
+		
+		}
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+		base.passedStep("Verified if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..");
+		
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-50018
+	 * @Description: Verify if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again
+	 */
+	@Test(groups = { "regression" }, priority = 22)
+	public void verifyAllProductionBatesRangesNotSearchable() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50018 -Production Sprint 09");
+		
+		ProjectFieldsPage projectField=new ProjectFieldsPage(driver);
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+	
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		sessionSearch.getBasicSearch_MetadataBtn().waitAndClick(5);
+		sessionSearch.getSelectMetaData().waitAndClick(5);
+		boolean flag=sessionSearch.getAllProductionBatesRanges().isDisplayed();
+		SoftAssert softAssertion= new SoftAssert();
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("'AllProductionBatesRanges' field is Available in Dropdown");
+		}else {
+			base.failedStep("'AllProductionBatesRanges' field is not Available in Dropdown");
+		
+		}
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.disableIsSearchableBatesRangeIsSelected();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.disableIsSearchableBatesRangeIsSelected();
+		base.passedStep("Verified if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again");
 		
 	}
 	
