@@ -151,7 +151,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	}
 	
 	/**
-	 * Author : Mohan date: 17/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51081 
+	 * Author : Mohan date: 23/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51081 
 	 * @description: Verify warning message is prompted to the user when user clicks browser back button
 	 *  without completing or saving from analytics panel 'RPMXCON-50921' Sprint 8
 	 */
@@ -230,6 +230,132 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Mohan date: 24/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50902 
+	 * @description: To verify Threaded Map tab when no document to display for logged in user 'RPMXCON-50902' Sprint 8
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	public void verifyThreadedMapTabWhenNoDocsAreDisplayed() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50902");
+		baseClass.stepInfo("To verify Threaded Map tab when no document to display for logged in user");
+		
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 3: Verify threaded map tab when no document to display");
+		docView.verifyThreadMapWithNoDocs();
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Verify threaded map tab when no document to display");
+		docView.verifyThreadMapWithNoDocs();
+		
+		loginPage.logout();
+		
+		
+		
+		
+	}
+	
+	
+	/**
+	 * Author : Mohan date: 24/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50905 
+	 * @description: To verify user can select Multiple documents in Analytic Panel-> Family Members tab and select Action as 'Code Same as this' 'RPMXCON-50902' Sprint 9
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	public void verifyFamilyMemberTabWhenMultiDocsAreSelectedAndActionCodeSameAs() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50905");
+		baseClass.stepInfo(" To verify user can select Multiple documents in Analytic Panel-> Family Members tab and select Action as 'Code Same as this'");
+		
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		int id=31;
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		docView.selectFamilyMemberPureHit();
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		baseClass.impersonateRMUtoReviewer();
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_DefaultViewTab());
+		baseClass.waitForElement(docView.getDocView_NumTextBox());
+		docView.getDocView_NumTextBox().Clear();
+		docView.getDocView_NumTextBox().SendKeys(Integer.toString(id));
+		docView.getDocView_NumTextBox().Enter();
+		
+		baseClass.stepInfo("Step 3: Select the documents from family member which are assigned to the user  Select multiple documents from Family Members and action as 'Code same as this'  ");
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		baseClass.stepInfo("Step 4: Edit the coding form of the principle document and save/complete the document");
+		docView.editCodingFormComplete();
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Select the documents from family member which are assigned to the user  Select multiple documents from Family Members and action as 'Code same as this'  ");
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		baseClass.stepInfo("Step 4: Edit the coding form of the principle document and save/complete the document");
+		docView.editCodingFormComplete();
+		
+		loginPage.logout();
+		
+		
+	}
+	
 	
 	
 	@AfterMethod(alwaysRun = true)

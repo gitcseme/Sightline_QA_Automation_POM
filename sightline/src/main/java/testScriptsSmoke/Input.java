@@ -168,6 +168,7 @@ public class Input {
 	public static String historyClockIconDocId;
 	public static String newNearDupeDocId;
 	public static String warningDocId;
+	public static String threadData1;
 
 	// DocView codingform Baskar Indium
 
@@ -572,6 +573,7 @@ public class Input {
 		familyDocumentForReviewer = testData.getFamilyDocumentForReviewer();
 		historyClockIconDocId = testData.getHistoryClockIconDocId();
 		warningDocId=testData.getWarningDocId();
+		threadData1=testData.getThreadData1();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

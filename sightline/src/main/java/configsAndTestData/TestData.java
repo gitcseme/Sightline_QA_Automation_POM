@@ -76,6 +76,7 @@ public class TestData {
 	public String historyClockIconDocId;
 	public String newNearDupeDocId;
 	public String warningDocId;
+	public String threadData1;
 
 	// Baskar Indium Docview Codingform
 	public String savedName;
