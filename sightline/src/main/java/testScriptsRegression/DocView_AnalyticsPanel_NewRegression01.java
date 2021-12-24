@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 
+import org.openqa.selenium.Alert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -42,8 +43,8 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		// Open browser
-//		 Input in = new Input();
-//		 in.loadEnvConfig();
+		 Input in = new Input();
+		 in.loadEnvConfig();
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
@@ -149,6 +150,87 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 	}
 	
+	/**
+	 * Author : Mohan date: 17/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51081 
+	 * @description: Verify warning message is prompted to the user when user clicks browser back button
+	 *  without completing or saving from analytics panel 'RPMXCON-50921' Sprint 8
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	public void verifyWarningMsgWHenUserClicksBackButton() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50921");
+		baseClass.stepInfo("Verify warning message is prompted to the user when user clicks browser back button without completing or saving from analytics panel");
+		
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 3: Select documents from mini doc list and action as 'Code same as this'  Do not click on 'Complete' or 'Save'");
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		
+		driver.waitForPageToBeReady();
+		driver.Navigate().back();
+		
+		driver.switchTo().alert().dismiss();
+		
+		
+		if (docView.getDocId().isElementAvailable(1)) {
+			baseClass.passedStep("User is on DocView");
+			System.out.println("User is on DocView");
+			
+		}else {
+			baseClass.failedStep("User is not In DocView");
+			System.out.println("User is not In DocView");
+		}
+		
+		driver.waitForPageToBeReady();
+		driver.Navigate().refresh();
+		docView.selectDocsFromMiniDocsAndCodeSameAs();
+		driver.Navigate().back();
+		driver.switchTo().alert().accept();
+		
+		if (assignmentsPage.getManageAssignmnets().isElementAvailable(1)) {
+			baseClass.passedStep("Users actions is not saved and user is redirect to the clicked page.");
+			System.out.println("User is on Assignment selection Page");
+		}else {
+			baseClass.failedStep("User is not on the clicked Page");
+		}
+		
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 4: Select documents from analytics panel and action as 'Code same as this'  Do not click on 'Complete' or 'Save' and click browser back button");
+		docView.selectDocsFromConceptualTabAndActionCodeSame();	
+		
+		driver.Navigate().back();
+		
+		String text = driver.switchTo().alert().getText();
+		System.out.println(text);
+		baseClass.passedStep("on navigation user action will not be save do you want to continue  - Leave and Cancel buttons is displayed.");
+		baseClass.waitTime(3);
+		driver.switchTo().alert().dismiss();
+		
+		loginPage.logout();
+	}
+	
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
@@ -171,7 +253,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		try {
 			loginPage.quitBrowser();
 		} finally {
-			loginPage.clearBrowserCache();
+		//	loginPage.clearBrowserCache();
 		}
 
 	}

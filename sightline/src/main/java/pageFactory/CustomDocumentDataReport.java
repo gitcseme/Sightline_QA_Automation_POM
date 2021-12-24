@@ -146,6 +146,15 @@ public class CustomDocumentDataReport {
 	public ElementCollection getSelectedFieldsList() {
 		return driver.FindElementsByXPath("//span[@class='itemFriendlyName']");
 	}
+	public Element getDefaultWorkproductCheckBox(String eleValue) {
+		return driver.FindElementByXPath("//*[@id='tab2-export']//div/ul/li/a[text()='"+eleValue+"']");
+	}
+	public Element getToggle_ObjectName() {
+		return driver.FindElementByXPath("//label//i[@id='exportObject']");
+	}
+	public Element getToggle_ScrubSpecChar() {
+		return driver.FindElementByXPath("//div[@id='divCcrubSpecialChar']//i");
+	}
 
 	public CustomDocumentDataReport(Driver driver) {
 
@@ -459,4 +468,18 @@ public class CustomDocumentDataReport {
 		actions.build().perform();
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param Wfields
+	 */
+	public void selectDefaultWorkProductFields(String[] Wfields) {
+		getWorkProductTab().Click();
+		for (int i = 0; i < Wfields.length; i++) {
+			driver.scrollingToBottomofAPage();
+			getDefaultWorkproductCheckBox(Wfields[i]).waitAndClick(5);
+		}
+		getAddToSelectedBtn().waitAndClick(2);
+		driver.scrollPageToTop();
+	}
+
 }

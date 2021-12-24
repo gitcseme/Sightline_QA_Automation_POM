@@ -901,12 +901,17 @@ public class BatchRedactionRegression2 {
 		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
 		batch.getPopupYesBtn().Click();
 		batch.verifyBatchHistoryStatus(searchName);
+		
+		final int Bgcount = base.initialBgCount();
+		System.out.println(Bgcount);
+		
 		base.waitForElement(batch.getRollbackbtn(searchName));
 		batch.getRollbackbtn(searchName).Click();
 		batch.getPopupYesBtn().Click();
 		String ExpectedMsg = "Your request to Roll Back this Batch Redaction has been added to the background.  Once it is complete, the \"bullhorn\" icon in the upper right hand corner will turn red to notify you of the results of your request.";
 		base.VerifySuccessMessageB(ExpectedMsg);
-		batch.verifyStatusInBackGroundTaskPg();
+		batch.verifyStatusInBackGroundTaskPg(Bgcount);
+		
 		// Delete Search
 		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
 		login.logout();

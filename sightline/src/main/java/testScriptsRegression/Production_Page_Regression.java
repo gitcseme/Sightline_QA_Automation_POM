@@ -1141,6 +1141,80 @@ public class Production_Page_Regression {
 		
 	}
 	
+	/**
+	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49250
+	 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each
+	 *                 document should be zero when only DAT component is selected
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 19)
+	public void verifyDocumentCountForDAT() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString20Docs);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATWithMultipleDropDown();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, tagname);
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49251
+	 * @Description:To verify In Productions DAT, TIFFPageCount for each document should be displayed when production is done with any component
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 20)
+	public void verifyDocumentCountForDATWithOtherComponent() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.searchString20Docs);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATWithMultipleDropDown();
+		page.fillingNativeSection();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, tagname);
+
+	}
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },

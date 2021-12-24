@@ -4022,4 +4022,27 @@ public class DocListPage {
 			base.failedStep("Exception is occured while selecting doc file size of document" + e.getMessage());
 		}
 	}
+	/**
+	 * @author Brundha
+	 * @Description  : Method for verifying doccount
+	 */
+	
+	public String verifyingDocCount() {
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getDocList_info());
+	    String DocListCount=getDocList_info().getText();
+		
+		String[] doccount = DocListCount.split(" ");
+		String DocumentCount = doccount[5];
+		System.out.println("doclist page document count is"+DocumentCount);
+		
+		driver.scrollPageToTop();
+		base.waitForElement(getBackToSourceBtn());
+		getBackToSourceBtn().Click();
+		driver.waitForPageToBeReady();
+		return DocumentCount;
+		
+		
+	}
 }

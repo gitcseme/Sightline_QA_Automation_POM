@@ -844,6 +844,10 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getAddFieldButtonInDAT() {
+		return driver.FindElementByXPath("//div//button[@class='btn btn-primary btn-add-row datAddNewRow']");
+	}
+
 
 	public Element getClkBtnDownloadDATFiles() {
 		return driver.FindElementByXPath("(//span[contains(text(),'Download DAT file')])[1]");
@@ -2049,7 +2053,19 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//a[text()='Mark Incomplete']");
 	}
 	
-
+	public Element getDocumentSelectionLink() {
+		return driver.FindElementById("TotalDocumentsCount");
+	}
+	
+	public Element NextBatesNumberPopup() {
+		return driver.FindElementById("hdrNextBatesNo");
+	}
+	public Element selectNextBatesNumber() {
+		return driver.FindElementByXPath("(//button[contains(text(),'Select')])[2]");
+	}
+	public Element getClickHereLinks() {
+		return driver.FindElementByXPath("//div[@id='divNextBatesNum']//label/a");}
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -12808,6 +12824,61 @@ public class ProductionPage {
 		}
 
 	}
+	
+	/**
+	 * @author sowndarya.velraj
+	 */
+	public void fillingDATWithMultipleDropDown() {
+
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().Click();
+
+		base.waitForElement(getDATTab());
+		getDATTab().Click();
+
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+
+		base.waitForElement(getDAT_SourceField1());
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+
+		base.waitForElement(getDAT_DATField1());
+		getDAT_DATField1().SendKeys("BatesNumber");
+
+		base.stepInfo("Dat section is filled with BATES");
+
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification2().ScrollTo();
+//		getDAT_FieldClassification2().waitAndClick(5);
+		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
+
+		base.waitForElement(getDAT_SourceField2());
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
+
+		base.waitForElement(getDAT_DATField2());
+		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+		
+		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
+		
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification3().ScrollTo();
+		getDAT_FieldClassification3().waitAndClick(5);
+		getDAT_FieldClassification3().selectFromDropdown().selectByVisibleText("Doc Basic");
+
+		base.waitForElement(getDAT_SourceField3());
+		getDAT_SourceField3().selectFromDropdown().selectByVisibleText("DocID");
+
+		base.waitForElement(getDAT_DATField3());
+		getDAT_DATField3().SendKeys("DOCID");
+		
+		base.stepInfo("Dat section is filled with DOCID");
+
+	}
+
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -14246,4 +14317,133 @@ public class ProductionPage {
 			base.failedStep("verify user not able to select documents."+e.getMessage() );
 		}
 	}
+	
+	/**
+	 * @author Brundha
+	 * @Description  : Method for navigating to doclist page.
+	 */
+	public String navigatingToDocViewPage() {
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+
+		System.out.println("Clicked on Mark Complete Button..");
+		driver.waitForPageToBeReady();
+		String docCount=getDocumentSelectionLink().getText();
+		base.waitForElement(getDocumentSelectionLink());
+		getDocumentSelectionLink().Click();
+		return docCount;
+		
+	}
+
+	public void verifyNavigationToProductionPage() {
+	if(	getDocumentSelectionLink().isDisplayed()) {
+		base.passedStep("Prodcution page is loaded successfully");
+	}else {
+		base.failedMessage("prodcution page is not loaded");
+	}
+		
+	}
+	/**
+	 * @author Brundha
+	 * @Description  :method to  next bates number
+	 */
+	public void SelectNextBatesNumber() {
+		driver.waitForPageToBeReady();
+		String actualText=getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt"+actualText);
+		base.waitForElement(getClickHereLink());
+		getClickHereLink().Click();
+		if(NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is opened");}
+		else {base.failedStep("Next bates number popup is not opened");}
+		base.waitForElement(getNextBatesNumber());
+		getNextBatesNumber().Click();
+		
+		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is closed automatically");}
+		else {base.failedStep("Next bates number is not closed automatically");}
+		
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("values are Auto populated in Numbering and Sorting Tab");}
+		else {base.failedStep("value are not Auto populated in Numbering and Sorting Tab");}
+		
+	}
+	/**
+	 * @author Brundha
+	 * @Description  : Method for navigating back to numbering and sorting tab
+	 */	
+	public void navigatingBackToNumberingAndSortingPage() {
+		for(int i=0;i<5;i++) {
+			driver.waitForPageToBeReady();
+		base.waitForElement(getBackButton());
+		getBackButton().waitAndClick(5);
+		}
+        base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
+		getMarkInCompleteBtn().waitAndClick(5);
+
+	}
+	/**
+	 * @author Brundha
+	 * @Description  :method to validate clickhere link
+	 */
+	public void verifyClickHereLinkNotAvailableAtMarkComplete() throws InterruptedException {
+		
+		if(getClickHereLink().isDisplayed()) {
+			base.passedStep("ClickHere link is available before Markcomplete");
+			base.waitForElement(getClickHereLink());
+			getClickHereLink().Click();
+			base.waitForElement(getNextBatesNumber());
+			getNextBatesNumber().Click();
+			}
+		else {base.failedStep("ClickHere link is not available before Markcomplete");}
+		
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		driver.waitForPageToBeReady();
+        boolean flag=getClickHereLinks().Displayed()&& getClickHereLinks().Exists();
+		if(!flag) {
+			System.out.println("passed");
+			base.passedStep("ClickHere link  is  not available After selecting Markcomplete as expected");}
+		else {
+			System.out.println("failed");
+		base.failedStep("ClickHere link is  available After Markcomplete ");}
+		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is not displayed after selecting markcomplete");}
+		else {base.failedStep("Next bates number popup is displayed after selecting markcomplete");}
+	}
+			
+		
+	/**
+	 * @author Brundha
+	 * @Description  :method to  refillling a new next bates number
+	 */
+	public void enteringNewNextBatesNumber() {
+		driver.waitForPageToBeReady();
+		if(getClickHereLink().isDisplayed()) {base.passedStep("After selecting MarkIncomplete clickhere link is available");}
+		
+		else{base.failedStep("After selecting MarkIncomplete clickhere link is not available");}
+		String actualText=getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt"+actualText);
+		base.waitForElement(getClickHereLink());
+		getClickHereLink().Click();
+		base.waitForElement(selectNextBatesNumber());
+		selectNextBatesNumber().Click();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("New Bates Number Values are updated and Auto populated in the Beginning Bates");}
+		else {base.failedStep("New Bates Number Values are not  updated and Auto populated in the Beginning Bates");}
+		
+	}
+		
+	
+	
+	
+	
+	
+	
 }

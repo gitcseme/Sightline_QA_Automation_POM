@@ -2272,7 +2272,29 @@ public class DocViewPage {
 	public Element getSecondDocIdOnMiniDocList() {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[2]//td[2]");
 	}
+	//Added by Aathith
+	public Element getlastDocinMiniDocView() {
+		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr/td[2])[last()]");
+	}
+	public Element getbtnDeleteEditStamp() {
+		return driver.FindElementById("btnDeleteEditStamp");
+	}
+	public Element getEditStampGearIcon() {
+		return driver.FindElementByXPath("//a[@id='stampSettings']");
+	}
 
+	//Added by Vijaya.Rani
+	public Element get1stDocinMiniDoc_ChildDocs() {
+		return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]/tbody/tr[1]/td[2]");
+	}
+	
+	public Element getEditCodingStampCF() {
+		return driver.FindElementByXPath("//div[@id='codingstamp']//a[@id='stampSettings']//i");
+	}
+	public Element getDocIdLast() {
+		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr[\" + row + \"]/td[2])[last()]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -16144,7 +16166,7 @@ public class DocViewPage {
 		}
 
 		// delete stamp Color
-		// reusableDocView.deleteStampColour(lastIcons);
+	    reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
 
 	}
@@ -16278,5 +16300,610 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void markInCompletedDocEditableCheck() {
+		SoftAssert softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("enter document before");
+		String beforeText =getAddComment1().getText();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("after enter document");
+		String afterText =getAddComment1().getText();
+		driver.waitForPageToBeReady();
+		softAssertion.assertNotEquals(beforeText, afterText);
+		if (beforeText!=afterText) {
+			softAssertion.assertNotEquals(beforeText, afterText);
+			base.passedStep("InCompleted Document are Editable");
 
+		} else {
+			softAssertion.assertEquals(beforeText, afterText);
+			base.failedStep("InCompleted Document are not Editable");
+
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void codeSameAsLastDisplayCheck() {
+		base.waitForElement(getLastCodeIconWhitePencil());
+		boolean flag=getLastCodeIconWhitePencil().isDisplayed();
+		if(flag) {
+			System.out.println("code same as last code displayed");
+			base.passedStep("Code same as last code displayed");
+		}
+		else {
+			System.out.println("code same as last code is not displayed");
+			base.failedStep("Code same as last code is not displayed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void verifyThatIsLastDoc() {
+		String expectText=getlastDocinMiniDocView().getText().trim();
+		System.out.println(expectText);
+		getDocView_Last().waitAndClick(5);
+		String actualText=getDocView_CurrentDocId().getText().trim();
+		System.out.println(actualText);
+		if(expectText.equalsIgnoreCase(actualText)) {
+			softAssertion.assertEquals(actualText, expectText);
+			System.out.println("assert are equal");
+			base.stepInfo("last document navigation navigate successfully");
+		}
+		else {
+			System.out.println("assert are not equal");
+			base.stepInfo("last doc navigation failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void deleteBlueStamp() {
+		base.waitForElement(getEditStampGearIcon());
+		driver.scrollingToElementofAPage(getEditStampGearIcon());
+		getEditStampGearIcon().waitAndClick(5);
+		if(getEditStampGearIcon().Enabled()) {
+		base.waitForElement(getStampBlueColour());
+		getStampBlueColour().waitAndClick(5);
+		base.waitForElement(getbtnDeleteEditStamp());
+		getbtnDeleteEditStamp().waitAndClick(5);
+		}else {
+			base.waitForElement(getEditStampGearIcon());
+			getEditStampGearIcon().waitAndClick(5);
+			base.waitForElement(getStampBlueColour());
+			getStampBlueColour().waitAndClick(5);
+			base.waitForElement(getbtnDeleteEditStamp());
+			getbtnDeleteEditStamp().waitAndClick(5);
+		}
+		//base.VerifySuccessMessage("Coding stamp deleted successfully");
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 22/12/2021
+	 * @Description To perform Click Gear Icon Check Child Window Symbol
+	 * 
+	 */
+	public void performGearIconChildWindowSymbol() {
+
+		driver.waitForPageToBeReady();
+		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep(" Analytical panel Child window displayed for parent window");
+		
+
+		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Coding form Child window displayed for parent window");
+		
+
+		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Mini Doc List Child window displayed for parent window");
+		
+
+		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("MetaData Child window displayed for parent window");
+		
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify tick mark in minidoclist child
+	 *              window 
+	 */
+
+	public void verifyCheckMarkIconFromMiniDocListChildWindow() {
+		driver.waitForPageToBeReady();
+	     driver.scrollPageToTop();
+	     try {
+
+				base.waitForElement(getverifyCodeSameAsLast());
+				if (getverifyCodeSameAsLast().Displayed()) {
+					softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+					base.passedStep("CheckMark is displayed successfully");
+				} else {
+					base.failedStep("CheckMark is not displayed");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Check mark is not verified");
+			}
+	     
+	}
+	
+	/**
+	 * @author Vijaya.Rani 23/12/21 NA Modified date: NA Modified by:NA
+	 * @description perform copmlete Doc Not hide Docs miniDocList
+	 */
+	public void verifyPrincipalDocNotHide() {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 1; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 2; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 4; i <= 4; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for verify the saved stamp
+	public void verifySavedStamp(String comment) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocument_CommentsTextBox());
+		String text=getDocument_CommentsTextBox().GetAttribute("value");
+		softAssertion.assertEquals(text,comment);
+		if (text.equals(comment) ) {
+			base.stepInfo("Coding form value as per the previous saved stamp");
+			base.passedStep("Coding form value updated while clicking the saved stamp");
+		} else {
+			base.failedStep("Not as per the expected condition in parent window");
+		}
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for click pencil icon for last applied colour
+	public void pencilGearIconCF(String icon) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getEditCodingStampCF());
+		getEditCodingStampCF().waitAndClick(10);
+		base.waitForElement(getCodingStampLastIcon(icon));
+		getCodingStampLastIcon(icon).waitAndClick(5);
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void deleteSavedStamp(String comment,String fieldText) {
+		driver.waitForPageToBeReady();
+		editCodingForm(comment);
+		stampColourSelection(fieldText,Input.stampSelection);
+		driver.getWebDriver().navigate().refresh();
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in parent window");
+		pencilGearicon(Input.stampSelection);
+		if (getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			base.passedStep("Coding stamp applied colour displayed in popup");
+		}
+		else {
+			base.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		base.waitForElement(getDeletePopUpAssignedColour());
+		getDeletePopUpAssignedColour().waitAndClick(5);
+		base.VerifySuccessMessage("Coding stamp deleted successfully");
+		clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		editCodingForm(comment);
+		codingStampButton();
+		switchToNewWindow(1);
+		popUpAction(fieldText,Input.stampSelection);
+		base.CloseSuccessMsgpopup();
+		switchToNewWindow(2);
+		pencilGearIconCF(Input.stampSelection);
+		closeWindow(1);
+		switchToNewWindow(1);
+		if (getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			base.passedStep("Coding stamp applied colour displayed in popup");
+		}
+		else {
+			base.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		base.waitForElement(getDeletePopUpAssignedColour());
+		getDeletePopUpAssignedColour().waitAndClick(5);
+		base.VerifySuccessMessage("Coding stamp deleted successfully");
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify persistent hit panel for disabled
+	 *              and enabled conditions for 0 count
+	 */
+	public void verifySavedStampForHitPanel(String panel,String comment,String stampText) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
+		String countPersistentHit = getHitPanleVerify(panel).getText();
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		codingStampButton();
+		popUpAction(comment, Input.stampSelection);
+		base.stepInfo("Coding stamp saved");
+		lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		String prnSecDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+		base.passedStep("Cursor navigated to next doc in minidoclist");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean flag = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("No");
+		softAssertion.assertTrue(flag);
+		base.passedStep("Hide Terms with 0 hits:Disabled");
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel after performing save and next");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		driver.waitForPageToBeReady();
+		base.stepInfo("Enabling 0 hits terms in docview panel");
+		getDocView_ToggleButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean docYes = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(docYes);
+		driver.waitForPageToBeReady();
+		base.passedStep("Hide Terms with 0 hits:Enabled");
+		boolean miniDis = getHitPanleVerify(panel).Displayed();
+		softAssertion.assertFalse(miniDis);
+		base.passedStep("0 count terms not displayed in persistent hit panel");
+		lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		String prnThDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnThDoc, prnSecDoc);
+		base.waitForElement(getDocView_ToggleButton());
+		boolean afterSave = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(afterSave);
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+//	Reusable method for click code same as last in coding form 
+//	If code same as last is clicked from coding form,cursor will move to next document in minidoclist.
+	public void clickCodeSameAsLast() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodeSameAsLast());
+		getCodeSameAsLast().waitAndClick(10);
+		softAssertion.assertTrue(getCodeSameAsLast().isDisplayed() && getCodeSameAsLast().Enabled());
+		if (getCodeSameAsLast().Displayed() && getCodeSameAsLast().Enabled()) {
+			base.stepInfo("coded as per the previous document..");
+			base.passedStep("Cursor has moved to the next document in mini doc list..");
+		} else {
+			base.failedStep("Failed to move next document in mini doc list..");
+		}
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify persistent hit panel for disabled
+	 *              and enabled conditions for 0 count
+	 */
+	public void verifyCodeSameAsLastForHitPanel(String panel,String comment) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
+		String countPersistentHit = getHitPanleVerify(panel).getText();
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		codingFormSaveButton();
+		base.stepInfo("Coding form saved successfully");
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		String prnSecDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+		base.passedStep("Cursor navigated to next doc in minidoclist");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean flag = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("No");
+		softAssertion.assertTrue(flag);
+		base.passedStep("Hide Terms with 0 hits:Disabled");
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel after performing save and next");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		driver.waitForPageToBeReady();
+		base.stepInfo("Enabling 0 hits terms in docview panel");
+		getDocView_ToggleButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean docYes = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(docYes);
+		driver.waitForPageToBeReady();
+		base.passedStep("Hide Terms with 0 hits:Enabled");
+		boolean miniDis = getHitPanleVerify(panel).Displayed();
+		softAssertion.assertFalse(miniDis);
+		base.passedStep("0 count terms not displayed in persistent hit panel");
+		for (int i = 3; i <= 4; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		String prnThDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnThDoc, prnSecDoc);
+		base.waitForElement(getDocView_ToggleButton());
+		boolean afterSave = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(afterSave);
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for complete button
+	public void completeButton() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCompleteDocBtn());
+		getCompleteDocBtn().waitAndClick(5);
+	}
+	
+	/**
+	 * @author Indium-Baskar date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify persistent hit panel for disabled
+	 *              and enabled conditions for 0 count
+	 */
+	public void verifyCompleteBtnForHitPanel(String panel,String comment) {
+		driver.waitForPageToBeReady();
+		driver.scrollingToElementofAPage(getHitPanleVerify(panel));
+		softAssertion.assertTrue(getHitPanleVerify(panel).Displayed());
+		String countPersistentHit = getHitPanleVerify(panel).getText();
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		editCodingForm(comment);
+		completeButton();
+		base.stepInfo("Coding form saved successfully by using complete button");
+		driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
+		String prnSecDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDoc, prnSecDoc);
+		base.passedStep("Cursor navigated to next doc in minidoclist");
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean flag = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("No");
+		softAssertion.assertTrue(flag);
+		base.passedStep("Hide Terms with 0 hits:Disabled");
+		if (getHitPanleVerify(panel).Displayed()) {
+			base.stepInfo("persistent hit panel displayed in docview panel after performing save and next");
+		} else {
+			base.failedStep("Hit panel not displayed");
+		}
+		driver.waitForPageToBeReady();
+		base.stepInfo("Enabling 0 hits terms in docview panel");
+		getDocView_ToggleButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean docYes = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(docYes);
+		driver.waitForPageToBeReady();
+		base.passedStep("Hide Terms with 0 hits:Enabled");
+		boolean miniDis = getHitPanleVerify(panel).Displayed();
+		softAssertion.assertFalse(miniDis);
+		base.passedStep("0 count terms not displayed in persistent hit panel");
+		completeButton();
+		driver.waitForPageToBeReady();
+		String prnThDoc=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnThDoc, prnSecDoc);
+		base.waitForElement(getDocView_ToggleButton());
+		boolean afterSave = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(afterSave);
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	
+	public void verifyCommentAndMetadata(String addComment,String commentText,String metadata,String metadataText) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingFormHelpText(addComment));
+		getCodingFormHelpText(addComment).SendKeys(commentText);
+		base.waitForElement(getReadOnlyTextBox(metadata));
+		getReadOnlyTextBox(metadata).SendKeys(metadataText);
+		codingFormSaveButton();
+		getClickDocviewID(1).waitAndClick(5);
+		driver.waitForPageToBeReady();
+		clickCodeSameAsLast();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for coding form save button
+	public void codingFormSaveButton() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getCodingFormSaveButton());
+		getCodingFormSaveButton().waitAndClick(5);
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void verifyCodeSameForSavedDocs(String comment) {
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 3; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		String docID=clickCodeSameAs();
+		editCodingForm(comment);
+		codingFormSaveButton();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_NumTextBox());
+		getDocView_NumTextBox().SendKeys("1");
+		base.waitForElement(getDocView_CurrentDocId());
+		String activeID=getDocView_CurrentDocId().getText();
+		if (docID.equals(activeID)) {
+			base.stepInfo("Verifying code same as for saved document");
+			String text=getDocument_CommentsTextBox().GetAttribute("value");
+			softAssertion.assertEquals(text,comment);
+			base.passedStep("Coding form displayed as per the saved value");
+		}
+		else {
+			base.failedStep("Document not mached");
+		}
+		boolean flag=getDocView_DefaultViewTab().Enabled();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Document displayed in default view");
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for verify the saved stamp
+	public void verifyComments(String comment) {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocument_CommentsTextBox());
+		String text=getDocument_CommentsTextBox().GetAttribute("value");
+		softAssertion.assertEquals(text,comment);
+		if (text.equals(comment) ) {
+			base.stepInfo("Coding form value as per the previous one");
+		} else {
+			base.failedStep("Not as per the expected condition in parent window");
+		}
+		softAssertion.assertAll();
+}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+//  Reusable method for perform codesameas and verify chain link
+//	Action click code same as
+	public String clickCodeSameAs() {
+		driver.waitForPageToBeReady();
+		String prinipalDocs=getVerifyPrincipalDocument().getText().trim();
+		base.waitForElement(getDocView_Mini_ActionButton());
+		getDocView_Mini_ActionButton().waitAndClick(5);
+		base.waitForElement(getDocView__ChildWindow_Mini_CodeSameAs());
+		getDocView__ChildWindow_Mini_CodeSameAs().waitAndClick(5);
+		base.stepInfo("Expected Message : Code same performed successfully.");
+//		driver.getWebDriver().navigate().refresh();
+//		driver.switchTo().alert().accept();
+		geDocView_MiniList_CodeSameAsIcon().WaitUntilPresent().ScrollTo();
+		softAssertion.assertEquals(geDocView_MiniList_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+		base.passedStep("Chain link displayed for document after performing code same as action");
+		return prinipalDocs;
+	}
+	
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+	public void audioDocsCodeSameAsLast(String comment) {
+		driver.waitForPageToBeReady();
+		base.stepInfo("performing in Parent window");
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnDocs=getVerifyPrincipalDocument().getText();
+		base.waitForElement(getDocView_IconPlay());
+		getDocView_IconPlay().waitAndClick(5);
+		editCodingForm(comment);
+		codingFormSaveButton();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnSecDocs=getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnDocs, prnSecDocs);
+		base.stepInfo("performing in Child window");
+		clickGearIconOpenCodingFormChildWindow();
+		base.waitForElement(getDocView_HdrMinDoc());
+		getDocView_HdrMinDoc().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnChildDoc = getVerifyPrincipalDocument().getText();
+		switchToNewWindow(3);
+		editCodingForm(comment);
+		codingFormSaveButton();
+		clickCodeSameAsLast();
+		switchToNewWindow(2);
+		base.waitForElement(getVerifyPrincipalDocument());
+		String secChildDoc = getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnChildDoc, secChildDoc);
+		reusableDocView.closeWindow(2);
+		reusableDocView.closeWindow(1);
+		reusableDocView.switchToNewWindow(1);
+	}
+	
+	
+	
+	
 }

@@ -25,6 +25,7 @@ import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
 import pageFactory.ReportsPage;
 import pageFactory.SavedSearch;
+import pageFactory.SearchTermReportPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -701,6 +702,96 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeNewSearchpair,
 				addSearchIDpair);
 		base.stepInfo("Verified Shared SG and Searches");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that application displays all documents that are in the
+	 *              aggregate results set of \"Default Security Group\" and User
+	 *              Navigate Search groups to Report [RPMXCON-49014]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifyReportForAggregateSearchHitCountInStrPage() throws Exception {
+		String search = "Search" + Utility.dynamicNameAppender();
+		String search2 = "Search" + Utility.dynamicNameAppender();
+		SearchTermReportPage str = new SearchTermReportPage(driver);
+
+		// Login As User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-49014");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of \"Default Security Group\" and User Navigate Search groups to Report");
+
+		session.basicContentSearch(Input.searchString5);
+		session.saveSearchInNewNode(search, null);
+
+		saveSearch.shareSearchFlow(search, Input.shareSearchDefaultSG, "RMU");
+
+		session.selectSavedsearchInASWp(Input.shareSearchDefaultSG);
+		int hitCount = session.saveAndReturnPureHitCount();
+
+		saveSearch.SavedSearchToTermReport_New(Input.shareSearchDefaultSG, false, null, search, "No");
+		str.verifyaggregateCount("HITS");
+		base.waitForElement(str.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(str.getHitsCount().getText());
+		base.stepInfo("Aggregate Hit Count of searhces is :  " + expectedHitsCount);
+		softAssertion.assertEquals(hitCount, expectedHitsCount);
+		softAssertion.assertAll();
+
+		// Delete Searches
+		saveSearch.deleteSearch(search, Input.mySavedSearch, "Yes");
+		saveSearch.deleteSearch(search, Input.shareSearchDefaultSG, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Jeevitha
+	 * @throws InterruptedException
+	 * @Description:verifying the All count of Basic and advance search after from
+	 *                        save search[RPMXCON-48490]
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	public void ValidateAllCountOfSavedSearch() throws InterruptedException {
+		String BasicSearchName = "comments" + Utility.dynamicNameAppender();
+		String AdvanceSearchName = "comments" + Utility.dynamicNameAppender();
+		String nearDupe = "Near Duplicate Count";
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		base.stepInfo("Test case Id: RPMXCON-48490 - Saved Search");
+		base.stepInfo(
+				"Verify status and count are updated in Saved Search Screen when user executes Basic/Advanced search with Execute option from Saved Search");
+
+		// Basic Search
+		int purehit = session.basicContentSearch(Input.searchString1);
+		session.saveSearch(BasicSearchName);
+
+		// Advanced Search
+		base.selectproject();
+		session.advancedContentSearch(Input.searchString2);
+		session.saveSearchAdvanced_New(AdvanceSearchName, Input.mySavedSearch);
+
+		// Execute Basic Search
+		saveSearch.savedSearchExecute(BasicSearchName, purehit);
+		saveSearch.getDocCountAndStatusOfBatch(BasicSearchName, nearDupe, true);
+		saveSearch.ApplyShowAndHideFilter(conceptually, BasicSearchName);
+
+		// Execute Advanced Search
+		saveSearch.savedSearchExecute(AdvanceSearchName, purehit);
+		saveSearch.getDocCountAndStatusOfBatch(AdvanceSearchName, nearDupe, true);
+		saveSearch.ApplyShowAndHideFilter(conceptually, AdvanceSearchName);
+
+		// Delete Search
+		saveSearch.deleteSearch(BasicSearchName, Input.mySavedSearch, "Yes");
+		saveSearch.deleteSearch(AdvanceSearchName, Input.mySavedSearch, "Yes");
 
 		login.logout();
 
