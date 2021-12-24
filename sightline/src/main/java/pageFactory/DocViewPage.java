@@ -16475,4 +16475,39 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		editCodingFormComplete();
 	}
+	/**
+	 * @Author Vijaya.Rani Created on 23/12/2021
+	 * @Description To perform CodeSame near dupe docs in the DocView Test Case id:
+	 *              RPMXCON-51072
+	 * 
+	 */
+	public void performCodeSameAsForNearDupeDocumentsThirdDocs() throws InterruptedException {
+
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return geDocView_NearDupe_CodeSameAsIcon().Displayed();
+			}
+		}), Input.wait30);
+		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+
+		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
+		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
+		softAssertion.assertAll();
+	}
 }
