@@ -1457,6 +1457,14 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element get_textHighlightedColor() {
+		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
+	}
+	
+	public Element getDocView_NearDupeComparisonWindow_IgnoreButton() {
+		return driver.FindElementById("nearDupeIgnore1");
+	}
 	public Element getDocView_MiniDocListDocId(String text) {
 		return driver.FindElementByXPath("//th[text()='" + text + "']");
 	}

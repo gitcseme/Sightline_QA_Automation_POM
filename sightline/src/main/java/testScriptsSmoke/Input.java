@@ -168,6 +168,7 @@ public class Input {
 	public static String historyClockIconDocId;
 	public static String newNearDupeDocId;
 	public static String warningDocId;
+	public static String threadData1;
 	public static String nearDupeBulkAssign;
 	public static String nearDupeBulkAssignId;
 	public static String nearDupeBlukAssignReviewer;
@@ -576,6 +577,7 @@ public class Input {
 		familyDocumentForReviewer = testData.getFamilyDocumentForReviewer();
 		historyClockIconDocId = testData.getHistoryClockIconDocId();
 		warningDocId=testData.getWarningDocId();
+		threadData1=testData.getThreadData1();
 		nearDupeBulkAssign=testData.getNearDupeBulkAssign();
 		nearDupeBulkAssignId=testData.getNearDupeBulkAssignId();
 		nearDupeBlukAssignReviewer=testData.getNearDupeBulkAssignReviewer();
