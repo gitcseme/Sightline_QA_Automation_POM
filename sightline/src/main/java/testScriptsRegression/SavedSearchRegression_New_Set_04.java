@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
+import automationLibrary.Element;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
 import pageFactory.LoginPage;
@@ -39,6 +40,7 @@ public class SavedSearchRegression_New_Set_04 {
 	BaseClass base;
 	SoftAssert softAssertion;
 	MiniDocListPage miniDocListPage;
+	SearchTermReportPage searchTerm;
 
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -792,6 +794,756 @@ public class SavedSearchRegression_New_Set_04 {
 		// Delete Search
 		saveSearch.deleteSearch(BasicSearchName, Input.mySavedSearch, "Yes");
 		saveSearch.deleteSearch(AdvanceSearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/23/21 Modified date:N/A Modified by:N/A
+	 * @Description : PA impersonate down as RMU/RU role, create Searchgroups and
+	 *              Searches, and then perform bulk actions against My saved
+	 *              searches in PAU role -RPMXCON-57388 Sprint 08
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void performBulkActionsAgainstMySavedSearches() throws InterruptedException {
+
+		miniDocListPage = new MiniDocListPage(driver);
+		searchTerm = new SearchTermReportPage(driver);
+
+		String searchPA = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchPANode = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchRMU = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchRMUNode = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchREV = "Search_REV_" + Utility.dynamicNameAppender();
+		String searchREVNode = "Search_REV_" + Utility.dynamicNameAppender();
+		String[] searches = { searchPA, searchRMU, searchREV };
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+		base.stepInfo("Test case Id: RPMXCON-57388 SavedSearch Sprint 08");
+		base.stepInfo(
+				"PA impersonate down as RMU/RU role, create Searchgroups and Searches, and then perform bulk actions against My saved searches in PAU role");
+
+		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchPA);
+		session.saveSearchInNewNode(searchPANode, newNodePA);
+		base.stepInfo("Created searches and saved as PA");
+
+		base.rolesToImp("PA", "RMU");
+
+		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchRMU);
+		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
+		base.stepInfo("Created searches and saved as RMU");
+
+		base.rolesToImp("RMU", "REV");
+
+		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchREV);
+		session.saveSearchInNewNode(searchREVNode, newNodeREV);
+		base.stepInfo("Created searches and saved as REV");
+
+		// base.rolesToImp("REV", "PA");
+		base.impersonateSAtoPA();
+
+		String[] searchNode = { newNodePA, newNodeRMU, newNodeREV };
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+
+		// Verify Searches and Nodes
+		base.stepInfo(
+				"1. Search and Search group created with RMU or Reviewer role should not be available for PAU role ");
+		base.stepInfo("2. Only Search groups and searches created by PAU role should be listed");
+		saveSearch.searchesToVerify(true, searches, true, searchNode, null, null);
+
+		// Get Count
+		session.searchSavedSearchResult(Input.mySavedSearch);
+		int aggregateHitCount = session.saveAndReturnPureHitCount();
+		base.stepInfo("Aggregate Count : " + aggregateHitCount);
+		System.out.println("Aggregate Count : " + aggregateHitCount);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+
+		base.stepInfo(
+				"Select My Saved Search main folder and perform @Action and check for searches/document count against the action is performed.");
+
+		base.selectproject();
+		// TAG
+		base.stepInfo("-----TAG------");
+		HashMap<String, String> tagCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Tag", 5, TagName, true, true, "", false, false);
+		base.textCompareEquals(tagCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Tag - Pure hit appear like aggregate results set of all child search groups and searches  ",
+				"Count Mismatches");
+		base.selectproject();
+
+		// FOLDER
+		base.stepInfo("-----FOLDER------");
+		HashMap<String, String> folderCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Folder", 5, "", false, false, folderName, true, true);
+		base.textCompareEquals(folderCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Folder - Pure hit shows the aggregate results set of all child search groups and searches ",
+				"Count Mismatches");
+		base.selectproject();
+
+		base.stepInfo("-----DOC LIST------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		// Get the count of total no.of document list
+		int finalCountresultDocList = saveSearch.launchDocListViaSSandReturnDocCount();
+
+		base.stepInfo("-----DOC VIEW------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Load latency Verification
+		Element loadingElement = session.getspinningWheel();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+		base.stepInfo("Navigated to DocView Page : " + currentUrl);
+
+		// Main method
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+
+		base.digitCompareEquals(aggregateHitCount, Integer.parseInt(documentSize),
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches with the Documents");
+
+		// Search Term Report
+		base.stepInfo("-----STR------");
+		saveSearch.SavedSearchToTermReport_New(Input.mySavedSearch, false, null, searchPA, "No");
+		driver.waitForPageToBeReady();
+		searchTerm.verifySTRForSearchFromSSPage(newNodePA, searchPA);
+		base.waitForElement(searchTerm.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(searchTerm.getHitsCount().getText());
+		base.stepInfo("Aggregate Hit Count of searhces is :  " + expectedHitsCount);
+		base.digitCompareEquals(aggregateHitCount, expectedHitsCount, "STR count matches", "Count matches");
+		softAssertion.assertEquals(aggregateHitCount, expectedHitsCount);
+
+		// Export
+		base.stepInfo("-----EXPORT------");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.verifyExportpopup(StyletoChoose, fieldTypeToChoose);
+
+		// Navigating to saved search page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(5);
+		saveSearch.getExecuteContinueBtn().waitAndClick(5);
+
+		base.stepInfo("To verify Pending Status By applying filter");
+		saveSearch.getStatusDropDown().waitAndClick(2);
+		saveSearch.getLastStatusAsPending().Click();
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("PENDING");
+
+		base.stepInfo("To verify Completed Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsCompleted().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("COMPLETED");
+
+		base.stepInfo("To verify In Progrss Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsInProgress().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("INPROGRESS");
+
+		softAssertion.assertAll();
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/23/21 Modified date:N/A Modified by:N/A
+	 * @Description : DA impersonate down as RMU/RU role, create Searchgroups and
+	 *              Searches, and then perform bulk actions against My saved
+	 *              searches in PAU role -RPMXCON-57387 Sprint 08
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	public void performBulkActionsAgainstMySavedSearchesDA() throws InterruptedException {
+
+		miniDocListPage = new MiniDocListPage(driver);
+		searchTerm = new SearchTermReportPage(driver);
+
+		String searchPA = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchPANode = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchRMU = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchRMUNode = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchREV = "Search_REV_" + Utility.dynamicNameAppender();
+		String searchREVNode = "Search_REV_" + Utility.dynamicNameAppender();
+		String[] searches = { searchPA, searchRMU, searchREV };
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+
+		// Login as PA
+		login.loginToSightLine(Input.da1userName, Input.da1password);
+		base.stepInfo("Loggedin As : " + Input.da1userName);
+		base.stepInfo("Test case Id: RPMXCON-57387 SavedSearch Sprint 08");
+		base.stepInfo(
+				"DA impersonate down as RMU/RU role, create Searchgroups and Searches, and then perform bulk actions against My saved searches in PAU role");
+
+		base.rolesToImp("DA", "PA");
+
+		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchPA);
+		session.saveSearchInNewNode(searchPANode, newNodePA);
+		base.stepInfo("Created searches and saved as PA");
+
+		base.rolesToImp("PA", "RMU");
+
+		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchRMU);
+		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
+		base.stepInfo("Created searches and saved as RMU");
+
+		base.rolesToImp("RMU", "REV");
+
+		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchREV);
+		session.saveSearchInNewNode(searchREVNode, newNodeREV);
+		base.stepInfo("Created searches and saved as REV");
+
+		// base.rolesToImp("REV", "PA");
+		base.impersonateSAtoPA();
+
+		String[] searchNode = { newNodePA, newNodeRMU, newNodeREV };
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+
+		// Verify Searches and Nodes
+		base.stepInfo(
+				"1. Search and Search group created with RMU or Reviewer role should not be available for PAU role ");
+		base.stepInfo("2. Only Search groups and searches created by PAU role should be listed");
+		saveSearch.searchesToVerify(true, searches, true, searchNode, null, null);
+
+		// Get Count
+		session.searchSavedSearchResult(Input.mySavedSearch);
+		int aggregateHitCount = session.saveAndReturnPureHitCount();
+		base.stepInfo("Aggregate Count : " + aggregateHitCount);
+		System.out.println("Aggregate Count : " + aggregateHitCount);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+
+		base.stepInfo(
+				"Select My Saved Search main folder and perform @Action and check for searches/document count against the action is performed.");
+
+		base.selectproject();
+		// TAG
+		base.stepInfo("-----TAG------");
+		HashMap<String, String> tagCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Tag", 5, TagName, true, true, "", false, false);
+		base.textCompareEquals(tagCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Tag - Pure hit appear like aggregate results set of all child search groups and searches  ",
+				"Count Mismatches");
+		base.selectproject();
+
+		// FOLDER
+		base.stepInfo("-----FOLDER------");
+		HashMap<String, String> folderCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Folder", 5, "", false, false, folderName, true, true);
+		base.textCompareEquals(folderCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Folder - Pure hit shows the aggregate results set of all child search groups and searches ",
+				"Count Mismatches");
+		base.selectproject();
+
+		base.stepInfo("-----DOC LIST------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		// Get the count of total no.of document list
+		int finalCountresultDocList = saveSearch.launchDocListViaSSandReturnDocCount();
+
+		base.stepInfo("-----DOC VIEW------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Load latency Verification
+		Element loadingElement = session.getspinningWheel();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+		base.stepInfo("Navigated to DocView Page : " + currentUrl);
+
+		// Main method
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+
+		base.digitCompareEquals(aggregateHitCount, Integer.parseInt(documentSize),
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches with the Documents");
+
+		// Search Term Report
+		base.stepInfo("-----STR------");
+		saveSearch.SavedSearchToTermReport_New(Input.mySavedSearch, false, null, searchPA, "No");
+		driver.waitForPageToBeReady();
+		searchTerm.verifySTRForSearchFromSSPage(newNodePA, searchPA);
+		base.waitForElement(searchTerm.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(searchTerm.getHitsCount().getText());
+		base.stepInfo("Aggregate Hit Count of searhces is :  " + expectedHitsCount);
+		base.digitCompareEquals(aggregateHitCount, expectedHitsCount, "STR count matches", "Count matches");
+		softAssertion.assertEquals(aggregateHitCount, expectedHitsCount);
+
+		// Export
+		base.stepInfo("-----EXPORT------");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.verifyExportpopup(StyletoChoose, fieldTypeToChoose);
+
+		// Navigating to saved search page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(5);
+		saveSearch.getExecuteContinueBtn().waitAndClick(5);
+
+		base.stepInfo("To verify Pending Status By applying filter");
+		saveSearch.getStatusDropDown().waitAndClick(2);
+		saveSearch.getLastStatusAsPending().Click();
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("PENDING");
+
+		base.stepInfo("To verify Completed Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsCompleted().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("COMPLETED");
+
+		base.stepInfo("To verify In Progrss Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsInProgress().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("INPROGRESS");
+
+		softAssertion.assertAll();
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/23/21 Modified date:N/A Modified by:N/A
+	 * @Description : SA impersonate down as RMU/RU role, create Searchgroups and
+	 *              Searches, and then perform bulk actions against My saved
+	 *              searches in PAU role -RPMXCON-57386 Sprint 08
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
+	public void performBulkActionsAgainstMySavedSearchesSA() throws InterruptedException {
+
+		miniDocListPage = new MiniDocListPage(driver);
+		searchTerm = new SearchTermReportPage(driver);
+
+		String searchPA = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchPANode = "Search_PA_" + Utility.dynamicNameAppender();
+		String searchRMU = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchRMUNode = "Search_RMU_" + Utility.dynamicNameAppender();
+		String searchREV = "Search_REV_" + Utility.dynamicNameAppender();
+		String searchREVNode = "Search_REV_" + Utility.dynamicNameAppender();
+		String[] searches = { searchPA, searchRMU, searchREV };
+		String TagName = "Tag" + Utility.dynamicNameAppender();
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		String StyletoChoose = "CSV";
+		String fieldTypeToChoose = "[,] 044";
+
+		// Login as PA
+		login.loginToSightLine(Input.sa1userName, Input.sa1password);
+		base.stepInfo("Loggedin As : " + Input.sa1userName);
+		base.stepInfo("Test case Id: RPMXCON-57386 SavedSearch Sprint 08");
+		base.stepInfo(
+				"SA impersonate down as RMU/RU role, create Searchgroups and Searches, and then perform bulk actions against My saved searches in PAU role");
+
+		base.rolesToImp("SA", "PA");
+
+		String newNodePA = saveSearch.createASearchGroupandReturnName(searchPA);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchPA);
+		session.saveSearchInNewNode(searchPANode, newNodePA);
+		base.stepInfo("Created searches and saved as PA");
+
+		base.rolesToImp("PA", "RMU");
+
+		String newNodeRMU = saveSearch.createASearchGroupandReturnName(searchRMU);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchRMU);
+		session.saveSearchInNewNode(searchRMUNode, newNodeRMU);
+		base.stepInfo("Created searches and saved as RMU");
+
+		base.rolesToImp("RMU", "REV");
+
+		String newNodeREV = saveSearch.createASearchGroupandReturnName(searchREV);
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(searchREV);
+		session.saveSearchInNewNode(searchREVNode, newNodeREV);
+		base.stepInfo("Created searches and saved as REV");
+
+		// base.rolesToImp("REV", "PA");
+		base.impersonateSAtoPA();
+
+		String[] searchNode = { newNodePA, newNodeRMU, newNodeREV };
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+
+		// Verify Searches and Nodes
+		base.stepInfo(
+				"1. Search and Search group created with RMU or Reviewer role should not be available for PAU role ");
+		base.stepInfo("2. Only Search groups and searches created by PAU role should be listed");
+		saveSearch.searchesToVerify(true, searches, true, searchNode, null, null);
+
+		// Get Count
+		session.searchSavedSearchResult(Input.mySavedSearch);
+		int aggregateHitCount = session.saveAndReturnPureHitCount();
+		base.stepInfo("Aggregate Count : " + aggregateHitCount);
+		System.out.println("Aggregate Count : " + aggregateHitCount);
+
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+
+		base.stepInfo(
+				"Select My Saved Search main folder and perform @Action and check for searches/document count against the action is performed.");
+
+		base.selectproject();
+		// TAG
+		base.stepInfo("-----TAG------");
+		HashMap<String, String> tagCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Tag", 5, TagName, true, true, "", false, false);
+		base.textCompareEquals(tagCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Tag - Pure hit appear like aggregate results set of all child search groups and searches  ",
+				"Count Mismatches");
+		base.selectproject();
+
+		// FOLDER
+		base.stepInfo("-----FOLDER------");
+		HashMap<String, String> folderCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, false,
+				false, "", "", "Folder", 5, "", false, false, folderName, true, true);
+		base.textCompareEquals(folderCount.get("PureHit Count"), Integer.toString(aggregateHitCount),
+				"After the Bulk Folder - Pure hit shows the aggregate results set of all child search groups and searches ",
+				"Count Mismatches");
+		base.selectproject();
+
+		base.stepInfo("-----DOC LIST------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		// Get the count of total no.of document list
+		int finalCountresultDocList = saveSearch.launchDocListViaSSandReturnDocCount();
+
+		base.stepInfo("-----DOC VIEW------");
+		// Navigate to SavedSearch Page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.getToDocView().waitAndClick(5);
+
+		// Load latency Verification
+		Element loadingElement = session.getspinningWheel();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		driver.waitForPageToBeReady();
+		String currentUrl = driver.getWebDriver().getCurrentUrl();
+		softAssertion.assertEquals(Input.url + "DocumentViewer/DocView", currentUrl);
+		base.stepInfo("Navigated to DocView Page : " + currentUrl);
+
+		// Main method
+		miniDocListPage = new MiniDocListPage(driver);
+		base.waitForElement(miniDocListPage.getDocumentCountFromDocView());
+		String sizeofList = miniDocListPage.getDocumentCountFromDocView().getText();
+		String documentSize = sizeofList.substring(sizeofList.indexOf("of") + 2, sizeofList.indexOf("Docs")).trim();
+		System.out.println("Size : " + documentSize);
+		base.stepInfo("Available documents in DocView page : " + sizeofList);
+
+		base.digitCompareEquals(aggregateHitCount, Integer.parseInt(documentSize),
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches with the Documents");
+
+		// Search Term Report
+		base.stepInfo("-----STR------");
+		saveSearch.SavedSearchToTermReport_New(Input.mySavedSearch, false, null, searchPA, "No");
+		driver.waitForPageToBeReady();
+		searchTerm.verifySTRForSearchFromSSPage(newNodePA, searchPA);
+		base.waitForElement(searchTerm.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(searchTerm.getHitsCount().getText());
+		base.stepInfo("Aggregate Hit Count of searhces is :  " + expectedHitsCount);
+		base.digitCompareEquals(aggregateHitCount, expectedHitsCount, "STR count matches", "Count matches");
+		softAssertion.assertEquals(aggregateHitCount, expectedHitsCount);
+
+		// Export
+		base.stepInfo("-----EXPORT------");
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch).waitAndClick(5);
+		saveSearch.verifyExportpopup(StyletoChoose, fieldTypeToChoose);
+
+		// Navigating to saved search page
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(5);
+		saveSearch.getExecuteContinueBtn().waitAndClick(5);
+
+		base.stepInfo("To verify Pending Status By applying filter");
+		saveSearch.getStatusDropDown().waitAndClick(2);
+		saveSearch.getLastStatusAsPending().Click();
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("PENDING");
+
+		base.stepInfo("To verify Completed Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsCompleted().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("COMPLETED");
+
+		base.stepInfo("To verify In Progrss Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsInProgress().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("INPROGRESS");
+
+		softAssertion.assertAll();
+
+		login.logout();
+
+	}
+
+	/**
+	 * @author Raghuram.A Date: 12/24/21 Modified date:N/A Modified by:N/A
+	 * @Description : Validate executing searches/groups from the shared with
+	 *              <Security Group Name> by any other PAU user
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void validatingExecutedSavedsearchSearchesAndGroupsAsPauAndRmu() throws Exception {
+
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		String searchName1 = "Search Name" + Utility.dynamicNameAppender();
+		int noOfNodesToCreate = 2;
+		List<String> newNodeList = new ArrayList<>();
+
+		base.stepInfo("Test case Id: RPMXCON-49872 SavedSearch Sprint 08");
+		base.stepInfo(
+				"Validate executing searches/groups from the shared with <Security Group Name> by any other PAU user");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Multiple Node Creation
+		saveSearch.navigateToSavedSearchPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		String parentNode = newNodeList.get(0);
+		String childNode = newNodeList.get(1);
+
+		// Adding searches to the created nodes
+		session.navigateToSessionSearchPageURL();
+		int pureHit = session.basicContentSearchWithSaveChanges(Input.searchString1, "Yes", "First");
+		session.saveSearchInNewNode(searchName, parentNode);
+		session.saveSearchInRootNode(searchName1, parentNode, childNode);
+
+		// Share the node with Default security group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.shareSavedNodeToSG(Input.securityGroup, parentNode, searchName);
+
+		// Executing the Search Group
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+		saveSearch.selectNode1(parentNode);
+		saveSearch.savedSearchExecute_SearchGRoup(searchName, pureHit);
+
+		// verifying the Child Node present in the Node
+		saveSearch.verifyNodePresentInSG(Input.shareSearchDefaultSG, parentNode);
+		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
+		saveSearch.getSavedSearchNewGroupExpand().Click();
+		saveSearch.getSharedGroupName(childNode).waitAndClick(10);
+		base.passedStep(childNode + " : Is Present in " + parentNode);
+
+		// Excecuting the Search
+		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+		saveSearch.selectNode1(parentNode);
+		saveSearch.savedSearch_SearchandSelect(searchName, "Yes");
+		saveSearch.savedSearchExecute_Draft(searchName, pureHit);
+
+		Map<String, Integer> searchAndDocCountPair = new HashMap<String, Integer>();
+		searchAndDocCountPair.put(searchName, (Integer) pureHit);
+
+		login.logout();
+
+		// login as another PAU and verifying the document count
+		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		base.stepInfo("Loggedin As : " + Input.pa2FullName);
+
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+		saveSearch.selectNode1(newNodeList.get(0));
+		saveSearch.verifyDocCountWithResult(searchAndDocCountPair);
+
+		login.logout();
+
+		// login as RMU and verifying the document count
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.securityGroup).waitAndClick(10);
+		saveSearch.selectNode1(newNodeList.get(0));
+		saveSearch.verifyDocCountWithResult(searchAndDocCountPair);
+
+		// deleting the node
+		saveSearch.deleteNode(Input.securityGroup, parentNode);
+		softAssertion.assertAll();
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 11/24/21 Modified date:N/A Modified by: Description
+	 *         : Validate sharing specific search/group to Security Group that are
+	 *         already shared -RPMXCON-49869 Sprint 08
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
+	public void validateSharingAlreadySharedSG() throws InterruptedException, ParseException {
+		int noOfNodesToCreate = 6;
+		int selectIndex = 0;
+		String SGtoShare = Input.shareSearchDefaultSG;
+		String node;
+		Boolean inputValue = true;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		HashMap<String, String> searchGroupSearchpIDpair = new HashMap<>();
+		HashMap<String, String> searchGroupSearchpIDpair2 = new HashMap<>();
+
+		base.stepInfo("Test case Id: RPMXCON-49869 - Saved Search Sprint 08");
+		base.stepInfo("VValidate sharing specific search/group to Security Group that are already shared");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Landed on Saved Search
+		saveSearch.navigateToSSPage();
+		// Multiple Node Creation
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+		System.out.println("Node creation is done followed by adding searches to the created nodes");
+		base.stepInfo("Node creation is done followed by adding searches to the created nodes");
+
+		// Adding searches to the created nodes
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		saveSearch.sortedMapList(nodeSearchpair);
+
+		// Search ID collection set 1
+		saveSearch.navigateToSSPage();
+		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+
+		searchGroupSearchpIDpair = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
+				searchGroupSearchpIDpair);
+
+		saveSearch.navigateToSSPage();
+		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
+		System.out.println("Final : " + node);
+		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+				searchGroupSearchpIDpair);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+
+		// Search ID collection set 2
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
+		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+
+		searchGroupSearchpIDpair2 = saveSearch.collectionOfSearchIdsFromNodeCollections(newNodeList, nodeSearchpair,
+				searchGroupSearchpIDpair);
+
+		// Verify shared SG/Searches
+		saveSearch.navigateToSSPage();
+		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
+		System.out.println("Final : " + node);
+		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
+		base.stepInfo("ID verfication between shared searches");
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		driver.waitForPageToBeReady();
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+				searchGroupSearchpIDpair2);
+
+		login.logout();
+
+		// Login as PA2 and Verify shared SG/Searches as different User
+		login.loginToSightLine(Input.pa2userName, Input.pa2password);
+		base.stepInfo("Loggedin As : " + Input.pa2FullName);
+		// Landed on Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+				searchGroupSearchpIDpair2);
+		base.stepInfo("Verified Shared SG and Searches");
+
+		login.logout();
+
+		// Login as PA2 and Verify shared SG/Searches as different User
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+		// Landed on Saved Search
+		saveSearch.navigateToSSPage();
+		saveSearch.verifyImpactinSharedchildNodes(SGtoShare, newNodeList, selectIndex, nodeSearchpair,
+				searchGroupSearchpIDpair2);
+		base.stepInfo("Verified Shared SG and Searches");
 
 		login.logout();
 

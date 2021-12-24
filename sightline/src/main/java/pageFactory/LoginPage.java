@@ -110,26 +110,26 @@ public class LoginPage {
 		// Click Login button
 		getEloginButton().Click();
 		// check if user session is active
-		if(getActiveSessionYesButton().isElementAvailable(3)) {
-		try {
-			base.waitForElement(getActiveSessionYesButton());
-			getActiveSessionYesButton().Click();
-			//driver.Navigate().refresh();
-			driver.waitForPageToBeReady();
-			base.waitForElement(getEuserName());
-			base.waitTillElemetToBeClickable(getEuserName());
-			getEuserName().Clear();
-            getEpassword().Clear();
-			getEuserName().SendKeys(strUserName);
-			// Fill password
-			getEuserName().Click();
-			getEpassword().SendKeys(strPasword);
-			// Click Login button
-			getEloginButton().Click();
-			driver.waitForPageToBeReady();
-		} catch (Exception e) {
+		if (getActiveSessionYesButton().isElementAvailable(3)) {
+			try {
+				base.waitForElement(getActiveSessionYesButton());
+				getActiveSessionYesButton().Click();
+				// driver.Navigate().refresh();
+				driver.waitForPageToBeReady();
+				base.waitForElement(getEuserName());
+				base.waitTillElemetToBeClickable(getEuserName());
+				getEuserName().Clear();
+				getEpassword().Clear();
+				getEuserName().SendKeys(strUserName);
+				// Fill password
+				getEuserName().Click();
+				getEpassword().SendKeys(strPasword);
+				// Click Login button
+				getEloginButton().Click();
+				driver.waitForPageToBeReady();
+			} catch (Exception e) {
 
-		}
+			}
 		}
 //		if(getEmailMeButton().isElementAvailable(1)) {
 //		// below code is to handles 2FA
@@ -155,7 +155,8 @@ public class LoginPage {
 		}), Input.wait30);
 		BaseClass bc = new BaseClass(driver);
 		try {
-			if (!strUserName.equals(Input.sa1userName))
+			// Modified on 12/24/21 - Raghuram (!strUserName.equals(Input.da1userName)
+			if (!strUserName.equals(Input.sa1userName) && (!strUserName.equals(Input.da1userName)))
 				bc.selectproject();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -210,7 +211,7 @@ public class LoginPage {
 //		Assert.assertTrue(getEuserName().Visible());
 //		UtilityLog.info("Logged out successfully!");
 //	}
-	
+
 	public void logout() {
 
 		driver.Navigate().refresh();
@@ -249,12 +250,11 @@ public class LoginPage {
 				return getEuserName().Visible();
 			}
 		}), 30000);
-		//base.waitTillElemetToBeClickable(getEuserName());
+		// base.waitTillElemetToBeClickable(getEuserName());
 		base.waitForElement(getEuserName());
 		Assert.assertTrue(getEuserName().Visible());
 		UtilityLog.info("Logged out successfully!");
 	}
-
 
 	public void logOutWithConfirmation() {
 
@@ -427,23 +427,23 @@ public class LoginPage {
 
 	public static void clearBrowserCache() {
 		try {
-		String[] command = {"cmd.exe", "/C", "Start", System.getProperty("user.dir")+ "//BrowserDrivers//chromeBrowser.bat"};
-		Runtime.getRuntime().exec(command);
-		try {
-		Thread.sleep(10000);
-		} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		}
-		//p.destroyForcibly();
+			String[] command = { "cmd.exe", "/C", "Start",
+					System.getProperty("user.dir") + "//BrowserDrivers//chromeBrowser.bat" };
+			Runtime.getRuntime().exec(command);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// p.destroyForcibly();
 		} catch (IOException ex1) {
 		}
-		//Thread.sleep(5000); //wait for clean up activity
-		}
+		// Thread.sleep(5000); //wait for clean up activity
+	}
 
 	/*
-	 * @created by Jeevitha.R
-	 * parameter: Edit profile language 
+	 * @created by Jeevitha.R parameter: Edit profile language
 	 */
 	public void editProfile(String language) {
 
@@ -453,22 +453,22 @@ public class LoginPage {
 			}
 		}), Input.wait60);
 		getSignoutMenu().waitAndClick(10);
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getEditProfile().Visible() && getEditProfile().Enabled();
 			}
 		}), Input.wait30);
 		getEditProfile().Click();
-		
+
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getSelectLanguage().Visible() && getSelectLanguage().Enabled();
 			}
 		}), Input.wait30);
-		
+
 		getSelectLanguage().selectFromDropdown().selectByVisibleText(language);
 		getEditprofilesave().Click();
 	}
-	
+
 }

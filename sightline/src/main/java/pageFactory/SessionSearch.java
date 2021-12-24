@@ -42,7 +42,7 @@ public class SessionSearch {
 	DocViewRedactions docViewRedact;
 	public static String selectedProductionName;
 	Map<String, Integer> pureHitCountMapping = new HashMap<String, Integer>();
-   
+
 	public Element getEnterSearchString() {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input");
 	}
@@ -1338,29 +1338,33 @@ public class SessionSearch {
 		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
 
-	
-	//Added by Gopinath - 23/12/2021
+	// Added by Gopinath - 23/12/2021
 	public Element getSaveButton() {
 		return driver.FindElementByXPath("//a[@id='qModifySearch']//..//a[@id='qSave']");
 	}
-
 
 	// Added by Raghuram
 	public Element getExistingFolderSelectionCheckBox(String folderName) {
 		return driver.FindElementByXPath("//*[@id='divBulkFolderJSTree']//a[text()='" + folderName
 				+ "']//i[@class='jstree-icon jstree-checkbox']");
 	}
-	
+
 	public Element getBasicSearch_MetadataBtnSec() {
 		return driver.FindElementByXPath("(//button[@id='metadataHelper'])[last()]");
 	}
+
 	public Element getCommentsFieldAndRemarksSec() {
 		return driver.FindElementByXPath("(//button[@id='commentsHelper'])[last()]");
 	}
+
 	public Element getSearchButtonSec() {
 		return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
 	}
 
+	// Method to avoid abnormal termination
+	public Element getSavedSearchNameResult(String savedSearchName) {
+		return driver.FindElementByXPath("//a[text()='" + savedSearchName + "']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -8286,21 +8290,19 @@ public class SessionSearch {
 		UtilityLog.info("Bulk folder is done, folder is : " + folderName);
 	}
 
-
 	/**
-	 * @author Gopinath
-	 * Description : this method insert the Query for draft save.
+	 * @author Gopinath Description : this method insert the Query for draft save.
 	 */
 	public void basicMetaDataDraftSearch(String metaDataField, String option, String val1, String val2) {
-		
-		try {     
+
+		try {
 			driver.getWebDriver().get(Input.url + "Search/Searches");
 			getBasicSearch_MetadataBtn().Click();
 			base.waitTime(3);
 			getSelectMetaData().isElementAvailable(10);
 			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
 			if (option == null) {
-	
+
 				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
 			} else if (option.equalsIgnoreCase("IS")) {
 				getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
@@ -8309,47 +8311,47 @@ public class SessionSearch {
 				getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
 				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
 				getMetaDataSearchText2().SendKeys(val2 + Keys.TAB);
-	
+
 			}
 			base.waitForElement(getMetaDataInserQuery());
 			getMetaDataInserQuery().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-    
+
 	/**
-	 * @author Gopinath
-	 * Description : this function will enter the search string into input text field
-	 *               and will not Seaech the input 
-	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	 * @author Gopinath Description : this function will enter the search string
+	 *         into input text field and will not Seaech the input
+	 * @param SearchString : SearchString is string value that search value need to
+	 *                     enter in search field.
 	 */
 	public void basicContentDraftSearch(String SearchString) {
 		try {
 			// To make sure we are in basic search page
-				driver.getWebDriver().get(Input.url + "Search/Searches");
-				// Enter seatch string
-				driver.WaitUntil((new Callable<Boolean>() {
-					public Boolean call() {
-						return getEnterSearchString().Visible();
-					}
-				}), Input.wait60);
-				getEnterSearchString().SendKeys(SearchString);
-		}catch(Exception e) {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getEnterSearchString().Visible();
+				}
+			}), Input.wait60);
+			getEnterSearchString().SendKeys(SearchString);
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while enter the search string into input text field and will not Seaech the input"+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while enter the search string into input text field and will not Seaech the input"
+							+ e.getLocalizedMessage());
 		}
-				
-		
+
 	}
 
-
-
-/**
-	 * @author Gopinath
-	 * Description : this function will navigate to Advanced search page and enter the search string into input text field
-	 *               the search string into input text filed and will not Search the input 
-	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	/**
+	 * @author Gopinath Description : this function will navigate to Advanced search
+	 *         page and enter the search string into input text field the search
+	 *         string into input text filed and will not Search the input
+	 * @param SearchString : SearchString is string value that search value need to
+	 *                     enter in search field.
 	 */
 	public void advanedContentDraftSearch(String SearchString) {
 		try {
@@ -8361,7 +8363,7 @@ public class SessionSearch {
 				}
 			}), Input.wait30);
 			getAdvancedSearchLink().Click();
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getContentAndMetaDatabtn().Visible();
@@ -8375,33 +8377,32 @@ public class SessionSearch {
 				}
 			}), Input.wait30);
 			getAdvancedContentSearchInput().SendKeys(SearchString);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while navigate to Advanced search page and enter the search string into input text field "+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while navigate to Advanced search page and enter the search string into input text field "
+							+ e.getLocalizedMessage());
 		}
 
 	}
 
-
-
-
 	/**
-     * @author Gopinath
-     * Description : This function will save the advanced search
-     * @param searchName : searchName is string value that search value need to enter in search field.
-     */
+	 * @author Gopinath Description : This function will save the advanced search
+	 * @param searchName : searchName is string value that search value need to
+	 *                   enter in search field.
+	 */
 	public void saveSearchadvanced(String searchName) {
 		try {
-			if(getSaveButton().isElementAvailable(2)) {
+			if (getSaveButton().isElementAvailable(2)) {
 				driver.WaitUntil((new Callable<Boolean>() {
-		
-				public Boolean call() {
-				return getSaveButton().Visible() && getSaveButton().Enabled();
-				}
+
+					public Boolean call() {
+						return getSaveButton().Visible() && getSaveButton().Enabled();
+					}
 				}), Input.wait30);
 				base.waitForElement(getSaveButton());
 				getSaveButton().waitAndClick(5);
-			}else {
+			} else {
 				getAdvanceSearch_DraftQuerySave_Button().Click();
 			}
 			if (getYesQueryAlert().isElementAvailable(2)) {
@@ -8411,51 +8412,52 @@ public class SessionSearch {
 					// TODO: handle exception
 				}
 			}
-	
-			if(getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+
+			if (getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
 				driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() {
-				return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
-				}
+					public Boolean call() {
+						return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+					}
 				}), Input.wait30);
-			getSaveAsNewSearchRadioButton().waitAndClick(5);
+				getSaveAsNewSearchRadioButton().waitAndClick(5);
 			} else {
 				System.out.println("Radio button already selected");
 				UtilityLog.info("Radio button already selected");
 			}
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
-	
-			public Boolean call() {
-			return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
-			}
+
+				public Boolean call() {
+					return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
+				}
 			}), Input.wait30);
 			getSavedSearch_MySearchesTab().Click();
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-			return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
-			}
+				public Boolean call() {
+					return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+				}
 			}), Input.wait30);
 			getSaveSearch_Name().SendKeys(searchName);
 			driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-			return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
-			}
+				public Boolean call() {
+					return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+				}
 			}), Input.wait30);
 			getSaveSearch_SaveButton().Click();
 			base.VerifySuccessMessage("Saved search saved successfully");
-	               	Reporter.log("Saved the search with name '" + searchName + "'", true);
+			Reporter.log("Saved the search with name '" + searchName + "'", true);
 			UtilityLog.info("Saved search with name - " + searchName);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while will save the advanced search. "+e.getLocalizedMessage());
+			base.failedStep("Exception occured while will save the advanced search. " + e.getLocalizedMessage());
 		}
 	}
+
 	/**
-     * @author Gopinath
-     * @Description : Method for advanced meta data for draft.
-     */
+	 * @author Gopinath
+	 * @Description : Method for advanced meta data for draft.
+	 */
 	public void advancedMetaDataForDraft(String metaDataField, String option, String val1, String val2) {
 		try {
 			// To make sure we are in basic search page
@@ -8499,9 +8501,9 @@ public class SessionSearch {
 
 			}
 			getMetaDataInserQuery().Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while performing advanced meta data draft "+e.getLocalizedMessage());
+			base.failedStep("Exception occured while performing advanced meta data draft " + e.getLocalizedMessage());
 		}
 	}
 
@@ -8530,6 +8532,7 @@ public class SessionSearch {
 		getQuerySearchBtn().Click();
 
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param SearchString
@@ -8537,7 +8540,7 @@ public class SessionSearch {
 	 * @param Searchtext2
 	 * @return
 	 */
-	public String basicContentSearchUsingOperator(String SearchString,String Operator,String Searchtext2) {
+	public String basicContentSearchUsingOperator(String SearchString, String Operator, String Searchtext2) {
 		// To make sure we are in basic search page
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		// Enter search string
@@ -8546,7 +8549,7 @@ public class SessionSearch {
 				return getEnterSearchString().Visible();
 			}
 		}), Input.wait60);
-		getEnterSearchString().SendKeys(SearchString+Keys.ENTER+Operator+Keys.ENTER+Searchtext2+Keys.ENTER);
+		getEnterSearchString().SendKeys(SearchString + Keys.ENTER + Operator + Keys.ENTER + Searchtext2 + Keys.ENTER);
 
 		// Click on Search button
 		getSearchButton().waitAndClick(10);
@@ -8565,9 +8568,11 @@ public class SessionSearch {
 		}), Input.wait120);
 		getPureHitsCount().waitAndClick(20);
 		String pureHit = getPureHitsCount().getText();
-		
-		UtilityLog.info("Search is done for " + SearchString + " "+Operator +" "+ Searchtext2+" and PureHit is : " + pureHit);
-		Reporter.log("Search is done for " + SearchString + "  "+Operator +"  "+ Searchtext2+" and PureHit is : " + pureHit, true);
+
+		UtilityLog.info("Search is done for " + SearchString + " " + Operator + " " + Searchtext2 + " and PureHit is : "
+				+ pureHit);
+		Reporter.log("Search is done for " + SearchString + "  " + Operator + "  " + Searchtext2 + " and PureHit is : "
+				+ pureHit, true);
 		return pureHit;
 	}
 
@@ -8619,7 +8624,7 @@ public class SessionSearch {
 
 		return finalizeDocCount;
 	}
-	
+
 	/**
 	 * @author Iyappan.Kasinathan Description:Function to perform content search for
 	 *         a given search string
@@ -8659,12 +8664,13 @@ public class SessionSearch {
 		UtilityLog.info("Serach is done for " + SearchString + " and PureHit is : " + pureHit);
 		return pureHit;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
-	
-	public int metadataAndCommentSearch(String projectFieldINT,String metadataText,String addComment,String commentText) {
+
+	public int metadataAndCommentSearch(String projectFieldINT, String metadataText, String addComment,
+			String commentText) {
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.waitForPageToBeReady();
 		base.waitForElement(getNewSearch());
@@ -8700,7 +8706,7 @@ public class SessionSearch {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		base.waitForElement(getPureHitsCount());
 		// verify counts for all the tiles
@@ -8710,12 +8716,44 @@ public class SessionSearch {
 			}
 		}), Input.wait90);
 		int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
-		System.out.println("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+		System.out.println(
+				"Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
 		base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
-		base.stepInfo("Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
+		base.stepInfo(
+				"Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
 		return pureHit;
 	}
-	
 
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @param SaveName
+	 */
+	public void searchSavedSearchResult(String SaveName) {
+
+		base = new BaseClass(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.selectproject();
+		switchToWorkproduct();
+		// searchSavedSearch(saveSearchName);
+
+		driver.waitForPageToBeReady();
+		getSavedSearchBtn().Click();
+
+		if (getSavedSearchNameResult(SaveName).isDisplayed()) {
+			System.out.println(getSavedSearchNameResult(SaveName).getText());
+		}
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+
+		getSavedSearchNameResult(SaveName).getWebElement().click();
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(15);
+		// Click on Search button
+		driver.scrollPageToTop();
+
+		UtilityLog.info("Selected a saved search " + SaveName + "and inserted into query text box ");
+		base.stepInfo("Selected a saved search " + SaveName + "and inserted into query text box ");
+
+	}
 
 }
