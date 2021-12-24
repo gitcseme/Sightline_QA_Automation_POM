@@ -1337,6 +1337,10 @@ public class SessionSearch {
 	public Element getSaveSearchTextField() {
 		return driver.FindElementByXPath("//input[@id='txtSaveSearchName']");
 	}
+	//Added by Aathith
+	public Element getAllProductionBatesRanges() {
+		return driver.FindElementByXPath("//*[@value='AllProductionBatesRanges']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;

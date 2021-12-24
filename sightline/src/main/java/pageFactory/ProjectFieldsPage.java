@@ -186,5 +186,49 @@ public Element getAllProductionBatesRanges() {	return driver.FindElementByXPath(
 			
 		}
 	}
+	/**
+	*@author Aathith
+	*@description : Method to verify Is Searchable Bates Range Is Selected.
+	*/
+	public void enableIsSearchableBatesRangeIsSelected() {
+		try {			
+			base.waitForElement(getIsSearchableCheckBox());
+			if(getIsSearchableCheckBox().Selected()) {
+				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is selected");
+			}else {
+				getIsSearchableCheckBox().waitAndClick(5);
+				getConfirmOkButton().waitAndClick(5);
+				getSaveButton().waitAndClick(5);
+				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is selected");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verify is searchable bates range is selected."+e.getMessage());
+			
+		}
+	}
+	/**
+	*@author Aathith
+	*@description : Method to verify Is Searchable Bates Range Is Selected.
+	*/
+	public void disableIsSearchableBatesRangeIsSelected() {
+		try {
+			base.waitForElement(getIsSearchableCheckBox());
+			if(getIsSearchableCheckBox().Selected()) {
+				getIsSearchableCheckBox().waitAndClick(5);
+				getConfirmOkButton().waitAndClick(5);
+				getSaveButton().waitAndClick(5);
+				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is unChecked");
+				
+			}else {
+				base.stepInfo("IsSeachable checkbox for all productionBatesRanges is unChecked");
+				}
+			}
+		catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while verify is searchable bates range is selected."+e.getMessage());
+			
+		}
+	}
 	
 }
