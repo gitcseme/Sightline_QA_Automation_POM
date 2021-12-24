@@ -160,7 +160,7 @@ public class Production_Page_Regression {
 	 *                     change on Production progress status bar on Generate page
 	 */
 
-	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority =2)
+	@Test(enabled = false, dataProvider = "Users", groups = { "regression" }, priority = 2)
 	public void verifyStatusAfterRegeneratingProductionInGeneratePage() throws Exception {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-55992- Production Sprint 06");
@@ -1041,12 +1041,13 @@ public class Production_Page_Regression {
 		baseClass.passedStep(
 				" Post Generation is in progress, it will displays status on Production Progress bar ,Tile View as 'Post-Gen QC Checks In Progress'");
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:12/14/21 TESTCASE No:RPMXCON-48849
-	 * @Description:Verify that user can download only Produced DAT file by selecting 'Download DAT file'
+	 * @Description:Verify that user can download only Produced DAT file by
+	 *                     selecting 'Download DAT file'
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 17)
+	@Test(enabled = false, groups = { " regression" }, priority = 17)
 	public void verifyDownloadDATFile() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48849- Production Sprint 08");
@@ -1092,12 +1093,13 @@ public class Production_Page_Regression {
 		page.getClkBtnDownloadDATFiles().waitAndClick(5);
 		baseClass.VerifySuccessMessage("Your Production DAT Archive download will get started shortly");
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:12/14/21 TESTCASE No:RPMXCON-48664
-	 * @Description:Run Production by selecting components like DAT,TIFF,NATIVE and with selection of multiple tags with audio files
+	 * @Description:Run Production by selecting components like DAT,TIFF,NATIVE and
+	 *                  with selection of multiple tags with audio files
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 18)
+	@Test(enabled = false, groups = { " regression" }, priority = 18)
 	public void verifyAudioFilesWithMultipleBranding() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48664- Production Sprint 08");
@@ -1115,7 +1117,7 @@ public class Production_Page_Regression {
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
-		sessionSearch.VerifyaudioSearchThreshold("morning", "International English","70");
+		sessionSearch.VerifyaudioSearchThreshold("morning", "International English", "70");
 		sessionSearch.bulkFolderExisting(foldername);
 
 		// create production with DAT,Native,PDF& ingested Text
@@ -1137,16 +1139,17 @@ public class Production_Page_Regression {
 		page.navigateToNextSection();
 		page.fillingSummaryAndPreview();
 		page.fillingGeneratePageWithContinueGenerationPopup();
-		baseClass.passedStep("Production generated  by selecting components like DAT,TIFF,NATIVE and with selection of multiple tags with audio files");
-		
+		baseClass.passedStep(
+				"Production generated  by selecting components like DAT,TIFF,NATIVE and with selection of multiple tags with audio files");
+
 	}
-	
+
 	/**
 	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49250
 	 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each
 	 *                 document should be zero when only DAT component is selected
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 19)
+	@Test(enabled = false, groups = { " regression" }, priority = 19)
 	public void verifyDocumentCountForDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1180,9 +1183,11 @@ public class Production_Page_Regression {
 
 	/**
 	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49251
-	 * @Description:To verify In Productions DAT, TIFFPageCount for each document should be displayed when production is done with any component
+	 * @Description:To verify In Productions DAT, TIFFPageCount for each document
+	 *                 should be displayed when production is done with any
+	 *                 component
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 20)
+	@Test(enabled = false, groups = { " regression" }, priority = 20)
 	public void verifyDocumentCountForDATWithOtherComponent() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1215,6 +1220,105 @@ public class Production_Page_Regression {
 		page.InsertingDataFromNumberingToGenerate(prefixID, suffixID, foldername, tagname);
 
 	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49106
+	 * @Description:To verify the count 'Total Documents: ' on Production Summary
+	 *                 page
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 21)
+	public void verifyTotalPagesOnSummary() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49106- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionBranding();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String expected = page.getValueTotalPagesCount().getText();
+		baseClass.passedStep("Total Documents:"+expected);
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49107
+	 * @Description:To verify that Total Pages count on Production-Summary page
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 22)
+	public void verifyTotalPagesCountOnSummary() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-49107- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+		
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionBranding();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		String expected = page.getValueTotalPagesCount().getText();
+		baseClass.passedStep("Total Page count is:"+expected);
+
+	}
+
+	
+	
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
