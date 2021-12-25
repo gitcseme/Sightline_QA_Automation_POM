@@ -466,6 +466,74 @@ public class DocView_Regression2 {
 				+ " light red in color as exepcted.");
 	}
 
+	@DataProvider(name = "userDetails2")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51918
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =12)
+	public void verifyImagesTabRetainedWhileSaving(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51918");
+		baseClass.stepInfo("Verify that when user in on Images tab and save the document then should be on Images tab for the same document");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.clickingImagesTab();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.editingCodingFormWithSaveAndNextButton();
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
+		}
+		else {
+			baseClass.failedStep("The images tab is NOT retained");
+		}
+			
+		
+	}
+	
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51919
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =13)
+	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51919");
+		baseClass.stepInfo("Verify that when user in on Images tab and clicks the document to load from mini doc list then should be on Images tab for the same document");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.clickingImagesTab();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.selectDocIdInMiniDocList("ID00001186");
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
+		}
+		else {
+			baseClass.failedStep("The images tab is NOT retained");
+		}
+	}
 	
 
 	@AfterMethod(alwaysRun = true)
