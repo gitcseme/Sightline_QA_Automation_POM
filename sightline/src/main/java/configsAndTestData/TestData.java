@@ -50,6 +50,7 @@ public class TestData {
 	public String MetaDataId;
 	public String documentToBeScrolled;
 	public String conceptualDocument;
+	public String conceptualDocs1;
 	public String conceptualDocumentReviewer;
 	public String threadDocId;
 	public String principalDocId;
