@@ -12160,16 +12160,9 @@ public class DocViewPage {
 
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
-			try {
-				if (getDocView_Analytics_Conceputal_ArrowMark().isDisplayed()) {
-					base.failedStep("ArrowDown icon is displayed for the selected docs ");
-				} else {
-					base.passedStep("ArrownDown icon is not displayed for the selected docs");
-				}
-			} catch (Exception e) {
-				base.passedStep("ArrownDown icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
-			}
+			softAssertion.assertFalse(getDocView_Analytics_Conceputal_ArrowMark().isElementAvailable(1));
+			softAssertion.assertAll();
+			base.passedStep("ArrownDown icon is not displayed for the selected docs");
 
 		} catch (Exception e) {
 			base.failedStep("Remove CodeAs Same icon is displayed for the selected docs");
@@ -12767,15 +12760,13 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
 			// verify Code Same as Link
-			try {
-				if (getDocView_Analytics_FamilyMember_CodeSameLink().getWebElement().isDisplayed()) {
-					softAssertion.assertTrue(getDocView_Analytics_FamilyMember_CodeSameLink().Displayed());
-					base.failedStep("Selected Document is having code as same icon under Family Member tabss");
-				}
-			} catch (Exception e) {
-				base.passedStep(
-						"Code same icon is not displayed for the selected documents and documents from Family Member are unchecked successfull");
-			}
+			
+			driver.Navigate().refresh();
+			driver.switchTo().alert().accept();
+			base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(3));
+			softAssertion.assertTrue(geDocView_ThreadMap_ArrowDownIcon(3).isElementAvailable(1));
+			softAssertion.assertAll();
+			base.passedStep("CodeSame Icon is removed successfully");
 
 		} catch (Exception e) {
 			e.printStackTrace();

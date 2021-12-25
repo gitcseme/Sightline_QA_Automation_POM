@@ -105,7 +105,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 				  on document selection from Thread Map panel. 'RPMXCON-51229'
 	 */
 	
-	//@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 1)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 1)
 	public void removeCodeSameAsForThreadMapDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -149,7 +149,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewThreadedDocsInDocViews();
 			docViewPage.selectDocsFromThreadMapTabAndActionCodeSame();
-			docViewPage.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+			docViewPage.selectDocsFromThreadMapTabAndActionRemoveCodeSameAs();
 		}
 
 		driver.waitForPageToBeReady();
@@ -162,14 +162,13 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 				  on document selection from Conceptual panel 'RPMXCON-51230'
 	 */
 	
-	//@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 2)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 2)
 	public void removeCodeSameAsForConceputalDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51230");
-		String miniDocs = "Conceptually";
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
 		switch (impersonate) {
@@ -207,7 +206,6 @@ public class DocView_AnalyticsPanel_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewConceptualDocsInDocViews();
 		
-			docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(miniDocs);
 			docViewPage.selectDocsFromConceptualTabAndActionCodeSame();
 			docViewPage.selectDocsFromConceptualAndRemoveCodeAsSameForConceptTab();
 		}
@@ -223,7 +221,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * and selected document from doc history, previously selected Analytics Panel Tab must remain.'RPMXCON-51426' Sprint : 5
 	 * @throws InterruptedException 
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyAnalyticsTabAfterSelectingDocsFromHistoryIconInMiniDoclist(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -434,7 +432,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * on document selection from Family Members panel 'RPMXCON-51221'
 	 */
 	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
+	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
 	public void removeCodeSameAsForFamilyMemberDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -648,7 +646,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	@Test(enabled = false, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -709,7 +707,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 11)
+	@Test(enabled = false,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -804,7 +802,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 12)
+	@Test(enabled = false,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -898,7 +896,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 *  Threaded Map tab when no documents to display. 'RPMXCON-50903'
 	 */
 	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
+	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
 	public void verifyThreadedMapTabWhenNoDocsToDisplay(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -955,7 +953,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 *  on click of the icon from Analytics Panel > Near Dupe child window'RPMXCON-51709' Sprint : 9
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 14)
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14)
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);

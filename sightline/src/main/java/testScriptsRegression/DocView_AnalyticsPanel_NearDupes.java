@@ -364,7 +364,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              analytics panel child window RPMXCON-51711
 	 * 
 	 */
-	@Test(priority = 4, enabled = true, groups = { "regression" })
+	//@Test(priority = 4, enabled = true, groups = { "regression" })
 	public void verifyApplyCodingNearDupeDocIdIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51711");
@@ -535,7 +535,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              from analytics panel parent window 'RPMXCON-51712'
 	 * 
 	 */
-	@Test(priority = 6, enabled = true, groups = { "regression" })
+	//@Test(priority = 6, enabled = true, groups = { "regression" })
 	public void verifyDocCompletedAndIsDisplayedInNearDupeComparisonWindow()
 			throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51712");
@@ -626,7 +626,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              saved 'RPMXCON-51708'
 	 * 
 	 */
-	@Test(priority = 7, enabled = true, groups = { "regression" })
+	//@Test(priority = 7, enabled = true, groups = { "regression" })
 	public void verifyNearDupeDocIsSaved() throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51708");
 		baseClass.stepInfo(
@@ -4365,7 +4365,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              remain.'RPMXCON-51424'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 33)
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
 	public void verifySelectedTabStilRemainInAnalyticalPanelChildWindowAfterCompletingCoceptualDoc()
 			throws InterruptedException {
 
@@ -4377,7 +4377,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "Conceptually";
+		String documentToBeSelected = Input.conceptualDocument;
+		String revDocsToBeSelected = Input.conceptualDocumentReviewer;
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51424");
 		baseClass.stepInfo(
@@ -4411,7 +4412,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 		DocViewPage.codeSameDocumentid = documentToBeSelected;
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
@@ -4523,8 +4524,8 @@ public class DocView_AnalyticsPanel_NearDupes {
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
-		DocViewPage.codeSameDocumentid = documentToBeSelected;
+		docViewAnalytics.selectDocIdInMiniDocList(revDocsToBeSelected);
+		DocViewPage.codeSameDocumentid = revDocsToBeSelected;
 
 		parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -4624,7 +4625,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 	 *              though Inclusive Email is either Yes or NO'RPMXCON-51514'
 	 * @throws InterruptedException
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 34)
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
 	public void verifyInclusiveEmailThreadMapDocuments() throws InterruptedException {
 
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -4643,7 +4644,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 		baseClass.stepInfo(
 				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = "ThreadMap";
+		String documentToBeSelected = Input.conceptualDocs1;
 
 		baseClass.stepInfo(
 				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
@@ -4652,7 +4653,7 @@ public class DocView_AnalyticsPanel_NearDupes {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewAnalytics.selectDocIdInMiniDocList(documentToBeSelected);
 
 		baseClass.stepInfo(
 				"Verify whether the threaded documents has documents which has Inclusive emails is either Yes or No");
