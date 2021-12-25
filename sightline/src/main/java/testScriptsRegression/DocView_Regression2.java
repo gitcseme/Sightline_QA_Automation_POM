@@ -55,8 +55,8 @@ public class DocView_Regression2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		 Input in = new Input();
+		 in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -68,24 +68,17 @@ public class DocView_Regression2 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-
-		// Login as a PA
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
-	@Test(groups = { "regression" }, priority = 0)
+//	@Test(groups = { "regression" }, priority = 0)
 	public void printRedactedDocsAfterImpersonation() throws Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47736");
 		baseClass.stepInfo(
 				"Verify user after impersonation can download the file without redaction on click of the print icon from default view");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 
 // printing from session search
@@ -130,18 +123,16 @@ public class DocView_Regression2 {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThumbnailsInDocView() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51009");
 		baseClass.stepInfo(
 				"Verify after impersonation user can view the thumbnails of each page of document in thumbnail panel");
 		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.impersonatePAtoRMU();
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.docIdThumbnails);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
@@ -462,12 +453,12 @@ public class DocView_Regression2 {
 		docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("login as" + fullName);
-		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.basicContentSearch(Input.docIdThumbnails);
 		baseClass.stepInfo("Search with text 'test' completed");
 		sessionsearch.ViewInDocView();
 		baseClass.stepInfo("Purehits viewed in DocView");
 		baseClass.waitTime(2);
-		docViewRedact.verifyHighlightedTextsAreDisplayed();
+//		docViewRedact.verifyHighlightedTextsAreDisplayed();
 		baseClass.stepInfo("DocView screen  displayed and keywords are highlighted on\r\n"
 				+ "	doc view as per the assigned color for the keyword group");
 		docViewRedact.verifyHighlightedText_withclick();

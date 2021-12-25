@@ -1966,7 +1966,7 @@ public Element getSecondSearchIcon() {
 		hitForwardIcon("test").waitAndClick(10);
 		String forwardCount = getHitCount("test").getText();
 		System.out.println("forwardCount: " + forwardCount);
-		if (forwardCount.equals("2 of 4")) {
+		if (forwardCount.equals("2 of 2")) {
 			System.out.println("Traverse Forward to the hits - PASSED");
 			base.passedStep("Traverse Forward to the hits - PASSED");
 			softAssertion.assertTrue(true);
@@ -1980,7 +1980,7 @@ public Element getSecondSearchIcon() {
 		hitBackwardIcon("test").waitAndClick(10);
 		String backwardCount = getHitCount("test").getText();
 		System.out.println("backwardCount :" + backwardCount);
-		if (backwardCount.equals("1 of 4")) {
+		if (backwardCount.equals("1 of 2")) {
 			System.out.println("Traverse Backward to the hits - PASSED");
 			base.passedStep("Traverse Backward to the hits - PASSED");
 			softAssertion.assertTrue(true);
@@ -2981,7 +2981,7 @@ public Element getSecondSearchIcon() {
 		base.waitForElement(searchTextIcon());
 		searchTextIcon().waitAndClick(10);
 
-		set_searchText().getWebElement().sendKeys("S");
+		set_searchText().getWebElement().sendKeys("Enron");
 		getOnDemandSearchBtn().waitAndClick(10);
 		
 		Thread.sleep(4000); // needed here implicitly
