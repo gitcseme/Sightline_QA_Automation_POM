@@ -6573,4 +6573,137 @@ public class SavedSearch {
 		}
 		softAssertion.assertAll();
 	}
+	
+	/**
+	 * @Author Jeevitha
+	 * @param specificHeaderName
+	 * @param searchName
+	 */
+	public void ApplyShowAndHideFilter(String specificHeaderName, String searchName) {
+		verifyHeaderIsPresent(specificHeaderName);
+		getHideSHowBtn().waitAndClick(10);
+		driver.scrollingToBottomofAPage();
+		base.waitForElement(getFieldoptions(specificHeaderName));
+		getFieldoptions_CC(specificHeaderName).waitAndClick(20);
+		base.waitTillElemetToBeClickable(getHideSHowBtn());
+		base.waitForElement(getbackGroundFilm());
+		getbackGroundFilm().waitAndClick(5);
+		driver.scrollPageToTop();
+		verifyHeaderIsPresent(specificHeaderName);
+
+		base.waitForElement(getNearDupeCount(searchName));
+		String Count = getNearDupeCount(searchName).getText();
+		base.stepInfo(specificHeaderName + "  : " + Count);
+		System.out.println(specificHeaderName + " : " + Count);
+	}
+	
+	
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @throws InterruptedException
+	 */
+	public void searchesToVerify(Boolean verifySearches, String[] searches, Boolean verifyNodes, String[] nodes,
+			Boolean additional1, List<String> additionalList1) throws InterruptedException {
+
+		if (verifySearches) {
+			for (String searchData : searches) {
+				savedSearch_SearchandSelect(searchData, "No");
+			}
+		}
+
+		if (verifyNodes) {
+			getSavedSearchNewGroupExpand().waitAndClick(3);
+			for (String nodeDatas : nodes) {
+				verifyNodePresent(nodeDatas);
+			}
+		}
+	}
+	
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public HashMap<String, String> bulkTagorFolderViaSS(Boolean ssPge, Boolean rootNode, String shareTo,
+			Boolean selectNode, Boolean selectSearch, String node, String searchName, String bulkAction, int loadTime,
+			String TagName, Boolean newTag, Boolean tagVerify, String folderName, Boolean newFolder,
+			Boolean folderVerify) throws InterruptedException {
+
+		search = new SessionSearch(driver);
+		HashMap<String, String> counts = new HashMap<String, String>();
+		String finalCount = null;
+		int pureHit = 0;
+		int finalCountresult;
+
+		// Landed on Saved Search
+		if (ssPge) {
+			navigateToSSPage();
+		}
+
+		if (rootNode) {
+			getSavedSearchGroupName(shareTo).waitAndClick(5);
+		}
+
+		if (bulkAction.equalsIgnoreCase("Tag")) {
+			getSavedSearchToBulkTag().Click();
+		} else if (bulkAction.equalsIgnoreCase("Folder")) {
+			getSavedSearchToBulkFolder().Click();
+		}
+
+		// Count load time check
+		loadTimeCheck(loadTime);
+
+		if (bulkAction.equalsIgnoreCase("Tag")) {
+			if (newTag) {
+				finalCount = search.bulkActions_TagSS_returnCount(TagName);
+				base.stepInfo("Completed Bulk Tag");
+			}
+			if (tagVerify) {
+				base.stepInfo(
+						"Navigating to Search >> Basic Search >> Advanced Search >> WorkProduct >> Tags (Select Same Tag which we have created in prerequesties.");
+				search.switchToWorkproduct();
+				search.selectTagInASwp(TagName);
+				pureHit = search.serarchWP();
+				finalCountresult = Integer.parseInt(finalCount);
+				base.stepInfo("Finalized Tag count : " + finalCountresult);
+				base.stepInfo("Aggreagate Tag search count : " + pureHit);
+
+			}
+
+		} else if (bulkAction.equalsIgnoreCase("Folder")) {
+			if (newFolder) {
+				finalCount = search.BulkActions_Folder_returnCount(folderName);
+				base.stepInfo("Completed Bulk Folder mapping");
+			}
+			if (folderVerify) {
+				base.stepInfo(
+						"Navigating to Search >> Basic Search >> Advanced Search >> WorkProduct >> Folder (Selected Same Folder which we have created in prerequesties.");
+				search.switchToWorkproduct();
+				search.selectFolderInASwp(folderName);
+				pureHit = search.serarchWP();
+				finalCountresult = Integer.parseInt(finalCount);
+
+			}
+
+		}
+		counts.put("Finalize Count ", finalCount);
+		counts.put("PureHit Count ", Integer.toString(pureHit));
+
+		return counts;
+	}
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @param time
+	 * @throws InterruptedException
+	 */
+	public void loadTimeCheck(int time) throws InterruptedException {
+
+		int latencyCheckTime = time;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+
+		// Load latency Verification
+		Element loadingElement = getTotalCountLoad();
+		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+	}
 }

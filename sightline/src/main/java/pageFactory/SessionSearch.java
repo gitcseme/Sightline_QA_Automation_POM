@@ -1357,6 +1357,11 @@ public class SessionSearch {
 	public Element getWhenAllResultsAreReadyID() {
 		return driver.FindElementByXPath("//div[@class='modal-body ui-dialog-content ui-widget-content']//b");
 	}
+	
+	// Method to avoid abnormal termination
+	public Element getSavedSearchNameResult(String savedSearchName) {
+		return driver.FindElementByXPath("//a[text()='" + savedSearchName + "']");
+	}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -8428,6 +8433,38 @@ public class SessionSearch {
 		driver.getWebDriver().navigate().refresh();
 
 		return finalizeDocCount;
+	}
+	
+	/**
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @param SaveName
+	 */
+	public void searchSavedSearchResult(String SaveName) {
+
+		base = new BaseClass(driver);
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		base.selectproject();
+		switchToWorkproduct();
+		// searchSavedSearch(saveSearchName);
+
+		driver.waitForPageToBeReady();
+		getSavedSearchBtn().Click();
+
+		if (getSavedSearchNameResult(SaveName).isDisplayed()) {
+			System.out.println(getSavedSearchNameResult(SaveName).getText());
+		}
+		driver.scrollingToBottomofAPage();
+		driver.waitForPageToBeReady();
+
+		getSavedSearchNameResult(SaveName).getWebElement().click();
+		base.waitForElement(getMetaDataInserQuery());
+		getMetaDataInserQuery().waitAndClick(15);
+		// Click on Search button
+		driver.scrollPageToTop();
+
+		UtilityLog.info("Selected a saved search " + SaveName + "and inserted into query text box ");
+		base.stepInfo("Selected a saved search " + SaveName + "and inserted into query text box ");
+
 	}
 
 }
