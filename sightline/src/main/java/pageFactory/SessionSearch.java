@@ -8360,7 +8360,7 @@ public class SessionSearch {
 	 * @Author jeevitha
 	 */
 	public void handleWhenAllResultsBtnInUncertainPopup() {
-		if (getWhenAllResultsAreReadyPopUp().isElementAvailable(10)) {
+		if (getWhenAllResultsAreReadyPopUp().isElementAvailable(20)) {
 			getWhenAllResultsAreReadyPopUp().waitAndClick(3);
 			String ID = getWhenAllResultsAreReadyID().getText();
 			base.stepInfo("When All Results Tab Clicked And Generated ID is: " + ID);

@@ -107,7 +107,8 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws ParseException
 	 */
 	@Test(enabled = false, groups = { "regression" }, priority = 1)
-	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup() throws Exception {
+	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup()
+			throws Exception {
 
 		int noOfNodesToCreate = 6;
 		int selectIndex = 0;
@@ -793,6 +794,7 @@ public class SavedSearchRegression_New_Set_04 {
 		login.logout();
 
 	}
+
 	/**
 	 * @author Raghuram A Date: 12/23/21 Modified date:N/A Modified by:N/A
 	 * @Description : PA impersonate down as RMU/RU role, create Searchgroups and
@@ -1643,7 +1645,91 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
-	
+	/**
+	 * @AUthor Jeevitha
+	 * @Description : Verify that BLANK \"Count\" gets display in conceptual Column
+	 *              in Saved Search Screen when user saved a Background Basic search
+	 *              Query [RPMXCON-48487]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	public void verifyConceptualCountAsBlank() throws InterruptedException, ParseException {
+		String Search1 = "search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48487  Saved Search");
+		base.stepInfo(
+				"Verify that BLANK \"Count\" gets display in conceptual Column in Saved Search Screen when user saved a Background Basic search Query");
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int purehit = session.returnPurehitCount();
+		session.saveSearch(Search1);
+
+		// Verify Conceptuall Column
+		saveSearch.savedSearch_Searchandclick(Search1);
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search1);
+		softAssertion.assertEquals(Count, "");
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is BLANK");
+
+		// Delete Searche
+		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that \"Count\" and status gets updated in conceptual
+	 *              column in Saved Search Screen when user Execute a Query with
+	 *              Execute option from Saved Search [RPMXCON-48489]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	public void verifyConceptualCountAfterExecute() throws InterruptedException, ParseException {
+		String Search1 = "search" + Utility.dynamicNameAppender();
+		String nearDupe = "Near Duplicate Count";
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48489  Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" and status gets updated in conceptual column in Saved Search Screen when user Execute a Query with Execute option from Saved Search");
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int purehit = session.returnPurehitCount();
+		session.saveSearch(Search1);
+
+		// Verify Conceptuall Column
+		saveSearch.savedSearchExecute(Search1, purehit);
+		saveSearch.getDocCountAndStatusOfBatch(Search1, nearDupe, true);
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search1);
+		softAssertion.assertNotEquals(Count, "");
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is Updated");
+
+		// Delete Searche
+		saveSearch.deleteSearch(Search1, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
