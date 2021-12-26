@@ -576,6 +576,13 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath(
 				"//*[@id='divDistributedDocUsers']//div[contains(.,'" + Input.rmu1userName + "')]/div/label");
 	}
+	
+	public Element getSelectUserToRedistributeDocsToReviewer() {
+		return driver.FindElementByXPath(
+				"//*[@id='dt_basic']//tr//td[contains(text(),'Indium ReviewerManager')]");
+	}
+
+	
 
 	// added by Jayanthi-Indium--23/8/21
 	public Element getArrowBtn_AssgnGroup(String assgnGroupName) {
@@ -1014,6 +1021,14 @@ public class AssignmentsPage {
 		return driver.FindElementByXPath("//h1[text()='Manage Assignments']");
 	}
 	
+	public Element getRedistributeYesPopup() {
+		return driver.FindElementByXPath("//*[@class='MessageBoxButtonSection']//button[@id='bot1-Msg1']");
+	}
+	
+	public Element getSelectTheReviewersDocCheckbox() {
+		return driver.FindElementByXPath("//*[@id='my-table']//label//i");
+	}
+	
 	
 	// Added by Raghuram
 	public Element getSortByMetaDataType() {
@@ -1262,7 +1277,14 @@ public class AssignmentsPage {
 	        return driver.FindElementByXPath(
 	                "//*[@id='AdditionalPreferences_IsAllowCodingOutsideReviwerBatch']/following-sibling::i");
 	    }
-
+		
+		public Element getAssgn_ToggleForAllowSaveWithoutCompletion() {
+	        return driver.FindElementByXPath(
+	                "//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
+	    }
+		
+		
+		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
 	public AssignmentsPage(Driver driver) {
 
 		this.driver = driver;
@@ -8354,5 +8376,26 @@ public class AssignmentsPage {
         getAssignmentSaveButton().waitAndClick(5);
         bc.CloseSuccessMsgpopup();
     }
+    
+    /**
+     * @author Indium-Mohan date: 20/12/2021 Modified date: NA Description: Toggle
+     *         Disable Code Outside Reviewer's Batch
+     */
+ 
+    public void toggleEnableSaveWithoutCompletion() {
+        // permissions
+        // Toggle disable for DisableCodeOutsideReviewersBatch
+        driver.waitForPageToBeReady();
+        driver.scrollingToBottomofAPage();
+        String analyticalPanelFlag = getAssgn_ToggleForAllowSaveWithoutCompletion().GetAttribute("class");
+ 
+        if (analyticalPanelFlag.contains("false")) {
+        	getAssgn_ToggleForAllowSaveWithoutCompletion().Click();
+        }
 
-}
+        driver.scrollPageToTop();
+        bc.waitForElement(getAssignmentSaveButton());
+        getAssignmentSaveButton().waitAndClick(5);
+        bc.CloseSuccessMsgpopup();
+    }
+  }
