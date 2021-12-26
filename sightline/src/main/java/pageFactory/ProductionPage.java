@@ -2077,6 +2077,8 @@ public class ProductionPage {
 	
 	public Element getNoOfCustodians() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians')]//following-sibling::label");}
+	public Element getAdvancedInMP3Files() {
+		return driver.FindElementByXPath("//div[@id='MP3FilesContainer']//div[@class='advanced-dd-toggle']");}
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -14468,6 +14470,66 @@ public class ProductionPage {
 
 	}	
 	
+	/**
+	 *
+	 * @Author Brundha
+	 * method for filling document selction page with one tag
+	 */
+	public void fillingDocumentSelectionWithTag(String Tag) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getTagRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(Tag).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(Tag).waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Document Selection Page section is filled");
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Brundha
+	 * method for filling mp3 file
+	 */
+	public void SelectMP3FileAndVerifyLstFile() {
+		
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.waitForElement(getAdvancedProductionComponent());
+		getAdvancedProductionComponent().waitAndClick(10);;
+		getMP3CheckBox().waitAndClick(10);;
+		getMP3CheckBoxToggle().waitAndClick(10);;
+		driver.waitForPageToBeReady();
+		base.clickButton(getAdvancedInMP3Files());
+		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i")).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor="#a9c981";	
+		if(ActualColor.equals(ExpectedColor)) {
+			base.passedStep("lst files toggle is enabled by default");
+		}else {
+			base.failedStep("lst files toggle is  not enabled by default");
+			}
+		
+	}
 	
+		
 	
 }
