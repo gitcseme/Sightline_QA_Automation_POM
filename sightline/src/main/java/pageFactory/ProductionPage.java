@@ -2077,6 +2077,19 @@ public class ProductionPage {
 	
 	public Element getNoOfCustodians() {
 		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians')]//following-sibling::label");}
+	
+	//added by Aathith
+	public Element getDAT_FieldClassification(int i) {
+		return driver.FindElementById("TY_"+i+"");
+	}
+	public Element getDAT_SourceField(int i) {
+		return driver.FindElementById("SF_"+i+"");
+	}
+	public Element getDAT_DATField(int i) {
+		return driver.FindElementById("DATFL_"+i+"");
+	}
+	
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -14467,6 +14480,33 @@ public class ProductionPage {
 		base.stepInfo("Dat section is filled with DOCID");
 
 	}	
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void addDatField(int i,String classification,String sourceField) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification(i).Visible() && getDAT_FieldClassification(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification(i).selectFromDropdown().selectByVisibleText(classification);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField(i).Visible() && getDAT_SourceField(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField(i).selectFromDropdown().selectByVisibleText(sourceField);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField(i).Visible() && getDAT_DATField(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField(i).waitAndClick(10);
+		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
+		base.stepInfo(i+"th Dat section is filled");
+	}
 	
 	
 	
