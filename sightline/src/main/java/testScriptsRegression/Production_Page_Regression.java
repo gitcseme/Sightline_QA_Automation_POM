@@ -1240,7 +1240,7 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
@@ -1264,8 +1264,8 @@ public class Production_Page_Regression {
 		page.fillingPrivGuardPage();
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
-		String expected = page.getValueTotalPagesCount().getText();
-		baseClass.passedStep("Total Documents:"+expected);
+		String expected = page.getValueTotalDocuments().getText();
+		baseClass.passedStep("Total Documents:" + expected);
 
 	}
 
@@ -1287,13 +1287,12 @@ public class Production_Page_Regression {
 		tagsAndFolderPage = new TagsAndFoldersPage(driver);
 		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
-		tagsAndFolderPage.createNewTagwithClassification(tagname, " Privileged");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
 
 		// search for folder
 		SessionSearch sessionSearch = new SessionSearch(driver);
 		sessionSearch.basicContentSearch(Input.testData1);
 		sessionSearch.bulkFolderExisting(foldername);
-		
 
 		// create production with DAT,Native,PDF& ingested Text
 		ProductionPage page = new ProductionPage(driver);
@@ -1313,12 +1312,119 @@ public class Production_Page_Regression {
 		page.fillingProductionLocationPage(productionname);
 		page.navigateToNextSection();
 		String expected = page.getValueTotalPagesCount().getText();
-		baseClass.passedStep("Total Page count is:"+expected);
+		baseClass.passedStep("Total Page count is:" + expected);
 
 	}
 
-	
-	
+	/**
+	 * @author Sowndarya.Velraj created on:12/26/21 TESTCASE No:RPMXCON-48505
+	 * @Description:Verify that Tiff should generate with Burned Redaction if Only
+	 *                     Burn Redaction is enabled
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 23)
+	public void verifyTiffWithBurnRedaction() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48505- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String tag = "Default Redaction Tag";
+
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSectionwithBurnRedaction(tag);
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, productionname);
+
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:12/26/21 TESTCASE No:RPMXCON-47791
+	 * @Description:To Verify appropriate display of data is occurring in 'Summary &
+	 *                 Preview' tab.
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 24)
+	public void verifySummaryAndPreview() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-47791- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String tag = "Default Redaction Tag";
+		// Pre-requisites
+		// create tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.CreateTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		// create production with DAT,Native,PDF& ingested Text
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingNativeSection();
+		page.fillingTiffSectionBranding();
+		page.fillingTextSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+
+		String totalDocumentsCount = page.getValueTotalDocuments().getText();
+		baseClass.passedStep("Total Documents:" + totalDocumentsCount);
+
+		String totalPagesCount = page.getValueTotalPagesCount().getText();
+		baseClass.passedStep("Total Page count is:" + totalPagesCount);
+
+		String totalCustodians = page.getValueNumberOfCustodians().getText();
+		baseClass.passedStep("Number of custodians:" + totalCustodians);
+
+		String FirstAndLastDocuments = page.getValueFirstLastDocs().getText();
+		baseClass.passedStep("First And Last Documents:" + FirstAndLastDocuments);
+
+		String redactedDocs = page.getValueRedactedDocs().getText();
+		baseClass.passedStep("Count Of Redacted Documents:" + redactedDocs);
+
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		// To delete tag and folder
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+	}
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
