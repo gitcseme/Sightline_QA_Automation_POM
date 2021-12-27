@@ -6579,7 +6579,7 @@ public class SavedSearch {
 	 * @param specificHeaderName
 	 * @param searchName
 	 */
-	public void ApplyShowAndHideFilter(String specificHeaderName, String searchName) {
+	public String ApplyShowAndHideFilter(String specificHeaderName, String searchName) {
 		verifyHeaderIsPresent(specificHeaderName);
 		getHideSHowBtn().waitAndClick(10);
 		driver.scrollingToBottomofAPage();
@@ -6595,6 +6595,7 @@ public class SavedSearch {
 		String Count = getNearDupeCount(searchName).getText();
 		base.stepInfo(specificHeaderName + "  : " + Count);
 		System.out.println(specificHeaderName + " : " + Count);
+		return Count;
 	}
 	
 	
