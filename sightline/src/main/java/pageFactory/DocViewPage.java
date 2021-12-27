@@ -1329,6 +1329,10 @@ public class DocViewPage {
 	public Element getDocView_Analytics_MetaDataPanel() {
 		return driver.FindElementById("divMetaTab");
 	}
+	
+	public Element getDocView_Analytics_FamilyMember_DocIdText(int rowno) {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[" + rowno + "]");
+	}
 
 	// added by Aathith
 	public Element getMetaDataInputInDocView() {
@@ -6021,34 +6025,22 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Mohan 8/29/21 NA Modified date: NA Modified by:NA
+	 * @author Mohan 8/29/21 NA Modified date: 26/12/2021 Modified by: Mohan
 	 * @description to edit coding form and save
 	 */
 	public void editCodingFormSave() {
 
 		driver.waitForPageToBeReady();
-
-//		driver.WaitUntil((new Callable<Boolean>() {
-//
-//			public Boolean call() {
-//
-//				return getDocument_CommentsTextBox().Displayed() && getDocument_CommentsTextBox().Enabled();
-//			}
-//		}), Input.wait30);
-
-		base.waitForElement(getDocument_CommentsTextBox());
-
-		getDocument_CommentsTextBox().SendKeys("Editing and click save button");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-
-			public Boolean call() {
-				return getCodingFormSaveBtn().Enabled() && getCodingFormSaveBtn().Visible();
-			}
-		}), Input.wait30);
-
 		driver.scrollPageToTop();
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().SendKeys("Editing and click save button");
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().Click();
 
 		base.VerifySuccessMessage("Document saved successfully");
@@ -16508,5 +16500,39 @@ public class DocViewPage {
 		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
 		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
 		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 26/12/2021
+	 * @description To select docs from Family member and action as View Document
+	 */
+	public void selectDocsFromFamilyMemberAndViewTheDocument() {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		String text1 = getDocView_CurrentDocId().getText();
+		 
+		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
+		driver.getPageSource();
+		getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		
+		base.waitForElement(getDocView_FamilyViewInDocView());
+		getDocView_FamilyViewInDocView().waitAndClick(3);
+		
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		
+		String text2 = getDocView_CurrentDocId().getText();
+		
+		softAssertion.assertNotEquals(text1, text2);
+		softAssertion.assertAll();
+		base.passedStep("Family Member Doc is viewed in DocView");
+
+		
 	}
 }

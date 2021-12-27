@@ -3,8 +3,10 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Set;
 
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -22,6 +24,7 @@ import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
+import pageFactory.MiniDocListPage;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -151,7 +154,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	}
 	
 	/**
-	 * Author : Mohan date: 23/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-51081 
+	 * Author : Mohan date: 23/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50921 
 	 * @description: Verify warning message is prompted to the user when user clicks browser back button
 	 *  without completing or saving from analytics panel 'RPMXCON-50921' Sprint 8
 	 */
@@ -356,6 +359,149 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 	}
 	
+	/**
+	 * Author : Mohan date: 26/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50907 
+	 * @description: To verify coding form should get overwritten if document from family members is already having assigned coding form 'RPMXCON-50907' Sprint 9
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	public void verifyFamilyMemberTabWhenCodingFormOverWritten() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50907");
+		baseClass.stepInfo("To verify coding form should get overwritten if document from family members is already having assigned coding form");
+		
+		String codingForm = Input.codingFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+		int id=4;
+		sessionSearch = new SessionSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+		assignmentsPage.assignmentCreation(assname, codingForm);
+		assignmentsPage.toggleEnableSaveWithoutCompletion();
+		assignmentsPage.add2ReviewerAndDistribute();
+		
+		baseClass.stepInfo("Step 2: Navigating Doc view from Assignment Page");
+		assignmentsPage.selectAssignmentToViewinDocview(assname);
+		
+		baseClass.stepInfo("Step 3: Select documents from family members tab which are part of the assignment and should be saved with coding form of security group  Select documents from family members and action as code same as this");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_DefaultViewTab());
+		baseClass.waitForElement(docView.getDocView_NumTextBox());
+		docView.getDocView_NumTextBox().Clear();
+		docView.getDocView_NumTextBox().SendKeys(Integer.toString(id));
+		docView.getDocView_NumTextBox().Enter();
+		
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+		docView.editCodingFormSave();
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		baseClass.stepInfo("Step 4: Edit the coding form and save");
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+		docView.editCodingFormSave();
+		baseClass.passedStep("Coding form is updated for the documents selected from family member tab successfully");
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+		
+		baseClass.stepInfo("Step 2: Go to doc view from my assignment");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		
+		baseClass.stepInfo("Step 3: Select documents from family members tab which are part of the assignment and should be saved with coding form of security group  Select documents from family members and action as code same as this");
+		driver.waitForPageToBeReady();
+		baseClass.waitForElement(docView.getDocView_DefaultViewTab());
+		baseClass.waitForElement(docView.getDocView_NumTextBox());
+		docView.getDocView_NumTextBox().Clear();
+		docView.getDocView_NumTextBox().SendKeys(Integer.toString(id));
+		docView.getDocView_NumTextBox().Enter();
+		
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+		docView.editCodingFormSave();
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+		
+		baseClass.stepInfo("Step 4: Edit the coding form and save");
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+		docView.editCodingFormSave();
+		baseClass.passedStep("Coding form is updated for the documents selected from family member tab successfully");
+		
+		loginPage.logout();
+		
+		
+	}
+	
+	/**
+	 * Author : Mohan date: 26/12/2021 Modified date: NA Modified by: NA Test Case Id:RPMXCON-50943 
+	 * @description: To verify that user can select multiple documents from the 'Conceptually similar' tab from analytics panel and marked it as 'Code Same as This'. 'RPMXCON-50943' Sprint 9
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	public void verifyUserCanSelectMultiDocsFromConceptualTab() throws Exception {
+		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
+		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Test case id : RPMXCON-50943");
+		baseClass.stepInfo("To verify that user can select multiple documents from the 'Conceptually similar' tab from analytics panel and marked it as 'Code Same as This'.");
+		
+		
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+		
+		baseClass.stepInfo("Step 3: User can view the Principal document along with Coding Form.");
+		
+		softAssertion.assertTrue(docView.getDocView_Analytics_CodingFormPanel().isElementAvailable(5));
+		softAssertion.assertAll();
+		baseClass.passedStep("User can view the Principal document along with Coding Form.");
+		
+		baseClass.stepInfo("Step 4: Click on Conceptually Similar in analytics Panel and select multiple documents.  Select the Action as ' Code same as this'.");
+		docView.selectDocsFromConceptualTabAndActionCodeSame();
+		
+		loginPage.logout();
+		
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rev1userName);
+		
+		baseClass.stepInfo("Step 1: Search for the doc and assignment is created");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewConceptualDocsInDocViews();
+		
+		baseClass.stepInfo("Step 3: User can view the Principal document along with Coding Form.");
+		
+		softAssertion.assertTrue(docView.getDocView_Analytics_CodingFormPanel().isElementAvailable(5));
+		softAssertion.assertAll();
+		baseClass.passedStep("User can view the Principal document along with Coding Form.");
+		
+		baseClass.stepInfo("Step 4: Click on Conceptually Similar in analytics Panel and select multiple documents.  Select the Action as ' Code same as this'.");
+		docView.selectDocsFromConceptualTabAndActionCodeSame();
+		
+		loginPage.logout();
+		
+		
+	}
 	
 	
 	@AfterMethod(alwaysRun = true)
