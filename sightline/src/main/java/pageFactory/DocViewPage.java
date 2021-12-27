@@ -2300,6 +2300,16 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]/tbody/tr[1]/td[2]");
 	}
 	
+	//Added by Gopinath - 27/12/2021
+		public Element getselectDocInImageTab() {
+			return driver.FindElementByXPath("//li[@id='liDocumentProductionView']");
+		}
+
+		public Element getDocViewSelectedDocId() {
+			return driver.FindElementByXPath("//span[@id='activeDocumentId']");
+		}
+
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -16534,5 +16544,84 @@ public class DocViewPage {
 		base.passedStep("Family Member Doc is viewed in DocView");
 
 		
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: This method for verification stamp complete navigate next documnet.
+	 */
+	public void stampCompleteNavigateNextDocumumentVerification(String comment, String fieldText, String colour) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getVerifyPrincipalDocument());
+			String prnDoc = getVerifyPrincipalDocument().getText();
+			reusableDocView.editCodingForm(comment);
+			base.waitForElement(getCodingFormStampButton());
+			getCodingFormStampButton().waitAndClick(5);
+			reusableDocView.popUpAction(fieldText, colour);
+			// clicking on stamp applied
+			base.stepInfo("performing action using stamp button");
+			reusableDocView.lastAppliedStamp(colour);
+			driver.waitForPageToBeReady();
+			base.waitForElement(getVerifyPrincipalDocument());
+			String prnSecDoc = getVerifyPrincipalDocument().getText();
+			boolean flag = getDocView_defaultView().Enabled();
+			softAssertion.assertTrue(flag);
+			if (!prnDoc.equals(prnSecDoc)) {
+				base.passedStep("Cursor navigated to next document");
+			} else {
+				base.stepInfo("cursor not navigated");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying weather cursor navigated to next documnet "+e.getLocalizedMessage());
+		}
+	}
+	/**
+	 * @author Gopinath
+	 * @Description: This method for select row from mini doc list from doc view.
+	 * @param rowNumber : rowNumber is integer value that row number need to select from mini doc list.
+	 */
+	public void selectRowFromMiniDocList(int rowNumber) {
+		try {
+			base.waitForElement(getDocView_MiniDocListIds(rowNumber));
+			getDocView_MiniDocListIds(rowNumber).isElementAvailable(10);
+			getDocView_MiniDocListIds(rowNumber).waitAndClick(6);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while select row from mini doc list from doc view. "+e.getLocalizedMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * @Description: This method for verify image tab is enabled if folder is added.
+	 * @param rowNumber : rowNumber is integer value that row number need to select from mini doc list.
+	 * @param folderName : folderName is String value that name of folder to create.
+	 */
+	public void verifyImageEnabledAfterCreatedFolder(String folderName,int rowNumber) {
+		try {
+			driver.scrollPageToTop();
+			getDocViewSelectedDocId().isElementAvailable(10);
+			String DocIdBefore =  getDocViewSelectedDocId().getText();//get the document id before creating the folder
+			driver.scrollPageToTop();
+			getselectDocInImageTab().isElementAvailable(10);
+			getselectDocInImageTab().waitAndClick(5);
+			performFolderAction(folderName, rowNumber);
+			driver.scrollPageToTop();
+			getDocViewSelectedDocId().isElementAvailable(10);
+			String DocIdAfter = getDocViewSelectedDocId().getText();//Get the document id after created the folder
+			getselectDocInImageTab().isElementAvailable(10);
+			if(getselectDocInImageTab().Enabled() && DocIdBefore.equals(DocIdAfter)) {
+				base.passedStep("Image tab retained for the loaded document after creating folder for selectded document");
+			    System.out.println("Image tab retained for the loaded document after creating folder for seleded document");
+			}else {
+				base.failedStep("Image tab Abandoned the loaded document after created the folder for selected documents");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while select row from mini doc list from doc view. "+e.getLocalizedMessage());
+		}
 	}
 }

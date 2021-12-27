@@ -2068,6 +2068,77 @@ public class DocView_Regression1 {
 			baseClass.stepInfo("Verify Image Tab Is Enabled");
 			docView.verifyImageTabIsEnabled();
 		}
+		
+		
+		/**
+		 * @Author : Gopinath 
+		 * @testcase_id :RPMXCON-51930 : Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList. 
+		 * @Description : Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList.
+		 */
+
+		@Test(enabled = true, groups = { "regression" }, priority = 22)
+		public void verifyingCodingStampPostFixColourChildWindowPopUp() throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-51930");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String comment = Input.randomText + Utility.dynamicNameAppender();
+			String fieldText = Input.randomText  + Utility.dynamicNameAppender();
+			
+			baseClass.stepInfo("#### Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList. ####");
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			// searching document for assignmnet creation
+			sessionSearch.basicContentSearch(Input.searchString2);
+			sessionSearch.bulkAssign();
+			assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+			assignmentPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+			
+			docView = new DocViewPage(driver);
+			
+			docView.stampCompleteNavigateNextDocumumentVerification(comment, fieldText, Input.stampSelection);
+			}
+
+		
+		/**
+		 * @author Gopinath
+		 * TestCase id : 51907 - Verify that when user in on Images tab and folder few documents then 
+		 *                       on loading of document should be on Images tab of document
+		 *  Description : Verify that when user in on Images tab and folder few documents then on loading
+		 *                of document should be on Images tab of document                     
+		 */
+		@Test(enabled = true, groups = { "regression" }, priority = 23)
+		public void  verifyUserOnImagesTabAfterCreatingFolder() throws InterruptedException {
+				String folderName = Input.randomText+Utility.dynamicNameAppender();
+				int RowNumber =1;
+				baseClass=new BaseClass(driver);
+				baseClass.stepInfo("Test case Id: RPMXCON-51907");
+				baseClass.stepInfo("#### Verify that when user in on Images tab and folder few documents then on loading of document should be on Images tab of document ####");
+				
+				docView = new DocViewPage(driver);
+				SessionSearch session = new SessionSearch(driver);
+				
+				baseClass.stepInfo("Basic Basic content search");
+				session.basicContentSearch(Input.searchString1);
+			
+				baseClass.stepInfo("Navigate to  DocView page");
+				session.ViewInDocView();
+				
+				baseClass.stepInfo("Document selected");
+				docView.selectRowFromMiniDocList(RowNumber);
+				
+				baseClass.stepInfo("Verify image tab is enabled if folder is added.");
+				docView.verifyImageEnabledAfterCreatedFolder(folderName, RowNumber);
+		}
+		
+		
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {

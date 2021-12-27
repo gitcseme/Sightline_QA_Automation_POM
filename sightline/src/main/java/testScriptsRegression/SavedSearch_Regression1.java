@@ -220,6 +220,150 @@ public class SavedSearch_Regression1 {
 			
 		}
 		
+		
+		/**
+		 * @author Gopinath
+		 * @Testcase_Id : RPMXCON-48478 : Verify that "Count" gets update  in Saved Search Screen when user saved a Background Advanced search Query.
+		 * @Description : Verify that "Count" gets update  in Saved Search Screen when user saved a Background Advanced search Query
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 5)
+		public void validateCountOfSavedAdvancedSearch() {
+			
+			String advanceSearchName = Input.randomText + Utility.dynamicNameAppender();
+			baseClass.stepInfo("Test case Id: RPMXCON-48478 - Saved Search 08");
+			baseClass.stepInfo("#### Verify that \"Count\" gets update  in Saved Search Screen when user saved a Background Advanced search Query ####");
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Navigate To Session Search Page URL");
+			sessionSearch.navigateToSessionSearchPageURL();
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicMetaDataSearch(Input.metaDataName,null,Input.metaDataCN,null);
+			
+			driver.Navigate().refresh();
+			
+			baseClass.stepInfo("Get count from tills.");
+			Map<String, String> tillsCount = sessionSearch.getCountFromTills();
+			
+			baseClass.stepInfo("Save searched content");
+			sessionSearch.saveSearchHandle(advanceSearchName);
+			
+			saveSearch = new SavedSearch(driver);
+			
+			baseClass.stepInfo("Navigate To Saved Search Page");
+			saveSearch.navigateToSavedSearchPage();	
+			
+			baseClass.stepInfo("Select Saved search with Near Dupe Count And CS Count");
+			saveSearch.selectSavedsearchCount(advanceSearchName);
+			
+			baseClass.stepInfo("Count Verifaction Of Draft Basic MetaData Search");
+			saveSearch.countVerifactionOfDraftBasicMetaDataSearch(tillsCount,advanceSearchName);
+			
+		}
+
+		/**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+		 * TestCase id :  48516 - Verify that "Pending" status appears in Saved Search Screen when user saved a Basic search through Batch Search Upload.
+		 * Description : Verify that "Pending" status appears in Saved Search Screen when user saved a Basic search through Batch Search Upload.
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 6)
+		public void verifyPendingStatusBatchUploadSavedSearch() throws Exception {		
+		
+			baseClass.stepInfo("Test case Id: RPMXCON-48516");
+			utility = new Utility(driver);
+			baseClass.stepInfo("#### Verify that 'Pending' status appears in Saved Search Screen when user saved a Basic search through Batch Search Upload ####");
+			  
+			saveSearch = new SavedSearch(driver);
+			
+			baseClass.stepInfo("Navigate To Saved Search Page");
+			saveSearch. navigateToSavedSearchPage();
+			
+			baseClass.stepInfo("Upload Batch File");
+			final String fileName = saveSearch.renameFile(Input.batchFileNewLocation);
+			saveSearch.uploadBatchFile_D(Input.batchFileNewLocation,fileName,true);
+			
+			baseClass.stepInfo("Click on select button");
+			saveSearch.getSubmitToUpload().Click();
+			
+			baseClass.stepInfo("Open uploded batch file.");
+			saveSearch.openUplodedBatchFile(fileName);
+			
+			baseClass.stepInfo("Verify pending status appeared on saved search table.");
+			saveSearch.verifyPendingStatusAppearedSavedSearchTable();
+			
+			baseClass.stepInfo("Delete uploded batch file.");
+			saveSearch.deleteUplodedBatchFile(fileName);
+		}
+		
+
+		/**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+		 * TestCase id :  48517 - Verify that "Pending" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
+		 * Description : Verify that "Pending" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 7)
+		public void verifyPendingStatusBatchUploadAdvancedSavedSearch() throws Exception {		
+		
+			baseClass.stepInfo("Test case Id: RPMXCON-48517");
+			utility = new Utility(driver);
+			baseClass.stepInfo("#### Verify that 'Pending' status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload ####");
+			  
+			saveSearch = new SavedSearch(driver);
+			
+			baseClass.stepInfo("Navigate To Saved Search Page");
+			saveSearch. navigateToSavedSearchPage();
+			
+			baseClass.stepInfo("Upload Batch File");
+			final String fileName = saveSearch.renameFile(Input.batchFileNewLocation);
+			saveSearch.uploadBatchFile_D(Input.batchFileNewLocation,fileName,true);
+			
+			baseClass.stepInfo("Click on select button");
+			saveSearch.getSubmitToUpload().Click();
+			
+			baseClass.stepInfo("Open uploded batch file.");
+			saveSearch.openUplodedBatchFile(fileName);
+			
+			baseClass.stepInfo("Verify pending status appeared on saved search table.");
+			saveSearch.verifyPendingStatusForAdvanceSearchAppeared();
+			
+			baseClass.stepInfo("Delete uploded batch file.");
+			saveSearch.deleteUplodedBatchFile(fileName);
+		}
+		/**
+		 * Author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath
+		 * TestCase id :  48519 - Verify that "Completed" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
+		 * Description : Verify that "Completed" status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload.
+		 */
+		@Test(alwaysRun = true,groups={"regression"},priority = 8)
+		public void verifyCompletedStatusBatchUploadAdvancedSavedSearch() throws Exception {		
+		
+			baseClass.stepInfo("Test case Id: RPMXCON-48519");
+			utility = new Utility(driver);
+			baseClass.stepInfo("#### Verify that 'Completed' status appears in Saved Search Screen when user saved a Advanced search, through Batch Search Upload ####");
+			  
+			saveSearch = new SavedSearch(driver);
+			
+			baseClass.stepInfo("Navigate To Saved Search Page");
+			saveSearch. navigateToSavedSearchPage();
+			
+			baseClass.stepInfo("Upload Batch File");
+			final String fileName = saveSearch.renameFile(Input.batchFileNewLocation);
+			saveSearch.uploadBatchFile_D(Input.batchFileNewLocation,fileName,true);
+			
+			baseClass.stepInfo("Click on select button");
+			saveSearch.getSubmitToUpload().Click();
+			
+			baseClass.stepInfo("Open uploded batch file.");
+			saveSearch.openUplodedBatchFile(fileName);
+			
+			baseClass.stepInfo("Verify pending status appeared on saved search table.");
+			saveSearch.verifyCompletedStatusForAdvanceSearchAppeared();
+			
+			baseClass.stepInfo("Delete uploded batch file.");
+			saveSearch.deleteUplodedBatchFile(fileName);
+		}
+		
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
