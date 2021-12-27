@@ -16,7 +16,7 @@
 	<conceptualSearchString1>field report</conceptualSearchString1>
 	<conceptualSearchString1PureHit>2</conceptualSearchString1PureHit>
 	<metaDataCN>P Allen</metaDataCN>
-	<metaDataCNcount>1135</metaDataCNcount>
+	<metaDataCNcount>1135</metaDataCNcount> 
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
 	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
@@ -353,5 +353,9 @@
 	<productionText>Production</productionText>
 	<tiffPageCountNam>TIFFPageCount</tiffPageCountNam>
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
+	
+	<!-- Added by Gopinath Created date - 27/12/2021 -->
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
+	<invalidNameText>Invalid Name</invalidNameText>
 	
 </TestData>

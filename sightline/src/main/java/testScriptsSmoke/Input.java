@@ -37,7 +37,7 @@ public class Input {
 	public static String newProject;
 	public static String ingestion;
 	public static String suite;
-	public static String browserName;
+	public static String browserName; 
 	public static String screenShotOnPass;
 	public static String screenShotOnFail;
 	public static int wait3;
@@ -428,6 +428,10 @@ public class Input {
 	public static String productionText;
 	public static String tiffPageCountNam;
 	public static String tiffPageCountText;
+	
+	//Added by Gopinath - 22/12/2021
+	public static String errorQueryFileLocation;
+	public static String invalidNameText;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -865,6 +869,10 @@ public class Input {
 		productionText = testData.getProductionText();
 		tiffPageCountNam = testData.getTiffPageCountNam();
 		tiffPageCountText = testData.getTiffPageCountText();
+		
+		//Added by Gopinath - 27/12/2021
+		errorQueryFileLocation = testData.getErrorQueryFileLocation();
+		invalidNameText = testData.getInvalidNameText();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");
