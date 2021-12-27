@@ -341,4 +341,8 @@ public class TestData {
 		public String productionText;
 		public String tiffPageCountNam;
 		public String tiffPageCountText;
+		
+		//Added by Gopinath - 27/12/2021
+		public String errorQueryFileLocation;
+		public String invalidNameText;
 }
