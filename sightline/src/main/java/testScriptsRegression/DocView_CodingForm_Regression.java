@@ -25,6 +25,7 @@ import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CodingForm;
+import pageFactory.CommentsPage;
 import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.KeywordPage;
@@ -55,6 +56,7 @@ public class DocView_CodingForm_Regression {
 	KeywordPage keywordPage;
 	ReusableDocViewPage reusableDocView;
 	MiniDocListPage miniDocListPage;
+	CommentsPage commentsPage;
 
 	String projectFieldINT = "DataINT" + Utility.dynamicNameAppender();
 	String projectFieldNVARCHAR = "Nvarchar" + Utility.dynamicNameAppender();
@@ -71,7 +73,7 @@ public class DocView_CodingForm_Regression {
 	String floppyIconTooltip = "Save this coding form as a new stamp";
 	String roll="rmu";
 	String stampOverWrite="The Stamp you selected is already in use. Do you want to overwrite this Stamp with the new selections?";
-
+	String date = "Date" + Utility.dynamicNameAppender();
 	
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
@@ -5260,8 +5262,6 @@ public class DocView_CodingForm_Regression {
 		softAssertion.assertEquals(stampName, toolTipName);
 		softAssertion.assertAll();
 		
-		
-		
 		//logout
 		loginPage.logout();
 		
@@ -5323,7 +5323,7 @@ public class DocView_CodingForm_Regression {
 	 *              document from history drop down. 'RPMXCON-52118' Sprint : 8
 	 */
 
-	@Test(enabled = true,dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 130)
+	@Test(enabled = true,dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 128)
 	public void verifyUserClickSaveAndNextSelectDropDown(String roll, String userName, String password) throws InterruptedException, AWTException {
 		
 		docViewPage = new DocViewPage(driver);
@@ -5366,7 +5366,7 @@ public class DocView_CodingForm_Regression {
 	 *              from search. 'RPMXCON-52124' Sprint : 8
 	 */
 
-	@Test(enabled = true, dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 131)
+	@Test(enabled = true, dataProvider = "rmuRevLogin",groups = { "regression" }, priority = 129)
 	public void verifyUserClickCodeSameAsLastInDocViewFromSearch(String roll, String userName, String password) throws InterruptedException, AWTException {
 
 		docViewPage = new DocViewPage(driver);
@@ -5403,7 +5403,7 @@ public class DocView_CodingForm_Regression {
 	 * 			RPMXCON-52121
 	 * @DisCription Verify the automatically selected audio redaction tag when shared annotation layer with shared redactation tags in security groups and all documents are released to security groups.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 120)
+	@Test(enabled = true, groups = { "regression" }, priority = 130)
 	public void verifyAllDocumentAreReleaseToSG() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5445,7 +5445,7 @@ public class DocView_CodingForm_Regression {
 	 * 			RPMXCON-52122
 	 * @DisCription Verify tool tip on mouse hover of the icon to code same as last.
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 121)
+	@Test(enabled = true, groups = { "regression" }, priority = 131)
 	public void verifyToolTipCodeSameAsLast() throws InterruptedException, AWTException {
 		docViewPage = new DocViewPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -5482,12 +5482,14 @@ public class DocView_CodingForm_Regression {
 		baseClass.passedStep("Verified tool tip on mouse hover of the icon to code same as last");
 		loginPage.logout();
 	}
+	
 	/**
 	 * @author Aathith.Senthilkumar
 	 * 			RPMXCON-52117
 	 * @DisCription Verify when user clicks the saved stamp when navigating to document on document navigation options [<<, <, >, >>, enter document number].
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 122)
+	
+	@Test(enabled = true, groups = { "regression" }, priority = 132)
 	public void verifiyNavigateToDocument() throws InterruptedException, AWTException {
 		baseClass.stepInfo("Test case Id: RPMXCON-52117");
 		
@@ -5501,22 +5503,14 @@ public class DocView_CodingForm_Regression {
 		// Login As rmu
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 
-
 		// Searching audio document with different term
 		baseClass.stepInfo("Searching audio documents based on search string");
 		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
-
-
 		docViewPage.selectPureHit();
-
-
 		baseClass.stepInfo("Searching Content documents based on search string");
 		sessionSearch.advancedNewContentSearch1(Input.testData1);
-		
 		baseClass.stepInfo("Open the searched documents in doc view mini list");
 		sessionSearch.ViewInDocViews();
-		
-		
 		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
 		docViewPage.verifyThatIsLastDoc();
 		docViewPage.getDocView_NumTextBox().SendKeys("3");
@@ -5541,6 +5535,895 @@ public class DocView_CodingForm_Regression {
 	
 	}
 	
+	/**
+	 * @Author : Baskar date: 22/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that on click of the saved stamp should load the coding
+	 *                     form values in context of security group
+	 */
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 133)
+	public void validateSavedStampSG(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52068");
+		baseClass.stepInfo(
+				"Verify that on click of the saved stamp should load the coding form values in context of security group");
+
+		// Login As
+		loginPage.loginToSightLine(userName, password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		docViewPage.editCodingForm(comment);
+		docViewPage.stampColourSelection(fieldText, Input.stampSelection);
+
+		// Click on saved stamp
+		docViewPage.lastAppliedStamp(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		docViewPage.verifySavedStamp(comment);
+		driver.getWebDriver().navigate().refresh();
+		docViewPage.deleteStampColour(Input.stampSelection);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 22/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify user can delete the stamp from edit coding stamp pop up
+	 *                     in context of security group
+	 */
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 134)
+	public void validateDeletionOfStamp(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "Stamp" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52066");
+		baseClass.stepInfo(
+				"Verify user can delete the stamp from edit coding stamp pop up in context of security group");
+
+		// Login As
+		loginPage.loginToSightLine(userName, password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// Click on saved stamp to delete
+		docViewPage.deleteSavedStamp(comment, fieldText);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 22/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description : Verify that on completing the document after applying coding
+	 *              stamp when hits panel is open then enable/disable should be
+	 *              retained
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 135)
+	public void verifyHitPanelUsingStamp() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51749");
+		baseClass.stepInfo("Verify that on clicking 'Save and Next' "
+				+ "when hits panel is open then enable/disable should be " + "retained in context of security group");
+		String hitTerms = "Than" + Utility.dynamicNameAppender();
+		String Assignment = "AAsign" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String stampText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+//		Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Assignment, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logou
+		loginPage.logout();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// select assignment from reviewer and got to docview
+		assignmentPage.SelectAssignmentByReviewer(Assignment);
+
+		docViewPage.getPersistentHit(hitTerms);
+		docViewPage.verifySavedStampForHitPanel(hitTerms, comment, stampText);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: 22/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description :Verify that on completing the document same as last with code
+	 *              same as action for other documents when hits panel is open then
+	 *              enable/disable should be retained
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 136)
+	public void verifyHitPanelCodeSameAsAndCodeLast() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51748");
+		baseClass.stepInfo("Verify that on completing the document same as last with code same as action "
+				+ "for other documents when hits panel is open then enable/disable should be retained");
+		String hitTerms = "Than" + Utility.dynamicNameAppender();
+		String Assignment = "AAsign" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+//		Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Assignment, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// select assignment from reviewer and got to docview
+		assignmentPage.SelectAssignmentByReviewer(Assignment);
+
+		docViewPage.getPersistentHit(hitTerms);
+		docViewPage.verifyCodeSameAsLastForHitPanel(hitTerms, comment);
+
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: 22/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description :Verify that on completing the document when hits panel is open
+	 *              then enable/disable should be retained
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 137)
+	public void verifyHitPanelCompleteBtn() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		keywordPage = new KeywordPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51747");
+		baseClass.stepInfo("Verify that on completing the document when hits panel "
+				+ "is open then enable/disable should be retained");
+		String hitTerms = "Than" + Utility.dynamicNameAppender();
+		String Assignment = "AAsign" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+//		Add keywords
+		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
+		keywordPage.AddKeyword(hitTerms, hitTerms);
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(Assignment, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// select assignment from reviewer and got to docview
+		assignmentPage.SelectAssignmentByReviewer(Assignment);
+
+		docViewPage.getPersistentHit(hitTerms);
+		docViewPage.verifyCompleteBtnForHitPanel(hitTerms, comment);
+
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 23/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:To verify that if user updates coding form in Doc View then it
+	 *                 will displayed the modification for other documents-Coding
+	 *                 form also.
+	 * 
+	 */
+	@Test(enabled = false, dataProvider = "rmuRevLogin", groups = { "regression" }, priority = 138)
+	public void validateSavedDocsAfterCodeSameAs(String fullName, String userName, String password)
+			throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String commentTwo = "commentTwo" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50944");
+		baseClass.stepInfo(
+				"To verify that if user updates coding form in Doc View then it will displayed the modification for other documents-Coding form also.\r\n"
+						+ "");
+
+		// Login As
+		loginPage.loginToSightLine(userName, password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// Save coding form
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingFormSaveButton();
+		for (int i = 1; i <= 2; i++) {
+			baseClass.waitForElement(docViewPage.getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			docViewPage.getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		docViewPage.clickCodeSameAs();
+		docViewPage.editCodingForm(commentTwo);
+		docViewPage.codingFormSaveButton();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify the coding form for current document");
+		docViewPage.verifyComments(commentTwo);
+		docViewPage.getClickDocviewID(2).WaitUntilPresent().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify the coding form for code same as document");
+		docViewPage.verifyComments(commentTwo);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: 20/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:In DocView, after loading/reloading mini doclist with additional
+	 *                 docs, the Complete action on the principal document is should
+	 *                 be working
+	 */
+	@Test(enabled = false, groups = { "regression" }, priority = 139)
+	public void validateFirstAndLastDocsShouldComplete() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51676");
+		baseClass.stepInfo("In DocView, after loading/reloading mini doclist with additional docs, "
+				+ "the Complete action on the principal document is should be working");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		baseClass.waitForElement(assignmentPage.getAssgnGrp_Create_DrawPoolCount());
+		assignmentPage.getAssgnGrp_Create_DrawPoolCount().SendKeys("500");
+		driver.scrollPageToTop();
+		baseClass.waitForElement(assignmentPage.getAssignmentSaveButton());
+		assignmentPage.getAssignmentSaveButton().waitAndClick(5);
+		baseClass.CloseSuccessMsgpopup();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		// selecting assignment and going to docview page
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		baseClass.stepInfo("Principal document completed successfully");
+		docViewPage.scrollingDocumentInMiniDocList();
+		docViewPage.getDocIdLast().waitAndClick(5);
+		String lastDoc = docViewPage.getVerifyPrincipalDocument().getText();
+		docViewPage.editCodingForm(comment);
+		docViewPage.completeButton();
+		String lastSeDoc = docViewPage.getVerifyPrincipalDocument().getText();
+		softAssertion.assertEquals(lastDoc, lastSeDoc);
+		baseClass.stepInfo("Last document completed successfully");
+		softAssertion.assertAll();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:24/8/2021 Modified by: Baskar
+	 * Description : Verify comment and metadata indexing when clicked 'code same as last' 
+	 *               for the document in security group context
+	 */
+
+	@Test(enabled = false, groups = { "regression" }, priority = 140)
+	public void validateCommentAndMetadataPureHitCount() throws InterruptedException, AWTException {
+		projectPage=new ProjectPage(driver);
+		securityGroupPage=new SecurityGroupsPage(driver);
+		commentsPage =new CommentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		codingForm=new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52138");
+		baseClass.stepInfo("Verify comment and metadata indexing when clicked 'code same as last' "
+				+ "for the document in security group context");
+		UtilityLog.info("Started Execution for prerequisite");
+		String addComment = "addomment" + Utility.dynamicNameAppender();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+		String commentText = "ct" + Utility.dynamicNameAppender();
+		String metadataText = "mt" + Utility.dynamicNameAppender();
+
+		
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+		
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+		
+		// Creating Coding Form
+		codingForm.createCommentAndMetadata(projectFieldINT, addComment,cfName);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		codingForm.assignCodingFormToSG(cfName);
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// verify the coding form panel
+		docViewPage.verifyCommentAndMetadata(addComment,commentText, projectFieldINT, metadataText);
+		baseClass.stepInfo("Checking index of comment and metadata for saved document");
+		sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText,addComment, commentText);
+		
+		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.deleteCodingForm(cfName, cfName);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+	}
+	
+	/**
+	 * @Author : Baskar date:27/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify when user clicks the saved stamp on selecting the
+	 *              document from history drop down
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 141)
+	public void savedStampInHistoryDropDown() throws InterruptedException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52116");
+		baseClass.stepInfo("Verify when user clicks the saved stamp on selecting the document from history drop down");
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		// validation in history drop down for saved stamp
+		docViewPage.savedStampHistoryDropDown(comment, filedText);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date:27/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Verify when user clicks the 'Saved and Next' when navigating
+	 *              to document on document navigation options [<<, <, >, >>, enter
+	 *              document number]
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 142)
+	public void validateNavigateOptionUsingSaveAndNext() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		baseClass.stepInfo("Test case Id: RPMXCON-52119");
+		baseClass.stepInfo("Verify when user clicks the 'Saved and Next' when navigating to"
+				+ " document on document navigation options [<<, <, >, >>, enter document number]");
+
+		String comment = "comment" + Utility.dynamicNameAppender();
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+
+		docViewPage.verifySaveAndNextUsingNavigationOption(comment);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: NA Modified date:27/12/2021 Modified by: Baskar
+	 * @Description :Verify validation of coding form when coding form is created
+	 *              with metadata field as DateOnly on click of 'Complete'
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 143)
+	public void nonDateFormatForDateUsingComplete() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		codingForm = new CodingForm(driver);
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51584");
+		baseClass.stepInfo("Verify validation of coding form when coding form is "
+				+ "created with metadata field as DateOnly on click of 'Complete'");
+		String codingForms = "CFDate" + Utility.dynamicNameAppender();
+		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Started Execution for prerequisite");
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with DATE DataType
+		projectPage.addCustomFieldDataType(date, "Date");
+		baseClass.stepInfo("Custom meta data field created with DATE datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(date);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.creatingCodingFormAndAssgnUsingParameter(codingForms, date, Input.optional);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+
+		assignmentPage.assignmentCreation(assgnCoding, codingForms);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify the coding form panel for non-date format
+		docViewPage.nonDateFormatValidationUsingComplete(date);
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: NA Modified date:27/12/2021 Modified by: Baskar
+	 * @Description :Verify validation of coding form when coding form is created
+	 *              with metadata field as DateOnly on saving of the stamp
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 144)
+	public void validationOfNonDateFormatDateOnly() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		codingForm = new CodingForm(driver);
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51585");
+		baseClass.stepInfo("Verify validation of coding form when coding form is "
+				+ "created with metadata field as DateOnly on saving of the stamp");
+
+		String codingfrom = "CFDate" + Utility.dynamicNameAppender();
+		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+		String assgnColour = "ColourAssign" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		UtilityLog.info("Started Execution for prerequisite");
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with DateTime DataType
+		projectPage.addCustomFieldDataType(date, "Date");
+		baseClass.stepInfo("Custom meta data field created with DateTime datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(date);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.creatingCodingFormAndAssgnUsingParameter(codingfrom, date, "Make it Optional");
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+
+		assignmentPage.assignmentCreation(assgnCoding, codingfrom);
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify the coding form panel
+		docViewPage.nonDateFormatValidationDateOnly(date, assgnColour, Input.stampSelection, comment);
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: NA Modified date:27/12/2021 Modified by: Baskar
+	 * @Description :Verify tool tip should be displayed on mouse over of the icon
+	 *              to complete document same as last
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 145)
+	public void validateTollTipFromAssgnCodeLast() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51301");
+		baseClass.stepInfo(
+				"Verify tool tip should be displayed on mouse over of the icon to complete document same as last");
+		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Started Execution for prerequisite");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+
+		assignmentPage.assignmentCreation(assgnCoding, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// verify the coding form panel for non-date format
+		docViewPage.verifyCodeSameAsLastDocMsgIsDisplayed("Code this document the same as the last coded document");
+
+		// logout
+		loginPage.logout();
+	}
+
+	/**
+	 * @Author : Baskar date: NA Modified date:27/12/2021 Modified by: Baskar
+	 * @Description :Verify on unassigned coding form/coding form objects should be
+	 *              deleted
+	 * 
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 146)
+	public void validateUnAssignedCFAndCfObjectToRemove() throws InterruptedException, AWTException {
+		codingForm = new CodingForm(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51190");
+		baseClass.stepInfo("Verify on unassigned coding form/coding form objects should be deleted");
+
+		String codingfrom = "unAssign" + Utility.dynamicNameAppender();
+		UtilityLog.info("Started Execution for prerequisite");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Creating Coding Form
+		codingForm.verifyUnassignedCf(codingfrom);
+		baseClass.stepInfo("Coding form deleted successfully after object removed");
+
+		// logout
+		loginPage.logout();
+
+	}
+
+	/**
+	 * @Author : Baskar date: NA Modified date:27/12/2021 Modified by: Baskar
+	 * @Description :Verify on saving of user stamp all control selections on coding
+	 *              form should not be clear, this is in context of an assignment
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 147)
+	public void validateStampControlShouldNotClaerFromAssgn() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51032");
+		baseClass.stepInfo("Verify on saving of user stamp all control selections on coding form "
+				+ "should not be clear, this is in context of an assignment\r\n" + "");
+		String assgnCoding = "codingAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		UtilityLog.info("Started Execution for prerequisite");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Session search to doc view to create assignment
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.bulkAssign();
+
+		// create assignment
+		assignmentPage.assignmentCreation(assgnCoding, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.add2ReviewerAndDistribute();
+
+		baseClass.impersonateRMUtoReviewer();
+
+		// selecting assignment
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+
+		// contol selection verification
+		docViewPage.controlSelectionShouldNotClear(comment, fieldText);
+
+		// logout
+		loginPage.logout();
+
+		// Login as Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+
+		// Assignment Selection
+		assignmentPage.SelectAssignmentByReviewer(assgnCoding);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+
+		// contol selection verification
+		docViewPage.controlSelectionShouldNotClear(comment, fieldText);
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 27/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify on click of the gear icon of the coding stamp saved stamp color should be clickable
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 148)
+	public void validateSavedStampToDisplayFromAssign() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51261");
+		baseClass.stepInfo("Verify on click of the gear icon of the coding stamp saved stamp color should be clickable");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		String stampName=docViewPage.getCodingEditStampTextBox().GetAttribute("value");
+		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()
+				&&stampName.equals(fieldText)) {
+			baseClass.passedStep("Coding stamp name displayed for applied colour");
+			baseClass.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date: 27/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify confirmation message should be displayed when overwriting 
+	 *              the stamp with already saved stamp
+
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 149)
+	public void validateOverWriteMsgForAlreadySavedStamp() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51291");
+		baseClass.stepInfo("Verify confirmation message should be displayed when overwriting the "
+				+ "stamp with already saved stamp");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+		String comment = "comment" + Utility.dynamicNameAppender();
+		String fieldText = "stamp" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		docViewPage.editCodingForm(comment);
+		docViewPage.codingStampButton();
+		docViewPage.popUpAction(fieldText, Input.stampSelection);
+		docViewPage.pencilGearicon(Input.stampSelection);
+		driver.waitForPageToBeReady();
+		if (docViewPage.getCodingStampPopUpColurVerify(Input.stampSelection).isDisplayed()) {
+			baseClass.passedStep("Coding stamp applied colour displayed in popup");
+		} else {
+			baseClass.failedStep("Coding stamp applied colour not displayed in popup");
+		}
+		docViewPage.getDrp_CodingEditStampColour().waitAndClick(5);
+		docViewPage.getEditAssignedColour(Input.stampSelection).waitAndClick(5);
+		docViewPage.getCodingStampSaveBtn().waitAndClick(5);
+		String overWrite = docViewPage.getStampOverWriteMessage().getText().trim();
+		System.out.println(overWrite);
+		softAssertion.assertEquals(stampOverWrite, overWrite);
+		baseClass.passedStep("Overwrite message displayed for already saved stamp");
+		docViewPage.getNavigationButton("Yes").waitAndClick(5);
+		driver.waitForPageToBeReady();
+		baseClass.VerifySuccessMessage("Coding stamp updated successfully");
+		softAssertion.assertAll();
+		// logout
+		loginPage.logout();
+	}
 	
 	
 	

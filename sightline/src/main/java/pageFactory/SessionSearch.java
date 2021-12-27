@@ -1367,6 +1367,16 @@ public class SessionSearch {
 		public Element getSaveButton() {
 			return driver.FindElementByXPath("//a[@id='qModifySearch']//..//a[@id='qSave']");
 		}
+		
+		public Element getBasicSearch_MetadataBtnSec() {
+			return driver.FindElementByXPath("(//button[@id='metadataHelper'])[last()]");
+		}
+		public Element getCommentsFieldAndRemarksSec() {
+			return driver.FindElementByXPath("(//button[@id='commentsHelper'])[last()]");
+		}
+		public Element getSearchButtonSec() {
+			return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
+		}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -8838,6 +8848,58 @@ public class SessionSearch {
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+		}
+		
+		public int metadataAndCommentSearch(String projectFieldINT,String metadataText,String addComment,String commentText) {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNewSearch());
+			getNewSearch().waitAndClick(5);
+			base.waitForElement(getBasicSearch_MetadataBtnSec());
+			getBasicSearch_MetadataBtnSec().waitAndClick(10);
+			base.waitForElement(getSelectMetaData());
+			// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().waitAndClick(10);
+			base.waitForElement(SelectFromDropDown(projectFieldINT));
+			SelectFromDropDown(projectFieldINT).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(metadataText + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+			base.waitForElement(getCommentsFieldAndRemarksSec());
+			getCommentsFieldAndRemarksSec().waitAndClick(10);
+			base.waitForElement(SelectFromDropDown(addComment));
+			SelectFromDropDown(addComment).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(commentText + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+			// Click on Search button
+			base.waitForElement(getSearchButtonSec());
+			getSearchButtonSec().Click();
+			// two handle twosearch strings
+			if (getTallyContinue().isElementAvailable(1)) {
+				try {
+					base.waitForElement(getTallyContinue());
+					getTallyContinue().waitAndClick(5);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			base.waitForElement(getPureHitsCount());
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsLastCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+			int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
+			System.out.println("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+			base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+			base.stepInfo("Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
+			return pureHit;
 		}
 	
 
