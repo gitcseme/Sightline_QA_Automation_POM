@@ -37,8 +37,8 @@ public class Tally_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -76,7 +76,7 @@ public class Tally_Regression1 {
 		tp.selectTallyByMetaDataField(Input.metaDataName);
 		driver.waitForPageToBeReady();
 		tp.tallyActions();
-		String totalDocsCount = tp.bulkRelease(securitygroupname);
+		String totalDocsCount = tp.bulkRelease(securitygroupname,false);
 		bc.stepInfo("sucessfully released tally docs to security group  -"+securitygroupname);
 		SessionSearch search = new SessionSearch(driver);
 		search.switchToWorkproduct();
@@ -90,6 +90,49 @@ public class Tally_Regression1 {
 		softAssertion.assertAll();
 		bc.passedStep("The docs released to Security group "+securitygroupname+" is reflected as expected");
 	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+		@Test(groups = { "regression" }, priority = 2)
+		public void ValidateSubTally_BulkRelease() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56226");
+			bc.stepInfo("To Verify Admin can release all the documents in subtally");
+			SoftAssert softAssertion = new SoftAssert();
+			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			String securitygroupname ="SG" + Utility.dynamicNameAppender();
+			SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
+			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+			securityPage.AddSecurityGroup(securitygroupname);
+			bc.stepInfo("Added security group -"+securitygroupname);
+			TallyPage tp = new TallyPage(driver);
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_SavedSearch(saveSearchNamePA);
+			tp.selectTallyByMetaDataField(Input.metaDataName);
+			bc.stepInfo("Created Tally Report for saved search-"+saveSearchNamePA);
+			driver.waitForPageToBeReady();
+			tp.tallyActions();
+			bc.waitTime(2);
+			tp.getTally_actionSubTally().Click();
+			tp.selectMetaData_SubTally(Input.docFileName);
+			driver.waitForPageToBeReady();
+			bc.stepInfo("Created SubTally Report");
+			tp.subTallyActions();
+			String totalDocsCount = tp.bulkRelease(securitygroupname,true);
+			bc.stepInfo("sucessfully released sub-tally docs to security group  -"+securitygroupname);
+			SessionSearch search = new SessionSearch(driver);
+			search.switchToWorkproduct();
+			search.selectSecurityGinWPS(securitygroupname);
+			bc.stepInfo("Configured a search query with Security group-" + securitygroupname);
+			search.serarchWP();
+			String expectedCount = search.verifyPureHitsCount();
+			softAssertion.assertEquals(totalDocsCount, expectedCount);
+			bc.stepInfo("Document Count associated to selected security group in search page is "+expectedCount);
+		//	securityPage.deleteSecurityGroups(securitygroupname);
+			softAssertion.assertAll();
+			bc.passedStep("The docs released to Security group "+securitygroupname+" is reflected as expected");
+		}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {

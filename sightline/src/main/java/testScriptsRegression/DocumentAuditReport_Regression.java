@@ -17,8 +17,7 @@ import automationLibrary.Driver;
 import pageFactory.BaseClass;
 import pageFactory.DocumentAuditReportPage;
 import pageFactory.LoginPage;
-
-
+import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -33,8 +32,8 @@ public class DocumentAuditReport_Regression {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 
 	}
 	/**
@@ -56,7 +55,27 @@ public class DocumentAuditReport_Regression {
 		docaudit = new DocumentAuditReportPage(driver);
 		docaudit.navigateTODocAuditReportPage();
 		docaudit.verifyReportDisplay(Input.NewDocId);
+		
 	}
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	  public void validateDocAuditBulkTag(String username, String password, String role) throws InterruptedException {
+			driver = new Driver();
+			bc = new BaseClass(driver);
+			lp = new LoginPage(driver);
+			String tagName="DA"+Utility.dynamicNameAppender();
+			bc.stepInfo("Test case Id: RPMXCON-48781");
+			bc.stepInfo("To verify that by performing some actions on Documents is displayed in Document Audit Report");
+			lp.loginToSightLine(username, password);
+			SessionSearch search = new SessionSearch(driver);
+			search.advancedMetaDataSearch("DocID", null, Input.docIDs+"0001", null);	
+			bc.stepInfo("Add a new Tag for doc id --" +Input.docIDs+"0001");
+			search.bulkTag(tagName);
+			docaudit = new DocumentAuditReportPage(driver);
+			docaudit.navigateTODocAuditReportPage();
+			docaudit.verifyReportDisplay(Input.docIDs+"0001");
+			docaudit.validateDocumentAuditActionColumn("Tagged - Bulk");
+			
+		}
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
