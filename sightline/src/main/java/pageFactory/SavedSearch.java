@@ -801,6 +801,14 @@ public class SavedSearch {
 		}
 	
 
+		//Added by Gopinath - 26/12/2021
+		public Element getPendingStatus() {
+			return driver.FindElementByXPath("(//td[text()='PENDING'])[1]");
+		}
+		public Element getPendingStatusAdvancedQueary() {
+			return driver.FindElementByXPath("//td[contains(text(),'Basic Work Product')]/following-sibling::td[3]");
+		}
+		
 	List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
 	List<String> sgList = new ArrayList<>();
@@ -6898,5 +6906,149 @@ public class SavedSearch {
 			}
 	
 	
+			
+			/**
+			 * @author Gopinath
+			 * Description: Method for count verifaction of draft basic MetaData search.
+			 * @param savedSearchName : savedSearchName is String value that saved search name.
+			 */
+				public void countVerifactionOfDraftBasicMetaDataSearch(Map<String,String> CountofSearch,String savedSearchName) {
+					try {
+						getFamilyCount(savedSearchName).isElementAvailable(10);
+						String FamilyCount = getFamilyCount(savedSearchName).getText();
+						getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
+						String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
+						getNearDupeCount(savedSearchName).isElementAvailable(10);
+						String NearDupeCount = getNearDupeCount(savedSearchName).getText();
+						getThreadedCount(savedSearchName).isElementAvailable(10);
+						String ThreadedCount = getThreadedCount(savedSearchName).getText();
+						if(CountofSearch.get("NearDupe Count").trim().contentEquals(NearDupeCount)) {
+							base.passedStep("NearDupe Count is as exptected to acutal : "+NearDupeCount);
+						}else {
+							base.failedStep("NearDupe Count is not as exptected to acutal : "+NearDupeCount);
+						}
+						if(CountofSearch.get("Pureit Count").trim().contentEquals(PureitCount)) {
+							base.passedStep("Pureit Count is as exptected to acutal : "+PureitCount);
+						}else {
+							base.failedStep("Pureit Count is not as exptected to acutal : "+PureitCount);
+						}
+						if(CountofSearch.get("Threaded Count").trim().contentEquals(ThreadedCount)) {
+							base.passedStep("Threaded Count is as exptected to acutal : "+ThreadedCount);
+						}else {
+							base.failedStep("Threaded Count is not as exptected to acutal : "+ThreadedCount);
+						}
+						if(CountofSearch.get("Family member count").trim().contentEquals(FamilyCount)) {
+							base.passedStep("Family member countt is as exptected to acutal : "+FamilyCount);
+						}else {
+							base.failedStep("Family member count is not as exptected to acutal : "+FamilyCount);
+						}
+						
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+						base.failedStep("Exception occured while  count verifaction of draft basic MetaData search."+e.getMessage());
+					}
+				}
+			
+				/**
+				 * @author Gopinath
+				 * Description: Method for select the saved search and select the Near dupe count Conceptually Similar Count 
+				 * @param searchname : searchname is String value that search name.
+				 */
+				public void selectSavedsearchCount(String searchname)  {
+					try {
+						  
+						savedSearch_Searchandclick(searchname);
+						driver.waitForPageToBeReady();
+						getChooseSearchRadiobtn(searchname).isElementAvailable(10);
+						getChooseSearchRadiobtn(searchname).Click();
+						getShowHideDropDown().isElementAvailable(10);
+						getShowHideDropDown().waitAndClick(10);
+						getSelectOptionsFromShowHideDropDown("Near Duplicate Count").isElementAvailable(10);
+						getSelectOptionsFromShowHideDropDown("Near Duplicate Count").waitAndClick(5);
+						driver.scrollPageToTop();
+						getbackGroundFilm().isElementAvailable(10);
+						getbackGroundFilm().waitAndClick(7);
+						getChooseSearchRadiobtn(searchname).isElementAvailable(10);
+						scrollToElementOfPage(getChooseSearchRadiobtn(searchname));
+						
+					}catch (Exception e) {
+						e.printStackTrace();
+						base.failedStep("Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "+e.getMessage());
+					}
+					
+				}
+					
+				 
+			    /**
+				 * @author Gopinath
+				 * Description: Method to verify pending status appeared on saved search table.
+				 */
+					public void verifyPendingStatusAppearedSavedSearchTable() {
+						try {
+							driver.scrollPageToTop();
+							getStatusDropDown().isElementAvailable(15);
+							getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
+							getSavedSearch_ApplyFilterButton().waitAndClick(20);
+							boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+							if(status) {
+								base.passedStep("Pending stats is appeared on table successfully by batch upload");
+							}else {
+								base.failedStep("Failed to get pending status on saved search table after batch upload");
+							}
+						}catch(Exception e) {
+							e.printStackTrace();
+							base.failedStep("Exception occured while verifying pending status appeared on saved search table."+e.getMessage());
+						}
+					}
+					 /**
+					 * @author Gopinath
+					 * Description: Method to verify pending status appeared for advanced search on saved search table.
+					 */
+						public void verifyPendingStatusForAdvanceSearchAppeared() {
+							try {
+								driver.scrollPageToTop();
+								getNumberOfSavedSearchToBeShown().isElementAvailable(15);
+								getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+								getStatusDropDown().isElementAvailable(15);
+								getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
+								getSavedSearch_ApplyFilterButton().waitAndClick(20);
+								boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+								if(status) {
+									base.passedStep("Pending status is appeared for advanced search on table successfully by batch upload");
+								}else {
+									base.failedStep("Failed to get pending status for advanced search on saved search table after batch upload");
+								}
+							}catch(Exception e) {
+								e.printStackTrace();
+								base.failedStep("Exception occured while verifying pending status appeared for advanced search on saved search table."+e.getMessage());
+							}
+						}
+					
+						 /**
+						 * @author Gopinath
+						 * Description: Method to verify completed status appeared for advanced search on saved search table.
+						 */
+							public void verifyCompletedStatusForAdvanceSearchAppeared() {
+								try {
+									driver.scrollPageToTop();
+									getNumberOfSavedSearchToBeShown().isElementAvailable(15);
+									getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+									getStatusDropDown().isElementAvailable(15);
+									getStatusDropDown().selectFromDropdown().selectByVisibleText("COMPLETED");
+									getSavedSearch_ApplyFilterButton().waitAndClick(20);
+									boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+									if(status) {
+										base.passedStep("Completed status is appeared for advanced search on table successfully by batch upload");
+									}else {
+										base.failedStep("Failed to get completed status for advanced search on saved search table after batch upload");
+									}
+								}catch(Exception e) {
+									e.printStackTrace();
+									base.failedStep("Exception occured while verify completed status appeared for advanced search on saved search table.."+e.getMessage());
+								}
+							}
+			
+			
 	
 }

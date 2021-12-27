@@ -8723,5 +8723,122 @@ public class SessionSearch {
 		}
 	}
 
+	/**
+	 * @author Gopinath
+	 * Description: Method for get count from tills.
+	 * @return countofSearch : countofSearch is hash map that count from search.
+	 */
+		public Map<String,String> getCountFromTills() {
+			Map<String,String> countofSearch =new HashMap<String,String>();
+			try {
+				String FamilyCount = "";
+				String ThreadedCount = "";
+				getFMHitsCount().isElementAvailable(20);
+				for (int i=0;i<10;i++) {
+					base.waitTime(2);
+					if(FamilyCount.contentEquals("")) {
+						FamilyCount = getFMHitsCount().getText();
+					}
+					else {
+						break;
+					}
+				}
+				FamilyCount =getFMHitsCount().getText();
+				getPureHitsCount().isElementAvailable(10);
+				String PureitCount = getPureHitsCount().getText();
+				getNDHitsCount().isElementAvailable(10);
+				String NearDupeCount = getNDHitsCount().getText();
+				getTDHitsCount().isElementAvailable(10);
+				for (int i=0;i<10;i++) {
+					base.waitTime(2);
+					if(ThreadedCount.contentEquals("")) {
+						ThreadedCount = getTDHitsCount().getText();
+					}else {
+						break;
+					}
+				}
+				ThreadedCount = getTDHitsCount().getText();
+				countofSearch.put("NearDupe Count", NearDupeCount);
+				countofSearch.put("Pureit Count",PureitCount);
+				countofSearch.put("Threaded Count", ThreadedCount);
+				countofSearch.put("Family member count", FamilyCount);
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while  get count from tills."+e.getMessage());
+			}
+			return countofSearch;
+		}	
+		
+		/**
+		 * @author Gopinath
+		 * Description: Method for save search.
+		 * @param searchName : searchName is String value that search value to check in saved search table.
+		 */
+		public void saveSearchHandle(String searchName) {
+			try {
+				
+				if (getSaveSearch_Button().isElementAvailable(7)) {
+	
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getSaveSearch_Button().Visible() && getSaveSearch_Button().Enabled();
+						}
+					}), Input.wait30);
+					getSaveSearch_Button().waitAndClick(5);
+				} else {
+					driver.WaitUntil((new Callable<Boolean>() {
+	
+						public Boolean call() {
+							return getAdvanceS_SaveSearch_Button().Visible() && getAdvanceS_SaveSearch_Button().Enabled();
+						}
+					}), Input.wait30);
+					getAdvanceS_SaveSearch_Button().waitAndClick(5);
+				}
+				if(getTallyContinue().isElementAvailable(1)) {
+					getTallyContinue().waitAndClick(5);
+				}
+				if (getSaveAsNewSearchRadioButton().isElementAvailable(1)) {
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+						}
+					}), Input.wait30);
+					getSaveAsNewSearchRadioButton().waitAndClick(5);
+				} else {
+					System.out.println("Radio button already selected");
+					UtilityLog.info("Radio button already selected");
+				}
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+	
+					public Boolean call() {
+						return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
+					}
+				}), Input.wait30);
+				getSavedSearch_MySearchesTab().Click();
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+					}
+				}), Input.wait30);
+				getSaveSearch_Name().SendKeys(searchName);
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+					}
+				}), Input.wait30);
+				getSaveSearch_SaveButton().Click();
+	
+				base.VerifySuccessMessage("Saved search saved successfully");
+	
+				Reporter.log("Saved the search with name '" + searchName + "'", true);
+				UtilityLog.info("Saved search with name - " + searchName);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
 
 }
