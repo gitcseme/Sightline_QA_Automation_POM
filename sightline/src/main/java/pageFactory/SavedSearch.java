@@ -55,7 +55,7 @@ public class SavedSearch {
 	ReportsPage report;
 	TagsAndFoldersPage tagsAndFolderPage;
 	LoginPage login;
- 
+
 	// Variables
 	String searchID;
 	String searchIDtoCompare;
@@ -741,7 +741,6 @@ public class SavedSearch {
 	public Element getbtnDocListContinue() {
 		return driver.FindElementByXPath("//button[@id='bot1-Msg1']");
 	}
-	
 
 	public String getLastStatus() {
 		return driver.FindElementByXPath("//table//td[6]").getText();
@@ -771,44 +770,59 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//table//td[text()='Your query returned no data']");
 	}
 
-	//Added by gopinath - 27/12/2021
-		public Element getSelectOptionsFromShowHideDropDown(String Option) {
-			return driver.FindElementByXPath("//ul[@class='ColVis_collection']/li/label/span[contains(text(),'"+Option+"')]/ancestor::label/input");
-		}
-		public Element getShowHideDropDown() {
-			return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
-		}
-		public Element getNearDuplicatesCountOfSavedSearch(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[text()='"+SaveSearchName+"']/following-sibling::td[12]");
-		}
-		public Element getShowHideOptionList() {
-			return driver.FindElementByXPath("//ul[@class='ColVis_collection']");
-		}
-		public Element getPureHitCountOfSavedSearch(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[text()='"+SaveSearchName+"']/following-sibling::td[1]");
-		}
-		public Element getFamilyMembersCountOfSavedSearch(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[text()='"+SaveSearchName+"']/following-sibling::td[14]");
-		}
-		public Element getConcepuallySimilarCountOfSavedSearch(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[text()='"+SaveSearchName+"']/following-sibling::td[11]");
-		}
-		public Element getThreadedDocumentCountOfSavedSearch(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[text()='"+SaveSearchName+"']/following-sibling::td[13]");
-		}
-		public Element getCount(String SaveSearchName) {
-			return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[contains(text(),'"+SaveSearchName+"')]/following-sibling::td[1]");
-		}
-	
+	// Added by gopinath - 27/12/2021
+	public Element getSelectOptionsFromShowHideDropDown(String Option) {
+		return driver.FindElementByXPath("//ul[@class='ColVis_collection']/li/label/span[contains(text(),'" + Option
+				+ "')]/ancestor::label/input");
+	}
 
-		//Added by Gopinath - 26/12/2021
-		public Element getPendingStatus() {
-			return driver.FindElementByXPath("(//td[text()='PENDING'])[1]");
-		}
-		public Element getPendingStatusAdvancedQueary() {
-			return driver.FindElementByXPath("//td[contains(text(),'Basic Work Product')]/following-sibling::td[3]");
-		}
-		
+	public Element getShowHideDropDown() {
+		return driver.FindElementByXPath("//button[@class='ColVis_Button ColVis_MasterButton']");
+	}
+
+	public Element getNearDuplicatesCountOfSavedSearch(String SaveSearchName) {
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[12]");
+	}
+
+	public Element getShowHideOptionList() {
+		return driver.FindElementByXPath("//ul[@class='ColVis_collection']");
+	}
+
+	public Element getPureHitCountOfSavedSearch(String SaveSearchName) {
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[1]");
+	}
+
+	public Element getFamilyMembersCountOfSavedSearch(String SaveSearchName) {
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[14]");
+	}
+
+	public Element getConcepuallySimilarCountOfSavedSearch(String SaveSearchName) {
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[11]");
+	}
+
+	public Element getThreadedDocumentCountOfSavedSearch(String SaveSearchName) {
+		return driver.FindElementByXPath(
+				"//*[@id='SavedSearchGrid']/tbody/tr/td[text()='" + SaveSearchName + "']/following-sibling::td[13]");
+	}
+
+	public Element getCount(String SaveSearchName) {
+		return driver.FindElementByXPath("//*[@id='SavedSearchGrid']/tbody/tr/td[contains(text(),'" + SaveSearchName
+				+ "')]/following-sibling::td[1]");
+	}
+
+	// Added by Gopinath - 26/12/2021
+	public Element getPendingStatus() {
+		return driver.FindElementByXPath("(//td[text()='PENDING'])[1]");
+	}
+
+	public Element getPendingStatusAdvancedQueary() {
+		return driver.FindElementByXPath("//td[contains(text(),'Basic Work Product')]/following-sibling::td[3]");
+	}
+
 	List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
 	List<String> sgList = new ArrayList<>();
@@ -6460,7 +6474,6 @@ public class SavedSearch {
 		return mySvedSearchID;
 	}
 
-	
 	/**
 	 * @author Brundha Date : 12/18/21 Description: verifySearchContents Modified on
 	 *         : N/A modified by : N/A
@@ -6541,7 +6554,6 @@ public class SavedSearch {
 
 	}
 
-	
 	/**
 	 * @author :Sowndarya.velraj
 	 * @throws InterruptedException
@@ -6611,7 +6623,7 @@ public class SavedSearch {
 		}
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param specificHeaderName
@@ -6635,8 +6647,7 @@ public class SavedSearch {
 		System.out.println(specificHeaderName + " : " + Count);
 		return Count;
 	}
-	
-	
+
 	/**
 	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
 	 * @throws InterruptedException
@@ -6657,9 +6668,10 @@ public class SavedSearch {
 			}
 		}
 	}
-	
+
 	/**
-	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
+	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : 12/27/21 @modifiedby :
+	 *         Raghuram
 	 * @return
 	 * @throws InterruptedException
 	 */
@@ -6683,9 +6695,20 @@ public class SavedSearch {
 			getSavedSearchGroupName(shareTo).waitAndClick(5);
 		}
 
+		if (selectNode) {
+			selectNode1(node);
+			base.stepInfo("Root node selected : " + node);
+		}
+
 		if (bulkAction.equalsIgnoreCase("Tag")) {
 			getSavedSearchToBulkTag().Click();
 		} else if (bulkAction.equalsIgnoreCase("Folder")) {
+
+			// verify Assign btn
+			driver.waitForPageToBeReady();
+			Element folderBtnStatus = getSavedSearchToBulkFolder();
+			checkButtonEnabled(folderBtnStatus, "Should be Enabled", "Assign");
+
 			getSavedSearchToBulkFolder().Click();
 		}
 
@@ -6725,11 +6748,12 @@ public class SavedSearch {
 			}
 
 		}
-		counts.put("Finalize Count ", finalCount);
-		counts.put("PureHit Count ", Integer.toString(pureHit));
+		counts.put("Finalize Count", finalCount);
+		counts.put("PureHit Count", Integer.toString(pureHit));
 
 		return counts;
 	}
+
 	/**
 	 * @author Raghuram.A @Date : 12/23/21 @modifiedon : N/A @modifiedby : N/A
 	 * @param time
@@ -6745,9 +6769,9 @@ public class SavedSearch {
 		Element loadingElement = getTotalCountLoad();
 		loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
 	}
-	
+
 	/**
-	 * @author Gopinath 
+	 * @author Gopinath
 	 * @Description : Method to open uploded batch file.
 	 * @param batchFile : batchFile is String value that name of batch upload file.
 	 */
@@ -6758,14 +6782,14 @@ public class SavedSearch {
 			getMySeraches().Click();
 			getSelectUploadedFile(batchFile).isElementAvailable(15);
 			getSelectUploadedFile(batchFile).Click();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while open uploded batch file."+e.getMessage());
+			base.failedStep("Exception occured while open uploded batch file." + e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath 
+	 * @author Gopinath
 	 * @Description : Method to delete uploded batch file.
 	 * @param batchFile : batchFile is String value that name of batch upload file.
 	 */
@@ -6782,21 +6806,20 @@ public class SavedSearch {
 			getDeleteOkBtn().isElementAvailable(10);
 			getDeleteOkBtn().waitAndClick(10);
 			base.VerifySuccessMessage("Save search tree node successfully deleted.");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while deleting uploded batch file."+e.getMessage());
+			base.failedStep("Exception occured while deleting uploded batch file." + e.getMessage());
 		}
 	}
 
-	
 	/**
-	 * @author Gopinath
-	 * Description: Method for select the saved search and select the Near dupe count Conceptually Similar Count 
+	 * @author Gopinath Description: Method for select the saved search and select
+	 *         the Near dupe count Conceptually Similar Count
 	 * @param searchname : searchname is String value that search name.
 	 */
-	public void selectSavedsearchwithNearDupeCountAndCSCount(String searchname)  {
+	public void selectSavedsearchwithNearDupeCountAndCSCount(String searchname) {
 		try {
-			  
+
 			savedSearch_Searchandclick(searchname);
 			driver.waitForPageToBeReady();
 			getChooseSearchRadiobtn(searchname).isElementAvailable(10);
@@ -6818,237 +6841,246 @@ public class SavedSearch {
 			} else {
 				base.failedStep("Search  status is not displayed as expected.");
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "+e.getMessage());
+			base.failedStep(
+					"Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "
+							+ e.getMessage());
 		}
-		
+
 	}
 
-	
 	/**
-	 * @author Gopinath
-	 * Description: Method for count verifaction of draft basic MetaData search.
-	 * @param savedSearchName : savedSearchName is String value that saved search name.
+	 * @author Gopinath Description: Method for count verifaction of draft basic
+	 *         MetaData search.
+	 * @param savedSearchName : savedSearchName is String value that saved search
+	 *                        name.
 	 */
-		public void countVerifactionOfDraftBasicMetaDataSearch(String savedSearchName) {
-			try {
-				getFamilyCount(savedSearchName).isElementAvailable(10);
-				String FamilyCount = getFamilyCount(savedSearchName).getText();
-				getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
-				String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
-				getNearDupeCount(savedSearchName).isElementAvailable(10);
-				String NearDupeCount = getNearDupeCount(savedSearchName).getText();
-				getThreadedCount(savedSearchName).isElementAvailable(10);
-				String ThreadedCount = getThreadedCount(savedSearchName).getText();
-				Map<String,String> CountofSearch =new HashMap<String,String>();
-				CountofSearch.put("NearDupe Count", NearDupeCount);
-				CountofSearch.put("Pureit Count",PureitCount);
-				CountofSearch.put("Threaded Count", ThreadedCount);
-				CountofSearch.put("Family member count", FamilyCount);
-				Set<String> CountKeySet = CountofSearch.keySet();
-				
-				for(String name:CountKeySet)
-				{
-					String count = CountofSearch.get(name);
-					if(count.equals("")) {
-						base.passedStep("The SavedSearch "+savedSearchName+" "+name+"is Blank");
-						System.out.println("The SavedSearch "+savedSearchName+" "+name+"is Blank");
-					}
-					else
-					{
-						base.failedStep(savedSearchName+" is having "+count +name);
-						System.out.println(savedSearchName+" is having "+count +name);
-					}
+	public void countVerifactionOfDraftBasicMetaDataSearch(String savedSearchName) {
+		try {
+			getFamilyCount(savedSearchName).isElementAvailable(10);
+			String FamilyCount = getFamilyCount(savedSearchName).getText();
+			getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
+			String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
+			getNearDupeCount(savedSearchName).isElementAvailable(10);
+			String NearDupeCount = getNearDupeCount(savedSearchName).getText();
+			getThreadedCount(savedSearchName).isElementAvailable(10);
+			String ThreadedCount = getThreadedCount(savedSearchName).getText();
+			Map<String, String> CountofSearch = new HashMap<String, String>();
+			CountofSearch.put("NearDupe Count", NearDupeCount);
+			CountofSearch.put("Pureit Count", PureitCount);
+			CountofSearch.put("Threaded Count", ThreadedCount);
+			CountofSearch.put("Family member count", FamilyCount);
+			Set<String> CountKeySet = CountofSearch.keySet();
+
+			for (String name : CountKeySet) {
+				String count = CountofSearch.get(name);
+				if (count.equals("")) {
+					base.passedStep("The SavedSearch " + savedSearchName + " " + name + "is Blank");
+					System.out.println("The SavedSearch " + savedSearchName + " " + name + "is Blank");
+				} else {
+					base.failedStep(savedSearchName + " is having " + count + name);
+					System.out.println(savedSearchName + " is having " + count + name);
 				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				base.failedStep("Exception occured while  count verifaction of draft basic MetaData search."+e.getMessage());
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while  count verifaction of draft basic MetaData search." + e.getMessage());
 		}
-	
-		 /**
-	     * @author Gopinath     
-	     * Description : Scrolling to Element by getting it's location 
-	     * @param element : element is scrolling to element.
-	     */
-	    public void scrollToElementOfPage(Element element) {
-	    	try{
-	    		 Point Location = element.getWebElement().getLocation();
-	               ((JavascriptExecutor) driver).executeScript("window.scrollBy"+Location);
-	                            
-	        } catch (Exception e){}
-	    	
-	    }
-	    
-	    /**
-		 * @author Gopinath
-		 * Description: Method to verify count field in saved search table is blank.
-		 * @param savedSearchName : savedSearchName is String value that saved search name.
-		 */
-			public void verifyCountFiledIsBlank(String savedSearchName) {
-				try {
-					getSavedSearch_SearchName().isElementAvailable(10);
-					getSavedSearch_SearchName().SendKeys(savedSearchName);
-					getSavedSearch_ApplyFilterButton().waitAndClick(10);
-					base.waitTime(3);
-					getCount(savedSearchName).isElementAvailable(10);
-					String pureitCount = getCount(savedSearchName).getText();
-					if(pureitCount.contentEquals("")) {
-						base.passedStep("Count field in saved search table is blank");
-					}else {
-						base.failedStep("Count field in saved search table is not blank");
-					}
-				}catch(Exception e) {
-					e.printStackTrace();
-					base.failedStep("Exception occured while  count verifaction of draft basic MetaData search."+e.getMessage());
-				}
+	}
+
+	/**
+	 * @author Gopinath Description : Scrolling to Element by getting it's location
+	 * @param element : element is scrolling to element.
+	 */
+	public void scrollToElementOfPage(Element element) {
+		try {
+			Point Location = element.getWebElement().getLocation();
+			((JavascriptExecutor) driver).executeScript("window.scrollBy" + Location);
+
+		} catch (Exception e) {
+		}
+
+	}
+
+	/**
+	 * @author Gopinath Description: Method to verify count field in saved search
+	 *         table is blank.
+	 * @param savedSearchName : savedSearchName is String value that saved search
+	 *                        name.
+	 */
+	public void verifyCountFiledIsBlank(String savedSearchName) {
+		try {
+			getSavedSearch_SearchName().isElementAvailable(10);
+			getSavedSearch_SearchName().SendKeys(savedSearchName);
+			getSavedSearch_ApplyFilterButton().waitAndClick(10);
+			base.waitTime(3);
+			getCount(savedSearchName).isElementAvailable(10);
+			String pureitCount = getCount(savedSearchName).getText();
+			if (pureitCount.contentEquals("")) {
+				base.passedStep("Count field in saved search table is blank");
+			} else {
+				base.failedStep("Count field in saved search table is not blank");
 			}
-	
-	
-			
-			/**
-			 * @author Gopinath
-			 * Description: Method for count verifaction of draft basic MetaData search.
-			 * @param savedSearchName : savedSearchName is String value that saved search name.
-			 */
-				public void countVerifactionOfDraftBasicMetaDataSearch(Map<String,String> CountofSearch,String savedSearchName) {
-					try {
-						getFamilyCount(savedSearchName).isElementAvailable(10);
-						String FamilyCount = getFamilyCount(savedSearchName).getText();
-						getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
-						String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
-						getNearDupeCount(savedSearchName).isElementAvailable(10);
-						String NearDupeCount = getNearDupeCount(savedSearchName).getText();
-						getThreadedCount(savedSearchName).isElementAvailable(10);
-						String ThreadedCount = getThreadedCount(savedSearchName).getText();
-						if(CountofSearch.get("NearDupe Count").trim().contentEquals(NearDupeCount)) {
-							base.passedStep("NearDupe Count is as exptected to acutal : "+NearDupeCount);
-						}else {
-							base.failedStep("NearDupe Count is not as exptected to acutal : "+NearDupeCount);
-						}
-						if(CountofSearch.get("Pureit Count").trim().contentEquals(PureitCount)) {
-							base.passedStep("Pureit Count is as exptected to acutal : "+PureitCount);
-						}else {
-							base.failedStep("Pureit Count is not as exptected to acutal : "+PureitCount);
-						}
-						if(CountofSearch.get("Threaded Count").trim().contentEquals(ThreadedCount)) {
-							base.passedStep("Threaded Count is as exptected to acutal : "+ThreadedCount);
-						}else {
-							base.failedStep("Threaded Count is not as exptected to acutal : "+ThreadedCount);
-						}
-						if(CountofSearch.get("Family member count").trim().contentEquals(FamilyCount)) {
-							base.passedStep("Family member countt is as exptected to acutal : "+FamilyCount);
-						}else {
-							base.failedStep("Family member count is not as exptected to acutal : "+FamilyCount);
-						}
-						
-						
-					}catch(Exception e) {
-						e.printStackTrace();
-						base.failedStep("Exception occured while  count verifaction of draft basic MetaData search."+e.getMessage());
-					}
-				}
-			
-				/**
-				 * @author Gopinath
-				 * Description: Method for select the saved search and select the Near dupe count Conceptually Similar Count 
-				 * @param searchname : searchname is String value that search name.
-				 */
-				public void selectSavedsearchCount(String searchname)  {
-					try {
-						  
-						savedSearch_Searchandclick(searchname);
-						driver.waitForPageToBeReady();
-						getChooseSearchRadiobtn(searchname).isElementAvailable(10);
-						getChooseSearchRadiobtn(searchname).Click();
-						getShowHideDropDown().isElementAvailable(10);
-						getShowHideDropDown().waitAndClick(10);
-						getSelectOptionsFromShowHideDropDown("Near Duplicate Count").isElementAvailable(10);
-						getSelectOptionsFromShowHideDropDown("Near Duplicate Count").waitAndClick(5);
-						driver.scrollPageToTop();
-						getbackGroundFilm().isElementAvailable(10);
-						getbackGroundFilm().waitAndClick(7);
-						getChooseSearchRadiobtn(searchname).isElementAvailable(10);
-						scrollToElementOfPage(getChooseSearchRadiobtn(searchname));
-						
-					}catch (Exception e) {
-						e.printStackTrace();
-						base.failedStep("Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "+e.getMessage());
-					}
-					
-				}
-					
-				 
-			    /**
-				 * @author Gopinath
-				 * Description: Method to verify pending status appeared on saved search table.
-				 */
-					public void verifyPendingStatusAppearedSavedSearchTable() {
-						try {
-							driver.scrollPageToTop();
-							getStatusDropDown().isElementAvailable(15);
-							getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
-							getSavedSearch_ApplyFilterButton().waitAndClick(20);
-							boolean status = getPendingStatusAdvancedQueary().isDisplayed();
-							if(status) {
-								base.passedStep("Pending stats is appeared on table successfully by batch upload");
-							}else {
-								base.failedStep("Failed to get pending status on saved search table after batch upload");
-							}
-						}catch(Exception e) {
-							e.printStackTrace();
-							base.failedStep("Exception occured while verifying pending status appeared on saved search table."+e.getMessage());
-						}
-					}
-					 /**
-					 * @author Gopinath
-					 * Description: Method to verify pending status appeared for advanced search on saved search table.
-					 */
-						public void verifyPendingStatusForAdvanceSearchAppeared() {
-							try {
-								driver.scrollPageToTop();
-								getNumberOfSavedSearchToBeShown().isElementAvailable(15);
-								getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
-								getStatusDropDown().isElementAvailable(15);
-								getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
-								getSavedSearch_ApplyFilterButton().waitAndClick(20);
-								boolean status = getPendingStatusAdvancedQueary().isDisplayed();
-								if(status) {
-									base.passedStep("Pending status is appeared for advanced search on table successfully by batch upload");
-								}else {
-									base.failedStep("Failed to get pending status for advanced search on saved search table after batch upload");
-								}
-							}catch(Exception e) {
-								e.printStackTrace();
-								base.failedStep("Exception occured while verifying pending status appeared for advanced search on saved search table."+e.getMessage());
-							}
-						}
-					
-						 /**
-						 * @author Gopinath
-						 * Description: Method to verify completed status appeared for advanced search on saved search table.
-						 */
-							public void verifyCompletedStatusForAdvanceSearchAppeared() {
-								try {
-									driver.scrollPageToTop();
-									getNumberOfSavedSearchToBeShown().isElementAvailable(15);
-									getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
-									getStatusDropDown().isElementAvailable(15);
-									getStatusDropDown().selectFromDropdown().selectByVisibleText("COMPLETED");
-									getSavedSearch_ApplyFilterButton().waitAndClick(20);
-									boolean status = getPendingStatusAdvancedQueary().isDisplayed();
-									if(status) {
-										base.passedStep("Completed status is appeared for advanced search on table successfully by batch upload");
-									}else {
-										base.failedStep("Failed to get completed status for advanced search on saved search table after batch upload");
-									}
-								}catch(Exception e) {
-									e.printStackTrace();
-									base.failedStep("Exception occured while verify completed status appeared for advanced search on saved search table.."+e.getMessage());
-								}
-							}
-			
-			
-	
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while  count verifaction of draft basic MetaData search." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Description: Method for count verifaction of draft basic
+	 *         MetaData search.
+	 * @param savedSearchName : savedSearchName is String value that saved search
+	 *                        name.
+	 */
+	public void countVerifactionOfDraftBasicMetaDataSearch(Map<String, String> CountofSearch, String savedSearchName) {
+		try {
+			getFamilyCount(savedSearchName).isElementAvailable(10);
+			String FamilyCount = getFamilyCount(savedSearchName).getText();
+			getPureHitCountOfSavedSearch(savedSearchName).isElementAvailable(10);
+			String PureitCount = getPureHitCountOfSavedSearch(savedSearchName).getText();
+			getNearDupeCount(savedSearchName).isElementAvailable(10);
+			String NearDupeCount = getNearDupeCount(savedSearchName).getText();
+			getThreadedCount(savedSearchName).isElementAvailable(10);
+			String ThreadedCount = getThreadedCount(savedSearchName).getText();
+			if (CountofSearch.get("NearDupe Count").trim().contentEquals(NearDupeCount)) {
+				base.passedStep("NearDupe Count is as exptected to acutal : " + NearDupeCount);
+			} else {
+				base.failedStep("NearDupe Count is not as exptected to acutal : " + NearDupeCount);
+			}
+			if (CountofSearch.get("Pureit Count").trim().contentEquals(PureitCount)) {
+				base.passedStep("Pureit Count is as exptected to acutal : " + PureitCount);
+			} else {
+				base.failedStep("Pureit Count is not as exptected to acutal : " + PureitCount);
+			}
+			if (CountofSearch.get("Threaded Count").trim().contentEquals(ThreadedCount)) {
+				base.passedStep("Threaded Count is as exptected to acutal : " + ThreadedCount);
+			} else {
+				base.failedStep("Threaded Count is not as exptected to acutal : " + ThreadedCount);
+			}
+			if (CountofSearch.get("Family member count").trim().contentEquals(FamilyCount)) {
+				base.passedStep("Family member countt is as exptected to acutal : " + FamilyCount);
+			} else {
+				base.failedStep("Family member count is not as exptected to acutal : " + FamilyCount);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while  count verifaction of draft basic MetaData search." + e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Description: Method for select the saved search and select
+	 *         the Near dupe count Conceptually Similar Count
+	 * @param searchname : searchname is String value that search name.
+	 */
+	public void selectSavedsearchCount(String searchname) {
+		try {
+
+			savedSearch_Searchandclick(searchname);
+			driver.waitForPageToBeReady();
+			getChooseSearchRadiobtn(searchname).isElementAvailable(10);
+			getChooseSearchRadiobtn(searchname).Click();
+			getShowHideDropDown().isElementAvailable(10);
+			getShowHideDropDown().waitAndClick(10);
+			getSelectOptionsFromShowHideDropDown("Near Duplicate Count").isElementAvailable(10);
+			getSelectOptionsFromShowHideDropDown("Near Duplicate Count").waitAndClick(5);
+			driver.scrollPageToTop();
+			getbackGroundFilm().isElementAvailable(10);
+			getbackGroundFilm().waitAndClick(7);
+			getChooseSearchRadiobtn(searchname).isElementAvailable(10);
+			scrollToElementOfPage(getChooseSearchRadiobtn(searchname));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while selecting the saved search select the Near dupe count Conceptually Similar Count "
+							+ e.getMessage());
+		}
+
+	}
+
+	/**
+	 * @author Gopinath Description: Method to verify pending status appeared on
+	 *         saved search table.
+	 */
+	public void verifyPendingStatusAppearedSavedSearchTable() {
+		try {
+			driver.scrollPageToTop();
+			getStatusDropDown().isElementAvailable(15);
+			getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
+			getSavedSearch_ApplyFilterButton().waitAndClick(20);
+			boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+			if (status) {
+				base.passedStep("Pending stats is appeared on table successfully by batch upload");
+			} else {
+				base.failedStep("Failed to get pending status on saved search table after batch upload");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying pending status appeared on saved search table."
+					+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Description: Method to verify pending status appeared for
+	 *         advanced search on saved search table.
+	 */
+	public void verifyPendingStatusForAdvanceSearchAppeared() {
+		try {
+			driver.scrollPageToTop();
+			getNumberOfSavedSearchToBeShown().isElementAvailable(15);
+			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+			getStatusDropDown().isElementAvailable(15);
+			getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
+			getSavedSearch_ApplyFilterButton().waitAndClick(20);
+			boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+			if (status) {
+				base.passedStep("Pending status is appeared for advanced search on table successfully by batch upload");
+			} else {
+				base.failedStep(
+						"Failed to get pending status for advanced search on saved search table after batch upload");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while verifying pending status appeared for advanced search on saved search table."
+							+ e.getMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath Description: Method to verify completed status appeared for
+	 *         advanced search on saved search table.
+	 */
+	public void verifyCompletedStatusForAdvanceSearchAppeared() {
+		try {
+			driver.scrollPageToTop();
+			getNumberOfSavedSearchToBeShown().isElementAvailable(15);
+			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+			getStatusDropDown().isElementAvailable(15);
+			getStatusDropDown().selectFromDropdown().selectByVisibleText("COMPLETED");
+			getSavedSearch_ApplyFilterButton().waitAndClick(20);
+			boolean status = getPendingStatusAdvancedQueary().isDisplayed();
+			if (status) {
+				base.passedStep(
+						"Completed status is appeared for advanced search on table successfully by batch upload");
+			} else {
+				base.failedStep(
+						"Failed to get completed status for advanced search on saved search table after batch upload");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep(
+					"Exception occured while verify completed status appeared for advanced search on saved search table.."
+							+ e.getMessage());
+		}
+	}
+
 }

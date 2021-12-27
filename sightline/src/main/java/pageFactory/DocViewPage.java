@@ -2334,11 +2334,6 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//div[contains(@data-pcc-mark,'outline-')]");
 	}
 
-
-	public Element getDocViewSelectedDocId() {
-		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
-	}
-
 	public Element getEditCodingStampCF() {
 		return driver.FindElementByXPath("//div[@id='codingstamp']//a[@id='stampSettings']//i");
 	}
@@ -2346,9 +2341,10 @@ public class DocViewPage {
 	public Element getDocIdLast() {
 		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr[\" + row + \"]/td[2])[last()]");
 	}
-	
-	public Element getChainVerifyInAnalDocs() {return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");}
 
+	public Element getChainVerifyInAnalDocs() {
+		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");
+	}
 
 	public DocViewPage(Driver driver) {
 
@@ -16738,32 +16734,6 @@ public class DocViewPage {
 		} else {
 			base.stepInfo("Redaction Is Not Highlighted");
 		}
-		driver.waitForPageToBeReady();
-		base.stepInfo("Enabling 0 hits terms in docview panel");
-		getDocView_ToggleButton().waitAndClick(5);
-		driver.waitForPageToBeReady();
-		base.waitForElement(getDocView_ToggleButton());
-		boolean docYes = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
-		softAssertion.assertFalse(docYes);
-		driver.waitForPageToBeReady();
-		base.passedStep("Hide Terms with 0 hits:Enabled");
-		boolean miniDis = getHitPanleVerify(panel).Displayed();
-		softAssertion.assertFalse(miniDis);
-		base.passedStep("0 count terms not displayed in persistent hit panel");
-		for (int i = 3; i <= 4; i++) {
-			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
-			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
-		}
-		clickCodeSameAs();
-		clickCodeSameAsLast();
-		driver.waitForPageToBeReady();
-		String prnThDoc = getVerifyPrincipalDocument().getText();
-		softAssertion.assertNotEquals(prnThDoc, prnSecDoc);
-		base.waitForElement(getDocView_ToggleButton());
-		boolean afterSave = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
-		softAssertion.assertFalse(afterSave);
-		driver.waitForPageToBeReady();
-		softAssertion.assertAll();
 	}
 
 	/**
@@ -16894,7 +16864,7 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -16902,21 +16872,23 @@ public class DocViewPage {
 	public void verifyingComments(String comment) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
-		String text=getDocument_CommentsTextBox().GetAttribute("value");
-		softAssertion.assertEquals(text,comment);
-		if (text.equals(comment) ) {
+		String text = getDocument_CommentsTextBox().GetAttribute("value");
+		softAssertion.assertEquals(text, comment);
+		if (text.equals(comment)) {
 			base.passedStep("Coding form value as per the expected one");
 		} else {
 			base.failedStep("Not as per the expected condition");
 		}
 		softAssertion.assertAll();
 	}
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date: NA
-	 * @Description : verifying stamp saved in minidoclist and validation done from history dropdown
+	 * @Description : verifying stamp saved in minidoclist and validation done from
+	 *              history dropdown
 	 */
 
-	public void savedStampHistoryDropDown(String comment,String fieldText) {
+	public void savedStampHistoryDropDown(String comment, String fieldText) {
 		driver.waitForPageToBeReady();
 		editCodingForm(comment);
 		codingStampButton();
@@ -16929,8 +16901,7 @@ public class DocViewPage {
 		if (expectedValue.equals(expectedValues)) {
 			base.waitForElement(getHistoryDrp_Dwn());
 			getHistoryDrp_Dwn().waitAndClick(5);
-		}
-		else {
+		} else {
 			base.failedStep("Document not maching");
 		}
 		base.passedStep("User selected the document from history drop down");
@@ -16946,6 +16917,7 @@ public class DocViewPage {
 		deleteStampColour(Input.stampSelection);
 		softAssertion.assertAll();
 	}
+
 	/*
 	 * Indium-Baskar
 	 */
@@ -16955,29 +16927,29 @@ public class DocViewPage {
 		base.waitForElement(getSaveAndNextButton());
 		getSaveAndNextButton().waitAndClick(5);
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date: NA
-	 * @Description : This method used to verify navigation option>> using save and next
+	 * @Description : This method used to verify navigation option>> using save and
+	 *              next
 	 */
 	public void verifySaveAndNextUsingNavigationOption(String comment) {
 		driver.waitForPageToBeReady();
 		editCodingForm(comment);
 		codingFormSaveAndNext();
 		verifyThatIsLastDoc();
-		getDocView_NumTextBox().SendKeys("3"+Keys.ENTER);
+		getDocView_NumTextBox().SendKeys("3" + Keys.ENTER);
 		driver.waitForPageToBeReady();
-		String firstDoc=getVerifyPrincipalDocument().getText();
+		String firstDoc = getVerifyPrincipalDocument().getText();
 		editCodingForm(comment);
 		codingFormSaveAndNext();
 		base.VerifySuccessMessage("Document saved successfully");
-		String secDoc=getVerifyPrincipalDocument().getText();
+		String secDoc = getVerifyPrincipalDocument().getText();
 		softAssertion.assertNotEquals(firstDoc, secDoc);
 		softAssertion.assertAll();
 		base.passedStep("Cursor navigated to next doc in minidoclist");
 	}
 
-	
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -16989,16 +16961,15 @@ public class DocViewPage {
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
 		base.waitForElement(getCodeSameAsNearDupe());
 		getCodeSameAsNearDupe().waitAndClick(10);
-        base.waitForElement(getChainVerifyInAnalDocs());
-        softAssertion.assertEquals(getChainVerifyInAnalDocs().isDisplayed().booleanValue(),true);
-        if (getChainVerifyInAnalDocs().Displayed()) {
-        base.passedStep("Chain link displayed in analytical panel while performing code same as action");			
-		}
-        else {
+		base.waitForElement(getChainVerifyInAnalDocs());
+		softAssertion.assertEquals(getChainVerifyInAnalDocs().isDisplayed().booleanValue(), true);
+		if (getChainVerifyInAnalDocs().Displayed()) {
+			base.passedStep("Chain link displayed in analytical panel while performing code same as action");
+		} else {
 			base.stepInfo("Chain link not displayed");
 		}
 	}
-	
+
 	public List<String> availableListofElements(ElementCollection element) {
 		List<String> elementNames = new ArrayList<>();
 		List<WebElement> elementList = null;
@@ -17009,24 +16980,26 @@ public class DocViewPage {
 		}
 		return elementNames;
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
-   // checking duplicates in analytical panel child wondow
-   public List<String> analyticalDocsSelection() throws InterruptedException {     
-        driver.waitForPageToBeReady();
-        Thread.sleep(5000);// Mandatory this thread.sleep no need to delete(for loading analytical docs taking time)
-        getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
+	// checking duplicates in analytical panel child wondow
+	public List<String> analyticalDocsSelection() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		Thread.sleep(5000);// Mandatory this thread.sleep no need to delete(for loading analytical docs
+							// taking time)
+		getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
-        Thread.sleep(5000);// Mandatory this thread. sleep no need to delete
-		List<String> listOFData= new ArrayList<>();
-		ElementCollection element=getAnalyticalPanelDocIdText();
-		listOFData=availableListofElements(element);
+		Thread.sleep(5000);// Mandatory this thread. sleep no need to delete
+		List<String> listOFData = new ArrayList<>();
+		ElementCollection element = getAnalyticalPanelDocIdText();
+		listOFData = availableListofElements(element);
 		System.out.println(listOFData);
 		return listOFData;
 
 	}
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date:N/A
 	 * @Description: This method used to verify Code same as in analytics doc
@@ -17046,18 +17019,18 @@ public class DocViewPage {
 		editCodingForm(comment);
 		codingFormSaveAndNext();
 		base.VerifySuccessMessage("Document saved successfully");
-		boolean flag=getChainVerifyInAnalDocs().isDisplayed();
+		boolean flag = getChainVerifyInAnalDocs().isDisplayed();
 		softAssertion.assertFalse(flag);
 		softAssertion.assertAll();
 		base.passedStep("Code same as icon removed after clicking save and next button");
 	}
-	
-	
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date:N/A
 	 * @Description: Validation of non-date format using complete
 	 */
-	public void nonDateFormatValidationUsingComplete(String projectFieldName) throws InterruptedException, AWTException {
+	public void nonDateFormatValidationUsingComplete(String projectFieldName)
+			throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -17092,13 +17065,13 @@ public class DocViewPage {
 		}
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date: 27/12/2021
 	 * @Description: Validation of non-date format validation for saved stamp
 	 */
-	public void nonDateFormatValidationDateOnly(String projectFieldName, String fieldValue, String colour,String comment)
-			throws InterruptedException, AWTException {
+	public void nonDateFormatValidationDateOnly(String projectFieldName, String fieldValue, String colour,
+			String comment) throws InterruptedException, AWTException {
 		driver.waitForPageToBeReady();
 		getReadOnlyTextBox(projectFieldName).WaitUntilPresent().ScrollTo();
 //		base.waitForElement(getReadOnlyTextBox(projectFieldName));
@@ -17137,15 +17110,15 @@ public class DocViewPage {
 			base.stepInfo("Error message not displayed");
 		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar date: 27/12/2021 Modified date: 27/12/2021
 	 * @Description: Control selection should not clear while saving the stamp
 	 */
-	public void controlSelectionShouldNotClear(String comment,String fieldText) {
+	public void controlSelectionShouldNotClear(String comment, String fieldText) {
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocument_CommentsTextBox());
-		String text=getDocument_CommentsTextBox().GetAttribute("value");
+		String text = getDocument_CommentsTextBox().GetAttribute("value");
 		editCodingForm(comment);
 		codingStampButton();
 		popUpAction(fieldText, Input.stampSelection);
@@ -17153,17 +17126,17 @@ public class DocViewPage {
 		verifyingComments(comment);
 		driver.getWebDriver().navigate().refresh();
 		base.waitForElement(getDocument_CommentsTextBox());
-		String textTwo=getDocument_CommentsTextBox().GetAttribute("value");
+		String textTwo = getDocument_CommentsTextBox().GetAttribute("value");
 		if (text.equals(textTwo)) {
 			base.passedStep("All control selection on coding is not cleared");
-		}
-		else {
+		} else {
 			base.failedStep("All control selection is cleared");
 		}
-		
+
 	}
-  /*
-   * @author Indium-Baskar
+
+	/*
+	 * @author Indium-Baskar
 	 */
 //	Reusable method for verify the saved stamp
 	public void verifySavedStamp(String comment) {
@@ -17348,4 +17321,6 @@ public class DocViewPage {
 			base.stepInfo("persistent hit panel displayed in docview panel after performing save and next");
 		} else {
 			base.failedStep("Hit panel not displayed");
+		}
+	}
 }
