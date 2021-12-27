@@ -4518,5 +4518,48 @@ public class CodingForm {
 		base.waitForElement(getCodingForm_Validation_ButtonYes());
 		getCodingForm_Validation_ButtonYes().waitAndClick(5);
 	}
+	
+	/*
+	 * Indium-Baskar
+	 */
+	
+	public void createCommentAndMetadata(String metadata,String comment,String cfName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();
+		basedOnCreatingNewObject(null, comment, null,"comment");
+		addcodingFormAddButton();
+		basedOnCreatingNewObject(null, null, metadata,"metadata");
+		addcodingFormAddButton();
+		passingCodingFormName(cfName);
+		saveCodingForm();
+	}
+	
+	/*
+	 * Indium-Baskar
+	 */
+//  Thismethod used to validate the unassigned coding form and removig object nd delete cf
+	public void verifyUnassignedCf(String cfName) throws InterruptedException {
+		this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+		driver.waitForPageToBeReady();
+		addNewCodingFormButton();
+		firstCheckBox("tag");
+		addcodingFormAddButton();
+		passingCodingFormName(cfName);
+		saveCodingForm();
+		editCodingForm(cfName);
+		getCodingForm_TagNames(1).waitAndClick(5);
+		selectRemoveLinkFromCodingForm(0);
+		if (getCodingForm_SelectRemoveLink(0).isElementAvailable(5)) {
+			base.failedStep("Coding form object not removed");
+		}
+		else {
+			base.passedStep("Coding form object removed ");
+		}
+		base.waitForElement(getSaveCFBtn());
+		getSaveCFBtn().waitAndClick(5);
+		deleteCodingForm(cfName, cfName);
+		base.VerifySuccessMessage("Coding form deleted successfully");
+	}
 
 }
