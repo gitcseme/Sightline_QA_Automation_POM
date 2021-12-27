@@ -5891,6 +5891,90 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 		 
 	}
 	
+	 /**
+	 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48662
+	 * @Description:Create a Production with the Prerequisite: MP3 files and by selecting just the DAT file as a production component
+	 */
+	@Test(groups = { "regression" }, priority = 70)
+      	 public void verifyProductionGenerateForMP3Docs() throws Exception {
+      	 UtilityLog.info(Input.prodPath);
+         base.stepInfo("RPMXCON-48662 -Production Sprint 09");
+         
+         loginPage.logout();
+ 		 loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+ 		
+		String tagname ="Tag" + Utility.dynamicNameAppender();
+		String productionname ="p" + Utility.dynamicNameAppender();
+		String prefixID = Input.randomText + Utility.dynamicNameAppender();
+		String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+		
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.getMetaDataSearch();
+		sessionSearch.bulkTagExisting(tagname);
+		
+		ProductionPage page = new ProductionPage(driver);
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionWithTag(tagname);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.fillingSummaryAndPreview();
+		page.fillingGeneratePageWithContinueGenerationPopup();
+	}
+	
+	
+
+	 /**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48661
+		 * @Description:Verify that production should be generated successfully for audio files
+		 */
+		@Test(groups = { "regression" }, priority = 71)
+	      	 public void verifyProductionGenerateForAudioFile() throws Exception {
+	      	 UtilityLog.info(Input.prodPath);
+	         base.stepInfo("RPMXCON-48661 -Production Sprint 09");
+	         
+	         loginPage.logout();
+	 		 loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+	 		
+			String tagname ="Tag" + Utility.dynamicNameAppender();
+			String productionname ="p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.audioSearch(Input.audioSearch, Input.language);
+			sessionSearch.bulkTagExisting(tagname);
+			
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.SelectMP3FileAndVerifyLstFile();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionWithTag(tagname);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+	         
+		}
+	
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
