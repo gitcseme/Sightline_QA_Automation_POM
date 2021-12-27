@@ -2102,6 +2102,22 @@ public class ProductionPage {
 	public Element getDAT_DATField(int i) {
 		return driver.FindElementById("DATFL_"+i+"");
 	}
+	public Element getLeftFooterBranding() {
+		return driver.FindElementById("LeftFooterBranding");
+	}
+	public Element getRightFooterBranding() {
+		return driver.FindElementById("RightFooterBranding");
+	}
+	public Element getEnterBranding(int i) {
+		return driver.FindElementByXPath("(//div[@placeholder='Enter default branding for the selected location on the page.'])["+i+"]");
+	}
+	public Element getDoNotProduceFullContentTiff() {
+		return driver.FindElementByXPath("//input[@id='chkShouldSkipTIFFGeneration']//following-sibling::i");
+	}
+	public Element getClkCheckBox_RedactionTag(String redactTag) {
+		return driver.FindElementByXPath(
+				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='"+redactTag+"']");
+	}
 	
 	
 	public ProductionPage(Driver driver) {
@@ -14576,6 +14592,225 @@ public class ProductionPage {
 			base.failedStep("lst files toggle is  not enabled by default");
 			}
 		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingPDFSectionWithMultiBranding(String tagname) throws InterruptedException {
+
+		base.waitForElement(getPDFChkBox());
+		getPDFChkBox().Click();
+
+		base.waitForElement(getPDFTab());
+		getPDFTab().Click();
+
+		driver.scrollPageToTop();
+
+		base.waitForElement(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().Click();
+		
+		base.waitForElement(getLeftHeaderBranding());
+		getLeftHeaderBranding().ScrollTo();
+		getLeftHeaderBranding().Click();
+		base.waitForElement(getEnterBranding(1));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(1).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(1).SendKeys(searchString4);
+
+		base.waitForElement(getTIFF_CenterHeaderBranding());
+		getTIFF_CenterHeaderBranding().Click();
+		base.waitForElement(getEnterBranding(5));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(5).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(5).SendKeys(searchString4);
+		
+		base.waitForElement(getRightHeaderBranding());
+		getRightHeaderBranding().Click();
+		base.waitForElement(getEnterBranding(3));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(3).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(3).SendKeys(searchString4);
+		
+		base.waitForElement(getLeftFooterBranding());
+		getLeftFooterBranding().ScrollTo();
+		getLeftFooterBranding().Click();
+		base.waitForElement(getEnterBranding(2));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(2).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(2).SendKeys(searchString4);
+		
+		base.waitForElement(getTIFF_CenterFooterBranding());
+		getTIFF_CenterFooterBranding().Click();
+		base.waitForElement(getEnterBranding(6));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(6).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(6).SendKeys(searchString4);
+		
+		base.waitForElement(getRightFooterBranding());
+		getRightFooterBranding().Click();
+		base.waitForElement(getEnterBranding(4));
+		new Actions(driver.getWebDriver()).moveToElement(getEnterBranding(4).getWebElement()).click();
+		driver.waitForPageToBeReady();
+		getEnterBranding(4).SendKeys(searchString4);
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		base.waitForElement(getPriveldge_SelectTagButton());
+		getPriveldge_SelectTagButton().Click();
+
+		base.waitForElement(getPriveldge_TagTree(tagname));
+		Thread.sleep(3000);
+		getPriveldge_TagTree(tagname).waitAndClick(10);
+
+		getPriveldge_TagTree_SelectButton().Click();
+
+		base.waitForElement(getPriveldge_TextArea());
+		new Actions(driver.getWebDriver()).moveToElement(getPriveldge_TextArea().getWebElement()).click();
+
+		getPriveldge_TextArea().SendKeys(tagname);
+
+		driver.scrollingToBottomofAPage();
+		base.stepInfo("PDF section is filled");
+
+	}
+	/**
+	 * @Author Aathith
+	 */
+	public void fillingTIFFSectionwithBurnRedactionSelectRedactTag(String tagname) throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().waitAndClick(10);
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+		getClkCheckBox_RedactionTag(tagname).ScrollTo();
+		getClkCheckBox_RedactionTag(tagname).isDisplayed();
+		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
+	}
+	/**
+	 * @Author Aathith
+	 */
+	public void fillingPDFSectionwithBurnRedactionSelectRedactTag(String tagname) throws InterruptedException {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTIFFChkBox());
+		base.waitTillElemetToBeClickable(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		driver.scrollingToBottomofAPage();
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getTIFFTab());
+		base.waitTillElemetToBeClickable(getTIFFTab());
+		getTIFFTab().Click();
+
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getPDFGenerateRadioButton().Enabled();
+			}
+		}), Input.wait60);
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		getPDFGenerateRadioButton().ScrollTo();
+		base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().Click();
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		base.waitTillElemetToBeClickable(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().waitAndClick(10);
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().waitAndClick(10);
+
+		getClkRadioBtn_selectRedactionTags().ScrollTo();
+
+		base.waitForElement(getClkRadioBtn_selectRedactionTags());
+		getClkRadioBtn_selectRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkRadioBtn_selectRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_RedactionTag(tagname));
+		getClkCheckBox_RedactionTag(tagname).ScrollTo();
+		getClkCheckBox_RedactionTag(tagname).isDisplayed();
+		getClkCheckBox_RedactionTag(tagname).waitAndClick(10);
+
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkCheckBox_selectingRedactionTags());
+		getClkCheckBox_selectingRedactionTags().isDisplayed();
+		driver.waitForPageToBeReady();
+		getClkCheckBox_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().isDisplayed();
+		getClk_selectBtn().waitAndClick(10);
+
+		base.waitForElement(gettextRedactionPlaceHolder());
+		gettextRedactionPlaceHolder().isDisplayed();
+		gettextRedactionPlaceHolder().waitAndClick(10);
+		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
 	
 		

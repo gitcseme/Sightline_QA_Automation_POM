@@ -16,8 +16,10 @@ import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.BaseClass;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
 import pageFactory.ProjectFieldsPage;
@@ -1215,7 +1217,7 @@ public class Production_Test_Regression {
 	page.fillingProductionLocationPage(productionname);
 	page.navigateToNextSection();
 	page.fillingSummaryAndPreview();
-	page.getbtnProductionGenerate().waitAndClick(10);
+	page.fillingGeneratePageWithContinueGenerationPopup();
 	
 	// Go To Production Home Page
 		this.driver.getWebDriver().get(Input.url + "Production/Home");
@@ -1428,6 +1430,165 @@ public class Production_Test_Regression {
 			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 			
 		 }
+			/**
+			 * @author Aathith.Senthilkumar
+			 * 			48978
+			 * @Description Verify that branding text should be wrapped when Branding text to all the six locations exceeds the space while production for a PDF file.
+			 * 
+			 */
+				@Test(groups = { "regression" }, priority = 25)
+				public void verifyBrandingTextToSixLocation() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48978 -Production Sprint 09");
+				
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				//String tagNameTechnical = Input.tagNameTechnical;
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingPDFSectionWithMultiBranding(tagname);
+				base.stepInfo("Added a multi line branding to all six  locations");
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				
+				base.passedStep("Verified that branding text should be wrapped when Branding text to all the six locations exceeds the space while production for a PDF file");
+				
+				//delete tags and folders
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			}
+				/**
+				 * @author Aathith.Senthilkumar
+				 * 			48660
+				 * @Description To verify that if "Do Not Produce TIFFs/PDFs for Natively Produced Docs" is enabled , then TIFFs with redaction should be produced. It should not export Natives
+				 * 
+				 */
+			@Test(groups = { "regression" }, priority = 26)
+			public void verifyDoNotProduceTiffToggleOn() throws Exception {
+					loginPage.logout();
+					loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-48660 -Production Sprint 09");
+					
+					foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					String Redactiontag1;
+					Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+					
+					RedactionPage redactionpage=new RedactionPage(driver);
+
+			        driver.waitForPageToBeReady();
+			        redactionpage.manageRedactionTagsPage(Redactiontag1);
+			        System.out.println("First Redaction Tag is created"+Redactiontag1);
+			        
+			        DocExplorerPage docExp=new DocExplorerPage(driver);
+		     		docExp.documentSelectionIteration();
+		     		docExp.docExpViewInDocView();
+		     		  
+		     		DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+		     		//doc1
+		     		 docViewRedactions.selectDoc1();
+
+		            driver.waitForPageToBeReady();
+		             docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+		             driver.waitForPageToBeReady();
+		             docViewRedactions.selectingRedactionTag2(Redactiontag1);
+		             
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateFolderInRMU(foldername);
+
+					 //Adding folder to bulkfolder
+		            DocExplorerPage docExplorer=new DocExplorerPage(driver);
+		            docExplorer.documentSelectionIteration();
+		            docExplorer.bulkFolderExisting(foldername);
+					
+
+					//Verify 
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTextSection();
+					page.fillingTIFFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
+					driver.scrollPageToTop();
+					page.getDoNotProduceFullContentTiff().ScrollTo();
+					page.getDoNotProduceFullContentTiff().waitAndClick(10);
+					base.stepInfo("Enabled 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' toggle ON");
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					//Verify 
+					page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingNativeSection();
+					page.fillingTextSection();
+					page.fillingPDFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
+					driver.scrollPageToTop();
+					page.getDoNotProduceFullContentTiff().ScrollTo();
+					page.getDoNotProduceFullContentTiff().waitAndClick(10);
+					base.stepInfo("Enabled 'Do not produce full content TIFF / PDFs or placeholder TIFF / PDFs for Natively Produced Docs' toggle ON");
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPage();
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					base.passedStep("Verified that if 'Do Not Produce TIFFs/PDFs for Natively Produced Docs' is enabled , then TIFFs with redaction should be produced. It should not export Natives");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
+				}
 	
 	
 	@AfterMethod(alwaysRun = true)
