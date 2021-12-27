@@ -1304,6 +1304,130 @@ public class Production_Test_Regression {
 		base.passedStep("Verified if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again");
 		
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			49099
+	 * @Description In production, Preview should displays correctly
+	 * 
+	 */
+		@Test(groups = { "regression" }, priority = 23)
+		public void verifyPreviewInProduction() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49099 -Production Sprint 09");
+		
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String tagNameTechnical = Input.tagNameTechnical;
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		//Verify 
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname,tagNameTechnical);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.getPreviewprod().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.passedStep("In production, Preview should displays correctly");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		
+	 }
+		/**
+		 * @author Aathith.Senthilkumar
+		 * 			49104
+		 * @Description To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.
+		 * 
+		 */
+			@Test(groups = { "regression" }, priority = 24)
+			public void verifyDatFieldsAreExport() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49104 -Production Sprint 09");
+			
+			String testData1 = Input.testData1;
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			//String tagNameTechnical = Input.tagNameTechnical;
+			String newExport = "Ex" + Utility.dynamicNameAppender();
+
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			String text = page.getProdExport_ProductionSets().getText();
+			if (text.contains("Export Set")) {
+				page.selectExportSetFromDropDown();
+			} else {
+				page.createNewExport(newExport);
+			}
+			page.addANewExport(productionname);
+			page.fillingDATSection();
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(2, "Email", "EmailToNamesAndAddresses");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(3, "Email", "EmailCCNamesAndAddresses");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(4, "Email", "EmailBCCNamesAndAddresses");
+			
+	
+			page.navigateToNextSection();
+			page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingExportLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			
+			base.passedStep("Verified that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.");
+			//delete tags and folders
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			
+		 }
 	
 	
 	@AfterMethod(alwaysRun = true)
