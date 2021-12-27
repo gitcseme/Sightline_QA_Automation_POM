@@ -16,13 +16,14 @@
 	<conceptualSearchString1>field report</conceptualSearchString1>
 	<conceptualSearchString1PureHit>2</conceptualSearchString1PureHit>
 	<metaDataCN>P Allen</metaDataCN>
-	<metaDataCNcount>1135</metaDataCNcount> 
+	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
-	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
+	<totalNumberOfDocsincludeadvoption>103
+	</totalNumberOfDocsincludeadvoption>
 	<historyTab>History</historyTab>
 	<documentConceptualTab>liDocumentConceptualSimilar
 	</documentConceptualTab>
-	<randomText>Test</randomText> 
+	<randomText>Test</randomText>
 	<metaDataName>CustodianName</metaDataName>
 	<is_Or_Range>range</is_Or_Range>
 	<second_Input>CustodianName</second_Input>
@@ -42,8 +43,10 @@
 	<timeStampColumnName>Time Stamp</timeStampColumnName>
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
+	</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
+	</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -84,7 +87,8 @@
 	<familyDocumentForReviewer>ID00005144</familyDocumentForReviewer>
 	<nearDupeCompletedDocId>ID00000067</nearDupeCompletedDocId>
 	<nearDupeDocId>ID00000103</nearDupeDocId>
-	<nearDupeCompletedDocIdReviewer>ID00005119</nearDupeCompletedDocIdReviewer>
+	<nearDupeCompletedDocIdReviewer>ID00005119
+	</nearDupeCompletedDocIdReviewer>
 	<historyClockIconDocId>ID00000667</historyClockIconDocId>
 	<newNearDupeDocId>ID00000006</newNearDupeDocId>
 	<warningDocId>ID00001304</warningDocId>
@@ -93,6 +97,7 @@
 	<nearDupeBulkAssignId>ID00003729</nearDupeBulkAssignId>
 	<nearDupeBulkAssignReviewer>ID00005182</nearDupeBulkAssignReviewer>
 	<nearDupeBulkAssignReviewId>ID00004969</nearDupeBulkAssignReviewId>
+	<theardMapViewId>ID00001129</theardMapViewId>
 
 
 
@@ -114,7 +119,8 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>ID00005088</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
+	</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -174,15 +180,19 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads
+	</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group
+	</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\
+	</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of type xls/xlsx</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of type
+		xls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
@@ -201,7 +211,8 @@
 
 	<!-- Added by Gopinath Modified date - 21/09/2021 -->
 	<codeSameAsLastMsg>Code this document the same as the last coded
-		document</codeSameAsLastMsg>
+		document
+	</codeSameAsLastMsg>
 
 	<!-- Added by Jeevitha -->
 	<colorCodeOfRed>#FF0000</colorCodeOfRed>
@@ -271,7 +282,7 @@
 	<docIdThumbnails>ID00000012</docIdThumbnails>
 
 	<!-- Added by Gopinath Created date - 16/11/2021 -->
-	<signDocumentId>ID00000013</signDocumentId> 
+	<signDocumentId>ID00000013</signDocumentId>
 	<technicalIssue>Technical Issue</technicalIssue>
 	<crammerDocId>ID00000067</crammerDocId>
 	<produced>Produced</produced>
@@ -280,7 +291,7 @@
 
 	<!-- Added by Gopinath Created date - 22/11/2021 -->
 	<batesDocumentId>ID00000182</batesDocumentId>
- 
+
 
 	<EmailAuthourName>gouri dhavalikar</EmailAuthourName>
 	<MetaDataEAName>EmailAuthorName</MetaDataEAName>
@@ -288,74 +299,78 @@
 	<MetaDataReciepientsDomain>EmailRecipientDomains
 	</MetaDataReciepientsDomain>
 	<KeyWordColour>Blue</KeyWordColour>
-<!-- Added by Baskar Created date - 24/11/2021 --> 
+	<!-- Added by Baskar Created date - 24/11/2021 -->
 	<tinyInt>Tiny - 20 Characters</tinyInt>
 	<smallInt>Small - 50 Characters</smallInt>
 	<averageInt>Average - 400 Characters</averageInt>
 	<bigInt>Big - 4000 Characters</bigInt>
 	<hugeInt>Huge - 2GB</hugeInt>
-	<docBasic>Doc Basic</docBasic> 
-	
+	<docBasic>Doc Basic</docBasic>
+
 	<!-- Added by Gopinath Created date - 25/11/2021 -->
-	<exText>The configured format is applicable only to OCRed text and production generated text, and not to ingested text.</exText>
+	<exText>The configured format is applicable only to OCRed text and
+		production generated text, and not to ingested text.</exText>
 
 	<!-- Added by Gopinath Created date - 29/11/2021 -->
 	<paginationDocId>ID00000196</paginationDocId>
 
-<!-- Added by Baskar Created date - 24/11/2021 -->
-    <hidden>Make It Hidden</hidden>
-    <notSelectable>Make It Display But Not Selectable</notSelectable>
-    <optional>Make It Optional</optional>
-    <required>Make It Required</required>
-    <tag>tag</tag>
-    <comments>comment</comments>
-    <metaData>metadata</metaData>
-    <checkItem>check item</checkItem>
-    <staticText>staticText</staticText>
-    <radioGroup>radio</radioGroup>
-    <checkGroup>check</checkGroup>
-    <yesButton>Yes</yesButton>
-    
-    <!-- Added by Aathith -->
- 	<pageCount>1</pageCount>
- 	<errorMsg>Error Message</errorMsg>
- 	<helpText>Help Text</helpText>
- 	<thisHidden>Make this Hidden</thisHidden>
- 	<thisReadOnly>Make this Read Only</thisReadOnly>
- 	<thisOptional>Make this Optional</thisOptional>
- 	<thisRequired>Make this Required</thisRequired>
- 	<select>Selected</select>
- 	 <notSelect>Not Selected</notSelect>
- 	
+	<!-- Added by Baskar Created date - 24/11/2021 -->
+	<hidden>Make It Hidden</hidden>
+	<notSelectable>Make It Display But Not Selectable</notSelectable>
+	<optional>Make It Optional</optional>
+	<required>Make It Required</required>
+	<tag>tag</tag>
+	<comments>comment</comments>
+	<metaData>metadata</metaData>
+	<checkItem>check item</checkItem>
+	<staticText>staticText</staticText>
+	<radioGroup>radio</radioGroup>
+	<checkGroup>check</checkGroup>
+	<yesButton>Yes</yesButton>
 
- 	 
- 	<!-- Added by Brundha -->
- 	 <documentID>ID00001333</documentID>
- 	
+	<!-- Added by Aathith -->
+	<pageCount>1</pageCount>
+	<errorMsg>Error Message</errorMsg>
+	<helpText>Help Text</helpText>
+	<thisHidden>Make this Hidden</thisHidden>
+	<thisReadOnly>Make this Read Only</thisReadOnly>
+	<thisOptional>Make this Optional</thisOptional>
+	<thisRequired>Make this Required</thisRequired>
+	<select>Selected</select>
+	<notSelect>Not Selected</notSelect>
 
- 	<!-- Added by Baskar Created date - 30/11/2021 -->
-    <postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
-    
-    <!-- Added by Gopinath Created date - 03/12/2021 -->
-    <thankyouText>thank you</thankyouText>
-    
-     <!-- Added by Gopinath Created date - 08/12/2021 -->
-    <anotherRemarkMessage>Another user has applied redactions, annotations or Reviewer Remarks to this document since you presented it in DocView.</anotherRemarkMessage>
 
- 	<!-- Added by Gopinath Created date - 09/12/2021 -->
+
+	<!-- Added by Brundha -->
+	<documentID>ID00001333</documentID>
+
+
+	<!-- Added by Baskar Created date - 30/11/2021 -->
+	<postGenQcChecks>Post-Gen QC Checks In Progress</postGenQcChecks>
+
+	<!-- Added by Gopinath Created date - 03/12/2021 -->
+	<thankyouText>thank you</thankyouText>
+
+	<!-- Added by Gopinath Created date - 08/12/2021 -->
+	<anotherRemarkMessage>Another user has applied redactions, annotations
+		or Reviewer Remarks to this document since you presented it in
+		DocView.</anotherRemarkMessage>
+
+	<!-- Added by Gopinath Created date - 09/12/2021 -->
 	<familyMembersDocId>ID00001251</familyMembersDocId>
-	
+
 	<!-- Added by Gopinath Created date - 15/12/2021 -->
 	<proximity>Proximity</proximity>
 	<masterDate>2019/08/05</masterDate>
-	
+
 	<!-- Added by Gopinath Created date - 16/12/2021 -->
 	<productionText>Production</productionText>
 	<tiffPageCountNam>TIFFPageCount</tiffPageCountNam>
 	<tiffPageCountText>TIFFPAGECOUNT</tiffPageCountText>
-	
+
 	<!-- Added by Gopinath Created date - 27/12/2021 -->
-	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
+	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
+	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
-	
+
 </TestData>

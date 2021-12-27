@@ -174,6 +174,7 @@ public class Input {
 	public static String nearDupeBulkAssignId;
 	public static String nearDupeBlukAssignReviewer;
 	public static String nearDupeBulkAssignReviewId;
+	public static String theardMapViewId;
 
 	// DocView codingform Baskar Indium
 
@@ -588,6 +589,7 @@ public class Input {
 		nearDupeBulkAssignId=testData.getNearDupeBulkAssignId();
 		nearDupeBlukAssignReviewer=testData.getNearDupeBulkAssignReviewer();
 		nearDupeBulkAssignReviewId=testData.getNearDupeBulkAssignReviewId();
+		theardMapViewId=testData.getTheardMapViewId();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

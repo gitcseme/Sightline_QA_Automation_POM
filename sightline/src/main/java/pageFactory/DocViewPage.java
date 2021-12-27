@@ -1329,7 +1329,7 @@ public class DocViewPage {
 	public Element getDocView_Analytics_MetaDataPanel() {
 		return driver.FindElementById("divMetaTab");
 	}
-	
+
 	public Element getDocView_Analytics_FamilyMember_DocIdText(int rowno) {
 		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[" + rowno + "]");
 	}
@@ -1461,14 +1461,15 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
-	
+
 	public Element get_textHighlightedColor() {
 		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
 	}
-	
+
 	public Element getDocView_NearDupeComparisonWindow_IgnoreButton() {
 		return driver.FindElementById("nearDupeIgnore1");
 	}
+
 	public Element getDocView_MiniDocListDocId(String text) {
 		return driver.FindElementByXPath("//th[text()='" + text + "']");
 	}
@@ -2284,32 +2285,43 @@ public class DocViewPage {
 	public Element getSecondDocIdOnMiniDocList() {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[2]//td[2]");
 	}
-	//Added by Aathith
+
+	// Added by Aathith
 	public Element getlastDocinMiniDocView() {
 		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr/td[2])[last()]");
 	}
+
 	public Element getbtnDeleteEditStamp() {
 		return driver.FindElementById("btnDeleteEditStamp");
 	}
+
 	public Element getEditStampGearIcon() {
 		return driver.FindElementByXPath("//a[@id='stampSettings']");
 	}
 
-	//Added by Vijaya.Rani
+	// Added by Vijaya.Rani
 	public Element get1stDocinMiniDoc_ChildDocs() {
 		return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]/tbody/tr[1]/td[2]");
 	}
-	
-	//Added by Gopinath - 27/12/2021
-		public Element getselectDocInImageTab() {
-			return driver.FindElementByXPath("//li[@id='liDocumentProductionView']");
-		}
 
-		public Element getDocViewSelectedDocId() {
-			return driver.FindElementByXPath("//span[@id='activeDocumentId']");
-		}
+	// Added by Gopinath - 27/12/2021
+	public Element getselectDocInImageTab() {
+		return driver.FindElementByXPath("//li[@id='liDocumentProductionView']");
+	}
 
-	
+	public Element getDocViewSelectedDocId() {
+		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
+	}
+
+	// Added by Vijaya.Rani
+	public Element getDocViewPageTitle() {
+		return driver.FindElementByXPath("//h1[@class='page-title']");
+	}
+
+	public Element getDocView_ConceptualViewInDocView() {
+		return driver.FindElementByXPath("//a[@id='AnalyticViewDocList']");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -12762,7 +12774,7 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
 			// verify Code Same as Link
-			
+
 			driver.Navigate().refresh();
 			driver.switchTo().alert().accept();
 			base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(3));
@@ -16160,7 +16172,7 @@ public class DocViewPage {
 		}
 
 		// delete stamp Color
-	    reusableDocView.deleteStampColour(lastIcons);
+		reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
 
 	}
@@ -16294,6 +16306,7 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -16302,13 +16315,13 @@ public class DocViewPage {
 		driver.waitForPageToBeReady();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("enter document before");
-		String beforeText =getAddComment1().getText();
+		String beforeText = getAddComment1().getText();
 		getAddComment1().Clear();
 		getAddComment1().SendKeys("after enter document");
-		String afterText =getAddComment1().getText();
+		String afterText = getAddComment1().getText();
 		driver.waitForPageToBeReady();
 		softAssertion.assertNotEquals(beforeText, afterText);
-		if (beforeText!=afterText) {
+		if (beforeText != afterText) {
 			softAssertion.assertNotEquals(beforeText, afterText);
 			base.passedStep("InCompleted Document are Editable");
 
@@ -16318,40 +16331,41 @@ public class DocViewPage {
 
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void codeSameAsLastDisplayCheck() {
 		base.waitForElement(getLastCodeIconWhitePencil());
-		boolean flag=getLastCodeIconWhitePencil().isDisplayed();
-		if(flag) {
+		boolean flag = getLastCodeIconWhitePencil().isDisplayed();
+		if (flag) {
 			System.out.println("code same as last code displayed");
 			base.passedStep("Code same as last code displayed");
-		}
-		else {
+		} else {
 			System.out.println("code same as last code is not displayed");
 			base.failedStep("Code same as last code is not displayed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
 	public void verifyThatIsLastDoc() {
-		String expectText=getlastDocinMiniDocView().getText().trim();
+		String expectText = getlastDocinMiniDocView().getText().trim();
 		System.out.println(expectText);
 		getDocView_Last().waitAndClick(5);
-		String actualText=getDocView_CurrentDocId().getText().trim();
+		String actualText = getDocView_CurrentDocId().getText().trim();
 		System.out.println(actualText);
-		if(expectText.equalsIgnoreCase(actualText)) {
+		if (expectText.equalsIgnoreCase(actualText)) {
 			softAssertion.assertEquals(actualText, expectText);
 			System.out.println("assert are equal");
 			base.stepInfo("last document navigation navigate successfully");
-		}
-		else {
+		} else {
 			System.out.println("assert are not equal");
 			base.stepInfo("last doc navigation failed");
 		}
 	}
+
 	/**
 	 * @author Aathith.Senthilkumar
 	 */
@@ -16359,12 +16373,12 @@ public class DocViewPage {
 		base.waitForElement(getEditStampGearIcon());
 		driver.scrollingToElementofAPage(getEditStampGearIcon());
 		getEditStampGearIcon().waitAndClick(5);
-		if(getEditStampGearIcon().Enabled()) {
-		base.waitForElement(getStampBlueColour());
-		getStampBlueColour().waitAndClick(5);
-		base.waitForElement(getbtnDeleteEditStamp());
-		getbtnDeleteEditStamp().waitAndClick(5);
-		}else {
+		if (getEditStampGearIcon().Enabled()) {
+			base.waitForElement(getStampBlueColour());
+			getStampBlueColour().waitAndClick(5);
+			base.waitForElement(getbtnDeleteEditStamp());
+			getbtnDeleteEditStamp().waitAndClick(5);
+		} else {
 			base.waitForElement(getEditStampGearIcon());
 			getEditStampGearIcon().waitAndClick(5);
 			base.waitForElement(getStampBlueColour());
@@ -16372,7 +16386,7 @@ public class DocViewPage {
 			base.waitForElement(getbtnDeleteEditStamp());
 			getbtnDeleteEditStamp().waitAndClick(5);
 		}
-		//base.VerifySuccessMessage("Coding stamp deleted successfully");
+		// base.VerifySuccessMessage("Coding stamp deleted successfully");
 	}
 
 	/**
@@ -16386,50 +16400,46 @@ public class DocViewPage {
 		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep(" Analytical panel Child window displayed for parent window");
-		
 
 		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Coding form Child window displayed for parent window");
-		
 
 		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("Mini Doc List Child window displayed for parent window");
-		
 
 		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
 		softAssertion.assertTrue(flag);
 		base.passedStep("MetaData Child window displayed for parent window");
-		
 
 	}
 
 	/**
 	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
 	 * @Description : this method used for verify tick mark in minidoclist child
-	 *              window 
+	 *              window
 	 */
 
 	public void verifyCheckMarkIconFromMiniDocListChildWindow() {
 		driver.waitForPageToBeReady();
-	     driver.scrollPageToTop();
-	     try {
+		driver.scrollPageToTop();
+		try {
 
-				base.waitForElement(getverifyCodeSameAsLast());
-				if (getverifyCodeSameAsLast().Displayed()) {
-					softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
-					base.passedStep("CheckMark is displayed successfully");
-				} else {
-					base.failedStep("CheckMark is not displayed");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Check mark is not verified");
+			base.waitForElement(getverifyCodeSameAsLast());
+			if (getverifyCodeSameAsLast().Displayed()) {
+				softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+				base.passedStep("CheckMark is displayed successfully");
+			} else {
+				base.failedStep("CheckMark is not displayed");
 			}
-	     
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Check mark is not verified");
+		}
+
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani 23/12/21 NA Modified date: NA Modified by:NA
 	 * @description perform copmlete Doc Not hide Docs miniDocList
@@ -16442,40 +16452,41 @@ public class DocViewPage {
 			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
 
 		}
-		
+
 		driver.waitForPageToBeReady();
 		editCodingFormComplete();
-		
+
 		driver.waitForPageToBeReady();
 		for (int i = 2; i <= 2; i++) {
 			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
 			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
 
 		}
-		
+
 		driver.waitForPageToBeReady();
 		editCodingFormComplete();
-		
+
 		driver.waitForPageToBeReady();
 		for (int i = 3; i <= 3; i++) {
 			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
 			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
 
 		}
-		
+
 		driver.waitForPageToBeReady();
 		editCodingFormComplete();
-		
+
 		driver.waitForPageToBeReady();
 		for (int i = 4; i <= 4; i++) {
 			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
 			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
 
 		}
-		
+
 		driver.waitForPageToBeReady();
 		editCodingFormComplete();
 	}
+
 	/**
 	 * @Author Vijaya.Rani Created on 23/12/2021
 	 * @Description To perform CodeSame near dupe docs in the DocView Test Case id:
@@ -16511,44 +16522,44 @@ public class DocViewPage {
 		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
 		softAssertion.assertAll();
 	}
-	
+
 	/**
 	 * @author Mohan.Venugopal Created Date: 26/12/2021
 	 * @description To select docs from Family member and action as View Document
 	 */
 	public void selectDocsFromFamilyMemberAndViewTheDocument() {
-		
+
 		driver.waitForPageToBeReady();
 		base.waitForElement(getDocView_Analytics_FamilyTab());
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
 		String text1 = getDocView_CurrentDocId().getText();
-		 
+
 		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
 		driver.getPageSource();
 		getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
-		
+
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
-		
+
 		base.waitForElement(getDocView_FamilyViewInDocView());
 		getDocView_FamilyViewInDocView().waitAndClick(3);
-		
+
 		driver.waitForPageToBeReady();
 		driver.scrollPageToTop();
-		
+
 		String text2 = getDocView_CurrentDocId().getText();
-		
+
 		softAssertion.assertNotEquals(text1, text2);
 		softAssertion.assertAll();
 		base.passedStep("Family Member Doc is viewed in DocView");
 
-		
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description: This method for verification stamp complete navigate next documnet.
+	 * @Description: This method for verification stamp complete navigate next
+	 *               documnet.
 	 */
 	public void stampCompleteNavigateNextDocumumentVerification(String comment, String fieldText, String colour) {
 		try {
@@ -16572,56 +16583,131 @@ public class DocViewPage {
 			} else {
 				base.stepInfo("cursor not navigated");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying weather cursor navigated to next documnet "+e.getLocalizedMessage());
+			base.failedStep("Exception occured while verifying weather cursor navigated to next documnet "
+					+ e.getLocalizedMessage());
 		}
 	}
+
 	/**
 	 * @author Gopinath
 	 * @Description: This method for select row from mini doc list from doc view.
-	 * @param rowNumber : rowNumber is integer value that row number need to select from mini doc list.
+	 * @param rowNumber : rowNumber is integer value that row number need to select
+	 *                  from mini doc list.
 	 */
 	public void selectRowFromMiniDocList(int rowNumber) {
 		try {
 			base.waitForElement(getDocView_MiniDocListIds(rowNumber));
 			getDocView_MiniDocListIds(rowNumber).isElementAvailable(10);
 			getDocView_MiniDocListIds(rowNumber).waitAndClick(6);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while select row from mini doc list from doc view. "+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while select row from mini doc list from doc view. " + e.getLocalizedMessage());
 		}
 	}
-	
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description: This method for verify image tab is enabled if folder is added.
-	 * @param rowNumber : rowNumber is integer value that row number need to select from mini doc list.
+	 * @param rowNumber  : rowNumber is integer value that row number need to select
+	 *                   from mini doc list.
 	 * @param folderName : folderName is String value that name of folder to create.
 	 */
-	public void verifyImageEnabledAfterCreatedFolder(String folderName,int rowNumber) {
+	public void verifyImageEnabledAfterCreatedFolder(String folderName, int rowNumber) {
 		try {
 			driver.scrollPageToTop();
 			getDocViewSelectedDocId().isElementAvailable(10);
-			String DocIdBefore =  getDocViewSelectedDocId().getText();//get the document id before creating the folder
+			String DocIdBefore = getDocViewSelectedDocId().getText();// get the document id before creating the folder
 			driver.scrollPageToTop();
 			getselectDocInImageTab().isElementAvailable(10);
 			getselectDocInImageTab().waitAndClick(5);
 			performFolderAction(folderName, rowNumber);
 			driver.scrollPageToTop();
 			getDocViewSelectedDocId().isElementAvailable(10);
-			String DocIdAfter = getDocViewSelectedDocId().getText();//Get the document id after created the folder
+			String DocIdAfter = getDocViewSelectedDocId().getText();// Get the document id after created the folder
 			getselectDocInImageTab().isElementAvailable(10);
-			if(getselectDocInImageTab().Enabled() && DocIdBefore.equals(DocIdAfter)) {
-				base.passedStep("Image tab retained for the loaded document after creating folder for selectded document");
-			    System.out.println("Image tab retained for the loaded document after creating folder for seleded document");
-			}else {
-				base.failedStep("Image tab Abandoned the loaded document after created the folder for selected documents");
+			if (getselectDocInImageTab().Enabled() && DocIdBefore.equals(DocIdAfter)) {
+				base.passedStep(
+						"Image tab retained for the loaded document after creating folder for selectded document");
+				System.out.println(
+						"Image tab retained for the loaded document after creating folder for seleded document");
+			} else {
+				base.failedStep(
+						"Image tab Abandoned the loaded document after created the folder for selected documents");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while select row from mini doc list from doc view. "+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while select row from mini doc list from doc view. " + e.getLocalizedMessage());
 		}
+	}
+
+	/**
+	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
+	 * @description to verify 'View in Doclist' is not visible in Conceptual Tab
+	 */
+	public void performConceptualViewInDocView() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_liDocumentConceptualSimilarab().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
+		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getViewInDocListAnalyticalDropDown());
+		getViewInDocListAnalyticalDropDown().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewPageTitle());
+
+		if (getDocViewPageTitle().Displayed()) {
+			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Conceptual View In Doc List page open successfully");
+		} else {
+			base.failedStep("Selected document is not display in Conceptual View In Doc List page open successfully");
+		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
+	 * @description to verify 'View in Doclist' is not visible in ThreadMap Tab
+	 */
+	public void performThreadMapViewInDocList() {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 2; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDoclist());
+		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewPageTitle());
+
+		if (getDocViewPageTitle().Displayed()) {
+			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in ThreadMap View In Doc List page open successfully");
+		} else {
+			base.failedStep("Selected document is not display in ThreadMap View In Doc List page open successfully");
+		}
+
 	}
 }
