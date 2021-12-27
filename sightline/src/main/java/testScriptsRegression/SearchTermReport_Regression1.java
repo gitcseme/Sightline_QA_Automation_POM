@@ -21,13 +21,16 @@ import pageFactory.ABMReportPage;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.CommunicationExplorerPage;
+import pageFactory.CustomDocumentDataReport;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.SavedSearch;
 import pageFactory.SearchTermReportPage;
+import pageFactory.SecurityGroupsPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
+import pageFactory.TallyPage;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
@@ -38,6 +41,10 @@ public class SearchTermReport_Regression1 {
 	BaseClass bc;
 	String hitsCountPA;
 	String hitsCountRMU;
+	String hitsCountPA1;
+	String hitsCountPA2;
+	String hitsCountRMU1;
+	String hitsCountRMU2;
 	SearchTermReportPage st;
 	String saveSearchNamePA = "ST" + Utility.dynamicNameAppender();
 	String saveSearchNameRMU = "ST" + Utility.dynamicNameAppender();
@@ -48,6 +55,8 @@ public class SearchTermReport_Regression1 {
 	String[] savedSearchNamesPA= {saveSearchNamePA2,saveSearchNamePA1,saveSearchNamePA};
 	String[] savedSearchNamesRMU= {saveSearchNameRMU2,saveSearchNameRMU1,saveSearchNameRMU};
 	String[] searchData= {"test","comments","null"};
+	String[] Hits= {hitsCountPA1,hitsCountPA2,hitsCountPA};
+	String[] HitsRMU= {hitsCountRMU1,hitsCountRMU2,hitsCountRMU};
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
@@ -67,21 +76,17 @@ public class SearchTermReport_Regression1 {
 		for(int i=0;i<savedSearchNamesPA.length;i++) {
 			search.basicContentSearch(searchData[i]);
 			search.saveSearch(savedSearchNamesPA[i]);
-			if(i==2) {hitsCountPA = search.verifyPureHitsCount();}
-			else {
-				bc.selectproject();
+			Hits[i] = search.verifyPureHitsCount();	
+			if(i!=2) {bc.selectproject();}
 			}
-		}
 		lp.logout();
 		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		// Search and save it
 		for(int i=0;i<savedSearchNamesRMU.length;i++) {
 			search.basicContentSearch(searchData[i]);
 			search.saveSearch(savedSearchNamesRMU[i]);
-			if(i==2) {hitsCountRMU = search.verifyPureHitsCount();}
-			else {
-				bc.selectproject();
-			}
+			HitsRMU[i] = search.verifyPureHitsCount();	
+			if(i!=2) {bc.selectproject();}
 		}
 		lp.logout();
 		lp.quitBrowser();   
@@ -395,6 +400,125 @@ public class SearchTermReport_Regression1 {
 		st.verifySearchInReportsTable(savedSearchNamesRMU);
 		}
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =10, enabled = true)
+	public void  VerifyUniqueHits(String username, String password, String role) throws InterruptedException {
+		bc.stepInfo("Test case Id: RPMXCON-56584");
+		bc.stepInfo("Search Term Report - Validate Unique Hits column value.");
+		st = new SearchTermReportPage(driver);
+		lp = new LoginPage(driver);
+		lp.loginToSightLine(username, password);
+		bc.stepInfo("Logged in as -" + role);
+		String[] savedSearchPA= {saveSearchNamePA1,saveSearchNamePA2};
+		String[] savedSearchRMU= {saveSearchNameRMU1,saveSearchNameRMU2};
+		String[] HitsPA1= {hitsCountPA1,hitsCountPA};
+		String[] HitsRMU1= {hitsCountRMU1,hitsCountRMU};
+		SessionSearch ss=new SessionSearch(driver);
+		ss.basicContentSearchUsingOperator(Input.searchString1, "NOT", Input.searchString2);
+		String expectedPureHit1 = ss.verifyPureHitsCount();
+		bc.stepInfo("Pure Hits count if Configured query 'test' 'NOT' 'Comments'"+expectedPureHit1);
+		bc.selectproject();
+		ss.basicContentSearchUsingOperator(Input.searchString2, "NOT", Input.searchString1);
+		String expectedPureHit2 = ss.verifyPureHitsCount();
+		bc.stepInfo("Pure Hits count if Configured query 'Comments''NOT' 'test' in basic search page "+expectedPureHit2);
+		bc.stepInfo("Pure hit count after WP saved search is " + expectedPureHit2);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		if(role=="PA") {
+	    st.GenerateReportWithAllSearches(savedSearchPA);
+	    SoftAssert SoftAssertion =new SoftAssert();
+	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA1) ,expectedPureHit2);
+	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNamePA2),expectedPureHit1);
+		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA1+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA1));
+		bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNamePA2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNamePA2));
+		SoftAssertion.assertAll();
+		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+		}
+		if(role=="RMU") {
+		st.GenerateReportWithAllSearches(savedSearchRMU);
+		SoftAssert SoftAssertion =new SoftAssert();
+		SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU1) ,expectedPureHit2);
+	    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", saveSearchNameRMU2),expectedPureHit1);
+	    bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNameRMU1+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU1));
+	    bc.stepInfo("The unique Hits Count for saved saerch "+saveSearchNameRMU2+"--"+st.getHitsValueFromRow("UNIQUE HITS",saveSearchNameRMU2));
+		SoftAssertion.assertAll();
+		bc.passedStep("Suceddfully verified the Unique Hits Column value in STR Page");
+		}
+		
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @throws InterruptedException
+	 */
+		@Test(groups = { "regression" }, priority = 11)
+		public void ValidateBulkRelease() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56499");
+			bc.stepInfo("To verify that Bulk action_Bulk Release is working on Search Term Report");
+			lp = new LoginPage(driver);
+			st = new SearchTermReportPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			lp.loginToSightLine(Input.pa1userName, Input.pa1password);
+			String securitygroupname = "STRSG" + Utility.dynamicNameAppender();
+			SecurityGroupsPage securityPage = new SecurityGroupsPage(driver);
+			driver.getWebDriver().get(Input.url + "SecurityGroups/SecurityGroups");
+			securityPage.AddSecurityGroup(securitygroupname);
+			bc.stepInfo("Added security group -"+securitygroupname);
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			String actualHitCount = st.GenerateReport(saveSearchNamePA);
+			bc.stepInfo("Report generated for selected search");
+			bc.stepInfo("sucessfully released Search term report docs to security group  -"+securitygroupname);
+			st.bulkRelease(securitygroupname);
+			SessionSearch search = new SessionSearch(driver);
+			search.switchToWorkproduct();
+			search.selectSecurityGinWPS(securitygroupname);
+			bc.stepInfo("Configured a search query with Security group-" + securitygroupname);
+			search.serarchWP();
+			String expectedCount = search.verifyPureHitsCount();
+			softAssertion.assertEquals(actualHitCount, expectedCount);
+			bc.stepInfo("Document Count associated to selected security group in search page is "+expectedCount);
+			//securityPage.deleteSecurityGroups(securitygroupname);
+			softAssertion.assertAll();
+			bc.passedStep("The Search term report docs released to Security group "+securitygroupname+" is reflected as expected");
+		}
+		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 12)
+		public void validateExportData(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56500");
+			bc.stepInfo("To verify that Action_Export Data is working on Search Term Report");
+			lp = new LoginPage(driver);
+			st = new SearchTermReportPage(driver);
+			SoftAssert softAssertion = new SoftAssert();
+			lp.loginToSightLine(username, password);
+			String saveSearchName = null;
+			bc.stepInfo("Logged in as -" + role);
+			if (role == "RMU") {
+				saveSearchName = saveSearchNameRMU;
+			}
+			if (role == "PA") {
+				saveSearchName = saveSearchNamePA;
+			}
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			st.GenerateReport(saveSearchName);
+			bc.stepInfo("Report generated for selected search");
+			st.STR_ToExportData();
+			driver.waitForPageToBeReady();
+			String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+			CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+			cddr.selectMetaDataFields(metaDataFields1);
+			cddr.runReportandVerifyFileDownloaded();
+			softAssertion.assertAll();
+			bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
+		}
+
 
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
@@ -431,8 +555,8 @@ public class SearchTermReport_Regression1 {
 	@AfterClass(alwaysRun = true)
 	public void close() {
 		try {
-			Input in = new Input();
-			in.loadEnvConfig();
+			//Input in = new Input();
+			//in.loadEnvConfig();
 			driver = new Driver();
 			lp = new LoginPage(driver);
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);

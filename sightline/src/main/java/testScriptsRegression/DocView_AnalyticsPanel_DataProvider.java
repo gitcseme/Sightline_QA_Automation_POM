@@ -3,8 +3,10 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.support.Color;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.AfterClass;
@@ -104,7 +106,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 				  on document selection from Thread Map panel. 'RPMXCON-51229'
 	 */
 	
-	//@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 1)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 1)
 	public void removeCodeSameAsForThreadMapDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -148,7 +150,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewThreadedDocsInDocViews();
 			docViewPage.selectDocsFromThreadMapTabAndActionCodeSame();
-			docViewPage.selectDocsFromMiniDocsAndRemoveCodeAsSame();
+			docViewPage.selectDocsFromThreadMapTabAndActionRemoveCodeSameAs();
 		}
 
 		driver.waitForPageToBeReady();
@@ -161,14 +163,13 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * 				  on document selection from Conceptual panel 'RPMXCON-51230'
 	 */
 	
-	//@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 2)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 2)
 	public void removeCodeSameAsForConceputalDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
 		docViewPage = new DocViewPage(driver);
 		
 		baseClass.stepInfo("Test case Id: RPMXCON-51230");
-		String miniDocs = "Conceptually";
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
 		switch (impersonate) {
@@ -206,7 +207,6 @@ public class DocView_AnalyticsPanel_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewConceptualDocsInDocViews();
 		
-			docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(miniDocs);
 			docViewPage.selectDocsFromConceptualTabAndActionCodeSame();
 			docViewPage.selectDocsFromConceptualAndRemoveCodeAsSameForConceptTab();
 		}
@@ -222,7 +222,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * and selected document from doc history, previously selected Analytics Panel Tab must remain.'RPMXCON-51426' Sprint : 5
 	 * @throws InterruptedException 
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 3)
 	public void verifyAnalyticsTabAfterSelectingDocsFromHistoryIconInMiniDoclist(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -433,7 +433,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * on document selection from Family Members panel 'RPMXCON-51221'
 	 */
 	
-	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
+	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
 	public void removeCodeSameAsForFamilyMemberDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -647,7 +647,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
 	 */
-	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	@Test(enabled = false, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -708,7 +708,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 11)
+	@Test(enabled = false,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -803,7 +803,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = true,  groups = { "regression" }, priority = 12)
+	@Test(enabled = false,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -891,6 +891,153 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		}
 	
+	/**
+	 * @Author : Mohan date: 24/10/2021 Modified date: NA Modified by: Mohan
+	 * @Description : TTo verify Sys Admin/Project Admin/RMU after impersonating-
+	 *  Threaded Map tab when no documents to display. 'RPMXCON-50903'
+	 */
+	
+	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
+	public void verifyThreadedMapTabWhenNoDocsToDisplay(String roll,String userName, String password,String impersonate) throws InterruptedException {
+		loginPage = new LoginPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-50903");
+		baseClass.stepInfo("To verify Sys Admin/Project Admin/RMU after impersonating- Threaded Map tab when no documents to display");
+		
+		// Login as Reviewer Manager
+		loginPage.loginToSightLine(userName, password);
+		switch (impersonate) {
+		case "rmu":
+			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoRMU();
+			}
+			if (roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoRMU();
+			} 
+				
+		case "rev":
+			if (roll.equalsIgnoreCase("sa")&& impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateSAtoReviewer();
+			}
+			if (roll.equalsIgnoreCase("pa")&& impersonate.equalsIgnoreCase("rev")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonatePAtoReviewer();
+			} 
+			if (roll.equalsIgnoreCase("rmu")) {
+				driver.waitForPageToBeReady();
+				baseClass.impersonateRMUtoReviewer();
+			}
+		}
+		
+		if (roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rmu")
+				|| roll.equalsIgnoreCase("sa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rev")
+				|| roll.equalsIgnoreCase("pa") && impersonate.equalsIgnoreCase("rmu")||roll.equalsIgnoreCase("rmu")) {
+			driver.waitForPageToBeReady();
+			sessionSearch.basicContentSearch(Input.searchString1);
+			sessionSearch.ViewInDocViews();
+			docViewPage.verifyThreadMapWithNoDocs();
+		}
+
+		driver.waitForPageToBeReady();
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Mohan date: 24/12/21 NA Modified date: NA Modified by:NA
+	 * Description : Verify that Near dupe window to see the differences should open,
+	 *  on click of the icon from Analytics Panel > Near Dupe child window'RPMXCON-51709' Sprint : 9
+	 * @throws InterruptedException 
+	 */
+	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14)
+	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password) throws InterruptedException {
+		
+		loginPage = new LoginPage(driver);
+		miniDocListpage = new MiniDocListPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		docViewPage = new DocViewPage(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-51709");
+
+		baseClass.stepInfo(
+				"Verify that Near dupe window to see the differences should open, on click of the icon from Analytics Panel > Near Dupe child window");
+
+		// Login as a Admin
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		
+		String docToBeSelected = Input.threadData1;
+		baseClass.stepInfo("Step 2 : Search for documents to get the near dupe documents and drag the result to shopping cart, select action as View in Doc View");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewNearDupeDocumentsInDocView();
+		
+		baseClass.stepInfo("Step 3: View the document from mini doc list having near dupe documents");
+		driver.waitForPageToBeReady();
+		docViewPage.selectDocIdInMiniDocList(docToBeSelected);
+		
+		baseClass.stepInfo("Step 4: Click the gear icon to pop out the panels and pop out the analytics panel");
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		docViewPage.popOutAnalyticsPanel();
+		
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+		
+		baseClass.stepInfo("Step 5 : From Analytics panel child window > Near Dupe click the icon to open the near dupe comparison window");
+		
+		
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+		
+		baseClass.waitForElement(docViewPage.getDocView_Analytics_NearDupeTab());
+		docViewPage.getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		docViewPage.getDocView_NearDupeIcon().waitAndClick(10);
+
+		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
+			driver.switchTo().window(winHandle);
+			driver.waitForPageToBeReady();
+		}
+
+		
+			
+			for (int i = 1; i <=3; i++) {
+				if (docViewPage.getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+					System.out.println("Comparison Window is Ready to perform next steps");
+					break;
+				}
+				else {
+					driver.Navigate().refresh();
+				}
+			}
+				
+				
+				docViewPage.getDocView_NearDupe_DocID().WaitUntilPresent();
+				String docidinchildwinodw = docViewPage.getDocView_NearDupe_DocID().getText().toString();
+				System.out.println(docidinchildwinodw);
+				
+				String color = docViewPage.get_textHighlightedColor().getWebElement().getCssValue("fill");
+				String hex2 = Color.fromString(color).asHex();
+				System.out.println(hex2);
+				baseClass.passedStep("Near Dupe comparison window is opened and the differences highlighted on the near dupe comparison window");
+				
+				driver.getWebDriver().close();
+				driver.switchTo().window(parentWindowID);
+				
+			
+		
+		
+		loginPage.logout();
+	}
 	
 
 	@AfterMethod(alwaysRun = true)

@@ -135,8 +135,9 @@ public class BatchRedactionRegression {
 	 *          'Pre-Redaction Report' pop up for the saved search (RPMXCON-53452)
 	 * 
 	 */
-	 @Test(groups = { "regression" }, priority = 1)
+	 //@Test(groups = { "regression" }, priority = 1)
 	public void verifyBatchRedactNoPopup() throws InterruptedException {
+		
 
 		base.stepInfo("RPMXCON-53453,RPMXCON-53455,RPMXCON-53454  Batch Redaction");
 		driver.getWebDriver().get(Input.url + "Search/Searches");
@@ -193,7 +194,7 @@ public class BatchRedactionRegression {
 	 * 
 	 * 
 	 */
-	 @Test(groups = { "regression" }, priority = 3)
+	// @Test(groups = { "regression" }, priority = 3)
 	public void verifySearchRollback() throws InterruptedException {
 
 		base.stepInfo("Test case Id:RPMXCON-53469");
@@ -406,7 +407,7 @@ public class BatchRedactionRegression {
 	 *         history) shown in the doc in 2nd sec group.(RPMXCON-53425)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 10)
+	@Test(groups = { "regression" }, priority = 10)
 	public void verifyBatchRedactWithDiffAnnotationLAyer() throws InterruptedException {
 		String search_Name = "Searchname4" + Utility.dynamicNameAppender();
 		String securityGroup = "SG1" + Utility.dynamicNameAppender();
@@ -432,6 +433,7 @@ public class BatchRedactionRegression {
 
 		// Select Different Annotation Layer
 		security = new SecurityGroupsPage(driver);
+		security.navigateToSecurityGropusPageURL();
 		security.AddSecurityGroup(securityGroup);
 		session.basicContentSearch(Input.testData1);
 		session.bulkRelease(securityGroup);
@@ -550,7 +552,7 @@ public class BatchRedactionRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 13)
+	// @Test(groups = { "regression" }, priority = 13)
 	public void deleteRedactionAndVerifyCount() throws InterruptedException {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Test case Id:RPMXCON-53413 , Test case Id:RPMXCON-53468");
@@ -644,7 +646,7 @@ public class BatchRedactionRegression {
 	 * 
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 14)
+	// @Test(groups = { "regression" }, priority = 14)
 	public void BatchRedactionWithANDOperator() throws InterruptedException {
 		String search = "Name1" + Utility.dynamicNameAppender();
 
@@ -686,7 +688,7 @@ public class BatchRedactionRegression {
 	 *
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 15)
+	//@Test(groups = { "regression" }, priority = 15)
 	public void BatchRedactionWithOROperator() throws InterruptedException {
 		String search = "Name1" + Utility.dynamicNameAppender();
 
@@ -723,8 +725,9 @@ public class BatchRedactionRegression {
 	 */
 	@DataProvider(name = "reserveWords")
 	public Object[][] dataMethod() {
-		return new Object[][] { { "(\"##[a-z]{2}[0-9]{2}[a-z]{3}\")" }, { "\"##[a-z][0-9]{1,3}[a-z]{3}\"" },
-				{ "\"##[a-z]{3}[0-9]{1,3}[a-z]\"" },
+		return new Object[][] { //{ "(\"##[a-z]{2}[0-9]{2}[a-z]{3}\")" }, 
+			{ "\"##[a-z][0-9]{1,3}[a-z]{3}\"" },
+				//{ "\"##[a-z]{3}[0-9]{1,3}[a-z]\"" },
 //			{"\"##[0-9]{1,3} [a-z]{1,3}\""},
 //			{"\"##[a-z]{1,2} [0-9]{1,4}\""},
 //			{"\"##[a-z]{1,3} [0-9]{1,3}\""},
@@ -732,7 +735,7 @@ public class BatchRedactionRegression {
 		};
 	}
 
-	 @Test(dataProvider = "reserveWords", groups = { "regression" }, priority =16)
+	// @Test(dataProvider = "reserveWords", groups = { "regression" }, priority =16)
 	public void BatchRedactionWithUKRegPlates(String data) throws InterruptedException {
 		String search = "Name1" + Utility.dynamicNameAppender();
 
@@ -752,7 +755,8 @@ public class BatchRedactionRegression {
 		batch.getPopupYesBtn().Click();
 		base.stepInfo("Clicked Yes Button");
 		// verify History status
-		batch.verifyHistoryStatus2(search, purehit);
+		//batch.verifyHistoryStatus2(search, purehit);
+		batch.verifyBatchHistoryStatus(search);
 		login.logout();
 	}
 
@@ -762,7 +766,7 @@ public class BatchRedactionRegression {
 	 *         and not in Native/PDF/Viewer file(RPMXCON-53423)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 17)
+	// @Test(groups = { "regression" }, priority = 17)
 	public void BatchRedactionWithMetaData() throws InterruptedException {
 		String search = "Name3" + Utility.dynamicNameAppender();
 
@@ -794,7 +798,7 @@ public class BatchRedactionRegression {
 	 *         successful(RPMXCON-53412)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 18)
+	// @Test(groups = { "regression" }, priority = 18)
 	public void BatchRedactionForSuccessRollBack() throws InterruptedException {
 		String str1 = "Name3" + Utility.dynamicNameAppender();
 		String tagName = "TAG" + Utility.dynamicNameAppender();
@@ -852,7 +856,7 @@ public class BatchRedactionRegression {
 	 *         redactions from doc view(RPMXCON-53410)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 19)
+	// @Test(groups = { "regression" }, priority = 19)
 	public void docViewAddRedactionAndDelete() throws InterruptedException {
 		String search = "Search" + Utility.dynamicNameAppender();
 		String tagName = "Tag" + Utility.dynamicNameAppender();
@@ -893,7 +897,7 @@ public class BatchRedactionRegression {
 	 *         batch redactions/batch redaction component(RPMXCON-53409)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 20)
+	// @Test(groups = { "regression" }, priority = 20)
 	public void verifyDocviewHistory() throws InterruptedException {
 		DocViewMetaDataPage docviewMetadata = new DocViewMetaDataPage(driver);
 		String str = "check" + Utility.dynamicNameAppender();
@@ -989,7 +993,7 @@ public class BatchRedactionRegression {
 	 *         selected Saved search is with wildcard search(RPMXCON-53351)
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 21)
+	 ///@Test(groups = { "regression" }, priority = 21)
 	public void BatchRedactionWithWildCard() throws InterruptedException {
 		DocViewMetaDataPage docviewMetadata = new DocViewMetaDataPage(driver);
 		String search = "Name3" + Utility.dynamicNameAppender();
@@ -1042,7 +1046,7 @@ public class BatchRedactionRegression {
 	 *         page redactions over the same search terms
 	 * @throws Exception
 	 */
-	 @Test(groups = { "regression" }, priority = 22)
+	// @Test(groups = { "regression" }, priority = 22)
 	public void verifyDocviewRedactionPanel() throws Exception {
 		String search = "Search" + Utility.dynamicNameAppender();
 		String tagName = "TAG" + Utility.dynamicNameAppender();
@@ -1102,7 +1106,7 @@ public class BatchRedactionRegression {
 	 *         Metadata should not be displayed on DAT(RPMXCON-53460 )
 	 * @throws InterruptedException
 	 */
-	 @Test(dataProvider = "Users", groups = { "regression" }, priority = 23)
+	// @Test(dataProvider = "Users", groups = { "regression" }, priority = 23)
 	public void verifyAnnotationLayer(String username, String password) throws InterruptedException {
 		tagname = "Tag" + Utility.dynamicNameAppender();
 		String productionname = "P" + Utility.dynamicNameAppender();
@@ -1117,6 +1121,7 @@ public class BatchRedactionRegression {
 
 		// create folder and tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		// search for the created folder and check the pure hit count
@@ -1156,7 +1161,7 @@ public class BatchRedactionRegression {
 	 *         specified(RPMXCON-53458 )
 	 * @throws InterruptedException
 	 */
-	 @Test(dataProvider = "Users", groups = { "regression" }, priority = 24)
+	// @Test(dataProvider = "Users", groups = { "regression" }, priority = 24)
 	public void verifyRedactionStyle(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -1170,6 +1175,7 @@ public class BatchRedactionRegression {
 
 		// create folder and tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		// search for the created folder and check the pure hit count
@@ -1206,7 +1212,7 @@ public class BatchRedactionRegression {
 	 *         redactions burned on the TIFFs(RPMXCON-53457 )
 	 * @throws InterruptedException
 	 */
-	 @Test(groups = { "regression" }, priority = 25)
+	// @Test(groups = { "regression" }, priority = 25)
 	public void verifyRedactionText() throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -1220,6 +1226,7 @@ public class BatchRedactionRegression {
 
 		// create folder and tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		// search for the created folder and check the pure hit count
@@ -1259,7 +1266,7 @@ public class BatchRedactionRegression {
 	 * @throws InterruptedException
 	 * @throws AWTException
 	 */
-	@Test(groups = { "regression" }, priority = 26)
+	//@Test(groups = { "regression" }, priority = 26)
 	public void verifyBatchReductionMenu() throws InterruptedException, AWTException {
 		String searchName = "Searchname3" + Utility.dynamicNameAppender();
 		String assignName = "assignName" + Utility.dynamicNameAppender();
@@ -1314,7 +1321,7 @@ public class BatchRedactionRegression {
 	 * @throws InterruptedException
 	 */
 
-	 @Test(dataProvider = "Users", groups = { "regression" }, priority = 27)
+	 //@Test(dataProvider = "Users", groups = { "regression" }, priority = 27)
 	public void verifyRedactionText2(String username, String password) throws InterruptedException {
 		String productionname = "P" + Utility.dynamicNameAppender();
 		String PrefixID = "A_" + Utility.dynamicNameAppender();
@@ -1326,6 +1333,7 @@ public class BatchRedactionRegression {
 
 		// create folder and tag
 		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.navigateToTagsAndFolderPage();
 		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
 
 		// search for the created folder and check the pure hit count
@@ -1380,7 +1388,7 @@ public class BatchRedactionRegression {
 	 *         tag(RPMXCON-53416)
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 28)
+	//@Test(groups = { "regression" }, priority = 28)
 	public void verifyHistoryWIthdifferentTAg() throws InterruptedException {
 		String search = "Search01" + Utility.dynamicNameAppender();
 		tagname = "Tag01" + Utility.dynamicNameAppender();
@@ -1446,7 +1454,7 @@ public class BatchRedactionRegression {
 	 *         different redaction tag(RPMXCON-53415)
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 29)
+	//@Test(groups = { "regression" }, priority = 29)
 	public void verifyHistoryWIthdifferentTag1() throws InterruptedException {
 		String search = "Search01" + Utility.dynamicNameAppender();
 		tagname = "Tag01" + Utility.dynamicNameAppender();
@@ -1505,7 +1513,7 @@ public class BatchRedactionRegression {
 	 *         same redaction tag(RPMXCON-53414)
 	 * @throws InterruptedException
 	 */
-	@Test(groups = { "regression" }, priority = 30)
+	//@Test(groups = { "regression" }, priority = 30)
 	public void verifyHistoryWithSameTag() throws InterruptedException {
 		String search = "Search01" + Utility.dynamicNameAppender();
 		tagname = "Tag01" + Utility.dynamicNameAppender();
@@ -1563,7 +1571,7 @@ public class BatchRedactionRegression {
 	 * with shared redaction tags, then on doc view no redaction info (coordinates,
 	 * tags and history) shown in the dupe (RPMXCON-53428)
 	 */
-	@Test(groups = { "regression" }, priority = 31)
+	//@Test(groups = { "regression" }, priority = 31)
 	public void verifyInDiffSG() throws InterruptedException {
 		String securityGroup = "SG0" + Utility.dynamicNameAppender();
 		String layer = "Layer00" + Utility.dynamicNameAppender();
@@ -1661,7 +1669,7 @@ public class BatchRedactionRegression {
 	 * with shared redaction tags, then on doc view should show redaction info
 	 * (RPMXCON-53473)
 	 */
-	@Test(groups = { "regression" }, priority = 32)
+	//@Test(groups = { "regression" }, priority = 32)
 	public void verifyRedactionWithExactDupes() throws InterruptedException {
 		String securityGroup = "SG0" + Utility.dynamicNameAppender();
 		String layer = "Default Annotation Layer";
@@ -1749,7 +1757,7 @@ public class BatchRedactionRegression {
  * Description : Verify that with two users under different security group with different annotation layer should execute batch redactions with saved search having same documents
 *                    (RPMXCON-53429)
  */
-	@Test(groups = { "regression" }, priority = 32)
+	//@Test(groups = { "regression" }, priority = 32)
 	public void verifyWithTwoUser() throws InterruptedException {
 		String securityGroup = "SG0" + Utility.dynamicNameAppender();
 		String layer = "Layer0"+Utility.dynamicNameAppender();
@@ -1885,5 +1893,6 @@ public class BatchRedactionRegression {
 			login.clearBrowserCache();
 		}
 	}
+
 
 }

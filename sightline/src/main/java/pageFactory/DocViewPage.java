@@ -1329,6 +1329,10 @@ public class DocViewPage {
 	public Element getDocView_Analytics_MetaDataPanel() {
 		return driver.FindElementById("divMetaTab");
 	}
+	
+	public Element getDocView_Analytics_FamilyMember_DocIdText(int rowno) {
+		return driver.FindElementByXPath("//*[@id='dtDocumentFamilyMembers']//td[" + rowno + "]");
+	}
 
 	// added by Aathith
 	public Element getMetaDataInputInDocView() {
@@ -1457,6 +1461,14 @@ public class DocViewPage {
 	}
 
 	// Added by Mohan
+	
+	public Element get_textHighlightedColor() {
+		return driver.FindElementByCssSelector("g:nth-child(2) > rect:nth-child(1)");
+	}
+	
+	public Element getDocView_NearDupeComparisonWindow_IgnoreButton() {
+		return driver.FindElementById("nearDupeIgnore1");
+	}
 	public Element getDocView_MiniDocListDocId(String text) {
 		return driver.FindElementByXPath("//th[text()='" + text + "']");
 	}
@@ -2272,7 +2284,22 @@ public class DocViewPage {
 	public Element getSecondDocIdOnMiniDocList() {
 		return driver.FindElementByXPath("//table[@id='SearchDataTable']//tr[2]//td[2]");
 	}
+	//Added by Aathith
+	public Element getlastDocinMiniDocView() {
+		return driver.FindElementByXPath("(//*[@id='SearchDataTable']//tr/td[2])[last()]");
+	}
+	public Element getbtnDeleteEditStamp() {
+		return driver.FindElementById("btnDeleteEditStamp");
+	}
+	public Element getEditStampGearIcon() {
+		return driver.FindElementByXPath("//a[@id='stampSettings']");
+	}
 
+	//Added by Vijaya.Rani
+	public Element get1stDocinMiniDoc_ChildDocs() {
+		return driver.FindElementByXPath("//*[@id=\"SearchDataTable\"]/tbody/tr[1]/td[2]");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -5998,34 +6025,22 @@ public class DocViewPage {
 	}
 
 	/**
-	 * @author Mohan 8/29/21 NA Modified date: NA Modified by:NA
+	 * @author Mohan 8/29/21 NA Modified date: 26/12/2021 Modified by: Mohan
 	 * @description to edit coding form and save
 	 */
 	public void editCodingFormSave() {
 
 		driver.waitForPageToBeReady();
-
-//		driver.WaitUntil((new Callable<Boolean>() {
-//
-//			public Boolean call() {
-//
-//				return getDocument_CommentsTextBox().Displayed() && getDocument_CommentsTextBox().Enabled();
-//			}
-//		}), Input.wait30);
-
-		base.waitForElement(getDocument_CommentsTextBox());
-
-		getDocument_CommentsTextBox().SendKeys("Editing and click save button");
-
-		driver.WaitUntil((new Callable<Boolean>() {
-
-			public Boolean call() {
-				return getCodingFormSaveBtn().Enabled() && getCodingFormSaveBtn().Visible();
-			}
-		}), Input.wait30);
-
 		driver.scrollPageToTop();
-
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().SendKeys("Editing and click save button");
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingFormSaveBtn());
 		getCodingFormSaveBtn().Click();
 
 		base.VerifySuccessMessage("Document saved successfully");
@@ -12137,16 +12152,9 @@ public class DocViewPage {
 
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
-			try {
-				if (getDocView_Analytics_Conceputal_ArrowMark().isDisplayed()) {
-					base.failedStep("ArrowDown icon is displayed for the selected docs ");
-				} else {
-					base.passedStep("ArrownDown icon is not displayed for the selected docs");
-				}
-			} catch (Exception e) {
-				base.passedStep("ArrownDown icon is not displayed for the selected docs");
-				UtilityLog.info("Verification failed due to " + e.getMessage());
-			}
+			softAssertion.assertFalse(getDocView_Analytics_Conceputal_ArrowMark().isElementAvailable(1));
+			softAssertion.assertAll();
+			base.passedStep("ArrownDown icon is not displayed for the selected docs");
 
 		} catch (Exception e) {
 			base.failedStep("Remove CodeAs Same icon is displayed for the selected docs");
@@ -12159,7 +12167,7 @@ public class DocViewPage {
 	public void verifyPanel() {
 		if (getDocView_RedactIcon().isElementPresent()) {
 			getDocView_RedactIcon().waitAndClick(10);
-			if (getDocView_RedactionPanel().isElementPresent()) {
+			if (getDocView_RedactionPanel().isElementAvailable(15)) {
 				base.stepInfo("Redaction Panel Is diplayed");
 				softAssertion.assertAll();
 			}
@@ -12744,15 +12752,13 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
 			// verify Code Same as Link
-			try {
-				if (getDocView_Analytics_FamilyMember_CodeSameLink().getWebElement().isDisplayed()) {
-					softAssertion.assertTrue(getDocView_Analytics_FamilyMember_CodeSameLink().Displayed());
-					base.failedStep("Selected Document is having code as same icon under Family Member tabss");
-				}
-			} catch (Exception e) {
-				base.passedStep(
-						"Code same icon is not displayed for the selected documents and documents from Family Member are unchecked successfull");
-			}
+			
+			driver.Navigate().refresh();
+			driver.switchTo().alert().accept();
+			base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(3));
+			softAssertion.assertTrue(geDocView_ThreadMap_ArrowDownIcon(3).isElementAvailable(1));
+			softAssertion.assertAll();
+			base.passedStep("CodeSame Icon is removed successfully");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -16144,7 +16150,7 @@ public class DocViewPage {
 		}
 
 		// delete stamp Color
-		// reusableDocView.deleteStampColour(lastIcons);
+	    reusableDocView.deleteStampColour(lastIcons);
 		driver.waitForPageToBeReady();
 
 	}
@@ -16278,5 +16284,255 @@ public class DocViewPage {
 			base.failedStep("Exception occured while verifying image tab is enabled." + e.getMessage());
 		}
 	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void markInCompletedDocEditableCheck() {
+		SoftAssert softAssertion = new SoftAssert();
+		driver.waitForPageToBeReady();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("enter document before");
+		String beforeText =getAddComment1().getText();
+		getAddComment1().Clear();
+		getAddComment1().SendKeys("after enter document");
+		String afterText =getAddComment1().getText();
+		driver.waitForPageToBeReady();
+		softAssertion.assertNotEquals(beforeText, afterText);
+		if (beforeText!=afterText) {
+			softAssertion.assertNotEquals(beforeText, afterText);
+			base.passedStep("InCompleted Document are Editable");
 
+		} else {
+			softAssertion.assertEquals(beforeText, afterText);
+			base.failedStep("InCompleted Document are not Editable");
+
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void codeSameAsLastDisplayCheck() {
+		base.waitForElement(getLastCodeIconWhitePencil());
+		boolean flag=getLastCodeIconWhitePencil().isDisplayed();
+		if(flag) {
+			System.out.println("code same as last code displayed");
+			base.passedStep("Code same as last code displayed");
+		}
+		else {
+			System.out.println("code same as last code is not displayed");
+			base.failedStep("Code same as last code is not displayed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void verifyThatIsLastDoc() {
+		String expectText=getlastDocinMiniDocView().getText().trim();
+		System.out.println(expectText);
+		getDocView_Last().waitAndClick(5);
+		String actualText=getDocView_CurrentDocId().getText().trim();
+		System.out.println(actualText);
+		if(expectText.equalsIgnoreCase(actualText)) {
+			softAssertion.assertEquals(actualText, expectText);
+			System.out.println("assert are equal");
+			base.stepInfo("last document navigation navigate successfully");
+		}
+		else {
+			System.out.println("assert are not equal");
+			base.stepInfo("last doc navigation failed");
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void deleteBlueStamp() {
+		base.waitForElement(getEditStampGearIcon());
+		driver.scrollingToElementofAPage(getEditStampGearIcon());
+		getEditStampGearIcon().waitAndClick(5);
+		if(getEditStampGearIcon().Enabled()) {
+		base.waitForElement(getStampBlueColour());
+		getStampBlueColour().waitAndClick(5);
+		base.waitForElement(getbtnDeleteEditStamp());
+		getbtnDeleteEditStamp().waitAndClick(5);
+		}else {
+			base.waitForElement(getEditStampGearIcon());
+			getEditStampGearIcon().waitAndClick(5);
+			base.waitForElement(getStampBlueColour());
+			getStampBlueColour().waitAndClick(5);
+			base.waitForElement(getbtnDeleteEditStamp());
+			getbtnDeleteEditStamp().waitAndClick(5);
+		}
+		//base.VerifySuccessMessage("Coding stamp deleted successfully");
+	}
+
+	/**
+	 * @Author Vijaya.Rani Created on 22/12/2021
+	 * @Description To perform Click Gear Icon Check Child Window Symbol
+	 * 
+	 */
+	public void performGearIconChildWindowSymbol() {
+
+		driver.waitForPageToBeReady();
+		boolean flag = getDocView_ChildWindowPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep(" Analytical panel Child window displayed for parent window");
+		
+
+		boolean flag1 = getDocView_CodingFormPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Coding form Child window displayed for parent window");
+		
+
+		boolean flag2 = getDocView_MiniDocListPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("Mini Doc List Child window displayed for parent window");
+		
+
+		boolean flag3 = getDocView_MetaDataPopOut().isDisplayed();
+		softAssertion.assertTrue(flag);
+		base.passedStep("MetaData Child window displayed for parent window");
+		
+
+	}
+
+	/**
+	 * @author Vijaya.Rani date: 22/12/2021 Modified date: NA
+	 * @Description : this method used for verify tick mark in minidoclist child
+	 *              window 
+	 */
+
+	public void verifyCheckMarkIconFromMiniDocListChildWindow() {
+		driver.waitForPageToBeReady();
+	     driver.scrollPageToTop();
+	     try {
+
+				base.waitForElement(getverifyCodeSameAsLast());
+				if (getverifyCodeSameAsLast().Displayed()) {
+					softAssertion.assertTrue(getverifyCodeSameAsLast().getWebElement().isDisplayed());
+					base.passedStep("CheckMark is displayed successfully");
+				} else {
+					base.failedStep("CheckMark is not displayed");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Check mark is not verified");
+			}
+	     
+	}
+	
+	/**
+	 * @author Vijaya.Rani 23/12/21 NA Modified date: NA Modified by:NA
+	 * @description perform copmlete Doc Not hide Docs miniDocList
+	 */
+	public void verifyPrincipalDocNotHide() {
+
+		driver.waitForPageToBeReady();
+		for (int i = 1; i <= 1; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 2; i <= 2; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+		
+		driver.waitForPageToBeReady();
+		for (int i = 4; i <= 4; i++) {
+			base.waitForElement(getDocView_MiniDoc_SelectRow(i));
+			getDocView_MiniDoc_SelectRow(i).waitAndClick(10);
+
+		}
+		
+		driver.waitForPageToBeReady();
+		editCodingFormComplete();
+	}
+	/**
+	 * @Author Vijaya.Rani Created on 23/12/2021
+	 * @Description To perform CodeSame near dupe docs in the DocView Test Case id:
+	 *              RPMXCON-51072
+	 * 
+	 */
+	public void performCodeSameAsForNearDupeDocumentsThirdDocs() throws InterruptedException {
+
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+
+		for (int i = 3; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
+			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getCodeSameAsNearDupe());
+		getCodeSameAsNearDupe().waitAndClick(15);
+
+		base.VerifySuccessMessage("Code same performed successfully.");
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return geDocView_NearDupe_CodeSameAsIcon().Displayed();
+			}
+		}), Input.wait30);
+		softAssertion.assertEquals(geDocView_NearDupe_CodeSameAsIcon().isDisplayed().booleanValue(), true);
+
+		base.waitForElement(getNearDocumentWhichHasCodeSameIcon());
+		codeSameDocumentid = getNearDocumentWhichHasCodeSameIcon().getText();
+		softAssertion.assertAll();
+	}
+	
+	/**
+	 * @author Mohan.Venugopal Created Date: 26/12/2021
+	 * @description To select docs from Family member and action as View Document
+	 */
+	public void selectDocsFromFamilyMemberAndViewTheDocument() {
+		
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_FamilyTab());
+		getDocView_Analytics_FamilyTab().waitAndClick(10);
+
+		String text1 = getDocView_CurrentDocId().getText();
+		 
+		base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(1));
+		driver.getPageSource();
+		getDocView_Analytics_FamilyMember_DocCheckBox(1).waitAndClick(10);
+		
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		
+		base.waitForElement(getDocView_FamilyViewInDocView());
+		getDocView_FamilyViewInDocView().waitAndClick(3);
+		
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		
+		String text2 = getDocView_CurrentDocId().getText();
+		
+		softAssertion.assertNotEquals(text1, text2);
+		softAssertion.assertAll();
+		base.passedStep("Family Member Doc is viewed in DocView");
+
+		
+	}
 }

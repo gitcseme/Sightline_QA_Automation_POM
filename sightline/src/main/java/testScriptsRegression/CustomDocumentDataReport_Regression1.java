@@ -57,8 +57,8 @@ public class CustomDocumentDataReport_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		Input in = new Input();
-		in.loadEnvConfig();
+		// Input in = new Input();
+		// in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -89,7 +89,7 @@ public class CustomDocumentDataReport_Regression1 {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
+	 @Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void verifyAndValidateCustomDataReport(String username, String password, String role)
 			throws InterruptedException, ParseException, IOException {
 		String[] metaDataFields = { "CustodianName" };
@@ -256,6 +256,71 @@ public class CustomDocumentDataReport_Regression1 {
 
 	}
 
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 4)
+	public void verifyReportGeneration_ToggleON(String username, String password, String role)
+			throws InterruptedException, IOException {
+		String[] metaDataFields1 = { "CustodianName", "DocFileName", "AttachCount" };
+		String[] workproductFields = { "All Comments", "All Folders" };
+		bc.stepInfo("Test case Id: RPMXCON-56580");
+		bc.stepInfo("To verify Custom Document Data Report if ‘Export Object Names’ and if 'Scrub export"
+				+ " of special characters' option is toggled 'ON'");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		if (role == "PA") {
+			cddr.selectSourceAsSearch(saveSearchNamePA);
+		}
+		if (role == "RMU") {
+			cddr.selectSourceAsSearch(saveSearchNameRMU);
+		}
+		cddr.selectMetaDataFields(metaDataFields1);
+		cddr.selectDefaultWorkProductFields(workproductFields);
+		if (cddr.getToggle_ObjectName().isDisplayed() && cddr.getToggle_ScrubSpecChar().isDisplayed()) {
+			bc.passedStep(
+					"Export Object Names’ and 'Scrub export of special characters' toggle is displayed and  ‘ON’.");
+		} else {
+			bc.failedStep("Export Object Names’ and 'Scrub export of special characters' toggle is  not displayed.");
+		}
+		cddr.runReportandVerifyFileDownloaded();
+		bc.passedStep(
+				"Custom Document Data Report generated if ‘Export Object Names’ and if 'Scrub export of special characters' option is toggled 'ON'");
+
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param username
+	 * @param password
+	 * @param role
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+	public void verifyRowDisplay_metadataTab(String username, String password, String role)
+			throws InterruptedException, IOException {
+		String[] workproductFields = { "All Comments", "All Folders","All Tags","All Redaction Tags", };
+		bc.stepInfo("Test case Id: RPMXCON-56939");
+		bc.stepInfo("Verify Export page shows upto 14 rows default for available objects on All reports");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		CustomDocumentDataReport cddr = new CustomDocumentDataReport(driver);
+		driver.waitForPageToBeReady();
+		cddr.getCustomDocumentDataReport().Click();
+		driver.waitForPageToBeReady();
+		cddr.verifyMetaFieldDisplay();
+		cddr.validateWrkprductHeaders(workproductFields);
+	}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
@@ -303,7 +368,7 @@ public class CustomDocumentDataReport_Regression1 {
 			lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 			TagsAndFoldersPage tp = new TagsAndFoldersPage(driver);
 			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
-			tp.deleteAllTags("AAtag");
+			tp.deleteAllTags(tagName);
 			SavedSearch savedSearch = new SavedSearch(driver);
 			savedSearch.SaveSearchDelete(saveSearchNameRMU);
 			lp.logout();

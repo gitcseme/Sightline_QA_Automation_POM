@@ -141,6 +141,7 @@ public class Input {
 	public static String MetaDataId;
 	public static String documentToBeScrolled;
 	public static String conceptualDocument;
+	public static String conceptualDocs1;
 	public static String conceptualDocumentReviewer;
 	public static String threadDocId;
 	public static String principalDocId;
@@ -168,6 +169,11 @@ public class Input {
 	public static String historyClockIconDocId;
 	public static String newNearDupeDocId;
 	public static String warningDocId;
+	public static String threadData1;
+	public static String nearDupeBulkAssign;
+	public static String nearDupeBulkAssignId;
+	public static String nearDupeBlukAssignReviewer;
+	public static String nearDupeBulkAssignReviewId;
 
 	// DocView codingform Baskar Indium
 
@@ -545,6 +551,7 @@ public class Input {
 		MetaDataId = testData.getMetaDataId();
 		documentToBeScrolled = testData.getDocumentToBeScrolled();
 		conceptualDocument = testData.getConceptualDocument();
+		conceptualDocs1 =testData.getConceptualDocs1();
 		conceptualDocumentReviewer = testData.getConceptualDocumentReviewer();
 		familyDocument = testData.getFamilyDocument();
 		threadDocId = testData.getThreadDocId();
@@ -572,6 +579,11 @@ public class Input {
 		familyDocumentForReviewer = testData.getFamilyDocumentForReviewer();
 		historyClockIconDocId = testData.getHistoryClockIconDocId();
 		warningDocId=testData.getWarningDocId();
+		threadData1=testData.getThreadData1();
+		nearDupeBulkAssign=testData.getNearDupeBulkAssign();
+		nearDupeBulkAssignId=testData.getNearDupeBulkAssignId();
+		nearDupeBlukAssignReviewer=testData.getNearDupeBulkAssignReviewer();
+		nearDupeBulkAssignReviewId=testData.getNearDupeBulkAssignReviewId();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();

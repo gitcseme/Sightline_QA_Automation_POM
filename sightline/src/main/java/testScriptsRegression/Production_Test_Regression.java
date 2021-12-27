@@ -20,6 +20,7 @@ import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.ProjectFieldsPage;
 import pageFactory.RedactionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
@@ -36,6 +37,7 @@ public class Production_Test_Regression {
 	SessionSearch sessionSearch;
 	DocListPage docPage;
 	DocViewPage docViewPage;
+	ProjectFieldsPage projectField;
 	SoftAssert softAssertion;
 	String prefixID = "A_" + Utility.dynamicNameAppender();
 	String suffixID = "_P" + Utility.dynamicNameAppender();
@@ -1172,6 +1174,260 @@ public class Production_Test_Regression {
 	tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
 	
 }
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-56048
+	 * @Description: Verify that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View.
+	 */
+	@Test(groups = { "regression" }, priority = 20)
+	public void verifyExportinFilesStatusOnGridView() throws Exception {
+	UtilityLog.info(Input.prodPath);
+	base.stepInfo("RPMXCON-56048 -Production Sprint 08");
+	
+	String testData1 = Input.testData1;
+	foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+	// Pre-requisites
+	// create tag and folder
+	TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+	this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+	tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+	
+
+	// search for folder
+	SessionSearch sessionSearch = new SessionSearch(driver);
+	sessionSearch = new SessionSearch(driver);
+	sessionSearch.basicContentSearch(testData1);
+	sessionSearch.bulkFolderExisting(foldername);
+
+	//Verify archive status on Gen page
+	ProductionPage page = new ProductionPage(driver);
+	productionname = "p" + Utility.dynamicNameAppender();
+	page.selectingDefaultSecurityGroup();
+	page.addANewProduction(productionname);
+	page.fillingDATSection();
+	page.navigateToNextSection();
+	page.fillingNumberingAndSortingPage(prefixID, suffixID);
+	page.navigateToNextSection();
+	page.fillingDocumentSelectionPage(foldername);
+	page.navigateToNextSection();
+	page.fillingPrivGuardPage();
+	page.fillingProductionLocationPage(productionname);
+	page.navigateToNextSection();
+	page.fillingSummaryAndPreview();
+	page.getbtnProductionGenerate().waitAndClick(10);
+	
+	// Go To Production Home Page
+		this.driver.getWebDriver().get(Input.url + "Production/Home");
+		driver.Navigate().refresh();
+		driver.waitForPageToBeReady();
+		page.getGridView().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		page.verifyProductionStatusInHomePageGridView("Exporting Files ", productionname);
+		base.passedStep("Verified that after LST generation, if Destination Copy is in progress, it will displays status as 'Exporting Files' on Production Grid View");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-50017
+	 * @Description: Verify if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..
+	 */
+	@Test(groups = { "regression" }, priority = 21)
+	public void verifyAllProductionBatesRangesSearchable() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50017 -Production Sprint 09");
+		
+		ProjectFieldsPage projectField=new ProjectFieldsPage(driver);
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+	
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		sessionSearch.getBasicSearch_MetadataBtn().waitAndClick(5);
+		sessionSearch.getSelectMetaData().waitAndClick(5);
+		boolean flag=sessionSearch.getAllProductionBatesRanges().isDisplayed();
+		SoftAssert softAssertion= new SoftAssert();
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("'AllProductionBatesRanges' field is Available in Dropdown");
+		}else {
+			base.failedStep("'AllProductionBatesRanges' field is not Available in Dropdown");
+		
+		}
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+		base.passedStep("Verified if currently 'AllProductionBatesRanges' is searchable, then we should leave the field to be searchable..");
+		
+	}
+	/**
+	 * @author Aathith Senthilkumar created on:NA modified by:NA TESTCASE
+	 *         No:RPMXCON-50018
+	 * @Description: Verify if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again
+	 */
+	@Test(groups = { "regression" }, priority = 22)
+	public void verifyAllProductionBatesRangesNotSearchable() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-50018 -Production Sprint 09");
+		
+		ProjectFieldsPage projectField=new ProjectFieldsPage(driver);
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.enableIsSearchableBatesRangeIsSelected();
+	
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		this.driver.getWebDriver().get(Input.url + "Search/Searches");
+		driver.waitForPageToBeReady();
+		sessionSearch.getBasicSearch_MetadataBtn().waitAndClick(5);
+		sessionSearch.getSelectMetaData().waitAndClick(5);
+		boolean flag=sessionSearch.getAllProductionBatesRanges().isDisplayed();
+		SoftAssert softAssertion= new SoftAssert();
+		if(flag) {
+			softAssertion.assertTrue(flag);
+			base.passedStep("'AllProductionBatesRanges' field is Available in Dropdown");
+		}else {
+			base.failedStep("'AllProductionBatesRanges' field is not Available in Dropdown");
+		
+		}
+		projectField.navigateToProjectFieldsPage();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.disableIsSearchableBatesRangeIsSelected();
+		projectField.getAllProductionBatesRanges().waitAndClick(5);
+		projectField.disableIsSearchableBatesRangeIsSelected();
+		base.passedStep("Verified if in existing project, 'AllProductionBatesRange' field is searchable and if  this field has been edited and is make it non-searchable, then this field cannot make as searchable again");
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			49099
+	 * @Description In production, Preview should displays correctly
+	 * 
+	 */
+		@Test(groups = { "regression" }, priority = 23)
+		public void verifyPreviewInProduction() throws Exception {
+		UtilityLog.info(Input.prodPath);
+		base.stepInfo("RPMXCON-49099 -Production Sprint 09");
+		
+		String testData1 = Input.testData1;
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+		tagname = "Tag" + Utility.dynamicNameAppender();
+		String tagNameTechnical = Input.tagNameTechnical;
+
+		// Pre-requisites
+		// create tag and folder
+		TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+		tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+		// search for folder
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		//Verify 
+		ProductionPage page = new ProductionPage(driver);
+		productionname = "p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		page.fillingTIFFSection(tagname,tagNameTechnical);
+		page.navigateToNextSection();
+		page.fillingNumberingAndSortingPage(prefixID, suffixID);
+		page.navigateToNextSection();
+		page.fillingDocumentSelectionPage(foldername);
+		page.navigateToNextSection();
+		page.fillingPrivGuardPage();
+		page.fillingProductionLocationPage(productionname);
+		page.navigateToNextSection();
+		page.getPreviewprod().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.passedStep("In production, Preview should displays correctly");
+		
+		//delete tags and folders
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+		
+	 }
+		/**
+		 * @author Aathith.Senthilkumar
+		 * 			49104
+		 * @Description To verify that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.
+		 * 
+		 */
+			@Test(groups = { "regression" }, priority = 24)
+			public void verifyDatFieldsAreExport() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-49104 -Production Sprint 09");
+			
+			String testData1 = Input.testData1;
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			//String tagNameTechnical = Input.tagNameTechnical;
+			String newExport = "Ex" + Utility.dynamicNameAppender();
+
+			// Pre-requisites
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			//tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+			// search for folder
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			//Verify 
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			String text = page.getProdExport_ProductionSets().getText();
+			if (text.contains("Export Set")) {
+				page.selectExportSetFromDropDown();
+			} else {
+				page.createNewExport(newExport);
+			}
+			page.addANewExport(productionname);
+			page.fillingDATSection();
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(1, "Email", "EmailAuthorNameAndAddress");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(2, "Email", "EmailToNamesAndAddresses");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(3, "Email", "EmailCCNamesAndAddresses");
+			page.getDAT_AddField().waitAndClick(5);
+			page.addDatField(4, "Email", "EmailBCCNamesAndAddresses");
+			
+	
+			page.navigateToNextSection();
+			page.fillingExportNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingExportLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopupWithoutCommit();
+			
+			base.passedStep("Verified that EmailAuthorNameAndAddress, EmailToNamesAndAddresses, EmailCCNamesAndAddresses, and EmailBCCNamesAndAddresses fields are exported properly in the correct format in the Production, DAT.");
+			//delete tags and folders
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+			
+		 }
 	
 	
 	@AfterMethod(alwaysRun = true)

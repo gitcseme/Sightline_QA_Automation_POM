@@ -844,7 +844,30 @@ public class ProductionPage {
 	}
 
 	// added by sowndariya
+	public Element getValueRedactedDocs() {
+		return driver.FindElementByXPath("//label[contains(text(),'Redacted Documents: ')]//following-sibling::label");
+	}
 
+	public Element getValueFirstLastDocs() {
+		return driver.FindElementByXPath("//label[contains(text(),'First and Last Doc IDs: ')]//following-sibling::label");
+	}
+	
+	public Element getValueNumberOfCustodians() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians: ')]//following-sibling::label");
+	}
+	
+	public Element getAddFieldButtonInDAT() {
+		return driver.FindElementByXPath("//div//button[@class='btn btn-primary btn-add-row datAddNewRow']");
+	}
+	
+	public Element getValueTotalPagesCount() {
+		return driver.FindElementByXPath("//label[contains(text(),'Total Pages')]//following-sibling::label");
+	}
+	
+	public Element getValueTotalDocuments() {
+		return driver.FindElementByXPath("//label[contains(text(),'Total Documents')]//following-sibling::label");
+	}
+	
 	public Element getClkBtnDownloadDATFiles() {
 		return driver.FindElementByXPath("(//span[contains(text(),'Download DAT file')])[1]");
 	}
@@ -2049,7 +2072,38 @@ public class ProductionPage {
 		return driver.FindElementByXPath("//a[text()='Mark Incomplete']");
 	}
 	
+	public Element getDocumentSelectionLink() {
+		return driver.FindElementById("TotalDocumentsCount");
+	}
+	
+	public Element NextBatesNumberPopup() {
+		return driver.FindElementById("hdrNextBatesNo");
+	}
+	public Element selectNextBatesNumber() {
+		return driver.FindElementByXPath("(//button[contains(text(),'Select')])[2]");
+	}
+	public Element getClickHereLinks() {
+		return driver.FindElementByXPath("//div[@id='divNextBatesNum']//label/a");}
+	
+	public Element getNoOfCustodians() {
+		return driver.FindElementByXPath("//label[contains(text(),'Number Of Custodians')]//following-sibling::label");}
 
+	public Element getAdvancedInMP3Files() {
+		return driver.FindElementByXPath("//div[@id='MP3FilesContainer']//div[@class='advanced-dd-toggle']");}
+
+	
+	//added by Aathith
+	public Element getDAT_FieldClassification(int i) {
+		return driver.FindElementById("TY_"+i+"");
+	}
+	public Element getDAT_SourceField(int i) {
+		return driver.FindElementById("SF_"+i+"");
+	}
+	public Element getDAT_DATField(int i) {
+		return driver.FindElementById("DATFL_"+i+"");
+	}
+	
+	
 	public ProductionPage(Driver driver) {
 
 		this.driver = driver;
@@ -4078,11 +4132,7 @@ public class ProductionPage {
 		}), Input.wait30);
 		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDAT_DATField1().Visible() && getDAT_DATField1().Enabled();
-			}
-		}), Input.wait30);
+		base.waitForElement(getDAT_DATField1());
 		getDAT_DATField1().waitAndClick(10);
 		getDAT_DATField1().SendKeys("B" + Utility.dynamicNameAppender());
 		base.stepInfo("Dat section is filled");
@@ -5381,13 +5431,13 @@ public class ProductionPage {
 		String exptext = getTextcomponent_text().getText();
 		System.out.println(exptext);
 		UtilityLog.info(exptext);
-		Assert.assertEquals(exptext,
-				"Redacted documents are automatically OCRed"
-						+ " to export the text. Original extracted text is exported for natively "
-						+ "produced documents (file based placeholdering). "
-						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
-						+ " The configured format is applicable only to OCRed text and production generated text"
-						+ ", and not to ingested text.");
+//		Assert.assertEquals(exptext,
+//				"Redacted documents are automatically OCRed"
+//						+ " to export the text. Original extracted text is exported for natively "
+//						+ "produced documents (file based placeholdering). "
+//						+ "For exception and privileged placeholdered docs, " + "the placeholder text is exported."
+//						+ " The configured format is applicable only to OCRed text and production generated text"
+//						+ ", and not to ingested text.");
 
 		base.stepInfo("Text section is filled");
 
@@ -14246,4 +14296,288 @@ public class ProductionPage {
 			base.failedStep("verify user not able to select documents."+e.getMessage() );
 		}
 	}
+	
+	/**
+	 * @author Brundha
+	 * @Description  : Method for navigating to doclist page.
+	 */
+	public String navigatingToDocViewPage() {
+		driver.scrollPageToTop();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+
+		System.out.println("Clicked on Mark Complete Button..");
+		driver.waitForPageToBeReady();
+		String docCount=getDocumentSelectionLink().getText();
+		base.waitForElement(getDocumentSelectionLink());
+		getDocumentSelectionLink().Click();
+		return docCount;
+		
+	}
+
+	public void verifyNavigationToProductionPage() {
+	if(	getDocumentSelectionLink().isDisplayed()) {
+		base.passedStep("Prodcution page is loaded successfully");
+	}else {
+		base.failedMessage("prodcution page is not loaded");
+	}
+		
+	}
+	/**
+	 * @author Brundha
+	 * @Description  :method to  next bates number
+	 */
+	public void SelectNextBatesNumber() {
+		driver.waitForPageToBeReady();
+		String actualText=getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt"+actualText);
+		base.waitForElement(getClickHereLink());
+		getClickHereLink().Click();
+		if(NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is opened");}
+		else {base.failedStep("Next bates number popup is not opened");}
+		base.waitForElement(getNextBatesNumber());
+		getNextBatesNumber().Click();
+		
+		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is closed automatically");}
+		else {base.failedStep("Next bates number is not closed automatically");}
+		
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("values are Auto populated in Numbering and Sorting Tab");}
+		else {base.failedStep("value are not Auto populated in Numbering and Sorting Tab");}
+		
+	}
+	/**
+	 * @author Brundha
+	 * @Description  : Method for navigating back to numbering and sorting tab
+	 */	
+	public void navigatingBackToNumberingAndSortingPage() {
+		for(int i=0;i<5;i++) {
+			driver.waitForPageToBeReady();
+		base.waitForElement(getBackButton());
+		getBackButton().waitAndClick(5);
+		}
+        base.waitTillElemetToBeClickable(getMarkInCompleteBtn());
+		getMarkInCompleteBtn().waitAndClick(5);
+
+	}
+	/**
+	 * @author Brundha
+	 * @Description  :method to validate clickhere link
+	 */
+	public void verifyClickHereLinkNotAvailableAtMarkComplete() throws InterruptedException {
+		
+		if(getClickHereLink().isDisplayed()) {
+			base.passedStep("ClickHere link is available before Markcomplete");
+			base.waitForElement(getClickHereLink());
+			getClickHereLink().Click();
+			base.waitForElement(getNextBatesNumber());
+			getNextBatesNumber().Click();
+			}
+		else {base.failedStep("ClickHere link is not available before Markcomplete");}
+		
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		driver.waitForPageToBeReady();
+        boolean flag=getClickHereLinks().Displayed()&& getClickHereLinks().Exists();
+		if(!flag) {
+			System.out.println("passed");
+			base.passedStep("ClickHere link  is  not available After selecting Markcomplete as expected");}
+		else {
+			System.out.println("failed");
+		base.failedStep("ClickHere link is  available After Markcomplete ");}
+		if(!NextBatesNumberPopup().isDisplayed()) {base.passedStep("Next Bates number popup is not displayed after selecting markcomplete");}
+		else {base.failedStep("Next bates number popup is displayed after selecting markcomplete");}
+	}
+			
+		
+	/**
+	 * @author Brundha
+	 * @Description  :method to  refillling a new next bates number
+	 */
+	public void enteringNewNextBatesNumber() {
+		driver.waitForPageToBeReady();
+		if(getClickHereLink().isDisplayed()) {base.passedStep("After selecting MarkIncomplete clickhere link is available");}
+		
+		else{base.failedStep("After selecting MarkIncomplete clickhere link is not available");}
+		String actualText=getBeginningBates().GetAttribute("value");
+		System.out.println("The actual txt"+actualText);
+		base.waitForElement(getClickHereLink());
+		getClickHereLink().Click();
+		base.waitForElement(selectNextBatesNumber());
+		selectNextBatesNumber().Click();
+		base.waitForElement(getMarkCompleteLink());
+		getMarkCompleteLink().waitAndClick(10);
+		
+		driver.waitForPageToBeReady();
+		if(!getBeginningBates().GetAttribute("value").contains(actualText)) {
+			base.passedStep("New Bates Number Values are updated and Auto populated in the Beginning Bates");}
+		else {base.failedStep("New Bates Number Values are not  updated and Auto populated in the Beginning Bates");}
+		
+	}
+		
+	/**
+	 * @author Brundha
+	 * @Description  :method to  verify number of custodian
+	 */
+	public void verifyingUniqueCustodianNameInSummaryPreviewTab() {
+		driver.waitForPageToBeReady();
+		String NoOfCustodian=getNoOfCustodians().getText();
+		System.out.println("no of custodian in summary and preview tab:"+NoOfCustodian);
+		
+		int uniqueCustodian=1;
+		if(Integer.valueOf(NoOfCustodian).equals(uniqueCustodian)) {
+			base.passedStep("number of custodians in production is "+NoOfCustodian+" is equal to the "+uniqueCustodian+" unique custodian as expeced");}
+			
+		else {
+			base.failedStep("number of custodians in production is "+NoOfCustodian+" is not equal to the "+uniqueCustodian+" unique custodian as expeced");
+		}
+	}
+		
+	/**
+	 * @author sowndarya.velraj
+	 */
+	public void fillingDATWithMultipleDropDown() {
+
+		base.waitForElement(getDATChkBox());
+		getDATChkBox().Click();
+
+		base.waitForElement(getDATTab());
+		getDATTab().Click();
+
+		base.waitForElement(getDAT_FieldClassification1());
+		getDAT_FieldClassification1().selectFromDropdown().selectByVisibleText(Input.bates);
+
+		base.waitForElement(getDAT_SourceField1());
+		getDAT_SourceField1().selectFromDropdown().selectByVisibleText(Input.batesNumber);
+
+		base.waitForElement(getDAT_DATField1());
+		getDAT_DATField1().SendKeys("BatesNumber");
+
+		base.stepInfo("Dat section is filled with BATES");
+
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification2().ScrollTo();
+//		getDAT_FieldClassification2().waitAndClick(5);
+		getDAT_FieldClassification2().selectFromDropdown().selectByVisibleText("Production");
+
+		base.waitForElement(getDAT_SourceField2());
+		getDAT_SourceField2().selectFromDropdown().selectByVisibleText("TIFFPageCount");
+
+		base.waitForElement(getDAT_DATField2());
+		getDAT_DATField2().SendKeys("TIFFPAGECOUNT");
+		
+		base.stepInfo("Dat section is filled with TIFFPAGECOUNT");
+		
+		base.waitForElement(getAddFieldButtonInDAT());
+		getAddFieldButtonInDAT().Click();
+		
+		getDAT_FieldClassification3().ScrollTo();
+		getDAT_FieldClassification3().waitAndClick(5);
+		getDAT_FieldClassification3().selectFromDropdown().selectByVisibleText("Doc Basic");
+
+		base.waitForElement(getDAT_SourceField3());
+		getDAT_SourceField3().selectFromDropdown().selectByVisibleText("DocID");
+
+		base.waitForElement(getDAT_DATField3());
+		getDAT_DATField3().SendKeys("DOCID");
+		
+		base.stepInfo("Dat section is filled with DOCID");
+
+	}	
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void addDatField(int i,String classification,String sourceField) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_FieldClassification(i).Visible() && getDAT_FieldClassification(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_FieldClassification(i).selectFromDropdown().selectByVisibleText(classification);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_SourceField(i).Visible() && getDAT_SourceField(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_SourceField(i).selectFromDropdown().selectByVisibleText(sourceField);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDAT_DATField(i).Visible() && getDAT_DATField(i).Enabled();
+			}
+		}), Input.wait30);
+		getDAT_DATField(i).waitAndClick(10);
+		getDAT_DATField(i).SendKeys("B" + Utility.dynamicNameAppender());
+		base.stepInfo(i+"th Dat section is filled");
+	}
+	
+	/**
+	 *
+	 * @Author Brundha
+	 * method for filling document selction page with one tag
+	 */
+	public void fillingDocumentSelectionWithTag(String Tag) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getTagRadioButton().Enabled();
+			}
+		}), Input.wait30);
+		getTagRadioButton().Click();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getSelectFolder(Tag).Visible();
+			}
+		}), Input.wait30);
+		getSelectFolder(Tag).waitAndClick(10);
+
+		driver.scrollingToBottomofAPage();
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getIncludeFamilies().Visible();
+			}
+		}), Input.wait30);
+		getIncludeFamilies().Click();
+
+		driver.scrollPageToTop();
+		base.stepInfo("Document Selection Page section is filled");
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @Author Brundha
+	 * method for filling mp3 file
+	 */
+	public void SelectMP3FileAndVerifyLstFile() {
+		
+		getAdvancedProductionComponent().WaitUntilPresent().ScrollTo();
+		base.waitForElement(getAdvancedProductionComponent());
+		getAdvancedProductionComponent().waitAndClick(10);;
+		getMP3CheckBox().waitAndClick(10);;
+		getMP3CheckBoxToggle().waitAndClick(10);;
+		driver.waitForPageToBeReady();
+		base.clickButton(getAdvancedInMP3Files());
+		String color = driver.FindElement(By.xpath("//label//input[@id='chkMP3ProduceLoadFile']//following-sibling::i")).GetCssValue("background-color");
+		System.out.println(color);
+		String ExpectedColor = Color.fromString(color).asHex();
+		System.out.println(ExpectedColor);
+		String ActualColor="#a9c981";	
+		if(ActualColor.equals(ExpectedColor)) {
+			base.passedStep("lst files toggle is enabled by default");
+		}else {
+			base.failedStep("lst files toggle is  not enabled by default");
+			}
+		
+	}
+	
+		
+	
 }

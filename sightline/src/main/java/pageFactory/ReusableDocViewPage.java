@@ -950,7 +950,7 @@ public class ReusableDocViewPage {
 	base.waitForElement(getDocView__ChildWindow_Mini_RemoveCodeSameAs());
 	getDocView__ChildWindow_Mini_RemoveCodeSameAs().waitAndClick(5);
 	driver.waitForPageToBeReady();
-	if (geDocView_MiniList_CodeSameAsIcon().isElementPresent()) {
+	if (geDocView_MiniList_CodeSameAsIcon().isElementAvailable(5)) {
 		base.failedStep("Chain link displayed");
 	} else {
 		base.passedStep("Chain link not displayed after performing removecodesame as action");

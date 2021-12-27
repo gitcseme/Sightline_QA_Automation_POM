@@ -146,11 +146,28 @@ public class CustomDocumentDataReport {
 	public ElementCollection getSelectedFieldsList() {
 		return driver.FindElementsByXPath("//span[@class='itemFriendlyName']");
 	}
+	public Element getDefaultWorkproductCheckBox(String eleValue) {
+		return driver.FindElementByXPath("//*[@id='tab2-export']//div/ul/li/a[text()='"+eleValue+"']");
+	}
+	public Element getToggle_ObjectName() {
+		return driver.FindElementByXPath("//label//i[@id='exportObject']");
+	}
+	public Element getToggle_ScrubSpecChar() {
+		return driver.FindElementByXPath("//div[@id='divCcrubSpecialChar']//i");
+	}
+	public Element getMetaDataFields_withoutLabel(int i) {
+		return driver.FindElementByXPath("(//div[@id='tab1-export']/div/ul/li/label)["+i+"]");
+	}
+
+	public Element getWrkProductHeaders(String eleValue) {
+		return driver.FindElementByXPath("tree//a[text()='"+eleValue+"']/parent::li");
+	}
+	
 
 	public CustomDocumentDataReport(Driver driver) {
 
 		this.driver = driver;
-		this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+		//this.driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
 		bc = new BaseClass(driver);
 		softAssertion = new SoftAssert();
 
@@ -459,4 +476,55 @@ public class CustomDocumentDataReport {
 		actions.build().perform();
 
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param Wfields
+	 */
+	public void selectDefaultWorkProductFields(String[] Wfields) {
+		getWorkProductTab().Click();
+		for (int i = 0; i < Wfields.length; i++) {
+			driver.scrollingToBottomofAPage();
+			getDefaultWorkproductCheckBox(Wfields[i]).waitAndClick(5);
+		}
+		getAddToSelectedBtn().waitAndClick(2);
+		driver.scrollPageToTop();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * 
+	 */
+	
+	public void verifyMetaFieldDisplay() {
+		getMetadataTab().Click();
+		bc.stepInfo("Clicked on metadata Field tab");
+		for (int i = 1; i <=14; i++) {
+			if(getMetaDataFields_withoutLabel(i).isDisplayed()) {
+				softAssertion.assertTrue(true);
+				continue;
+				
+			}else {
+				softAssertion.assertTrue(false);
+				break;
+			}
+		}
+		softAssertion.assertAll();
+		bc.passedStep("Available objects rows under metadata tab displayed upto 14 rows by default. ");
+		
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param Wfields
+	 */
+	public void validateWrkprductHeaders(String[] Wfields) {
+		getWorkProductTab().Click();
+		bc.stepInfo("Clciked on workproduct Tab");
+		for (int i =0; i <Wfields.length; i++) {
+			String status=getWrkProductHeaders(Wfields[i]).GetAttribute("aria-expanded");
+			System.out.println(status);
+			softAssertion.assertEquals("true", status);
+		}
+		softAssertion.assertAll();
+		bc.passedStep("Available objects rows under workproduct tab displayed and expanded by default. ");
+	}
+
 }

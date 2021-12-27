@@ -4054,6 +4054,9 @@ public class DocView_CodingForm_Regression {
 
 	@Test(enabled = false, groups = { "regression" }, priority = 105)
 	public void allowReviewerstoCodedocsOutsrideReviewerbatch() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50961");
 		
 		baseClass.stepInfo("RMU can set the 'Allow reviewers to code docs outside reviewer's batch (but within assignment) ' on in an assignment");
@@ -4073,8 +4076,6 @@ public class DocView_CodingForm_Regression {
 		assignmentPage.allowReviewer();
 		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
 		assignmentPage.add2ReviewerAndDistribute();
-		//assignmentPage.editAssignment1(assignName);
-		//assignmentPage.allowReviewer();
 		driver.scrollPageToTop();
 		baseClass.waitTillElemetToBeClickable(assignmentPage.getAssignmentSaveButton());
 		assignmentPage.getAssignmentSaveButton().waitAndClick(10);
@@ -4090,6 +4091,9 @@ public class DocView_CodingForm_Regression {
 
 	@Test(enabled = false, groups = { "regression" }, priority = 106)
 	public void disableAllowReviewerstoCodedocsOutsrideReviewerbatchRmuImporsonateRve() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50964");
 		
 		baseClass.stepInfo("verify after impersonation user can complete the document outside reviewer batch on doc view when redirects from my assignment");
@@ -4135,6 +4139,9 @@ public class DocView_CodingForm_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 107)
 
 	public void enableAllowReviewerstoCodedocsOutsrideReviewerbatchINRmuRve() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50963");
 		
 		baseClass.stepInfo("Verify Reviewer can complete the document outside reviewer batch from analytics panel by selecting 'Code same as this' action when 'Allow coding outside reviewer batch' is on in an assignment");
@@ -4180,7 +4187,7 @@ public class DocView_CodingForm_Regression {
 		// perform code same as Conceptual Documents
 		docViewPage.performCodeSameForFamilyMembersDocumentsReviewer();
 
-				// Edit coding Form and complete Action
+		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
 		baseClass.VerifySuccessMessage("Document completed successfully");
 		baseClass.passedStep("Verified Reviewer can complete the document outside reviewer batch from analytics panel by selecting 'Code same as this' action when 'Allow coding outside reviewer batch' is on in an assignment");
@@ -4194,6 +4201,9 @@ public class DocView_CodingForm_Regression {
 
 	@Test(enabled = false, groups = { "regression" }, priority = 108)
 	public void verifyDocMarkCompletecodingFormNotEditable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50965");
 		
 		baseClass.stepInfo("verify for user document marked as completed in an assignment, custom coding form is not editable on doc view page");
@@ -4244,7 +4254,7 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 		
 
-				// Edit coding Form and complete Action
+		// Edit coding Form and complete Action
 		docViewPage.editCodingFormComplete();
 		baseClass.VerifySuccessMessage("Document completed successfully");
 		docViewPage.enableShowCompletedDoc();
@@ -4933,6 +4943,9 @@ public class DocView_CodingForm_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 122)
 
 	public void verifyDocNotMarkCompletecodingFormEditable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50966");
 		
 		baseClass.stepInfo("To verify for user document not marked as completed in an assignment, custom coding form is editable on doc view page");
@@ -4965,8 +4978,8 @@ public class DocView_CodingForm_Regression {
 		// perform code same as Conceptual Documents
 		
 		docViewPage = new DocViewPage(driver);
-		// Edit coding Form and complete Action
-		//docViewPage.markInCompletedDocEditableCheck();
+		// Editable check
+		docViewPage.markInCompletedDocEditableCheck();
 		
 		
 		loginPage.logout();	
@@ -4993,6 +5006,9 @@ public class DocView_CodingForm_Regression {
 	@Test(enabled = true, groups = { "regression" }, priority = 123)
 
 	public void verifyMarkCompletedDocumentNotEditable() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		assignmentPage=new AssignmentsPage(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-50968");
 		
 		baseClass.stepInfo("Verify after impersonation document marked as completed in an assignment, custom coding form is not editable on doc view page");
@@ -5022,7 +5038,6 @@ public class DocView_CodingForm_Regression {
 		assignmentPage.SelectAssignmentByReviewer(assignName);
 		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
 
-		// perform code same as Conceptual Documents
 		// Edit coding Form and complete Action
 		docViewPage = new DocViewPage(driver);
 		docViewPage.editCodingFormComplete();
@@ -5382,6 +5397,148 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 		
 
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-52121
+	 * @DisCription Verify the automatically selected audio redaction tag when shared annotation layer with shared redactation tags in security groups and all documents are released to security groups.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 120)
+	public void verifyAllDocumentAreReleaseToSG() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52121");
+		
+		baseClass.stepInfo("Verify after impersonation document marked as completed in an assignment, custom coding form is not editable on doc view page");
+		
+		
+		// Login As
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+
+		baseClass.impersonatePAtoReviewer();
+
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+
+		docViewPage.selectPureHit();
+
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		docViewPage.codeSameAsLastDisplayCheck();
+		docViewPage.getDocView_NumTextBox().SendKeys("7");
+		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.codeSameAsLastDisplayCheck();
+		baseClass.passedStep("Verified after impersonation document marked as completed in an assignment, custom coding form is not editable on doc view page");
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-52122
+	 * @DisCription Verify tool tip on mouse hover of the icon to code same as last.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 121)
+	public void verifyToolTipCodeSameAsLast() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52121");
+		
+		baseClass.stepInfo("Verify tool tip on mouse hover of the icon to code same as last");
+		
+		
+		// Login As
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+
+		docViewPage.selectPureHit();
+
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		docViewPage.verifyCodeSameAsLastDocMsgIsDisplayed("Code this document the same as the last coded document");
+		reusableDocView.clickGearIconOpenCodingFormChildWindow();
+		reusableDocView.switchTochildWindow();
+		docViewPage.verifyCodeSameAsLastDocMsgIsDisplayed("Code this document the same as the last coded document");
+		
+		docViewPage.closeWindow(1);
+		docViewPage.switchToNewWindow(1);
+		baseClass.passedStep("Verified tool tip on mouse hover of the icon to code same as last");
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-52117
+	 * @DisCription Verify when user clicks the saved stamp when navigating to document on document navigation options [<<, <, >, >>, enter document number].
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 122)
+	public void verifiyNavigateToDocument() throws InterruptedException, AWTException {
+		baseClass.stepInfo("Test case Id: RPMXCON-52117");
+		
+		baseClass.stepInfo("Verify when user clicks the saved stamp when navigating to document on document navigation options [<<, <, >, >>, enter document number]");
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		codingForm = new CodingForm(driver);
+		String filedText = "Stamp" + Utility.dynamicNameAppender();
+		//String commands = "Stamp" + Utility.dynamicNameAppender();
+		
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+
+		docViewPage.selectPureHit();
+
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+		
+		baseClass.stepInfo("Open the searched documents in doc view mini list");
+		sessionSearch.ViewInDocViews();
+		
+		
+		docViewPage.editCodingFormAndSaveWithStamp(filedText, Input.stampColour);
+		docViewPage.verifyThatIsLastDoc();
+		docViewPage.getDocView_NumTextBox().SendKeys("3");
+		driver.waitForPageToBeReady();
+		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.getStampBlueColour().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.getSelectSaveLink().waitAndClick(5);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		docViewPage.verifyThatIsLastDoc();
+		docViewPage.getDocView_NumTextBox().SendKeys("5");
+		driver.waitForPageToBeReady();
+		docViewPage.getDocView_NumTextBox().Enter();
+		docViewPage.getStampBlueColour().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		docViewPage.getSelectSaveLink().waitAndClick(5);
+		driver.scrollPageToTop();
+		docViewPage.deleteBlueStamp();
+		
+		baseClass.passedStep("Verified when user clicks the saved stamp when navigating to document on document navigation options [<<, <, >, >>, enter document number]");
+		loginPage.logout();
+	
 	}
 	
 	

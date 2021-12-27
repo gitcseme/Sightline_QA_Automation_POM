@@ -55,8 +55,8 @@ public class DocView_Regression2 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		// Input in = new Input();
-		// in.loadEnvConfig();
+		 Input in = new Input();
+		 in.loadEnvConfig();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -68,24 +68,17 @@ public class DocView_Regression2 {
 		driver = new Driver();
 		baseClass = new BaseClass(driver);
 		loginPage = new LoginPage(driver);
-
-		// Login as a PA
-		loginPage = new LoginPage(driver);
-		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
-		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 	}
 
-	@Test(groups = { "regression" }, priority = 0)
+//	@Test(groups = { "regression" }, priority = 0)
 	public void printRedactedDocsAfterImpersonation() throws Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-47736");
 		baseClass.stepInfo(
 				"Verify user after impersonation can download the file without redaction on click of the print icon from default view");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.impersonatePAtoRMU();
 
 // printing from session search
@@ -130,18 +123,16 @@ public class DocView_Regression2 {
 
 	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyThumbnailsInDocView() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case id : RPMXCON-51009");
 		baseClass.stepInfo(
 				"Verify after impersonation user can view the thumbnails of each page of document in thumbnail panel");
 		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.impersonatePAtoRMU();
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.docIdThumbnails);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
@@ -447,7 +438,102 @@ public class DocView_Regression2 {
 			baseClass.failedStep("The images tab is NOT retained");
 		}
 	}
+
+	/**
+	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51566
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =11)
+	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51566");
+		baseClass.stepInfo("Verify user can distinguish this on-demand search highlights with the highlights from the keyword"
+				+ " group and persistent search hit highlights");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.docIdThumbnails);
+		baseClass.stepInfo("Search with text 'test' completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Purehits viewed in DocView");
+		baseClass.waitTime(2);
+//		docViewRedact.verifyHighlightedTextsAreDisplayed();
+		baseClass.stepInfo("DocView screen  displayed and keywords are highlighted on\r\n"
+				+ "	doc view as per the assigned color for the keyword group");
+		docViewRedact.verifyHighlightedText_withclick();
+		baseClass.stepInfo("On demand search text searched and application highlight the text  and highlights are"
+				+ " light red in color as exepcted.");
+	}
+
+	@DataProvider(name = "userDetails2")
+	public Object[][] userLoginDetails2() {
+		return new Object[][] { { Input.rmu1FullName, Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1FullName, Input.rev1userName, Input.rev1password } };
+	}
+
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51918
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =12)
+	public void verifyImagesTabRetainedWhileSaving(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51918");
+		baseClass.stepInfo("Verify that when user in on Images tab and save the document then should be on Images tab for the same document");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.clickingImagesTab();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.editingCodingFormWithSaveAndNextButton();
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
+		}
+		else {
+			baseClass.failedStep("The images tab is NOT retained");
+		}
+			
+		
+	}
 	
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51919
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =13)
+	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51919");
+		baseClass.stepInfo("Verify that when user in on Images tab and clicks the document to load from mini doc list then should be on Images tab for the same document");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.clickingImagesTab();
+		DocViewPage docviewpage = new DocViewPage(driver);
+		docviewpage.selectDocIdInMiniDocList("ID00001186");
+		String status = docViewRedact.imagesIconDocView().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("true")) {
+			baseClass.passedStep("The images tab is retained when document selected from Mini Doc List");
+		}
+		else {
+			baseClass.failedStep("The images tab is NOT retained");
+		}
+	}
 	
 
 	@AfterMethod(alwaysRun = true)
