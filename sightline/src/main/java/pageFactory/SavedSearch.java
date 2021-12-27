@@ -55,7 +55,7 @@ public class SavedSearch {
 	ReportsPage report;
 	TagsAndFoldersPage tagsAndFolderPage;
 	LoginPage login;
-
+ 
 	// Variables
 	String searchID;
 	String searchIDtoCompare;

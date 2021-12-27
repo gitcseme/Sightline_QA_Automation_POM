@@ -18,7 +18,7 @@ public class TestData {
 	public String searchString1;
 	public String searchString2;
 	public int pureHitSeachString1;
-	public int pureHitSeachString2;
+	public int pureHitSeachString2; 
 	public int searchString1ANDsearchString2;
 	public int searchString1ORsearchString2;
 	public int searchString1NOTsearchString2;

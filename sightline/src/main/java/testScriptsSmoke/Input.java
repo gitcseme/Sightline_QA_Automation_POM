@@ -37,7 +37,7 @@ public class Input {
 	public static String newProject;
 	public static String ingestion;
 	public static String suite;
-	public static String browserName;
+	public static String browserName; 
 	public static String screenShotOnPass;
 	public static String screenShotOnFail;
 	public static int wait3;
