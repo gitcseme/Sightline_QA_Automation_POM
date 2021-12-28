@@ -1074,6 +1074,128 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that when navigated to the last redaction should be
+	 *              able to navigate to first redaction on click of '>' from doc
+	 *              view redactions [Cycle from First to Last while toggle between
+	 *              redacted terms ] [RPMXCON-53401]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void verifyingRedactionInDocView() throws Exception {
+
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53401");
+		base.stepInfo(
+				"Verify that when navigated to the last redaction should be able to navigate to first redaction on click of '>' from doc view redactions [Cycle from First to Last while toggle between redacted terms ]");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// creating Batch Redaction
+		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
+		batch.verifyHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(docview.getDocView_RedactIcon());
+		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
+		docview.getDocView_RedactIcon().waitAndClick(10);
+
+		// getting the All Redaction total Count
+		Element allRedacCount = docview.getDocView_AllRedactionCount();
+		int redactionCount = docview.getRedactionCount(allRedacCount, "All Redaction");
+
+		// getting the Batch Redaction total count
+		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
+		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
+
+		// getting the Component Batch Redaction total count
+		Element componentCount = docview.getComponentBatchRedactionsRatioCount();
+		int ComponentBatchCount = docview.getRedactionCount(componentCount, "Component Batch Redaction");
+
+		// navigating through All Redaction
+		Element allredaction = docview.getAllredactionForwardNavigate();
+		Element alRedactCount = docview.getDocView_AllRedactionCount();
+		docview.navigateToRedaction(redactionCount, allredaction, alRedactCount, true, false);
+
+		// navigating through Batch Redaction
+		Element batchRedact = docview.BatchredactionForwardNavigate();
+		Element batchRedactCOunt = docview.getDocView_BatchRedactionCount();
+		docview.navigateToRedaction(ComponentBatchCount, batchRedact, batchRedactCOunt, true, false);
+
+		// navigating through Component Batch Redaction
+		Element componentBR = docview.componentBatchredactionForwardNavigate();
+		Element componentBRCount = docview.getComponentBatchRedactionsRatioCount();
+		docview.navigateToRedaction(ComponentBatchCount, componentBR, componentBRCount, true, false);
+
+		// Delete Searche
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+	}
+
+	/**
+	 * @Author Raghuram
+	 * @Description : Verify that for All redactions navigation option to redactions
+	 *              should be displayed [<, >] on doc view redactions panel [RPMXCON-53398]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
+	public void verifyingAllRedactionsNavigationOptionInDocView() throws Exception {
+
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53398");
+		base.stepInfo(
+				"Verify that for All redactions navigation option to redactions should be displayed [<, >] on doc view redactions panel");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Create saved search
+		int purehit = session.basicContentSearch("crammer");
+		session.saveSearch(searchName);
+
+		// creating Batch Redaction
+		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
+		batch.verifyHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(docview.getDocView_RedactIcon());
+		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
+		docview.getDocView_RedactIcon().waitAndClick(10);
+
+		// getting the All Redaction total Count
+		Element allRedacCount = docview.getDocView_AllRedactionCount();
+		int redactionCount = docview.getRedactionCount(allRedacCount, "All Redaction");
+
+		// navigating through All Redaction
+		Element allredaction = docview.getAllredactionForwardNavigate();
+		Element alRedactCount = docview.getDocView_AllRedactionCount();
+		docview.navigateToRedaction(redactionCount, allredaction, alRedactCount, true, true);
+
+		// Delete Searche
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {

@@ -46,7 +46,7 @@ public class SessionSearch {
 	public Element getEnterSearchString() {
 		return driver.FindElementByXPath(".//*[@id='xEdit']/li/input");
 	}
-
+ 
 	public Element getSearchButton() {
 		return driver.FindElementById("btnBasicSearch");
 	}
@@ -1362,6 +1362,21 @@ public class SessionSearch {
 	public Element getSavedSearchNameResult(String savedSearchName) {
 		return driver.FindElementByXPath("//a[text()='" + savedSearchName + "']");
 	}
+	
+	//Added by Gopinath - 23/12/2021
+		public Element getSaveButton() {
+			return driver.FindElementByXPath("//a[@id='qModifySearch']//..//a[@id='qSave']");
+		}
+		
+		public Element getBasicSearch_MetadataBtnSec() {
+			return driver.FindElementByXPath("(//button[@id='metadataHelper'])[last()]");
+		}
+		public Element getCommentsFieldAndRemarksSec() {
+			return driver.FindElementByXPath("(//button[@id='commentsHelper'])[last()]");
+		}
+		public Element getSearchButtonSec() {
+			return driver.FindElementByXPath("(//a[@id='btnBasicSearch'])[last()]");
+		}
 
 	public SessionSearch(Driver driver) {
 		this.driver = driver;
@@ -8500,5 +8515,392 @@ public class SessionSearch {
 
 	}
 
+	/**
+	 * @author Gopinath
+	 * Description : this method insert the Query for draft save.
+	 */
+	public void basicMetaDataDraftSearch(String metaDataField, String option, String val1, String val2) {
+		
+		try {     
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			getBasicSearch_MetadataBtn().Click();
+			base.waitTime(3);
+			getSelectMetaData().isElementAvailable(10);
+			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			if (option == null) {
+	
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("IS")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("RANGE")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+				getMetaDataSearchText2().SendKeys(val2 + Keys.TAB);
+	
+			}
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+    
+	/**
+	 * @author Gopinath
+	 * Description : this function will enter the search string into input text field
+	 *               and will not Seaech the input 
+	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	 */
+	public void basicContentDraftSearch(String SearchString) {
+		try {
+			// To make sure we are in basic search page
+				driver.getWebDriver().get(Input.url + "Search/Searches");
+				// Enter seatch string
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getEnterSearchString().Visible();
+					}
+				}), Input.wait60);
+				getEnterSearchString().SendKeys(SearchString);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while enter the search string into input text field and will not Seaech the input"+e.getLocalizedMessage());
+		}
+				
+		
+	}
+
+
+
+/**
+	 * @author Gopinath
+	 * Description : this function will navigate to Advanced search page and enter the search string into input text field
+	 *               the search string into input text filed and will not Search the input 
+	 * @param SearchString : SearchString is string value that search value need to enter in search field.
+	 */
+	public void advanedContentDraftSearch(String SearchString) {
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedSearchLink().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedSearchLink().Click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getContentAndMetaDatabtn().Visible();
+				}
+			}), Input.wait30);
+			getContentAndMetaDatabtn().Click();
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedContentSearchInput().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedContentSearchInput().SendKeys(SearchString);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while navigate to Advanced search page and enter the search string into input text field "+e.getLocalizedMessage());
+		}
+
+	}
+
+
+
+
+	/**
+     * @author Gopinath
+     * Description : This function will save the advanced search
+     * @param searchName : searchName is string value that search value need to enter in search field.
+     */
+	public void saveSearchadvanced(String searchName) {
+		try {
+			if(getSaveButton().isElementAvailable(2)) {
+				driver.WaitUntil((new Callable<Boolean>() {
+		
+				public Boolean call() {
+				return getSaveButton().Visible() && getSaveButton().Enabled();
+				}
+				}), Input.wait30);
+				base.waitForElement(getSaveButton());
+				getSaveButton().waitAndClick(5);
+			}else {
+				getAdvanceSearch_DraftQuerySave_Button().Click();
+			}
+			if (getYesQueryAlert().isElementAvailable(2)) {
+				try {
+					getYesQueryAlert().waitAndClick(8);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+	
+			if(getSaveAsNewSearchRadioButton().isElementAvailable(7)) {
+				driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+				return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+				}
+				}), Input.wait30);
+			getSaveAsNewSearchRadioButton().waitAndClick(5);
+			} else {
+				System.out.println("Radio button already selected");
+				UtilityLog.info("Radio button already selected");
+			}
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+	
+			public Boolean call() {
+			return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
+			}
+			}), Input.wait30);
+			getSavedSearch_MySearchesTab().Click();
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+			return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+			}
+			}), Input.wait30);
+			getSaveSearch_Name().SendKeys(searchName);
+			driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+			return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+			}
+			}), Input.wait30);
+			getSaveSearch_SaveButton().Click();
+			base.VerifySuccessMessage("Saved search saved successfully");
+	               	Reporter.log("Saved the search with name '" + searchName + "'", true);
+			UtilityLog.info("Saved search with name - " + searchName);
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while will save the advanced search. "+e.getLocalizedMessage());
+		}
+	}
+	/**
+     * @author Gopinath
+     * @Description : Method for advanced meta data for draft.
+     */
+	public void advancedMetaDataForDraft(String metaDataField, String option, String val1, String val2) {
+		try {
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvancedSearchLink().Visible();
+				}
+			}), Input.wait30);
+			getAdvancedSearchLink().Click();
+
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getContentAndMetaDatabtn().Visible();
+				}
+			}), Input.wait30);
+			getContentAndMetaDatabtn().Click();
+			// Enter seatch string
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getAdvanceSearch_MetadataBtn().Visible();
+				}
+			}), Input.wait30);
+			getAdvanceSearch_MetadataBtn().Click();
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			if (option == null) {
+
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("IS")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("IS (:)");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			} else if (option.equalsIgnoreCase("RANGE")) {
+				getMetaOption().selectFromDropdown().selectByVisibleText("RANGE");
+				getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+				getMetaDataSearchText2().SendKeys(val2 + Keys.TAB);
+
+			}
+			getMetaDataInserQuery().Click();
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while performing advanced meta data draft "+e.getLocalizedMessage());
+		}
+	}
+
+	/**
+	 * @author Gopinath
+	 * Description: Method for get count from tills.
+	 * @return countofSearch : countofSearch is hash map that count from search.
+	 */
+		public Map<String,String> getCountFromTills() {
+			Map<String,String> countofSearch =new HashMap<String,String>();
+			try {
+				String FamilyCount = "";
+				String ThreadedCount = "";
+				getFMHitsCount().isElementAvailable(20);
+				for (int i=0;i<10;i++) {
+					base.waitTime(2);
+					if(FamilyCount.contentEquals("")) {
+						FamilyCount = getFMHitsCount().getText();
+					}
+					else {
+						break;
+					}
+				}
+				FamilyCount =getFMHitsCount().getText();
+				getPureHitsCount().isElementAvailable(10);
+				String PureitCount = getPureHitsCount().getText();
+				getNDHitsCount().isElementAvailable(10);
+				String NearDupeCount = getNDHitsCount().getText();
+				getTDHitsCount().isElementAvailable(10);
+				for (int i=0;i<10;i++) {
+					base.waitTime(2);
+					if(ThreadedCount.contentEquals("")) {
+						ThreadedCount = getTDHitsCount().getText();
+					}else {
+						break;
+					}
+				}
+				ThreadedCount = getTDHitsCount().getText();
+				countofSearch.put("NearDupe Count", NearDupeCount);
+				countofSearch.put("Pureit Count",PureitCount);
+				countofSearch.put("Threaded Count", ThreadedCount);
+				countofSearch.put("Family member count", FamilyCount);
+			}catch(Exception e) {
+				e.printStackTrace();
+				base.failedStep("Exception occured while  get count from tills."+e.getMessage());
+			}
+			return countofSearch;
+		}	
+		
+		/**
+		 * @author Gopinath
+		 * Description: Method for save search.
+		 * @param searchName : searchName is String value that search value to check in saved search table.
+		 */
+		public void saveSearchHandle(String searchName) {
+			try {
+				
+				if (getSaveSearch_Button().isElementAvailable(7)) {
+	
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getSaveSearch_Button().Visible() && getSaveSearch_Button().Enabled();
+						}
+					}), Input.wait30);
+					getSaveSearch_Button().waitAndClick(5);
+				} else {
+					driver.WaitUntil((new Callable<Boolean>() {
+	
+						public Boolean call() {
+							return getAdvanceS_SaveSearch_Button().Visible() && getAdvanceS_SaveSearch_Button().Enabled();
+						}
+					}), Input.wait30);
+					getAdvanceS_SaveSearch_Button().waitAndClick(5);
+				}
+				if(getTallyContinue().isElementAvailable(1)) {
+					getTallyContinue().waitAndClick(5);
+				}
+				if (getSaveAsNewSearchRadioButton().isElementAvailable(1)) {
+					driver.WaitUntil((new Callable<Boolean>() {
+						public Boolean call() {
+							return getSaveAsNewSearchRadioButton().Visible() && getSaveAsNewSearchRadioButton().Enabled();
+						}
+					}), Input.wait30);
+					getSaveAsNewSearchRadioButton().waitAndClick(5);
+				} else {
+					System.out.println("Radio button already selected");
+					UtilityLog.info("Radio button already selected");
+				}
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+	
+					public Boolean call() {
+						return getSavedSearch_MySearchesTab().Visible() && getSavedSearch_MySearchesTab().Enabled();
+					}
+				}), Input.wait30);
+				getSavedSearch_MySearchesTab().Click();
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSaveSearch_Name().Visible() && getSaveSearch_Name().Enabled();
+					}
+				}), Input.wait30);
+				getSaveSearch_Name().SendKeys(searchName);
+	
+				driver.WaitUntil((new Callable<Boolean>() {
+					public Boolean call() {
+						return getSaveSearch_SaveButton().Visible() && getSaveSearch_SaveButton().Enabled();
+					}
+				}), Input.wait30);
+				getSaveSearch_SaveButton().Click();
+	
+				base.VerifySuccessMessage("Saved search saved successfully");
+	
+				Reporter.log("Saved the search with name '" + searchName + "'", true);
+				UtilityLog.info("Saved search with name - " + searchName);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		public int metadataAndCommentSearch(String projectFieldINT,String metadataText,String addComment,String commentText) {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			driver.waitForPageToBeReady();
+			base.waitForElement(getNewSearch());
+			getNewSearch().waitAndClick(5);
+			base.waitForElement(getBasicSearch_MetadataBtnSec());
+			getBasicSearch_MetadataBtnSec().waitAndClick(10);
+			base.waitForElement(getSelectMetaData());
+			// getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			base.waitForElement(getSelectMetaData());
+			getSelectMetaData().waitAndClick(10);
+			base.waitForElement(SelectFromDropDown(projectFieldINT));
+			SelectFromDropDown(projectFieldINT).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(metadataText + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().waitAndClick(10);
+			base.waitForElement(getCommentsFieldAndRemarksSec());
+			getCommentsFieldAndRemarksSec().waitAndClick(10);
+			base.waitForElement(SelectFromDropDown(addComment));
+			SelectFromDropDown(addComment).waitAndClick(10);
+			base.waitForElement(getMetaDataSearchText1());
+			getMetaDataSearchText1().SendKeys(commentText + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+			// Click on Search button
+			base.waitForElement(getSearchButtonSec());
+			getSearchButtonSec().Click();
+			// two handle twosearch strings
+			if (getTallyContinue().isElementAvailable(1)) {
+				try {
+					base.waitForElement(getTallyContinue());
+					getTallyContinue().waitAndClick(5);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			base.waitForElement(getPureHitsCount());
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsLastCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+			int pureHit = Integer.parseInt(getPureHitsLastCount().getText());
+			System.out.println("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+			base.stepInfo("Search is done for " + addComment + " with value " + commentText + " purehit is : " + pureHit);
+			base.stepInfo("Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
+			return pureHit;
+		}
+	
 
 }
