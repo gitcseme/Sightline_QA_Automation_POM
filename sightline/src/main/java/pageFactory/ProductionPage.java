@@ -14861,6 +14861,55 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
 	}
 	
+	
+	/**
+	 * @author Brundha
+	 * @description :method  for filling native placeholder
+	 */
+	public void fillingNativeDocsPlaceholder(String Tag) {
+		base.waitForElement(getTiff_NativeDoc());
+		getTiff_NativeDoc().Click();
+		base.waitForElement(getclkSelectTag());
+		getclkSelectTag().Click();
+		base.waitForElement(getPriveldged_TagTree(Tag));
+		getPriveldged_TagTree(Tag).Click();
+		base.waitForElement(getClkSelect());
+		getClkSelect().Click();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getNativeDocsPlaceholder());
+		getNativeDocsPlaceholder().SendKeys(Input.technicalIssue);
+	}
+	
+
+	/**
+	 * @author Brundha
+	 * @description :method for filling TIFF/PDF Section With branding text.
+	 */
+	public void fillingPDFSectionWithBrandingText() {
 		
+			base.waitForElement(getTIFFChkBox());
+			getTIFFChkBox().Click();
+			driver.scrollingToBottomofAPage();
+			base.waitForElement(getTIFFTab());
+			getTIFFTab().Click();
+			driver.waitForPageToBeReady();
+			driver.scrollPageToTop();
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().waitAndClick(10);
+			base.waitForElement(getLeftHeaderBranding());
+			getLeftHeaderBranding().waitAndClick(10);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+			// disabling enable for priviledged docs
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.waitForElement(getInsertMetadataField());
+			getInsertMetadataField().Click();
+			base.waitForElement(getBatesNumberinTiff());
+			getBatesNumberinTiff().Click();
+			base.waitForElement(getOkBtn());
+			getOkBtn().Click();
+
+	}		
 	
 }
