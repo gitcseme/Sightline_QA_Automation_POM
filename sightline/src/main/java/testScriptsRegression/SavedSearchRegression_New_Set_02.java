@@ -80,8 +80,8 @@ public class SavedSearchRegression_New_Set_02 {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("Started Execution for prerequisite");
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		// Input in = new Input();
+		// in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -1039,7 +1039,7 @@ public class SavedSearchRegression_New_Set_02 {
 		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
 		driver.waitForPageToBeReady();
 		session.searchAndReturnPureHit_BS();
-		session.saveAsOverwrittenSearch(Input.shareSearchPA, savedName, "first");
+		session.saveAsOverwrittenSearch(Input.shareSearchPA, savedName, "first", "Success", "", null);
 		session.saveSearchAtAnyRootGroup(savedName_1, Input.mySavedSearch);
 		driver.waitForPageToBeReady();
 

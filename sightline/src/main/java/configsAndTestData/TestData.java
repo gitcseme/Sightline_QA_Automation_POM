@@ -151,7 +151,7 @@ public class TestData {
 	public String fullPageRange;
 	public String iconColor;
 
-	// Added by Raghuram - Last Modified 12/1/21
+	// Added by Raghuram - Last Modified 12/28/21
 	public String docHighlightColor;
 	public String sortType;
 	public String sortDataBy;
@@ -169,6 +169,7 @@ public class TestData {
 	public String metaDataCustodianNameInput;
 	public String selectionHighlightColor;
 	public String searchString7;
+	public String errMsgSinceExecutionInProgress;
 
 	// Added by jeevitha
 	public String colorCodeOfRed;

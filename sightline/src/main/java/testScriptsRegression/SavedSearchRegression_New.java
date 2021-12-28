@@ -797,7 +797,7 @@ public class SavedSearchRegression_New {
 		System.out.println("PureHit COunt of Modified Search is : " + pureHit2);
 		base.stepInfo("PureHit COunt of Modified Search is : " + pureHit2);
 
-		session.saveAsOverwrittenSearch(Input.shareSearchDefaultSG, search, "First");
+		session.saveAsOverwrittenSearch(Input.shareSearchDefaultSG, search, "First", "Success", "", null);
 
 		login.logout();
 		// Login As RMU
@@ -816,7 +816,7 @@ public class SavedSearchRegression_New {
 		System.out.println("PureHit COunt of Modified Search is : " + pureHit3);
 		base.stepInfo("PureHit COunt of Modified Search is : " + pureHit3);
 
-		session.saveAsOverwrittenSearch(Input.shareSearchDefaultSG, search, "First");
+		session.saveAsOverwrittenSearch(Input.shareSearchDefaultSG, search, "First", "Success", "", null);
 
 		login.logout();
 
@@ -889,7 +889,7 @@ public class SavedSearchRegression_New {
 		System.out.println("PureHit COunt of Modified Search is : " + pureHit2);
 		base.stepInfo("PureHit COunt of Modified Search is : " + pureHit2);
 
-		session.saveAsOverwrittenSearch(Input.shareSearchPA, search, "first");
+		session.saveAsOverwrittenSearch(Input.shareSearchPA, search, "first", "Success", "", null);
 
 		session.saveSearchInNewNode(search1, null);
 		session.saveSearchAtAnyRootGroup(search2, Input.shareSearchPA);
@@ -923,7 +923,7 @@ public class SavedSearchRegression_New {
 		base.waitForElement(saveSearch.getSavedSearchEditButton());
 		saveSearch.getSavedSearchEditButton().waitAndClick(5);
 
-		session.saveAsOverwrittenSearch(Input.shareSearchPA, search3, "First");
+		session.saveAsOverwrittenSearch(Input.shareSearchPA, search3, "First", "Success", "", null);
 		session.saveSearchAtAnyRootGroup(search4, Input.shareSearchPA);
 
 		softAssertion.assertAll();
@@ -1546,7 +1546,7 @@ public class SavedSearchRegression_New {
 		base.stepInfo("Modified search query, & executed the same  ");
 
 		session.searchAndReturnPureHit_BS();
-		session.saveAsOverwrittenSearch(grpName1, searchName1, "First");
+		session.saveAsOverwrittenSearch(grpName1, searchName1, "First", "Success", "", null);
 
 		session.saveSearchInNewNode(searchName1, null);
 

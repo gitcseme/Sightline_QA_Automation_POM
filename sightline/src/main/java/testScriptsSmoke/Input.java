@@ -260,7 +260,7 @@ public class Input {
 	public static String fullPageRange;
 	public static String iconColor;
 
-	// Added by Raghuram - Modified 10/27/21
+	// Added by Raghuram - Modified 12/28/21
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;
@@ -278,6 +278,7 @@ public class Input {
 	public static String metaDataCustodianNameInput;
 	public static String selectionHighlightColor;
 	public static String searchString7;
+	public static String errMsgSinceExecutionInProgress;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -688,6 +689,7 @@ public class Input {
 		metaDataCustodianNameInput = testData.getMetaDataCustodianNameInput();
 		selectionHighlightColor = testData.getSelectionHighlightColor();
 		searchString7 = testData.getSearchString7();
+		errMsgSinceExecutionInProgress = testData.getErrMsgSinceExecutionInProgress();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();

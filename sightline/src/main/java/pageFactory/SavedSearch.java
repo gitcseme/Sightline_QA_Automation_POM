@@ -147,8 +147,9 @@ public class SavedSearch {
 	}
 
 	public Element getMySeraches() {
-		return driver.FindElementByXPath("//*[contains(@class,'clicked')]//preceding-sibling::i[contains(@class,'ocl')]");
-		}
+		return driver
+				.FindElementByXPath("//*[contains(@class,'clicked')]//preceding-sibling::i[contains(@class,'ocl')]");
+	}
 
 	public Element getSelectUploadedFile(String fileName) {
 		return driver.FindElementByXPath("//a[contains(text(),'" + fileName.replace(".xlsx", "") + "')]");
@@ -6707,7 +6708,7 @@ public class SavedSearch {
 			// verify Assign btn
 			driver.waitForPageToBeReady();
 			Element folderBtnStatus = getSavedSearchToBulkFolder();
-			checkButtonEnabled(folderBtnStatus, "Should be Enabled", "Assign");
+			checkButtonEnabled(folderBtnStatus, "Should be Enabled", "Folder");
 
 			getSavedSearchToBulkFolder().Click();
 		}
@@ -7011,23 +7012,24 @@ public class SavedSearch {
 	 */
 	public void verifyPendingStatusAppearedSavedSearchTable() {
 		try {
-		driver.scrollPageToTop();
-		getNumberOfSavedSearchToBeShown().isElementAvailable(15);
-		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
-		getStatusDropDown().isElementAvailable(15);
-		getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
-		getSavedSearch_ApplyFilterButton().waitAndClick(20);
-		boolean status = getPendingStatus().isDisplayed();
-		if(status) {
-		base.passedStep("Pending stats is appeared on table successfully by batch upload");
-		}else {
-		base.failedStep("Failed to get pending status on saved search table after batch upload");
+			driver.scrollPageToTop();
+			getNumberOfSavedSearchToBeShown().isElementAvailable(15);
+			getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+			getStatusDropDown().isElementAvailable(15);
+			getStatusDropDown().selectFromDropdown().selectByVisibleText("PENDING");
+			getSavedSearch_ApplyFilterButton().waitAndClick(20);
+			boolean status = getPendingStatus().isDisplayed();
+			if (status) {
+				base.passedStep("Pending stats is appeared on table successfully by batch upload");
+			} else {
+				base.failedStep("Failed to get pending status on saved search table after batch upload");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying pending status appeared on saved search table."
+					+ e.getMessage());
 		}
-		}catch(Exception e) {
-		e.printStackTrace();
-		base.failedStep("Exception occured while verifying pending status appeared on saved search table."+e.getMessage());
-		}
-		}
+	}
 
 	/**
 	 * @author Gopinath Description: Method to verify pending status appeared for
