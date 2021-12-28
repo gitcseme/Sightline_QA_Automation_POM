@@ -212,7 +212,7 @@ public class DocView_Regression2 {
 	 * Id: RPMXCON-51564 Verify when there are no hits, then it will show 0 of 0
 	 * with the forward and backward arrows grayed out.
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 5)
 	public void verifyThereAreNoHits(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -234,7 +234,7 @@ public class DocView_Regression2 {
 	 * from child window
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void verifyPersistentHitPanelChildWindow(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -247,7 +247,7 @@ public class DocView_Regression2 {
 				"Verify that on document navigation from mini doc list when hits panel is open then enable/disable should be retained");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for audio docs completed");
+		baseClass.stepInfo("Search for non audio docs completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.checkingPersistentHitPanel();
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
@@ -268,7 +268,7 @@ public class DocView_Regression2 {
 	 * navigation from child window
 	 */
 
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority = 7)
 	public void verifyConceptuallySimilarTabChildWindow(String fullName, String userName, String password)
 			throws Exception {
 		baseClass = new BaseClass(driver);
@@ -281,11 +281,13 @@ public class DocView_Regression2 {
 				"To verify that user has selected an Analytics Panel tab and navigates to another document from mini doc list child window, the Analytics Panel Tab previously selected must remain.");
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		sessionsearch.basicContentSearch(Input.randomText);
-		baseClass.stepInfo("Search for audio docs completed");
+		baseClass.stepInfo("Search for non audio docs completed");
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingConceptuallySimilarTab();
+		driver.scrollPageToTop();
 		reusabledocviewpage.clickGearIconOpenMiniDocList();
 		docViewRedact.navigatingDocsFromMiniDocListChildWindowandClose();
+		driver.waitForPageToBeReady();
 		String getAttribute = docViewRedact.getConceptuallySimilarTab().GetAttribute("class");
 		if (getAttribute.equalsIgnoreCase("text-center active")) {
 			baseClass.passedStep(
@@ -301,7 +303,7 @@ public class DocView_Regression2 {
 	 * PA to RMU
 	 */
 	
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyImagesIconWhenMovedToLastDoc() throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -336,7 +338,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 8)
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 9)
 	public void verifyImagesIconWhenMovedToFirstDoc(String fullName, String userName, String password) throws Exception {
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -373,7 +375,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 9)
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 10)
 	public void verifyImagesIconWhenMovedtoDocByEnteringNumber(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -410,7 +412,7 @@ public class DocView_Regression2 {
 	 * 
 	 */
 	
-	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 10)
+	@Test(enabled = true,dataProvider = "userDetails", groups = { "regression" }, priority = 11)
 	public void verifyImagesIconWhenNavigatingPriviousDoc(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -443,7 +445,7 @@ public class DocView_Regression2 {
 	 * Author :Jayanthi date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51566
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =11)
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =12)
 	public void verifyDistinguishedHighlightedTextInDocView(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -476,7 +478,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51918
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =12)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =13)
 	public void verifyImagesTabRetainedWhileSaving(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
@@ -509,7 +511,7 @@ public class DocView_Regression2 {
 	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51919
 	 * 
 	 */
-	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =13)
+	@Test(enabled = true, dataProvider = "userDetails2", alwaysRun = true, groups = { "regression" }, priority =14)
 	public void verifyImagesTabRetainedFromMiniDocList(String fullName, String userName, String password) throws Exception {
 		baseClass = new BaseClass(driver);
 		loginPage.loginToSightLine(userName, password);
