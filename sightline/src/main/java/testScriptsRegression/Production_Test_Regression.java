@@ -1589,6 +1589,132 @@ public class Production_Test_Regression {
 					tagsAndFolderPage = new TagsAndFoldersPage(driver);
 					tagsAndFolderPage.DeleteFolderWithSecurityGroupInRMU(foldername);
 				}
+			/**
+			 * @author Aathith.Senthilkumar
+			 * 			48454
+			 * @Description To verify that Production should generate successfully for PDF docs.
+			 * 
+			 */
+				@Test(groups = { "regression" }, priority = 27)
+				public void verifyProdGenSuccesInPdfDoc() throws Exception {
+				UtilityLog.info(Input.prodPath);
+				base.stepInfo("RPMXCON-48454 -Production Sprint 09");
+				
+				String testData1 = Input.testData1;
+				foldername = "FolderProd" + Utility.dynamicNameAppender();
+				tagname = "Tag" + Utility.dynamicNameAppender();
+				//String tagNameTechnical = Input.tagNameTechnical;
+
+				// Pre-requisites
+				// create tag and folder
+				TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+				tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+				tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+				// search for folder
+				SessionSearch sessionSearch = new SessionSearch(driver);
+				sessionSearch = new SessionSearch(driver);
+				sessionSearch.basicContentSearch(testData1);
+				sessionSearch.bulkFolderExisting(foldername);
+
+				//Verify 
+				ProductionPage page = new ProductionPage(driver);
+				productionname = "p" + Utility.dynamicNameAppender();
+				page.selectingDefaultSecurityGroup();
+				page.addANewProduction(productionname);
+				page.fillingDATSection();
+				page.fillingPDFSectionwithBurnRedaction(tagname);
+				page.navigateToNextSection();
+				page.fillingNumberingAndSortingPage(prefixID, suffixID);
+				page.navigateToNextSection();
+				page.fillingDocumentSelectionPage(foldername);
+				page.navigateToNextSection();
+				page.fillingPrivGuardPage();
+				page.fillingProductionLocationPage(productionname);
+				page.navigateToNextSection();
+				page.fillingSummaryAndPreview();
+				page.fillingGeneratePageWithContinueGenerationPopup();
+				
+				base.passedStep("Verified that Production should generate successfully for PDF docs");
+				
+				//delete tags and folders
+				tagsAndFolderPage = new TagsAndFoldersPage(driver);
+				tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+				tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+			}
+				/**
+				 * @author Aathith.Senthilkumar
+				 * 			48279
+				 * @Description To Verify Enabling Placeholder for Privilege Doc at PrivGuard.
+				 * 
+				 */
+					@Test(groups = { "regression" }, priority = 28)
+					public void verifiyEnablePlaceholderAtPrivDoc() throws Exception {
+					UtilityLog.info(Input.prodPath);
+					base.stepInfo("RPMXCON-48279 -Production Sprint 09");
+					
+					String testData1 = Input.testData1;
+					foldername = "FolderProd" + Utility.dynamicNameAppender();
+					tagname = "Tag" + Utility.dynamicNameAppender();
+					//String tagNameTechnical = Input.tagNameTechnical;
+
+					// Pre-requisites
+					// create tag and folder
+					TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+					tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+					tagsAndFolderPage.createNewTagwithClassification(tagname, "Privileged");
+
+					// search for folder
+					SessionSearch sessionSearch = new SessionSearch(driver);
+					sessionSearch = new SessionSearch(driver);
+					sessionSearch.basicContentSearch(testData1);
+					sessionSearch.bulkFolderExisting(foldername);
+
+					//Verify 
+					ProductionPage page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingTiffSectionDisablePrivilegedDocs();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPageWithPrivPlaceHolder(tagname);
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					//Verify 
+					page = new ProductionPage(driver);
+					productionname = "p" + Utility.dynamicNameAppender();
+					page.selectingDefaultSecurityGroup();
+					page.addANewProduction(productionname);
+					page.fillingDATSection();
+					page.fillingPDFSectionDisablePrivilegedDocs();
+					page.navigateToNextSection();
+					page.fillingNumberingAndSortingPage(prefixID, suffixID);
+					page.navigateToNextSection();
+					page.fillingDocumentSelectionPage(foldername);
+					page.navigateToNextSection();
+					page.fillingPrivGuardPageWithPrivPlaceHolder(tagname);
+					page.fillingProductionLocationPage(productionname);
+					page.navigateToNextSection();
+					page.fillingSummaryAndPreview();
+					page.fillingGeneratePageWithContinueGenerationPopup();
+					
+					base.passedStep("Verified Enabling Placeholder for Privilege Doc at PrivGuard.");
+					
+					//delete tags and folders
+					tagsAndFolderPage = new TagsAndFoldersPage(driver);
+					tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+					tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
+				}
 	
 	
 	@AfterMethod(alwaysRun = true)

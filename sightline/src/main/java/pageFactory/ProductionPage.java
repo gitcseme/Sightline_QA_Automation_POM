@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -2117,6 +2118,25 @@ public class ProductionPage {
 	public Element getClkCheckBox_RedactionTag(String redactTag) {
 		return driver.FindElementByXPath(
 				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='"+redactTag+"']");
+	}
+	public Element getPrivPlaceHolderToggleAtPrivGaurdPage() {
+		return driver.FindElementByXPath("//*[@id='chkIsPrivilegedPlaceholderEnabled']/../i");
+	}
+	public Element getSelectTagBtnInPrivGaurd() {
+		return driver.FindElementByXPath("//*[@id='btnGuardSelectPrevTags']");
+	}
+	
+	public Element getPrivPlaceholderTextboInPrivGaurd() {
+		return driver.FindElementByXPath("//*[@class='redactor-editor']");
+	}
+	public Element getTagInPrivGaurd(String tagname) {
+		return driver.FindElementByXPath("//*[text()='"+tagname+"']");
+	}
+	public Element getSaveButtonINPrivGuard() {
+		return driver.FindElementByXPath("//button[@id='btnSave']");
+	}
+	public Element getTiffSinglePage() {
+		return driver.FindElementByXPath("//*[@id='rbdSinglePageType']/../i");
 	}
 	
 	
@@ -14859,6 +14879,136 @@ public class ProductionPage {
 		gettextRedactionPlaceHolder().isDisplayed();
 		gettextRedactionPlaceHolder().waitAndClick(10);
 		gettextRedactionPlaceHolder().SendKeys(searchString4);
+	}
+	/**
+	 * @author Aathith
+	 * @description :filling PDF section diable priv doc.
+	 */
+	public void fillingPDFSectionDisablePrivilegedDocs() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFTab());
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+
+			driver.waitForPageToBeReady();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPDFGenerateRadioButton().Enabled();
+				}
+			}), Input.wait60);
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getPDFGenerateRadioButton().ScrollTo();
+			base.waitTillElemetToBeClickable(getPDFGenerateRadioButton());
+			getPDFGenerateRadioButton().Click();
+			getTiffSinglePage().waitAndClick(5);
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.stepInfo("Diable priviledge doc in PDF section is filled successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while handling pdf section" + e.getMessage());
+		}
+	}
+	/**
+	 * @author Aathith
+	 * @description :filling tiff section diable priv doc.
+	 */
+	public void fillingTiffSectionDisablePrivilegedDocs() {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFChkBox());
+			base.waitTillElemetToBeClickable(getTIFFChkBox());
+			getTIFFChkBox().Click();
+
+			driver.scrollingToBottomofAPage();
+
+			driver.waitForPageToBeReady();
+			base.waitForElement(getTIFFTab());
+			base.waitTillElemetToBeClickable(getTIFFTab());
+			getTIFFTab().Click();
+
+			driver.waitForPageToBeReady();
+			
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+			// disabling enable for priviledged docs
+
+			base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+			driver.waitForPageToBeReady();
+			getTIFF_EnableforPrivilegedDocs().Enabled();
+			getTIFF_EnableforPrivilegedDocs().Click();
+			base.stepInfo("Diable priviledge doc in Tiff section is filled successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while handling Tiff section" + e.getMessage());
+		}
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * @param tagname
+	 */
+	public void EnablePrivPlaceholderAtPrivGaurdPage(String tagname) {
+		base.waitForElement(getPrivPlaceHolderToggleAtPrivGaurdPage());
+		getPrivPlaceHolderToggleAtPrivGaurdPage().waitAndClick(10);
+		
+		base.waitForElement(getSelectTagBtnInPrivGaurd());
+		getSelectTagBtnInPrivGaurd().waitAndClick(10);
+		
+	
+		getTagInPrivGaurd(tagname).waitAndClick(10);
+		
+		base.waitForElement(getSaveButtonINPrivGuard());
+		getSaveButtonINPrivGuard().waitAndClick(10);
+
+		base.waitForElement(getPrivPlaceholderTextboInPrivGaurd());
+		getPrivPlaceholderTextboInPrivGaurd().waitAndClick(10);
+		getPrivPlaceholderTextboInPrivGaurd().SendKeys(searchString2);
+		
+		Dimension d=driver.Manage().window().getSize();
+		driver.Manage().window().fullscreen();
+		base.waitForElement(getPrivPlaceholderTextboInPrivGaurd());
+		getbtnPopupPreviewMarkComplete().waitAndClick(10);
+		driver.Manage().window().setSize(d);
+		driver.Manage().window().maximize();
+		
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 */
+	public void fillingPrivGuardPageWithPrivPlaceHolder(String tagname) {
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardMarkComplete().Visible();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardMarkComplete().waitAndClick(5);
+		
+		EnablePrivPlaceholderAtPrivGaurdPage(tagname);
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getbtnProductionGuardNext().Enabled();
+			}
+		}), Input.wait30);
+		getbtnProductionGuardNext().waitAndClick(5);
+		base.stepInfo("privilage placeholder enabled in Priv Guard Page section is filled");
 	}
 	
 		
