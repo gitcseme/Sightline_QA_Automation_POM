@@ -58,9 +58,9 @@
 	<SavedSearch>TDM54178</SavedSearch>
 	<pureHitCount1>267</pureHitCount1>
 	<docName>DocID</docName>
-	<MiniDocId>ID00003846</MiniDocId>
+	<MiniDocId>ID00000102</MiniDocId>
 	<ThreadQuery>"testing the same"</ThreadQuery>
-	<NewDocId>ID00000171</NewDocId>
+	<NewDocId>ID00001178</NewDocId>
 	<MetaDataId>ID00000015</MetaDataId>
 	<documentToBeScrolled>5147</documentToBeScrolled>
 	<conceptualDocument>ID00004389</conceptualDocument>
@@ -372,5 +372,6 @@
 	<errorQueryFileLocation>\BatchFiles\InvalidQuery\
 	</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
-
+<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
+		<conceptualDoc>ID00000001</conceptualDoc>
 </TestData>
