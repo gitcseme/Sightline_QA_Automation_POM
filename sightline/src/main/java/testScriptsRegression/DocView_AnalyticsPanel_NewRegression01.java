@@ -563,6 +563,59 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		docView.performConceptualViewInDocView();
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 28/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify thread map panel for default number of
+	 * documents.'RPMXCON-50901' Sprint : 9
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	public void verifyThredMapDefaultNumberOfDocuments() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50901");
+		baseClass.stepInfo("To verify thread map panel for default number of documents.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();;
+
+        driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheThreadedDocuments();
+
+		baseClass.stepInfo("verifyMiniDocListIsDisplayedThreaedDocumentsSuccessfully");
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();;
+
+		driver.waitForPageToBeReady();
+		docView.selectDocsFromMiniDocsListAndCheckTheThreadedDocuments();
+
+		baseClass.stepInfo("verifyMiniDocListIsDisplayedThreaedDocumentsSuccessfully");
+	}
+	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
