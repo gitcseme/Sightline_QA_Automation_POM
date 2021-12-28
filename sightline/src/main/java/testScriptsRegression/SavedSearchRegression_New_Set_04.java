@@ -83,6 +83,13 @@ public class SavedSearchRegression_New_Set_04 {
 		return users;
 	}
 
+	@DataProvider(name = "AllTheUsers")
+	public Object[][] AllTheUsers() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password },
+				{ Input.rev1userName, Input.rev1password } };
+		return users;
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
@@ -1996,6 +2003,89 @@ public class SavedSearchRegression_New_Set_04 {
 		driver.scrollPageToTop();
 		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0), true, true);
 
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To Verify, In saved search page, \"Submit\" button should be
+	 *              renamed to \"Execute\" [RPMXCON- 47387]
+	 * @param username
+	 * @param password
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 21)
+	public void verifySubmitBtnRenamedAsExecute(String username, String password) {
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+
+		base.stepInfo("Test case Id: RPMXCON-47387 - Saved Search Sprint 09");
+		base.stepInfo("To Verify, In saved search page, \"Submit\" button should be renamed to \"Execute\"");
+
+		// verify Execute Action
+		saveSearch.navigateToSavedSearchPage();
+		driver.waitForPageToBeReady();
+		String displayedName = saveSearch.getSavedSearchExecuteButton().getText();
+		softAssertion.assertNotEquals(displayedName, "Submit");
+		softAssertion.assertEquals(displayedName, "Execute");
+		System.out.println(displayedName + " : is Displayed in Action");
+		base.stepInfo(displayedName + " : is Displayed in Action");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that After adding Saved Query - application displays all
+	 *              documents that are in the aggregate results - when User Navigate
+	 *              Child Search groups to Report [RPMXCON-49067]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	public void verifyAfterAddingSavedQuery() throws InterruptedException {
+		int noOfNodesToCreate = 3;
+		int selectIndex = 0;
+		String node;
+		Boolean inputValue = true;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		SearchTermReportPage str = new SearchTermReportPage(driver);
+
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		base.stepInfo("Test case Id: RPMXCON-49067 - Saved Search Sprint 08");
+		base.stepInfo(
+				"Verify that After adding Saved Query - application displays all documents that are in the aggregate results - when User Navigate Child Search groups to Report");
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+
+		// Adding searches to the created nodes
+		session.navigateToSessionSearchPageURL();
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		saveSearch.sortedMapList(nodeSearchpair);
+		String search = nodeSearchpair.get(newNodeList.get(0));
+
+		base.selectproject();
+		int aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		System.out.println(aggregateHitCount);
+
+		// verify Searches in child nodes and share to SG
+		saveSearch.SavedSearchToTermReport_New(Input.mySavedSearch, true, newNodeList.get(0), search, "No");
+		str.verifyaggregateCount("HITS");
+		base.waitForElement(str.getHitsCount());
+		int expectedHitsCount = Integer.parseInt(str.getHitsCount().getText());
+		System.out.println(expectedHitsCount);
+		base.stepInfo("Aggregate Hit Count of searhces is :  " + expectedHitsCount);
+		softAssertion.assertEquals(aggregateHitCount, expectedHitsCount);
+		softAssertion.assertAll();
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
 		login.logout();
 	}
 

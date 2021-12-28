@@ -2355,6 +2355,16 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");
 	}
 
+	//Added by jeevitha
+	public Element BatchredactionBackwardNavigate() {
+		return driver.FindElementByXPath("//i[@id='PrevAllBatchRedaction']");
+	}
+
+	public Element componentBatchredactionBackwardNavigate(String search) {
+		return driver.FindElementByXPath(
+				"//div[contains(text(),'" + search + "')]//..//i [@class='fa fa-chevron-left DocViewBatchPrevious']");
+	}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -17423,5 +17433,44 @@ public class DocViewPage {
 		softAssertion.assertFalse(afterSave);
 		driver.waitForPageToBeReady();
 		softAssertion.assertAll();
+	}
+	
+	
+	/**
+	 * @Author Jeevitha
+	 * @param count
+	 * @param verifyBatchRedacPrevious
+	 * @param verifyCompRedactPrevious
+	 * @param getCountAfterNavigating
+	 * @param search
+	 */
+	public void navigatePreviousRedact(int count, boolean verifyBatchRedacPrevious, boolean verifyCompRedactPrevious,
+			Element getCountAfterNavigating, String search) {
+
+		for (int i = 1; i <= count; i++) {
+			if (verifyBatchRedacPrevious) {
+				BatchredactionBackwardNavigate().waitAndClick(10);
+				System.out.println(" Redactions Ratio After Navigating : " + getCountAfterNavigating.getText());
+				base.stepInfo("Redactions Ratio After Navigating : " + getCountAfterNavigating.getText());
+				if (highlitedRedacrtion().isElementAvailable(3)) {
+					System.out.println(" Redaction is highlited");
+					base.stepInfo(" Redaction is highlited");
+				} else {
+					base.stepInfo("Redaction Is Not Highlighted");
+				}
+			}
+
+			if (verifyCompRedactPrevious) {
+				componentBatchredactionBackwardNavigate(search).waitAndClick(10);
+				System.out.println(" Redactions Ratio After Navigating : " + getCountAfterNavigating.getText());
+				base.stepInfo("Redactions Ratio After Navigating : " + getCountAfterNavigating.getText());
+				if (highlitedRedacrtion().isElementAvailable(3)) {
+					System.out.println(" Redaction is highlited");
+					base.stepInfo(" Redaction is highlited");
+				} else {
+					base.stepInfo("Redaction Is Not Highlighted");
+				}
+			}
+		}
 	}
 }
