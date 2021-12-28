@@ -399,11 +399,6 @@ public class DocView_Sprint2_Regression {
 
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 9)
 	public void verifyRedactionStabilityinAllDocTypes() throws Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52303, RPMXCON-52304");
@@ -425,8 +420,6 @@ public class DocView_Sprint2_Regression {
 
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 6)
 	public void printRedactedPdfasReviewer() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 
 // Selecting Document from Session search	
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -540,9 +533,6 @@ public class DocView_Sprint2_Regression {
 
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 11)
 	public void checkingRectangleRedactionWhileRefreshingPage() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
@@ -592,7 +582,7 @@ public class DocView_Sprint2_Regression {
 		Thread.sleep(4000);
 //Thread sleep added for the page to adjust resolution		
 		actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 0, 0).clickAndHold()
-				.moveByOffset(200, 50).release().build().perform();
+				.moveByOffset(100, 20).release().build().perform();
 		baseClass.stepInfo("text for remarks has been selected");
 		actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 		actions.click().build().perform();
@@ -622,9 +612,6 @@ public class DocView_Sprint2_Regression {
 
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 13)
 	public void textRedactionWithAudioDocs() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52202");
@@ -655,9 +642,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 14)
 	public void textRedactionCancleButtonVerification() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		Robot robot = new Robot();
@@ -694,12 +678,8 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 15)
 	public void verifyToolTipMouseOverCodeSameAsLast() throws Exception {
-
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-
 		String assignmentName = "assignmentA1" + Utility.dynamicNameAppender();
-		int pureHitCount = 97;
+		int pureHitCount = 201;
 		// Selecting Document from Session search
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		AssignmentsPage assignmentPage = new AssignmentsPage(driver);
@@ -757,11 +737,8 @@ public class DocView_Sprint2_Regression {
 	 * bullet points and redaction applied at bullet points
 	 */
 
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 16)
 	public void printingDocWithBulletPoints() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52228");
@@ -779,17 +756,14 @@ public class DocView_Sprint2_Regression {
 		baseClass.VerifySuccessMessage(
 				"Your document is being printed. Once it is complete, the \"bullhorn\" icon in the upper right-hand corner will turn red, and will increment forward.");
 		baseClass.stepInfo("Success message has been verified");
-		try {
-			driver.WaitUntil((new Callable<Boolean>() {
-				public Boolean call() throws Exception {
-					return docViewRedact.bullhornIconRedColour().Visible()
-							&& docViewRedact.bullhornIconRedColour().Enabled();
-				}
-			}), Input.wait30);
-			docViewRedact.bullhornIconRedColour().waitAndClick(30);
-		} catch (Exception e) {
-			docViewRedact.bullhornIcon().waitAndClick(5);
-		}
+		
+baseClass.waitForElement(docViewRedact.bullhornIconRedColour());
+if (docViewRedact.bullhornIconRedColour().isDisplayed()) {
+			docViewRedact.bullhornIconRedColour().waitAndClick(30);}
+else {
+		
+			docViewRedact.bullhornIcon().waitAndClick(5);}
+		
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return docViewRedact.firstTaskInList().Visible() && docViewRedact.firstTaskInList().Enabled();
@@ -810,9 +784,6 @@ public class DocView_Sprint2_Regression {
 
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 17)
 	public void persistentHitCheckAudioDocs() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -841,11 +812,8 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for docs from assignment DocView- sprint 3
 	 */
 
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 18)
 	public void persistentHitCheckNonAudioDocs() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51871");
@@ -878,9 +846,6 @@ public class DocView_Sprint2_Regression {
 
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void persistentHitCheckAudioDocsChildWindow() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		ReusableDocViewPage reusabledocviewpage = new ReusableDocViewPage(driver);
@@ -902,9 +867,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 19)
 	public void persistentHitCheckAudioDocsChildWindowAsPA() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		loginPage.logout();
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -927,9 +889,6 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 20)
 	public void VerifySavedTextRemark() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
@@ -972,14 +931,14 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.confirmDeleteRemarksBtn().waitAndClick(5);
 		baseClass.passedStep("Remarks have been deleted");
 		driver.waitForPageToBeReady();
-		try {
+		if(docViewRedact.get_textHighlightedColor().isDisplayed()) {
 			String color2 = docViewRedact.get_textHighlightedColor().getWebElement().getCssValue("fill");
 			String hex2 = Color.fromString(color2).asHex();
 			System.out.println(hex2);
 			if (hex1.equalsIgnoreCase(hex2)) {
 				baseClass.failedStep("The color for the Highlighted text is same");
 			}
-		} catch (Exception e) {
+		} else{
 			baseClass.passedStep("The Highlighted text is not present after the remark has been Deleted");
 		}
 	}
@@ -989,11 +948,8 @@ public class DocView_Sprint2_Regression {
 	 * Verifying persistent hit for non audio docs as RMU and Rev from assignments
 	 * DocView- sprint 3
 	 */
-//	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 21)
 	public void persistentHitCheckNonAudioAsRev() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-51764");
@@ -1022,9 +978,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 22)
 	public void textRemarksWithoutText() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52216");
@@ -1053,9 +1006,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 23)
 	public void verifyDeleteIconRectangleRedaction() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52215");
@@ -1099,8 +1049,6 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 24)
 	public void verifyKeywordHighlitingAfterBatchRedaction() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-53421");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1130,9 +1078,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 25)
 	public void verifyingPersistenthitAudioPanel() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52190");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
@@ -1154,9 +1099,6 @@ public class DocView_Sprint2_Regression {
 	 */
 	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 26)
 	public void verifyTextRedactionOption() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52191");
 // Verifying As RMU
@@ -1192,7 +1134,6 @@ public class DocView_Sprint2_Regression {
 		} else {
 			assertTrue(false);
 		}
-		;
 	}
 
 	/**
@@ -1202,9 +1143,6 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 27)
 	public void textRemarksWithoutTextInRectangleRedaction() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
 		baseClass.stepInfo("Test case Id: RPMXCON-52212");
@@ -1217,18 +1155,19 @@ public class DocView_Sprint2_Regression {
 		docViewRedact.redactRectangleUsingOffset(0, 0, 100, 80);
 		docViewRedact.selectingRedactionTag("Default Redaction Tag");
 		baseClass.stepInfo("Rectangle redaction drawn in selected document without text and redaction Tag selected");
-		try {
+		
 			actions.moveToElement(docViewRedact.getDocView_Redactrec_textarea().getWebElement(), 50, 40).click();
 			actions.build().perform();
 			baseClass.stepInfo("The drawn redaction has been selected");
 			actions.moveToElement(docViewRedact.addRemarksBtn().getWebElement());
 			actions.click().build().perform();
+			if(docViewRedact.addRemarksTextArea().Enabled()) {
 			actions.moveToElement(docViewRedact.addRemarksTextArea().getWebElement());
 			actions.click();
 			actions.sendKeys("Remark by RMU");
 			actions.build().perform();
 			baseClass.failedStep("Created Remarks as RMU");
-		} catch (Exception e) {
+		} else{
 			baseClass.passedStep("Remarks as RMU Can not be selected as text area is not selected");
 
 		}
@@ -1242,9 +1181,6 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 28)
 	public void verifyHighlitingInDocView() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		Robot robot = new Robot();
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -1291,9 +1227,6 @@ public class DocView_Sprint2_Regression {
 	 */
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 29)
 	public void textRemarksWithTextInRectangleRedaction() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver.getWebDriver(), 100);
 		Actions actions = new Actions(driver.getWebDriver());
 		baseClass = new BaseClass(driver);
@@ -1339,7 +1272,7 @@ public class DocView_Sprint2_Regression {
 				"Verify on click of any of the thumbnail respective page should be displayed in doc view panel");
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
-		sessionsearch.basicContentSearch(Input.docIdThumbnails);
+		sessionsearch.basicContentSearch(Input.randomText);
 		sessionsearch.ViewInDocView();
 		docViewRedact.clickingThumbnailIcon();
 		if (docViewRedact.thumbNailsPanel().isElementPresent() == true) {
@@ -1370,12 +1303,8 @@ public class DocView_Sprint2_Regression {
 
 //	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 31)
 	public void checkingThumbnailsIconFromAssignment() throws Exception {
-		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
-		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
-		driver.Manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 		baseClass = new BaseClass(driver);
-
 		baseClass.stepInfo("Test case id : RPMXCON-51008");
 		baseClass.stepInfo(
 				"Verify user can see the thumbnail image of each page of the document being viewed on doc view page in thumbnail panel when redirecting from assignment page");
@@ -1523,7 +1452,6 @@ public class DocView_Sprint2_Regression {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51625");
 		baseClass.stepInfo("Needs to verify with out adding remarks should not save");
-
 		DocViewRedactions docViewRedact = new DocViewRedactions(driver);
 		SessionSearch sessionsearch = new SessionSearch(driver);
 		Actions actions = new Actions(driver.getWebDriver());

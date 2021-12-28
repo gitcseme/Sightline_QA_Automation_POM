@@ -1469,12 +1469,14 @@ public Element getSecondSearchIcon() {
 	}
 
 	public void checkingPersistentHitPanel() throws Exception {
-
+		base = new BaseClass(driver);
+		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return persistantHitBtn().Visible() && persistantHitBtn().Enabled();
 			}
 		}), Input.wait30);
+		base.waitForElement(persistantHitBtn());	
 		persistantHitBtn().waitAndClick(30);
 
 	}
@@ -2937,11 +2939,9 @@ public Element getSecondSearchIcon() {
 				driver.waitForPageToBeReady();
 			}
 		}
-
 		for (int i = 1; i <= 4; i++) {
 			Thread.sleep(4000);
 			miniDoclistTable(i).waitAndClick(10);
-
 		}
 		driver.switchTo().window(parentWindow);
 
@@ -2950,12 +2950,12 @@ public Element getSecondSearchIcon() {
  	
 
 	public void clickingConceptuallySimilarTab() {
+		driver.scrollingToElementofAPage(getConceptuallySimilarTab());
  		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() throws Exception {
 				return getConceptuallySimilarTab().Visible() && getConceptuallySimilarTab().Enabled();
 			}
 		}), Input.wait30);
- 		driver.scrollingToElementofAPage(getConceptuallySimilarTab());
  		getConceptuallySimilarTab().waitAndClick(30);
  		driver.scrollingToBottomofAPage();
  		
