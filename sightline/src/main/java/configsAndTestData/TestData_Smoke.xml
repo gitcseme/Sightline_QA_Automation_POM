@@ -30,9 +30,9 @@
      <Panel>Conceptually Similar</Panel>
      <pureHitCount1>267</pureHitCount1>
      <docName>DocID</docName>
-     <MiniDocId>ID00003846</MiniDocId>
-  	   <ThreadQuery>"testing the same"</ThreadQuery>
-  	   <NewDocId>ID00000171</NewDocId>
+  <MiniDocId>ID00000102</MiniDocId>
+	<ThreadQuery>"testing the same"</ThreadQuery>
+	<NewDocId>ID00001178</NewDocId>
   	   <MetaDataId>ID00000015</MetaDataId>
      <documentToBeScrolled>4028</documentToBeScrolled>
      <conceptualDocument>ID00000209</conceptualDocument>
@@ -111,6 +111,7 @@
     <!--  Added by Jeevitha -->
     <colorCodeOfRed>#FF0000</colorCodeOfRed>
     <crammerdocumentID>ID00001191</crammerdocumentID>
-
+<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
+		<conceptualDoc>ID00000001</conceptualDoc>
 </TestData>
 
