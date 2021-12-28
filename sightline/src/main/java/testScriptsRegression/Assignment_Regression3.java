@@ -312,7 +312,7 @@ public class Assignment_Regression3 {
 		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
 		String assignmentName = "AR3assignment" + Utility.dynamicNameAppender();
-		String keywordName = Input.testData1;
+		String keywordName = "keyword" + Utility.dynamicNameAppender();
 		keyword = new KeywordPage(driver);
 		this.driver.getWebDriver().get(Input.url + "Keywords/Keywords");
 		keyword.addKeywordWithColor(keywordName, Input.KeyWordColour);
