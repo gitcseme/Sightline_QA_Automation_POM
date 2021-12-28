@@ -324,9 +324,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify when user select action as 'Remove code same' for
 	 *              documents which are not marked as code same as this from
 	 *              conceptual RPMXCON-51225
-	 * Not stab
+	 * stab
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 5)
 	public void verifyConceputallyTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
 			String password) throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51225");
@@ -344,7 +344,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = Input.conceptualDocument;
+		String docsToBeSelected = Input.conceptualDoc;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
@@ -371,9 +371,9 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @Description : To verify user can select Multiple documents in Analytics
 	 *              panel > Family Members and Select Action as 'Remove Code Same as
 	 *              this' RPMXCON-51216
-	 * Not stab
+	 * stab
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyWhenUserSelectsMulitiDocsAndPerformRemoveCodeSameAs() throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51216");
 		baseClass.stepInfo(
@@ -436,7 +436,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select docs from Mini docs List and perform action
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(Input.familyDocumentForReviewer);
 
 		// select docs from family member and action as code same as
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
@@ -456,8 +456,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              member RPMXCON-51224
 	 * 
 	 */
-	// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
-	// priority = 7)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },priority = 7)
 	public void verifyFamilyMemberTabWhenUserSelectsDocsWhicAreNotMarkedAsCodeSameAs(String fullName, String userName,
 			String password) throws ParseException, InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51224");
@@ -475,7 +474,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "FamilyMember";
+		String docsToBeSelected = Input.familyDocument;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
@@ -485,7 +484,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// select docs and perform code same as
 		baseClass.stepInfo("Step 2: Select multiple documents from family member and action as 'Code same as this'");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// select docs which are not marked as code same as
@@ -504,7 +503,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51218
 	 * 
 	 */
-	//// //@Test(enabled = true, groups = { "regression" }, priority = 8)
+	//@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51218");
@@ -591,7 +590,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              and Select Action as 'Remove Code Same as this' RPMXCON-51217
 	 * Not stab
 	 */
-	//@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyWhenUserSelectsMiniDocListMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51217");
@@ -1103,7 +1102,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//// //@Test(enabled = true, groups = { "regression" }, priority = 15)
+	//@Test(enabled = true, groups = { "regression" }, priority = 15)
 	public void verifyCheckMarkIconDisplayedTheConceptuallySimilar() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51059");
@@ -1338,7 +1337,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * 
 	 */
-	//@Test(enabled = false, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1355,7 +1354,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "FamilyMember";
+		String docsToBeSelected = Input.familyDocument;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -1371,7 +1370,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// FamilyMember and perform code same as
 		baseClass.stepInfo("Step 4: select documents from family member and action as 'Code Same as this'");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// Select Docs from family member and action As Remove Code Same As
@@ -1394,7 +1393,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * selected document
 	 */
 
-	// //@Test(enabled = true, groups = { "regression" }, priority = 18) // chk with
+	@Test(enabled = true, groups = { "regression" }, priority = 18) // chk with
 	// mohan
 	public void verifyRemarksForSelectedDocsAfterImpersonating() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1471,7 +1470,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * without selecting document.
 	 */
 
-	//@Test(enabled = false, groups = { "regression" }, priority = 19)
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
 	public void verifyViewDocumnetDisableWithoutSelectingDocument() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1507,7 +1506,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *               when document is viewed from analytics panel
 	 */
 
-	// //@Test(enabled = true, groups = { "regression" }, priority = 20)
+	//@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1637,7 +1636,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = false, groups = { "regression" }, priority = 21)
+	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyCannotViewTheActionCodeSameAsNearDupes() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50941");
@@ -1783,7 +1782,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
+	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
 	// priority = 24)
 	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
@@ -1830,7 +1829,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              clicks on the icon in Analytical Panel->Near Dupes.
 	 *              RPMXCON-50956
 	 */
-	//@Test(enabled = false, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
+	@Test(enabled = true, dataProvider = "userDetailss", groups = { "regression" }, priority = 25)
 	public void verifyCompareSimilarDocumentIsDisplayedOnceTheIconIsClicked(String roll, String userName,
 			String password, String impersonate) throws InterruptedException {
 
@@ -2379,7 +2378,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
 	public void verifyCompareSimilarDocsInNearDupe(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
