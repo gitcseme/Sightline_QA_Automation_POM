@@ -1282,6 +1282,9 @@ public class AssignmentsPage {
 	        return driver.FindElementByXPath(
 	                "//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i");
 	    }
+		public Element getResponsiveCheked() {return driver.FindElementByXPath("//div[@id='item1']//div[@id='0_radiogroup']//div[1]//div[1]//label[1]//span[1]");}
+	    public Element getNonPrivilegeRadio() {return driver.FindElementByXPath("//input[@id='9_radio']//parent::label//span");}
+	    public Element getDocument_CommentsTextBox() {return driver.FindElementByXPath("//textarea[@id='1_textarea']");}
 		
 		
 		//*[@id='AdditionalPreferences_IsAllowSaveWithoutCompletion']/following-sibling::i
@@ -3872,6 +3875,7 @@ public class AssignmentsPage {
 			}
 			bc.waitForElement(completeBtn());
 			completeBtn().isElementAvailable(10);
+			editCodingForm(Input.searchString1);
 			completeBtn().waitAndClick(5);
 		}
 		dashBoardBtn().waitAndClick(2);
@@ -7219,6 +7223,10 @@ public class AssignmentsPage {
 		List<String> ActualMetadataList = new ArrayList<String>();
 		bc.waitForElementCollection(getRetainedMetadataListInReviewerPage());
 		ActualMetadataList = bc.availableListofElements(getRetainedMetadataListInReviewerPage());
+		if(ActualMetadataList.size()!=0) {
+			bc.waitForElementCollection(getRetainedMetadataListInReviewerPage());
+			ActualMetadataList = bc.availableListofElements(getRetainedMetadataListInReviewerPage());
+		}
 		System.out.println(ActualMetadataList);
 		System.out.println(ActualMetadataList.size());
 		try {
@@ -8398,4 +8406,14 @@ public class AssignmentsPage {
         getAssignmentSaveButton().waitAndClick(5);
         bc.CloseSuccessMsgpopup();
     }
+    public void editCodingForm(String comment) {
+		driver.waitForPageToBeReady();
+		bc.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().waitAndClick(5);
+		bc.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().waitAndClick(5);
+		bc.waitTillElemetToBeClickable(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().Clear();
+		getDocument_CommentsTextBox().SendKeys(comment);
+	}
   }

@@ -2942,7 +2942,7 @@ public class SessionSearch {
 				return getWP_FolderBtn().Visible();
 			}
 		}), Input.wait30);
-		getWP_FolderBtn().Click();
+		getWP_FolderBtn().waitAndClick(10);
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getTree().Visible();
@@ -2957,7 +2957,7 @@ public class SessionSearch {
 				iterable_element.click();
 			}
 		}
-		getMetaDataInserQuery().Click();
+		getMetaDataInserQuery().waitAndClick(10);
 		driver.scrollPageToTop();
 
 	}
@@ -3417,7 +3417,7 @@ public class SessionSearch {
 				return getModifyASearch().Visible();
 			}
 		}), Input.wait90);
-		getModifyASearch().Click();
+		getModifyASearch().waitAndClick(10);
 		driver.waitForPageToBeReady();
 		if (modifiableQueryType == "savedsearch") {
 			driver.WaitUntil((new Callable<Boolean>() {
@@ -3447,14 +3447,14 @@ public class SessionSearch {
 					return getModifysearchOKBtn().Visible();
 				}
 			}), Input.wait30);
-			getModifysearchOKBtn().Click();
+			getModifysearchOKBtn().waitAndClick(5);
 		} else {
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getModifysearchNOBtn().Visible();
 				}
 			}), Input.wait30);
-			getModifysearchNOBtn().Click();
+			getModifysearchNOBtn().waitAndClick(5);
 		}
 		driver.scrollPageToTop();
 		driver.WaitUntil((new Callable<Boolean>() {
@@ -3462,7 +3462,7 @@ public class SessionSearch {
 				return getQuerySearchButton().Visible() && getQuerySearchButton().Enabled();
 			}
 		}), Input.wait60);
-		getQuerySearchButton().Click();
+		getQuerySearchButton().waitAndClick(5);
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {

@@ -1430,7 +1430,7 @@ public class ReusableDocViewPage {
 	 */
 	public void verifyCompletedIconNotDisplayed() {
 		driver.waitForPageToBeReady();
-		if(getverifyCodeSameAsLast().isElementPresent()==false) {
+		if(getverifyCodeSameAsLast().isElementAvailable(5)==false) {
 			base.passedStep("Tick icon in mini doc list is not displayed for the uncompletd documents");
 		}else {
 			base.failedStep("Tick icon in mini doc list is displayed for the uncompletd documents");
