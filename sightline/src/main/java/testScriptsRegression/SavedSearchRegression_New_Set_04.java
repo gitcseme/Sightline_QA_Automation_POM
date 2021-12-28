@@ -1864,7 +1864,7 @@ public class SavedSearchRegression_New_Set_04 {
 		List<String> newNodeList = new ArrayList<>();
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
 		Boolean inputValue = true;
-		int aggregateHitCount, noOfNode = 2;
+		int aggregateHitCount, noOfNode = 3;
 		String folderName = "Folder" + Utility.dynamicNameAppender();
 		base.stepInfo("Test case Id: RPMXCON-48922 - Saved Search Sprint 09");
 		base.stepInfo(
@@ -1934,7 +1934,7 @@ public class SavedSearchRegression_New_Set_04 {
 		List<String> newNodeList = new ArrayList<>();
 		HashMap<String, String> nodeSearchpair = new HashMap<>();
 		Boolean inputValue = true;
-		int finalCountresult, noOfNode = 2, purehitCount, aggregateHitCount;
+		int finalCountresult, noOfNode = 3, purehitCount, aggregateHitCount;
 		String finalCount;
 		String assignName = "assignName" + Utility.dynamicNameAppender();
 		base.stepInfo("Test case Id: RPMXCON-48923 - Saved Search Sprint 09");
@@ -2087,6 +2087,117 @@ public class SavedSearchRegression_New_Set_04 {
 		// Delete Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
 		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/27/21 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of all child search groups "My Saved Search"
+	 *         and searches when User Navigate Child Search groups to DocList
+	 *         -RPMXCON-48916 Sprint 09
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void aggregateResultWhileDocListAction() throws InterruptedException, ParseException {
+
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		int finalCountresult, noOfNode = 3, aggregateHitCount;
+		base.stepInfo("Test case Id: RPMXCON-48916 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Navigate Child Search groups to DocList");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("RMU", "No", noOfNode);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Calculate the unique doc count for the respective searches
+		aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.selectproject();
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + newNodeList.get(0));
+		saveSearch.selectNode1(newNodeList.get(0));
+
+		// verify Assign Button Enabled
+		driver.waitForPageToBeReady();
+		Element docListBtnStatus = saveSearch.getDocListIcon();
+		saveSearch.checkButtonEnabled(docListBtnStatus, "Should be Enabled", "DocList");
+
+		// Get the count of total no.of document list
+		finalCountresult = saveSearch.launchDocListViaSSandReturnDocCount();
+
+		base.stepInfo("Aggregate Hit count : " + aggregateHitCount);
+		base.stepInfo("Finalize count : " + finalCountresult);
+		base.digitCompareEquals(finalCountresult, aggregateHitCount,
+				"Shows all documents that are in the aggregate results set of all child search groups and searches",
+				"Count Mismatches");
+
+		// Delete Node
+		driver.scrollPageToTop();
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0), true, true);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/27/21 Modified date:N/A Modified by: Description
+	 *         : Verify that user is not able to save a session search onto an
+	 *         existing saved search that is progress. RPMXCON-48913 Sprint 09
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 24)
+	public void executionErrorInProgress() throws InterruptedException, ParseException {
+
+		String savedSearchName = "Search Name" + UtilityLog.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-48913 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that user is not able to save a session search onto an existing saved search that is progress.");
+		base.stepInfo("Flow can only be done for inputs with bulk data");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		int pureHit = session.basicContentSearch(Input.searchStringStar);
+		session.saveSearch(savedSearchName);
+		base.selectproject();
+		session.basicContentSearch(Input.testData1);
+
+		// Execute
+		base.stepInfo("Select an existing saved search that is progress and try to Save it");
+		saveSearch.savedSearch_Searchandclick(savedSearchName);
+		saveSearch.getSavedSearchExecuteButton().Click();
+
+		// Verify Overwrite
+		session.navigateToSessionSearchPageURL();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, savedSearchName, "First", "ExecutionErrorInProgress", "",
+				null);
+
+		// Delete Search
+		saveSearch.deleteSearch(savedSearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

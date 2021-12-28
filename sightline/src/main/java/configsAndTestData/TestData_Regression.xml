@@ -43,10 +43,8 @@
 	<timeStampColumnName>Time Stamp</timeStampColumnName>
 
 	<!-- Production path for redaction master doc -->
-	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf
-	</MasterPDF1location>
-	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf
-	</MasterPDF2location>
+	<MasterPDF1location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDFAllRedact.pdf</MasterPDF1location>
+	<MasterPDF2location>\\hlnas20\\mtpsldev\\Automation_Redact\\MasterPDF2Redact.pdf</MasterPDF2location>
 
 	<!-- Docview Analytics -->
 	<Panel>Conceptually Similar</Panel>
@@ -119,8 +117,7 @@
 	<tagNameTechnical> Technical_Issue</tagNameTechnical>
 	<signatureDocumentID>ID00005088</signatureDocumentID>
 	<searchString20Docs>conceptually</searchString20Docs>
-	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation
-	</prodPathUAT>
+	<prodPathUAT>\\qanas01.consiliotest.com\Sightline_UAT\Productions\Automation</prodPathUAT>
 	<bates>Bates</bates>
 	<batesNumber>BatesNumber</batesNumber>
 	<ChildBates>ChildBates</ChildBates>
@@ -180,22 +177,19 @@
 	<docHighlightColor>#CDD9E1</docHighlightColor>
 	<sortDataBy>DocID</sortDataBy>
 	<sortType>Ascending</sortType>
-	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads
-	</fileDownloadLocation>
+	<fileDownloadLocation>C:\\BatchPrintFiles\\downloads</fileDownloadLocation>
 	<completedWithErrColorCodeBR>#F88C00</completedWithErrColorCodeBR>
 	<shareSearchPA>Shared With Project Administrator</shareSearchPA>
-	<shareSearchDefaultSG>Shared with Default Security Group
-	</shareSearchDefaultSG>
+	<shareSearchDefaultSG>Shared with Default Security Group</shareSearchDefaultSG>
 	<mySavedSearch>My Saved Search</mySavedSearch>
 	<zeroPureHitString>#$%^</zeroPureHitString>
-	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\
-	</invalidBatchFileNewLocation>
+	<invalidBatchFileNewLocation>\Misc\InvalidBatchFiles\</invalidBatchFileNewLocation>
 	<xlsBatchFile>Invalid_xlx_BatchSearchTemplate.xls</xlsBatchFile>
-	<invalidBatchFileFormatErrMsg>Please select a valid file of type
-		xls/xlsx</invalidBatchFileFormatErrMsg>
+	<invalidBatchFileFormatErrMsg>Please select a valid file of typexls/xlsx</invalidBatchFileFormatErrMsg>
 	<metaDataCustodianNameInput>Andrew</metaDataCustodianNameInput>
 	<selectionHighlightColor>#B0BED9</selectionHighlightColor>
 	<searchString7>term</searchString7>
+	<errMsgSinceExecutionInProgress>40001000015 : Existing SavedSearch is in progress, you cannot overwrite it. Please wait until SavedSearch is completed.</errMsgSinceExecutionInProgress>
 
 	<!-- Added by Gopinath Modified date - 03/09/2021 -->
 

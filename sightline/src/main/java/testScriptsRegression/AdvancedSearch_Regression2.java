@@ -28,8 +28,6 @@ import pageFactory.Utility;
 import testScriptsSmoke.Input;
 
 public class AdvancedSearch_Regression2 {
-	
-	
 
 	Driver driver;
 	LoginPage loginPage;
@@ -77,9 +75,11 @@ public class AdvancedSearch_Regression2 {
 	 * @throws InterruptedException
 	 * @description To verify as an user login into the Application, user will be
 	 *              able to search based on Remarks text on Content & Metadata in
-	 *              basic search Modified on : 10/26/21 - DataProvider name and try block
+	 *              basic search Modified on : 10/26/21 - DataProvider name and try
+	 *              block
 	 */
-	//@Test(dataProvider = "UsersWithoutPA", groups = { "regression" }, priority = 1,enabled = true)
+	// @Test(dataProvider = "UsersWithoutPA", groups = { "regression" }, priority =
+	// 1,enabled = true)
 	public void verifyRemarks(String username, String password) throws InterruptedException {
 		String RemarksName = "Remarks" + Utility.dynamicNameAppender();
 		loginPage.loginToSightLine(username, password);
@@ -106,7 +106,6 @@ public class AdvancedSearch_Regression2 {
 		}
 
 	}
-
 
 	/**
 	 * @author Iyappan.Kasinathan
@@ -211,7 +210,7 @@ public class AdvancedSearch_Regression2 {
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
-	 * @throws AWTException 
+	 * @throws AWTException
 	 * @description Validate search with combination of Content/Metadata, Audio,
 	 *              Conceptual, WorkProduct
 	 */
@@ -230,7 +229,7 @@ public class AdvancedSearch_Regression2 {
 			search.getIntoFullScreen();
 			search.bulkFolder(FolderName);
 			search.getExitFullScreen();
-					}
+		}
 		try {
 			int ExpectedPureHit = search.verifyCombinedSearch(FolderName, "folder", "no", "AND", "NOT", "OR");
 			baseClass.stepInfo("PureHit count after combined search " + ExpectedPureHit);
@@ -286,7 +285,7 @@ public class AdvancedSearch_Regression2 {
 	 * @description Verify that Term Operator - Any is working properly on Advanced
 	 *              Search screen
 	 */
-	//@Test(groups = { "regression" }, priority = 6,enabled = false)
+	// @Test(groups = { "regression" }, priority = 6,enabled = false)
 
 	public void verifyTermOperator() throws InterruptedException {
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -386,7 +385,7 @@ public class AdvancedSearch_Regression2 {
 	 *               Completed Assignment workproduct (SysAdmin/DAU/PAU impersonated
 	 *               as RMU) RPMXCON-57268
 	 */
-	@Test(groups = { "regression" }, priority = 8, enabled= true)
+	@Test(groups = { "regression" }, priority = 8, enabled = true)
 	public void verifyDistributedListUsingImpersonation() throws InterruptedException, AWTException {
 		baseClass.stepInfo(
 				"Validate distributed list and results for searching by Completed Assignment workproduct(SysAdmin/DAU/PAU impersonated as RMU)");
@@ -440,16 +439,16 @@ public class AdvancedSearch_Regression2 {
 		baseClass.stepInfo("Pure hit count after Distribution of Docs  is " + PureHitCountAfterDistribution1);
 		assgnPage.deleteAssgnmntUsingPagination(assignmentName);
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
-	 * @description: Verify that "Export Data" window have a closing "x" button in the top right.
-	 *               RPMXCON-47181
+	 * @description: Verify that "Export Data" window have a closing "x" button in
+	 *               the top right. RPMXCON-47181
 	 */
-	@Test(groups = { "regression" }, priority = 9,enabled = true)
+	@Test(groups = { "regression" }, priority = 9, enabled = true)
 	public void verifyExportDataPopUpCloseButton() throws InterruptedException {
-		baseClass.stepInfo(
-				"Verify that \"Export Data\" window have a closing \"x\" button in the top right.");
+		baseClass.stepInfo("Verify that \"Export Data\" window have a closing \"x\" button in the top right.");
 		baseClass.stepInfo("Test case Id: RPMXCON-47181");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		baseClass.stepInfo("Metadata search is done by basic search and validate export data popup close button");
@@ -462,16 +461,15 @@ public class AdvancedSearch_Regression2 {
 		search.exportData();
 		search.closeExportDataPopup();
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
-	 * @description: Search Query Saved Using Advanced Search 
-	 *               RPMXCON-47214
+	 * @description: Search Query Saved Using Advanced Search RPMXCON-47214
 	 */
 	@Test(groups = { "regression" }, priority = 10)
 	public void verifySavedSearchQuery() throws InterruptedException {
-		baseClass.stepInfo(
-				"Search Query Saved Using Advanced Search ");
+		baseClass.stepInfo("Search Query Saved Using Advanced Search ");
 		baseClass.stepInfo("Test case Id: RPMXCON-47214");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		String savedSearchName = "test" + Utility.dynamicNameAppender();
@@ -487,40 +485,46 @@ public class AdvancedSearch_Regression2 {
 
 		}
 		try {
-			softAssertion.assertEquals(search.getSavedSearchCount(savedSearchName).getText(),Integer.toString(pureHits));
+			softAssertion.assertEquals(search.getSavedSearchCount(savedSearchName).getText(),
+					Integer.toString(pureHits));
 			softAssertion.assertAll();
 			baseClass.passedStep("Purehits of saved search query is displayed as expected");
-		}catch(Exception e) {
+		} catch (Exception e) {
 			baseClass.failedStep("Purehits of saved search query is not displayed as expected");
 		}
 		savedSearch.SaveSearchDelete(savedSearchName);
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
-	 * @description: Verify that pre-defined list of special characters should be disallowed to be
-	 *               entered by the user in audio search
+	 * @description: Verify that pre-defined list of special characters should be
+	 *               disallowed to be entered by the user in audio search
 	 */
 	@Test(groups = { "regression" }, priority = 11)
-	public void VerifyWarningMessage_AudioSearchSpecialChars() throws InterruptedException{
-		baseClass.stepInfo("Verify that pre-defined list of special characters should be disallowed to be entered by the user in audio search");
+	public void VerifyWarningMessage_AudioSearchSpecialChars() throws InterruptedException {
+		baseClass.stepInfo(
+				"Verify that pre-defined list of special characters should be disallowed to be entered by the user in audio search");
 		baseClass.stepInfo("Test case Id: RPMXCON-47135");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
-		String searchText="~ ! @ # $ % & * ( ) { } | : ; , . ? / = '";
+		String searchText = "~ ! @ # $ % & * ( ) { } | : ; , . ? / = '";
 		search.VerifyaudioSearch_DisallowedSpecialCharachters(searchText);
 		softAssertion.assertAll();
 	}
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
-	 * @description Verify that user should be able to execute the saved audio search which involve content in other
-	 * languages - eg. German, Japanese characters in search text
+	 * @description Verify that user should be able to execute the saved audio
+	 *              search which involve content in other languages - eg. German,
+	 *              Japanese characters in search text
 	 */
-	@Test(groups = { "regression" }, priority =12 )
+	@Test(groups = { "regression" }, priority = 12)
 	public void AudioSearch_SaveAndExecute() throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47138");
-		baseClass.stepInfo("Verify that user should be able to execute the saved audio search which involve content in other"
-				+ " languages - eg. German, Japanese characters in search text");
+		baseClass.stepInfo(
+				"Verify that user should be able to execute the saved audio search which involve content in other"
+						+ " languages - eg. German, Japanese characters in search text");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		search.VerifyaudioSearchThreshold("grün", "German", "min");
 		String actualPH1 = search.verifyPureHitsCount();
@@ -535,57 +539,62 @@ public class AdvancedSearch_Regression2 {
 		search.saveSearchAdvanced_New(Search2, "My Saved Search");
 		savedSearch.VerifySavedSearchExecuteStatus(Search2);
 	}
-	
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
-	 * @description Verify that user should be able to save audio search which involve content in other 
-	 * languages - eg. German, Japanese characters in search text
+	 * @description Verify that user should be able to save audio search which
+	 *              involve content in other languages - eg. German, Japanese
+	 *              characters in search text
 	 */
-	@Test(groups = { "regression" }, priority =13 )
+	@Test(groups = { "regression" }, priority = 13)
 	public void AudioSearch_Save() throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47137");
-		baseClass.stepInfo("Verify that user should be able to save audio search which involve content in other languages - "
-				+ "eg. German, Japanese characters in search text");
+		baseClass.stepInfo(
+				"Verify that user should be able to save audio search which involve content in other languages - "
+						+ "eg. German, Japanese characters in search text");
 		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
 		search.VerifyaudioSearchThreshold("grün", "German", "min");
 		String actualPH1 = search.verifyPureHitsCount();
-		baseClass.stepInfo("Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
+		baseClass.stepInfo(
+				"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
 		search.saveSearchAdvanced_New(Search1, "My Saved Search");
 		baseClass.selectproject();
 		String Search2 = "AudioSearch" + Utility.dynamicNameAppender();
 		search.VerifyaudioSearchThreshold("です", "Japanese", "min");
 		String actualPH2 = search.verifyPureHitsCount();
-		baseClass.stepInfo("Audio Search is done using Japnese language  PureHit is displayed as expected : " + actualPH2 + "");
+		baseClass.stepInfo(
+				"Audio Search is done using Japnese language  PureHit is displayed as expected : " + actualPH2 + "");
 		search.saveSearchAdvanced_New(Search2, "My Saved Search");
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
-	 * @description Verify that user should be able to edit the existing saved audio search which with the 
-	 *              content in other languages - eg. German, Japanese in search text
+	 * @description Verify that user should be able to edit the existing saved audio
+	 *              search which with the content in other languages - eg. German,
+	 *              Japanese in search text
 	 */
 	@Test(dataProvider = "Users", groups = { "regression" }, priority = 14)
 	public void VerifyAudio_ModifySearchWithOtherLanguages(String username, String password)
 			throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47140");
-		baseClass.stepInfo("Verify that user should be able to edit the existing saved audio search which with the content"+
-		                        " in other languages - eg. German, Japanese in search text");
+		baseClass.stepInfo(
+				"Verify that user should be able to edit the existing saved audio search which with the content"
+						+ " in other languages - eg. German, Japanese in search text");
 		loginPage.loginToSightLine(username, password);
 		search.VerifyaudioSearchThreshold("right", "North American English", "min");
 		String actualPH1 = search.verifyPureHitsCount();
-		baseClass.stepInfo(
-				"Audio Search is done PureHit is : " + actualPH1 );
+		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH1);
 		search.saveSearchAdvanced_New(Search1, "My Saved Search");
 		try {
 			savedSearch.savedSearch_Searchandclick(Search1);
 			savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
 			baseClass.waitTillElemetToBeClickable(savedSearch.getSavedSearchEditButton());
 			savedSearch.getSavedSearchEditButton().waitAndClick(10);
-			driver.waitForPageToBeReady();			
+			driver.waitForPageToBeReady();
 			search.modifyAudioSearch("grün", "German", "max");
 			search.getPureHitsCount_ModifySearch().getText();
 			baseClass.passedStep("Sucessfully modified the query and get the search results for the german language");
@@ -601,19 +610,20 @@ public class AdvancedSearch_Regression2 {
 		}
 
 	}
+
 	/**
 	 * @author Iyappan.Kasinathan
 	 * @throws InterruptedException
-	 * @description Verify that user should be able to edit the saved audio search which involve content 
-	 *               in other languages - eg. German, Japanese characters in search text
+	 * @description Verify that user should be able to edit the saved audio search
+	 *              which involve content in other languages - eg. German, Japanese
+	 *              characters in search text
 	 */
 	@Test(dataProvider = "Users", groups = { "regression" }, priority = 15)
-	public void VerifyAudio_ModifySearchTextAndLanguages(String username, String password)
-			throws InterruptedException {
+	public void VerifyAudio_ModifySearchTextAndLanguages(String username, String password) throws InterruptedException {
 		String Search1 = "AudioSearch" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-47139");
-		baseClass.stepInfo("Verify that user should be able to edit the saved audio search which involve "+
-		                             "content in other languages - eg. German, Japanese characters in search text");
+		baseClass.stepInfo("Verify that user should be able to edit the saved audio search which involve "
+				+ "content in other languages - eg. German, Japanese characters in search text");
 		loginPage.loginToSightLine(username, password);
 		search.VerifyaudioSearchThreshold("grün", "German", "max");
 		search.verifyPureHitsCount();
@@ -624,7 +634,7 @@ public class AdvancedSearch_Regression2 {
 			savedSearch.VerifyPureHitInSavedAudiosearch(Search1);
 			baseClass.waitTillElemetToBeClickable(savedSearch.getSavedSearchEditButton());
 			savedSearch.getSavedSearchEditButton().waitAndClick(10);
-			driver.waitForPageToBeReady();			
+			driver.waitForPageToBeReady();
 			search.modifyAudioSearch("が", "Japanese", "min");
 			search.getPureHitsCount_ModifySearch().getText();
 			baseClass.passedStep("Sucessfully modified the query and get the search results for the japanese language");
@@ -635,19 +645,21 @@ public class AdvancedSearch_Regression2 {
 		}
 
 	}
-	
+
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
-	 * @description Verify that user should be able to do audio search which involve content in other languages - eg. German, Japanese,
-	 *  Mandarin by being able to key in search text in these languages  
+	 * @description Verify that user should be able to do audio search which involve
+	 *              content in other languages - eg. German, Japanese, Mandarin by
+	 *              being able to key in search text in these languages
 	 */
-	@Test(dataProvider = "Users",groups = { "regression" }, priority =16)
+	@Test(dataProvider = "Users", groups = { "regression" }, priority = 16)
 	public void AudioSearch(String username, String password) throws InterruptedException {
 		baseClass.stepInfo("Test case Id: RPMXCON-47136");
-		baseClass.stepInfo("Verify that user should be able to do audio search which involve content in other languages - eg. German, Japanese,\r\n"
-				+ "Mandarin by being able to key in search text in these languages ");
-		loginPage.loginToSightLine(username,password);
+		baseClass.stepInfo(
+				"Verify that user should be able to do audio search which involve content in other languages - eg. German, Japanese,\r\n"
+						+ "Mandarin by being able to key in search text in these languages ");
+		loginPage.loginToSightLine(username, password);
 		search.VerifyaudioSearchThreshold("grün", "German", "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.selectproject();
@@ -661,34 +673,39 @@ public class AdvancedSearch_Regression2 {
 					"Audio Search is done using german language PureHit is displayed as expected : " + actualPH1 + "");
 			baseClass.passedStep("Audio Search is done using Japnese language  PureHit is displayed as expected : "
 					+ actualPH2 + "");
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			baseClass.failedStep("PureHit Count value is not as Exepcted");
-			
+
 		}
-		//Added to perform Audio search using Mandarin as language
-		//but right now we dont have Mandarin Language Docs in the current Project So commented those lines.
-		
-		/*search.VerifyaudioSearchThreshold("所", "Mandarin", "min");
-		String actualPH3 = search.verifyPureHitsCount();
-		Assert.assertEquals(actualPH3,"" );
-		baseClass.stepInfo("Audio Search is done using Japnese language  PureHit is displayed as expected : " + actualPH3 + "");     */
-		
+		// Added to perform Audio search using Mandarin as language
+		// but right now we dont have Mandarin Language Docs in the current Project So
+		// commented those lines.
+
+		/*
+		 * search.VerifyaudioSearchThreshold("所", "Mandarin", "min"); String actualPH3 =
+		 * search.verifyPureHitsCount(); Assert.assertEquals(actualPH3,"" ); baseClass.
+		 * stepInfo("Audio Search is done using Japnese language  PureHit is displayed as expected : "
+		 * + actualPH3 + "");
+		 */
+
 	}
 
 	/**
 	 * @author Jayanthi.ganesan
 	 * @throws InterruptedException
-	 * @description Verify modifying saved audio searches and cross check Audio threshold value saved correctly 
+	 * @description Verify modifying saved audio searches and cross check Audio
+	 *              threshold value saved correctly
 	 */
-	//@Test(dataProvider = "AudioSearchwithUsers", groups = { "regression" }, priority =17,enabled= true)
+	// @Test(dataProvider = "AudioSearchwithUsers", groups = { "regression" },
+	// priority =17,enabled= true)
 	public void VerifyAudio_ModifySavedSearchInMySavedSearch(String username, String password, String ImpersonateOption)
 			throws InterruptedException {
 		String Search1 = "AudioSearchONE" + Utility.dynamicNameAppender();
 		String Search2 = "AudioSearcTWO" + Utility.dynamicNameAppender();
 		String Search3 = "AudioSearchThree" + Utility.dynamicNameAppender();
 		baseClass.stepInfo("Test case Id: RPMXCON-46983");
-		baseClass.stepInfo("Verify modifying saved audio searches and cross check Audio threshold value saved correctly");
+		baseClass.stepInfo(
+				"Verify modifying saved audio searches and cross check Audio threshold value saved correctly");
 		loginPage.loginToSightLine(username, password);
 		if (ImpersonateOption == "PA") {
 			baseClass.impersonateSAtoPA();
@@ -698,21 +715,21 @@ public class AdvancedSearch_Regression2 {
 			baseClass.impersonateSAtoRMU();
 			baseClass.stepInfo("Logged in as SA and impersonated as RMU");
 		}
-		//creating audio search
+		// creating audio search
 		String ActualThresholdValue1 = search.VerifyaudioSearchThreshold("right", "North American English", "min");
 		String actualPH1 = search.verifyPureHitsCount();
 		baseClass.stepInfo(
 				"Audio Search is done PureHit is : " + actualPH1 + "Threshold value is " + ActualThresholdValue1);
 		search.saveSearchAdvanced_New(Search1, "My Saved Search");
-		
-		//Modifying the audio serach and saving it
+
+		// Modifying the audio serach and saving it
 		search.ModifyAudioSearch("morning well", "North American English", "max");
 		String actualThreshold2 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH2 = search.getPureHitsCount_ModifySearch().getText();
 		baseClass.stepInfo("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		System.out.println("Audio Search is done PureHit is : " + actualPH2 + "Threshold value is " + actualThreshold2);
 		search.saveSearchAdvanced_New(Search2, "My Saved Search");
-		//Modifying the audio serach and saving it
+		// Modifying the audio serach and saving it
 		search.ModifyAudioSearch(null, "North American English", "min");
 		String actualThreshold3 = search.GetConfidenceThresholdInSecondSearchResult().getText();
 		String actualPH3 = search.getPureHitsCount_ModifySearch().getText();
@@ -720,10 +737,9 @@ public class AdvancedSearch_Regression2 {
 		search.saveSearchAdvanced_New(Search3, "My Saved Search");
 		baseClass.selectproject();
 		try {
-             String pureHit0;
-			String dataSet[][] = { { Search1, actualPH1 }, { Search2, actualPH2 },
-					{ Search3,actualPH3 } };
-			String ThresholdList[][] = { { ActualThresholdValue1 }, { actualThreshold2 }, { actualThreshold3 }  };
+			String pureHit0;
+			String dataSet[][] = { { Search1, actualPH1 }, { Search2, actualPH2 }, { Search3, actualPH3 } };
+			String ThresholdList[][] = { { ActualThresholdValue1 }, { actualThreshold2 }, { actualThreshold3 } };
 
 			int k = 0;
 			for (int i = 0; i < dataSet.length; i++) {
@@ -733,7 +749,8 @@ public class AdvancedSearch_Regression2 {
 				j++;
 				pureHit0 = dataSet[i][j];
 				String ThresholdValueExpected = ThresholdList[k][l];
-			    //Verifying the pure hit and threshold Value in saved search page for all the searches saved in above steps.	
+				// Verifying the pure hit and threshold Value in saved search page for all the
+				// searches saved in above steps.
 				savedSearch.savedSearch_Searchandclick(searches);
 				driver.waitForPageToBeReady();
 				softAssertion.assertEquals(ThresholdValueExpected,
@@ -742,19 +759,21 @@ public class AdvancedSearch_Regression2 {
 				baseClass.passedStep(
 						"Sucessfuly Verified whether the threshold value and PureHit Count for modified Audio search Displays as Expected in"
 								+ " saved search page");
-				//editing the saved audio search
+				// editing the saved audio search
 				baseClass.waitForElement(savedSearch.getSavedSearchEditButton());
 				savedSearch.getSavedSearchEditButton().waitAndClick(10);
 				search.ModifyAudioSearch("well", "North American English", "max");
-                //saving the modified search by overwriting the existing search
-				search.saveAsOverwrittenSearch("My Saved Search", searches, "First");
-                
+				// saving the modified search by overwriting the existing search
+				search.saveAsOverwrittenSearch("My Saved Search", searches, "First", "Success", "", null);
+
 				String actualThreshold = search.GetConfidenceThresholdInSecondSearchResult().getText();
 				String actualPH = search.getPureHitsCount_ModifySearch().getText();
 				savedSearch.savedSearch_Searchandclick(searches);
 				driver.waitForPageToBeReady();
-				 //Verifying the pure hit and threshold Value in saved search page for all the overwriten searches saved in above steps.
-				softAssertion.assertEquals(actualThreshold, savedSearch.VerifyThresholdValueInSavedAudiosearch(searches));
+				// Verifying the pure hit and threshold Value in saved search page for all the
+				// overwriten searches saved in above steps.
+				softAssertion.assertEquals(actualThreshold,
+						savedSearch.VerifyThresholdValueInSavedAudiosearch(searches));
 				softAssertion.assertEquals(actualPH, savedSearch.VerifyPureHitInSavedAudiosearch(searches));
 				baseClass.passedStep(
 						"Sucessfuly Verified whether the threshold value and PureHit Count for OverWritten modified Audio search Displays as Expected in"
@@ -773,8 +792,8 @@ public class AdvancedSearch_Regression2 {
 	@DataProvider(name = "AudioSearchwithUsers")
 	public Object[][] AudioSearchwithUsers() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, null },
-				{ Input.rmu1userName, Input.rmu1password, null },{ Input.sa1userName, Input.sa1password, "PA" },
-				{ Input.sa1userName, Input.sa1password, "RMU" }};
+				{ Input.rmu1userName, Input.rmu1password, null }, { Input.sa1userName, Input.sa1password, "PA" },
+				{ Input.sa1userName, Input.sa1password, "RMU" } };
 		return users;
 	}
 
@@ -784,13 +803,13 @@ public class AdvancedSearch_Regression2 {
 				{ Input.rev1userName, Input.rev1password } };
 		return users;
 	}
-	
+
 	// Added on 10/26/21
-		@DataProvider(name = "UsersWithoutPA")
-		public Object[][] UsersWithoutPA() {
-			Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password } };
-			return users;
-		}
+	@DataProvider(name = "UsersWithoutPA")
+	public Object[][] UsersWithoutPA() {
+		Object[][] users = { { Input.rmu1userName, Input.rmu1password }, { Input.rev1userName, Input.rev1password } };
+		return users;
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result) {

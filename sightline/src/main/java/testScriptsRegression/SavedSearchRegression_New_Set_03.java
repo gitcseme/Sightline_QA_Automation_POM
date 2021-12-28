@@ -2064,7 +2064,7 @@ public class SavedSearchRegression_New_Set_03 {
 
 	}
 
-/**
+	/**
 	 * @author Brundha
 	 * @Description :Validate sharing search with Default Security Group
 	 *
@@ -2272,7 +2272,7 @@ public class SavedSearchRegression_New_Set_03 {
 		login.logout();
 	}
 
-/**
+	/**
 	 * @author Brundha
 	 * @Description :Validate modifying search shared by PAU/RMU to specific
 	 *              <Security Group Name> by both PAU and RMU
@@ -2312,7 +2312,7 @@ public class SavedSearchRegression_New_Set_03 {
 
 		// Overwrite Search / Modify
 		session.modifySearchTextArea(1, Input.testData1, Input.searchString2, "Save");
-		session.saveAsOverwrittenSearch(SGtoShare, searchName, "first");
+		session.saveAsOverwrittenSearch(SGtoShare, searchName, "first", "Success", "", null);
 		login.logout();
 
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
@@ -2327,13 +2327,10 @@ public class SavedSearchRegression_New_Set_03 {
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(5);
 		saveSearch.verifySearchContents(searchName, searchID, true, true, null, null, "No");
 
-
 		login.logout();
 	}
 
-	
-	
-/**
+	/**
 	 * @author Raghuram A Date: 12/20/21 Modified date:N/A Modified by:Raghuram
 	 * @Description : Verify that application displays all documents that are in the
 	 *              aggregate results set of "Shared With Project
@@ -2425,7 +2422,7 @@ public class SavedSearchRegression_New_Set_03 {
 
 		login.logout();
 	}
-	
+
 	/**
 	 * @author Raghuram A Date: 12/20/21 Modified date:N/A Modified by:Raghuram
 	 * @Description : Verify that application displays all documents that are in the
@@ -2520,11 +2517,10 @@ public class SavedSearchRegression_New_Set_03 {
 		login.logout();
 	}
 
-	
-
 	/**
 	 * @author Brundha
-	 * @Description :For RMU - Validate saving executed search (executed or draft) under My Searches or Shared Searches
+	 * @Description :For RMU - Validate saving executed search (executed or draft)
+	 *              under My Searches or Shared Searches
 	 *
 	 *              Test case Id: RPMXCON-49890
 	 * @throws InterruptedException
@@ -2566,9 +2562,8 @@ public class SavedSearchRegression_New_Set_03 {
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
 
-		
 		saveSearch.navigateToSavedSearchPage();
-		
+
 		saveSearch.getSavedSearchGroupName(SGtoShare).waitAndClick(10);
 		saveSearch.selectNode1(newNode);
 		saveSearch.savedSearch_SearchandSelect(searchName1, "Yes");
@@ -2580,10 +2575,10 @@ public class SavedSearchRegression_New_Set_03 {
 		saveSearch.validatingSaves(SGtoShare, newNode, searchName1);
 
 		login.logout();
-		
+
 	}
-    
-    /**
+
+	/**
 	 * @author Sowndarya.velraj A Date: 12/20/21 Modified date:N/A Modified by:
 	 *         Description :Validate executing search shared by PAU/RMU to specific
 	 *         <Security Group Name> by both PAU and RMU -RPMXCON-49895 Sprint 08
@@ -2638,7 +2633,7 @@ public class SavedSearchRegression_New_Set_03 {
 		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 		base.selectsecuritygroup(othSG);
-		
+
 		// saving the Search
 		driver.getWebDriver().get(Input.url + "Search/Searches");
 		session.basicContentSearchWithSaveChanges(Input.searchString5, "No", "First");
@@ -2650,107 +2645,93 @@ public class SavedSearchRegression_New_Set_03 {
 		saveSearch.savedSearchExecute_Draft(searchName, hitCount2);
 		driver.waitForPageToBeReady();
 		String docCount2 = saveSearch.getCountofDocs().getText();
-		
+
 		base.selectsecuritygroup(Input.securityGroup);
 		login.logout();
-		
+
 		login.loginToSightLine(Input.pa1userName, Input.pa1password);
 		base.stepInfo("Loggedin As : " + Input.pa1FullName);
-		
-		saveSearch.selectSavedSearchTAb(searchName,othSG, "Yes");
+
+		saveSearch.selectSavedSearchTAb(searchName, othSG, "Yes");
 		driver.waitForPageToBeReady();
 		String docCount3 = saveSearch.getCountofDocs().getText();
-		
+
 		softAssertion.assertEquals(docCount2, docCount3);
 		softAssertion.assertAll();
-		
+
 		sg.deleteSecurityGroups(othSG);
 		login.logout();
 
 	}
-    
-    /**
-* @author Sowndarya.velraj A Date: 12/20/21 Modified date:N/A Modified by:
-* Description :To verify User is able to filter saved search based on
-* their status -RPMXCON-49958 Sprint 08
-*/
-@Test(enabled = true, groups = { "regression" }, priority = 39)
-public void verifySavedSearchFilter() throws Exception {
 
+	/**
+	 * @author Sowndarya.velraj A Date: 12/20/21 Modified date:N/A Modified by:
+	 *         Description :To verify User is able to filter saved search based on
+	 *         their status -RPMXCON-49958 Sprint 08
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 39)
+	public void verifySavedSearchFilter() throws Exception {
 
+		base.stepInfo("Test case Id: RPMXCON-49958");
+		base.stepInfo("To verify User is able to filter saved search based on their status");
 
-base.stepInfo("Test case Id: RPMXCON-49958");
-base.stepInfo("To verify User is able to filter saved search based on their status");
-
-
-
-String searchName1 = "ANode" + Utility.dynamicNameAppender();
-String file = saveSearch.renameFile(Input.batchFileNewLocation);
+		String searchName1 = "ANode" + Utility.dynamicNameAppender();
+		String file = saveSearch.renameFile(Input.batchFileNewLocation);
 
 // Login as PAU
-login.loginToSightLine(Input.pa1userName, Input.pa1password);
-base.stepInfo("Loggedin As : " + Input.pa1FullName);
-
-
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
 
 // saving the Search
-driver.getWebDriver().get(Input.url + "Search/Searches");
-session.basicContentSearch(Input.searchStringStar);
-session.saveSearch(searchName1);
-
-
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.basicContentSearch(Input.searchStringStar);
+		session.saveSearch(searchName1);
 
 // Navigating to saved search page
-driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-saveSearch.getSavedSearchGroupName(Input.mySavedSearch);
-saveSearch.getSavedSearchExecuteButton().waitAndClick(5);
-saveSearch.getExecuteContinueBtn().waitAndClick(5);
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.getSavedSearchGroupName(Input.mySavedSearch);
+		saveSearch.getSavedSearchExecuteButton().waitAndClick(5);
+		saveSearch.getExecuteContinueBtn().waitAndClick(5);
 
-base.stepInfo("To verify Pending Status By applying filter");
-saveSearch.getStatusDropDown().waitAndClick(2);
-saveSearch.getLastStatusAsPending().Click();
-saveSearch.getStatusDropDown().Click();
-saveSearch.getSavedSearch_ApplyFilterButton().Click();
-saveSearch.verifyExecutionStatusInSavedSearchPage("PENDING");
+		base.stepInfo("To verify Pending Status By applying filter");
+		saveSearch.getStatusDropDown().waitAndClick(2);
+		saveSearch.getLastStatusAsPending().Click();
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("PENDING");
 
+		base.stepInfo("To verify Completed Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsCompleted().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("COMPLETED");
 
-
-base.stepInfo("To verify Completed Status By applying filter");
-saveSearch.getStatusDropDown().Click();
-saveSearch.getLastStatusAsCompleted().Click();
-saveSearch.getSavedSearch_ApplyFilterButton().Click();
-saveSearch.verifyExecutionStatusInSavedSearchPage("COMPLETED");
-
-base.stepInfo("To verify In Progrss Status By applying filter");
-saveSearch.getStatusDropDown().Click();
-saveSearch.getLastStatusAsInProgress().Click();
-saveSearch.getSavedSearch_ApplyFilterButton().Click();
-saveSearch.verifyExecutionStatusInSavedSearchPage("INPROGRESS");
-
+		base.stepInfo("To verify In Progrss Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsInProgress().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("INPROGRESS");
 
 // Upload Error Query Through Batch File
-driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
-saveSearch.uploadWPBatchFile_New(file, Input.batchFileNewLocation);
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.uploadWPBatchFile_New(file, Input.batchFileNewLocation);
 
-base.stepInfo("To verify Error Status By applying filter");
-saveSearch.getStatusDropDown().Click();
-saveSearch.getLastStatusAsError().Click();
-saveSearch.getSavedSearch_ApplyFilterButton().Click();
-saveSearch.verifyExecutionStatusInSavedSearchPage("ERROR");
+		base.stepInfo("To verify Error Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsError().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("ERROR");
 
-base.stepInfo("To verify Failed Status By applying filter");
-saveSearch.getStatusDropDown().Click();
-saveSearch.getLastStatusAsFailed().Click();
-saveSearch.getSavedSearch_ApplyFilterButton().Click();
-saveSearch.verifyExecutionStatusInSavedSearchPage("FAILED");
+		base.stepInfo("To verify Failed Status By applying filter");
+		saveSearch.getStatusDropDown().Click();
+		saveSearch.getLastStatusAsFailed().Click();
+		saveSearch.getSavedSearch_ApplyFilterButton().Click();
+		saveSearch.verifyExecutionStatusInSavedSearchPage("FAILED");
 
+		saveSearch.SaveSearchDelete(searchName1);
+		login.logout();
+	}
 
-
-
-saveSearch.SaveSearchDelete(searchName1);
-login.logout();
-}
-	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
