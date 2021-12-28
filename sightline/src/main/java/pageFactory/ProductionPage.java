@@ -1291,7 +1291,7 @@ public class ProductionPage {
 
 	public Element getClkCheckBox_defaultRedactionTag() {
 		return driver.FindElementByXPath(
-				"//div[@id='TIFFRedactiontreeFolder']/ul/li/ul/li/a[text()='Default Redaction Tag']");
+				"(//ul[@class='jstree-children']//a[@data-content='Default Redaction Tag'])[3]");
 	}
 
 	public Element getClkLink_selectingRedactionTags() {
@@ -12357,6 +12357,54 @@ public class ProductionPage {
 		getMP3CheckBoxToggle().waitAndClick(10);
 	}
 
+	/**
+	 * @Author Indium Sowndarya.Velraj
+	 */
+	public void fillingPDFWithRedactedDocumentsInAnnotationLayer() throws InterruptedException {
+
+		base.waitForElement(getTIFFChkBox());
+		getTIFFChkBox().Click();
+
+		base.waitForElement(getTIFFTab());
+		getTIFFTab().Click();
+
+		base.waitForElement(getPDFGenerateRadioButton());
+		getPDFGenerateRadioButton().ScrollTo();
+		base.clickButton(getPDFGenerateRadioButton());
+
+		getTIFF_EnableforPrivilegedDocs().ScrollTo();
+
+		// disabling enable for priviledged docs
+
+		base.waitForElement(getTIFF_EnableforPrivilegedDocs());
+		getTIFF_EnableforPrivilegedDocs().Enabled();
+		getTIFF_EnableforPrivilegedDocs().Click();
+
+		getClk_burnReductiontoggle().ScrollTo();
+
+		// enable burn redaction
+		base.waitForElement(getClk_burnReductiontoggle());
+		getClk_burnReductiontoggle().Click();
+		
+		base.waitForElement(getClkLink_selectingRedactionTags());
+		getClkLink_selectingRedactionTags().isDisplayed();
+		getClkLink_selectingRedactionTags().waitAndClick(10);
+
+		base.waitForElement(getClkBtn_selectingRedactionTags());
+		getClkBtn_selectingRedactionTags().isDisplayed();
+		getClkBtn_selectingRedactionTags().waitAndClick(10);
+		
+		base.waitForElement(getClkCheckBox_defaultRedactionTag());
+		getClkCheckBox_defaultRedactionTag().isDisplayed();
+		getClkCheckBox_defaultRedactionTag().waitAndClick(10);
+		
+		base.waitForElement(getClk_selectBtn());
+		getClk_selectBtn().Click();
+
+		base.waitForElement(getRedactedTagTextArea());
+		getRedactedTagTextArea().isDisplayed();
+		getRedactedTagTextArea().SendKeys(Input.searchString1);
+	}
 	/**
 	 * @author Gopinath
 	 * @description : Method for verifying DAT and Pdf field.
