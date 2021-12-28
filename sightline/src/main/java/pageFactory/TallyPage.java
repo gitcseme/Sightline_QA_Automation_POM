@@ -283,7 +283,15 @@ public class TallyPage {
 	public Element getTotalSelectedDocs() {
 		return driver.FindElementByXPath("//span[@id='spanTotal']");
 	}
-
+	public Element getTallyViewBtn() {
+		return driver.FindElementByXPath("//button[@id='tallyactionbtn']/following-sibling::ul[@class='dropdown-menu action-dd']//li//a[text()='View']");
+	}
+	public Element getTallyViewinDocViewBtn() {
+		return driver.FindElementByXPath("//ul[@Class='dropdown-menu']//li//a[@id='idViewInDocview']");
+	}
+	public Element getSubTallyBulkReleaseAction() {
+		return driver.FindElementByXPath("//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
+	}
 	public TallyPage(Driver driver) {
 
 		this.driver = driver;
@@ -1040,13 +1048,18 @@ public class TallyPage {
 		getTally_SearchSaveSelections().Click();
 		base.stepInfo("Selected "+saveSearch+" as source to generate tally report");
 	}
-	 /**
+	/**
 	  * @author Jayanthi.ganesan
 	  */
-	public String bulkRelease(String SG) {
-		base.waitForElement(getTallyBulkReleaseAction());
-		getTallyBulkReleaseAction().Click();
-		System.out.println("performing bulk assign");
+	public String bulkRelease(String SG,boolean subtally) {
+		if(subtally) {
+			base.waitForElement(getSubTallyBulkReleaseAction());
+			getSubTallyBulkReleaseAction().Click();
+		}
+		else {
+			base.waitForElement(getTallyBulkReleaseAction());
+			getTallyBulkReleaseAction().Click();
+		}
 		getBulkRelDefaultSecurityGroup_CheckBox(SG).Click();
 		base.waitForElement(getBulkRelease_ButtonRelease());
 		getBulkRelease_ButtonRelease().waitAndClick(20);
@@ -1059,5 +1072,34 @@ public class TallyPage {
 		return TotalDocs;
 
 	}
+	
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param subtallyBy
+	 * @throws InterruptedException
+	 */
+	public void selectMetaData_SubTally(String subtallyBy) throws InterruptedException {
+		base.waitForElement(getSubTallyField());
+		base.waitTillElemetToBeClickable(getSubTallyField());
+		getSubTallyField().Click();
+		base.waitForElement( getTally_subMetadata());
+		getTally_subMetadata().Click();
+		base.waitForElement(getTally_submetadataselect());
+		getTally_submetadataselect().selectFromDropdown().selectByVisibleText(subtallyBy);
+		base.waitForElement(getTally_btnSubTallyApply());			
+		getTally_btnSubTallyApply().Click();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void Tally_ViewInDocView() {
+		base.waitForElement(getTallyViewBtn());
+		getTallyViewBtn().ScrollTo();
+		getTallyViewinDocViewBtn().ScrollTo();
+		getTallyViewinDocViewBtn().waitAndClick(30);
+		base.stepInfo("Navigating from Tally page to view in doc view page.");
+	}
+	
 
 }

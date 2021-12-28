@@ -2309,8 +2309,18 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='liDocumentProductionView']");
 	}
 
+
 	public Element getDocViewSelectedDocId() {
 		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
+	}
+
+	// Added by Vijaya.Rani
+	public Element getDocViewPageTitle() {
+		return driver.FindElementByXPath("//h1[@class='page-title']");
+	}
+
+	public Element getDocView_ConceptualViewInDocView() {
+		return driver.FindElementByXPath("//a[@id='AnalyticViewDocList']");
 	}
 
 	// Added By jeevitha
@@ -2345,6 +2355,7 @@ public class DocViewPage {
 	public Element getChainVerifyInAnalDocs() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");
 	}
+
 
 	public DocViewPage(Driver driver) {
 
@@ -16669,6 +16680,72 @@ public class DocViewPage {
 	}
 
 	/**
+	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
+	 * @description to verify 'View in Doclist' is not visible in Conceptual Tab
+	 */
+	public void performConceptualViewInDocView() {
+
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_liDocumentConceptualSimilarab().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Analytics_liDocumentConceptualSimilarab().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_Conceptual_FirstDoc());
+		getDocView_Analytics_Conceptual_FirstDoc().waitAndClick(15);
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(15);
+
+		base.waitForElement(getViewInDocListAnalyticalDropDown());
+		getViewInDocListAnalyticalDropDown().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewPageTitle());
+
+		if (getDocViewPageTitle().Displayed()) {
+			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Conceptual View In Doc List page open successfully");
+		} else {
+			base.failedStep("Selected document is not display in Conceptual View In Doc List page open successfully");
+		}
+	}
+	
+	/**
+	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
+	 * @description to verify 'View in Doclist' is not visible in ThreadMap Tab
+	 */
+	public void performThreadMapViewInDocList() {
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
+		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+
+		for (int i = 2; i <= 3; i++) {
+			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
+			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
+		}
+
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+
+		base.waitForElement(getDocView_Analytics_Thread_ViewDoclist());
+		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(15);
+
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocViewPageTitle());
+
+		if (getDocViewPageTitle().Displayed()) {
+			softAssertion.assertTrue(getDocViewPageTitle().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in ThreadMap View In Doc List page open successfully");
+		} else {
+			base.failedStep("Selected document is not display in ThreadMap View In Doc List page open successfully");
+		}
+  }
+
+	/**
 	 * @Author Jeevitha
 	 * @param elementName
 	 * @param readctionName
@@ -17133,6 +17210,7 @@ public class DocViewPage {
 			base.failedStep("All control selection is cleared");
 		}
 
+
 	}
 
 	/*
@@ -17281,8 +17359,7 @@ public class DocViewPage {
 			base.failedStep("Failed to move next document in mini doc list..");
 		}
 	}
-
-	/**
+    /**
 	 * @author Indium-Baskar date: 22/12/2021 Modified date: NA
 	 * @Description : this method used for verify persistent hit panel for disabled
 	 *              and enabled conditions for 0 count
@@ -17322,5 +17399,35 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Hit panel not displayed");
 		}
+
 	}
+
+		driver.waitForPageToBeReady();
+		base.stepInfo("Enabling 0 hits terms in docview panel");
+		getDocView_ToggleButton().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_ToggleButton());
+		boolean docYes = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(docYes);
+		driver.waitForPageToBeReady();
+		base.passedStep("Hide Terms with 0 hits:Enabled");
+		boolean miniDis = getHitPanleVerify(panel).Displayed();
+		softAssertion.assertFalse(miniDis);
+		base.passedStep("0 count terms not displayed in persistent hit panel");
+		for (int i = 3; i <= 4; i++) {
+			base.waitForElement(getDocView_MiniDoc_ChildWindow_Selectdoc(i));
+			getDocView_MiniDoc_ChildWindow_Selectdoc(i).waitAndClick(5);
+		}
+		clickCodeSameAs();
+		clickCodeSameAsLast();
+		driver.waitForPageToBeReady();
+		String prnThDoc = getVerifyPrincipalDocument().getText();
+		softAssertion.assertNotEquals(prnThDoc, prnSecDoc);
+		base.waitForElement(getDocView_ToggleButton());
+		boolean afterSave = getDocView_ToggleButton().GetAttribute("data-swchoff-text").contains("Yes");
+		softAssertion.assertFalse(afterSave);
+		driver.waitForPageToBeReady();
+		softAssertion.assertAll();
+}
+
 }

@@ -26,8 +26,10 @@ import pageFactory.BaseClass;
 import pageFactory.DataSets;
 import pageFactory.DocListPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ProductionPage;
+import pageFactory.RedactionPage;
 import pageFactory.SessionSearch;
 import pageFactory.TagsAndFoldersPage;
 import pageFactory.Utility;
@@ -1047,7 +1049,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that user can download only Produced DAT file by
 	 *                     selecting 'Download DAT file'
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 17)
+	@Test(enabled = false, groups = { " regression" }, priority = 18)
 	public void verifyDownloadDATFile() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48849- Production Sprint 08");
@@ -1099,7 +1101,7 @@ public class Production_Page_Regression {
 	 * @Description:Run Production by selecting components like DAT,TIFF,NATIVE and
 	 *                  with selection of multiple tags with audio files
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 18)
+	@Test(enabled = false, groups = { " regression" }, priority = 19)
 	public void verifyAudioFilesWithMultipleBranding() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48664- Production Sprint 08");
@@ -1149,7 +1151,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each
 	 *                 document should be zero when only DAT component is selected
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 19)
+	@Test(enabled = false, groups = { " regression" }, priority = 20)
 	public void verifyDocumentCountForDAT() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1187,7 +1189,7 @@ public class Production_Page_Regression {
 	 *                 should be displayed when production is done with any
 	 *                 component
 	 */
-	@Test(enabled = false, groups = { " regression" }, priority = 20)
+	@Test(enabled = false, groups = { " regression" }, priority = 21)
 	public void verifyDocumentCountForDATWithOtherComponent() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49250- Production Sprint 08");
@@ -1226,7 +1228,7 @@ public class Production_Page_Regression {
 	 * @Description:To verify the count 'Total Documents: ' on Production Summary
 	 *                 page
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 21)
+	@Test(enabled = false, groups = { " regression" }, priority = 22)
 	public void verifyTotalPagesOnSummary() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49106- Production Sprint 08");
@@ -1273,7 +1275,7 @@ public class Production_Page_Regression {
 	 * @author Sowndarya.Velraj created on:12/23/21 TESTCASE No:RPMXCON-49107
 	 * @Description:To verify that Total Pages count on Production-Summary page
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 22)
+	@Test(enabled = false, groups = { " regression" }, priority = 23)
 	public void verifyTotalPagesCountOnSummary() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-49107- Production Sprint 08");
@@ -1321,7 +1323,7 @@ public class Production_Page_Regression {
 	 * @Description:Verify that Tiff should generate with Burned Redaction if Only
 	 *                     Burn Redaction is enabled
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 23)
+	@Test(enabled = false, groups = { " regression" }, priority = 24)
 	public void verifyTiffWithBurnRedaction() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-48505- Production Sprint 08");
@@ -1364,7 +1366,7 @@ public class Production_Page_Regression {
 	 * @Description:To Verify appropriate display of data is occurring in 'Summary &
 	 *                 Preview' tab.
 	 */
-	@Test(enabled = true, groups = { " regression" }, priority = 24)
+	@Test(enabled = false, groups = { " regression" }, priority = 25)
 	public void verifySummaryAndPreview() throws Exception {
 
 		baseClass.stepInfo("Test case Id RPMXCON-47791- Production Sprint 08");
@@ -1425,6 +1427,93 @@ public class Production_Page_Regression {
 		tagsAndFolderPage.DeleteTagWithClassification(tagname, "Default Security Group");
 	}
 
+	/**
+	 * @author Sowndarya.Velraj created on:12/27/21 TESTCASE No:RPMXCON-48502
+	 * @Description:To verify that if annotation layer option is selected in PDF
+	 *                 section and document is redacted then selected Metadata
+	 *                 should not be displayed on DAT
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 26)
+	public void verifyPDFWithAnnotationLayer() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48502- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		baseClass.stepInfo("Searching for a content and performing bulk folder action");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Navigating to Production Home page");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		baseClass.waitForElement(page.getDATRedactionsCBox());
+		page.getDATRedactionsCBox().waitAndClick(10);
+		page.fillingNativeSection();
+		page.fillingPDFWithRedactedDocumentsInAnnotationLayer();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, null);
+
+		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+
+	/**
+	 * @author Sowndarya.Velraj created on:12/27/21 TESTCASE No:RPMXCON-48503
+	 * @Description:To verify that if annotation layer option is selected in MP3
+	 *                 section and Audio is redacted then selected Metadata should
+	 *                 not be displayed on DATF
+	 */
+	@Test(enabled = true, groups = { " regression" }, priority = 27)
+	public void verifyMP3WithAnnotationLayer() throws Exception {
+
+		baseClass.stepInfo("Test case Id RPMXCON-48503- Production Sprint 08");
+		UtilityLog.info(Input.prodPath);
+
+		foldername = "FolderProd" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Creating tags and folders in Tags/Folders Page");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+		baseClass.stepInfo("Searching for a content and performing bulk folder action");
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkFolderExisting(foldername);
+
+		baseClass.stepInfo("Navigating to Production Home page");
+		ProductionPage page = new ProductionPage(driver);
+		productionname = " p" + Utility.dynamicNameAppender();
+		page.selectingDefaultSecurityGroup();
+		page.addANewProduction(productionname);
+		page.fillingDATSection();
+		baseClass.waitForElement(page.getDATRedactionsCBox());
+		page.getDATRedactionsCBox().waitAndClick(10);
+		page.fillingNativeSection();
+		page.fillingPDFSection();
+		page.fillingMP3();
+		page.navigateToNextSection();
+		page.InsertingDataFromNumberingToGenerateWithContinuePopup(prefixID, suffixID, foldername, null);
+
+		baseClass.stepInfo("Deleting the tags and folders after the production gets completed");
+		this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+		tagsAndFolderPage = new TagsAndFoldersPage(driver);
+		tagsAndFolderPage.DeleteFolderWithSecurityGroup(foldername, "Default Security Group");
+	}
+
 	@DataProvider(name = "PAandRMU")
 	public Object[][] PAandRMU() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password, Input.pa1FullName },
@@ -1445,7 +1534,7 @@ public class Production_Page_Regression {
 			loginPage.quitBrowser();
 		} catch (Exception e) {
 			loginPage.quitBrowser();
-			LoginPage.clearBrowserCache();
+//			LoginPage.clearBrowserCache();
 		}
 	}
 
@@ -1454,7 +1543,7 @@ public class Production_Page_Regression {
 	public void close() {
 		System.out.println("******TEST CASES FOR PRODUCTIONS EXECUTED******");
 		try {
-			loginPage.clearBrowserCache();
+//			loginPage.clearBrowserCache();
 		} catch (Exception e) {
 			// no session avilable
 

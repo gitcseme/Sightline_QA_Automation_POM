@@ -175,6 +175,17 @@ public class DocumentAuditReportPage {
 		
 			
 	}
+    public void validateDocumentAuditActionColumn (String expectedActionName)
+    {
+    	bc.waitForElement(getDA_Actions(2));
+    	String actualActionName = getDA_Actions(2).getText();
+    	if(actualActionName.equals(expectedActionName)) {
+    		bc.passedStep("Different actions performed on the document  listed in the report");
+    	}
+    	else {
+    		bc.failedStep("Different actions performed on the document not listed in the report");
+    	}
+    }
     
  
 }
