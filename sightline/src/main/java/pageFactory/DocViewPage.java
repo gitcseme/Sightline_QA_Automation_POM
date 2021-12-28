@@ -2309,7 +2309,6 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//li[@id='liDocumentProductionView']");
 	}
 
-
 	public Element getDocViewSelectedDocId() {
 		return driver.FindElementByXPath("//span[@id='activeDocumentId']");
 	}
@@ -2355,7 +2354,6 @@ public class DocViewPage {
 	public Element getChainVerifyInAnalDocs() {
 		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");
 	}
-
 
 	public DocViewPage(Driver driver) {
 
@@ -10747,7 +10745,7 @@ public class DocViewPage {
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
 
 		try {
-			if (getDocView_Analytics_NearDupe_WholeTable().isDisplayed()) {
+			if (getDocView_Analytics_NearDupe_WholeTable().isElementAvailable(5)) {
 				base.passedStep("Near dupes docs are loaded");
 			} else {
 				base.failedStep("Near dupes docs are not loaded");
@@ -15265,14 +15263,14 @@ public class DocViewPage {
 
 			if (getGearIcon().isDisplayed()) {
 				base.waitForElement(getGearIcon());
-				getGearIcon().Click();
+				getGearIcon().waitAndClick(5);
 			} else {
 				getDocView_CodingFormPopOut().isElementPresent();
 				System.out.println("Gear Icon Is already clicked");
 			}
 
 			base.waitForElement(getDocView_CodingFormPopOut());
-			getDocView_CodingFormPopOut().Click();
+			getDocView_CodingFormPopOut().waitAndClick(5);
 			System.out.println("CodingForm Panel is popout successfully");
 			base.passedStep("CodingForm Panel is popout successfully");
 
@@ -16712,7 +16710,7 @@ public class DocViewPage {
 			base.failedStep("Selected document is not display in Conceptual View In Doc List page open successfully");
 		}
 	}
-	
+
 	/**
 	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
 	 * @description to verify 'View in Doclist' is not visible in ThreadMap Tab
@@ -16743,7 +16741,7 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Selected document is not display in ThreadMap View In Doc List page open successfully");
 		}
-  }
+	}
 
 	/**
 	 * @Author Jeevitha
@@ -17210,7 +17208,6 @@ public class DocViewPage {
 			base.failedStep("All control selection is cleared");
 		}
 
-
 	}
 
 	/*
@@ -17359,7 +17356,8 @@ public class DocViewPage {
 			base.failedStep("Failed to move next document in mini doc list..");
 		}
 	}
-    /**
+
+	/**
 	 * @author Indium-Baskar date: 22/12/2021 Modified date: NA
 	 * @Description : this method used for verify persistent hit panel for disabled
 	 *              and enabled conditions for 0 count
@@ -17399,9 +17397,6 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Hit panel not displayed");
 		}
-
-	}
-
 		driver.waitForPageToBeReady();
 		base.stepInfo("Enabling 0 hits terms in docview panel");
 		getDocView_ToggleButton().waitAndClick(5);
@@ -17428,6 +17423,5 @@ public class DocViewPage {
 		softAssertion.assertFalse(afterSave);
 		driver.waitForPageToBeReady();
 		softAssertion.assertAll();
-}
-
+	}
 }

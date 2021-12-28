@@ -15,7 +15,7 @@
 	<audioSearchString1pureHit>3</audioSearchString1pureHit>
 	<conceptualSearchString1>field report</conceptualSearchString1>
 	<conceptualSearchString1PureHit>2</conceptualSearchString1PureHit>
-	<metaDataCN>P Allen</metaDataCN> 
+	<metaDataCN>P Allen</metaDataCN>
 	<metaDataCNcount>1135</metaDataCNcount>
 	<totalNumberOfDocs>1202</totalNumberOfDocs>
 	<totalNumberOfDocsincludeadvoption>103</totalNumberOfDocsincludeadvoption>
@@ -55,9 +55,9 @@
 	<SavedSearch>TDM54178</SavedSearch>
 	<pureHitCount1>267</pureHitCount1>
 	<docName>DocID</docName>
-	<MiniDocId>ID00003846</MiniDocId>
+	<MiniDocId>ID00000102</MiniDocId>
 	<ThreadQuery>"testing the same"</ThreadQuery>
-	<NewDocId>ID00000171</NewDocId>
+	<NewDocId>ID00001178</NewDocId>
 	<MetaDataId>ID00000015</MetaDataId>
 	<documentToBeScrolled>5147</documentToBeScrolled>
 	<conceptualDocument>ID00004389</conceptualDocument>
@@ -94,6 +94,8 @@
 	<nearDupeBulkAssignReviewer>ID00005182</nearDupeBulkAssignReviewer>
 	<nearDupeBulkAssignReviewId>ID00004969</nearDupeBulkAssignReviewId>
     <theardMapViewId>ID00001129</theardMapViewId>
+
+
 
 	<!-- DocView Coding Form -->
 	<savedName>AttachData</savedName>
@@ -357,4 +359,6 @@
 	<errorQueryFileLocation>\BatchFiles\InvalidQuery\</errorQueryFileLocation>
 	<invalidNameText>Invalid Name</invalidNameText>
 	
+			<threadDocWithToolTip>ID00000703</threadDocWithToolTip>
+		<conceptualDoc>ID00000001</conceptualDoc>
 </TestData>

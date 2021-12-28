@@ -37,7 +37,7 @@ public class Input {
 	public static String newProject;
 	public static String ingestion;
 	public static String suite;
-	public static String browserName; 
+	public static String browserName;
 	public static String screenShotOnPass;
 	public static String screenShotOnFail;
 	public static int wait3;
@@ -433,6 +433,9 @@ public class Input {
 	//Added by Gopinath - 22/12/2021
 	public static String errorQueryFileLocation;
 	public static String invalidNameText;
+	
+	public static String threadDocWithToolTip;
+	public static String conceptualDoc;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -875,6 +878,9 @@ public class Input {
 		//Added by Gopinath - 27/12/2021
 		errorQueryFileLocation = testData.getErrorQueryFileLocation();
 		invalidNameText = testData.getInvalidNameText();
+		
+		threadDocWithToolTip = testData.getThreadDocWithToolTip();
+		conceptualDoc = testData.getConceptualDoc();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

@@ -46,6 +46,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	String assignmentNameToChoose;
 
 
+	//
 	@BeforeClass(alwaysRun = true)
 	private void TestStart() throws Exception, InterruptedException, IOException {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -290,14 +291,14 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String docIdHistoryIcon = "Conceptually";
-
+		String docIdHistoryIcon = Input.MiniDocId;
+		
 		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
 		// Session search to doc view Coding Form
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewInDocView();
 		
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docIdHistoryIcon);
+		docViewPage.selectDocIdInMiniDocList(docIdHistoryIcon);
 		
 		baseClass.stepInfo("Step 3 : Select Analytics Panel");
 		//Select Analytics Panel and verify docs are loaded
