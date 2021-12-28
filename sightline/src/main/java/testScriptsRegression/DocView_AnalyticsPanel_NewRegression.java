@@ -26,6 +26,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ReusableDocViewPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -41,6 +42,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 	SoftAssert softAssertion;
 	DocViewRedactions docViewRedact;
 	ReusableDocViewPage reusableDocViewPage;
+	SavedSearch savedSearch;
+
 
 	@BeforeClass(alwaysRun = true)
 
@@ -2420,7 +2423,134 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 	}
 
+	/**
+	 * Author : Vijaya.Rani date: 23/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the Save
+	 * search, then he can view the documents in the doc list from Doc View->Thread
+	 * Map..'RPMXCON-50875' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
+		baseClass.stepInfo("Test case Id: RPMXCON-50875");
+		baseClass.stepInfo(
+				"To verify that if user navigates to doc view from the Save search, then he can view the documents in the doc list from Doc View->Thread Map.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+
+		// threadmap tab View in DocList
+		driver.scrollPageToTop();
+		docView.performThreadMapViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// select Doc In MiniDoc List
+		driver.waitForPageToBeReady();
+		docView.selectDocIdInMiniDocList(Input.theardMapViewId);
+
+		// threadmap tab View in DocList
+		driver.scrollPageToTop();
+		docView.performThreadMapViewInDocList();
+
+	}
+
+	
+	
+	/**
+	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user select any document on Child Window then
+	 * same document will displayed on Doc View page.'RPMXCON-50947' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	public void verifyDocChilsWindowThenSameDocWillDisplayInDocView(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50947");
+		baseClass.stepInfo(
+				"To verify that if user select any document on Child Window then same document will displayed on Doc View page.");
+
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewFamilyMemberDocsInDocViews();
+
+		String parentWindowID = driver.getWebDriver().getWindowHandle();
+
+		String fisrtId = docView.getDocView_CurrentDocId().getText();
+
+		docView.popOutAnalyticsPanel();
+
+		Set<String> allWindowsId = driver.getWebDriver().getWindowHandles();
+		for (String eachId : allWindowsId) {
+			if (!parentWindowID.equals(eachId)) {
+				driver.switchTo().window(eachId);
+			}
+		}
+
+		// view docs DocView
+		docView.selectDocsFromFamilyMemberAndViewTheDocument();
+
+		driver.getWebDriver().close();
+		driver.switchTo().window(parentWindowID);
+
+		String secondId = docView.getDocView_CurrentDocId().getText();
+
+		softAssertion.assertNotEquals(fisrtId, secondId);
+		softAssertion.assertAll();
+		baseClass.passedStep("Selected document are displayed on Doc View page");
+
+		loginPage.logout();
+
+	}
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);

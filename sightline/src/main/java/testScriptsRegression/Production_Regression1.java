@@ -5975,6 +5975,104 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 	         
 		}
 	
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48492
+		 * @Description:To verify that If user select PrivTag and if Audio document is
+		 *                 associated to that tag then Native should not produced
+		 */
+		@Test(groups = { "regression" }, priority = 72)
+		public void SelectPrivTagWithAudioDocumentAndNativeNotProduced() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48492 -Production Sprint 09");
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.audioSearch(Input.audioSearch, Input.language);
+			sessionSearch.bulkTagExisting(tagname);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.getAdvancedProductionComponent().waitAndClick(10);
+			page.getMP3CheckBox().waitAndClick(10);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+		}
+
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48493
+		 * @Description:To verify that If user select PrivTag and if Audio document is
+		 *                 not associated to that tag then Native should be produced
+		 */
+		@Test(groups = { "regression" }, priority = 73)
+		public void SelectPrivTagWithAudioDocumentAndNativeProduced() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48493 -Production Sprint 09");
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String tagname = "Tag" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.audioSearch(Input.audioSearch, Input.language);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.getAdvancedProductionComponent().waitAndClick(10);
+			page.getMP3CheckBox().waitAndClick(10);
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
+
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {

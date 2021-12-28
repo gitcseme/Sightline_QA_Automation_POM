@@ -107,7 +107,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 1)
+	@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void validateSharingAlreadySharedSGWithModificationsInMiddleOfHierarfchyWithSecurityGroup()
 			throws Exception {
 
@@ -242,7 +242,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 2)
+	@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void modificationsInMiddleOfHierarchyWithSecurityGroupAsPA() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -362,7 +362,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, dataProvider = "UserPaAndSaAndDa", groups = { "regression" }, priority = 3)
+	@Test(enabled = true, dataProvider = "UserPaAndSaAndDa", groups = { "regression" }, priority = 3)
 	public void verifyTimelineReport(String username, String password) throws InterruptedException, ParseException {
 		String search1 = "Search" + Utility.dynamicNameAppender();
 		String search2 = "Search" + Utility.dynamicNameAppender();
@@ -451,7 +451,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 4)
+	@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void validateSharingAlreadySharedSGWithModifications() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -582,7 +582,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 5)
+	@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void validateSharingAlreadySharedSGWithModificationsViaRMU() throws Exception {
 
 		int noOfNodesToCreate = 6;
@@ -713,7 +713,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              Navigate Search groups to Report [RPMXCON-49014]
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 6)
+	@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyReportForAggregateSearchHitCountInStrPage() throws Exception {
 		String search = "Search" + Utility.dynamicNameAppender();
 		String search2 = "Search" + Utility.dynamicNameAppender();
@@ -755,7 +755,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @Description:verifying the All count of Basic and advance search after from
 	 *                        save search[RPMXCON-48490]
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 7)
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void ValidateAllCountOfSavedSearch() throws InterruptedException {
 		String BasicSearchName = "comments" + Utility.dynamicNameAppender();
 		String AdvanceSearchName = "comments" + Utility.dynamicNameAppender();
@@ -804,7 +804,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void performBulkActionsAgainstMySavedSearches() throws InterruptedException {
 
 		miniDocListPage = new MiniDocListPage(driver);
@@ -989,7 +989,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 9)
+	@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void performBulkActionsAgainstMySavedSearchesDA() throws InterruptedException {
 
 		miniDocListPage = new MiniDocListPage(driver);
@@ -1176,7 +1176,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 10)
+	@Test(enabled = true, groups = { "regression" }, priority = 10)
 	public void performBulkActionsAgainstMySavedSearchesSA() throws InterruptedException {
 
 		miniDocListPage = new MiniDocListPage(driver);
@@ -1361,7 +1361,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *              <Security Group Name> by any other PAU user
 	 * @throws Exception
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 11)
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
 	public void validatingExecutedSavedsearchSearchesAndGroupsAsPauAndRmu() throws Exception {
 
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
@@ -1452,7 +1452,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 12)
+	@Test(enabled = true, groups = { "regression" }, priority = 12)
 	public void validateSharingAlreadySharedSG() throws InterruptedException, ParseException {
 		int noOfNodesToCreate = 6;
 		int selectIndex = 0;
@@ -1558,7 +1558,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @param SGtoShare
 	 * @throws InterruptedException
 	 */
-	@Test(enabled = false, dataProvider = "UserAndShare", groups = { "regression" }, priority = 13)
+	@Test(enabled = true, dataProvider = "UserAndShare", groups = { "regression" }, priority = 13)
 	public void verifyAppDispalysAggregateResult(String username, String password, String fullname, String SGtoShare)
 			throws InterruptedException {
 		int noOfNodesToCreate = 2;
@@ -1610,7 +1610,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
-	@Test(enabled = false, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyAppDispalysAggregateResult() throws InterruptedException, ParseException {
 		String Search1 = "search" + Utility.dynamicNameAppender();
 		// Login as PA
@@ -1838,6 +1838,163 @@ public class SavedSearchRegression_New_Set_04 {
 
 		// Delete Node
 		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/27/21 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of all child search groups "My Saved Search"
+	 *         and searches when User Performs Bulk Folder from Child Search
+	 *         groups-RPMXCON-48922 Sprint 09
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	public void aggregateResultFromNodeWhileBulkFolder() throws InterruptedException, ParseException {
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		int aggregateHitCount, noOfNode = 2;
+		String folderName = "Folder" + Utility.dynamicNameAppender();
+		base.stepInfo("Test case Id: RPMXCON-48922 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Performs Bulk Folder from Child Search groups");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNode);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		// Calculate the unique doc count for the respective searches
+		aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.selectproject();
+
+		// FOLDER
+		base.stepInfo("-----FOLDER------");
+		HashMap<String, String> folderCount = saveSearch.bulkTagorFolderViaSS(true, true, Input.mySavedSearch, true,
+				false, newNodeList.get(0), "", "Folder", 5, "", false, false, folderName, true, true);
+
+		base.stepInfo(" aggregateHitCount " + aggregateHitCount);
+		base.stepInfo(" Finalize Count " + folderCount.get("Finalize Count"));
+		base.textCompareEquals(folderCount.get("Finalize Count"), Integer.toString(aggregateHitCount),
+				"Document finalize count matches with aggregate results set of all child search groups and searches   ",
+				"Count Mismatches");
+
+		base.stepInfo(" Finalize Count " + folderCount.get("Finalize Count"));
+		base.stepInfo(" PureHit Count " + folderCount.get("PureHit Count"));
+		base.textCompareEquals(folderCount.get("PureHit Count"), folderCount.get("Finalize Count"),
+				"After the Bulk Folder - Pure hit shows the aggregate results set of all child search groups and searches  ",
+				"Count Mismatches");
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0), true, true);
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/27/21 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of all child search groups "My Saved Search"
+	 *         and searches when User Performs Bulk Assign from Child Search groups
+	 *         -RPMXCON-48923 Sprint 09
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
+	public void aggregateResultWhileBulkAssignment() throws InterruptedException, ParseException {
+		AssignmentsPage assign = new AssignmentsPage(driver);
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+		Boolean inputValue = true;
+		int finalCountresult, noOfNode = 2, purehitCount, aggregateHitCount;
+		String finalCount;
+		String assignName = "assignName" + Utility.dynamicNameAppender();
+		base.stepInfo("Test case Id: RPMXCON-48923 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Performs Bulk Assign from Child Search groups");
+
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("RMU", "No", noOfNode);
+		System.out.println("Next adding searches to the created nodes");
+		base.stepInfo("Next adding searches to the created nodes");
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+
+		base.stepInfo("-------Pre-requesties completed--------");
+		login.logout();
+
+		// Login as PA
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Calculate the unique doc count for the respective searches
+		aggregateHitCount = session.getDocCountBtwnTwoSearches(true, Input.searchString5, Input.searchString6);
+		base.selectproject();
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSSPage();
+		base.stepInfo("Root node selected : " + newNodeList.get(0));
+		saveSearch.selectNode1(newNodeList.get(0));
+
+		// verify Assign Button Enabled
+		driver.waitForPageToBeReady();
+		Element assignBtnStatus = saveSearch.getSavedSearchToBulkAssign();
+		saveSearch.checkButtonEnabled(assignBtnStatus, "Should be Enabled", "Assign");
+
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(5);
+		base.stepInfo("Clicked Assign Icon");
+
+		// Load latency Verification SaveSearchToBulkFolder
+		Element loadingElement = saveSearch.getbulkAssignTotalCountLoad();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		finalCount = assign.assignDocstoNewAssgn(assignName);
+		finalCountresult = Integer.parseInt(finalCount);
+		base.stepInfo("Finalize count : " + finalCountresult);
+		assign.quickAssignCreation(assignName, Input.codeFormName);
+		session.switchToWorkproduct();
+		purehitCount = session.selectAssignmentInWPSWs(assignName);
+		base.stepInfo("PureHitcount via WP assignment selection : " + purehitCount);
+
+		base.stepInfo("Aggregate Hit count : " + aggregateHitCount);
+		base.stepInfo("Finalize count : " + finalCountresult);
+		base.digitCompareEquals(finalCountresult, aggregateHitCount,
+				"Finalize hit appears like aggregate results set of all child search groups and searches   ",
+				"Count Mismatches");
+
+		base.stepInfo("Finalize count : " + finalCountresult);
+		base.stepInfo("PureHit count : " + purehitCount);
+		base.digitCompareEquals(finalCountresult, purehitCount,
+				"After the Bulk Assignment - Pure hit appears like aggregate results set of all child search groups and searches   ",
+				"Count Mismatches");
+
+		// Delete Node
+		driver.scrollPageToTop();
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0), true, true);
 
 		login.logout();
 	}
