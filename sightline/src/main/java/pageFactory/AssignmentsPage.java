@@ -8416,4 +8416,32 @@ public class AssignmentsPage {
 		getDocument_CommentsTextBox().Clear();
 		getDocument_CommentsTextBox().SendKeys(comment);
 	}
+    
+    /**
+	 * Indium-Baskar
+	 */
+	public void VerifyToggleColour() {
+    	SoftAssert assertion=new SoftAssert();
+    	driver.waitForPageToBeReady();
+    	bc.waitForElement(getAssignmentActionDropdown());
+		getAssignmentActionDropdown().waitAndClick(15);
+		bc.waitForElement(getAssignmentAction_NewAssignment());
+		getAssignmentAction_NewAssignment().waitAndClick(5);
+		driver.waitForPageToBeReady();
+		driver.scrollingToBottomofAPage();
+        String flagFalse = getAssgn_CodingStampAplliedToggle().GetAttribute("class");
+        if (flagFalse.contains("false")) {
+        	String colourRed=getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
+        	colourRed =bc.rgbTohexaConvertor(colourRed);
+        	System.out.println(colourRed);
+        	assertion.assertEquals(colourRed, "#E54036");
+        }
+        getAssgn_CodingStampAplliedToggle().waitAndClick(5);
+        driver.waitForPageToBeReady();
+        String colourGreen=getAssgn_CodingStampAplliedToggle().GetCssValue("background-color");
+       	colourGreen =bc.rgbTohexaConvertor(colourGreen);
+     	System.out.println(colourGreen);
+        assertion.assertEquals(colourGreen, "#A9C981");
+        assertion.assertAll();
+    }
   }

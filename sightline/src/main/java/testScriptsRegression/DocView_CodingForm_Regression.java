@@ -6425,6 +6425,74 @@ public class DocView_CodingForm_Regression {
 		loginPage.logout();
 	}
 	
+	/**
+	 * @Author : Baskar date: 28/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify Complete When Coding Stamp Applied toggle color when it on/off for assignment group
+
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 150)
+	public void validateToggleColour() throws InterruptedException, AWTException {
+		assignmentPage = new AssignmentsPage(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51283");
+		baseClass.stepInfo("Verify Complete When Coding Stamp Applied toggle color when it on/off for assignment group");
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		
+		driver.getWebDriver().get(Input.url + "Assignment/ManageAssignment");
+		assignmentPage.VerifyToggleColour();
+
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * @Author : Baskar date:28/12/21 Modified date: NA Modified by: Baskar
+	 * @Description : Coding form child window: Verify that code same as last should be 
+	 *                displayed in context of security group
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 151)
+	public void codeSameAsLastShouldDisplay() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+		
+		baseClass.stepInfo("Test case Id: RPMXCON-52123");
+		baseClass.stepInfo("Coding form child window: Verify that code same as last "
+				+ "should be displayed in context of security group");
+
+		// Login As rmu
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Searching audio document with different term
+		baseClass.stepInfo("Searching audio documents based on search string");
+		sessionSearch.audioSearch(Input.audioSearchString1, Input.language);
+
+		docViewPage.selectPureHit();
+
+		baseClass.stepInfo("Searching Content documents based on search string");
+		sessionSearch.advancedNewContentSearch1(Input.testData1);
+
+		baseClass.stepInfo("User on the docview page");
+		sessionSearch.ViewInDocViews();
+
+		// verify code same as last displaying in child window
+		baseClass.stepInfo("Coding form child window get opened");
+		docViewPage.clickGearIconOpenCodingFormChildWindow();
+		docViewPage.switchToNewWindow(2);
+		boolean flag=docViewPage.getCodeSameAsLast().isDisplayed();
+		softAssertion.assertTrue(flag);
+		driver.close();
+		docViewPage.switchToNewWindow(1);
+		softAssertion = new SoftAssert();
+		baseClass.passedStep("Code same as last button displayed in coding form child window");
+		// logout
+		loginPage.logout();
+
+	}
+	
 	
 	
 	@DataProvider(name = "paToRmuRev")
