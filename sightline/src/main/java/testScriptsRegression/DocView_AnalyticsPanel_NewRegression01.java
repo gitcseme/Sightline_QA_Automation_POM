@@ -25,6 +25,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.MiniDocListPage;
+import pageFactory.SavedSearch;
 import pageFactory.SessionSearch;
 import pageFactory.Utility;
 import testScriptsSmoke.Input;
@@ -39,6 +40,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	SessionSearch sessionSearch;
 	SoftAssert softAssertion;
 	DocViewRedactions docViewRedact;
+	SavedSearch savedSearch;
 
 	@BeforeClass(alwaysRun = true)
 
@@ -503,6 +505,63 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		
 	}
 	
+	/**
+	 * Author : Vijaya.Rani date: 27/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that if user navigates to doc view from the save
+	 * search, then user can view the documents in the doc list from Doc
+	 * View->Conceptual Similar docuemnts panel.'RPMXCON-50878' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	public void verifyDocViewFromSaveSearchDocViewConceptual() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-50878");
+		baseClass.stepInfo(
+				"To verify that if user navigates to doc view from the Save search, then he can view the documents in the doc list from Doc View->Thread Map.");
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer Manager with " + Input.rmu1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		DocViewPage docViewAnalytics = new DocViewPage(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		String BasicSearchName = "Savebtn" + Utility.dynamicNameAppender();
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// threadmap tab View in DocList
+		driver.waitForPageToBeReady();
+		docView.performConceptualViewInDocView();
+
+		// logout
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Basic Search
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(BasicSearchName);
+		savedSearch.savedSearchToDocView(BasicSearchName);
+
+		// threadmap tab View in DocList
+		driver.waitForPageToBeReady();
+		docView.performConceptualViewInDocView();
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
