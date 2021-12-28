@@ -14,9 +14,11 @@ import automationLibrary.Driver;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
+import pageFactory.DocExplorerPage;
 import pageFactory.DocListPage;
 import pageFactory.DocViewMetaDataPage;
 import pageFactory.DocViewPage;
+import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
 import pageFactory.ProductionPage;
@@ -6072,6 +6074,173 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			page.fillingSummaryAndPreview();
 			page.fillingGeneratePageWithContinueGenerationPopup();
 		}
+		
+		
+
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48504
+		 * @Description:To verify that Tiff/PDF should generate with Priv placeholdering
+		 *                 even though Burn redactions and File group/tag based
+		 *                 placeholdering is exists.
+		 */
+		@Test(groups = { "regression" }, priority = 74)
+		public void ProductionGenerateWithPrivHolderWithBurnRedaction() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48504 -Production Sprint 09");
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			tagname = "Tag" + Utility.dynamicNameAppender();
+			String tagname1= "Tag" + Utility.dynamicNameAppender();
+			String Redactiontag1;
+			Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+			RedactionPage redactionpage=new RedactionPage(driver);
+
+			driver.waitForPageToBeReady();
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+			System.out.println("First Redaction Tag is created"+Redactiontag1);
+
+			DocExplorerPage docExp=new DocExplorerPage(driver);
+			docExp.documentSelectionIteration();
+			docExp.docExpViewInDocView();
+
+			DocViewRedactions docViewRedactions=new DocViewRedactions(driver);
+			//doc1
+			docViewRedactions.selectDoc1();
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10,10,100,100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			
+			tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateTagwithClassification(tagname, Input.tagNamePrev);
+			tagsAndFolderPage.CreateTagwithClassification(tagname1,"Select Tag Classification");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			ProductionPage page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.selectPrivDocsInTiffSection(tagname);
+			page.fillingNativeDocsPlaceholder(tagname1);
+			page.getClk_burnReductiontoggle().ScrollTo();
+			page.getClk_burnReductiontoggle().waitAndClick(5);
+			page.burnRedactionWithRedactionTag(Redactiontag1);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname1);
+			page.fillingDATSection();
+			page.fillingPDFSection(tagname, Input.searchString4);
+			page.fillingNativeDocsPlaceholder(tagname1);
+			page.getClk_burnReductiontoggle().ScrollTo();
+			page.getClk_burnReductiontoggle().waitAndClick(5);
+			page.burnRedactionWithRedactionTag(Redactiontag1);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname1);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+		}
+
+		
+		
+		
+		/**
+		 * @author Brundha created on:NA modified by:NA TESTCASE No:RPMXCON-48204
+		 * @Description:To verify In Productions DAT, provide the TIFFPageCount for each document produced
+		 */
+		@Test(groups = { "regression" }, priority = 75)
+		public void verifyProductionDATProvideTIFFPageCount() throws Exception {
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48204 -Production Sprint 09");
+			String bates="B"+ Utility.dynamicNameAppender();
+			String bates1="B"+ Utility.dynamicNameAppender();
+			String foldername = "Folder" + Utility.dynamicNameAppender();
+			String productionname1 = "p" + Utility.dynamicNameAppender();
+			String productionname = "p" + Utility.dynamicNameAppender();
+			String prefixID = Input.randomText + Utility.dynamicNameAppender();
+			String suffixID = Input.randomText + Utility.dynamicNameAppender();
+
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+
+			ProductionPage page = new ProductionPage(driver);
+			
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname1);
+			page.fillingDATSection();
+	        page.addDATFieldAtSecondRow("Production","TIFFPageCount",bates);
+	        page.addDATFieldAtThirdRow("Doc Basic","DocID",bates1);
+			page.fillingNativeSection();
+			page.fillingPDFSectionWithBrandingText();
+			page.slipSheetToggleEnable();
+			page.availableFieldSelection("BatesNumber");
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname1);
+			page.navigateToNextSection();
+			page.viewingPreviewInSummaryTab();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+			
+			
+			page = new ProductionPage(driver);
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+	        page.addDATFieldAtSecondRow("Production","TIFFPageCount",bates);
+	        page.addDATFieldAtThirdRow("Doc Basic","DocID",bates1);
+			page.fillingNativeSection();
+			page.fillingTIFFSectionWithBatesNumber();
+			page.slipSheetToggleEnable();
+			page.availableFieldSelection("BatesNumber");
+			page.fillingTextSection();
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.viewingPreviewInSummaryTab();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePageWithContinueGenerationPopup();
+
+			
+		}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
