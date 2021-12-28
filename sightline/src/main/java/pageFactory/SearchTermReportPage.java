@@ -338,6 +338,7 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
+		bc.waitTime(4);
 		bc.waitForElement(getSTReport());
 		int i;
 		try {
@@ -346,7 +347,7 @@ public class SearchTermReportPage {
 			i = bc.getIndex(gettableHeaders(), "HITS");
 		}
 		System.out.println(i);
-		getRowCheckBox(searchName, i).waitAndClick(5);
+		getRowCheckBox(searchName, i).waitAndClick(20);
 		String pureHits = getRowValue(searchName, i).getText();
 		return pureHits;
 	}
@@ -356,10 +357,10 @@ public class SearchTermReportPage {
 	 * @param TagName
 	 */
 
-	public void BulkTag(String TagName) throws InterruptedException, AWTException {
+	public String BulkTag(String TagName) throws InterruptedException, AWTException {
 
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(20);
 		bc.waitForElement(getActionBulkTag());
 		getActionBulkTag().Click();
 		bc.waitForElement(getBulkNewTab());
@@ -373,6 +374,8 @@ public class SearchTermReportPage {
 		getContinueDocument().waitAndClick(10);
 		driver.Manage().window().maximize();
 		driver.waitForPageToBeReady();
+		bc.waitForElement(getTotalSelectedDocs());
+		String TotalDocs = getTotalSelectedDocs().getText();
 		bc.waitTillElemetToBeClickable(getFinalizeTag());
 		getFinalizeTag().Click();
 		driver.waitForPageToBeReady();
@@ -380,16 +383,17 @@ public class SearchTermReportPage {
 		getFinalizeOkButton().Click();
 		bc.VerifySuccessMessage("Records saved successfully");
 		driver.waitForPageToBeReady();
+		return TotalDocs;
 	}
 
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param folderName
 	 */
-	public void BulkFolder(String folderName) throws InterruptedException, AWTException {
+	public String BulkFolder(String folderName) throws InterruptedException, AWTException {
 
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(20);
 		bc.waitForElement(getActionBulkFolder());
 		getActionBulkFolder().Click();
 		bc.waitForElement(getBulkNewTab());
@@ -407,10 +411,13 @@ public class SearchTermReportPage {
 		getContinueDocument().waitAndClick(10);
 		driver.Manage().window().maximize();
 		driver.waitForPageToBeReady();
+		bc.waitForElement(getTotalSelectedDocs());
+		String TotalDocs = getTotalSelectedDocs().getText();
 		bc.waitTillElemetToBeClickable(getFinalizeTag());
 		getFinalizeTag().Click();
 		bc.VerifySuccessMessage("Records saved successfully");
 		driver.waitForPageToBeReady();
+		return TotalDocs;
 	}
 
 	/**
@@ -419,7 +426,7 @@ public class SearchTermReportPage {
 	public void ViewInDocView() {
 		driver.scrollPageToTop();
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(20);
 		bc.waitForElement(getViewBtn());
 		getViewBtn().ScrollTo();
 		getViewinDocViewBtn().ScrollTo();
@@ -432,7 +439,7 @@ public class SearchTermReportPage {
 	 */
 	public void BulkAssign() {
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(20);
 		getBulkAssignBtn().waitAndClick(30);
 		bc.stepInfo("Navigating from Search term report page to assignments creation page.");
 	}
@@ -456,6 +463,7 @@ public class SearchTermReportPage {
 		bc.waitTillElemetToBeClickable(getApplyBtn());
 		getApplyBtn().Click();
 		driver.waitForPageToBeReady();
+		bc.waitTime(3);		
 		bc.waitForElement(getSTReport());
 		if (getSTReport().isDisplayed()) {
 			bc.stepInfo("Report generated sucessfull");
@@ -651,7 +659,7 @@ public class SearchTermReportPage {
 	 */
 	public String bulkRelease(String SG) {
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(20);
 		getActionBulkRelease().waitAndClick(30);
 		bc.stepInfo("Navigating from Search term report page to Security Groups doc release popup.");
 		getBulkRelDefaultSecurityGroup_CheckBox(SG).Click();
@@ -671,7 +679,7 @@ public class SearchTermReportPage {
 	 */
 	public void STR_ToExportData() {
 		bc.waitForElement(getActionButton());
-		getActionButton().Click();
+		getActionButton().waitAndClick(30);
 		bc.waitTime(2);
 		bc.waitForElement(getActionExportData());
 		getActionExportData().waitAndClick(10);
