@@ -846,7 +846,7 @@ public class BatchRedactionRegression3 {
 	 *              Time (Saved Search) [RPMXCON-53508]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 15)
+	@Test(enabled = false, groups = { "regression" }, priority = 15)
 	public void verifyBRSearchTreeTimestamp() throws Exception {
 		String searchName = "search" + Utility.dynamicNameAppender();
 		String data = Input.testData1;
@@ -888,7 +888,7 @@ public class BatchRedactionRegression3 {
 	 *              saved search criteria[RPMXCON-53471]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 16)
+	@Test(enabled = false, groups = { "regression" }, priority = 16)
 	public void verifyRollbackSuccessfullyCompletedBR() throws Exception {
 		String search = "Search" + UtilityLog.dynamicNameAppender();
 		String othSG = "Security Group_" + UtilityLog.dynamicNameAppender();
@@ -964,7 +964,7 @@ public class BatchRedactionRegression3 {
 	 *              redaction[RPMXCON-53431]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 17)
+	@Test(enabled = false, groups = { "regression" }, priority = 17)
 	public void verifyRedactedDocuments() throws Exception {
 		String search = "Search" + UtilityLog.dynamicNameAppender();
 
@@ -1053,7 +1053,7 @@ public class BatchRedactionRegression3 {
 	 *              Analyzing the saved search for redaction[RPMXCON-48804]
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 19)
+	@Test(enabled = false, groups = { "regression" }, priority = 19)
 	public void verifyViewReportBtn() throws Exception {
 		String search = "Search" + Utility.dynamicNameAppender();
 
@@ -1134,7 +1134,7 @@ public class BatchRedactionRegression3 {
 		// navigating through Batch Redaction
 		Element batchRedact = docview.BatchredactionForwardNavigate();
 		Element batchRedactCOunt = docview.getDocView_BatchRedactionCount();
-		docview.navigateToRedaction(ComponentBatchCount, batchRedact, batchRedactCOunt, true, false);
+		docview.navigateToRedaction(batchRedactionCount, batchRedact, batchRedactCOunt, true, false);
 
 		// navigating through Component Batch Redaction
 		Element componentBR = docview.componentBatchredactionForwardNavigate();
@@ -1149,12 +1149,12 @@ public class BatchRedactionRegression3 {
 	/**
 	 * @Author Raghuram
 	 * @Description : Verify that for All redactions navigation option to redactions
-	 *              should be displayed [<, >] on doc view redactions panel [RPMXCON-53398]
+	 *              should be displayed [<, >] on doc view redactions panel
+	 *              [RPMXCON-53398]
 	 * @throws Exception
 	 */
 	@Test(enabled = true, groups = { "regression" }, priority = 21)
 	public void verifyingAllRedactionsNavigationOptionInDocView() throws Exception {
-
 		String searchName = "Search Name" + Utility.dynamicNameAppender();
 		DocViewPage docview = new DocViewPage(driver);
 
@@ -1167,7 +1167,7 @@ public class BatchRedactionRegression3 {
 		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
 
 		// Create saved search
-		int purehit = session.basicContentSearch("crammer");
+		int purehit = session.basicContentSearch(Input.testData1);
 		session.saveSearch(searchName);
 
 		// creating Batch Redaction
@@ -1197,6 +1197,117 @@ public class BatchRedactionRegression3 {
 		login.logout();
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that for Batch redactions navigation option to redacted
+	 *              terms should be displayed [<, >] on doc view redactions panel
+	 *              [RPMXCON-53399]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 22)
+	public void verifyingBatchRedactionsNavigationOptionInDocView() throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+		DocViewRedactions dcRedact = new DocViewRedactions(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53399");
+		base.stepInfo(
+				"Verify that for Batch redactions navigation option to redacted terms should be displayed [<, >] on doc view redactions panel");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// creating Batch Redaction
+		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
+		batch.verifyHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(docview.getDocView_RedactIcon());
+		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
+		docview.getDocView_RedactIcon().waitAndClick(10);
+		dcRedact.verifyRedactionsSubMenu();
+
+		// getting the Batch Redaction total count
+		Element batchRedactCount = docview.getDocView_BatchRedactionCount();
+		int batchRedactionCount = docview.getRedactionCount(batchRedactCount, "Batch Redaction");
+
+		// navigating through Batch Redaction
+		Element batchRedact = docview.BatchredactionForwardNavigate();
+		Element batchRedactCOunt = docview.getDocView_BatchRedactionCount();
+		docview.navigateToRedaction(batchRedactionCount, batchRedact, batchRedactCOunt, true, false);
+		docview.navigatePreviousRedact(1, true, false, batchRedactCOunt, "");
+
+		// Delete Search
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	/**
+	 * @Author Raghuram
+	 * @Description :Verify that for each Batch redactions components navigation
+	 *              option to redacted terms should be displayed [<,>] on doc view
+	 *              redatcions panel [RPMXCON-53400]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 23)
+	public void verifyingComponentBatchRedactionsNavigationOptionInDocView() throws Exception {
+		String searchName = "Search Name" + Utility.dynamicNameAppender();
+		DocViewPage docview = new DocViewPage(driver);
+		DocViewRedactions dcRedact = new DocViewRedactions(driver);
+
+		base.stepInfo("Test case Id:RPMXCON-53400");
+		base.stepInfo(
+				"Verify that for each Batch redactions components navigation option to redacted terms should be displayed [<,>] on doc view redatcions panel");
+
+		// Login as a RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Create saved search
+		int purehit = session.basicContentSearch(Input.testData1);
+		session.saveSearch(searchName);
+
+		// creating Batch Redaction
+		batch.savedSearchBatchRedaction1(Input.defaultRedactionTag, searchName);
+		batch.getConfirmationBtn("Yes").waitAndClick(5);
+		batch.verifyHistoryStatus(searchName);
+
+		// selecting the Configured Saved search
+		saveSearch.savedSearchToDocView(searchName);
+		driver.waitForPageToBeReady();
+
+		base.waitForElement(docview.getDocView_RedactIcon());
+		base.waitTillElemetToBeClickable(docview.getDocView_RedactIcon());
+		docview.getDocView_RedactIcon().waitAndClick(10);
+		dcRedact.verifyRedactionsSubMenu();
+
+		// getting the Component Batch Redaction total count
+		Element componentCount = docview.getComponentBatchRedactionsRatioCount();
+		int ComponentBatchCount = docview.getRedactionCount(componentCount, "Component Batch Redaction");
+
+		// navigating through Component Batch Redaction
+		Element componentBR = docview.componentBatchredactionForwardNavigate();
+		Element componentBRCount = docview.getComponentBatchRedactionsRatioCount();
+		docview.navigateToRedaction(ComponentBatchCount, componentBR, componentBRCount, true, false);
+		docview.navigatePreviousRedact(1, false, true, componentBRCount, Input.testData1);
+
+		// Delete Searches
+		saveSearch.deleteSearch(searchName, Input.mySavedSearch, "Yes");
+		login.logout();
+
+	}
+
+	
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod) throws IOException {
 		Reporter.setCurrentTestResult(result);
