@@ -5990,18 +5990,25 @@ public class DocViewPage {
 
 	public void openNearDupeComparisonWindow() throws InterruptedException {
 
-		driver.WaitUntil((new Callable<Boolean>() {
-			public Boolean call() {
-				return getDocView_Analytics_NearDupeTab().Displayed();
-			}
-		}), Input.wait30);
+		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(10);
-
+		base.waitForElement(getDocView_NearDupeIcon());
+		getDocView_NearDupeIcon().ScrollTo();
 		getDocView_NearDupeIcon().waitAndClick(10);
 
 		for (String winHandle : driver.getWebDriver().getWindowHandles()) {
 			driver.switchTo().window(winHandle);
 			driver.waitForPageToBeReady();
+		}
+
+		for (int i = 1; i <= 3; i++) {
+			if (getDocView_NearDupeComparisonWindow_IgnoreButton().Enabled()) {
+				System.out.println("Comparison Window is Ready to perform next steps");
+				break;
+			} else {
+				driver.Navigate().refresh();
+			}
 		}
 
 		getDocView_NearDupe_DocID().WaitUntilPresent();
@@ -11173,8 +11180,7 @@ public class DocViewPage {
 			base.waitTime(5);
 			// verify Code Same as Link
 			try {
-				if (getDocView_Analytics_FamilyMember_CodeSameLink().isDisplayed()) {
-					softAssertion.assertTrue(getDocView_Analytics_FamilyMember_CodeSameLink().isDisplayed());
+				if (getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5)) {
 					base.failedStep("Selected Document is having code as same icon under Family Member tabss");
 				} else
 					base.passedStep(
@@ -11183,6 +11189,8 @@ public class DocViewPage {
 				base.passedStep(
 						"Code same icon is not displayed for the selected documents and documents from Family Member are unchecked successfull");
 			}
+
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -11222,13 +11230,17 @@ public class DocViewPage {
 
 			// verify Code Same as Link
 			try {
-				if (getDocView_Analytics_Concept_CodeSameLink().isDisplayed()) {
+				if (getDocView_Analytics_Concept_CodeSameLink().isElementAvailable(5)) {
 					base.failedStep("Selected Document is having code as same icon under Conceptual tabss");
+				} else {
+					base.passedStep(
+							"Code same icon is not displayed for the selected documents and documents from Conceptual tab are unchecked successfully");
 				}
 			} catch (Exception e) {
 				base.passedStep(
 						"Code same icon is not displayed for the selected documents and documents from Conceptual tab are unchecked successfully");
 			}
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

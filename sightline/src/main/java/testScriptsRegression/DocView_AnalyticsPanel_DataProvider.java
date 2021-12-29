@@ -275,7 +275,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * then previously selected Analytics Panel Tab must remain.'RPMXCON-51427' Sprint : 5
 	 * @throws InterruptedException 
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 4)
 	public void verifyAnalyticsTabAfterSelectingDocsFromAnalyticsPanel(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -326,7 +326,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * functional from 'Original' and 'Near Dupe' document panel of near dupe comparison'RPMXCON-51704' Sprint : 5
 	 * @throws InterruptedException 
 	 */
-	////@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 5)
 	public void verifyResetZoomIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -342,7 +342,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String docId="NearDupe";
+		String docId= Input.nearDupeCompletedDocId;
 		
 		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
 		// Session search to doc view Coding Form
@@ -351,7 +351,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		baseClass.stepInfo("Step 3 : View the document from mini doc list having near dupe documents");
 		//View the document from mini doc list
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewPage.selectDocIdInMiniDocList(docId);
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 		
 		baseClass.stepInfo("Step 4 : From Analytics panel > Near Dupe window click the icon");
@@ -383,7 +383,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Original document panel of near dupe comparison window'RPMXCON-51705' Sprint : 5
 	 * @throws InterruptedException 
 	 */
-	////@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 6)
 	public void verifyZoomInZoomOutIconInNearDupeComparisonWindow(String fullName, String userName, String password) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -398,7 +398,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String docId= "NearDupe";
+		String docId= Input.nearDupeCompletedDocId;
 		
 		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
 		// Session search to doc view Coding Form
@@ -407,7 +407,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		baseClass.stepInfo("Step 3 : View the document from mini doc list having near dupe documents");
 		//View the document from mini doc list
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewPage.selectDocIdInMiniDocList(docId);
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 		
 		baseClass.stepInfo("Step 4 : From Analytics panel > Near Dupe window click the icon");
@@ -433,7 +433,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * on document selection from Family Members panel 'RPMXCON-51221'
 	 */
 	
-	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 7)
 	public void removeCodeSameAsForFamilyMemberDocsAfterImpersonate(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -442,7 +442,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		baseClass.stepInfo("Test case Id: RPMXCON-51221");
 		baseClass.stepInfo(
 				"To verify user after impersonation should able to 'Remove Code same as this' on document selection from Family Members panel");
-		String miniDocs = "FamilyMember";
+		String miniDocs = Input.familyDocument;
 		// Login as Reviewer Manager
 		loginPage.loginToSightLine(userName, password);
 		switch (impersonate) {
@@ -480,7 +480,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 			sessionSearch.basicContentSearch(Input.searchString1);
 			sessionSearch.ViewFamilyMemberDocsInDocViews();
 			driver.waitForPageToBeReady();
-            docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(miniDocs);
+            docViewPage.selectDocIdInMiniDocList(miniDocs);
 			docViewPage.selectDocsFromFamilyMemberTabAndActionCodeSame();
 			docViewPage.selectDocsFromFamilyMemberTabAndActionRemoveCodeSame();
 		}
@@ -496,7 +496,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * and Select Action as 'Remove Code Same as this''RPMXCON-51219' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	//@Test(enabled = true,  groups = { "regression" }, priority = 8)
+	@Test(enabled = true,  groups = { "regression" }, priority = 8)
 	public void verifyMultiDocsInConceptAndActionAsRemoveCodeAsSame() throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -510,7 +510,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "Conceptually";
+		String documentToBeSelected = Input.MetaDataId;
+		String revDocToBeSelected = Input.conceptualDocumentReviewer;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -538,7 +539,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 		
 		baseClass.stepInfo("Step 3 : Select multiple documents from Conceptual and action as 'Code same as this'");
 		//select Multi docs from conceptual tab
@@ -561,7 +562,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 
 		baseClass.stepInfo("Step 3 : Select multiple documents from Conceptual and action as 'Code same as this'");
 		// select Multi docs from conceptual tab
@@ -582,7 +583,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * from Dockout screen->Analytics-Family Members.'RPMXCON-51128' Sprint : 6
 	 * @throws Exception 
 	 */
-	//@Test(enabled = true, dataProvider = "specificUsers", groups = { "regression" }, priority = 9)
+	@Test(enabled = true, dataProvider = "specificUsers", groups = { "regression" }, priority = 9)
 	public void verifyFolderActionInAnalyticsFamilyMemberTab(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -599,7 +600,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String AnalyticsPanel="FamilyMember";
+		String miniDocs = Input.familyDocument;
 		String folderName = "FamilyMember"+ Utility.dynamicNameAppender();
 		
 		baseClass.stepInfo("Step 2 : Go to doc view and click on gear icon");
@@ -608,7 +609,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(AnalyticsPanel);
+		docViewPage.selectDocIdInMiniDocList(miniDocs);
 		
 		baseClass.stepInfo("Step 3 : open Analytical panel child window->Family member  select multiple document");
 		
@@ -647,7 +648,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * from dockout screens and Select Action as 'Code Same as'.'RPMXCON-51126' Sprint : 6
 	 * @throws Exception 
 	 */
-	@Test(enabled = false, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 10)
 	public void verifyCodeSameAsActionInAnalyticsFamilyMemberTabAndSaveCodingForm(String fullName, String userName, String password) throws Exception {
 		
 		loginPage = new LoginPage(driver);
@@ -664,7 +665,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 		
-		String AnalyticsPanel="FamilyMember";
+		String AnalyticsPanel= Input.familyDocument;
 		
 		baseClass.stepInfo("Step 2 : Go to doc view and click on gear icon");
 		
@@ -672,7 +673,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		sessionSearch.basicContentSearch(Input.searchString1);
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(AnalyticsPanel);
+		docViewPage.selectDocIdInMiniDocList(AnalyticsPanel);
 		
 		
 		baseClass.stepInfo("Step 3 : Pop out the analytics panel");
@@ -708,7 +709,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Family Member'RPMXCON-51060' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = { "regression" }, priority = 11)
+	@Test(enabled = true,  groups = { "regression" }, priority = 11)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForFamilyMember() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -726,7 +727,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
 		String colourName = "colourName" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "FamilyMember";
+		String documentToBeSelected = "ID00001355";
+		String revDocToBeSelected= Input.familyDocument;
 
 		// Login as a Admin
 		loginPage.loginToSightLine(Input.rmu1userName,Input.rmu1password);
@@ -755,7 +757,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(documentToBeSelected);
 		docViewPage.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		
 		
@@ -783,7 +785,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList");
-		docViewPage.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docViewPage.selectDocIdInMiniDocList(revDocToBeSelected);
 		docViewPage.selectDocsFromFamilyMemberTabAndActionCodeSame();
 
 		// Edit Coding Stamp and Apply Coding Stamp
@@ -803,7 +805,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * applied after selecting 'Code same as this' action' from Analytics Panel > Near Dupe'RPMXCON-51061' Sprint : 6
 	 * @throws InterruptedException 
 	 */
-	@Test(enabled = false,  groups = { "regression" }, priority = 12)
+	@Test(enabled = true,  groups = { "regression" }, priority = 12)
 	public void verifyCheckMarkApplyingCodingStampAfterSelectingCodeSameAsForNearDupe() throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
@@ -897,7 +899,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 *  Threaded Map tab when no documents to display. 'RPMXCON-50903'
 	 */
 	
-	@Test(enabled = false,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
+	@Test(enabled = true,dataProvider="userDetailss", groups = { "regression" }, priority = 13)
 	public void verifyThreadedMapTabWhenNoDocsToDisplay(String roll,String userName, String password,String impersonate) throws InterruptedException {
 		loginPage = new LoginPage(driver);
 		sessionSearch = new SessionSearch(driver);
@@ -953,8 +955,8 @@ public class DocView_AnalyticsPanel_DataProvider {
 	 * Description : Verify that Near dupe window to see the differences should open,
 	 *  on click of the icon from Analytics Panel > Near Dupe child window'RPMXCON-51709' Sprint : 9
 	 * @throws InterruptedException 
-	 */
-	@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14)
+	 */ 
+	//@Test(enabled = false, dataProvider = "userDetails", groups = { "regression" }, priority = 14) // Doc are need to be ingested
 	public void verifyNearDupeWindowToSeeDifferenceInTheDocs(String fullName, String userName, String password) throws InterruptedException {
 		
 		loginPage = new LoginPage(driver);
