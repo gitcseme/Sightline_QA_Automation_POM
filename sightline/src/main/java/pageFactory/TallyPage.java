@@ -1,5 +1,7 @@
 package pageFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.openqa.selenium.WebElement;
@@ -257,7 +259,7 @@ public class TallyPage {
 	public Element getTally_Searches() {
 		return driver.FindElementByXPath("//strong[text()='Searches']/parent::a//span[@class='fa fa-plus']");
 	}
-
+	
 	public Element getTally_SelectSearches(String searchName) {
 		return driver.FindElementByXPath(
 				"//a[@class='jstree-anchor' and text()='" + searchName + "']//i[@class='jstree-icon jstree-checkbox']");
@@ -266,7 +268,7 @@ public class TallyPage {
 	public Element getTally_SearchSaveSelections() {
 		return driver.FindElementByXPath("//button[@id='search']");
 	}
-
+	
 	public Element getTallyBulkReleaseAction() {
 		return driver.FindElementByXPath(
 				"//button[@id='tallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
@@ -291,6 +293,49 @@ public class TallyPage {
 	}
 	public Element getSubTallyBulkReleaseAction() {
 		return driver.FindElementByXPath("//button[@id='subtallyactionbtn']/following-sibling::ul//li//a[contains(.,'Bulk Release')]");
+	}
+	public Element getTally_SecurityGroupCheckBox(String checkBoxName) {
+		return driver.FindElementByXPath("//*[@class='checkbox']//span[text()='"+checkBoxName+"']");
+	}
+	public Element getTally_SearchesCheckBox(String checkBoxName) {
+		return driver.FindElementByXPath("//*[@id='divSearchGroupTree']//*[text()='"+checkBoxName+"']");
+	}
+	public Element getTally_AssignmentsCheckBox(String checkBoxName) {
+		return driver.FindElementByXPath("//*[@id='divAssignmentGroupTree']//*[text()='"+checkBoxName+"']");
+	}
+	public Element getTally_FoldersCheckBox(String checkBoxName) {
+		return driver.FindElementByXPath("//*[@id='divFolderGroupTree']//*[text()='"+checkBoxName+"']");
+	}
+	public Element getTally_ClickMetaSourceButton() {
+		return driver.FindElementByXPath("//*[@id='select-source1']");
+	}
+	public Element getTally_ClickMetaSourceDropDown() {
+		return driver.FindElementByXPath("//*[@id='metadataselect']");
+	}
+	public Element getTally_SelectMetaSourceDropDown(String options) {
+		return driver.FindElementByXPath("//*[@id='metadataselect']/option[text()='"+options+"']");
+	}
+	public Element getTally_assignSaveSelections() {
+		return driver.FindElementByXPath("//button[@id='assignment']");
+	}
+	public Element getTally_SGSaveSelections() {
+		return driver.FindElementByXPath("//button[@id='secgroup']");
+	}
+	public Element getTally_foldersSaveSelections() {
+		return driver.FindElementByXPath("//button[@id='folder']");
+	}
+	
+	public Element getTally_Assignments() {
+		return driver.FindElementByXPath("//strong[text()=' Assignments']/parent::a//span[@class='fa fa-plus']");
+	}
+	public Element getTally_Folders() {
+		return driver.FindElementByXPath("//strong[text()='Folders']/parent::a//span[@class='fa fa-plus']");
+	}
+	public Element getTally_SecurityGroup() {
+		return driver.FindElementByXPath("//strong[text()='Security Groups']/parent::a//span[@class='fa fa-plus']");
+	}
+	public ElementCollection getTallyChartMetaData() {
+		return driver.FindElementsByCssSelector("div[id='tallyChart'] > svg > g:nth-child(2) > text");
 	}
 	public TallyPage(Driver driver) {
 
@@ -1097,6 +1142,94 @@ public class TallyPage {
 		getTallyViewinDocViewBtn().ScrollTo();
 		getTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+
+	public void SelectSource_Assignment(String assignmentName) {
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Assignments());
+		getTally_Assignments().Click();
+		base.waitTime(2);
+		driver.scrollingToElementofAPage(getTally_AssignmentsCheckBox(assignmentName));
+		getTally_AssignmentsCheckBox(assignmentName).waitAndClick(15);
+		base.waitTime(2);
+		getTally_assignSaveSelections().ScrollTo();
+		driver.scrollingToElementofAPage(getTally_assignSaveSelections());
+		base.waitForElement(getTally_assignSaveSelections());
+		base.waitTime(2);
+		getTally_assignSaveSelections().waitAndClick(15);
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SelectSource_Folder(String folderName) {
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_Folders());
+		getTally_Folders().Click();
+		driver.scrollingToElementofAPage(getTally_FoldersCheckBox(folderName));
+		getTally_FoldersCheckBox(folderName).waitAndClick(5);
+		driver.scrollingToElementofAPage(getTally_foldersSaveSelections());
+		base.waitForElement(getTally_foldersSaveSelections());
+		getTally_foldersSaveSelections().Click();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void SelectSource_SecurityGroup(String securityGroup) {
+		base.waitForElement(getTally_SelectSource());
+		getTally_SelectSource().Click();
+		base.waitForElement(getTally_SecurityGroup());
+		getTally_SecurityGroup().Click();
+		driver.scrollingToElementofAPage(getTally_SecurityGroupCheckBox(securityGroup));
+		getTally_SecurityGroupCheckBox(securityGroup).waitAndClick(5);
+		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
+		base.waitForElement(getTally_SGSaveSelections());
+		getTally_SGSaveSelections().Click();
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void validateMetaDataFieldName(String expectedFieldName) {
+		try {
+			base.waitForElement(getTally_SelectaTallyFieldtoruntallyon());
+			base.waitTillElemetToBeClickable(getTally_SelectaTallyFieldtoruntallyon());
+			String actualFieldName = getTally_SelectaTallyFieldtoruntallyon().getText();
+			if(actualFieldName.equals("Metadata :"+expectedFieldName)) {
+				base.passedStep("Expected MetaData Field Name "+expectedFieldName+" Displayed in Tally By  MetaData Button.");
+			}
+			else 
+			{
+				base.failedStep("Expected MetaData Field Name is not Displayed");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occcured while validating tally by meta data field" + e.getMessage());
+		}
+	}
+	
+	/**
+	 * @author Jayanthi.ganesan
+	 */
+	public void verifyTallyChart() {
+			base.waitForElement(getTallyChartRectbar());
+			base.waitTillElemetToBeClickable(getTallyChartRectbar());
+			getTallyChartRectbar().Displayed();
+			List metaData = new ArrayList();
+				if (getTallyChartRectbar().Displayed()) {
+					base.passedStep("Tally chart  displayed successfully");
+					metaData=base.availableListofElements(getTallyChartMetaData());
+					System.out.println(metaData);
+				}
+				else {
+					base.failedStep("Tally chart  not displayed");
+				}
+			
+
+
 	}
 
 }

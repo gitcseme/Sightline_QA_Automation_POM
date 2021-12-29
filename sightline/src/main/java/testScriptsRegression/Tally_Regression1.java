@@ -13,6 +13,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import automationLibrary.Driver;
+import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
 import pageFactory.DocViewPage;
 import pageFactory.LoginPage;
@@ -37,8 +38,8 @@ public class Tally_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-	//	Input in = new Input();
-	//	in.loadEnvConfig();
+		//Input in = new Input();
+		//in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -180,7 +181,39 @@ public class Tally_Regression1 {
 			bc.stepInfo("Document Count associated to selected saved search in Tally page is  displayed"
 					+ " as excpeted in doc view page");
 		}
-		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(groups = { "regression" }, priority = 3)
+		public void verifyTally_Assignments() throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56204");
+			bc.stepInfo("To Verify RMU will have a report in Tally with document counts by metadata fields for assignment groups.");
+			String[] metadata={"CustodianName","DocFileType","EmailAuthorName","EmailAuthorAddress" };
+			lp.loginToSightLine(Input.rmu1userName,Input.rmu1password);
+			bc.stepInfo("Logged in as RMU");
+			String assignmentName="AssignTally"+Utility.dynamicNameAppender();
+			SessionSearch sessionsearch = new SessionSearch(driver);
+			AssignmentsPage agnmt = new AssignmentsPage(driver);
+			sessionsearch.basicContentSearch(Input.testData1);
+			sessionsearch.bulkAssign();
+			agnmt.FinalizeAssignmentAfterBulkAssign();
+			agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
+			agnmt.getAssignmentSaveButton().waitAndClick(5);
+			bc.stepInfo("Created a assignment " + assignmentName);
+			TallyPage tp = new TallyPage(driver);
+			for(int i=0;i<metadata.length;i++) {
+				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-"+metadata[i]+"**");
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_Assignment(assignmentName);
+			tp.selectTallyByMetaDataField(metadata[i]);
+			tp.validateMetaDataFieldName(metadata[i]);
+			tp.verifyTallyChart();
+			bc.passedStep("Verified whether RMU will have a report in Tally with document counts by metadata "
+					+ "fields for assignment groups if Tally by metadata is "+metadata[i]);
+			if(i!=3) {bc.selectproject();}
+			}
+		}
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
@@ -214,6 +247,7 @@ public class Tally_Regression1 {
 				{ Input.pa1userName, Input.pa1password, "PA" } };
 		return users;
 	}
+	
 
 	@AfterClass(alwaysRun = true)
 	public void close() {

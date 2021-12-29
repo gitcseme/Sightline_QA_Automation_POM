@@ -126,7 +126,6 @@ public class SearchTermReportPage {
 		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='My Saved Search']//..//ul//a[text()='"
 				+ nodeName + "']//i[@class='jstree-icon jstree-checkbox']");
 	}
-
 	public ElementCollection gettableHeaders() {
 		return driver.FindElementsByXPath("(//table[@id='searchtermTable']//thead/tr/th)");
 	}
@@ -685,6 +684,36 @@ public class SearchTermReportPage {
 		getActionExportData().waitAndClick(10);
 		bc.stepInfo("Navigating from Search term report page to Export page.");
 	}
-
+	public Element getSGSaveSearchNodeCheckBox(String nodeName) {
+		return driver.FindElementByXPath("//a[@class='jstree-anchor' and text()='Shared with Default Security Group']//..//ul//a[text()='"
+				+ nodeName + "']//i[@class='jstree-icon jstree-checkbox']");
+	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param searchName
+	 */
+	public void GenerateReportWithSharedWithSGSearches(String[] savedSearchNames) {
+		bc.waitForElement(getSearchTermReport());
+		getSearchTermReport().Click();
+		driver.waitForPageToBeReady();
+		bc.waitTillElemetToBeClickable(mySavedSearchCheckbox());
+		for (int i = 0; i < savedSearchNames.length; i++) {
+			driver.scrollingToElementofAPage(getSGSaveSearchNodeCheckBox(savedSearchNames[i]));
+			bc.waitTillElemetToBeClickable(getSGSaveSearchNodeCheckBox(savedSearchNames[i]));
+			getSGSaveSearchNodeCheckBox(savedSearchNames[i]).waitAndClick(5);
+		}
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		bc.waitTillElemetToBeClickable(getApplyBtn());
+		getApplyBtn().Click();
+		driver.waitForPageToBeReady();
+		bc.waitTime(3);		
+		bc.waitForElement(getSTReport());
+		if (getSTReport().isDisplayed()) {
+			bc.stepInfo("Report generated sucessfully");
+		} else {
+			bc.failedStep("Report not generated sucessfully");
+		}
+	}
 
 }

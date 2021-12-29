@@ -51,16 +51,20 @@ public class SearchTermReport_Regression1 {
 	String[] searchData= {"test","comments","null"};
 	String[] Hits= new String[3];
 	String[] HitsRMU= new String[3];
+	String cmbSearchName1="STR"+Utility.dynamicNameAppender();
+	String cmbSearchName2="STR"+Utility.dynamicNameAppender();
+	String expectedUHit2;
+	String expectedUHit1;
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-	//	in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 	 // Open browser
-		driver = new Driver();
+    	driver = new Driver();
 		bc = new BaseClass(driver);
 		// Login as a PA
 		lp = new LoginPage(driver);
@@ -86,7 +90,7 @@ public class SearchTermReport_Regression1 {
 			if(i!=2) {bc.selectproject();}
 		}
 		lp.logout();
-		lp.quitBrowser();   
+		lp.quitBrowser();  
 
 	}
 
@@ -495,7 +499,61 @@ public class SearchTermReport_Regression1 {
 			bc.passedStep("Sucessfully verified that Export Data action is working on Search Term Report Page.");
 		}
 
-
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param username
+		 * @param password
+		 * @param role
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority =13, enabled = false)
+		public void  VerifyCombinedUniqueHits(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56586");
+			bc.stepInfo("Search Term Report - Validate Unique Hits and Unique Family Hits column value for combined search results");
+			st = new SearchTermReportPage(driver);
+			lp = new LoginPage(driver);
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as -" + role);
+			String saveSearch[]= {cmbSearchName1,cmbSearchName2};
+			SessionSearch ss=new SessionSearch(driver);
+			if(role=="RMU") {
+			ss.advancedSearch_CombinedResults(Input.searchString1,ss.getadvoption_family());
+			ss.saveSearchAdvanced_New(cmbSearchName1, "Shared with Default Security Group");	
+			bc.selectproject();
+		    ss.advancedSearch_CombinedResults(Input.searchString2,ss.getadvoption_family());
+			ss.saveSearchAdvanced_New(cmbSearchName2, "Shared with Default Security Group");
+			ss.selectSavedsearchInASWp(cmbSearchName1);
+			driver.waitForPageToBeReady();
+			ss.selectOperator("NOT");
+			driver.waitForPageToBeReady();
+			ss.searchSavedSearch(cmbSearchName2);
+			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
+			expectedUHit1=Integer.toString(ss.serarchWP());
+			ss.selectSavedsearchInASWp(cmbSearchName2);
+			driver.waitForPageToBeReady();
+			ss.selectOperator("NOT");
+			driver.waitForPageToBeReady();
+			ss.searchSavedSearch(cmbSearchName1);
+			expectedUHit2=Integer.toString(ss.serarchWP());
+			bc.stepInfo("Configured a search query with two saved search and NOT operator in between ");
+			}
+			driver.getWebDriver().get(Input.url + "Report/ReportsLanding");
+			st.GenerateReportWithSharedWithSGSearches(saveSearch);
+		    SoftAssert SoftAssertion =new SoftAssert();
+		    SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName1) ,expectedUHit1);
+		   SoftAssertion.assertEquals(st.getHitsValueFromRow("UNIQUE HITS", cmbSearchName2),expectedUHit2);
+			bc.stepInfo("The unique Hits Count for Combined saved saerch "+cmbSearchName1+"--"+st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName1));
+			bc.stepInfo("The unique Hits Count for Combined saved saerch "+cmbSearchName2+"--"+st.getHitsValueFromRow("UNIQUE HITS",cmbSearchName2));
+			SoftAssertion.assertAll();
+			bc.passedStep("Sucessfully verified the Unique Hits Column value for Combined search in STR Page");
+			if(role=="PA") {
+				SavedSearch savedSearch = new SavedSearch(driver);
+				savedSearch.SaveSearchDelete(cmbSearchName1);
+				savedSearch.SaveSearchDelete(cmbSearchName2);
+			}
+			}
+			
+		
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
