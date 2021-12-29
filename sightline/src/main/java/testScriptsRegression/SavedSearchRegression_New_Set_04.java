@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import automationLibrary.Driver;
 import automationLibrary.Element;
+import automationLibrary.ElementCollection;
 import executionMaintenance.UtilityLog;
 import pageFactory.AssignmentsPage;
 import pageFactory.BaseClass;
@@ -93,6 +95,12 @@ public class SavedSearchRegression_New_Set_04 {
 	@DataProvider(name = "PaAndRmuUser")
 	public Object[][] PaAndRmuUser() {
 		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		return users;
+	}
+
+	@DataProvider(name = "verifyOverwrittingSavedSearch")
+	public Object[][] SavedSearchwithPAandRMUwithRole() {
+		Object[][] users = { { "Yes", "COMPLETED" }, { "No", "DRAFT" } };
 		return users;
 	}
 
@@ -2349,6 +2357,203 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.deleteNode(SGtoShare, newNodeList.get(0));
 
 		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of shared groups and when User performs Refresh
+	 *         with Search groups (RPMXCON-49018 Sprint-09)
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 28)
+	public void showHideFieldsWithSharedSG() throws InterruptedException, ParseException {
+
+		String basicSearchName = "comments" + Utility.dynamicNameAppender();
+		String specificHeaderName = "Search Name";
+		List<String> headerList1 = new ArrayList<>();
+		List<String> headerList2 = new ArrayList<>();
+
+		base.stepInfo("Test case Id: RPMXCON-49018 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of shared groups and when User performs Refresh with Search groups");
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(basicSearchName);
+
+		saveSearch.shareSearchFlow(basicSearchName, Input.shareSearchDefaultSG, "RMU");
+
+		saveSearch.navigateToSSPage();
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(3);
+
+		ElementCollection headerListElementsBefore = saveSearch.getGridHeaderListSS();
+		headerList1 = base.availableListofElements(headerListElementsBefore);
+		Collections.sort(headerList1);
+		base.stepInfo(headerList1.toString());
+
+		saveSearch.methodTocheckHideandShowFunction(specificHeaderName);
+
+		driver.waitForPageToBeReady();
+		ElementCollection headerListElementsAfter = saveSearch.getGridHeaderListSS();
+		headerList2 = base.availableListofElements(headerListElementsAfter);
+		Collections.sort(headerList2);
+		base.stepInfo(headerList2.toString());
+
+		base.listCompareEquals(headerList1, headerList2, "all default columns are listed", "Mismatch with headers");
+
+		// Delete Search
+		saveSearch.deleteSearch(basicSearchName, Input.shareSearchDefaultSG, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : Verify that application displays all documents that are in the
+	 *         aggregate results set of all child search groups "My Saved Search"
+	 *         and searches when User Performs Bulk Assign from Child Search groups
+	 *         -RPMXCON-48923 Sprint 09
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 29)
+	public void aggregateResultWhileBulkAssignmentSG() throws InterruptedException, ParseException {
+		AssignmentsPage assign = new AssignmentsPage(driver);
+
+		String basicSearchName = "BS_" + Utility.dynamicNameAppender();
+		String passMsg = "Selected folder is highlighted";
+		String failMsg = "Selected folder is Not highlighted / highlighted with wrong color code";
+
+		int latencyCheckTime = 5;
+		String passMessage = "Application not hang or shows latency more than " + latencyCheckTime + " seconds.";
+		String failureMsg = "Continues Loading more than " + latencyCheckTime + " seconds.";
+		int finalCountresult, purehitCount, aggregateHitCount;
+		String finalCount;
+		String assignName = "assignName" + Utility.dynamicNameAppender();
+		base.stepInfo("Test case Id: RPMXCON-48923 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Performs Bulk Assign from Child Search groups");
+
+		// Login as RMZU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Loggedin As : " + Input.rmu1FullName);
+
+		// Navigate on Saved Search & Multiple Node Creation & save search in node
+		saveSearch.navigateToSSPage();
+		session.basicContentSearch(Input.searchString1);
+		session.saveSearch(basicSearchName);
+
+		saveSearch.shareSearchFlow(basicSearchName, Input.shareSearchDefaultSG, "RMU");
+
+		base.stepInfo("-------Pre-requesties completed--------");
+		login.logout();
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+
+		// Get Count
+		session.searchSavedSearchResult(Input.shareSearchDefaultSG);
+		aggregateHitCount = session.saveAndReturnPureHitCount();
+		base.stepInfo("Aggregate Count from Default Security Group: " + aggregateHitCount);
+		System.out.println("Aggregate Count from Default Security Group : " + aggregateHitCount);
+		base.selectproject();
+
+		// Launch DocVia via Saved Search
+		saveSearch.navigateToSavedSearchPage();
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(3);
+
+		base.stepInfo("Selected : " + Input.shareSearchDefaultSG);
+		driver.waitForPageToBeReady();
+		String bgColor = saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).GetCssValue("background-color");
+		bgColor = base.rgbTohexaConvertor(bgColor);
+
+		// Text Comparision
+		base.textCompareEquals(bgColor, Input.selectionHighlightColor, passMsg, failMsg);
+
+		// verify Assign Button Enabled
+		driver.waitForPageToBeReady();
+		Element assignBtnStatus = saveSearch.getSavedSearchToBulkAssign();
+		saveSearch.checkButtonEnabled(assignBtnStatus, "Should be Enabled", "Assign");
+
+		saveSearch.getSavedSearchToBulkAssign().waitAndClick(5);
+		base.stepInfo("Clicked Assign Icon");
+
+		// Load latency Verification SaveSearchToBulkFolder
+		Element loadingElement = saveSearch.getbulkAssignTotalCountLoad();
+		saveSearch.loadingCountVerify(loadingElement, latencyCheckTime, passMessage, failureMsg);
+		finalCount = assign.assignDocstoNewAssgn(assignName);
+		finalCountresult = Integer.parseInt(finalCount);
+		base.stepInfo("Finalize count : " + finalCountresult);
+		assign.quickAssignCreation(assignName, Input.codeFormName);
+		session.switchToWorkproduct();
+		purehitCount = session.selectAssignmentInWPSWs(assignName);
+		base.stepInfo("PureHitcount via WP assignment selection : " + purehitCount);
+
+		base.stepInfo("Aggregate Hit count : " + aggregateHitCount);
+		base.stepInfo("Finalize count : " + finalCountresult);
+		base.digitCompareEquals(finalCountresult, aggregateHitCount,
+				"Finalize hit appears like aggregate results set of all child search groups and searches   ",
+				"Count Mismatches");
+
+		base.stepInfo("Finalize count : " + finalCountresult);
+		base.stepInfo("PureHit count : " + purehitCount);
+		base.digitCompareEquals(finalCountresult, purehitCount,
+				"After the Bulk Assignment - Pure hit appears like aggregate results set of all child search groups and searches   ",
+				"Count Mismatches");
+
+		// Delete Node
+		driver.scrollPageToTop();
+		saveSearch.deleteSearch(basicSearchName, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : To verify that Overwritting Saved Searches must be allowed when the
+	 *         Search is in Completed/Draft Status - RPMXCON-49033 Sprint 09
+	 */
+	@Test(enabled = true, dataProvider = "verifyOverwrittingSavedSearch", groups = { "regression" }, priority = 30)
+	public void verifyOverwrittingSavedSearchInCompletedAndDraftStatus(String Query, String Status) throws Exception {
+
+		String searchName1 = "SearchName" + Utility.dynamicNameAppender();
+
+		base.stepInfo("Test case Id: RPMXCON-49033 - Saved Search Sprint 09");
+		base.stepInfo(
+				"To verify that Overwritting Saved Searches must be allowed when the Search is in Completed/Draft Status");
+
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		// saving the Search
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		session.basicContentSearchWithSaveChanges(Input.searchString1, Query, "First");
+		session.saveSearch(searchName1);
+
+		// selecting the savedSearch
+		saveSearch.navigateToSSPage();
+		saveSearch.savedSearch_SearchandSelect(searchName1, "Yes");
+		saveSearch.verifyExecutionStatusInSavedSearchPage(Status);
+
+		// modifying the saved search
+		saveSearch.getSavedSearchEditButton().waitAndClick(10);
+		session.modifySearchTextArea(1, Input.searchString1, Input.searchString2, "Save");
+		session.getSearchButton().Click();
+
+		// Overwriting the the same saved saerch
+		driver.waitForPageToBeReady();
+		session.saveAsOverwrittenSearch(Input.mySavedSearch, searchName1, "First", "Success", "", null);
+
+		login.logout();
+
 	}
 
 	@AfterMethod(alwaysRun = true)

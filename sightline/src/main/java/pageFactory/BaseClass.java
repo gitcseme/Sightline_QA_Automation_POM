@@ -2139,4 +2139,22 @@ public class BaseClass {
 
 	}
 
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by: Description
+	 *         : listCompareEquals with Pass and Fail Message
+	 */
+	public void listCompareEquals(List<String> sourceList, List<String> compreList, String passMsg,
+			String failMessage) {
+		System.out.println("Source String  : " + sourceList);
+		System.out.println("Compare String  : " + compreList);
+
+		softAssertion.assertEquals(sourceList, compreList);
+		if (sourceList.equals(compreList)) {
+			passedStep(passMsg);
+		} else if (!sourceList.equals(compreList)) {
+			failedStep(failMessage);
+		}
+		softAssertion.assertAll();
+	}
+
 }
