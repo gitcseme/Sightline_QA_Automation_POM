@@ -17706,5 +17706,30 @@ public Element getDefaultViewTab() {
 		}
 
 	}
-
+	/**
+	 * @author Brundha
+	 * @Description :Method to Verify Tooltip in docview page
+	 */
+	public void verifyingToolTipPopupMessage(String Doc,String ExpectedText) throws InterruptedException {
+		
+		base.waitTillElemetToBeClickable(getDociD(Doc));
+		getDociD(Doc).waitAndClick(10);
+		
+		driver.scrollPageToTop();
+		base.waitTillElemetToBeClickable(getDocView_IconFileType());
+		String ActualValue=getDocView_IconFileType().getText();
+		System.out.println("default value:"+ActualValue);
+		if(getDocView_IconFileType().isDisplayed()) {
+			base.passedStep("Default "+ActualValue+" value  is displayed");}
+		else {base.failedStep("Default "+ActualValue+" value is not displayed");}
+		
+		
+		Actions act=new Actions(driver.getWebDriver());
+		act.moveToElement(getDocView_IconFileType().getWebElement()).build().perform();
+		String ActualText=getDocView_IconFileType().GetAttribute("title");
+		
+		if(ActualText.equals(ExpectedText)) {
+			base.passedStep(""+ExpectedText+" as expected");}
+		else {base.failedStep(""+ExpectedText+" is not  as expected");}
+	}
 }
