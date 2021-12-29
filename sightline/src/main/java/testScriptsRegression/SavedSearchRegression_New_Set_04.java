@@ -2420,7 +2420,7 @@ public class SavedSearchRegression_New_Set_04 {
 	 *         : Verify that application displays all documents that are in the
 	 *         aggregate results set of all child search groups "My Saved Search"
 	 *         and searches when User Performs Bulk Assign from Child Search groups
-	 *         -RPMXCON-48923 Sprint 09
+	 *         -RPMXCON-49017 Sprint 09
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
@@ -2438,7 +2438,7 @@ public class SavedSearchRegression_New_Set_04 {
 		int finalCountresult, purehitCount, aggregateHitCount;
 		String finalCount;
 		String assignName = "assignName" + Utility.dynamicNameAppender();
-		base.stepInfo("Test case Id: RPMXCON-48923 - Saved Search Sprint 09");
+		base.stepInfo("Test case Id: RPMXCON-49017 - Saved Search Sprint 09");
 		base.stepInfo(
 				"Verify that application displays all documents that are in the aggregate results set of all child search groups \"My Saved Search\" and searches when User Performs Bulk Assign from Child Search groups");
 
