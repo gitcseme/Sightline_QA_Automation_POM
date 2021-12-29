@@ -4993,7 +4993,7 @@ public class DocView_CodingForm_Regression {
 		
 
 		// Edit coding Form and complete Action
-		//docViewPage.markInCompletedDocEditableCheck();
+		docViewPage.markInCompletedDocEditableCheck();
 		
 		baseClass.passedStep("verified for user document not marked as completed in an assignment, custom coding form is editable on doc view page");
 		loginPage.logout();	
