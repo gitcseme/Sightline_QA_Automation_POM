@@ -90,6 +90,12 @@ public class SavedSearchRegression_New_Set_04 {
 		return users;
 	}
 
+	@DataProvider(name = "PaAndRmuUser")
+	public Object[][] PaAndRmuUser() {
+		Object[][] users = { { Input.pa1userName, Input.pa1password }, { Input.rmu1userName, Input.rmu1password } };
+		return users;
+	}
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeTestMethod(ITestResult result, Method testMethod)
 			throws IOException, ParseException, InterruptedException {
@@ -2198,6 +2204,151 @@ public class SavedSearchRegression_New_Set_04 {
 
 		login.logout();
 
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that \"Count\" gets updated in conceptual column in
+	 *              Saved Search Screen when user Execute a Query with Execute
+	 *              option from Saved Search [RPMXCON-48910]
+	 * @throws InterruptedException
+	 * @throws ParseException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 25)
+	public void verifyConceptualCountForBSAfterExecute() throws InterruptedException, ParseException {
+		String Search = "search" + Utility.dynamicNameAppender();
+		String conceptually = "Conceptually Similar Count";
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Loggedin As : " + Input.pa1FullName);
+
+		base.stepInfo("Test case Id: RPMXCON-48910  Saved Search");
+		base.stepInfo(
+				"Verify that \"Count\" gets updated in conceptual column in Saved Search Screen when user Execute a Query with Execute option from Saved Search");
+
+		// Basic Search
+		session.navigateToSessionSearchPageURL();
+		session.basicContentSearchWithSaveChanges(Input.searchString1, "No", "First");
+		session.getSecondSearchBtn().waitAndClick(5);
+		session.handleWhenAllResultsBtnInUncertainPopup();
+		int purehit = session.returnPurehitCount();
+		session.saveSearch(Search);
+
+		// Verify Conceptual Column
+		saveSearch.savedSearchExecute(Search, purehit);
+		saveSearch.savedSearch_SearchandSelect(Search, "Yes");
+		String Count = saveSearch.ApplyShowAndHideFilter(conceptually, Search);
+		softAssertion.assertNotEquals(Count, "");
+		softAssertion.assertAll();
+		base.stepInfo("Conceptual Column Count is Updated");
+
+		// Delete Search
+		saveSearch.deleteSearch(Search, Input.mySavedSearch, "Yes");
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that when batch upload is done with Redaction Labels
+	 *              then count should be displayed correctly on saved search after
+	 *              Search completes [RPMXCON-49091]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "PaAndRmuUser", groups = { "regression" }, priority = 26)
+	public void validateRedactionTagSearchViaBatchUpload(String username, String password) throws Exception {
+		String search = "WP With RedactionLabel";
+		String file = saveSearch.renameFile(Input.batchFileNewLocation);
+
+		// Login as PA
+		login.loginToSightLine(username, password);
+		base.stepInfo("Test case Id: RPMXCON-49091");
+		base.stepInfo(
+				"Verify that when batch upload is done with Redaction Labels then count should be displayed correctly on saved search after Search completes");
+
+		// workproduct search radaction tag purehit count
+		session.switchToWorkproduct();
+		session.selectRedactioninWPS(Input.defaultRedactionTag);
+		int purehit = session.saveAndReturnPureHitCount();
+
+		// Upload Error Query Through Batch File
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.uploadWPBatchFile_New(file, Input.batchFileNewLocation);
+		saveSearch.selectSavedSearch(search);
+		base.waitForElement(saveSearch.getSavedSearchCount(search));
+		String countOfDocs = saveSearch.getSavedSearchCount(search).getText();
+		int docCount = Integer.parseInt(countOfDocs);
+		base.stepInfo(docCount + " : is the Count of Doc");
+		softAssertion.assertEquals(docCount, purehit);
+
+		String status = saveSearch.getSavedSearchStatus(search).getText();
+		base.stepInfo(status + "  is the Status Displayed");
+		softAssertion.assertEquals(status, "COMPLETED");
+
+		// Delete Uploaded File
+		saveSearch.deleteUploadedBatchFile(file, Input.mySavedSearch, false, null);
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :Verify that application displays all documents that are in the
+	 *              aggregate results set of \"Default Security Group\" and when
+	 *              User performs Execute option with Search groups[RPMXCON-49015]
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 27)
+	public void performExecuteWithSearchGroup() throws InterruptedException {
+		int noOfNodesToCreate = 4;
+		int selectIndex = 0;
+		String SGtoShare = Input.shareSearchDefaultSG;
+		String node;
+		Boolean inputValue = true;
+		List<String> newNodeList = new ArrayList<>();
+		HashMap<String, String> nodeSearchpair = new HashMap<>();
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+		base.stepInfo("Test case Id: RPMXCON-49015 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that application displays all documents that are in the aggregate results set of \"Default Security Group\" and when User performs Execute option with Search groups");
+
+		// Multiple Node Creation
+		saveSearch.navigateToSSPage();
+		newNodeList = saveSearch.createSGAndReturn("PA", "No", noOfNodesToCreate);
+
+		// Adding searches to the created nodes
+		driver.getWebDriver().get(Input.url + "Search/Searches");
+		nodeSearchpair = session.saveSearchInNodewithChildNode(newNodeList, inputValue);
+		saveSearch.sortedMapList(nodeSearchpair);
+		String search = nodeSearchpair.get(newNodeList.get(0));
+
+		// verify Searches in child nodes and share to SG
+		saveSearch.navigateToSSPage();
+		base.waitForElement(saveSearch.getSavedSearchNewGroupExpand());
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(20);
+		saveSearch.navigateToSSPage();
+		node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
+		System.out.println("Final : " + node);
+		saveSearch.shareSavedNodePA(SGtoShare, node, false, true, nodeSearchpair.get(node));
+
+		// Execute
+		driver.Navigate().refresh();
+		saveSearch.getSavedSearchGroupName(Input.shareSearchDefaultSG).waitAndClick(10);
+		saveSearch.performExecute();
+
+		// Verify Search Status And Count in all nodes
+		saveSearch.verifyStatusAndCountInAllChildNode(SGtoShare, newNodeList, selectIndex, nodeSearchpair);
+
+		// Delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+		saveSearch.deleteNode(SGtoShare, newNodeList.get(0));
+
+		login.logout();
 	}
 
 	@AfterMethod(alwaysRun = true)
