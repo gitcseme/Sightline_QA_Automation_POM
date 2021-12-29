@@ -7086,4 +7086,39 @@ public class SavedSearch {
 		}
 	}
 
+	/**
+	 * @Author Jeevitha
+	 */
+	public void performExecute() {
+		final BaseClass bc = new BaseClass(driver);
+		final int Bgcount = bc.initialBgCount();
+
+		base.waitForElement(getSavedSearchExecuteButton());
+		getSavedSearchExecuteButton().Click();
+
+		if (getExecuteContinueBtn().isElementAvailable(10)) {
+			getExecuteContinueBtn().waitAndClick(10);
+		} else {
+			System.out.println("Saved Search Execute Popup is Not Dispalyed ");
+		}
+
+		base.waitForElement(getSuccessMsgHeader());
+		if (getSuccessMsgHeader().getText() == "Warning !") {
+			System.out.println(getSuccessMsgHeader().getText());
+			System.out.println(getSuccessMsg().getText());
+			base.failedMessage("Verification Failed. Warning message appeared");
+		} else {
+			base.stepInfo("Verification Passed. Warning message doesn't appeared");
+		}
+
+		base.VerifySuccessMessage(
+				"Successfully added to background search. In the search group being executed, searches that are referring to other searches in the same search group will be errored out. You can select the errored searches and run them individually.");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return bc.initialBgCount() == Bgcount + 1;
+			}
+		}), Input.wait60);
+		System.out.println("Got notification!");
+	}
+
 }
