@@ -8892,6 +8892,7 @@ public class SessionSearch {
 		// two handle twosearch strings
 		if (getTallyContinue().isElementAvailable(1)) {
 			try {
+				Thread.sleep(Input.wait30);
 				base.waitForElement(getTallyContinue());
 				getTallyContinue().waitAndClick(5);
 			} catch (Exception e) {

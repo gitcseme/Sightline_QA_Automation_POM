@@ -6494,6 +6494,119 @@ public class DocView_CodingForm_Regression {
 	}
 	
 	
+	/**
+	 * @Author : Baskar date: 29/12/2021 Modified date: NA Modified by: Baskar
+	 * @Description:Verify that scrolling should work for the comment box entered
+	 *                     with large text and complete the same document
+	 * 
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 152)
+	public void validateScrollToDisplayForComment() throws InterruptedException, AWTException {
+		docViewPage = new DocViewPage(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		sessionSearch = new SessionSearch(driver);
+
+		baseClass.stepInfo("Test case Id: RPMXCON-51465");
+		baseClass.stepInfo("Verify that scrolling should work for the comment "
+				+ "box entered with large text and complete the same document");
+		String assign = "AAssgn" + Utility.dynamicNameAppender();
+
+		// Login As Reviewer Manager
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+
+		// Create New Assignment
+		sessionSearch.basicContentSearch(Input.testData1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assign, Input.codingFormName);
+		assignmentPage.toggleCodingStampEnabled();
+		assignmentPage.assignmentDistributingToReviewer();
+
+		// logout
+		loginPage.logout();
+		
+		// login as reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		// selecting assignment from rev
+		assignmentPage.SelectAssignmentByReviewer(assign);
+		
+		// Scroll verification
+		docViewPage.editCodingFormScrollComplete();
+		
+		// logout
+		loginPage.logout();
+	}
+	
+	/**
+	 * Author : Baskar date: NA Modified date:29/12/2021 Modified by: Baskar
+	 * Description : Verify comment and metadata indexing when clicked 'Save and Next' 
+	 *               for the document in security group context
+	 */
+
+	@Test(enabled = true, groups = { "regression" }, priority = 153)
+	public void validateCommentAndMetadataPureHitCountSaveAndNext() throws InterruptedException, AWTException {
+		projectPage = new ProjectPage(driver);
+		securityGroupPage = new SecurityGroupsPage(driver);
+		commentsPage = new CommentsPage(driver);
+		docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		sessionSearch = new SessionSearch(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Test case Id: RPMXCON-52113");
+		baseClass.stepInfo("Verify comment and metadata indexing when clicked 'Save and Next' "
+				+ "for the document in security group context");
+		UtilityLog.info("Started Execution for prerequisite");
+		String addComment = "addomment" + Utility.dynamicNameAppender();
+		String cfName = "coding" + Utility.dynamicNameAppender();
+		String commentText = "ct" + Utility.dynamicNameAppender();
+		String metadataText = "mt" + Utility.dynamicNameAppender();
+
+		// Login as a PA
+		loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+		baseClass.stepInfo("Successfully login as Project Administration'" + Input.pa1userName + "'");
+
+		// Custom Field created with INT DataType
+		projectPage.addCustomFieldProjectDataType(projectFieldINT, "NVARCHAR");
+		baseClass.stepInfo("Custom meta data field created with INT datatype");
+
+		// Custom Field Assign to SecurityGroup
+		securityGroupPage.addProjectFieldtoSG(projectFieldINT);
+		baseClass.stepInfo("Custom meta data field assign to security group");
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Project Administration'" + Input.pa1userName + "'");
+
+		// login as RMU
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+		commentsPage.AddComments(addComment);
+
+		// Creating Coding Form
+		codingForm.createCommentAndMetadata(projectFieldINT, addComment, cfName);
+		baseClass.stepInfo("Project field added to coding form in Doc view");
+		codingForm.assignCodingFormToSG(cfName);
+
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString2);
+		sessionSearch.ViewInDocView();
+
+		// verify the coding form panel
+		docViewPage.verifyCommentAndMetadataUsingSaveAndNext(addComment, commentText, projectFieldINT, metadataText);
+		baseClass.stepInfo("Checking index of comment and metadata for saved document");
+		sessionSearch.metadataAndCommentSearch(projectFieldINT, metadataText, addComment, commentText);
+
+		codingForm.assignCodingFormByCondition(Input.codingFormName);
+		codingForm.deleteCodingForm(cfName, cfName);
+
+		// logout
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+
+	}
+	
 	
 	@DataProvider(name = "paToRmuRev")
 	public Object[][] paToRmuRev() {
