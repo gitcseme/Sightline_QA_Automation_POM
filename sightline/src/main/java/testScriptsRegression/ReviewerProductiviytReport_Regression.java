@@ -36,7 +36,14 @@ public class ReviewerProductiviytReport_Regression {
 		in.loadEnvConfig();
 
 	}
-
+/**
+ * @author Jayanthi.ganesan
+ * @param username
+ * @param password
+ * @param role
+ * @throws InterruptedException
+ * @throws AWTException
+ */
 	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 1)
 	public void reviewerProdPageDisplay(String username, String password, String role)
 			throws InterruptedException, AWTException {
@@ -48,6 +55,21 @@ public class ReviewerProductiviytReport_Regression {
 		bc.stepInfo("Logged in as -" + role);
 		ReviewerProductivityReportPage reviewerProdReport = new ReviewerProductivityReportPage(driver);
 		reviewerProdReport.navigateTOReviewerPodReportPage();
+	}
+	
+	@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 2)
+	public void verifyDistributedCount(String username, String password, String role)
+			throws InterruptedException, AWTException {
+		LoginPage lp = new LoginPage(driver);
+		bc.stepInfo("Test case Id: RPMXCON-48733");
+		bc.stepInfo("Verify the 'Distributed Docs Completed by This Reviewer' in the 'Reviewer Productivity Report'.");
+		lp.loginToSightLine(username, password);
+		driver.waitForPageToBeReady();
+		bc.stepInfo("Logged in as -" + role);
+		ReviewerProductivityReportPage rp = new ReviewerProductivityReportPage(driver);
+		rp.navigateTOReviewerPodReportPage();
+		rp.generateReport();
+		rp.verifyColumnDisplay(rp.getTableHeader("Distributed Docs Completed by This Reviewer"),"Distributed Docs Completed by This Reviewer");
 	}
 
 	@BeforeMethod
@@ -72,7 +94,6 @@ public class ReviewerProductiviytReport_Regression {
 		} catch (Exception e) {
 			lp.quitBrowser();
 		}
-
 		System.out.println("Executed :" + result.getMethod().getMethodName());
 
 	}

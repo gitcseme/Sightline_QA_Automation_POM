@@ -37,8 +37,8 @@ public class Tally_Regression1 {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+	//	Input in = new Input();
+	//	in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -51,6 +51,12 @@ public class Tally_Regression1 {
 		search.basicContentSearch(Input.testData1);
 		hitsCountPA = search.verifyPureHitsCount();
 		search.saveSearch(saveSearchNamePA);
+		lp.logout();
+		lp.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		// Search and save it
+		search.basicContentSearch(Input.testData1);
+		hitsCountRMU = search.verifyPureHitsCount();
+		search.saveSearch(saveSearchNameRMU);
 		lp.logout();
 		lp.quitBrowser();
 
@@ -133,7 +139,48 @@ public class Tally_Regression1 {
 			softAssertion.assertAll();
 			bc.passedStep("The docs released to Security group "+securitygroupname+" is reflected as expected");
 		}
-
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param username
+		 * @param password
+		 * @param role
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU",groups = { "regression" }, priority = 3)
+		public void ValidateTally_ViewInDocView(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56212");
+			bc.stepInfo("To verify Admin/RMU will be able to view tallied documents in a doc view(Tally)");
+			SoftAssert softAssertion = new SoftAssert();
+			lp.loginToSightLine(username, password);
+			String saveSearchName = null;
+			String hitsCountexpected=null;
+			bc.stepInfo("Logged in as -" + role);
+			if (role == "RMU") {
+				saveSearchName = saveSearchNameRMU;
+				hitsCountexpected=hitsCountRMU;
+				
+			}
+			if (role == "PA") {
+				saveSearchName = saveSearchNamePA;
+				hitsCountexpected=hitsCountPA;
+			}
+			TallyPage tp = new TallyPage(driver);
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_SavedSearch(saveSearchName);
+			tp.selectTallyByMetaDataField(Input.metaDataName);
+			driver.waitForPageToBeReady();
+			tp.tallyActions();
+			tp.Tally_ViewInDocView();
+			bc.stepInfo("Tally Report  generated for selected search.");
+			DocViewPage dc = new DocViewPage(driver);
+			String ActualCount = dc.verifyDocCountDisplayed_DocView();
+			System.out.println(ActualCount);
+			softAssertion.assertEquals(hitsCountexpected, ActualCount);
+			softAssertion.assertAll();
+			bc.stepInfo("Document Count associated to selected saved search in Tally page is  displayed"
+					+ " as excpeted in doc view page");
+		}
+		
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");

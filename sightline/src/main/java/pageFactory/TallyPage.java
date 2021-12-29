@@ -1072,8 +1072,6 @@ public class TallyPage {
 		return TotalDocs;
 
 	}
-	
-	
 	/**
 	 * @author Jayanthi.ganesan
 	 * @param subtallyBy
@@ -1100,6 +1098,5 @@ public class TallyPage {
 		getTallyViewinDocViewBtn().waitAndClick(30);
 		base.stepInfo("Navigating from Tally page to view in doc view page.");
 	}
-	
 
 }
