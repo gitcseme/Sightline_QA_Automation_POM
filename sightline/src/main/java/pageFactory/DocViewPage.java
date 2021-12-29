@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
@@ -17763,5 +17764,62 @@ public class DocViewPage {
 		if(ActualText.equals(ExpectedText)) {
 			base.passedStep(""+ExpectedText+" as expected");}
 		else {base.failedStep(""+ExpectedText+" is not  as expected");}
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+//	Reusable method for edit coding without complete btn and verify scroll
+	public void editCodingFormScrollComplete() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		getClickDocviewID(3).waitAndClick(5);
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().waitAndClick(5);
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().waitAndClick(5);
+		base.waitForElement(getDocument_CommentsTextBox());
+		char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+		StringBuilder sb = new StringBuilder(400);
+		Random random = new Random();
+		for (int i = 0; i < 500; i++) {
+		    char c = chars[random.nextInt(chars.length)];
+		    sb.append(c);
+		}
+		String output = sb.toString();
+		getDocument_CommentsTextBox().SendKeys(output);
+		completeButton();
+		base.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+		JavascriptExecutor jse = (JavascriptExecutor) driver.getWebDriver();
+		boolean flag = (boolean) jse
+				.executeScript("return document.querySelector(\"textarea[id='1_textarea']\").scrollHeight>"
+						+ "document.querySelector(\"textarea[id='1_textarea']\").clientHeight;");
+		System.out.println(flag);
+		softAssertion.assertTrue(flag);
+		softAssertion.assertAll();
+		base.passedStep("Scrolling displayed for comment when large text entered");
+	}
+	
+	/**
+	 * @author Indium-Baskar
+	 */
+
+	public void verifyCommentAndMetadataUsingSaveAndNext(String addComment, String commentText, String metadata, String metadataText) {
+		driver.waitForPageToBeReady();
+		String prnDoc=getVerifyPrincipalDocument().getText();
+		base.waitForElement(getCodingFormHelpText(addComment));
+		getCodingFormHelpText(addComment).SendKeys(commentText);
+		base.waitForElement(getReadOnlyTextBox(metadata));
+		getReadOnlyTextBox(metadata).SendKeys(metadataText);
+		codingFormSaveAndNext();
+		driver.waitForPageToBeReady();
+		String prnSecDoc=getVerifyPrincipalDocument().getText();
+		if (!prnDoc.equals(prnSecDoc)) {
+			base.passedStep("Cursor navigated to next document from minidoclist");
+		}
+		else {
+			base.failedStep("Cursor not navigated to next document");
+		}
 	}
 }
