@@ -3866,11 +3866,13 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram A Date: 10/8/21 Modified date:N/A Modified by: Description :
+	 * @author Raghuram A Date: 10/8/21 Modified date:12/29/21 Modified by:Raghuram
+	 *         Description :
 	 * @return
 	 */
 	public void methodTocheckHideandShowFunction(String specificHeaderName) throws InterruptedException {
 
+		List<String> headerListAfterHide = new ArrayList<>();
 		verifyHeaderIsPresent(specificHeaderName);
 		getHideSHowBtn().waitAndClick(5);
 		try {
@@ -3883,6 +3885,13 @@ public class SavedSearch {
 		base.waitForElement(getbackGroundFilm());
 		getbackGroundFilm().waitAndClick(5);
 		verifyHeaderIsPresent(specificHeaderName);
+
+		// updated list after hide
+		ElementCollection headerListElementsBefore = getGridHeaderListSS();
+		headerListAfterHide = base.availableListofElements(headerListElementsBefore);
+		Collections.sort(headerListAfterHide);
+		base.stepInfo(headerListAfterHide.toString());
+
 		getSavedSearchRefresh().Click();
 		driver.waitForPageToBeReady();
 		base.stepInfo("Refreshed  Search Grid");
@@ -3981,8 +3990,8 @@ public class SavedSearch {
 	}
 
 	/**
-	 * @author Raghuram A Date: 10/19/21 Modified date:N/A Modified by: Description
-	 *         :
+	 * @author Raghuram A Date: 10/19/21 Modified date:12/29/21 Modified by:
+	 *         Raghuram Description :-updated base.stepinfo
 	 * @throws InterruptedException
 	 * @throws ParseException
 	 */
@@ -4034,6 +4043,7 @@ public class SavedSearch {
 		ElementCollection headerListElementsBefore = getGridHeaderListSS();
 		headerList1 = base.availableListofElements(headerListElementsBefore);
 		Collections.sort(headerList1);
+		base.stepInfo(headerList1.toString());
 
 		methodTocheckHideandShowFunction(specificHeaderName);
 
@@ -4041,6 +4051,7 @@ public class SavedSearch {
 		ElementCollection headerListElementsAfter = getGridHeaderListSS();
 		headerList2 = base.availableListofElements(headerListElementsAfter);
 		Collections.sort(headerList2);
+		base.stepInfo(headerList2.toString());
 
 		if (headerList1.equals(headerList2)) {
 			base.passedStep(" All column appear on screen");
