@@ -106,7 +106,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * is outside of the assignment when allow coding outside reviewer batch is enabled in assignment 
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 1)
+	//@Test(enabled = true, groups = { "regression" }, priority = 1)
 	public void verifyWarningMsgForDocsWhichAreNotPresentInAssignment() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -161,7 +161,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 *  without completing or saving from analytics panel 'RPMXCON-50921' Sprint 8
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 2)
+	//@Test(enabled = true, groups = { "regression" }, priority = 2)
 	public void verifyWarningMsgWHenUserClicksBackButton() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -241,7 +241,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @description: To verify Threaded Map tab when no document to display for logged in user 'RPMXCON-50902' Sprint 8
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 3)
+	//@Test(enabled = true, groups = { "regression" }, priority = 3)
 	public void verifyThreadedMapTabWhenNoDocsAreDisplayed() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -297,7 +297,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @description: To verify user can select Multiple documents in Analytic Panel-> Family Members tab and select Action as 'Code Same as this' 'RPMXCON-50902' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 4)
+	//@Test(enabled = true, groups = { "regression" }, priority = 4)
 	public void verifyFamilyMemberTabWhenMultiDocsAreSelectedAndActionCodeSameAs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -366,7 +366,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @description: To verify coding form should get overwritten if document from family members is already having assigned coding form 'RPMXCON-50907' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 5)
+	//@Test(enabled = true, groups = { "regression" }, priority = 5)
 	public void verifyFamilyMemberTabWhenCodingFormOverWritten() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -450,7 +450,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @description: To verify that user can select multiple documents from the 'Conceptually similar' tab from analytics panel and marked it as 'Code Same as This'. 'RPMXCON-50943' Sprint 9
 	 */
 
-	@Test(enabled = true, groups = { "regression" }, priority = 6)
+	//@Test(enabled = true, groups = { "regression" }, priority = 6)
 	public void verifyUserCanSelectMultiDocsFromConceptualTab() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -514,7 +514,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 7)
+	//@Test(enabled = true, groups = { "regression" }, priority = 7)
 	public void verifyDocViewFromSaveSearchDocViewConceptual() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50878");
@@ -570,7 +570,7 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 8)
+	//@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyThredMapDefaultNumberOfDocuments() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50901");
@@ -624,10 +624,10 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, groups = { "regression" }, priority = 9)
+	//@Test(enabled = true, groups = { "regression" }, priority = 9)
 	public void verifyCodeSameAsDocsSelectionForFamilyMember() throws InterruptedException {
 		
-		baseClass.stepInfo("Test case Id: RPMXCON-50901");
+		baseClass.stepInfo("Test case Id: RPMXCON-50908");
 		baseClass.stepInfo("To verify user after impersonation should able to 'Code same as this' on document selection from Family Members panel.");
 		String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 
@@ -691,6 +691,126 @@ public class DocView_AnalyticsPanel_NewRegression01 {
 		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
 		loginPage.logout();
 	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 24/12/21 NA Modified date: NA Modified by:NA
+	 * Description :To verify that user can view the documents in the doc list from
+	 * Doc View->Thread Map tab.'RPMXCON-48700' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 11)
+	public void verifyViewTheDocsFromDocViewThreadMap(String fullName, String userName, String password)
+			throws ParseException, InterruptedException, IOException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48700");
+		baseClass.stepInfo("To verify that user can view the documents in the doc list from Doc View->Thread Map tab.");
+
+		loginPage = new LoginPage(driver);
+
+		loginPage.loginToSightLine(userName, password);
+		UtilityLog.info("Logged in as User: " + fullName);
+		baseClass.stepInfo("Logged in as User: " + fullName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Project Menager with " + Input.pa1userName + "");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		softAssertion = new SoftAssert();
+
+		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
+		// Session search to doc view Coding Form
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.ViewThreadedDocsInDocViews();
+
+		// threadmap tab View in DocList
+		driver.waitForPageToBeReady();
+		docView.performThreadMapViewInDocList();
+
+		// logout
+		loginPage.logout();
+
+	}
+	
+	/**
+	 * Author : Vijaya.Rani date: 28/12/21 NA Modified date: NA Modified by:NA
+	 * Description :Verify check mark icon should be displayed when document is
+	 * completed after selecting 'Code same as this' action' from Analytics Panel >
+	 * Family Member.'RPMXCON-48716' Sprint : 9
+	 * 
+	 * @throws AWTException
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 11)
+	public void verifyCheckMarkIconAndCodeSameAsFamilyMember() throws InterruptedException {
+
+		baseClass.stepInfo("Test case Id: RPMXCON-48716");
+		baseClass.stepInfo(
+				"Verify check mark icon should be displayed when document is completed after selecting 'Code same as this' action' from Analytics Panel > Family Member.");
+
+		sessionSearch = new SessionSearch(driver);
+		docView = new DocViewPage(driver);
+		savedSearch = new SavedSearch(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+
+		String codingForm = Input.codeFormName;
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		// login as RMU
+		loginPage = new LoginPage(driver);
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		UtilityLog.info("Logged in as User: " + Input.rmu1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rmu1userName + "");
+
+		baseClass.stepInfo(
+				"Searching documents based on search string to get threaded documents and added to shopping cart successfuly");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssignFamilyMemberDocuments();
+
+		// create Assignment and disturbute docs
+		assignmentsPage.assignFamilyDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
+
+		// Impersonate RMU to Reviewer
+		baseClass.impersonateRMUtoReviewer();
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+		loginPage.logout();
+
+		// LOGIN AS REVU
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		UtilityLog.info("Logged in as User: " + Input.rev1userName);
+		baseClass.stepInfo(
+				"User successfully logged into slightline webpage as Reviewer with " + Input.rev1userName + "");
+
+		// Select the Assignment from dashboard
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+
+		// select docs from family member and action as code same as
+		docView.selectDocsFromFamilyMemberTabAndActionCodeSame();
+
+		// Edit coding Form and complete Action
+		docView.editCodingFormComplete();
+
+		// verify Check Mark Icon
+		docView.verifyCheckMark();
+
+	}
+
 	
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

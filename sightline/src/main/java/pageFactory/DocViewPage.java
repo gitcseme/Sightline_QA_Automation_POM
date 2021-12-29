@@ -2355,7 +2355,7 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//label//..//i[@class='fa fa-link']");
 	}
 
-	//Added by jeevitha
+	// Added by jeevitha
 	public Element BatchredactionBackwardNavigate() {
 		return driver.FindElementByXPath("//i[@id='PrevAllBatchRedaction']");
 	}
@@ -2364,29 +2364,39 @@ public class DocViewPage {
 		return driver.FindElementByXPath(
 				"//div[contains(text(),'" + search + "')]//..//i [@class='fa fa-chevron-left DocViewBatchPrevious']");
 	}
-	
-	//Added by gopinath - 28/12/2021
-	public Element getRedactionApplied(){
+
+	// Added by gopinath - 28/12/2021
+	public Element getRedactionApplied() {
 		return driver.FindElementByCssSelector("rect:not([style*='default'])");
 	}
-	
-	public Element getAnnotationApplied(){
+
+	public Element getAnnotationApplied() {
 		return driver.FindElementByCssSelector("rect:not([style*='default'])[style*='opacity']");
 	}
+
 	public Element getdocViewMiniDocChildWindow() {
 		return driver.FindElementByXPath("//header[@id='HdrMiniDoc']//i[@class='fa fa-expand']");
 	}
 
-public Element getDocViewMiniDocIdCheckBoxCircle(String Id) {
-		return driver.FindElementByXPath("//td[text()='"+Id+"']/preceding-sibling::td/i[@class='fa fa-check-circle']");
+	public Element getDocViewMiniDocIdCheckBoxCircle(String Id) {
+		return driver
+				.FindElementByXPath("//td[text()='" + Id + "']/preceding-sibling::td/i[@class='fa fa-check-circle']");
 	}
-public Element getDocViewMiniDocIdCheckBoxArrowRight(String Id) {
-		return driver.FindElementByXPath("//td[text()='"+Id+"']/preceding-sibling::td/i[@class='fa fa-arrow-right']");
-}
-public Element getDefaultViewTab() {
-	return driver.FindElementById("liDocumentDefaultView");
-}
-	
+
+	public Element getDocViewMiniDocIdCheckBoxArrowRight(String Id) {
+		return driver
+				.FindElementByXPath("//td[text()='" + Id + "']/preceding-sibling::td/i[@class='fa fa-arrow-right']");
+	}
+
+	public Element getDefaultViewTab() {
+		return driver.FindElementById("liDocumentDefaultView");
+	}
+
+     //Added By Vijaya.Rani
+	public Element getDocView_FamilyMemberDocListDoc() {
+		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
+	}
+
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -11155,7 +11165,8 @@ public Element getDefaultViewTab() {
 			try {
 				if (getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5)) {
 					softAssertion.assertEquals(
-							getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5).booleanValue(), true);
+							getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5).booleanValue(),
+							true);
 					base.passedStep(
 							"Code same icon is displayed for the selected documents and documents from Family Member are unchecked successfull");
 				} else
@@ -11213,8 +11224,6 @@ public Element getDefaultViewTab() {
 						"Code same icon is not displayed for the selected documents and documents from Family Member are unchecked successfull");
 			}
 
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Code Same As Icon is not displayed");
@@ -11263,7 +11272,6 @@ public Element getDefaultViewTab() {
 				base.passedStep(
 						"Code same icon is not displayed for the selected documents and documents from Conceptual tab are unchecked successfully");
 			}
-
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -16757,7 +16765,8 @@ public Element getDefaultViewTab() {
 	}
 
 	/**
-	 * @author Vijaya.Rani 27/12/21 NA Modified date: NA Modified by:NA
+	 * @author Vijaya.Rani 27/12/21 NA Modified date:29/12/2021 Modified
+	 *         by:Vijaya.Rani
 	 * @description to verify 'View in Doclist' is not visible in ThreadMap Tab
 	 */
 	public void performThreadMapViewInDocList() {
@@ -16767,6 +16776,7 @@ public Element getDefaultViewTab() {
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
 
 		for (int i = 2; i <= 3; i++) {
+			driver.waitForPageToBeReady();
 			base.waitForElement(getDocView_Analytics_ThreadMap_DocCheckBox(i));
 			getDocView_Analytics_ThreadMap_DocCheckBox(i).waitAndClick(10);
 		}
@@ -16778,6 +16788,15 @@ public Element getDefaultViewTab() {
 		getDocView_Analytics_Thread_ViewDoclist().waitAndClick(15);
 
 		driver.waitForPageToBeReady();
+		base.waitForElement(getDocView_FamilyMemberDocListDoc());
+		if (getDocView_FamilyMemberDocListDoc().Displayed()) {
+			softAssertion.assertTrue(getDocView_FamilyMemberDocListDoc().getWebElement().isDisplayed());
+			base.passedStep("Selected document is display in Doc List ");
+		} else {
+			base.failedStep("Selected document is not display in Doc List");
+		}
+
+		driver.waitForPageToBeReady();
 		base.waitForElement(getDocViewPageTitle());
 
 		if (getDocViewPageTitle().Displayed()) {
@@ -16786,6 +16805,7 @@ public Element getDefaultViewTab() {
 		} else {
 			base.failedStep("Selected document is not display in ThreadMap View In Doc List page open successfully");
 		}
+
 	}
 
 	/**
@@ -17469,8 +17489,7 @@ public Element getDefaultViewTab() {
 		driver.waitForPageToBeReady();
 		softAssertion.assertAll();
 	}
-	
-	
+
 	/**
 	 * @Author Jeevitha
 	 * @param count
@@ -17508,59 +17527,63 @@ public Element getDefaultViewTab() {
 			}
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @Description: Verify redaction,annotation and remark buttons are not displayed.
+	 * @Description: Verify redaction,annotation and remark buttons are not
+	 *               displayed.
 	 */
 	public void verifyRedactionAnnotaionAndRemarkButtonsAreDisabled() {
 		try {
-			if(getNonAudioRemarkBtn().isElementAvailable(1)) {
+			if (getNonAudioRemarkBtn().isElementAvailable(1)) {
 				base.failedStep("Remark button is displayed");
-			}else {
+			} else {
 				base.passedStep("Remark button is not displayed");
 			}
-			if(getDocView_RedactIcon().isElementAvailable(1)) {
+			if (getDocView_RedactIcon().isElementAvailable(1)) {
 				base.failedStep("Redaction button is displayed");
-			}else {
+			} else {
 				base.passedStep("Redaction button is not displayed");
 			}
-			if(getDocView_AnnotateIcon().isElementAvailable(1)) {
+			if (getDocView_AnnotateIcon().isElementAvailable(1)) {
 				base.failedStep("Annotation button is displayed");
-			}else {
+			} else {
 				base.passedStep("Annotation button is not displayed");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while Verify redaction,annotation and remark buttons "+e.getLocalizedMessage());
+			base.failedStep("Exception occured while Verify redaction,annotation and remark buttons "
+					+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description: Verify applied redaction and annotation is not displayed.
 	 */
 	public void verifyAppliedRedactionAndAnnotationIsNotDisplayed() {
 		try {
-			if(getRedactionApplied().isElementAvailable(1)) {
+			if (getRedactionApplied().isElementAvailable(1)) {
 				base.failedStep("Applied redaction is displayed");
-			}else {
+			} else {
 				base.passedStep("Applied redaction is not displayed");
 			}
-			if(getAnnotationApplied().isElementAvailable(1)) {
+			if (getAnnotationApplied().isElementAvailable(1)) {
 				base.failedStep("Annotation applied is displayed");
-			}else {
+			} else {
 				base.passedStep("Annotation applied is not displayed");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while Verify applied redaction and annotation is not displayed."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while Verify applied redaction and annotation is not displayed."
+					+ e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
-	 * @description : Method to complete coding form and verify cursor navigated to next document.
+	 * @description : Method to complete coding form and verify cursor navigated to
+	 *              next document.
 	 */
 	public void completeCodingFormAndVerifyCursorNavigateToNextDoc() {
 		try {
@@ -17578,37 +17601,38 @@ public Element getDefaultViewTab() {
 				}
 			}), Input.wait30);
 			getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
-	
+
 			driver.WaitUntil((new Callable<Boolean>() {
 				public Boolean call() {
 					return getCompleteDocBtn().Enabled() && getCompleteDocBtn().Visible();
 				}
 			}), Input.wait30);
-	
+
 			driver.scrollPageToTop();
 			getCompleteDocBtn().Click();
 			base.VerifySuccessMessage("Document completed successfully");
 			driver.waitForPageToBeReady();
 			String currentDocId = mini.getCurrentDocumentId().getText().trim();
-			
-			if(currentDocId.contentEquals(nextDocId)) {
+
+			if (currentDocId.contentEquals(nextDocId)) {
 				base.passedStep("Cursor navigated to next document successfully by clicking on complete buton");
-			}else {
+			} else {
 				base.failedStep("Cursor not navigated to next document successfully by clicking on complete button");
 			}
 			String visibleDoc = getDocView_CurrentDocId().getText().trim();
-			if(currentDocId.contentEquals(visibleDoc)) {
+			if (currentDocId.contentEquals(visibleDoc)) {
 				base.passedStep("Cursor navigated to next doc and document is visible on doc view successfully");
-			}else {
+			} else {
 				base.failedStep("Expected document is not visible on doc view");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while complete coding form and verify cursor navigated to next document."+e.getLocalizedMessage());
+			base.failedStep("Exception occured while complete coding form and verify cursor navigated to next document."
+					+ e.getLocalizedMessage());
 		}
 
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description: Method for verifying document displayed in text view.
@@ -17619,90 +17643,98 @@ public Element getDefaultViewTab() {
 			base.waitForElement(getDocView_TextTab());
 			getDocView_TextTab().isElementAvailable(10);
 			getDocView_TextTab().waitAndClick(5);
-			if(getDocView_TextTab().getWebElement().isEnabled())//download button should not available 
+			if (getDocView_TextTab().getWebElement().isEnabled())// download button should not available
 			{
 				base.passedStep("Document is displyed in textview for review");
-			}else {
+			} else {
 				base.failedStep("document unable load in textview");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while  verifying document displayed in text view."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while  verifying document displayed in text view." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
 	 * @author Gopinath
 	 * @Description: Method for verifying document loaded in default view.
 	 */
 	public void verifyDocumentLoadedInDefaultView() {
 		try {
- 			 driver.scrollPageToTop();
-			 base.waitForElement(getDocView_Next());
-			 getDocView_Next().isElementAvailable(10);
-			 getDocView_Next().waitAndClick(5);
-			 base.waitForElement(getDocView_IconDownload());
-			 if((!getDocView_TextTab().getWebElement().getAttribute("class").contains("active")) && getDefaultViewTab().GetAttribute("class").contains("active")) {
+			driver.scrollPageToTop();
+			base.waitForElement(getDocView_Next());
+			getDocView_Next().isElementAvailable(10);
+			getDocView_Next().waitAndClick(5);
+			base.waitForElement(getDocView_IconDownload());
+			if ((!getDocView_TextTab().getWebElement().getAttribute("class").contains("active"))
+					&& getDefaultViewTab().GetAttribute("class").contains("active")) {
 				base.passedStep("Document is Loaded in default view after clicked on nagivation button");
-			 }else {
+			} else {
 				base.failedStep("Document not is Loaded in default view after clicked on nagivation button");
-			 }
-		}catch(Exception e) {
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying document loaded in default view."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while verifying document loaded in default view." + e.getLocalizedMessage());
 		}
 	}
-	
+
 	/**
-	 * @author Gopinath
-	 * Description : Verify weather mini docList Document is navigate to next doc in mini doc list child window after doc complete.
+	 * @author Gopinath Description : Verify weather mini docList Document is
+	 *         navigate to next doc in mini doc list child window after doc
+	 *         complete.
 	 */
 	public void verifyNavegatingofDocInMiniDocLIstAfterComplete() {
 		try {
-		driver.waitForPageToBeReady();
-		base.waitForElement(getGearIcon());
-		getGearIcon().isElementAvailable(15);
-		getGearIcon().Click();
-		String parentWindowID = driver.CurrentWindowHandle();
-		base.waitForElement(getdocViewMiniDocChildWindow());
-		getdocViewMiniDocChildWindow().isElementAvailable(10);
-		getdocViewMiniDocChildWindow().waitAndClick(5);
-		Set<String> allWindowsId1 = driver.WindowHandles();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getGearIcon());
+			getGearIcon().isElementAvailable(15);
+			getGearIcon().Click();
+			String parentWindowID = driver.CurrentWindowHandle();
+			base.waitForElement(getdocViewMiniDocChildWindow());
+			getdocViewMiniDocChildWindow().isElementAvailable(10);
+			getdocViewMiniDocChildWindow().waitAndClick(5);
+			Set<String> allWindowsId1 = driver.WindowHandles();
 
-		for (int i = 1; i < 4; i++) {
-			base.waitForElement(getDocViewSelectedDocId());
-			String DocIdBeforeComplete = getDocViewSelectedDocId().getText();
-			
-			base.waitForElement(getCompleteDocBtn());
-			getCompleteDocBtn().waitAndClick(10);
-			base.waitForElement(base.getSuccessMsgHeader());
-			base.VerifySuccessMessage("Document completed successfully");
-			base.waitForElement(getDocViewSelectedDocId());
-			String DocIdAfterComplete = getDocViewSelectedDocId().getText();
-			
-			
-			for (String eachId : allWindowsId1) {
-				if (!parentWindowID.equals(eachId)) {
-					driver.switchTo().window(eachId);
-					driver.scrollPageToTop();
-					getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).ScrollTo();
-					base.waitForElement(getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete));
-					if (getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).isElementAvailable(3)
-							&& getDocViewMiniDocIdCheckBoxArrowRight(DocIdAfterComplete).isElementAvailable(3)) {
-						base.passedStep(DocIdBeforeComplete+"Document is completed and cursor is navigate to the next document("+DocIdAfterComplete+") in mini doc list child window, "
-										+ "next document is loaded successfully");
-						System.out.println("Document is completed and cursor is navigate to the next document in mini doc list child window,next document is loaded successfully"); 
-					} else {
-						base.failedStep("failed to navigate to the next document in miniDoc list after complete");
+			for (int i = 1; i < 4; i++) {
+				base.waitForElement(getDocViewSelectedDocId());
+				String DocIdBeforeComplete = getDocViewSelectedDocId().getText();
 
+				base.waitForElement(getCompleteDocBtn());
+				getCompleteDocBtn().waitAndClick(10);
+				base.waitForElement(base.getSuccessMsgHeader());
+				base.VerifySuccessMessage("Document completed successfully");
+				base.waitForElement(getDocViewSelectedDocId());
+				String DocIdAfterComplete = getDocViewSelectedDocId().getText();
+
+				for (String eachId : allWindowsId1) {
+					if (!parentWindowID.equals(eachId)) {
+						driver.switchTo().window(eachId);
+						driver.scrollPageToTop();
+						getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).ScrollTo();
+						base.waitForElement(getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete));
+						if (getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).isElementAvailable(3)
+								&& getDocViewMiniDocIdCheckBoxArrowRight(DocIdAfterComplete).isElementAvailable(3)) {
+							base.passedStep(DocIdBeforeComplete
+									+ "Document is completed and cursor is navigate to the next document("
+									+ DocIdAfterComplete + ") in mini doc list child window, "
+									+ "next document is loaded successfully");
+							System.out.println(
+									"Document is completed and cursor is navigate to the next document in mini doc list child window,next document is loaded successfully");
+						} else {
+							base.failedStep("failed to navigate to the next document in miniDoc list after complete");
+
+						}
 					}
 				}
+				driver.switchTo().window(parentWindowID);
 			}
-			driver.switchTo().window(parentWindowID);
-		}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			base.failedStep("Exception occured while verifying weather mini docList Document is navigate to next doc in mini doc list child window after doc complete."+e.getLocalizedMessage());
+			base.failedStep(
+					"Exception occured while verifying weather mini docList Document is navigate to next doc in mini doc list child window after doc complete."
+							+ e.getLocalizedMessage());
 		}
 
 	}
