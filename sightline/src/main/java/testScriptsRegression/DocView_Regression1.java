@@ -23,6 +23,7 @@ import pageFactory.DocViewPage;
 import pageFactory.DocViewRedactions;
 import pageFactory.LoginPage;
 import pageFactory.ManageAssignment;
+import pageFactory.MiniDocListPage;
 import pageFactory.ProductionPage;
 import pageFactory.RedactionPage;
 import pageFactory.ReusableDocViewPage;
@@ -2138,6 +2139,186 @@ public class DocView_Regression1 {
 				docView.verifyImageEnabledAfterCreatedFolder(folderName, RowNumber);
 		}
 		
+		/**
+		 * @Author : Gopinath
+		 * @Testcase_Id : RPMXCON-51935 : Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList child window.
+		 * @Description : Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList child window .
+		 */
+
+		@Test(enabled = true, groups = { "regression" }, priority = 24)
+		public void verifyCursorNavigatedProperlyBySavedCodingStampApplied() throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-51935 Sprint 09");
+			baseClass.stepInfo("#### Verify that when completing the documents on applying the stamp the entry for the navigated document in mini-DocList child window ####");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+			String assgnColour = Input.randomText  + Utility.dynamicNameAppender();
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			MiniDocListPage miniDoc = new MiniDocListPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			// searching document for assignmnet creation
+			
+			baseClass.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(Input.searchString2);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assignmentPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assignmentPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Navigate To Doc View Page URL");
+			docView.navigateToDocViewPageURL();
+			
+			baseClass.stepInfo("Coding Stamp For Saved Document");
+			docView.codingStampForSavedDocument(assgnColour, Input.stampSelection);
+			
+			baseClass.stepInfo("Verify cursor navigated to child window clicking on saved stamp.");
+			miniDoc.verifyCursorNavigatedToChildWindowClickingOnSavedStamp(assgnColour, Input.stampSelection);
+			
+		}
+		
+		/**
+		 * @Author : Gopinath
+		 * @Testcase_Id : RPMXCON-51928 : erify that when completing the documents the entry for the navigated document in mini-DocList.
+		 * @Description : Verify that when completing the documents the entry for the navigated document in mini-DocList.
+		 */
+
+		@Test(enabled = true, groups = { "regression" }, priority = 25)
+		public void verifyCursorNavigatedProperlyByComplete() throws InterruptedException {
+			baseClass.stepInfo("Test case Id: RPMXCON-51928 Sprint 09");
+			baseClass.stepInfo("#### erify that when completing the documents the entry for the navigated document in mini-DocList ####");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			// searching document for assignmnet creation
+			
+			baseClass.stepInfo("Basic Content Search");
+			sessionSearch.basicContentSearch(Input.searchString2);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Toggle Coding Stamp Enabled");
+			assignmentPage.toggleCodingStampEnabled();
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assignmentPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+			baseClass.stepInfo("Successfully logout Reviewer '" + Input.rev1userName + "'");
+
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Selecting the assignment");
+			assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+		
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Navigate To Doc View Page URL");
+			docView.navigateToDocViewPageURL();
+			
+			baseClass.stepInfo("Complete coding form and verify cursor navigated to next document.");
+			docView.completeCodingFormAndVerifyCursorNavigateToNextDoc();
+			
+		}
+		
+		
+		/**
+		 * @author Gopinath
+		 * TestCase ID : 50912 - Verify when user navigates to the document from Text tab
+		 * Description :To verify when user navigates to the document from Text tab
+		 * @throws InterruptedException 
+		 */
+		@Test (enabled = true, groups = { "regression" }, priority = 26)
+		public void  verifyUserNavigateToDocumentFromTextTab() throws InterruptedException {
+			
+			baseClass=new BaseClass(driver);
+			baseClass.stepInfo("Test case Id: RPMXCON-50912 spint-09");
+			baseClass.stepInfo("#### verify when user navigates to the document from Text tab ####");
+			
+			docView = new DocViewPage(driver);
+			SessionSearch session = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Basic Basic content search completed");
+			session.basicContentSearch(Input.searchString1);
+			
+			baseClass.stepInfo("Navigated to  DocView page");
+			session.ViewInDocView();
+			
+			baseClass.stepInfo("Verifying document displayed in text view.");
+			docView.verifyDocumentDisplayedInTextView();
+			
+			baseClass.stepInfo("Verifying document loaded in default view.");
+			docView.verifyDocumentLoadedInDefaultView();
+		
+		}
+		
+		/**
+		 * @author Gopinath
+		 * TestCase Id: 51933 Verify that when completing the documents the entry for the navigated document in mini-DocList child window.
+		 * Description: Verify that when completing the documents the entry for the navigated document in mini-DocList child window.                  
+		 */
+		@Test(enabled = true, groups = { "regression" }, priority = 26)
+		public void verifyMiniDocNavigateTonExtDocAfterDOcComplete() {
+			baseClass.stepInfo("Test case Id: RPMXCON-51933 Sprint-09");
+			String AssignStamp = Input.randomText + Utility.dynamicNameAppender();
+			
+			baseClass.stepInfo("#### Verify that when completing the documents the entry for the navigated document in mini-DocList child window ####");
+			AssignmentsPage assignmentPage = new AssignmentsPage(driver);
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			// searching document for assignmnet creation
+			
+			baseClass.stepInfo("Basic content search");
+			sessionSearch.basicContentSearch(Input.searchString2);
+			
+			baseClass.stepInfo("Bulk Assign");
+			sessionSearch.bulkAssign();
+			
+			baseClass.stepInfo("Assignment Creation");
+			assignmentPage.assignmentCreation(AssignStamp, Input.codingFormName);
+			
+			baseClass.stepInfo("Assignment Distributing To Reviewer");
+			assignmentPage.assignmentDistributingToReviewer();
+
+			loginPage.logout();
+	
+			// Login As Reviewer
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+			
+			// selecting the assignment
+			baseClass.stepInfo("Select Assignment By Reviewer");
+			assignmentPage.SelectAssignmentByReviewer(AssignStamp);
+			
+			docView = new DocViewPage(driver);
+			
+			baseClass.stepInfo("Verify weather mini docList Document is navigate to next doc in mini doc list child window after doc complete.");
+			docView.verifyNavegatingofDocInMiniDocLIstAfterComplete();
+			
+			baseClass.stepInfo("Refresh page");
+			driver.Navigate().refresh();
+		}
 		
 	@AfterMethod(alwaysRun = true)
 	public void close() {

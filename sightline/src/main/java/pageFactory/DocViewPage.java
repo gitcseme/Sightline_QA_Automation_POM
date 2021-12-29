@@ -2365,6 +2365,28 @@ public class DocViewPage {
 				"//div[contains(text(),'" + search + "')]//..//i [@class='fa fa-chevron-left DocViewBatchPrevious']");
 	}
 	
+	//Added by gopinath - 28/12/2021
+	public Element getRedactionApplied(){
+		return driver.FindElementByCssSelector("rect:not([style*='default'])");
+	}
+	
+	public Element getAnnotationApplied(){
+		return driver.FindElementByCssSelector("rect:not([style*='default'])[style*='opacity']");
+	}
+	public Element getdocViewMiniDocChildWindow() {
+		return driver.FindElementByXPath("//header[@id='HdrMiniDoc']//i[@class='fa fa-expand']");
+	}
+
+public Element getDocViewMiniDocIdCheckBoxCircle(String Id) {
+		return driver.FindElementByXPath("//td[text()='"+Id+"']/preceding-sibling::td/i[@class='fa fa-check-circle']");
+	}
+public Element getDocViewMiniDocIdCheckBoxArrowRight(String Id) {
+		return driver.FindElementByXPath("//td[text()='"+Id+"']/preceding-sibling::td/i[@class='fa fa-arrow-right']");
+}
+public Element getDefaultViewTab() {
+	return driver.FindElementById("liDocumentDefaultView");
+}
+	
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -17485,4 +17507,203 @@ public class DocViewPage {
 			}
 		}
 	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: Verify redaction,annotation and remark buttons are not displayed.
+	 */
+	public void verifyRedactionAnnotaionAndRemarkButtonsAreDisabled() {
+		try {
+			if(getNonAudioRemarkBtn().isElementAvailable(1)) {
+				base.failedStep("Remark button is displayed");
+			}else {
+				base.passedStep("Remark button is not displayed");
+			}
+			if(getDocView_RedactIcon().isElementAvailable(1)) {
+				base.failedStep("Redaction button is displayed");
+			}else {
+				base.passedStep("Redaction button is not displayed");
+			}
+			if(getDocView_AnnotateIcon().isElementAvailable(1)) {
+				base.failedStep("Annotation button is displayed");
+			}else {
+				base.passedStep("Annotation button is not displayed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verify redaction,annotation and remark buttons "+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: Verify applied redaction and annotation is not displayed.
+	 */
+	public void verifyAppliedRedactionAndAnnotationIsNotDisplayed() {
+		try {
+			if(getRedactionApplied().isElementAvailable(1)) {
+				base.failedStep("Applied redaction is displayed");
+			}else {
+				base.passedStep("Applied redaction is not displayed");
+			}
+			if(getAnnotationApplied().isElementAvailable(1)) {
+				base.failedStep("Annotation applied is displayed");
+			}else {
+				base.passedStep("Annotation applied is not displayed");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while Verify applied redaction and annotation is not displayed."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @description : Method to complete coding form and verify cursor navigated to next document.
+	 */
+	public void completeCodingFormAndVerifyCursorNavigateToNextDoc() {
+		try {
+			driver.scrollPageToTop();
+			MiniDocListPage mini = new MiniDocListPage(driver);
+			String nextDocId = mini.getCursorNextDocumentId().getText().trim();
+			driver.waitForPageToBeReady();
+			base.waitForElement(getResponsiveCheked());
+			getResponsiveCheked().Click();
+			base.waitForElement(getNonPrivilegeRadio());
+			getNonPrivilegeRadio().Click();
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getDocument_CommentsTextBox().Displayed() && getDocument_CommentsTextBox().Enabled();
+				}
+			}), Input.wait30);
+			getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
+	
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCompleteDocBtn().Enabled() && getCompleteDocBtn().Visible();
+				}
+			}), Input.wait30);
+	
+			driver.scrollPageToTop();
+			getCompleteDocBtn().Click();
+			base.VerifySuccessMessage("Document completed successfully");
+			driver.waitForPageToBeReady();
+			String currentDocId = mini.getCurrentDocumentId().getText().trim();
+			
+			if(currentDocId.contentEquals(nextDocId)) {
+				base.passedStep("Cursor navigated to next document successfully by clicking on complete buton");
+			}else {
+				base.failedStep("Cursor not navigated to next document successfully by clicking on complete button");
+			}
+			String visibleDoc = getDocView_CurrentDocId().getText().trim();
+			if(currentDocId.contentEquals(visibleDoc)) {
+				base.passedStep("Cursor navigated to next doc and document is visible on doc view successfully");
+			}else {
+				base.failedStep("Expected document is not visible on doc view");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while complete coding form and verify cursor navigated to next document."+e.getLocalizedMessage());
+		}
+
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: Method for verifying document displayed in text view.
+	 */
+	public void verifyDocumentDisplayedInTextView() {
+		try {
+			driver.scrollPageToTop();
+			base.waitForElement(getDocView_TextTab());
+			getDocView_TextTab().isElementAvailable(10);
+			getDocView_TextTab().waitAndClick(5);
+			if(getDocView_TextTab().getWebElement().isEnabled())//download button should not available 
+			{
+				base.passedStep("Document is displyed in textview for review");
+			}else {
+				base.failedStep("document unable load in textview");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while  verifying document displayed in text view."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description: Method for verifying document loaded in default view.
+	 */
+	public void verifyDocumentLoadedInDefaultView() {
+		try {
+ 			 driver.scrollPageToTop();
+			 base.waitForElement(getDocView_Next());
+			 getDocView_Next().isElementAvailable(10);
+			 getDocView_Next().waitAndClick(5);
+			 base.waitForElement(getDocView_IconDownload());
+			 if((!getDocView_TextTab().getWebElement().getAttribute("class").contains("active")) && getDefaultViewTab().GetAttribute("class").contains("active")) {
+				base.passedStep("Document is Loaded in default view after clicked on nagivation button");
+			 }else {
+				base.failedStep("Document not is Loaded in default view after clicked on nagivation button");
+			 }
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying document loaded in default view."+e.getLocalizedMessage());
+		}
+	}
+	
+	/**
+	 * @author Gopinath
+	 * Description : Verify weather mini docList Document is navigate to next doc in mini doc list child window after doc complete.
+	 */
+	public void verifyNavegatingofDocInMiniDocLIstAfterComplete() {
+		try {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getGearIcon());
+		getGearIcon().isElementAvailable(15);
+		getGearIcon().Click();
+		String parentWindowID = driver.CurrentWindowHandle();
+		base.waitForElement(getdocViewMiniDocChildWindow());
+		getdocViewMiniDocChildWindow().isElementAvailable(10);
+		getdocViewMiniDocChildWindow().waitAndClick(5);
+		Set<String> allWindowsId1 = driver.WindowHandles();
+
+		for (int i = 1; i < 4; i++) {
+			base.waitForElement(getDocViewSelectedDocId());
+			String DocIdBeforeComplete = getDocViewSelectedDocId().getText();
+			
+			base.waitForElement(getCompleteDocBtn());
+			getCompleteDocBtn().waitAndClick(10);
+			base.waitForElement(base.getSuccessMsgHeader());
+			base.VerifySuccessMessage("Document completed successfully");
+			base.waitForElement(getDocViewSelectedDocId());
+			String DocIdAfterComplete = getDocViewSelectedDocId().getText();
+			
+			
+			for (String eachId : allWindowsId1) {
+				if (!parentWindowID.equals(eachId)) {
+					driver.switchTo().window(eachId);
+					driver.scrollPageToTop();
+					getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).ScrollTo();
+					base.waitForElement(getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete));
+					if (getDocViewMiniDocIdCheckBoxCircle(DocIdBeforeComplete).isElementAvailable(3)
+							&& getDocViewMiniDocIdCheckBoxArrowRight(DocIdAfterComplete).isElementAvailable(3)) {
+						base.passedStep(DocIdBeforeComplete+"Document is completed and cursor is navigate to the next document("+DocIdAfterComplete+") in mini doc list child window, "
+										+ "next document is loaded successfully");
+						System.out.println("Document is completed and cursor is navigate to the next document in mini doc list child window,next document is loaded successfully"); 
+					} else {
+						base.failedStep("failed to navigate to the next document in miniDoc list after complete");
+
+					}
+				}
+			}
+			driver.switchTo().window(parentWindowID);
+		}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception occured while verifying weather mini docList Document is navigate to next doc in mini doc list child window after doc complete."+e.getLocalizedMessage());
+		}
+
+	}
+
 }

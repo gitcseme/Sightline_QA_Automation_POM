@@ -23,7 +23,8 @@ public class AnnotationLayer {
     public Element getDeleteAnnotationLayer(){ return driver.FindElementByXPath("//a[contains(text(),'Delete')]"); }
     public Element getYes(){ return driver.FindElementByXPath("//button[@id='bot1-Msg1']"); }
     public Element getSuccessMsg(){ return driver.FindElementByXPath("//div[starts-with(@id,'bigBoxColor')]//p"); }
-  
+    public Element getDeleteAnnotation(String annotation){ return driver.FindElementByXPath("//td[text()='"+annotation+"']/following-sibling::td//a[text()='Delete']"); }
+
   
     //Annotation Layer added successfully
     public AnnotationLayer(Driver driver){
@@ -56,5 +57,25 @@ public class AnnotationLayer {
          base.CloseSuccessMsgpopup();
  
 	}
+    /**
+   	 * @author Gopinath
+   	 * @Description : Method for deleting annotation layer.
+   	 * @param name : name is String value that name of annotation layer.
+   	 */
+       public void deleteAnnotation(String name) {
+       	try{
+       		driver.getWebDriver().get(Input.url+ "Annotations/Annotations");
+       		driver.waitForPageToBeReady();
+       		getDeleteAnnotation(name).isElementAvailable(15);
+       		getDeleteAnnotation(name).Click();
+       		getYes().isElementAvailable(15);
+       		getYes().waitAndClick(5);
+       		base.VerifySuccessMessage("Annotation Layer deleted successfully");
+       		base.CloseSuccessMsgpopup();
+       	}catch (Exception e){
+   	    	e.printStackTrace();
+   	    	base.failedStep("Exception occured while deleting annotation layer "+e.getLocalizedMessage());
+       	}
+   	}
     
    }
