@@ -2320,6 +2320,137 @@ public class DocView_Regression1 {
 			driver.Navigate().refresh();
 		}
 		
+		
+		/**
+		 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+		 * id :RPMXCON- 51433 Description: Verify that if the document native is being
+		 * presented, the "N" icon with the accompanying mouse over tool tip must appear
+		 * 
+		 */
+		@Test(alwaysRun = true, groups = { "regression" }, priority = 23)
+
+		public void verifyNIconAndToolTipInDocView() throws Exception {
+
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("RPMXCON-51433 docview-sprint:9");
+			baseClass.stepInfo(
+					"#### Verify that if the document native is being presented, the 'N' icon with the accompanying mouse over tool tip must appear ####");
+			
+	        String DocId="ID00001155";
+			String ExpectedText = "Native file variant of the document being displayed";
+			baseClass.stepInfo("Basic meta data search");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			DocViewPage docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			sessionSearch = new SessionSearch(driver);
+			
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+			loginPage.logout();
+
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password );
+
+			sessionSearch = new SessionSearch(driver);
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(DocId);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify Native Document Tooltip");
+			docView.verifyingToolTipPopupMessage(DocId, ExpectedText);
+			
+		}
+
+		/**
+		 * Author : Brundha Created date: NA Modified date: NA Modified by:NA TestCase
+		 * id :RPMXCON- 51434 Description: Verify that if the document PDF is being
+		 * presented, the "P" icon with the accompanying mouse over tool tip must appear
+		 * 
+		 */
+		@Test(alwaysRun = true, groups = { "regression" }, priority = 24)
+
+		public void verifyPIconAndToolTipInDocView() throws Exception {
+
+			
+			baseClass = new BaseClass(driver);
+			baseClass.stepInfo("RPMXCON-51434 docview-sprint:9");
+			baseClass.stepInfo(
+					"#### Verify that if the document PDF is being presented, the 'P' icon with the accompanying mouse over tool tip must appear ####");
+			SessionSearch sessionSearch = new SessionSearch(driver);
+
+			String ExpectedText = "PDF file variant of the document being displayed";
+			String Doc="ID00001036";
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Doc);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			DocViewPage docView = new DocViewPage(driver);
+
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify PDF Document Tooltip");
+			docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+			
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+
+			sessionSearch = new SessionSearch(driver);
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Doc);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify PDF Document Tooltip");
+			docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rev1userName, Input.rev1password );
+
+			sessionSearch = new SessionSearch(driver);
+			baseClass.stepInfo("Basic meta data search");
+			sessionSearch.basicContentSearch(Doc);
+
+			baseClass.stepInfo("Navigating to docview page");
+			sessionSearch.ViewInDocView();
+
+			docView = new DocViewPage(driver);
+			docView.navigateToDocViewPageURL();
+
+			baseClass.stepInfo("Verify PDF Document Tooltip");
+			docView.verifyingToolTipPopupMessage(Doc, ExpectedText);
+			
+		}
+
 	@AfterMethod(alwaysRun = true)
 	public void close() {
 		try {
