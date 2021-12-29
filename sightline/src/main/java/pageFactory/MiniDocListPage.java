@@ -76,6 +76,15 @@ public class MiniDocListPage {
 	List<String> selectedFieldsSetDocumentSorting;
 	List<String> originalOrderedList;
 	List<String> afterSortList;
+	
+	//Added  by Gopinath 28/12/2021
+	public Element getCursorNextDocumentId() {
+		return driver.FindElementByXPath("(//i[@class='fa fa-arrow-right']//../../following-sibling::tr)[1]//td[2]");
+	}
+	public Element getCurrentDocumentId() {
+		return driver.FindElementByXPath("//i[@class='fa fa-arrow-right']//..//..//td[2]");
+	}
+
 
 	public MiniDocListPage(Driver driver) {
 		this.driver = driver;
@@ -3417,5 +3426,42 @@ public class MiniDocListPage {
 		
 		baseClass.passedStep("EmailAuthorNameAndAddress field is not displayed on configure mini doc list");
 		
+	}
+	
+	/**
+	 * @author Gopinath
+	 * @Description : this method used for verifying cursor navigated to child window clicking on saved stamp.
+	 * @param textBox : textBox is String value that text value ned to enter in comment box.
+	 * @param colour : colour is String value that colour stamp to select.
+	 */
+
+	public void verifyCursorNavigatedToChildWindowClickingOnSavedStamp(String textBox,String colour) throws InterruptedException {
+		try {
+			driver.waitForPageToBeReady();
+			reusableDocViewPage.clickGearIconOpenMiniDocList();
+			String miniDocListPrent = reusableDocViewPage.switchTochildWindow();
+			baseClass.stepInfo("MiniDocList child window opened");
+			driver.waitForPageToBeReady();
+			getCursorNextDocumentId().isElementAvailable(15);
+			String nextDocId = getCursorNextDocumentId().getText().trim();
+			driver.getWebDriver().switchTo().window(miniDocListPrent);
+			driver.waitForPageToBeReady();
+			reusableDocViewPage.lastAppliedStamp(colour);
+			reusableDocViewPage.switchTochildWindow();
+			String currentDocId = getCurrentDocumentId().getText().trim();
+			
+			if(currentDocId.contentEquals(nextDocId)) {
+				baseClass.passedStep("Cursor navigated to next document successfully by clicking on saved stamp");
+			}else {
+				baseClass.failedStep("Cursor not navigated to next document successfully by clicking on saved stamp");
+			}
+			reusableDocViewPage.childWindowToParentWindowSwitching(miniDocListPrent);
+			DocViewPage dovView = new DocViewPage(driver);
+			dovView.getDocView_SaveWidgetButton().waitAndClick(10);
+			driver.Navigate().refresh();
+		}catch(Exception e) {
+			e.printStackTrace();
+			baseClass.failedStep("Exception occured whileverifying cursor navigated to child window clicking on saved stamp. "+e.getLocalizedMessage());
+		}
 	}
 }
