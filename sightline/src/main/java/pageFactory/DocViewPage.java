@@ -11116,7 +11116,7 @@ public class DocViewPage {
 			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			driver.getPageSource();
 
-			for (int i = 2; i <= 2; i++) {
+			for (int i = 1; i <= 2; i++) {
 				base.waitForElement(getDocView_Analytics_FamilyMember_DocCheckBox(i));
 				driver.getPageSource();
 				getDocView_Analytics_FamilyMember_DocCheckBox(i).waitAndClick(10);
@@ -11178,6 +11178,7 @@ public class DocViewPage {
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 			driver.waitForPageToBeReady();
 			base.waitTime(5);
+			getDocView_Analytics_FamilyTab().waitAndClick(10);
 			// verify Code Same as Link
 			try {
 				if (getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5)) {
