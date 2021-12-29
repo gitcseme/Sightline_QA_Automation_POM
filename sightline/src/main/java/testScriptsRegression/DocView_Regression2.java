@@ -537,6 +537,64 @@ public class DocView_Regression2 {
 		}
 	}
 	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51407
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =15)
+	public void verifyKeywordHighliteIsdisplayedOnHitofPersistentHitIcon(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51407");
+		baseClass.stepInfo("Verify on click of the \"eye\" icon, ALL highlighted terms - including those that are set from Manage > Keywords configured to the security group");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.checkingPersistentHitPanel();
+		if(docViewRedact.getKeywordInPersistentHitPanel_test().isDisplayed()) {
+			baseClass.passedStep("Keyword assigned to security group is present in the persistent hit panel");
+		} else {
+			baseClass.failedStep("Keyword assigned to security group is not present in the panel");
+		}
+	}
+
+
+/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51750
+	 * 
+	 */
+	@Test(enabled = true, dataProvider = "userDetails", alwaysRun = true, groups = { "regression" }, priority =16)
+	public void verifyPersistentHitPanelRetainedWhenDocNumberEntered(String fullName, String userName, String password) throws Exception {
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(userName, password);
+		baseClass.stepInfo("Test case Id: RPMXCON-51750");
+		baseClass.stepInfo("Verify that on entering the document number when hits panel is open then enable/disable should be retained after loading the document");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		baseClass.stepInfo("login as" + fullName);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		docViewRedact.checkingPersistentHitPanel();
+		driver.scrollPageToTop();
+		docViewRedact.pageNumberTextBox().waitAndClick(10);
+		docViewRedact.pageNumberTextBox().getWebElement().clear();
+		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
+		baseClass.stepInfo("Clicked on Analytics panel button and moved to other doc by entering page number");
+		driver.waitForPageToBeReady();
+		if(docViewRedact.persistantHitToggle().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panel is retained after loding the new page by entering page number");
+		}
+		else {
+			baseClass.failedStep("Persistent hit panel is NOT retained after loding the new page by entering page number");
+		}
+	}
+	
 
 	@AfterMethod(alwaysRun = true)
 	private void afterMethod(ITestResult result) throws ParseException, Exception, Throwable {

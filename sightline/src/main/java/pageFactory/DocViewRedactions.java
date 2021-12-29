@@ -1082,6 +1082,11 @@ public Element getSecondSearchIcon() {
 		public Element getOnDemandSearchBtn() {
 			return driver.FindElementByXPath("//div[@class='searchOnDemand']//div[@class='searchIcon']//i[@class='fa fa-search']");}
 		
+		
+		public Element getKeywordInPersistentHitPanel_test() {
+			return driver.FindElementById("PHitCount_test");
+		}
+		
 	public DocViewRedactions(Driver driver) {
 		this.driver = driver;
 		// This initElements method will create all WebElements
