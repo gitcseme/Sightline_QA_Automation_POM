@@ -8914,5 +8914,55 @@ public class SessionSearch {
 				"Search is done for " + projectFieldINT + " with value " + metadataText + " purehit is : " + pureHit);
 		return pureHit;
 	}
+	/**
+	 * @author Jayanthi.ganesan
+	 * @param SearchString
+	 * @param element
+	 * @return
+	 * @throws InterruptedException
+	 */
+		public String  advancedSearch_CombinedResults( String SearchString, Element element)
+				throws InterruptedException {
+
+			// To make sure we are in basic search page
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			SoftAssert softAssertion = new SoftAssert();
+			base.waitForElement(getAdvancedSearchLink());
+			getAdvancedSearchLink().Click();
+			base.stepInfo("Navigated to advanced search page successfuly");
+			try {
+				base.waitForElement(element);
+				element.waitAndClick(10);
+				base.passedStep("Advanced search option is selected");
+			} catch (Exception e) {
+				base.failedStep("Advanced search option is not selected");
+				softAssertion.fail();
+			}
+			base.waitForElement(getContentAndMetaDatabtn());	
+			getContentAndMetaDatabtn().Click();
+			base.waitForElement(getAdvancedContentSearchInput());
+			getAdvancedContentSearchInput().SendKeys(SearchString);
+			base.waitForElement(getQuerySearchButton());
+			// Click on Search button
+			getQuerySearchButton().Click();
+
+			// look for warnings, in case of proximity search
+			try {
+				if (getTallyContinue().isElementAvailable(2)) {
+					getTallyContinue().waitAndClick(10);
+				}
+			} catch (Exception e) {
+
+			}
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getCombinedSearchResults().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+			String combinedSearchResults = getCombinedSearchResults().getText();
+			softAssertion.assertNotNull(combinedSearchResults, "Search is done and no combined search hits returned");
+			base.stepInfo("The combined search results are " + combinedSearchResults);
+			return combinedSearchResults;
+		}
 
 }
