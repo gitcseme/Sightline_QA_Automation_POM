@@ -6606,6 +6606,115 @@ public class DocView_CodingForm_Regression {
 		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
 
 	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description :To verify that user can change the label of the field in coding form, it should displayed on the Doc View.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 154)
+	public void verifyEditedCfLabelsInDocview() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-50984");
+	    baseClass.stepInfo("To verify that user can change the label of the field in coding form, it should displayed on the Doc View");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+	    String codingform = "CFmetadata"+Utility.dynamicNameAppender();
+	    String assignmentName = "assignment"+Utility.dynamicNameAppender();
+	    System.out.println(assignmentName);
+	    //Login as a rmu user
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    //create codingform
+	    codingForm.createCodingFormUsingFirstObject(codingform,"tag");
+	    baseClass.waitForElement(codingForm.getCodingForm_CommentTab());
+	    codingForm.getCodingForm_CommentTab().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingForm_FirstComment());
+		codingForm.getCodingForm_FirstComment().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingForm_EDITABLE_METADATA_Tab());
+		codingForm.getCodingForm_EDITABLE_METADATA_Tab().waitAndClick(10);
+		baseClass.waitForElement(codingForm.getCodingForm_FirstMetadata());
+		codingForm.getCodingForm_FirstMetadata().waitAndClick(10);
+		codingForm.addcodingFormAddButton();
+		codingForm.enterObjectName(0, Input.searchString1);
+		codingForm.enterObjectName(1, Input.searchString2);
+		codingForm.enterObjectName(2, Input.searchString4);
+		codingForm.saveCodingForm();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		//assignmentPage.assignmentWithSaveButtonForRmu(assignmentName, codingform);
+		assignmentPage.assignmentCreation(assignmentName, codingform);
+		assignmentPage.toggleSaveButton();
+		assignmentPage.assignmentDistributingToReviewer();
+//		// logout Reviewer Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		docViewPage.verifyCodingFormTagNameInDocviewPg(0, Input.searchString1);
+		docViewPage.verifyCodingFormTagNameInDocviewPg(1, Input.searchString2);
+		docViewPage.verifyCodingFormTagNameInDocviewPg(2, Input.searchString4);
+		baseClass.passedStep("Edited labels in coding form are displayed in docview page as expected");
+        loginPage.logout();
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        codingForm.deleteCodingForm(codingform, codingform);
+        assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+        loginPage.logout();
+	}
+	/**
+	 * @Author : Iyappan.Kasinathan 
+	 * @Description : To verify that user can view the helpful tooltip in doc view coding form.
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 155)
+	public void verifyHelpToolTipInDocviewCf() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-50985");
+	    baseClass.stepInfo("To verify that user can view the helpful tooltip in doc view coding form.");
+	    docViewPage = new DocViewPage(driver);
+		codingForm = new CodingForm(driver);
+		assignmentPage = new AssignmentsPage(driver);
+		softAssertion = new SoftAssert();
+	    String codingform = "CFmetadata"+Utility.dynamicNameAppender();
+	    String assignmentName = "assignment"+Utility.dynamicNameAppender();
+	    System.out.println(assignmentName);
+	    //Login as a rmu user
+	    loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	    this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	    //create codingform
+	    codingForm.createCodingFormUsingFirstObject(codingform,"tag");
+		codingForm.addcodingFormAddButton();
+		 codingForm.enterErrorAndHelpMsg(0,"No","Help for testing",null);
+		codingForm.saveCodingForm();
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.bulkAssign();
+		assignmentPage.assignmentCreation(assignmentName, codingform);
+		assignmentPage.add2ReviewerAndDistribute();
+	 	baseClass.impersonateRMUtoReviewer();
+	 	assignmentPage.SelectAssignmentByReviewer(assignmentName);
+        String actualResult1 =docViewPage.getCodingFormTaglabel(0).GetAttribute("title");
+        softAssertion.assertEquals("Help for testing", actualResult1);
+        baseClass.passedStep("The helptext tooltip successfully verified as review manager");
+//		// logout Reviewer Manager
+		loginPage.logout();
+		baseClass.stepInfo("Successfully logout Reviewer Manager'" + Input.rmu1userName + "'");
+		// Login As Reviewer
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rev1userName + "'");
+		assignmentPage.SelectAssignmentByReviewer(assignmentName);
+		baseClass.stepInfo("User on the doc view after selecting the assignment");
+		//assignmentPage.assgnViewInAllDocView();
+		String actualResult2 =docViewPage.getCodingFormTaglabel(0).GetAttribute("title");
+	    softAssertion.assertEquals("Help for testing", actualResult2);		    
+		baseClass.passedStep("The helptext tooltip successfully verified as reviewer");
+		loginPage.logout();
+        loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+        codingForm.deleteCodingForm(codingform, codingform);
+        assignmentPage.deleteAssgnmntUsingPagination(assignmentName);
+        loginPage.logout();
+        softAssertion.assertAll();
+		
+	}
 	
 	
 	@DataProvider(name = "paToRmuRev")
