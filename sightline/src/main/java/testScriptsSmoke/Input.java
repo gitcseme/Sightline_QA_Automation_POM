@@ -439,6 +439,9 @@ public class Input {
 	
 	public static String threadDocWithToolTip;
 	public static String conceptualDoc;
+	//added by jayanthi-30/12/21
+	public static String TallySearch;
+	public static String TallyCN;
 	
 	@BeforeSuite(alwaysRun = true)
 
@@ -888,6 +891,9 @@ public class Input {
 		
 		threadDocWithToolTip = testData.getThreadDocWithToolTip();
 		conceptualDoc = testData.getConceptualDoc();
+		
+         TallySearch=testData.getTallySearch();
+		 TallyCN=testData.getTallyCN();
 
 		System.out.println("*****************************************************");
 		UtilityLog.info("*****************************************************");

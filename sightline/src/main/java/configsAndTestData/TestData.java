@@ -351,4 +351,7 @@ public class TestData {
 				
 		public String threadDocWithToolTip;
 		public String conceptualDoc;
+		//Added by jayanthi
+		public String TallySearch;
+		public String TallyCN;
 }

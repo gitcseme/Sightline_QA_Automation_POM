@@ -1,6 +1,7 @@
 package pageFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -1087,9 +1088,12 @@ public class TallyPage {
 		base.waitForElement(getTally_Searches());
 		getTally_Searches().Click();
 		driver.scrollingToElementofAPage(getTally_SelectSearches(saveSearch));
+		getTally_SelectSearches(saveSearch).ScrollTo();
+		base.waitTime(2);
 		getTally_SelectSearches(saveSearch).waitAndClick(5);
 		driver.scrollingToElementofAPage(getTally_SearchSaveSelections());
 		base.waitForElement(getTally_SearchSaveSelections());
+		base.waitTime(2);
 		getTally_SearchSaveSelections().Click();
 		base.stepInfo("Selected "+saveSearch+" as source to generate tally report");
 	}
@@ -1213,8 +1217,9 @@ public class TallyPage {
 	
 	/**
 	 * @author Jayanthi.ganesan
+	 * @return 
 	 */
-	public void verifyTallyChart() {
+	public List verifyTallyChart() {
 			base.waitForElement(getTallyChartRectbar());
 			base.waitTillElemetToBeClickable(getTallyChartRectbar());
 			getTallyChartRectbar().Displayed();
@@ -1228,8 +1233,7 @@ public class TallyPage {
 					base.failedStep("Tally chart  not displayed");
 				}
 			
-
-
+return metaData;
 	}
 
 }

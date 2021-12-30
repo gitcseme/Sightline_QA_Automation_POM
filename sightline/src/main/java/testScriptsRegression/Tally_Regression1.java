@@ -4,6 +4,9 @@ package testScriptsRegression;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
+
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -32,14 +35,19 @@ public class Tally_Regression1 {
 	String hitsCountRMU;
 	String saveSearchNamePA = "A" + Utility.dynamicNameAppender();
 	String saveSearchNameRMU = "A" + Utility.dynamicNameAppender();
-
+	List<String> exp1 =Arrays.asList("2", "Auto", "Gavin","Jaydeep","Owen","P Allen","Sai","Tyler","ViKas Mestry");
+    List<String> exp2=Arrays.asList("Compressed Data (Headerle", "Document", "Drawing", "Email","Image","Microsoft Word Document", "MS Excel Worksheet/Template (OLE)","MS Outlook Message", "Other Document", "Spreadsheet");
+	List<String> exp3=Arrays.asList("", "general announcement/corp/enron@enron","gouri dhavalikar", "gouri.dhavalikar@symphonyteleca.com", "Jaydeep Gatlewar@symphonyteleca.com",
+			"Phillip K Allen", "Sai.Theodare@symphonyteleca.com", "satish pawal", "Vikas.Mestry@symphonyteleca.com","Vishal.Parikh@symphonyteleca.com");
+	List<String> exp4=Arrays.asList("","/o=exchangelabs/ou=exchange administrative group","/o=exchangelabs/ou=exchange administrative group","imceanotes-general+20announcement_corp_enron+40en","Phillip K Allen");
+	String SearchName="Tally"+Utility.dynamicNameAppender();
 	@BeforeClass(alwaysRun = true)
 	public void preCondition() throws ParseException, InterruptedException, IOException {
 
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 
-		//Input in = new Input();
-		//in.loadEnvConfig();
+		Input in = new Input();
+		in.loadEnvConfig();
 
 		// Open browser
 		driver = new Driver();
@@ -185,7 +193,7 @@ public class Tally_Regression1 {
 		 * @author Jayanthi.ganesan
 		 * @throws InterruptedException
 		 */
-		@Test(groups = { "regression" }, priority = 3)
+		@Test(groups = { "regression" }, priority = 4)
 		public void verifyTally_Assignments() throws InterruptedException {
 			bc.stepInfo("Test case Id: RPMXCON-56204");
 			bc.stepInfo("To Verify RMU will have a report in Tally with document counts by metadata fields for assignment groups.");
@@ -200,20 +208,63 @@ public class Tally_Regression1 {
 			agnmt.FinalizeAssignmentAfterBulkAssign();
 			agnmt.createAssignment_fromAssignUnassignPopup(assignmentName, Input.codeFormName);
 			agnmt.getAssignmentSaveButton().waitAndClick(5);
-			bc.stepInfo("Created a assignment " + assignmentName);
+			bc.stepInfo("Created a assignment " + assignmentName);  
 			TallyPage tp = new TallyPage(driver);
-			for(int i=0;i<metadata.length;i++) {
-				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-"+metadata[i]+"**");
 			tp.navigateTo_Tallypage();
 			tp.SelectSource_Assignment(assignmentName);
+			for(int i=0;i<metadata.length;i++) {
+			bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-"+metadata[i]+"**");			
 			tp.selectTallyByMetaDataField(metadata[i]);
 			tp.validateMetaDataFieldName(metadata[i]);
 			tp.verifyTallyChart();
 			bc.passedStep("Verified whether RMU will have a report in Tally with document counts by metadata "
 					+ "fields for assignment groups if Tally by metadata is "+metadata[i]);
-			if(i!=3) {bc.selectproject();}
 			}
 		}
+		
+		/**
+		 * @author Jayanthi.ganesan
+		 * @throws InterruptedException
+		 */
+		@Test(dataProvider = "Users_PARMU", groups = { "regression" }, priority = 5)
+		public void verifyTally_Searches(String username, String password, String role) throws InterruptedException {
+			bc.stepInfo("Test case Id: RPMXCON-56203");
+			bc.stepInfo("To Verify Admin/RMU will have a report in Tally with document counts by metadata fields for searches.");
+			String[] metadata = { "CustodianName", "DocFileType", "EmailAuthorName", "EmailAuthorAddress" };
+			lp.loginToSightLine(username, password);
+			bc.stepInfo("Logged in as " + role);
+			SessionSearch ss = new SessionSearch(driver);
+			ss.advMetaDataSearchQueryInsert(Input.metaDataName,Input.TallyCN);
+			ss.selectOperator("OR");
+			ss.advContentSearchWithoutURL(Input.TallySearch);
+			ss.saveSearchAdvanced_New(SearchName, Input.shareSearchDefaultSG);
+			SoftAssert softAssertion = new SoftAssert();
+			TallyPage tp = new TallyPage(driver);
+			tp.navigateTo_Tallypage();
+			tp.SelectSource_SavedSearch(SearchName);
+			for (int i = 0; i < metadata.length; i++) {
+				bc.stepInfo("**To Verify Tally Report if Tally By MetaData as-" + metadata[i] + "**");
+				tp.selectTallyByMetaDataField(metadata[i]);
+				tp.validateMetaDataFieldName(metadata[i]);
+				if (i == 0) {
+					softAssertion.assertEquals(exp1, tp.verifyTallyChart());
+				}
+				if (i == 1) {
+					softAssertion.assertEquals(exp2, tp.verifyTallyChart());
+				}
+				if (i == 2) {
+					softAssertion.assertEquals(exp3, tp.verifyTallyChart());
+				}
+				if (i == 3) {
+					softAssertion.assertEquals(exp4, tp.verifyTallyChart());
+				}
+				softAssertion.assertAll();
+				bc.passedStep(
+						"Verified whether " + role + " will have a report in Tally with document counts by metadata "
+								+ "fields for Searches if Tally by metadata is " + metadata[i]);
+			}
+		}
+	
 	@BeforeMethod
 	public void beforeTestMethod(Method testMethod) {
 		System.out.println("------------------------------------------");
@@ -251,7 +302,7 @@ public class Tally_Regression1 {
 
 	@AfterClass(alwaysRun = true)
 	public void close() {
-		try {
+	/*	try {
 		//	Input in = new Input();
 		//	in.loadEnvConfig();
 			driver = new Driver();
@@ -264,7 +315,7 @@ public class Tally_Regression1 {
 			lp.quitBrowser();
 		} catch (Exception e) {
 			lp.quitBrowser();
-		}
+		}  */
 
 	}
 }
