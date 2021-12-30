@@ -8966,4 +8966,54 @@ public class SessionSearch {
 			return combinedSearchResults;
 		}
 
-}
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param metaDataField
+		 * @param val1
+		 */
+		public void advMetaDataSearchQueryInsert(String metaDataField, String val1) {
+			driver.getWebDriver().get(Input.url + "Search/Searches");
+			base.waitForElement(getAdvancedSearchLink());
+			getAdvancedSearchLink().Click();
+			base.waitForElement(getContentAndMetaDatabtn());
+			getContentAndMetaDatabtn().Click();
+			base.waitForElement(getAdvanceSearch_MetadataBtn());
+			getAdvanceSearch_MetadataBtn().Click();
+			getSelectMetaData().selectFromDropdown().selectByVisibleText(metaDataField);
+			getMetaDataSearchText1().SendKeys(val1 + Keys.TAB);
+			base.waitForElement(getMetaDataInserQuery());
+			getMetaDataInserQuery().Click();
+		}
+
+		/**
+		 * @author Jayanthi.ganesan
+		 * @param SearchString
+		 * @return
+		 */
+		public int advContentSearchWithoutURL(String SearchString) {
+			base.waitForElement(getAdvancedContentSearchInputCurrent());
+			getAdvancedContentSearchInputCurrent().SendKeys(SearchString);
+			base.waitForElement(getQuerySearchButton());
+			getQuerySearchButton().Click();
+
+			// look for warnings, in case of proximity search
+			try {
+				if (getTallyContinue().isElementAvailable(2)) {
+					getTallyContinue().waitAndClick(10);
+				}
+			} catch (Exception e) {
+
+			}
+			// verify counts for all the tiles
+			driver.WaitUntil((new Callable<Boolean>() {
+				public Boolean call() {
+					return getPureHitsCount().getText().matches("-?\\d+(\\.\\d+)?");
+				}
+			}), Input.wait90);
+
+			int pureHit = Integer.parseInt(getPureHitsCount().getText());
+			UtilityLog.info("Search is done purehit is : " + pureHit);
+			return pureHit;
+		}
+
+	}

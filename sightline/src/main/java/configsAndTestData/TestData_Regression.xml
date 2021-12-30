@@ -375,4 +375,6 @@
 	<invalidNameText>Invalid Name</invalidNameText>
 <threadDocWithToolTip>ID00000703</threadDocWithToolTip>
 		<conceptualDoc>ID00000001</conceptualDoc>
+		<TallySearch>null</TallySearch>
+		<TallyCN>auto</TallyCN>
 </TestData>
