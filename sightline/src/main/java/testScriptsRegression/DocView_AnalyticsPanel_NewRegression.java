@@ -503,7 +503,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *              this' RPMXCON-51218
 	 * 
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 8)
+	@Test(enabled = true, groups = { "regression" }, priority = 8)
 	public void verifyWhenUserSelectsThreadMapMulitiDocsAndPerformRemoveCodeSameAs()
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51218");
@@ -522,7 +522,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		docView = new DocViewPage(driver);
 		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "ThreadMap";
+		String docsToBeSelected =Input.newNearDupeDocId;
+		String revDocToBeSelected =Input.conceptualDocs1;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		// Basic Search and select the pure hit count
@@ -545,7 +546,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 		// select docs from family member and action as code same as
 		docView.selectDocsFromThreadMapTabAndActionCodeSame();
 
@@ -571,7 +572,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo(
 				"Step 3: Select docs having thread docs from Mini Doc list and select docs from ThreadMap Tab and perform action CodeSamAs");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(revDocToBeSelected);
 		// select docs from ThreadMap and action as code same as
 		docView.selectDocsFromThreadMapTabAndActionCodeSame();
 
@@ -682,8 +683,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"
-	// }, priority = 10)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression"}, priority = 10)
 	public void verifyZoomInZoomOutForNearDupeDocuments(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -699,7 +699,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String docId = "NearDupe";
+		String docId = Input.nearDupeCompletedDocId;
 
 		baseClass.stepInfo("Step 2 : Search for Docs and go to Docview");
 		// Session search to doc view Coding Form
@@ -709,7 +709,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// Select Docid from MiniDocList
 		baseClass.stepInfo("Step 3 : Docs are selected and viewed In MiniDocList successfully");
 		driver.waitForPageToBeReady();
-		docViewAnalytics.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docId);
+		docViewAnalytics.selectDocIdInMiniDocList(docId);
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -736,8 +736,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * 
 	 */
-	//// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"
-	//// }, priority = 11)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 11)
 	public void verifyWhenNavigatingFromThreadMapToNearDupeTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51571");
@@ -754,7 +753,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "ThreadMap";
+		String docsToBeSelected = Input.conceptualDocs1;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -765,7 +764,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// Select docs from Mini docs List and perform action
 		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 
 		// verify navigate to other tab link not to be present
 		baseClass.stepInfo("Step 4: Navigate to Near Dupe tab from thread map tab and again click the thread map tab");
@@ -820,7 +819,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		loginPage.logout();
 
 	}
-
+	
+	
 	/**
 	 * @Author: Mohan Created date: 29/11/2021 Modified date: NA Modified by: NA
 	 * @Description : Verify that on navigating to thread map tab from Conceptual
@@ -829,8 +829,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * 
 	 */
-	//// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"
-	//// }, priority = 12)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 12)
 	public void verifyWhenNavigatingFromThreadMapToConceptualTabLoadMoreDocsLinkToBeNotDisplayed(String fullName,
 			String userName, String password) throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51572");
@@ -847,7 +846,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "ThreadMap";
+		String docsToBeSelected =Input.conceptualDocs1;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 2: Searching documents based on search string and Navigate to DocView");
@@ -858,7 +857,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		// Select docs from Mini docs List and perform action
 		baseClass.stepInfo("Step 3: View the document from mini doc list having threaded documents");
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 
 		// verify navigate to other tab link not to be present
 		baseClass.stepInfo("Step 4: Navigate to Conceptual tab from thread map tab and again click the thread map tab");
@@ -921,8 +920,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"
-	//// }, priority = 13)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression"}, priority = 13)
 	public void verifyNavigatingToThreadMapTabFamilyMemberTabNotBeDisplayed(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -936,7 +934,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String documentToBeSelected = "ThreadMap";
+		String documentToBeSelected = Input.conceptualDocs1;
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -947,7 +945,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		baseClass.waitForElement(docView.getDocView_Analytics_FamilyTab());
@@ -1006,7 +1004,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//// //@Test(enabled = true, groups = { "regression" }, priority = 14)
+	@Test(enabled = true, groups = { "regression" }, priority = 14)
 	public void verifyCheckMarkIconDisplayedTheNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51058");
@@ -1020,7 +1018,8 @@ public class DocView_AnalyticsPanel_NewRegression {
 		baseClass.stepInfo("Logged in as User: " + Input.rmu1FullName);
 		baseClass.stepInfo("User successfully logged into slightline webpage as RMU with " + Input.rmu1userName + "");
 
-		String documentToBeSelected = "NearDupe";
+		String documentToBeSelected =Input.nearDupeDocId;
+		String revDocToBeSelected = Input.nearDupeCompletedDocId;
 		String codingForm = Input.codeFormName;
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 
@@ -1043,7 +1042,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(documentToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
@@ -1075,7 +1074,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// Select Docid from MiniDocList
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(documentToBeSelected);
+		docView.selectDocIdInMiniDocList(revDocToBeSelected);
 		baseClass.stepInfo("Docs are selected and viewed In MiniDocList successfully");
 
 		// perform code same as NearDupe Documents
@@ -1195,8 +1194,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
-	// priority = 16) [Doc issue]
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 16) 
 	public void verifyUserCanSelectRemoveCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException {
 
@@ -1209,9 +1207,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		UtilityLog.info("Logged in as User: " + fullName);
 		baseClass.stepInfo("Logged in as User: " + fullName);
 
-		String familyMemDocsId = Input.familyDocument;
-		String threadDocId = Input.threadDocId;
-		String conceptualDocId = Input.NewDocId;
+		String docToBeSelected = Input.familyDocument;
 
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
@@ -1225,7 +1221,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select docs from mini doc list
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(familyMemDocsId);
+		docView.selectDocIdInMiniDocList(docToBeSelected);
 
 		String parentWindowID = driver.getWebDriver().getWindowHandle();
 
@@ -1248,6 +1244,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		driver.switchTo().window(analyticsWindowID);
 		baseClass.stepInfo("Step 4: Select the documents having code same icon and action as 'Remove Code Same'");
 		docView.performRemoveCodeSameForFamilyMembersDocuments(parentWindowID);
+		driver.waitForPageToBeReady();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID);
 
@@ -1260,7 +1257,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		driver.Navigate().refresh();
 		// select docs from mini doc list
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(threadDocId);
+		docView.selectDocIdInMiniDocList(docToBeSelected);
 
 		String parentWindowID1 = driver.getWebDriver().getWindowHandle();
 
@@ -1282,6 +1279,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		driver.switchTo().window(analyticsWindowID1);
 		baseClass.stepInfo("Step 7: Select the documents having code same icon and action as 'Remove Code Same'");
 		docView.performRemoveCodeSameForThreadDocuments(parentWindowID1);
+		driver.waitForPageToBeReady();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID1);
 
@@ -1294,7 +1292,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		driver.Navigate().refresh();
 		// select docs from mini doc list
 		driver.waitForPageToBeReady();
-		docView.selectDocIdInMiniDocList(conceptualDocId);
+		docView.selectDocIdInMiniDocList(docToBeSelected);
 
 		String parentWindowID2 = driver.getWebDriver().getWindowHandle();
 
@@ -1311,11 +1309,13 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		String analyticsWindowID2 = driver.getWebDriver().getWindowHandle();
 
+		driver.waitForPageToBeReady();
 		docView.performCodeSameForConceptualDocuments(parentWindowID2);
 
 		driver.switchTo().window(analyticsWindowID2);
 		baseClass.stepInfo("Step 10: Select the documents having code same icon and action as 'Remove Code Same'");
 		docView.performRemoveCodeSameForConceptualDocuments(parentWindowID2);
+		driver.waitForPageToBeReady();
 		driver.getWebDriver().close();
 		driver.switchTo().window(parentWindowID2);
 
@@ -1337,7 +1337,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * 
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 17)
 	public void verifyUserEditCodingFormMainDocAndActionCodeSameAs(String fullName, String userName, String password)
 			throws InterruptedException, IOException {
 		baseClass.stepInfo("Test case Id: RPMXCON-51222");
@@ -1506,7 +1506,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 *               when document is viewed from analytics panel
 	 */
 
-	//@Test(enabled = true, groups = { "regression" }, priority = 20)
+	@Test(enabled = true, groups = { "regression" }, priority = 20)
 	public void verifyCodingFormAndMetaDataFromParentAndChildWindow() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -1528,7 +1528,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		baseClass.stepInfo("Step 1: Search for the doc and assignment is created successfully");
 		sessionSearch.basicContentSearch(Input.searchString1);
-		sessionSearch.bulkAssign();
+		sessionSearch.bulkAssignThreadedDocs();
 		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, SessionSearch.pureHit);
 
 		baseClass.stepInfo("Step 2: Go to doc view in context of an assignment");
@@ -1692,8 +1692,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
-	// priority = 22)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 22)
 	public void verifyCodeSameAsActionWithOutSelectingDocsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1711,7 +1710,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch = new SessionSearch(driver);
 		docView = new DocViewPage(driver);
 		String searchString = Input.searchString1;
-		String docsToBeSelected = "FamilyMember";
+		String docsToBeSelected = Input.familyDocument;
 
 		// Basic Search and select the pure hit count
 		baseClass.stepInfo("Step 1: Searching documents based on search string and Navigate to DocView");
@@ -1720,7 +1719,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 		// select docs and perform code same as
 		driver.waitForPageToBeReady();
-		docView.selectDocsFromMiniDocsListAndCheckTheDocsInAnalyticsPanel(docsToBeSelected);
+		docView.selectDocIdInMiniDocList(docsToBeSelected);
 
 		docView.checkCodeSameAsIsDisableFamilyMember();
 
@@ -1774,6 +1773,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 
 	}
 
+
 	/**
 	 * Author : Vijaya.Rani date: 14/12/21 NA Modified date: NA Modified by:NA
 	 * Description :To verify when user edits the coding form of main document and
@@ -1782,8 +1782,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * 
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" },
-	// priority = 24)
+	@Test(enabled = true, dataProvider = "multiUsers", groups = { "regression" }, priority = 24)
 	public void verifyEditsCodingFormSelectActionCodeSameAsFromFamilyMember(String fullName, String userName,
 			String password) throws InterruptedException {
 
@@ -1809,19 +1808,20 @@ public class DocView_AnalyticsPanel_NewRegression {
 		sessionSearch.ViewFamilyMemberDocsInDocViews();
 
 		driver.waitForPageToBeReady();
-
 		docView.selectDocsMiniDocListAndCodingFormSaveButton();
 
-		docView.getDocView_Analytics_FamilyTab().waitAndClick(10);
+		driver.waitForPageToBeReady();
 		docView.performCodeSameForFamilyMembersDocuments();
 
+		
 		docView.selectDocsMiniDocListAndCodingFormSaveButton();
 
 		// logout
 		loginPage.logout();
 
 	}
-
+	
+	
 	/**
 	 * @Author: Mohan Created date: 14/12/2021 Modified date: NA Modified by: NA
 	 * @Description : To verify after impersonation document opened in default
@@ -1899,15 +1899,13 @@ public class DocView_AnalyticsPanel_NewRegression {
 	}
 
 	/**
-	 * Author : Mohan date: 14/12/2021 Modified date: NA Modified by: NA Test Case
-	 * Id:RPMXCON-51364
-	 * 
+	 * Author : Mohan date: 14/12/2021 Modified date: NA Modified by: NA 
 	 * @description: Verify check mark icon should be displayed when coding stamp
 	 *               applied after selecting 'Code same as this' action' from
 	 *               Analytics Panel > Conceptual RPMXCON-51062
 	 */
 
-	// //@Test(enabled = true, groups = { "regression" }, priority = 26)
+	@Test(enabled = true, groups = { "regression" }, priority = 26)
 	public void verifyCheckMarkIconCodingStampAppliedToSelectedDocs() throws Exception {
 		System.out.println("******Execution started for " + this.getClass().getSimpleName() + "********");
 		UtilityLog.info("******Execution started for " + this.getClass().getSimpleName() + "********");
@@ -2145,7 +2143,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	// //@Test(enabled = true, groups = { "regression" }, priority = 24)
+	// //@Test(enabled = true, groups = { "regression" }, priority = 29)
 	public void verifyCompleteLastDocsAndCodeSameAsActionFamilyMember() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2258,7 +2256,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 25)
+	//@Test(enabled = true, groups = { "regression" }, priority = 30)
 	public void verifyCompleteLastDocsAndCodeSameAsActionNearDupe() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-51070");
@@ -2378,7 +2376,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 26)
+	@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 31)
 	public void verifyCompareSimilarDocsInNearDupe(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
@@ -2426,7 +2424,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, groups = { "regression" }, priority = 27)
+	//@Test(enabled = true, groups = { "regression" }, priority = 32)
 	public void verifyDocViewFromSaveSearchDocViewThreadMap() throws InterruptedException {
 
 		baseClass.stepInfo("Test case Id: RPMXCON-50875");
@@ -2491,7 +2489,7 @@ public class DocView_AnalyticsPanel_NewRegression {
 	 * @throws AWTException
 	 * @throws Exception
 	 */
-	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 28)
+	//@Test(enabled = true, dataProvider = "userDetails", groups = { "regression" }, priority = 33)
 	public void verifyDocChilsWindowThenSameDocWillDisplayInDocView(String fullName, String userName, String password)
 			throws ParseException, InterruptedException, IOException {
 
