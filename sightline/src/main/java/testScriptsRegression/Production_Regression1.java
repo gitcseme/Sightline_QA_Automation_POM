@@ -6241,6 +6241,151 @@ public void GenerateProductionByFillingDATAndPDFSection() throws Exception {
 			
 		}
 
+		/**
+		 * @author Brundha Test case id-RPMXCON-48379
+		 * @Description To verify that If user select RedactionTag and if non-audio
+		 *              document is associated to the selected Redaction Tag then Native
+		 *              should not produced
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 76)
+		public void verifyNativeIsNotProducedAtGeneration() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48379 -Production Sprint 09");
+
+			foldername = "RedactFolderProd" + Utility.dynamicNameAppender();
+			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+
+			RedactionPage redactionpage = new RedactionPage(driver);
+			redactionpage.selectDefaultSecurityGroup();
+			driver.waitForPageToBeReady();
+
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+			System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			DocExplorerPage docExp = new DocExplorerPage(driver);
+			docExp.documentSelectionIteration();
+			docExp.docExpViewInDocView();
+
+			
+			DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+			// doc1
+			docViewRedactions.selectDoc1();
+
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+			
+	        DocExplorerPage docExplorer=new DocExplorerPage(driver);
+	        docExplorer.documentSelectionIteration();
+	        docExplorer.bulkFolderExisting(foldername);
+
+			
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTextSection();
+			page.fillingTIFFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePage();
+		}
+
+		/**
+		 * @author Brundha Test case id-RPMXCON-48380
+		 * @Description To verify that If user select RedactionTag and if non-audio
+		 *              document is not associated to the selected Redaction Tag then
+		 *              Native should produced
+		 * 
+		 */
+		@Test(groups = { "regression" }, priority = 77)
+		public void verifyNativeIsProducedAtGeneration() throws Exception {
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			UtilityLog.info(Input.prodPath);
+			base.stepInfo("RPMXCON-48380 -Production Sprint 09");
+
+			foldername = "FolderProd" + Utility.dynamicNameAppender();
+			String Redactiontag1 = "FirstRedactionTag" + Utility.dynamicNameAppender();
+
+			RedactionPage redactionpage = new RedactionPage(driver);
+			redactionpage.selectDefaultSecurityGroup();
+			driver.waitForPageToBeReady();
+
+			redactionpage.manageRedactionTagsPage(Redactiontag1);
+			System.out.println("First Redaction Tag is created" + Redactiontag1);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+			
+			DocExplorerPage docExp = new DocExplorerPage(driver);
+			docExp.documentSelectionIteration();
+			docExp.docExpViewInDocView();
+
+			
+			DocViewRedactions docViewRedactions = new DocViewRedactions(driver);
+			// doc1
+			docViewRedactions.selectDoc1();
+
+			driver.waitForPageToBeReady();
+			docViewRedactions.redactRectangleUsingOffset(10, 10, 100, 100);
+			driver.waitForPageToBeReady();
+			docViewRedactions.selectingRedactionTag2(Redactiontag1);
+
+			loginPage.logout();
+			loginPage.loginToSightLine(Input.pa1userName, Input.pa1password);
+			// create tag and folder
+			TagsAndFoldersPage tagsAndFolderPage = new TagsAndFoldersPage(driver);
+			this.driver.getWebDriver().get(Input.url + "TagsAndFolders/TagsAndFolders");
+			tagsAndFolderPage.CreateFolder(foldername, "Default Security Group");
+
+			SessionSearch sessionSearch = new SessionSearch(driver);
+			sessionSearch.basicContentSearch(Input.testData1);
+			sessionSearch.bulkFolderExisting(foldername);
+			
+			ProductionPage page = new ProductionPage(driver);
+			productionname = "p" + Utility.dynamicNameAppender();
+			page.selectingDefaultSecurityGroup();
+			page.addANewProduction(productionname);
+			page.fillingDATSection();
+			page.fillingNativeSection();
+			page.fillingTextSection();
+			page.fillingTIFFSectionwithBurnRedactionSelectRedactTag(Redactiontag1);
+			page.navigateToNextSection();
+			page.fillingNumberingAndSortingPage(prefixID, suffixID);
+			page.navigateToNextSection();
+			page.fillingDocumentSelectionPage(foldername);
+			page.navigateToNextSection();
+			page.fillingPrivGuardPage();
+			page.fillingProductionLocationPage(productionname);
+			page.navigateToNextSection();
+			page.fillingSummaryAndPreview();
+			page.fillingGeneratePage();
+		}
+
 
 	@AfterMethod(alwaysRun = true)
 	public void close() {
