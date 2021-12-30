@@ -64,8 +64,8 @@
 	<conceptualDocument>ID00004389</conceptualDocument>
 	<conceptualDocs1>ID00000703</conceptualDocs1>
 	<conceptualDocumentReviewer>ID00001178</conceptualDocumentReviewer>
-<familyDocument>ID00001132</familyDocument>
-	<threadDocId>ID00000018</threadDocId>
+	<familyDocument>ID00001132</familyDocument>
+	<threadDocId>ID00001355</threadDocId>
 	<principalDocId>5168</principalDocId>
 	<principalDocId1>5138</principalDocId1>
 	<principalDocId2>5161</principalDocId2>
@@ -79,16 +79,15 @@
 	<sourceDocId3>T2545D</sourceDocId3>
 	<sourceDocId4>T2552D</sourceDocId4>
 	<sourceDocId5>T2554D</sourceDocId5>
-	<nearDupeDocument>ID00000042</nearDupeDocument>
+	<nearDupeDocument>ID00001162</nearDupeDocument>
 	<nearDupeDocumentForReviewer>ID00001191</nearDupeDocumentForReviewer>
-	<threadDocumentForReviewer>ID00001008</threadDocumentForReviewer>
+	<threadDocumentForReviewer>ID00001346</threadDocumentForReviewer>
 	<familyDocumentForReviewer>ID00001355</familyDocumentForReviewer>
 	<nearDupeCompletedDocId>ID00000944</nearDupeCompletedDocId>
-	<nearDupeDocId>ID00000103</nearDupeDocId>
-	<nearDupeCompletedDocIdReviewer>ID00005119
-	</nearDupeCompletedDocIdReviewer>
+	<nearDupeDocId>ID00001158</nearDupeDocId>
+	<nearDupeCompletedDocIdReviewer>ID00001532</nearDupeCompletedDocIdReviewer>
 	<historyClockIconDocId>ID00000667</historyClockIconDocId>
-	<newNearDupeDocId>ID00000006</newNearDupeDocId>
+	<newNearDupeDocId>ID00001531</newNearDupeDocId>
 	<warningDocId>ID00001304</warningDocId>
 	<threadData1>ID00005182</threadData1>
 	<nearDupeBulkAssign>ID00003719</nearDupeBulkAssign>

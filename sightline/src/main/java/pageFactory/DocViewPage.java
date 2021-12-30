@@ -2409,14 +2409,10 @@ public class DocViewPage {
 	}
 	// added sakthivel
 		public Element getVerifyNearDuppin() {
-			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']/.");
-
-
-		public Element getAttachCountTextBox() {
-			return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
-
+			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']");
 		}
 
+		
 	public DocViewPage(Driver driver) {
 
 		this.driver = driver;
@@ -12880,13 +12876,6 @@ public class DocViewPage {
 
 			base.VerifySuccessMessage("Code Same has been successfully removed");
 
-			// verify Code Same as Link
-
-			driver.Navigate().refresh();
-			driver.switchTo().alert().accept();
-			base.waitForElement(geDocView_ThreadMap_ArrowDownIcon(3));
-			softAssertion.assertTrue(geDocView_ThreadMap_ArrowDownIcon(3).isElementAvailable(1));
-			softAssertion.assertAll();
 			base.passedStep("CodeSame Icon is removed successfully");
 
 		} catch (Exception e) {
@@ -12939,6 +12928,7 @@ public class DocViewPage {
 	public void verifyLoadMoreLinkNaviagtedToOtherTab() {
 
 		driver.waitForPageToBeReady();
+		base.waitTime(3);
 		if (getDocView_Analytics_LoadMoreButton().Displayed()) {
 			base.failedStep("Load more link is visible");
 
@@ -13522,13 +13512,14 @@ public class DocViewPage {
 	public void performRemoveCodeSameForFamilyMembersDocuments(String windowId) throws InterruptedException {
 
 		driver.waitForPageToBeReady();
-		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
-		driver.waitForPageToBeReady();
-		Point p = getDocView_Analytics_liDocumentThreadMap().getWebElement().getLocation();
-		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
+//		JavascriptExecutor je = (JavascriptExecutor) driver.getWebDriver();
+//		driver.waitForPageToBeReady();
+//		Point p = getDocView_Analytics_liDocumentThreadMap().getWebElement().getLocation();
+//		je.executeScript("window.scroll(" + p.getX() + "," + (p.getY() - 400) + ");");
 		getDocView_Analytics_FamilyTab().ScrollTo();
 		getDocView_Analytics_FamilyTab().waitAndClick(10);
 
+		driver.waitForPageToBeReady();
 		driver.WaitUntil((new Callable<Boolean>() {
 			public Boolean call() {
 				return getDocView_Analytics_ChildWindow_FamilyTab_Firstdoc().Displayed();
@@ -13555,8 +13546,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		try {
-			if (getDocView_Analytics_FamilyMember_CodeSameLink().getWebElement().isDisplayed()) {
-				softAssertion.assertTrue(getDocView_Analytics_FamilyMember_CodeSameLink().Displayed());
+			if (getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5)) {
+				softAssertion.assertTrue(getDocView_Analytics_FamilyMember_CodeSameLink().isElementAvailable(5));
 				base.failedStep("Selected Document is having code as same icon under Family Member tabss");
 			}
 		} catch (Exception e) {
@@ -13574,6 +13565,7 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_Analytics_liDocumentThreadMap());
 		getDocView_Analytics_liDocumentThreadMap().waitAndClick(10);
+		driver.waitForPageToBeReady();
 
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(getDocView_Analytics_ThreadedDocument_Doc(i));
@@ -13598,10 +13590,10 @@ public class DocViewPage {
 		}
 
 		driver.waitForPageToBeReady();
-		for (int i = 1; i <= 1; i++) {
+		
 			try {
-				if (geDocView_ThreadMap_CodeSameAsIcon(i).getWebElement().isDisplayed()) {
-					softAssertion.assertTrue(geDocView_ThreadMap_CodeSameAsIcon(i).Displayed());
+				if (geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5)) {
+					softAssertion.assertTrue(geDocView_ThreadMap_CodeSameAsIcon(1).isElementAvailable(5));
 
 					base.failedStep("CodeAsSame icon is displayed for the selected docs ");
 				}
@@ -13611,7 +13603,7 @@ public class DocViewPage {
 				UtilityLog.info("Verification failed due to " + e.getMessage());
 			}
 
-		}
+		
 
 	}
 
@@ -13649,8 +13641,8 @@ public class DocViewPage {
 
 		driver.waitForPageToBeReady();
 		try {
-			if (geDocView_Concept_CodeSameAsIcon().getWebElement().isDisplayed()) {
-				softAssertion.assertTrue(geDocView_Concept_CodeSameAsIcon().Displayed());
+			if (geDocView_Concept_CodeSameAsIcon().isElementAvailable(5)) {
+				softAssertion.assertTrue(geDocView_Concept_CodeSameAsIcon().isElementAvailable(5));
 				base.failedStep("CodeAsSame icon is displayed for the selected docs ");
 			}
 		} catch (Exception e) {
@@ -15354,6 +15346,7 @@ public class DocViewPage {
 		}
 	}
 
+
 	/**
 	 * @author Vijaya.Rani date: 13/12/2021 Modified date:N/A
 	 * @Description:Check CodeSame As is Disable Family Member
@@ -15365,10 +15358,10 @@ public class DocViewPage {
 
 		base.waitForElement(getDocView_ChildWindow_ActionButton());
 		getDocView_ChildWindow_ActionButton().waitAndClick(10);
-		base.waitForElement(geDocView_MiniList_CodeSameAsIcon());
+		base.waitForElement(getDocView_FamilyCodeSameAs());
 
-		softAssertion.assertFalse(geDocView_MiniList_CodeSameAsIcon().getWebElement().isSelected());
-		if (getCodeSameAsLast().getWebElement().isSelected()) {
+		softAssertion.assertFalse(getDocView_FamilyCodeSameAs().getWebElement().isSelected());
+		if (getDocView_FamilyCodeSameAs().getWebElement().isSelected()) {
 
 			base.failedStep("Code same as last clickable in Analytical Panel");
 		} else {

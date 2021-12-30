@@ -727,7 +727,7 @@ public class DocView_AnalyticsPanel_DataProvider {
 		String assname = "assgnment" + Utility.dynamicNameAppender();
 		String colour = "BLUE";
 		String colourName = "colourName" + Utility.dynamicNameAppender();
-		String documentToBeSelected = "ID00001355";
+		String documentToBeSelected = Input.threadDocId;
 		String revDocToBeSelected= Input.familyDocument;
 
 		// Login as a Admin
