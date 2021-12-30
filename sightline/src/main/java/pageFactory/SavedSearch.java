@@ -590,7 +590,7 @@ public class SavedSearch {
 
 	public Element getFieldoptions(String fieldToChoose) {
 		return driver
-				.FindElementByXPath("//span[contains(text(),'" + fieldToChoose + "')]//..//input[@type='checkbox']");
+				.FindElementByXPath("(//span[contains(text(),'" + fieldToChoose + "')]//..//input[@type='checkbox'])[last()]");
 	}
 
 	public Element getFieldHeader(String headerName) {
@@ -824,7 +824,17 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//td[contains(text(),'Basic Work Product')]/following-sibling::td[3]");
 	}
 
-	List<String> listOfAvailableSharefromMenu = new ArrayList<>();
+	//Added By Jeevitha
+	public ElementCollection gettableHeaders(String headerName) {
+		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//thead//tr//th[normalize-space()='"
+				+ headerName + "']              ");
+	}
+
+	public ElementCollection getColumnValues(int i) {
+		return driver.FindElementsByXPath("//tbody//td[" + i + "]");
+	}
+
+	public List<String> listOfAvailableSharefromMenu = new ArrayList<>();
 	List<String> listOfAvailableShareListfromShareASearchPopup = new ArrayList<>();
 	List<String> sgList = new ArrayList<>();
 
@@ -2650,23 +2660,25 @@ public class SavedSearch {
 	/**
 	 * @author Raghuram A Date: 9/21/21 Modified date:N/A Modified by: N/A
 	 *         Description : verifyNodePresent
+	 * @return 
 	 * @throws InterruptedException
 	 * @Stabilization - updates ON
 	 * @TOcheck - verifyMoveActionAsRev() - verifyMoveActionAsRMU() -
 	 *          verifyMoveActionSSMethod() -
 	 */
-	public void verifyNodePresent(String newNode) {
-		try {
+	public boolean verifyNodePresent(String newNode) {
+		
 			if (getSelectAnode(newNode).isElementAvailable(5)) {
 				System.out.println(newNode + " is Present");
 				base.stepInfo(newNode + " is Present");
+				return true;
 			} else {
 				System.out.println(newNode + " is not Present");
 				base.stepInfo(newNode + " is not Present");
+				return false;
 			}
-		} catch (Exception e) {
-
-		}
+		
+		
 	}
 
 	/**
@@ -4842,12 +4854,10 @@ public class SavedSearch {
 		driver.waitForPageToBeReady();
 		String Status = getSavedSearchStatus(searchName).getText();
 		System.out.println(Status + "  is the Status Displayed");
-		base.stepInfo(Status + "  is the Status Displayed");
 		softAssertion.assertEquals(getSavedSearchStatus(searchName).getText(), "COMPLETED");
 
 		String docCounts = getSavedSearchCount(searchName).getText();
 		System.out.println(docCounts + "  is the Count of Docs");
-		base.stepInfo(docCounts + "  is the Count of Docs");
 
 		if (select) {
 			verifyHeaderIsPresent(specificHeaderName);
@@ -4863,15 +4873,14 @@ public class SavedSearch {
 		}
 		base.waitForElement(getThreadedCount(searchName));
 		String threadedCount = getThreadedCount(searchName).getText();
-		base.stepInfo("Threaded Count : " + threadedCount);
 
 		base.waitForElement(getFamilyCount(searchName));
 		String FamilyMember = getFamilyCount(searchName).getText();
-		base.stepInfo("Family Members : " + FamilyMember);
 
 		base.waitForElement(getNearDupeCount(searchName));
 		String nearDup = getNearDupeCount(searchName).getText();
-		base.stepInfo("Near Duplicates : " + nearDup);
+		
+		base.stepInfo("[Status : "+Status+" ] [ "+"PureHit : "+docCounts +" ] [ "+"Threaded Count : "+threadedCount+" ] [ "+"Family Members : "+FamilyMember+" ] [ "+"Near Duplicates : "+nearDup+"]");
 
 	}
 
@@ -7130,6 +7139,45 @@ public class SavedSearch {
 			}
 		}), Input.wait60);
 		System.out.println("Got notification!");
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param headerName
+	 * @return
+	 */
+	public List<String> getListFromSavedSearchTable(String headerName) {
+		int i;
+		i = base.getIndex(gettableHeaders(headerName), headerName);
+		System.out.println(i);
+
+		base.waitForElement(getNumberOfSavedSearchToBeShown());
+		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
+        driver.waitForPageToBeReady();
+		List<String> elementNames = new ArrayList<>();
+		List<WebElement> elementList = null;
+		elementList = getColumnValues(i + 1).FindWebElements();
+		for (WebElement webElementNames : elementList) {
+			String elementName = webElementNames.getText();
+			elementNames.add(elementName);
+		}
+		return elementNames;
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @param headerName
+	 * @param columnName
+	 * @throws InterruptedException
+	 */
+	public void StatusAndCountForListOfSearches(String headerName,String columnName)throws InterruptedException {
+		List<String> list = getListFromSavedSearchTable(headerName);
+		System.out.println(list);
+		
+		for (String search : list) {
+			getDocCountAndStatusOfBatch(search, columnName, true);
+			softAssertion.assertAll();
+		}
 	}
 
 }
