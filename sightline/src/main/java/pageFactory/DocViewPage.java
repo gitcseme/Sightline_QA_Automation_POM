@@ -2397,6 +2397,10 @@ public class DocViewPage {
 	public Element getDocView_FamilyMemberDocListDoc() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
 	}
+	//Added by Aathith
+	public Element getAttachCountTextBox() {
+		return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
+	}
 
 	public DocViewPage(Driver driver) {
 

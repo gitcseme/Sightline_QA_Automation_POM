@@ -3406,7 +3406,154 @@ public class CreateCodingForm_New_Regression {
 		// logout
 		loginPage.logout();
 	}
-	
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51204
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Comment object on coding form screen.
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 55)
+	public void verifySaveCompleteValidateCommentNotSelectableCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51204");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Comment object on coding form screen");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String assignName = "Assignment"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+       
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	codingForm.firstCheckBox("comment");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0, Input.notSelectable);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Metadata Coding form created with Make it Optional");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		boolean flag=docViewPage.getAddComment1().Enabled();
+		if(!flag) {
+			System.out.println("document comment not selecable");
+			baseClass.passedStep("document comment not selecable");
+		}else {
+			System.out.println("document comment selecable");
+			baseClass.failedStep("document comment selecable");
+		}
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		boolean flag1=docViewPage.getAddComment1().Enabled();
+		if(!flag1) {
+			System.out.println("document comment not selecable");
+			baseClass.passedStep("document comment not selecable");
+		}else {
+			System.out.println("document comment selecable");
+			baseClass.failedStep("document comment selecable");
+		}
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form using Comment object on coding form screen");
+		
+		// logout
+		loginPage.logout();
+	}
+	/**
+	 * @author Aathith.Senthilkumar
+	 * 			RPMXCON-51205
+	 * @Description : Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Editable Metadata objects
+	 */
+	@Test(enabled = true,groups = { "regression" }, priority = 56)
+	public void verifySaveCompleteValidateMetaCodingForm() throws InterruptedException, AWTException {
+	    baseClass.stepInfo("Test case Id: RPMXCON-51205");
+	    baseClass.stepInfo("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Editable Metadata objects");
+	    String cfName = "CF"+Utility.dynamicNameAppender();
+	    String assignName = "Assignment"+Utility.dynamicNameAppender();
+		
+	    // login as RMU
+	 	loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+	 	baseClass.stepInfo("Successfully login as Reviewer Manager'" + Input.rmu1userName + "'");
+       
+	 	// create new coding form
+	 	this.driver.getWebDriver().get(Input.url + "CodingForm/Create");
+	 	driver.waitForPageToBeReady();
+	 	codingForm.addNewCodingFormButton();
+	 	codingForm.firstCheckBox("metadata");
+	 	codingForm.addcodingFormAddButton();
+	 	codingForm.selectDefaultActions(0, Input.optional);
+	 	codingForm.passingCodingFormName(cfName);
+	 	codingForm.saveCodingForm();
+	 	baseClass.stepInfo("Comment Coding form created with Display but Not Selectable");
+		
+		// Assign to security group
+		codingForm.assignCodingFormToSG(cfName);
+		baseClass.stepInfo("Coding form assigned to security group");
+		
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.searchString1);
+		sessionsearch.bulkAssign();
+		baseClass.stepInfo("Search with text input for docs completed");
+
+		// Creating Assignment from Basic search
+		assignmentPage = new AssignmentsPage(driver);
+		assignmentPage.assignmentCreation(assignName, cfName);
+		assignmentPage.toggleCodingStampEnabled();
+		baseClass.stepInfo("Doc is Assigned from basic Search and Assignment '" + assignName + "' is created Successfully");
+		assignmentPage.add2ReviewerAndDistribute();
+		assignmentPage.selectAssignmentToViewinDocviewThreadMap(assignName);
+		driver.waitForPageToBeReady();
+		docViewPage.getAttachCountTextBox().waitAndClick(5);
+		docViewPage.getAttachCountTextBox().SendKeys("Edit document comment And Save");
+		baseClass.stepInfo("text box is editble");
+		docViewPage.getSaveDoc().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document saved successfully");
+		
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+		baseClass.stepInfo("Successfully login as Reviewer'" + Input.rev1userName + "'");
+		
+		// Select the Assignment from dashboard
+		assignmentPage.SelectAssignmentByReviewer(assignName);
+		baseClass.stepInfo("Doc is selected from dashboard and viewed in DocView successfully");
+		
+		// Edit coding Form and complete Action
+		driver.waitForPageToBeReady();
+		docViewPage.getAttachCountTextBox().waitAndClick(5);
+		docViewPage.getAttachCountTextBox().SendKeys("Edit document comment And Save");
+		baseClass.stepInfo("text box is editble");
+		docViewPage.getCompleteDocBtn().waitAndClick(10);
+		baseClass.VerifySuccessMessage("Document completed successfully");
+		baseClass.passedStep("Verify on click of 'Save'/'Complete button coding form should be validated as per the customized coding form for Editable Metadata objects");
+		
+		// logout
+		loginPage.logout();
+	}
 
 
 		
