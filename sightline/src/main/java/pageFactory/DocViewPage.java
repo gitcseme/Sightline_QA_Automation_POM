@@ -1864,6 +1864,10 @@ public class DocViewPage {
 		return driver.FindElementByXPath("//p[contains(@id,'PHitCount')]");
 	}
 
+	public Element getHitPanelCount() {
+		return driver.FindElement(By.xpath("//p[contains(@id,'PHitCount')][1]//span"));
+	}
+
 	// Added by Gopinath - 10/11/2021
 	public Element getAssertOnImage() {
 		return driver.FindElementByCssSelector("g:nth-child(1) svg:nth-child(1)");
@@ -2393,14 +2397,15 @@ public class DocViewPage {
 		return driver.FindElementById("liDocumentDefaultView");
 	}
 
-     //Added By Vijaya.Rani
+	// Added By Vijaya.Rani
 	public Element getDocView_DocListPageDocs() {
 		return driver.FindElementByXPath("//*[@id='dtDocList']/tbody/tr/td[3]");
 	}
+	
 	//Added by Aathith
-	public Element getAttachCountTextBox() {
-		return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
-	}
+		public Element getAttachCountTextBox() {
+			return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
+		}
 
 	public DocViewPage(Driver driver) {
 
@@ -17744,33 +17749,37 @@ public class DocViewPage {
 		}
 
 	}
+
 	/**
 	 * @author Brundha
 	 * @Description :Method to Verify Tooltip in docview page
 	 */
-	public void verifyingToolTipPopupMessage(String Doc,String ExpectedText) throws InterruptedException {
-		
+	public void verifyingToolTipPopupMessage(String Doc, String ExpectedText) throws InterruptedException {
+
 		base.waitTillElemetToBeClickable(getDociD(Doc));
 		getDociD(Doc).waitAndClick(10);
-		
+
 		driver.scrollPageToTop();
 		base.waitTillElemetToBeClickable(getDocView_IconFileType());
-		String ActualValue=getDocView_IconFileType().getText();
-		System.out.println("default value:"+ActualValue);
-		if(getDocView_IconFileType().isDisplayed()) {
-			base.passedStep("Default "+ActualValue+" value  is displayed");}
-		else {base.failedStep("Default "+ActualValue+" value is not displayed");}
-		
-		
-		Actions act=new Actions(driver.getWebDriver());
+		String ActualValue = getDocView_IconFileType().getText();
+		System.out.println("default value:" + ActualValue);
+		if (getDocView_IconFileType().isDisplayed()) {
+			base.passedStep("Default " + ActualValue + " value  is displayed");
+		} else {
+			base.failedStep("Default " + ActualValue + " value is not displayed");
+		}
+
+		Actions act = new Actions(driver.getWebDriver());
 		act.moveToElement(getDocView_IconFileType().getWebElement()).build().perform();
-		String ActualText=getDocView_IconFileType().GetAttribute("title");
-		
-		if(ActualText.equals(ExpectedText)) {
-			base.passedStep(""+ExpectedText+" as expected");}
-		else {base.failedStep(""+ExpectedText+" is not  as expected");}
+		String ActualText = getDocView_IconFileType().GetAttribute("title");
+
+		if (ActualText.equals(ExpectedText)) {
+			base.passedStep("" + ExpectedText + " as expected");
+		} else {
+			base.failedStep("" + ExpectedText + " is not  as expected");
+		}
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
@@ -17788,8 +17797,8 @@ public class DocViewPage {
 		StringBuilder sb = new StringBuilder(400);
 		Random random = new Random();
 		for (int i = 0; i < 500; i++) {
-		    char c = chars[random.nextInt(chars.length)];
-		    sb.append(c);
+			char c = chars[random.nextInt(chars.length)];
+			sb.append(c);
 		}
 		String output = sb.toString();
 		getDocument_CommentsTextBox().SendKeys(output);
@@ -17805,29 +17814,30 @@ public class DocViewPage {
 		softAssertion.assertAll();
 		base.passedStep("Scrolling displayed for comment when large text entered");
 	}
-	
+
 	/**
 	 * @author Indium-Baskar
 	 */
 
-	public void verifyCommentAndMetadataUsingSaveAndNext(String addComment, String commentText, String metadata, String metadataText) {
+	public void verifyCommentAndMetadataUsingSaveAndNext(String addComment, String commentText, String metadata,
+			String metadataText) {
 		driver.waitForPageToBeReady();
-		String prnDoc=getVerifyPrincipalDocument().getText();
+		String prnDoc = getVerifyPrincipalDocument().getText();
 		base.waitForElement(getCodingFormHelpText(addComment));
 		getCodingFormHelpText(addComment).SendKeys(commentText);
 		base.waitForElement(getReadOnlyTextBox(metadata));
 		getReadOnlyTextBox(metadata).SendKeys(metadataText);
 		codingFormSaveAndNext();
 		driver.waitForPageToBeReady();
-		String prnSecDoc=getVerifyPrincipalDocument().getText();
+		String prnSecDoc = getVerifyPrincipalDocument().getText();
 		if (!prnDoc.equals(prnSecDoc)) {
 			base.passedStep("Cursor navigated to next document from minidoclist");
-		}
-		else {
+		} else {
 			base.failedStep("Cursor not navigated to next document");
 		}
 	}
 	
+
 	/**
 	 * @author Gopianth
 	 * @Description : this method used for verifying persistent Hits Displayed.
