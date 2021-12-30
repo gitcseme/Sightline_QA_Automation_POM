@@ -2659,7 +2659,94 @@ public class SavedSearchRegression_New_Set_04 {
 		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
 		login.logout();
 	}
-	
+
+	/**
+	 * @author Raghuram A Date: 12/30/21 Modified date:N/A Modified by:N/A
+	 *         Description: Verify that relevant error message appears when user
+	 *         deletes- batch Search "column header" and tries to upload same file
+	 *         in Saved Search Screen.(RPMXCON-48537)
+	 * @throws InterruptedException
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 34)
+	public void saveSearchBatchUploadInvalidHeaderData() throws InterruptedException {
+
+		String fileName = Input.batchColumnHeaderErrorFileName;
+		String fileFormat = ".xlsx";
+		String sheetNum = "1";
+		String batchNodeToCheck = fileName + "_" + sheetNum + "_Sheet" + sheetNum;
+
+		base.stepInfo("Test case Id: RPMXCON-48537 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that relevant error message appears when user deletes- batch Search \"column header\" and tries to upload same file in Saved Search Screen.");
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Logged in as : " + Input.pa1FullName);
+
+		saveSearch.navigateToSSPage();
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.invalidBatchFileNewLocation, fileName + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("DataFailure", false);
+
+		saveSearch.getSavedSearchNewGroupExpand().waitAndClick(2);
+		softAssertion.assertFalse(saveSearch.verifyNodePresent(batchNodeToCheck),
+				"Searches not uploaded in Saved search screen.");
+		softAssertion.assertAll();
+
+		login.logout();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/30/21 Modified date:N/A Modified by:N/A
+	 *         Description: Verify that Batch Search Upload should have ability to
+	 *         upload multiple tabs/worksheets(10 sheets)(RPMXCON-48296)
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
+	@Test(enabled = true, dataProvider = "AllTheUsers", groups = { "regression" }, priority = 35)
+	public void verifyMultipleTabWorkSheets(String userName, String password) throws InterruptedException, IOException {
+
+		String fileName = Input.BatchFileWithMultiplesheetFile;
+		String fileFormat = ".xlsx";
+		String fileLocation = System.getProperty("user.dir") + Input.validBatchFileLocation;
+		List<String> sheetList = new ArrayList<>();
+
+		base.stepInfo("Test case Id: RPMXCON-48296 - Saved Search Sprint 09");
+		base.stepInfo(
+				"Verify that Batch Search Upload should have ability to upload multiple tabs/worksheets(10 sheets)");
+
+		// Login as User
+		login.loginToSightLine(userName, password);
+		base.stepInfo("Logged in as : " + userName);
+
+		int number_of_sheets = base.getTotalSheetCount(fileLocation, fileName + fileFormat);
+		base.stepInfo("Total no.of sheets available in the workbook : " + number_of_sheets);
+
+		saveSearch.navigateToSavedSearchPage();
+
+		String fileToSelect = base.renameFile(true, fileLocation, fileName, fileFormat, false, "");
+		System.out.println(fileToSelect);
+
+		// upload batch file
+		saveSearch.uploadBatchFile_D(Input.validBatchFileLocation, fileToSelect + fileFormat, false);
+		saveSearch.getSubmitToUpload().Click();
+		saveSearch.verifyBatchUploadMessage("Success", false);
+
+		sheetList = saveSearch.verifyListOfNodes(sheetList, null, true, number_of_sheets, fileToSelect, null, null,
+				true, Input.mySavedSearch);
+
+		base.passedStep("Search groups created as per the naming convention  {Spreadsheet File Name} TabID{Tab Name}");
+
+		String resetName = base.renameFile(false, fileLocation, fileToSelect, fileFormat, true, fileName);
+		System.out.println(resetName);
+
+		// Delete node
+		saveSearch.deleteListofNode(Input.mySavedSearch, sheetList, true, true);
+
+		login.logout();
+	}
 
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {

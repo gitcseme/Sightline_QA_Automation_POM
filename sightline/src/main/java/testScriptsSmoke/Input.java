@@ -15,7 +15,7 @@ import configsAndTestData.Environment;
 import configsAndTestData.TestData;
 import executionMaintenance.Log;
 import executionMaintenance.UtilityLog;
-import pageFactory.BaseClass; 
+import pageFactory.BaseClass;
 import pageFactory.IngestionPage;
 import pageFactory.LoginPage;
 import pageFactory.ManageUsersPage;
@@ -211,8 +211,6 @@ public class Input {
 	public static String ChildBates;
 	public static String Production;
 	public static String TIFFPageCount;
-	
-
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -243,7 +241,7 @@ public class Input {
 	// Added by krishna
 	public static String pageNumber;
 	public static String searchDocId;
-	
+
 	public static String keyWordHexCode;
 	public static String docIdKeyWordTest;
 	public static String docIdThumbnails;
@@ -262,7 +260,7 @@ public class Input {
 	public static String fullPageRange;
 	public static String iconColor;
 
-	// Added by Raghuram - Modified 12/28/21
+	// Added by Raghuram - Modified 12/30/21
 	public static String docHighlightColor;
 	public static String sortDataBy;
 	public static String sortType;
@@ -281,6 +279,11 @@ public class Input {
 	public static String selectionHighlightColor;
 	public static String searchString7;
 	public static String errMsgSinceExecutionInProgress;
+	public static String validBatchFileLocation;
+	public static String fileDataErrMsg;
+	public static String batchColumnHeaderErrorFileName;
+	public static String BatchFileWithMultiplesheetFile;
+	public static String savedSearchColor;
 
 	// Added BY Jeevitha
 	public static String colorCodeOfRed;
@@ -351,22 +354,22 @@ public class Input {
 	public static String translationDocument;
 
 	public static String WPbatchFile;
-	
-	//Added by Gopinath - 16/11/2021
+
+	// Added by Gopinath - 16/11/2021
 	public static String signDocumentId;
 	public static String technicalIssue;
 	public static String crammerDocId;
 	public static String produced;
 	public static String producedDeleted;
-	
+
 	public static String EmailAuthourName;
-	public static String  MetaDataEAName;
-	public static String  MetaDataDomainName;
-	public static String  MetaDataReciepientsDomain;
+	public static String MetaDataEAName;
+	public static String MetaDataDomainName;
+	public static String MetaDataReciepientsDomain;
 	public static String KeyWordColour;
-	//Added by Gopinath - 22/11/2021
+	// Added by Gopinath - 22/11/2021
 	public static String batesDocumentId;
-	
+
 //	Added by baskar
 	public static String tinyInt;
 	public static String smallInt;
@@ -374,11 +377,11 @@ public class Input {
 	public static String bigInt;
 	public static String hugeInt;
 	public static String docBasic;
-	
-	//Added by Gopinath - 25/11/2021
+
+	// Added by Gopinath - 25/11/2021
 	public static String exText;
-	
-	//Added by Gopinath - 29/11/2021
+
+	// Added by Gopinath - 29/11/2021
 	public static String paginationDocId;
 //	Added by Baskar - 29/11/2021
 	public static String hidden;
@@ -393,8 +396,8 @@ public class Input {
 	public static String radioGroup;
 	public static String checkGroup;
 	public static String yesButton;
-	
-	//added by Aathith
+
+	// added by Aathith
 	public static String pageCount;
 	public static String errorMsg;
 	public static String helpText;
@@ -404,45 +407,45 @@ public class Input {
 	public static String thisRequired;
 	public static String select;
 	public static String notSelect;
-	
 
 	// Added by Brundha-1/12/2021
 	public static String documentId;
-	
-	 
 
-	//Added by Gopinath- 30/11/2021
+	// Added by Gopinath- 30/11/2021
 	public static String postGenQcChecks;
 
-	
-	//Added by Gopinath - 03/12/2021
+	// Added by Gopinath - 03/12/2021
 	public static String thankyouText;
-	
-	//Added by gopinath - 08/12/2021
+
+	// Added by gopinath - 08/12/2021
 	public static String anotherRemarkMessage;
-	
-	//Added by gopinath - 09/12/2021
+
+	// Added by gopinath - 09/12/2021
 	public static String familyMembersDocId;
-	
-	//Added by Gopinath - 15/Dec/2021
+
+	// Added by Gopinath - 15/Dec/2021
 	public static String proximity;
 	public static String masterDate;
-	
-	//Added by gopinath  - 16/Dec/2021
+
+	// Added by gopinath - 16/Dec/2021
 	public static String productionText;
 	public static String tiffPageCountNam;
 	public static String tiffPageCountText;
-	
-	//Added by Gopinath - 22/12/2021
+
+	// Added by Gopinath - 22/12/2021
 	public static String errorQueryFileLocation;
 	public static String invalidNameText;
-	
+
 	public static String threadDocWithToolTip;
 	public static String conceptualDoc;
+
+
+
 	//added by jayanthi-30/12/21
 	public static String TallySearch;
 	public static String TallyCN;
 	
+
 	@BeforeSuite(alwaysRun = true)
 
 	public void loadEnvConfig() throws ParseException, InterruptedException, IOException {
@@ -565,7 +568,7 @@ public class Input {
 		MetaDataId = testData.getMetaDataId();
 		documentToBeScrolled = testData.getDocumentToBeScrolled();
 		conceptualDocument = testData.getConceptualDocument();
-		conceptualDocs1 =testData.getConceptualDocs1();
+		conceptualDocs1 = testData.getConceptualDocs1();
 		conceptualDocumentReviewer = testData.getConceptualDocumentReviewer();
 		familyDocument = testData.getFamilyDocument();
 		threadDocId = testData.getThreadDocId();
@@ -592,13 +595,13 @@ public class Input {
 		nearDupeCompletedDocIdReviewer = testData.getNearDupeCompletedDocIdReviewer();
 		familyDocumentForReviewer = testData.getFamilyDocumentForReviewer();
 		historyClockIconDocId = testData.getHistoryClockIconDocId();
-		warningDocId=testData.getWarningDocId();
-		threadData1=testData.getThreadData1();
-		nearDupeBulkAssign=testData.getNearDupeBulkAssign();
-		nearDupeBulkAssignId=testData.getNearDupeBulkAssignId();
-		nearDupeBlukAssignReviewer=testData.getNearDupeBulkAssignReviewer();
-		nearDupeBulkAssignReviewId=testData.getNearDupeBulkAssignReviewId();
-		theardMapViewId=testData.getTheardMapViewId();
+		warningDocId = testData.getWarningDocId();
+		threadData1 = testData.getThreadData1();
+		nearDupeBulkAssign = testData.getNearDupeBulkAssign();
+		nearDupeBulkAssignId = testData.getNearDupeBulkAssignId();
+		nearDupeBlukAssignReviewer = testData.getNearDupeBulkAssignReviewer();
+		nearDupeBulkAssignReviewId = testData.getNearDupeBulkAssignReviewId();
+		theardMapViewId = testData.getTheardMapViewId();
 
 		// Docview Coding Form Baskar Indium
 		savedName = testData.getSavedName();
@@ -615,35 +618,32 @@ public class Input {
 		testData1 = testData.getTestData1();
 		tagNamePrev = testData.getTagNamePrev();
 		tagNameTechnical = testData.getTagNameTechnical();
-		 documentID=testData.getDocumentID();
+		documentID = testData.getDocumentID();
 		orphanDocument = testData.getOrphanDocument();
 		searchString3 = testData.getSearchString3();
 		searchString4 = testData.getSearchString4();
-		signatureDocumentID=testData.getSignatureDocumentID();
-		searchString20Docs=testData.getSearchString20Docs();
-		prodPathUAT=testData.getProdPathUAT();
-		bates=testData.getBates();
-		batesNumber=testData.getBatesNumber();
-		ChildBates=testData.getChildBates();
-		Production=testData.getProduced();
-		TIFFPageCount=testData.getPageCount();
-		
-		
-		
+		signatureDocumentID = testData.getSignatureDocumentID();
+		searchString20Docs = testData.getSearchString20Docs();
+		prodPathUAT = testData.getProdPathUAT();
+		bates = testData.getBates();
+		batesNumber = testData.getBatesNumber();
+		ChildBates = testData.getChildBates();
+		Production = testData.getProduced();
+		TIFFPageCount = testData.getPageCount();
+
 		/**
-		 *@author Aathith.Senthilkumar 
+		 * @author Aathith.Senthilkumar
 		 */
-		pageCount=testData.getPageCount();
-		errorMsg=testData.getErrorMsg();
-		helpText=testData.getHelpText();
-		thisHidden=testData.getThisHidden();
-		thisReadOnly=testData.getThisReadOnly();
-		thisOptional=testData.getThisOptional();
-		thisRequired=testData.getThisRequired();
-		select=testData.getSelect();
-		notSelect=testData.getNotSelect();
-		
-		
+		pageCount = testData.getPageCount();
+		errorMsg = testData.getErrorMsg();
+		helpText = testData.getHelpText();
+		thisHidden = testData.getThisHidden();
+		thisReadOnly = testData.getThisReadOnly();
+		thisOptional = testData.getThisOptional();
+		thisRequired = testData.getThisRequired();
+		select = testData.getSelect();
+		notSelect = testData.getNotSelect();
+
 		/**
 		 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
 		 */
@@ -677,7 +677,6 @@ public class Input {
 		docIdThumbnails = testData.getDocIdThumbnails();
 		testSecondDocId = testData.getTestSecondDocId();
 		testTenthDocId = testData.getTestTenthDocId();
-		
 
 		// Added by Raghuram
 		docHighlightColor = testData.getDocHighlightColor();
@@ -698,6 +697,11 @@ public class Input {
 		selectionHighlightColor = testData.getSelectionHighlightColor();
 		searchString7 = testData.getSearchString7();
 		errMsgSinceExecutionInProgress = testData.getErrMsgSinceExecutionInProgress();
+		validBatchFileLocation = testData.getValidBatchFileLocation();
+		fileDataErrMsg = testData.getFileDataErrMsg();
+		batchColumnHeaderErrorFileName = testData.getBatchColumnHeaderErrorFileName();
+		BatchFileWithMultiplesheetFile = testData.getBatchFileWithMultiplesheetFile();
+		savedSearchColor = testData.getSavedSearchColor();
 
 		// Added by Jeevitha
 		colorCodeOfRed = testData.getColorCodeOfRed();
@@ -798,97 +802,90 @@ public class Input {
 		fileExtBlankDocument = testData.fileExtBlankDocument;
 		translationDocument = testData.translationDocument;
 
-		
+		// Added
+		WPbatchFile = testData.WPbatchFile;
 
-		//Added 
-		WPbatchFile=testData.WPbatchFile;
-		
-		//Added by Iyappan
-	    WPbatchFile = testData.getWPbatchFile();
-	    
-	    // Added by Krishna
-	    docIdKeyWordTest = testData.getDocIdKeyWordTest();
-	    keyWordHexCode = testData.getKeyWordHexCode();
+		// Added by Iyappan
+		WPbatchFile = testData.getWPbatchFile();
 
+		// Added by Krishna
+		docIdKeyWordTest = testData.getDocIdKeyWordTest();
+		keyWordHexCode = testData.getKeyWordHexCode();
 
-	  //Added by Gopinath - 16/11/2021
+		// Added by Gopinath - 16/11/2021
 		signDocumentId = testData.getSignDocumentId();
 		technicalIssue = testData.getTechnicalIssue();
 		crammerDocId = testData.getCrammerDocId();
 		produced = testData.getProduced();
 		producedDeleted = testData.getProducedDeleted();
-		//added by jayanthi
-		EmailAuthourName=testData.getEmailAuthourName();
-	     MetaDataEAName=testData.getMetaDataEAName();
-	       MetaDataDomainName=testData.getMetaDataDomainName();
-	 	  MetaDataReciepientsDomain=testData.getMetaDataReciepientsDomain();
-	 	 KeyWordColour=testData.getKeyWordColour();
-           //Added By jeevitha
-	    performaceBatchFile =testData.getPerformaceBatchFile();
+		// added by jayanthi
+		EmailAuthourName = testData.getEmailAuthourName();
+		MetaDataEAName = testData.getMetaDataEAName();
+		MetaDataDomainName = testData.getMetaDataDomainName();
+		MetaDataReciepientsDomain = testData.getMetaDataReciepientsDomain();
+		KeyWordColour = testData.getKeyWordColour();
+		// Added By jeevitha
+		performaceBatchFile = testData.getPerformaceBatchFile();
 
-	    
-	    //Added by gopinath-22/11/2021
-	    batesDocumentId = testData.getProducedDeleted();
-	    
+		// Added by gopinath-22/11/2021
+		batesDocumentId = testData.getProducedDeleted();
+
 //	    Added by Baskar 
-	    tinyInt=testData.getTinyInt();
-	    smallInt=testData.getSmallInt();
-	    averageInt=testData.getAverageInt();
-	    bigInt=testData.getBigInt();
-	    hugeInt=testData.getHugeInt();
-	    docBasic=testData.getDocBasic();
-	    
-	    
-	    //Added by Gopianth - 25/11/2021
-	    exText = testData.exText;
-	    
-	    //Added by Gopinath - 29/11/2021
-	    paginationDocId = testData.paginationDocId;
+		tinyInt = testData.getTinyInt();
+		smallInt = testData.getSmallInt();
+		averageInt = testData.getAverageInt();
+		bigInt = testData.getBigInt();
+		hugeInt = testData.getHugeInt();
+		docBasic = testData.getDocBasic();
+
+		// Added by Gopianth - 25/11/2021
+		exText = testData.exText;
+
+		// Added by Gopinath - 29/11/2021
+		paginationDocId = testData.paginationDocId;
 //	    Added by Baskar -29/11/2021
-	    hidden=testData.getHidden();
-	    optional=testData.getOptional();
-	    notSelectable=testData.getNotSelectable();
-	    required=testData.getRequired();
-	    tag=testData.getTag();
-	    comments=testData.getComments();
-	    metaData=testData.getMetaData();
-	    checkItem=testData.getCheckItem();
-	    staticText=testData.getStaticText();
-	    radioGroup=testData.getRadioGroup();
-	    checkGroup=testData.getCheckGroup();
-	    yesButton=testData.getYesButton();
-	    
+		hidden = testData.getHidden();
+		optional = testData.getOptional();
+		notSelectable = testData.getNotSelectable();
+		required = testData.getRequired();
+		tag = testData.getTag();
+		comments = testData.getComments();
+		metaData = testData.getMetaData();
+		checkItem = testData.getCheckItem();
+		staticText = testData.getStaticText();
+		radioGroup = testData.getRadioGroup();
+		checkGroup = testData.getCheckGroup();
+		yesButton = testData.getYesButton();
 
-	    // Added by Brundha-1/12/2021  
-	 
-	   documentId=testData.getDocumentID(); 
+		// Added by Brundha-1/12/2021
 
-	  //Added by Gopinath - 30/11/2021
-	    postGenQcChecks = testData.getPostGenQcChecks();
-	    
-	    //Added by Gopinath - 03/12/2021
-	    thankyouText = testData.getThankyouText();
-	    
-	  //Added by Gopinath - 08/12/2021
-	    anotherRemarkMessage = testData.getAnotherRemarkMessage();
-	    
-	    //Added by Gopinath - 09/12/2021
-	    familyMembersDocId = testData.getFamilyMembersDocId();
+		documentId = testData.getDocumentID();
 
-	    
-	    //Added by Gopinath - 15/Dec/2021
-	    proximity= testData.getProximity();
+		// Added by Gopinath - 30/11/2021
+		postGenQcChecks = testData.getPostGenQcChecks();
+
+		// Added by Gopinath - 03/12/2021
+		thankyouText = testData.getThankyouText();
+
+		// Added by Gopinath - 08/12/2021
+		anotherRemarkMessage = testData.getAnotherRemarkMessage();
+
+		// Added by Gopinath - 09/12/2021
+		familyMembersDocId = testData.getFamilyMembersDocId();
+
+		// Added by Gopinath - 15/Dec/2021
+		proximity = testData.getProximity();
 		masterDate = testData.getMasterDate();
-		
-		//Added by Gopinath - 16/Dec/2021
+
+		// Added by Gopinath - 16/Dec/2021
 		productionText = testData.getProductionText();
 		tiffPageCountNam = testData.getTiffPageCountNam();
 		tiffPageCountText = testData.getTiffPageCountText();
-		
-		//Added by Gopinath - 27/12/2021
+
+		// Added by Gopinath - 27/12/2021
 		errorQueryFileLocation = testData.getErrorQueryFileLocation();
 		invalidNameText = testData.getInvalidNameText();
-		
+
 		threadDocWithToolTip = testData.getThreadDocWithToolTip();
 		conceptualDoc = testData.getConceptualDoc();
 		
@@ -905,7 +902,7 @@ public class Input {
 		ingestion();
 
 		// BulkRelase all docs
-		// releaseDocs(); 
+		// releaseDocs();
 
 	}
 
@@ -1076,8 +1073,3 @@ public class Input {
 	}
 
 }
-
-
-
-
-

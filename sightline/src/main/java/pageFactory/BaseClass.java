@@ -26,6 +26,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -2155,6 +2156,58 @@ public class BaseClass {
 			failedStep(failMessage);
 		}
 		softAssertion.assertAll();
+	}
+
+	/**
+	 * @author Raghuram A Date: 12/29/21 Modified date:N/A Modified by:N/A
+	 *         Description : returns TotalSheetCount from workbook
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public int getTotalSheetCount(String location, String fileName) throws IOException {
+		int number_of_sheets = 0;
+		String fileTOGetCOunt = location + fileName;
+		File file = new File(fileTOGetCOunt);
+		FileInputStream xlFile = new FileInputStream(file);
+		String fileFormat = FilenameUtils.getExtension(fileName);
+
+		if (fileFormat.equalsIgnoreCase("xlsx")) {
+			Workbook xlwb = new XSSFWorkbook(xlFile);
+			number_of_sheets = xlwb.getNumberOfSheets();
+		}
+		return number_of_sheets;
+	}
+
+	/**
+	 * @author Raghuram.A Date: 12/30/21 Modified date:N/A Modified by:N/A
+	 *         Description : returns rename a Particular file
+	 */
+	public String renameFile(Boolean renameDynamic, String fileLocation, String fileName, String fileFormat,
+			Boolean backtoDefault, String defaultName) {
+		String renameString = fileName + "_R_" + Utility.dynamicNameAppender();
+		File oldName = new File(fileLocation + fileName + fileFormat);
+		File newName = new File(fileLocation + renameString + fileFormat);
+
+		if (backtoDefault) {
+			File oldNameD = new File(fileLocation + fileName + fileFormat);
+			File newNameD = new File(fileLocation + defaultName + fileFormat);
+
+			if (oldNameD.renameTo(newNameD)) {
+				System.out.println("File renamed to Default Successfully");
+			} else {
+				System.out.println("Error in renaming File");
+			}
+		}
+
+		if (renameDynamic) {
+			if (oldName.renameTo(newName)) {
+				System.out.println("File renamed Successfully");
+			} else {
+				System.out.println("Error in renaming File");
+			}
+		}
+
+		return renameString;
 	}
 
 }

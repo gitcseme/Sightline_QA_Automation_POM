@@ -589,8 +589,8 @@ public class SavedSearch {
 	}
 
 	public Element getFieldoptions(String fieldToChoose) {
-		return driver
-				.FindElementByXPath("(//span[contains(text(),'" + fieldToChoose + "')]//..//input[@type='checkbox'])[last()]");
+		return driver.FindElementByXPath(
+				"(//span[contains(text(),'" + fieldToChoose + "')]//..//input[@type='checkbox'])[last()]");
 	}
 
 	public Element getFieldHeader(String headerName) {
@@ -824,7 +824,7 @@ public class SavedSearch {
 		return driver.FindElementByXPath("//td[contains(text(),'Basic Work Product')]/following-sibling::td[3]");
 	}
 
-	//Added By Jeevitha
+	// Added By Jeevitha
 	public ElementCollection gettableHeaders(String headerName) {
 		return driver.FindElementsByXPath("//div[@class='dataTables_scrollHead']//thead//tr//th[normalize-space()='"
 				+ headerName + "']              ");
@@ -2660,25 +2660,24 @@ public class SavedSearch {
 	/**
 	 * @author Raghuram A Date: 9/21/21 Modified date:N/A Modified by: N/A
 	 *         Description : verifyNodePresent
-	 * @return 
+	 * @return
 	 * @throws InterruptedException
 	 * @Stabilization - updates ON
 	 * @TOcheck - verifyMoveActionAsRev() - verifyMoveActionAsRMU() -
 	 *          verifyMoveActionSSMethod() -
 	 */
 	public boolean verifyNodePresent(String newNode) {
-		
-			if (getSelectAnode(newNode).isElementAvailable(5)) {
-				System.out.println(newNode + " is Present");
-				base.stepInfo(newNode + " is Present");
-				return true;
-			} else {
-				System.out.println(newNode + " is not Present");
-				base.stepInfo(newNode + " is not Present");
-				return false;
-			}
-		
-		
+
+		if (getSelectAnode(newNode).isElementAvailable(5)) {
+			System.out.println(newNode + " is Present");
+			base.stepInfo(newNode + " is Present");
+			return true;
+		} else {
+			System.out.println(newNode + " is not Present");
+			base.stepInfo(newNode + " is not Present");
+			return false;
+		}
+
 	}
 
 	/**
@@ -3858,6 +3857,7 @@ public class SavedSearch {
 
 		String Expected = "Save search tree node successfully deleted.";
 		base.VerifySuccessMessage(Expected);
+		base.CloseSuccessMsgpopup();
 
 	}
 
@@ -4390,6 +4390,11 @@ public class SavedSearch {
 				base.stepInfo("Error in verification, Try with some other file");
 				base.failedStep(getNotficationStatusMessage().getText());
 			}
+		} else if (status.equals("DataFailure")) {
+
+			base.VerifyErrorMessage(Input.fileDataErrMsg);
+			base.stepInfo("Verified : Error in file saving ");
+
 		}
 	}
 
@@ -4879,8 +4884,10 @@ public class SavedSearch {
 
 		base.waitForElement(getNearDupeCount(searchName));
 		String nearDup = getNearDupeCount(searchName).getText();
-		
-		base.stepInfo("[Status : "+Status+" ] [ "+"PureHit : "+docCounts +" ] [ "+"Threaded Count : "+threadedCount+" ] [ "+"Family Members : "+FamilyMember+" ] [ "+"Near Duplicates : "+nearDup+"]");
+
+		base.stepInfo("[Status : " + Status + " ] [ " + "PureHit : " + docCounts + " ] [ " + "Threaded Count : "
+				+ threadedCount + " ] [ " + "Family Members : " + FamilyMember + " ] [ " + "Near Duplicates : "
+				+ nearDup + "]");
 
 	}
 
@@ -7153,7 +7160,7 @@ public class SavedSearch {
 
 		base.waitForElement(getNumberOfSavedSearchToBeShown());
 		getNumberOfSavedSearchToBeShown().selectFromDropdown().selectByVisibleText("100");
-        driver.waitForPageToBeReady();
+		driver.waitForPageToBeReady();
 		List<String> elementNames = new ArrayList<>();
 		List<WebElement> elementList = null;
 		elementList = getColumnValues(i + 1).FindWebElements();
@@ -7170,14 +7177,58 @@ public class SavedSearch {
 	 * @param columnName
 	 * @throws InterruptedException
 	 */
-	public void StatusAndCountForListOfSearches(String headerName,String columnName)throws InterruptedException {
+	public void StatusAndCountForListOfSearches(String headerName, String columnName) throws InterruptedException {
 		List<String> list = getListFromSavedSearchTable(headerName);
 		System.out.println(list);
-		
+
 		for (String search : list) {
 			getDocCountAndStatusOfBatch(search, columnName, true);
 			softAssertion.assertAll();
 		}
+	}
+
+	/**
+	 * @author Raghuram Created on 12/30/2021 Modified date:N/A Modified by:N/A
+	 */
+	public void deleteListofNode(String GroupName, List<String> nodeList, Boolean navigateToSS, Boolean sgToSelect) {
+
+		if (navigateToSS) {
+			navigateToSSPage();
+		}
+		if (sgToSelect) {
+			getSavedSearchGroupName(GroupName).waitAndClick(10);
+		}
+		getSavedSearchNewGroupExpand().waitAndClick(5);
+		for (String node : nodeList) {
+			getCreatedNode(node).waitAndClick(5);
+			base.waitForElement(getSavedSearchDeleteButton());
+			deleteFunctionality();
+		}
+
+	}
+
+	/**
+	 * @author Raghuram.A Created on 12/30/2021 Modified date:N/A Modified by:N/A
+	 */
+	public List<String> verifyListOfNodes(List<String> listOfNodesToVerify, List<String> listOfNodes, Boolean custom,
+			int number_of_sheets, String fileName, String additional1, Boolean additionalB1, Boolean selectGroupExpand,
+			String groupName) {
+
+		if (selectGroupExpand) {
+			getSavedSearchGroupName(groupName).waitAndClick(2);
+			getSavedSearchNewGroupExpand().waitAndClick(2);
+		}
+
+		if (custom) {
+			for (int i = 1; i <= number_of_sheets; i++) {
+				String batchNodeToCheck = fileName + "_" + i + "_Sheet" + i;
+				softAssertion.assertTrue(verifyNodePresent(batchNodeToCheck),
+						"Searches not uploaded in Saved search screen.");
+				listOfNodesToVerify.add(batchNodeToCheck);
+			}
+		}
+		return listOfNodesToVerify;
+
 	}
 
 }
