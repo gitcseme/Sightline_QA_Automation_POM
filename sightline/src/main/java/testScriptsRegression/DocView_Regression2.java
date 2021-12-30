@@ -3,6 +3,9 @@ package testScriptsRegression;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.text.ParseException;
@@ -594,6 +597,107 @@ public class DocView_Regression2 {
 			baseClass.failedStep("Persistent hit panel is NOT retained after loding the new page by entering page number");
 		}
 	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-51114
+	 * @throws InterruptedException 
+	 * 
+	 */
+	
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =14)
+	public void verifyDownloadDropdownDocViewAsSA() throws InterruptedException{
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Test case Id: RPMXCON-51114");
+		baseClass.stepInfo("Verify user after impersonation can download the associated files from default view");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.redactionIcon().Displayed() && docViewRedact.redactionIcon().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.downloadIcon());
+		docViewRedact.downloadIcon().waitAndClick(5);
+		docViewRedact.dropDownDownloadIcon().waitAndClick(5);
+		String getAttribute1 = docViewRedact.dropDownDownloadIcon().GetAttribute("onclick");
+		System.out.println(getAttribute1);
+		if(getAttribute1.contains("GetFilePathAndDownload")) {
+			baseClass.passedStep("The download dropdown is clicked and doc is downloaded");
+		} else {
+			baseClass.failedStep("The dropdown for downloading is not present");
+		}
+		DocViewPage docviewpage = new DocViewPage(driver);	
+		docviewpage.selectDocIdInMiniDocList("ID00001069");
+		driver.waitForPageToBeReady();
+		baseClass.waitTillElemetToBeClickable(docViewRedact.downloadIcon());
+		docViewRedact.downloadIcon().waitAndClick(10);
+		docViewRedact.dropDownDownloadIcon().waitAndClick(5);
+		String getAttribute2 = docViewRedact.dropDownDownloadIcon().GetAttribute("onclick");
+		System.out.println(getAttribute2);
+		if(getAttribute1.contains("GetFilePathAndDownload")) {
+			baseClass.passedStep("The download dropdown is clicked and doc is downloaded");
+		} else {
+			baseClass.failedStep("The dropdown for downloading is not present");
+		}	
+	}
+	
+	/**
+	 * Author :Krishna date: NA Modified date: NA Modified by: NA Test Case Id:RPMXCON-50915
+	 * @throws InterruptedException 
+	 * @throws AWTException 
+	 * 
+	 */
+	
+	@Test(enabled = true,alwaysRun = true, groups = { "regression" }, priority =14)
+	public void verifyNavigationToDocViewAsSAimpersonation() throws InterruptedException, AWTException{
+		baseClass = new BaseClass(driver);
+		loginPage.loginToSightLine(Input.sa1userName, Input.sa1password);
+		baseClass.impersonateSAtoPA();
+		baseClass.stepInfo("Test case Id: RPMXCON-50915");
+		baseClass.stepInfo("To verify user can navigate to document for from text view after impersonation");
+		docViewRedact = new DocViewRedactions(driver);
+		SessionSearch sessionsearch = new SessionSearch(driver);
+		sessionsearch.basicContentSearch(Input.randomText);
+		baseClass.stepInfo("Search for text input completed");
+		sessionsearch.ViewInDocView();
+		baseClass.stepInfo("Docs Viewed in Doc View");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() throws Exception {
+				return docViewRedact.textTab().Displayed() && docViewRedact.textTab().Enabled();
+			}
+		}), Input.wait30);
+		baseClass.waitTillElemetToBeClickable(docViewRedact.textTab());
+		docViewRedact.textTab().waitAndClick(30);	
+		baseClass.waitTillElemetToBeClickable(docViewRedact.forwardNextDocBtn());
+		docViewRedact.forwardNextDocBtn().waitAndClick(10);	
+        docViewRedact.verifyingActiveDocIdInDocView(Input.testSecondDocId);
+		baseClass.passedStep("Navigated to next doc in the list while on text tab");	
+		driver.scrollPageToTop();
+		docViewRedact.pageNumberTextBox().waitAndClick(10);
+		docViewRedact.pageNumberTextBox().getWebElement().clear();
+		docViewRedact.pageNumberTextBox().getWebElement().sendKeys(Input.pageNumber);
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+		driver.waitForPageToBeReady();
+		docViewRedact.verifyingActiveDocIdInDocView(Input.testTenthDocId);
+		baseClass.passedStep("Navigated to expected doc in the list while on text tab");
+		String status = docViewRedact.textTab().GetAttribute("aria-selected");
+		System.out.println(status);
+		if(status.equalsIgnoreCase("false")) {
+			baseClass.passedStep("The text tab is Not retained");
+		}
+		else {
+			baseClass.failedStep("The images tab is retained");
+		}
+	}
+		
 	
 
 	@AfterMethod(alwaysRun = true)

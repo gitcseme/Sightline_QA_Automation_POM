@@ -247,6 +247,8 @@ public class Input {
 	public static String keyWordHexCode;
 	public static String docIdKeyWordTest;
 	public static String docIdThumbnails;
+	public static String testSecondDocId;
+	public static String testTenthDocId;
 
 	/**
 	 * @author : Gopinath Created date: NA Modified date: NA Modified by:Gopinath.
@@ -670,6 +672,9 @@ public class Input {
 		fullPageRange = testData.getFullPageRange();
 		iconColor = testData.getIconColor();
 		docIdThumbnails = testData.getDocIdThumbnails();
+		testSecondDocId = testData.getTestSecondDocId();
+		testTenthDocId = testData.getTestTenthDocId();
+		
 
 		// Added by Raghuram
 		docHighlightColor = testData.getDocHighlightColor();
