@@ -63,6 +63,8 @@ public class DocView_Redactions_Regression {
 
 	String assignmentName = "AAassignment" + Utility.dynamicNameAppender();
 	String keywordsArray[] = { "test", "hi", "Than8617167" };
+	String keywordsArrayPT[] = { "test" };
+	
 
 	@BeforeClass(alwaysRun = true)
 
@@ -2862,6 +2864,121 @@ public class DocView_Redactions_Regression {
 
 		softAssert.assertAll();
 
+	}
+	
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51408 Verify on click of the "eye" icon, terms should be
+	 * highlighted those that are set from Manage > Keywords when documents are
+	 * searched with work product
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 49)
+	public void verifyHighlightedKeywordsForDocSearchWithWorkProduct() throws Exception {
+
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		docViewRedact = new DocViewRedactions(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51408");
+		baseClass.stepInfo(
+				"Verify on click of the \"eye\" icon, terms should be highlighted those that are set from Manage > Keywords when documents are searched with work product");
+
+		String codingForm = Input.codeFormName;
+		baseClass.stepInfo("Create new assignment");
+		assignmentsPage.createAssignment(assignmentName, codingForm);
+		sessionSearch.basicMetaDataSearch("DocID", null, Input.MiniDocId, null);
+		sessionSearch.bulkAssign();
+		assignmentsPage.assignDocstoExisting(assignmentName);
+		assignmentsPage.editAssignment(assignmentName);
+		baseClass.stepInfo("Distributing docs to RMU");
+		assignmentsPage.assignmentDistributingToReviewerManager();
+		sessionSearch.switchToWorkproduct();
+		sessionSearch.selectAssignmentInWPS(assignmentName);
+		sessionSearch.serarchWP();
+		sessionSearch.ViewInDocView();
+		driver.waitForPageToBeReady();
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view along with terms and its counts");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().waitAndClick(5);
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		docView.verifyKeywordsAreDisplayed(keywordsArrayPT);
+		loginPage.logout();
+		loginPage.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		assignmentsPage.deleteAssignment(assignmentName);
+	}
+
+	/**
+	 * Author : Steffy date: NA Modified date: NA Modified by: NA Test Case
+	 * Id:RPMXCON-51853 Verify that persistent hits panel should not retain
+	 * previously viewed hits for the document on completing the document from
+	 * coding form child window
+	 */
+
+	@Test(enabled = true, alwaysRun = true, groups = { "regression" }, priority = 50)
+	public void verifyPersistentHitsAfterCompletingDocumentsSavedSearchGroup() throws Exception {
+		baseClass = new BaseClass(driver);
+		SessionSearch sessionSearch = new SessionSearch(driver);
+		SavedSearch savedSearch = new SavedSearch(driver);
+		SoftAssert softAssert = new SoftAssert();
+		DocViewPage docView = new DocViewPage(driver);
+		AssignmentsPage assignmentsPage = new AssignmentsPage(driver);
+		baseClass.stepInfo("Test case id : RPMXCON-51853");
+		baseClass.stepInfo(
+				"Verify that persistent hits panel should not retain previously viewed hits for the document on completing the document from coding form child window");
+
+		String codingForm = Input.codeFormName;
+		String searchName = "Search Name" + UtilityLog.dynamicNameAppender();
+		String assname = "assgnment" + Utility.dynamicNameAppender();
+
+		baseClass.stepInfo("Search the non audio documents and Create new assignment");
+		sessionSearch.basicContentSearch(Input.searchString1);
+		sessionSearch.saveSearch(searchName);
+
+		// Share Search via Saved Search
+		baseClass.stepInfo("Sharing the saved search with security group");
+		savedSearch.shareSavedSearchRMU(searchName, Input.securityGroup);
+
+		savedSearch.getSavedSearchToBulkAssign().waitAndClick(10);
+
+		assignmentsPage.assignDocstoNewAssgnEnableAnalyticalPanel(assname, codingForm, 0);
+
+		loginPage.logout();
+
+		baseClass.stepInfo(
+				"Logging in to reviewer account to verify whether reviewer can view docs in doc view from assignment");
+		loginPage.loginToSightLine(Input.rev1userName, Input.rev1password);
+
+		baseClass.stepInfo("Reviwer is selecting assignment from Dashboard");
+		assignmentsPage.SelectAssignmentByReviewer(assname);
+
+		driver.waitForPageToBeReady();
+
+		baseClass.stepInfo("Verify whether the user is in doc view in context of an assignment");
+		baseClass.waitForElement(assignmentsPage.getAssignmentNameInDocView());
+		if (assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue()) {
+			baseClass.passedStep("User is in doc view in context of an assignment");
+			softAssert.assertEquals(assignmentsPage.getAssignmentNameInDocView().isDisplayed().booleanValue(), true);
+		}
+
+		baseClass.stepInfo("Verify whether the panels are displayed in doc view");
+		baseClass.waitForElement(docView.getPersistantHitEyeIcon());
+		docView.getPersistantHitEyeIcon().Click();
+		baseClass.waitForElement(docView.getDocView_HitsTogglePanel());
+		if (docView.getHitPanel().isDisplayed()) {
+			baseClass.passedStep("Persistent hit panels are displayed");
+			softAssert.assertEquals(docView.getHitPanel().isDisplayed().booleanValue(), true);
+		} else {
+			baseClass.failedStep("Persistent hit panels are not displayed");
+		}
+
+		String beforeComplete = docView.getHitPanelCount().getText();
+		docView.popOutCodingFormAndCompleteDocument();
+		String afterComplete = docView.getHitPanelCount().getText();
+
+		softAssert.assertNotEquals(beforeComplete, afterComplete);
+		softAssert.assertAll();
 	}
 
 	@AfterMethod(alwaysRun = true)

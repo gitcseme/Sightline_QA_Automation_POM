@@ -2556,6 +2556,111 @@ public class SavedSearchRegression_New_Set_04 {
 
 	}
 
+	/**
+	 * @Author Jeevitha
+	 * @Description : Verify that status and counts are updated when Batch search
+	 *              file is uploaded[RPMXCON-48905]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 31)
+	public void verifyStatusAndCountForBatchFile() throws Exception {
+		String headerName = "Search Name";
+		String nearDupe = "Near Duplicate Count";
+		String file = saveSearch.renameFile(Input.WPbatchFile);
+
+		// Login as PA
+		login.loginToSightLine(Input.pa1userName, Input.pa1password);
+		base.stepInfo("Test case Id: RPMXCON-48905");
+		base.stepInfo("Verify that status and counts are updated when Batch search file is uploaded");
+
+		// Upload Batch File And Get count of docs
+		driver.getWebDriver().get(Input.url + "SavedSearch/SavedSearches");
+		saveSearch.uploadWPBatchFile(file);
+		saveSearch.StatusAndCountForListOfSearches(headerName, nearDupe);
+
+		// delete Uploaded Batch File
+		saveSearch.deleteUploadedBatchFile(file, Input.mySavedSearch, false, null);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description : To verify, As a RM user login, when user select any folder or
+	 *              sub folder (Node) in saved search page under search group, that
+	 *              will be highlighted [RPMXCON-47422]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 32)
+	public void verifyNodeHighlightRmu() throws Exception {
+		String passMsg = "Selected folder is highlighted";
+		String failMsg = "Selected folder is Not highlighted / highlighted with wrong color code";
+
+		// Login as RMU
+		login.loginToSightLine(Input.rmu1userName, Input.rmu1password);
+		base.stepInfo("Test case Id: RPMXCON-47422");
+		base.stepInfo(
+				"To verify, As a RM user login, when user select any folder or sub folder (Node) in saved search page under search group, that will be highlighted");
+
+		// Saved Search
+		String node = saveSearch.createSearchGroupAndReturn(null, "PA");
+
+		driver.Navigate().refresh();
+		saveSearch.selectNode1(node);
+		base.stepInfo("Selected : " + node);
+		driver.waitForPageToBeReady();
+		String bgColor = saveSearch.getCreatedNode(node).GetCssValue("background-color");
+		bgColor = base.rgbTohexaConvertor(bgColor);
+
+		// Text Comparision
+		base.textCompareEquals(bgColor, Input.selectionHighlightColor, passMsg, failMsg);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, node);
+		login.logout();
+	}
+
+	/**
+	 * @Author Jeevitha
+	 * @Description :To verify, As a Reviewer user login, when user select any
+	 *              folder or sub folder (Node) in saved search page under search
+	 *              group, that will be highlighted [RPMXCON-47423]
+	 * @throws Exception
+	 */
+	@Test(enabled = true, groups = { "regression" }, priority = 33)
+	public void verifySubNodeHighlightRev() throws Exception {
+		String passMsg = "Selected folder is highlighted";
+		String failMsg = "Selected folder is Not highlighted / highlighted with wrong color code";
+		int noOfNodesToCreate = 2;
+		int selectIndex = 1;
+		List<String> newNodeList = new ArrayList<>();
+
+		// Login as PA
+		login.loginToSightLine(Input.rev1userName, Input.rev1password);
+		base.stepInfo("Test case Id: RPMXCON-47423");
+		base.stepInfo(
+				"To verify, As a Reviewer user login, when user select any folder or sub folder (Node) in saved search page under search group, that will be highlighted");
+
+		// Saved Search
+		saveSearch.navigateToSavedSearchPage();
+		newNodeList = saveSearch.createSGAndReturn("Rev", "No", noOfNodesToCreate);
+
+		// select node
+		driver.Navigate().refresh();
+		String node = saveSearch.childNodeSelectionToShare(selectIndex, newNodeList);
+		base.stepInfo("Selected : " + node);
+		driver.waitForPageToBeReady();
+		String bgColor = saveSearch.getCreatedNode(node).GetCssValue("background-color");
+		bgColor = base.rgbTohexaConvertor(bgColor);
+
+		// Text Comparision
+		base.textCompareEquals(bgColor, Input.selectionHighlightColor, passMsg, failMsg);
+
+		// delete Node
+		saveSearch.deleteNode(Input.mySavedSearch, newNodeList.get(0));
+		login.logout();
+	}
+	
+
 	@AfterMethod(alwaysRun = true)
 	public void takeScreenShot(ITestResult result, Method testMethod) {
 		Reporter.setCurrentTestResult(result);
