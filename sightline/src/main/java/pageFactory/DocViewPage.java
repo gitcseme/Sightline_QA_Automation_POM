@@ -2403,8 +2403,18 @@ public class DocViewPage {
 	}
 	
 	//Added by Aathith
+
+	public Element getAttachCountTextBox() {
+		return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
+	}
+	// added sakthivel
+		public Element getVerifyNearDuppin() {
+			return driver.FindElementByXPath("//table[@id='dtDocumentNearDuplicates']//i[@class='fa fa-link']/.");
+
+
 		public Element getAttachCountTextBox() {
 			return driver.FindElementByXPath("//input[@projectfieldname='AttachCount']");
+
 		}
 
 	public DocViewPage(Driver driver) {
@@ -13281,29 +13291,6 @@ public class DocViewPage {
 		reusableDocView.deleteStampColour(Input.stampSelection);
 	}
 
-	/**
-	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
-	 * @Description: This method used to verify coding stamp display
-	 * 
-	 */
-
-	public void verifyCodingStampDisplay() {
-		driver.waitForPageToBeReady();
-		base.stepInfo("Performing action in Child window");
-		base.stepInfo("Validation for non-audio document");
-		reusableDocView.clickGearIconOpenCodingFormChildWindow();
-		String parent = reusableDocView.switchTochildWindow();
-		reusableDocView.stampButtonShouldDisplay();
-		reusableDocView.switchToNewWindow(1);
-		for (int i = 20; i <= 20; i++) {
-			getClickDocviewID(i).waitAndClick(5);
-			driver.waitForPageToBeReady();
-		}
-		base.stepInfo("Validation for audio document");
-		reusableDocView.switchToNewWindow(2);
-		reusableDocView.stampButtonShouldDisplay();
-		reusableDocView.childWindowToParentWindowSwitching(parent);
-	}
 
 	/**
 	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
@@ -17944,7 +17931,6 @@ public class DocViewPage {
 		base.waitForElement(getDocView_Analytics_NearDupeTab());
 		getDocView_Analytics_NearDupeTab().waitAndClick(5);
 
-
 		for (int i = 1; i <= 1; i++) {
 			base.waitForElement(getDocView_Analytics_NearDupe_Doc(i));
 			getDocView_Analytics_NearDupe_Doc(i).waitAndClick(5);
@@ -17964,6 +17950,306 @@ public class DocViewPage {
 		} else {
 			base.failedStep("Selected document is not display in Doc List");
 		}
-
 	} 
+	
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description:verify Docview coding form child window then should be on Images
+	 *                     tab for next navigated document
+	 */
+	public void verifyCodingFormChildWindowCursorNavigatedToImageTabDisplayed() {
+		driver.waitForPageToBeReady();
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnSecDocCF1 = getVerifyPrincipalDocument().getText();
+		clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		driver.waitForPageToBeReady();
+		editCodingFormCompleteChildWindow();
+		driver.waitForPageToBeReady();
+		closeWindow(1);
+		switchToNewWindow(1);
+		String prnSecDocCF2 = getVerifyPrincipalDocument().getText();
+		base.waitForElement(getVerifyPrincipalDocument());
+		softAssertion.assertNotEquals(prnSecDocCF1, prnSecDocCF2);
+		if (!prnSecDocCF1.equals(prnSecDocCF2)) {
+			base.passedStep("Cursor navigated to next document in child window");
+		} else {
+			base.failedStep("Curosr not navigated to next document in child window");
+		}
+		base.waitForElement(getVerifyPrincipalDocument());
+		String CfImageTab1 = getVerifyPrincipalDocument().getText();
+		base.waitForElement(getDocView_CurrentDocId());
+		String CfImageTab2 = getDocView_CurrentDocId().getText();
+		softAssertion.assertEquals(CfImageTab1, CfImageTab2);
+		if (CfImageTab1.equals(CfImageTab2)) {
+			base.passedStep("Navigated imagetab is successfully displayed");
+		} else {
+			base.failedStep("Navigated imagetab is successfully displayed");
+		}
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description:verify Docview coding form child window after applying stamp
+	 *                     then should be on Images tab for next navigated document
+	 */
+	public void verifyCfStampChildCursorNavigatedToDocViewImage(String colour, String lastIcon) throws AWTException {
+		driver.waitForPageToBeReady();
+		docViewCodingFormPanelStampSelectionWithoutSave(colour);
+		base.waitForElement(getVerifyPrincipalDocument());
+		String prnSecDocCF1 = getVerifyPrincipalDocument().getText();
+		clickGearIconOpenCodingFormChildWindow();
+		switchToNewWindow(2);
+		editCodingFormSavedStampBtnChildWindow(lastIcon);
+		System.out.println("document saved successfully");
+		driver.waitForPageToBeReady();
+		closeWindow(1);
+		switchToNewWindow(1);
+		String prnSecDocCF2 = getVerifyPrincipalDocument().getText();
+		base.waitForElement(getVerifyPrincipalDocument());
+		softAssertion.assertNotEquals(prnSecDocCF1, prnSecDocCF2);
+		if (!prnSecDocCF1.equals(prnSecDocCF2)) {
+			base.passedStep("Cursor navigated to next document in child window");
+		} else {
+			base.failedStep("Curosr not navigated to next document in child window");
+		}
+		base.waitForElement(getVerifyPrincipalDocument());
+		String CfImageTab1 = getVerifyPrincipalDocument().getText();
+		base.waitForElement(getDocView_CurrentDocId());
+		String CfImageTab2 = getDocView_CurrentDocId().getText();
+		softAssertion.assertEquals(CfImageTab1, CfImageTab2);
+		if (CfImageTab1.equals(CfImageTab2)) {
+			base.passedStep("Navigated imagetab is successfully displayed");
+		} else {
+			base.failedStep("Navigated imagetab is successfully displayed");
+			System.out.println("navigated not successfully");
+		}
+		softAssertion.assertAll();
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description: Reusable this method is used for Edit CodingForm and
+	 *               CompleteBtn in ChildWindow.
+	 */
+	public void editCodingFormCompleteChildWindow() {
+		driver.scrollPageToTop();
+		driver.waitForPageToBeReady();
+		base.waitForElement(getResponsiveCheked());
+		getResponsiveCheked().Click();
+		base.waitForElement(getNonPrivilegeRadio());
+		getNonPrivilegeRadio().Click();
+		base.waitForElement(getDocument_CommentsTextBox());
+		getDocument_CommentsTextBox().SendKeys("Editing and click complete button");
+		driver.scrollPageToTop();
+		base.waitForElement(getCompleteDocBtn());
+		getCompleteDocBtn().waitAndClick(10);
+		switchToNewWindow(1);
+		base.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description: Reusable this method is used for click StamplastIcon and
+	 *               CompleteBtn in ChildWindow.
+	 */
+	public void editCodingFormSavedStampBtnChildWindow(String lastIcon) {
+		driver.waitForPageToBeReady();
+		driver.scrollPageToTop();
+		base.waitForElement(getCodingStampLastIcon(lastIcon));
+		String getAttribute = getDocument_CommentsTextBox().WaitUntilPresent().GetAttribute("value");
+		base.waitForElement(getCodingStampLastIcon(lastIcon));
+		getCodingStampLastIcon(lastIcon).waitAndClick(10);
+		softAssertion.assertEquals("Review", getAttribute);
+		if (getAttribute.equals("Review")) {
+			base.passedStep("Expected Message -StamplastIcon is Clicked scuessfully..");
+		} else {
+			base.failedStep("Expected Message - StamplastIcon is not Clicked scuessfully..");
+		}
+		base.waitForElement(getCompleteDocBtn());
+		getCompleteDocBtn().waitAndClick(10);
+		switchToNewWindow(1);
+		base.VerifySuccessMessage("Document completed successfully");
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description: View the document which is not part of mini doc list from
+	 *               Analytics panel.
+	 */
+	public void verifyNotPartofDocViewAnalyticalPanelNearDupeTab() throws InterruptedException {
+		driver.waitForPageToBeReady();
+		List<String> uniqueDocuments = new ArrayList<>();
+		Set<String> duplicates = new HashSet<String>();
+		List<String> listOFData2 = new ArrayList<>();
+		ElementCollection element2 = getMiniDocListDocIdText();
+		listOFData2 = reusableDocView.availableListofElements(element2);
+		for (String minidoclist : listOFData2) {
+			duplicates.add(minidoclist);
+		}
+		System.out.println(listOFData2);
+		reusableDocView.switchToNewWindow(1);
+		reusableDocView.clickGearIconOpenAnalyticalPanel();
+		String parentWindow = reusableDocView.switchTochildWindow();
+		Thread.sleep(Input.wait30);
+		getDocView_Analytics_NearDupeTab().WaitUntilPresent().ScrollTo();
+		getDocView_Analytics_NearDupeTab().waitAndClick(5);
+		Thread.sleep(Input.wait30);
+		List<String> listOFData3 = new ArrayList<>();
+		ElementCollection element3 = getAnalyticalPanelDocIdText();
+		listOFData3 = reusableDocView.availableListofElements(element3);
+		System.out.println(listOFData3);
+		for (String analytical : listOFData3) {
+			if (duplicates.add(analytical)) {
+				uniqueDocuments.add(analytical);
+			}
+		}
+		System.out.println(uniqueDocuments);
+		String name = uniqueDocuments.get(0);
+		base.waitForElement(getAnalyCheckBox(name));
+		getAnalyCheckBox(name).waitAndClick(10);
+		base.waitForElement(getDocView_ChildWindow_ActionButton());
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		base.waitForElement(getAnalyticalDropDown());
+		getAnalyticalDropDown().waitAndClick(10);
+		base.passedStep("Selected document is not part of minidoclist document");
+		String expect = getDocView_NearDupeIconForSpecificDocument(name).getText();
+		driver.waitForPageToBeReady();
+		reusableDocView.switchToNewWindow(1);
+		base.waitForElement(getDocView_CurrentDocId());
+		String actual = getDocView_CurrentDocId().getText();
+		softAssertion.assertEquals(expect, actual);
+		base.stepInfo(" selected document successfully displayed in parent window");
+		reusableDocView.closeWindow(1);
+		reusableDocView.switchToNewWindow(1);
+		driver.Navigate().refresh();
+		driver.switchTo().alert().accept();
+		driver.waitForPageToBeReady();
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description: This method is MiniDoclist Selecting the CodeSameAsIcon and
+	 *               Saved Edit codingForm clicks the'Save and Next after the icon
+	 *               should be removed.
+	 */
+	public void verifyCodeSameAsIconIsRemoved() {
+		driver.waitForPageToBeReady();
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getDocView_Analytics_NearDupeTab().Displayed();
+			}
+		}), Input.wait30);
+		getDocView_Analytics_NearDupeTab().waitAndClick(10);
+		getDocView_NearDupe_Selectdoc().waitAndClick(5);
+		getDocView_ChildWindow_ActionButton().Displayed();
+		getDocView_ChildWindow_ActionButton().waitAndClick(10);
+		driver.waitForPageToBeReady();
+		getDocView_NearDupeCodeSameAs().waitAndClick(10);
+		base.VerifySuccessMessage("Code same performed successfully.");
+		driver.WaitUntil((new Callable<Boolean>() {
+			public Boolean call() {
+				return getVerifyNearDuppin().Displayed();
+			}
+		}), Input.wait30);
+		softAssertion.assertTrue(getVerifyNearDuppin().Displayed());
+		driver.waitForPageToBeReady();
+		editingCodingFormWithSaveAndNextButton();
+		if (getVerifyNearDuppin().isElementPresent()) {
+			System.out.println("MiniDoclist codesameas is  removed successfully");
+			base.stepInfo("MiniDoclist codesameas is  removed successfully");
+		} else {
+			System.out.println("MiniDoclist codesameas is not removed successfully");
+			base.stepInfo("MiniDoclist codesameas is not removed successfully");
+		}
+	}
+
+	/**
+	 * @author Indium-Sakthivel date: 29/12/2021 Modified date:N/A
+	 * @Description: this method is used to CodingForm saved stamplasticon click and
+	 *               Saved Document in parentwindow.
+	 */
+	public void getCodingFormStampClickAndSave(String lastIcon) {
+		driver.waitForPageToBeReady();
+		String CommentTextActual = getDocument_CommentsTextBox().GetAttribute("value");
+		base.waitForElement(getCodingStampLastIcon(lastIcon));
+		getCodingStampLastIcon(lastIcon).waitAndClick(10);
+		base.stepInfo("CodingForm saved Stamp is clicked successfully");
+		String CommentTextExpected = getDocument_CommentsTextBox().GetAttribute("value");
+		softAssertion.assertEquals(CommentTextActual, CommentTextExpected);
+		base.stepInfo("Document is saved with the last applied coding of  the document..");
+		base.waitForElement(getCodingFormSaveButton());
+		getCodingFormSaveButton().waitAndClick(5);
+		base.VerifySuccessMessage("Document saved successfully");
+	}
+
+	/**
+	 * @author Indium-Baskar
+	 */
+//	Reusable method for switching to child window for all panel
+//	Child Window Display and control in child window
+	public String switchTochildWindow() {
+		String parentWindow = driver.getWebDriver().getWindowHandle();
+		Set<String> childWindow = driver.getWebDriver().getWindowHandles();
+		for (String miniDocListChild : childWindow) {
+			if (!parentWindow.equals(miniDocListChild)) {
+				driver.switchTo().window(miniDocListChild);
+				driver.waitForPageToBeReady();
+			}
+		}
+		return parentWindow;
+
+	}
+
+	/**
+	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
+	 * @Description: This method used to verify coding stamp display
+	 * 
+	 */
+
+	public void verifyCodingStampDisplay() {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action in Child window");
+		base.stepInfo("Validation for non-audio document");
+		clickGearIconOpenCodingFormChildWindow();
+		String parent = switchTochildWindow();
+		stampButtonShouldDisplay();
+		switchToNewWindow(1);
+		for (int i = 20; i <= 20; i++) {
+			getClickDocviewID(i).waitAndClick(5);
+			driver.waitForPageToBeReady();
+		}
+		base.stepInfo("Validation for audio document");
+		switchToNewWindow(2);
+		stampButtonShouldDisplay();
+		childWindowToParentWindowSwitching(parent);
+	}
+
+	/**
+	 * @author Indium-Baskar date: 30/11/2021 Modified date:N/A
+	 * @Description: This method used to verify comment without saving
+	 * 
+	 */
+	public void validateWithoutEditUsingSave() {
+		driver.waitForPageToBeReady();
+		base.stepInfo("Performing action from parent window");
+		base.waitForElement(getDocView_CodingFormComments());
+		getDocView_CodingFormComments().Clear();
+		codingFormSaveButton();
+		if (getCodingFormValidErrorMeta().isElementAvailable(2)) {
+			try {
+				if (getCodingFormValidErrorMeta().isDisplayed()) {
+					base.stepInfo("Coding form validation error message displayed");
+					base.passedStep("Application not allowed to save without passing required field");
+				} else {
+					base.failedStep("Error message not displayed");
+				}
+			} catch (Exception e) {
+				base.failedStep("Error message not displayed");
+			}
+		}
+		driver.waitForPageToBeReady();
+	}
 }
