@@ -150,6 +150,8 @@ public class TestData {
 	public String pageRange;
 	public String fullPageRange;
 	public String iconColor;
+	public String testSecondDocId;
+	public String testTenthDocId;
 
 	// Added by Raghuram - Last Modified 12/28/21
 	public String docHighlightColor;
