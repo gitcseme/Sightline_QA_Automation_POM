@@ -17822,4 +17822,73 @@ public class DocViewPage {
 			base.failedStep("Cursor not navigated to next document");
 		}
 	}
+	
+	/**
+	 * @author Gopianth
+	 * @Description : this method used for verifying persistent Hits Displayed.
+	 * @param searchValue : searchValue is string value that search term will appear on persistant hits.
+	 * 
+	 */
+	public void verifyPersistentHitsDisplayed(String searchValue) {
+		try {
+
+			driver.scrollPageToTop();
+			driver.waitForPageToBeReady();
+			getHitPanels().isElementAvailable(10);
+			int numOfPanels = getHitPanels().size();
+			System.out.println("numOfPanels" + (numOfPanels - 1));
+			for (int i = 2; i <= numOfPanels; i++) {
+				if (getTermInHitPanels(i).getText().contains(searchValue)) {
+					System.out.println("Found " + searchValue);
+					base.passedStep(searchValue + " term is present in persistent hit panel.");
+				}else if(i==numOfPanels) {
+					base.failedStep(searchValue + " term is not present in persistent hit panel.");
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while  verifying persistent Hits Displayed." + e.getMessage());
+		}
+	}
+	
+	
+	/**
+	 * @author Gopinath
+	 * Description: select the documnet from min doc list and verify loaded in default view or not
+	 * @param RowNumber(select the document from mini doc list by it's row number
+	 */
+	public void selectDocumentFromMiniDocList(int RowNumber) {
+		try {
+			driver.waitForPageToBeReady();
+			base.waitForElement(getDocView_MiniDocListIds(RowNumber));
+			getDocView_MiniDocListIds(RowNumber).waitAndClick(6);
+			base.waitForElement(getDocViewSelectedDocId());
+			if(getDocViewSelectedDocId().isElementAvailable(3)==true) {
+				base.passedStep("Document is selcted from min Doclist");
+			}
+			else {
+				base.failedStep("Unable to select document from Mini doc lIst");
+			}
+			softAssertion.assertTrue(getDocView_IconDownload().isElementAvailable(3));
+			if(getDocView_IconDownload().isElementAvailable(5)==true) {
+				base.passedStep("Document is loaded in default view");
+			}
+			else {
+				base.failedStep("Unable to oad the document in default view");
+			}
+			String DocId = getDocViewSelectedDocId().getText();
+			if(getDocViewMiniDocIdCheckBoxArrowRight(DocId).isElementAvailable(RowNumber)==true) {
+				base.passedStep("same document is  fully in visible area of mini doc list");
+				
+			}
+			else {
+				base.failedStep("document is not in visible area of mini doc list");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			base.failedStep("Exception while select the documnet from min doc list and verify loaded in default view or not." + e.getMessage());
+			
+		}
+	}
 }
